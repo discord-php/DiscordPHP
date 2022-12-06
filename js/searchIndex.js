@@ -1301,10 +1301,10 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020HTTP\u0020client.",
             "url": "classes/Discord-Discord.html#method_getHttp"
         },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003AgetCache\u0028\u0029",
-            "name": "getCache",
-            "summary": "Gets\u0020the\u0020cache\u0020interface.",
-            "url": "classes/Discord-Discord.html#method_getCache"
+            "fqsen": "\\Discord\\Discord\u003A\u003AgetCacheConfig\u0028\u0029",
+            "name": "getCacheConfig",
+            "summary": "Gets\u0020the\u0020cache\u0020configuration.",
+            "url": "classes/Discord-Discord.html#method_getCacheConfig"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A__get\u0028\u0029",
             "name": "__get",
@@ -1501,10 +1501,10 @@ Search.appendIndex(
             "summary": "The\u0020HTTP\u0020client.",
             "url": "classes/Discord-Discord.html#property_http"
         },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024cache",
-            "name": "cache",
-            "summary": "The\u0020react\/cache\u0020interface.",
-            "url": "classes/Discord-Discord.html#property_cache"
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024cacheConfig",
+            "name": "cacheConfig",
+            "summary": "The\u0020cache\u0020configuration.",
+            "url": "classes/Discord-Discord.html#property_cacheConfig"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024client",
             "name": "client",
@@ -1876,6 +1876,41 @@ Search.appendIndex(
             "summary": "ReactPHP\u0020event\u0020loop.",
             "url": "classes/Discord-Helpers-Buffer.html#property_loop"
         },                {
+            "fqsen": "\\Discord\\Helpers\\CacheConfig",
+            "name": "CacheConfig",
+            "summary": "Cache\u0020configuration\u0020class.\u0020To\u0020be\u0020used\u0020with\u0020Discord\u0020\u0060cache\u0060\u0020Options.",
+            "url": "classes/Discord-Helpers-CacheConfig.html"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\CacheConfig\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-Helpers-CacheConfig.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\CacheConfig\u003A\u003A__get\u0028\u0029",
+            "name": "__get",
+            "summary": "",
+            "url": "classes/Discord-Helpers-CacheConfig.html#method___get"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\CacheConfig\u003A\u003A\u0024interface",
+            "name": "interface",
+            "summary": "",
+            "url": "classes/Discord-Helpers-CacheConfig.html#property_interface"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\CacheConfig\u003A\u003A\u0024compress",
+            "name": "compress",
+            "summary": "Whether\u0020to\u0020compress\u0020cache\u0020data\u0020before\u0020serialization,\u0020disabled\u0020by\u0020default,\u0020ignored\u0020in\u0020ArrayCache.",
+            "url": "classes/Discord-Helpers-CacheConfig.html#property_compress"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\CacheConfig\u003A\u003A\u0024sweep",
+            "name": "sweep",
+            "summary": "Whether\u0020to\u0020automatically\u0020sweep\u0020cached\u0020items\u0020from\u0020memory,\u0020disabled\u0020by\u0020default.",
+            "url": "classes/Discord-Helpers-CacheConfig.html#property_sweep"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\CacheConfig\u003A\u003A\u0024separator",
+            "name": "separator",
+            "summary": "",
+            "url": "classes/Discord-Helpers-CacheConfig.html#property_separator"
+        },                {
             "fqsen": "\\Discord\\Helpers\\Collection",
             "name": "Collection",
             "summary": "Collection\u0020of\u0020items.\u0020Inspired\u0020by\u0020Laravel\u0020Collections.",
@@ -2205,11 +2240,6 @@ Search.appendIndex(
             "name": "Channel",
             "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
             "url": "classes/Discord-Parts-Channel-Channel.html"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003Afill\u0028\u0029",
-            "name": "fill",
-            "summary": "Fills\u0020the\u0020parts\u0020attributes\u0020from\u0020an\u0020array.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_fill"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AafterConstruct\u0028\u0029",
             "name": "afterConstruct",
@@ -2728,7 +2758,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AsetReactionsAttribute\u0028\u0029",
             "name": "setReactionsAttribute",
-            "summary": "Sets\u0020the\u0020reactions\u0020attriubte.",
+            "summary": "Sets\u0020the\u0020reactions\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Message.html#method_setReactionsAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetChannelAttribute\u0028\u0029",
@@ -4238,17 +4268,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AsetRolesAttribute\u0028\u0029",
             "name": "setRolesAttribute",
-            "summary": "",
+            "summary": "Sets\u0020the\u0020roles\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_setRolesAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AsetEmojisAttribute\u0028\u0029",
             "name": "setEmojisAttribute",
-            "summary": "",
+            "summary": "Sets\u0020the\u0020emojis\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_setEmojisAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AsetStickersAttribute\u0028\u0029",
             "name": "setStickersAttribute",
-            "summary": "",
+            "summary": "Sets\u0020the\u0020stickers\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_setStickersAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetInvites\u0028\u0029",
@@ -6206,6 +6236,11 @@ Search.appendIndex(
             "summary": "Creates\u0020a\u0020message\u0020collector\u0020for\u0020the\u0020channel.",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_createMessageCollector"
         },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetBotPermissions\u0028\u0029",
+            "name": "getBotPermissions",
+            "summary": "Returns\u0020the\u0020bot\u0027s\u0020permissions\u0020in\u0020the\u0020thread.",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_getBotPermissions"
+        },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetCreatableAttributes\u0028\u0029",
             "name": "getCreatableAttributes",
             "summary": "Returns\u0020the\u0020attributes\u0020needed\u0020to\u0020create.",
@@ -7105,6 +7140,11 @@ Search.appendIndex(
             "name": "toArray",
             "summary": "Converts\u0020the\u0020weak\u0020caches\u0020to\u0020array.",
             "url": "classes/Discord-Repository-AbstractRepository.html#method_toArray"
+        },                {
+            "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003Akeys\u0028\u0029",
+            "name": "keys",
+            "summary": "Get\u0020the\u0020keys\u0020of\u0020the\u0020items.",
+            "url": "classes/Discord-Repository-AbstractRepository.html#method_keys"
         },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003AoffsetExists\u0028\u0029",
             "name": "offsetExists",

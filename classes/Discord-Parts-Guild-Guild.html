@@ -1198,7 +1198,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method___set">__set()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Handles dynamic set calls onto the part.</dd>
 
@@ -1437,7 +1437,7 @@ JSON. Used for JsonSerializable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method_serialize">serialize()</a>
     <span>
-                                &nbsp;: string    </span>
+                                &nbsp;: string|null    </span>
 </dt>
 <dd>Serializes the data. Used for Serializable.</dd>
 
@@ -1466,7 +1466,7 @@ another member.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method_unserialize">unserialize()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Unserializes some data and stores it. Used for Serializable.</dd>
 
@@ -1741,21 +1741,21 @@ another member.</dd>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
+<dd>Sets the emojis attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Discord-Parts-Guild-Guild.html#method_setRolesAttribute">setRolesAttribute()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
+<dd>Sets the roles attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Discord-Parts-Guild-Guild.html#method_setStickersAttribute">setStickersAttribute()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd></dd>
+<dd>Sets the stickers attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/Discord-Parts-Part.html#method_checkForMutator">checkForMutator()</a>
@@ -5731,6 +5731,10 @@ another member.</dd>
     &#039;joined_at&#039;,
     &#039;large&#039;,
     &#039;member_count&#039;,
+    // repositories
+    &#039;roles&#039;,
+    &#039;emojis&#039;,
+    &#039;stickers&#039;,
 ]</span></code>
 
     
@@ -5839,7 +5843,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">292</span>
+    <span class="phpdocumentor-element-found-in__line">294</span>
 
     </aside>
 
@@ -5872,7 +5876,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">270</span>
+    <span class="phpdocumentor-element-found-in__line">272</span>
 
     </aside>
 
@@ -5953,7 +5957,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">235</span>
+    <span class="phpdocumentor-element-found-in__line">240</span>
 
     </aside>
 
@@ -5963,7 +5967,7 @@ another member.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$visible</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;feature_animated_banner&#039;, &#039;feature_animated_icon&#039;, &#039;feature_application_command_permissions_v2&#039;, &#039;feature_auto_moderation&#039;, &#039;feature_banner&#039;, &#039;feature_community&#039;, &#039;feature_developer_support_server&#039;, &#039;feature_discoverable&#039;, &#039;feature_featurable&#039;, &#039;feature_has_directory_entry&#039;, &#039;feature_invites_disabled&#039;, &#039;feature_invite_splash&#039;, &#039;feature_linked_to_hub&#039;, &#039;feature_member_verification_gate_enabled&#039;, &#039;feature_monetization_enabled&#039;, &#039;feature_more_stickers&#039;, &#039;feature_news&#039;, &#039;feature_partnered&#039;, &#039;feature_preview_enabled&#039;, &#039;feature_private_threads&#039;, &#039;feature_role_icons&#039;, &#039;feature_ticketed_events_enabled&#039;, &#039;feature_vanity_url&#039;, &#039;feature_verified&#039;, &#039;feature_vip_regions&#039;, &#039;feature_welcome_screen_enabled&#039;, &#039;emojis&#039;, &#039;roles&#039;, &#039;stickers&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;feature_animated_banner&#039;, &#039;feature_animated_icon&#039;, &#039;feature_application_command_permissions_v2&#039;, &#039;feature_auto_moderation&#039;, &#039;feature_banner&#039;, &#039;feature_community&#039;, &#039;feature_developer_support_server&#039;, &#039;feature_discoverable&#039;, &#039;feature_featurable&#039;, &#039;feature_has_directory_entry&#039;, &#039;feature_invites_disabled&#039;, &#039;feature_invite_splash&#039;, &#039;feature_linked_to_hub&#039;, &#039;feature_member_verification_gate_enabled&#039;, &#039;feature_monetization_enabled&#039;, &#039;feature_more_stickers&#039;, &#039;feature_news&#039;, &#039;feature_partnered&#039;, &#039;feature_preview_enabled&#039;, &#039;feature_private_threads&#039;, &#039;feature_role_icons&#039;, &#039;feature_ticketed_events_enabled&#039;, &#039;feature_vanity_url&#039;, &#039;feature_verified&#039;, &#039;feature_vip_regions&#039;, &#039;feature_welcome_screen_enabled&#039;]</span></code>
 
     
     
@@ -6237,7 +6241,7 @@ another member.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__set</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__set</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -6281,7 +6285,7 @@ another member.</dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     
@@ -6402,7 +6406,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1190</span>
+    <span class="phpdocumentor-element-found-in__line">1198</span>
 
     </aside>
 
@@ -6483,7 +6487,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1587</span>
+    <span class="phpdocumentor-element-found-in__line">1595</span>
 
     </aside>
 
@@ -6516,7 +6520,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">735</span>
+    <span class="phpdocumentor-element-found-in__line">743</span>
 
     </aside>
 
@@ -6612,7 +6616,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1414</span>
+    <span class="phpdocumentor-element-found-in__line">1422</span>
 
     </aside>
 
@@ -6688,7 +6692,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">707</span>
+    <span class="phpdocumentor-element-found-in__line">715</span>
 
     </aside>
 
@@ -6765,7 +6769,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">811</span>
+    <span class="phpdocumentor-element-found-in__line">819</span>
 
     </aside>
 
@@ -6940,7 +6944,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">297</span>
+    <span class="phpdocumentor-element-found-in__line">299</span>
 
     </aside>
 
@@ -6998,7 +7002,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">983</span>
+    <span class="phpdocumentor-element-found-in__line">991</span>
 
     </aside>
 
@@ -7066,7 +7070,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1024</span>
+    <span class="phpdocumentor-element-found-in__line">1032</span>
 
     </aside>
 
@@ -7099,7 +7103,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1523</span>
+    <span class="phpdocumentor-element-found-in__line">1531</span>
 
     </aside>
 
@@ -7152,7 +7156,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">458</span>
+    <span class="phpdocumentor-element-found-in__line">466</span>
 
     </aside>
 
@@ -7208,7 +7212,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">384</span>
+    <span class="phpdocumentor-element-found-in__line">392</span>
 
     </aside>
 
@@ -7264,7 +7268,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1135</span>
+    <span class="phpdocumentor-element-found-in__line">1143</span>
 
     </aside>
 
@@ -7418,7 +7422,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1575</span>
+    <span class="phpdocumentor-element-found-in__line">1583</span>
 
     </aside>
 
@@ -7466,7 +7470,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">497</span>
+    <span class="phpdocumentor-element-found-in__line">505</span>
 
     </aside>
 
@@ -7522,7 +7526,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1549</span>
+    <span class="phpdocumentor-element-found-in__line">1557</span>
 
     </aside>
 
@@ -7575,7 +7579,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">680</span>
+    <span class="phpdocumentor-element-found-in__line">688</span>
 
     </aside>
 
@@ -7621,7 +7625,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1241</span>
+    <span class="phpdocumentor-element-found-in__line">1249</span>
 
     </aside>
 
@@ -7689,7 +7693,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1399</span>
+    <span class="phpdocumentor-element-found-in__line">1407</span>
 
     </aside>
 
@@ -7735,7 +7739,7 @@ another member.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1333</span>
+    <span class="phpdocumentor-element-found-in__line">1341</span>
 
     </aside>
 
@@ -7884,7 +7888,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">910</span>
+    <span class="phpdocumentor-element-found-in__line">918</span>
 
     </aside>
 
@@ -8148,7 +8152,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1088</span>
+    <span class="phpdocumentor-element-found-in__line">1096</span>
 
     </aside>
 
@@ -8214,14 +8218,14 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">serialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">serialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
+    <span class="phpdocumentor-signature__response_type">string|null</span>
             &mdash;
             <section class="phpdocumentor-description"><p>A string of serialized data.</p>
 </section>
@@ -8241,7 +8245,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1476</span>
+    <span class="phpdocumentor-element-found-in__line">1484</span>
 
     </aside>
 
@@ -8349,7 +8353,7 @@ manage_guild for INVITES_DISABLED.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">926</span>
+    <span class="phpdocumentor-element-found-in__line">934</span>
 
     </aside>
 
@@ -8420,7 +8424,7 @@ another member.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">414</span>
+    <span class="phpdocumentor-element-found-in__line">422</span>
 
     </aside>
 
@@ -8495,7 +8499,7 @@ another member.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">unserialize</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">unserialize</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -8530,7 +8534,7 @@ another member.</p>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     
@@ -8548,7 +8552,7 @@ another member.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1445</span>
+    <span class="phpdocumentor-element-found-in__line">1453</span>
 
     </aside>
 
@@ -8617,7 +8621,7 @@ another member.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1046</span>
+    <span class="phpdocumentor-element-found-in__line">1054</span>
 
     </aside>
 
@@ -8687,7 +8691,7 @@ e.g. <code class="prettyprint">[1 =&gt; 'role_id_1', 3 =&gt; 'role_id_3']</code>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1289</span>
+    <span class="phpdocumentor-element-found-in__line">1297</span>
 
     </aside>
 
@@ -8757,7 +8761,7 @@ e.g. <code class="prettyprint">[1 =&gt; 'role_id_1', 3 =&gt; 'role_id_3']</code>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1362</span>
+    <span class="phpdocumentor-element-found-in__line">1370</span>
 
     </aside>
 
@@ -8838,7 +8842,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">953</span>
+    <span class="phpdocumentor-element-found-in__line">961</span>
 
     </aside>
 
@@ -8920,7 +8924,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">543</span>
+    <span class="phpdocumentor-element-found-in__line">551</span>
 
     </aside>
 
@@ -8953,7 +8957,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">548</span>
+    <span class="phpdocumentor-element-found-in__line">556</span>
 
     </aside>
 
@@ -8986,7 +8990,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">553</span>
+    <span class="phpdocumentor-element-found-in__line">561</span>
 
     </aside>
 
@@ -9019,7 +9023,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">558</span>
+    <span class="phpdocumentor-element-found-in__line">566</span>
 
     </aside>
 
@@ -9052,7 +9056,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">563</span>
+    <span class="phpdocumentor-element-found-in__line">571</span>
 
     </aside>
 
@@ -9085,7 +9089,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">568</span>
+    <span class="phpdocumentor-element-found-in__line">576</span>
 
     </aside>
 
@@ -9118,7 +9122,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">573</span>
+    <span class="phpdocumentor-element-found-in__line">581</span>
 
     </aside>
 
@@ -9151,7 +9155,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">578</span>
+    <span class="phpdocumentor-element-found-in__line">586</span>
 
     </aside>
 
@@ -9184,7 +9188,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">583</span>
+    <span class="phpdocumentor-element-found-in__line">591</span>
 
     </aside>
 
@@ -9217,7 +9221,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">588</span>
+    <span class="phpdocumentor-element-found-in__line">596</span>
 
     </aside>
 
@@ -9250,7 +9254,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">593</span>
+    <span class="phpdocumentor-element-found-in__line">601</span>
 
     </aside>
 
@@ -9283,7 +9287,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">598</span>
+    <span class="phpdocumentor-element-found-in__line">606</span>
 
     </aside>
 
@@ -9316,7 +9320,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">603</span>
+    <span class="phpdocumentor-element-found-in__line">611</span>
 
     </aside>
 
@@ -9349,7 +9353,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">608</span>
+    <span class="phpdocumentor-element-found-in__line">616</span>
 
     </aside>
 
@@ -9382,7 +9386,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">653</span>
+    <span class="phpdocumentor-element-found-in__line">661</span>
 
     </aside>
 
@@ -9415,7 +9419,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">658</span>
+    <span class="phpdocumentor-element-found-in__line">666</span>
 
     </aside>
 
@@ -9448,7 +9452,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">613</span>
+    <span class="phpdocumentor-element-found-in__line">621</span>
 
     </aside>
 
@@ -9481,7 +9485,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">618</span>
+    <span class="phpdocumentor-element-found-in__line">626</span>
 
     </aside>
 
@@ -9514,7 +9518,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">623</span>
+    <span class="phpdocumentor-element-found-in__line">631</span>
 
     </aside>
 
@@ -9547,7 +9551,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">663</span>
+    <span class="phpdocumentor-element-found-in__line">671</span>
 
     </aside>
 
@@ -9580,7 +9584,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">668</span>
+    <span class="phpdocumentor-element-found-in__line">676</span>
 
     </aside>
 
@@ -9613,7 +9617,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">648</span>
+    <span class="phpdocumentor-element-found-in__line">656</span>
 
     </aside>
 
@@ -9646,7 +9650,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">628</span>
+    <span class="phpdocumentor-element-found-in__line">636</span>
 
     </aside>
 
@@ -9679,7 +9683,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">633</span>
+    <span class="phpdocumentor-element-found-in__line">641</span>
 
     </aside>
 
@@ -9712,7 +9716,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">638</span>
+    <span class="phpdocumentor-element-found-in__line">646</span>
 
     </aside>
 
@@ -9745,7 +9749,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">643</span>
+    <span class="phpdocumentor-element-found-in__line">651</span>
 
     </aside>
 
@@ -9778,7 +9782,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">484</span>
+    <span class="phpdocumentor-element-found-in__line">492</span>
 
     </aside>
 
@@ -9813,7 +9817,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">441</span>
+    <span class="phpdocumentor-element-found-in__line">449</span>
 
     </aside>
 
@@ -9862,7 +9866,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">429</span>
+    <span class="phpdocumentor-element-found-in__line">437</span>
 
     </aside>
 
@@ -9895,7 +9899,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">517</span>
+    <span class="phpdocumentor-element-found-in__line">525</span>
 
     </aside>
 
@@ -9930,7 +9934,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">529</span>
+    <span class="phpdocumentor-element-found-in__line">537</span>
 
     </aside>
 
@@ -9979,7 +9983,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1266</span>
+    <span class="phpdocumentor-element-found-in__line">1274</span>
 
     </aside>
 
@@ -10012,11 +10016,12 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">344</span>
+    <span class="phpdocumentor-element-found-in__line">342</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Sets the emojis attribute.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">setEmojisAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$emojis</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -10029,25 +10034,11 @@ channel_id =&gt; the widget channel id</p>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritDoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
@@ -10068,11 +10059,12 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">327</span>
+    <span class="phpdocumentor-element-found-in__line">319</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Sets the roles attribute.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">setRolesAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$roles</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -10085,25 +10077,11 @@ channel_id =&gt; the widget channel id</p>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritDoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
@@ -10124,11 +10102,12 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">361</span>
+    <span class="phpdocumentor-element-found-in__line">365</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Sets the stickers attribute.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">setStickersAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$stickers</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -10141,25 +10120,11 @@ channel_id =&gt; the widget channel id</p>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritDoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
