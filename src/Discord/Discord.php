@@ -1414,6 +1414,7 @@ class Discord
                     if (! ($value instanceof CacheConfig)) {
                         $value = new CacheConfig($value);
                     }
+
                     return [AbstractRepository::class => $value];
                 }
 
