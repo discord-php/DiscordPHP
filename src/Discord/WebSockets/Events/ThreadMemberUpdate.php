@@ -26,6 +26,7 @@ class ThreadMemberUpdate extends Event
 {
     public function handle($data)
     {
+        /** @var Member */
         $memberPart = $this->factory->part(Member::class, (array) $data, true);
 
         /** @var ?Guild */

@@ -13,7 +13,6 @@ namespace Discord\WebSockets\Events;
 
 use Discord\InteractionType;
 use Discord\Parts\Interactions\Interaction;
-use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
 
 /**
@@ -35,7 +34,7 @@ class InteractionCreate extends Event
             if ($userPart = $this->discord->users->get('id', $snowflake)) {
                 $userPart->fill((array) $user);
             } else {
-                $this->discord->users->pushItem($this->factory->part(User::class, (array) $user, true));
+                $this->discord->users->pushItem($this->discord->users->create((array) $user, true));
             }
         }
 
