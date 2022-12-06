@@ -71,7 +71,8 @@ class MessageReactionAdd extends Event
             $message->reactions->pushItem($react);
         }
 
-        if (isset($data->member->user)) {
+        if (isset($data->member) && $guild) {
+            $this->cacheMember($guild->members, $data->member);
             $this->cacheUser($data->member->user);
         }
 

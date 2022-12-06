@@ -62,9 +62,12 @@ class VoiceStateUpdate extends Event
                     break;
                 }
             }
-        }
 
-        $this->cacheUser($data->member->user);
+            if (isset($data->member)) {
+                $this->cacheMember($guild->members, $data->member);
+                $this->cacheUser($data->member->user);
+            }
+        }
 
         return [$statePart, $oldVoiceState];
     }

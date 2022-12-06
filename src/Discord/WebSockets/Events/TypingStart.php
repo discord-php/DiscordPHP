@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\WebSockets\TypingStart as TypingStartPart;
 use Discord\WebSockets\Event;
 
@@ -28,7 +29,12 @@ class TypingStart extends Event
     {
         $typing = $this->factory->part(TypingStartPart::class, (array) $data, true);
 
-        if (isset($data->member->user)) {
+        if (isset($data->member)) {
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                $this->cacheMember($guild->members, $data->member);
+            }
+
             $this->cacheUser($data->member->user);
         }
 
