@@ -50,7 +50,7 @@ class InteractionCreate extends Event
                     $this->cacheMember($members, (array) $member + ['user' => $data->data->resolved->users->$snowflake]);
                 }
 
-                $this->cacheMember($members, $data->member);
+                $this->cacheMember($members, (array) $data->member);
             }
 
             // User caching from member
@@ -99,7 +99,7 @@ class InteractionCreate extends Event
     protected function cacheMember(MemberRepository $members, $memberdata)
     {
         // Do not load members from cache as it may delay interaction codes.
-        if ($member = $members->offsetGet('id', $memberdata->user->id)) {
+        if ($member = $members->offsetGet('id', $memberdata['user']->id)) {
             $member->fill((array) $memberdata);
         } else {
             $members->pushItem($members->create((array) $memberdata, true));

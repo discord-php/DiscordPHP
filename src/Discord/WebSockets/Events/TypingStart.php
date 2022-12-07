@@ -32,7 +32,7 @@ class TypingStart extends Event
         if (isset($data->member)) {
             /** @var ?Guild */
             if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                $this->cacheMember($guild->members, $data->member);
+                $this->cacheMember($guild->members, (array) $data->member);
             }
 
             $this->cacheUser($data->member->user);
