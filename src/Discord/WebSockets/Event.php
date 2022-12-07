@@ -159,9 +159,9 @@ abstract class Event
     /**
      * Cache User repository from Event data.
      *
-     * @param array|object $userdata `$data->user` or `$data->member->user`
+     * @param object $userdata `$data->user` or `$data->member->user`
      */
-    protected function cacheUser($userdata)
+    protected function cacheUser(object $userdata)
     {
         $users = $this->discord->users;
         if ($user = $users->get('id', $userdata->id)) {
@@ -177,7 +177,7 @@ abstract class Event
      * @param MemberRepository $members    `$guild->members`
      * @param array            $memberdata `(array) $data->member`
      */
-    protected function cacheMember(MemberRepository $members, $memberdata)
+    protected function cacheMember(MemberRepository $members, array $memberdata)
     {
         if ($member = $members->get('id', $memberdata['user']->id)) {
             $member->fill($memberdata);
