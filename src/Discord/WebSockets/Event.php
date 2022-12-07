@@ -175,14 +175,14 @@ abstract class Event
      * Cache Member repository from Event data.
      *
      * @param MemberRepository $members    `$guild->members`
-     * @param array            $memberdata `$data->member`
+     * @param array            $memberdata `(array) $data->member`
      */
     protected function cacheMember(MemberRepository $members, $memberdata)
     {
         if ($member = $members->get('id', $memberdata['user']->id)) {
-            $member->fill((array) $memberdata);
+            $member->fill($memberdata);
         } else {
-            $members->pushItem($members->create((array) $memberdata, true));
+            $members->pushItem($members->create($memberdata, true));
         }
     }
 

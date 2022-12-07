@@ -100,9 +100,9 @@ class InteractionCreate extends Event
     {
         // Do not load members from cache as it may delay interaction codes.
         if ($member = $members->offsetGet('id', $memberdata['user']->id)) {
-            $member->fill((array) $memberdata);
+            $member->fill($memberdata);
         } else {
-            $members->pushItem($members->create((array) $memberdata, true));
+            $members->pushItem($members->create($memberdata, true));
         }
     }
 }
