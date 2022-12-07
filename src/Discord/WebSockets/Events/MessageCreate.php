@@ -53,9 +53,6 @@ class MessageCreate extends Event
                 foreach ($guild->channels as $parent) {
                     /** @var ?Thread */
                     if ($thread = yield $parent->threads->cacheGet($data->channel_id)) {
-                        if ($parent->type == Channel::TYPE_GUILD_FORUM) {
-                            $parent->last_message_id = $data->id;
-                        }
                         $thread->message_count++;
                         $thread->total_message_sent++;
                         $channel = $thread;
@@ -70,6 +67,10 @@ class MessageCreate extends Event
             if (($this->discord->options['intents'] & Intents::MESSAGE_CONTENT) || $data->author->id == $this->discord->id || ! (yield $channel->messages->cache->has($data->id))) {
                 $channel->messages->set($data->id, $messagePart);
             }
+        }
+
+        if ($channel) { 
+            $channel->last_message_id = $data->id;
         }
 
         if (isset($data->author) && ! isset($data->webhook_id)) {
