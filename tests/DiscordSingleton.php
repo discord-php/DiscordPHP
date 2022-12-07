@@ -55,7 +55,7 @@ class DiscordSingleton
             'token' => getenv('DISCORD_TOKEN'),
             'loop' => $loop,
             'logger' => $logger,
-            'cacheInterface' => $cache,
+            'cache' => $cache,
         ]);
 
         $e = null;

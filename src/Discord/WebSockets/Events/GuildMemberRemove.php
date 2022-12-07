@@ -41,7 +41,6 @@ class GuildMemberRemove extends Event
         } else {
             /** @var Member */
             $memberPart = $this->factory->part(Member::class, (array) $data);
-            $memberPart->guild_id = $data->guild_id;
         }
 
         $this->cacheUser($data->user);

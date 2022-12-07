@@ -14,6 +14,7 @@ namespace Discord\WebSockets;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
+use Discord\Repository\Guild\MemberRepository;
 use Evenement\EventEmitterTrait;
 
 /**
@@ -158,15 +159,30 @@ abstract class Event
     /**
      * Cache User repository from Event data.
      *
-     * @param object $userdata
+     * @param array|object $userdata `$data->user` or `$data->member->user`
      */
     protected function cacheUser($userdata)
     {
-        // User caching
-        if ($user = $this->discord->users->get('id', $userdata->id)) {
+        $users = $this->discord->users;
+        if ($user = $users->get('id', $userdata->id)) {
             $user->fill((array) $userdata);
         } else {
-            $this->discord->users->pushItem($this->factory->part(\Discord\Parts\User\User::class, (array) $userdata, true));
+            $users->pushItem($users->create((array) $userdata, true));
+        }
+    }
+
+    /**
+     * Cache Member repository from Event data.
+     *
+     * @param MemberRepository $members    `$guild->members`
+     * @param array|object     $memberdata `$data->member`
+     */
+    protected function cacheMember(MemberRepository $members, $memberdata)
+    {
+        if ($member = $members->get('id', $memberdata->user->id)) {
+            $member->fill((array) $memberdata);
+        } else {
+            $members->pushItem($members->create((array) $memberdata, true));
         }
     }
 
