@@ -64,7 +64,7 @@ class VoiceStateUpdate extends Event
             }
 
             if (isset($data->member)) {
-                $this->cacheMember($guild->members, $data->member);
+                $this->cacheMember($guild->members, (array) $data->member);
                 $this->cacheUser($data->member->user);
             }
         }

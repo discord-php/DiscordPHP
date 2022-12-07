@@ -72,7 +72,7 @@ class MessageReactionAdd extends Event
         }
 
         if (isset($data->member) && $guild) {
-            $this->cacheMember($guild->members, $data->member);
+            $this->cacheMember($guild->members, (array) $data->member);
             $this->cacheUser($data->member->user);
         }
 
