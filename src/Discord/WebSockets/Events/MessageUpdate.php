@@ -33,18 +33,16 @@ class MessageUpdate extends Event
         /** @var Message */
         $messagePart = $oldMessagePart = null;
 
-        if (isset($data->guild_id)) {
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Channel */
-                if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
-                    /** @var Channel */
-                    foreach ($guild->channels as $parent) {
-                        /** @var ?Thread */
-                        if ($thread = yield $parent->threads->cacheGet($data->channel_id)) {
-                            $channel = $thread;
-                            break;
-                        }
+        /** @var ?Guild */
+        if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                /** @var Channel */
+                foreach ($guild->channels as $parent) {
+                    /** @var ?Thread */
+                    if ($thread = yield $parent->threads->cacheGet($data->channel_id)) {
+                        $channel = $thread;
+                        break;
                     }
                 }
             }
@@ -75,6 +73,20 @@ class MessageUpdate extends Event
 
         if (isset($channel) && ($oldMessagePart || $this->discord->options['storeMessages'])) {
             $channel->messages->set($data->id, $cacheMessagePart ?? $messagePart);
+        }
+
+        if (isset($data->author) && ! isset($data->webhook_id)) {
+            if (isset($data->member) && $guild) {
+                $this->cacheMember($guild->members, (array) $data->member + ['user' => $data->author]);
+            }
+            $this->cacheUser($data->author);
+        }
+
+        foreach ($data->mentions ?? [] as $user) {
+            if (isset($user->member) && $guild) {
+                $this->cacheMember($guild->members, (array) $user->member + ['user' => $user]);
+            }
+            $this->cacheUser($user);
         }
 
         return [$messagePart, $oldMessagePart];
