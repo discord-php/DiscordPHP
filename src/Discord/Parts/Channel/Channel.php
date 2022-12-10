@@ -140,6 +140,10 @@ class Channel extends Part
     public const SORT_ORDER_LATEST_ACTIVITY = 0;
     public const SORT_ORDER_CREATION_DATE = 1;
 
+    public const FORUM_LAYOUT_DEFAULT = 0;
+    public const FORUM_LAYOUT_LIST = 1;
+    public const FORUM_LAYOUT_GRID = 2;
+    
     /**
      * @inheritDoc
      */
