@@ -12,7 +12,7 @@
         "issues": "https://github.com/discord-php/DiscordPHP/issues",
         "wiki": "https://github.com/discord-php/DiscordPHP/wiki",
         "docs": "https://discord-php.github.io/DiscordPHP/",
-        "chat": "https://discord.gg/dphp",
+        "chat": "https://discord.gg/dphp"
     },
     "require": {
         "php": "^8.0",
