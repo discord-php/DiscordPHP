@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+            <title>DiscordPHP Documentation</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="../">
+    <link rel="icon" href="images/favicon.ico"/>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/base.css">
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/template.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism-okaidia.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
+                <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
+        <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="js/search.js"></script>
+        <script defer src="js/searchIndex.js"></script>
+    </head>
+<body id="top">
+    <header class="phpdocumentor-header phpdocumentor-section">
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">DiscordPHP Documentation</a></h1>
+    <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
+    <label class="phpdocumentor-header__menu-icon" for="menu-button">
+        <i class="fas fa-bars"></i>
+    </label>
+    <section data-search-form class="phpdocumentor-search">
+    <label>
+        <span class="visually-hidden">Search for</span>
+        <svg class="phpdocumentor-search__icon" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="7.5" cy="7.5" r="6.5" stroke="currentColor" stroke-width="2"/>
+            <line x1="12.4892" y1="12.2727" x2="19.1559" y2="18.9393" stroke="currentColor" stroke-width="3"/>
+        </svg>
+        <input type="search" class="phpdocumentor-field phpdocumentor-search__field" placeholder="Loading .." disabled />
+    </label>
+</section>
+
+    <nav class="phpdocumentor-topnav">
+    <ul class="phpdocumentor-topnav__menu">
+        </ul>
+</nav>
+</header>
+
+    <main class="phpdocumentor">
+        <div class="phpdocumentor-section">
+            <input class="phpdocumentor-sidebar__menu-button" type="checkbox" id="sidebar-button" name="sidebar-button" />
+<label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
+    Menu
+</label>
+<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
+                    <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Guide</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/index.html" class="">Guide</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/faq.html" class="">FAQ</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/basics.html" class="">Basics</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/events/index.html" class="">Events</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/events/application_commands.html" class="">Application Commands</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/auto_moderations.html" class="">Auto Moderations</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/channels.html" class="">Channels</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/guilds.html" class="">Guilds</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/invites.html" class="">Invites</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/interactions.html" class="">Interactions</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/messages.html" class="">Messages</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/presences.html" class="">Presences</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/stage_instances.html" class="">Stage Instances</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/voices.html" class="">Voices</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/webhooks.html" class="">Webhooks</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/repositories.html" class="">Repositories</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/parts/index.html" class="">Parts</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/collection.html" class="">Collection</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/permissions.html" class="">Permissions</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/message_builder.html" class="">Message Builder</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/components.html" class="">Message Components</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/interactions.html" class="">Interactions</a>
+</h4>
+
+                        </section>
+                <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="namespaces/discord.html" class="">Discord</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="namespaces/discord-builders.html" class="">Builders</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-commandclient.html" class="">CommandClient</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-exceptions.html" class="">Exceptions</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-factory.html" class="">Factory</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-helpers.html" class="">Helpers</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-parts.html" class="">Parts</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-repository.html" class="">Repository</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-voice.html" class="">Voice</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/discord-websockets.html" class="">WebSockets</a>
+                
+            </li>
+            </ul>
+
+                        </section>
+                <section class="phpdocumentor-sidebar__category">
+            <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/Application.html" class="">Application</a>
+</h4>
+
+                        </section>
+            
+    <section class="phpdocumentor-sidebar__category">
+        <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
+                <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
+        <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
+        <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
+    </section>
+
+    <section class="phpdocumentor-sidebar__category">
+        <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
+        <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
+    </section>
+</aside>
+
+            <div class="phpdocumentor-column -eight phpdocumentor-content">
+                    <ul class="phpdocumentor-breadcrumbs">
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-websockets.html">WebSockets</a></li>
+    </ul>
+
+    <article class="phpdocumentor-element -class">
+        <h2 class="phpdocumentor-content__title">
+    Op
+
+    
+            <div class="phpdocumentor-element__package">
+            in package
+            <ul class="phpdocumentor-breadcrumbs">
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Application.html">Application</a></li>
+                            </ul>
+        </div>
+    
+    
+    </h2>
+
+        <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">19</span>
+
+    </aside>
+
+            <p class="phpdocumentor-summary">Contains constants used in websockets.</p>
+
+
+
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">3.2.1</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+
+
+
+
+
+<h3 id="toc">
+    Table of Contents
+    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+</h3>
+
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_ABNORMAL">CLOSE_ABNORMAL</a>
+    <span>
+        &nbsp;= 1006                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_DISALLOWED_INTENTS">CLOSE_DISALLOWED_INTENTS</a>
+    <span>
+        &nbsp;= 4014                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_INTENTS">CLOSE_INVALID_INTENTS</a>
+    <span>
+        &nbsp;= 4013                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_MESSAGE">CLOSE_INVALID_MESSAGE</a>
+    <span>
+        &nbsp;= 4002                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_OPCODE">CLOSE_INVALID_OPCODE</a>
+    <span>
+        &nbsp;= 4001                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_SEQ">CLOSE_INVALID_SEQ</a>
+    <span>
+        &nbsp;= 4007                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_SESSION">CLOSE_INVALID_SESSION</a>
+    <span>
+        &nbsp;= 4006                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_SHARD">CLOSE_INVALID_SHARD</a>
+    <span>
+        &nbsp;= 4010                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_TOKEN">CLOSE_INVALID_TOKEN</a>
+    <span>
+        &nbsp;= 4004                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_VERSION">CLOSE_INVALID_VERSION</a>
+    <span>
+        &nbsp;= 4012                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_NORMAL">CLOSE_NORMAL</a>
+    <span>
+        &nbsp;= 1000                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_NOT_AUTHENTICATED">CLOSE_NOT_AUTHENTICATED</a>
+    <span>
+        &nbsp;= 4003                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_SESSION_TIMEOUT">CLOSE_SESSION_TIMEOUT</a>
+    <span>
+        &nbsp;= 4009                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_SHARDING_REQUIRED">CLOSE_SHARDING_REQUIRED</a>
+    <span>
+        &nbsp;= 4011                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_TOO_MANY_MSG">CLOSE_TOO_MANY_MSG</a>
+    <span>
+        &nbsp;= 4008                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_UNKNOWN_ERROR">CLOSE_UNKNOWN_ERROR</a>
+    <span>
+        &nbsp;= 4000                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED">CLOSE_VOICE_DISCONNECTED</a>
+    <span>
+        &nbsp;= 4014                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_SERVER_CRASH">CLOSE_VOICE_SERVER_CRASH</a>
+    <span>
+        &nbsp;= 4015                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_SERVER_NOT_FOUND">CLOSE_VOICE_SERVER_NOT_FOUND</a>
+    <span>
+        &nbsp;= 4011                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_UNKNOWN_ENCRYPT">CLOSE_VOICE_UNKNOWN_ENCRYPT</a>
+    <span>
+        &nbsp;= 4016                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_UNKNOWN_PROTO">CLOSE_VOICE_UNKNOWN_PROTO</a>
+    <span>
+        &nbsp;= 4012                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_CONST_ALREADY_AUTHD">CONST_ALREADY_AUTHD</a>
+    <span>
+        &nbsp;= 4005                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_OP_DISPATCH">OP_DISPATCH</a>
+    <span>
+        &nbsp;= 0                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_OP_GUILD_MEMBER_CHUNK">OP_GUILD_MEMBER_CHUNK</a>
+    <span>
+        &nbsp;= 8                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_OP_HEARTBEAT">OP_HEARTBEAT</a>
+    <span>
+        &nbsp;= 1                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_OP_HEARTBEAT_ACK">OP_HEARTBEAT_ACK</a>
+    <span>
+        &nbsp;= 11                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_OP_HELLO">OP_HELLO</a>
+    <span>
+        &nbsp;= 10                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_OP_IDENTIFY">OP_IDENTIFY</a>
+    <span>
+        &nbsp;= 2                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_OP_INVALID_SESSION">OP_INVALID_SESSION</a>
+    <span>
+        &nbsp;= 9                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_OP_PRESENCE_UPDATE">OP_PRESENCE_UPDATE</a>
+    <span>
+        &nbsp;= 3                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_OP_RECONNECT">OP_RECONNECT</a>
+    <span>
+        &nbsp;= 7                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_OP_RESUME">OP_RESUME</a>
+    <span>
+        &nbsp;= 6                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_OP_VOICE_SERVER_PING">OP_VOICE_SERVER_PING</a>
+    <span>
+        &nbsp;= 5                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_OP_VOICE_STATE_UPDATE">OP_VOICE_STATE_UPDATE</a>
+    <span>
+        &nbsp;= 4                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_DESCRIPTION">VOICE_DESCRIPTION</a>
+    <span>
+        &nbsp;= 4                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_HEARTBEAT">VOICE_HEARTBEAT</a>
+    <span>
+        &nbsp;= 3                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_HEARTBEAT_ACK">VOICE_HEARTBEAT_ACK</a>
+    <span>
+        &nbsp;= 6                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_HELLO">VOICE_HELLO</a>
+    <span>
+        &nbsp;= 8                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_IDENTIFY">VOICE_IDENTIFY</a>
+    <span>
+        &nbsp;= 0                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_READY">VOICE_READY</a>
+    <span>
+        &nbsp;= 2                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTO">VOICE_SELECT_PROTO</a>
+    <span>
+        &nbsp;= 1                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_SPEAKING">VOICE_SPEAKING</a>
+    <span>
+        &nbsp;= 5                            </span>
+</dt>
+<dd></dd>
+
+                        <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-WebSockets-Op.html#method_getCriticalCloseCodes">getCriticalCloseCodes()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Returns the critical event codes that we should not reconnect after.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-WebSockets-Op.html#method_getCriticalVoiceCloseCodes">getCriticalVoiceCloseCodes()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Returns the critical event codes for a voice websocket.</dd>
+
+        </dl>
+
+
+
+        
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="classes/Discord-WebSockets-Op.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_ABNORMAL">
+        CLOSE_ABNORMAL
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_ABNORMAL" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">74</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_ABNORMAL</span>
+    = <span class="phpdocumentor-signature__default-value">1006</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_DISALLOWED_INTENTS">
+        CLOSE_DISALLOWED_INTENTS
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_DISALLOWED_INTENTS" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">104</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_DISALLOWED_INTENTS</span>
+    = <span class="phpdocumentor-signature__default-value">4014</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_INVALID_INTENTS">
+        CLOSE_INVALID_INTENTS
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_INTENTS" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">102</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_INVALID_INTENTS</span>
+    = <span class="phpdocumentor-signature__default-value">4013</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_INVALID_MESSAGE">
+        CLOSE_INVALID_MESSAGE
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_MESSAGE" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">80</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_INVALID_MESSAGE</span>
+    = <span class="phpdocumentor-signature__default-value">4002</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_INVALID_OPCODE">
+        CLOSE_INVALID_OPCODE
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_OPCODE" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">78</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_INVALID_OPCODE</span>
+    = <span class="phpdocumentor-signature__default-value">4001</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_INVALID_SEQ">
+        CLOSE_INVALID_SEQ
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_SEQ" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">90</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_INVALID_SEQ</span>
+    = <span class="phpdocumentor-signature__default-value">4007</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_INVALID_SESSION">
+        CLOSE_INVALID_SESSION
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_SESSION" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">88</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_INVALID_SESSION</span>
+    = <span class="phpdocumentor-signature__default-value">4006</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_INVALID_SHARD">
+        CLOSE_INVALID_SHARD
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_SHARD" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">96</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_INVALID_SHARD</span>
+    = <span class="phpdocumentor-signature__default-value">4010</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_INVALID_TOKEN">
+        CLOSE_INVALID_TOKEN
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_TOKEN" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">84</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_INVALID_TOKEN</span>
+    = <span class="phpdocumentor-signature__default-value">4004</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_INVALID_VERSION">
+        CLOSE_INVALID_VERSION
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_VERSION" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">100</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_INVALID_VERSION</span>
+    = <span class="phpdocumentor-signature__default-value">4012</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_NORMAL">
+        CLOSE_NORMAL
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_NORMAL" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">72</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_NORMAL</span>
+    = <span class="phpdocumentor-signature__default-value">1000</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_NOT_AUTHENTICATED">
+        CLOSE_NOT_AUTHENTICATED
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_NOT_AUTHENTICATED" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">82</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_NOT_AUTHENTICATED</span>
+    = <span class="phpdocumentor-signature__default-value">4003</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_SESSION_TIMEOUT">
+        CLOSE_SESSION_TIMEOUT
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_SESSION_TIMEOUT" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">94</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_SESSION_TIMEOUT</span>
+    = <span class="phpdocumentor-signature__default-value">4009</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_SHARDING_REQUIRED">
+        CLOSE_SHARDING_REQUIRED
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_SHARDING_REQUIRED" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">98</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_SHARDING_REQUIRED</span>
+    = <span class="phpdocumentor-signature__default-value">4011</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_TOO_MANY_MSG">
+        CLOSE_TOO_MANY_MSG
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_TOO_MANY_MSG" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">92</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_TOO_MANY_MSG</span>
+    = <span class="phpdocumentor-signature__default-value">4008</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_UNKNOWN_ERROR">
+        CLOSE_UNKNOWN_ERROR
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_UNKNOWN_ERROR" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">76</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_UNKNOWN_ERROR</span>
+    = <span class="phpdocumentor-signature__default-value">4000</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_VOICE_DISCONNECTED">
+        CLOSE_VOICE_DISCONNECTED
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">115</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_VOICE_DISCONNECTED</span>
+    = <span class="phpdocumentor-signature__default-value">4014</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_VOICE_SERVER_CRASH">
+        CLOSE_VOICE_SERVER_CRASH
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_SERVER_CRASH" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">117</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_VOICE_SERVER_CRASH</span>
+    = <span class="phpdocumentor-signature__default-value">4015</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_VOICE_SERVER_NOT_FOUND">
+        CLOSE_VOICE_SERVER_NOT_FOUND
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_SERVER_NOT_FOUND" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">111</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_VOICE_SERVER_NOT_FOUND</span>
+    = <span class="phpdocumentor-signature__default-value">4011</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_VOICE_UNKNOWN_ENCRYPT">
+        CLOSE_VOICE_UNKNOWN_ENCRYPT
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_UNKNOWN_ENCRYPT" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">119</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_VOICE_UNKNOWN_ENCRYPT</span>
+    = <span class="phpdocumentor-signature__default-value">4016</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_VOICE_UNKNOWN_PROTO">
+        CLOSE_VOICE_UNKNOWN_PROTO
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_UNKNOWN_PROTO" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">113</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_VOICE_UNKNOWN_PROTO</span>
+    = <span class="phpdocumentor-signature__default-value">4012</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CONST_ALREADY_AUTHD">
+        CONST_ALREADY_AUTHD
+        <a href="classes/Discord-WebSockets-Op.html#constant_CONST_ALREADY_AUTHD" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">86</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CONST_ALREADY_AUTHD</span>
+    = <span class="phpdocumentor-signature__default-value">4005</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OP_DISPATCH">
+        OP_DISPATCH
+        <a href="classes/Discord-WebSockets-Op.html#constant_OP_DISPATCH" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">22</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OP_DISPATCH</span>
+    = <span class="phpdocumentor-signature__default-value">0</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OP_GUILD_MEMBER_CHUNK">
+        OP_GUILD_MEMBER_CHUNK
+        <a href="classes/Discord-WebSockets-Op.html#constant_OP_GUILD_MEMBER_CHUNK" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">38</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OP_GUILD_MEMBER_CHUNK</span>
+    = <span class="phpdocumentor-signature__default-value">8</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OP_HEARTBEAT">
+        OP_HEARTBEAT
+        <a href="classes/Discord-WebSockets-Op.html#constant_OP_HEARTBEAT" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">24</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OP_HEARTBEAT</span>
+    = <span class="phpdocumentor-signature__default-value">1</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OP_HEARTBEAT_ACK">
+        OP_HEARTBEAT_ACK
+        <a href="classes/Discord-WebSockets-Op.html#constant_OP_HEARTBEAT_ACK" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">44</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OP_HEARTBEAT_ACK</span>
+    = <span class="phpdocumentor-signature__default-value">11</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OP_HELLO">
+        OP_HELLO
+        <a href="classes/Discord-WebSockets-Op.html#constant_OP_HELLO" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">42</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OP_HELLO</span>
+    = <span class="phpdocumentor-signature__default-value">10</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OP_IDENTIFY">
+        OP_IDENTIFY
+        <a href="classes/Discord-WebSockets-Op.html#constant_OP_IDENTIFY" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">26</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OP_IDENTIFY</span>
+    = <span class="phpdocumentor-signature__default-value">2</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OP_INVALID_SESSION">
+        OP_INVALID_SESSION
+        <a href="classes/Discord-WebSockets-Op.html#constant_OP_INVALID_SESSION" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">40</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OP_INVALID_SESSION</span>
+    = <span class="phpdocumentor-signature__default-value">9</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OP_PRESENCE_UPDATE">
+        OP_PRESENCE_UPDATE
+        <a href="classes/Discord-WebSockets-Op.html#constant_OP_PRESENCE_UPDATE" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">28</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OP_PRESENCE_UPDATE</span>
+    = <span class="phpdocumentor-signature__default-value">3</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OP_RECONNECT">
+        OP_RECONNECT
+        <a href="classes/Discord-WebSockets-Op.html#constant_OP_RECONNECT" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">36</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OP_RECONNECT</span>
+    = <span class="phpdocumentor-signature__default-value">7</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OP_RESUME">
+        OP_RESUME
+        <a href="classes/Discord-WebSockets-Op.html#constant_OP_RESUME" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">34</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OP_RESUME</span>
+    = <span class="phpdocumentor-signature__default-value">6</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OP_VOICE_SERVER_PING">
+        OP_VOICE_SERVER_PING
+        <a href="classes/Discord-WebSockets-Op.html#constant_OP_VOICE_SERVER_PING" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">32</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OP_VOICE_SERVER_PING</span>
+    = <span class="phpdocumentor-signature__default-value">5</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_OP_VOICE_STATE_UPDATE">
+        OP_VOICE_STATE_UPDATE
+        <a href="classes/Discord-WebSockets-Op.html#constant_OP_VOICE_STATE_UPDATE" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">30</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">OP_VOICE_STATE_UPDATE</span>
+    = <span class="phpdocumentor-signature__default-value">4</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_VOICE_DESCRIPTION">
+        VOICE_DESCRIPTION
+        <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_DESCRIPTION" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">59</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">VOICE_DESCRIPTION</span>
+    = <span class="phpdocumentor-signature__default-value">4</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_VOICE_HEARTBEAT">
+        VOICE_HEARTBEAT
+        <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_HEARTBEAT" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">57</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">VOICE_HEARTBEAT</span>
+    = <span class="phpdocumentor-signature__default-value">3</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_VOICE_HEARTBEAT_ACK">
+        VOICE_HEARTBEAT_ACK
+        <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_HEARTBEAT_ACK" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">63</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">VOICE_HEARTBEAT_ACK</span>
+    = <span class="phpdocumentor-signature__default-value">6</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_VOICE_HELLO">
+        VOICE_HELLO
+        <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_HELLO" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">65</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">VOICE_HELLO</span>
+    = <span class="phpdocumentor-signature__default-value">8</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_VOICE_IDENTIFY">
+        VOICE_IDENTIFY
+        <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_IDENTIFY" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">51</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">VOICE_IDENTIFY</span>
+    = <span class="phpdocumentor-signature__default-value">0</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_VOICE_READY">
+        VOICE_READY
+        <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_READY" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">55</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">VOICE_READY</span>
+    = <span class="phpdocumentor-signature__default-value">2</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_VOICE_SELECT_PROTO">
+        VOICE_SELECT_PROTO
+        <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTO" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">53</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">VOICE_SELECT_PROTO</span>
+    = <span class="phpdocumentor-signature__default-value">1</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_VOICE_SPEAKING">
+        VOICE_SPEAKING
+        <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_SPEAKING" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">61</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">VOICE_SPEAKING</span>
+    = <span class="phpdocumentor-signature__default-value">5</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+            </section>
+
+        
+
+            <section class="phpdocumentor-methods">
+        <h3 class="phpdocumentor-elements__header" id="methods">
+            Methods
+            <a href="classes/Discord-WebSockets-Op.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+        </h3>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getCriticalCloseCodes">
+        getCriticalCloseCodes()
+        <a href="classes/Discord-WebSockets-Op.html#method_getCriticalCloseCodes" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">126</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the critical event codes that we should not reconnect after.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getCriticalCloseCodes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getCriticalVoiceCloseCodes">
+        getCriticalVoiceCloseCodes()
+        <a href="classes/Discord-WebSockets-Op.html#method_getCriticalVoiceCloseCodes" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">143</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the critical event codes for a voice websocket.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getCriticalVoiceCloseCodes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            &mdash;
+        
+    
+</article>
+            </section>
+
+        
+    <script type="text/javascript">
+        function loadExternalCodeSnippets(line) {
+            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
+                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                var language = 'php';
+
+                var code = document.createElement('code');
+                code.className = 'language-' + language;
+
+                pre.textContent = '';
+
+                pre.setAttribute('data-line', line)
+                code.textContent = 'Loading…';
+
+                pre.appendChild(code);
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('GET', src, true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+
+                        if (xhr.status < 400 && xhr.responseText) {
+                            code.textContent = xhr.responseText;
+
+                            Prism.highlightElement(code);
+                        }
+                        else if (xhr.status >= 400) {
+                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                        }
+                        else {
+                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
+                        }
+                    }
+                };
+
+                xhr.send(null);
+            });
+        }
+
+        var modals = document.querySelectorAll("[data-modal]");
+
+        modals.forEach(function (trigger) {
+            trigger.addEventListener("click", function (event) {
+                //event.preventDefault();
+                const modal = document.getElementById(trigger.dataset.modal);
+                modal.classList.add("phpdocumentor-modal__open");
+                loadExternalCodeSnippets(trigger.dataset.line)
+                const exits = modal.querySelectorAll("[data-exit-button]");
+                exits.forEach(function (exit) {
+                    exit.addEventListener("click", function (event) {
+                        event.preventDefault();
+                        modal.classList.remove("phpdocumentor-modal__open");
+                    });
+                });
+            });
+        });
+    </script>
+
+    </article>
+                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+    <section class="phpdocumentor-search-results__dialog">
+        <header class="phpdocumentor-search-results__header">
+            <h2 class="phpdocumentor-search-results__title">Search results</h2>
+            <button class="phpdocumentor-search-results__close"><i class="fas fa-times"></i></button>
+        </header>
+        <section class="phpdocumentor-search-results__body">
+            <ul class="phpdocumentor-search-results__entries"></ul>
+        </section>
+    </section>
+</section>
+            </div>
+        </div>
+        <a href="classes/Discord-WebSockets-Op.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+
+    </main>
+
+    <script>
+        cssVars({});
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
+</body>
+</html>
