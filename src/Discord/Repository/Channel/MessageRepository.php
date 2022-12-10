@@ -11,6 +11,7 @@
 
 namespace Discord\Repository\Channel;
 
+use Discord\Discord;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Message;
 use Discord\Repository\AbstractRepository;
@@ -44,4 +45,13 @@ class MessageRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $class = Message::class;
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct(Discord $discord, array $vars = [])
+    {
+        unset($vars['thread_id']); // For thread
+        parent::__construct($discord, $vars);
+    }
 }
