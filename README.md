@@ -17,7 +17,7 @@ For testing and stability it would be greatly appreciated if you were able to ad
 1. Can I run DiscordPHP on a webserver (e.g. Apache, nginx)?
     - No, DiscordPHP will only run in CLI. If you want to have an interface for your bot you can integrate [react/http](https://github.com/ReactPHP/http) with your bot and run it through CLI.
 2. PHP is running out of memory?
-	- Try increase your memory limit using `ini_set('memory_limit', '-1');`.
+	- Try unlimit your PHP memory using `ini_set('memory_limit', '-1');`.
 
 ## Getting Started
 
@@ -25,22 +25,21 @@ Before you start using this Library, you **need** to know how PHP works, you nee
 
 ### Requirements
 
-- [PHP 8.0](https://php.net) or higher
-	- x86 (32-bit) PHP requires [`ext-gmp` extension](https://www.php.net/manual/en/book.gmp.php) enabled.
-- Composer
-- `ext-json`
-- `ext-zlib`
+- [PHP 8.0](https://php.net) or higher (latest version recommended)
+	- x86 (32-bit) PHP requires [`ext-gmp`](https://www.php.net/manual/en/book.gmp.php) enabled.
+- [`ext-json`](https://www.php.net/manual/en/book.json.php)
+- [`ext-zlib`](https://www.php.net/manual/en/book.zlib.php)
 
 #### Recommended Extensions
 
 - One of `ext-uv` (recommended), `ext-libev` or `ext-event` for a faster, and more performant event loop.
-- `ext-mbstring` if handling non-latin characters.
+- [`ext-mbstring`](https://www.php.net/manual/en/book.mbstring.php) if handling non-latin characters.
 
 #### Voice Requirements
 
-- 64-bit OS.
-- `ext-sodium`
-- FFmpeg
+- 64-bit PHP
+- [`ext-sodium`](https://www.php.net/manual/en/book.sodium.php)
+- [FFmpeg](https://ffmpeg.org/)
 
 ### Windows and SSL
 
@@ -84,7 +83,8 @@ $discord->on('ready', function (Discord $discord) {
 
     // Listen for messages.
     $discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
-        echo "{$message->author->username}: {$message->content}", PHP_EOL; // Note: MESSAGE_CONTENT intent must be enabled to see the content if the bot is not mentioned/DMed.
+        echo "{$message->author->username}: {$message->content}", PHP_EOL;
+        // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
     });
 });
 
@@ -95,7 +95,7 @@ See [examples folder](examples) for more.
 
 ## Documentation
 
-Documentation can be found [here](//discord-php.github.io/DiscordPHP/guide). Community contributed tutorials can be found on the [wiki](//github.com/discord-php/DiscordPHP/wiki).
+Documentation for the latest version can be found [here](//discord-php.github.io/DiscordPHP/guide). Community contributed tutorials can be found on the [wiki](//github.com/discord-php/DiscordPHP/wiki).
 
 ## Contributing
 
