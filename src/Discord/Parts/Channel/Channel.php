@@ -138,7 +138,7 @@ class Channel extends Part
     public const FLAG_REQUIRE_TAG = (1 << 4);
 
     public const SORT_ORDER_LATEST_ACTIVITY = 0;
-    public const SORT_ORDER_CREATION_DATE = 0;
+    public const SORT_ORDER_CREATION_DATE = 1;
 
     /**
      * @inheritDoc
