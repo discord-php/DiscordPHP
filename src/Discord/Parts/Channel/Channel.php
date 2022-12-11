@@ -143,7 +143,7 @@ class Channel extends Part
     public const FORUM_LAYOUT_DEFAULT = 0;
     public const FORUM_LAYOUT_LIST = 1;
     public const FORUM_LAYOUT_GRID = 2;
-    
+
     /**
      * @inheritDoc
      */

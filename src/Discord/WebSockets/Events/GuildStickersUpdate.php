@@ -49,7 +49,7 @@ class GuildStickersUpdate extends Event
             $stickerParts->pushItem($this->factory->part(Sticker::class, (array) $sticker, true));
         }
 
-        if ($guild) {
+        if (isset($guild)) {
             yield $guild->stickers->cache->setMultiple($stickerParts->toArray());
         }
 

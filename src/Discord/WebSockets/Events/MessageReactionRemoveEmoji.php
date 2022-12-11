@@ -51,7 +51,7 @@ class MessageReactionRemoveEmoji extends Event
         $reaction = new MessageReaction($this->discord, (array) $data, true);
 
         /** @var ?Message */
-        if ($channel && $message = yield $channel->messages->cacheGet($data->message_id)) {
+        if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
             yield $message->reactions->cache->delete($reaction->reaction_id);
         }
 

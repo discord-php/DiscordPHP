@@ -52,7 +52,7 @@ class MessageDelete extends Event
                     }
                 }
 
-                if ($channel) {
+                if (isset($channel)) {
                     /** @var ?Message */
                     $messagePart = yield $channel->messages->cachePull($data->id);
                     if ($channel instanceof Thread) {

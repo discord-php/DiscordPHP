@@ -51,7 +51,7 @@ class ApplicationCommandPermissionsUpdate extends Event
             $commandPermissionsPart = $this->factory->part(CommandPermissions::class, (array) $data, true);
         }
 
-        if ($guild && $commandPermissionsPart) {
+        if (isset($guild) && $commandPermissionsPart) {
             // Permission set / updated
             $guild->command_permissions->set($data->id, $commandPermissionsPart);
         }
