@@ -69,7 +69,7 @@ class MessageCreate extends Event
             }
         }
 
-        if ($channel) { 
+        if (isset($channel)) { 
             $channel->last_message_id = $data->id;
         }
 

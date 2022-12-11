@@ -50,7 +50,7 @@ class GuildEmojisUpdate extends Event
             $emojiParts->pushItem($this->factory->part(Emoji::class, (array) $emoji, true));
         }
 
-        if ($guild) {
+        if (isset($guild)) {
             yield $guild->emojis->cache->setMultiple($emojiParts->toArray());
         }
 
