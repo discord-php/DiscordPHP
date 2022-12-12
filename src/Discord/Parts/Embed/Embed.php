@@ -48,7 +48,7 @@ class Embed extends Part
     public const TYPE_LINK = 'link';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'title',

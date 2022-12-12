@@ -37,7 +37,7 @@ use Discord\Parts\User\User;
 class Emoji extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -134,7 +134,7 @@ class Emoji extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/emoji#modify-guild-emoji-json-params
      */
@@ -152,7 +152,7 @@ class Emoji extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

@@ -36,7 +36,7 @@ use function React\Promise\resolve;
 class ThreadRepository extends AbstractRepository
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_THREADS_ACTIVE,
@@ -47,12 +47,12 @@ class ThreadRepository extends AbstractRepository
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $class = Thread::class;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function cacheFreshen($response): ExtendedPromiseInterface
     {

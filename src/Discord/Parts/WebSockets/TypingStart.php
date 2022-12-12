@@ -38,7 +38,7 @@ use Discord\Parts\User\User;
 class TypingStart extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'channel_id',

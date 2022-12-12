@@ -111,7 +111,7 @@ class CommandBuilder implements JsonSerializable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function jsonSerialize(): array
     {

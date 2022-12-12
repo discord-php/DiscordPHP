@@ -68,7 +68,7 @@ use function React\Promise\reject;
 class Member extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'user',
@@ -749,7 +749,7 @@ class Member extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-member-json-params
      */
@@ -761,7 +761,7 @@ class Member extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

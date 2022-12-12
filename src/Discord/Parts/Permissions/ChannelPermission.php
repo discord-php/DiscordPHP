@@ -12,7 +12,7 @@
 namespace Discord\Parts\Permissions;
 
 /**
- * @inheritDoc
+ * {@inheritDoc}
  *
  * @since 2.1.3
  *
@@ -53,7 +53,7 @@ namespace Discord\Parts\Permissions;
 class ChannelPermission extends Permission
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getPermissions(): array
     {

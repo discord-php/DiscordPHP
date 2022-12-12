@@ -41,7 +41,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class GuildTemplate extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'code',
@@ -179,7 +179,7 @@ class GuildTemplate extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild-template#create-guild-template-json-params
      */
@@ -192,7 +192,7 @@ class GuildTemplate extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild-template#modify-guild-template-json-params
      */
@@ -210,7 +210,7 @@ class GuildTemplate extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

@@ -44,7 +44,7 @@ use Discord\Parts\User\User;
 class PresenceUpdate extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'user',
@@ -55,7 +55,7 @@ class PresenceUpdate extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $visible = [
         'game',

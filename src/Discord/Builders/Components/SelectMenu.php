@@ -339,7 +339,7 @@ abstract class SelectMenu extends Component
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function jsonSerialize(): array
     {

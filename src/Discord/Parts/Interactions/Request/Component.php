@@ -44,7 +44,7 @@ use Discord\Parts\Part;
 class Component extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'type',
@@ -100,7 +100,7 @@ class Component extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

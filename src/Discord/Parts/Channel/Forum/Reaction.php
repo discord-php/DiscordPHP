@@ -26,7 +26,7 @@ use Discord\Parts\Part;
 class Reaction extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'emoji_id',
