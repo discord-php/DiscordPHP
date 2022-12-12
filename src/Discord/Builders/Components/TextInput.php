@@ -171,9 +171,8 @@ class TextInput extends Component
 
     /**
      * Sets the minimum input length for a text input.
-     * Minimum 0 and maximum 4000. Null to set as default.
      *
-     * @param int|null $min_length
+     * @param int|null $min_length Minimum `0` and maximum `4000`. `null` to set as default.
      *
      * @throws \LengthException
      *
@@ -192,9 +191,8 @@ class TextInput extends Component
 
     /**
      * Sets the maximum input length for a text input.
-     * Minimum 1 and maximum 4000. Null to set as default.
      *
-     * @param int|null $max_length
+     * @param int|null $max_length Minimum `1` and maximum `4000`. `null` to set as default.
      *
      * @throws \LengthException
      *
@@ -213,9 +211,8 @@ class TextInput extends Component
 
     /**
      * Sets the placeholder string to display if text input is empty.
-     * Maximum 100 characters. Null to clear placeholder.
      *
-     * @param string|null $placeholder
+     * @param string|null $placeholder Maximum 100 characters. `null` to clear placeholder.
      *
      * @throws \LengthException
      *

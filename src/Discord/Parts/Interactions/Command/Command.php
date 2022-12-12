@@ -98,7 +98,7 @@ class Command extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return Guild|null The guild attribute. Null for global command.
+     * @return Guild|null The guild attribute. `null` for global command.
      */
     protected function getGuildAttribute(): ?Guild
     {

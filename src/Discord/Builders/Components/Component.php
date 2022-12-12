@@ -14,7 +14,8 @@ namespace Discord\Builders\Components;
 use JsonSerializable;
 
 /**
- * Components are a new field on the message object, so you can use them whether you're sending messages or responding to a slash command or other interaction.
+ * Components are a new field on the message object, so you can use them whether
+ * you're sending messages or responding to a slash command or other interaction.
  *
  * @link https://discord.com/developers/docs/interactions/message-components#what-is-a-component
  *

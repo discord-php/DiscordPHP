@@ -487,7 +487,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @param string $key   The attributes key.
      * @param mixed  $value The attributes value.
      *
-     * @see Part::setAttribute() This function forwards onto setAttribute.
+     * @see self::setAttribute() This function forwards onto setAttribute.
      */
     public function __set(string $key, $value): void
     {

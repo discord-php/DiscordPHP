@@ -21,7 +21,8 @@ use function Discord\poly_strlen;
 
 /**
  * Buttons are interactive components that render in messages.
- * They can be clicked by users, and send an interaction to your app when clicked.
+ * They can be clicked by users, and send an interaction to your app when
+ * clicked.
  *
  * @link https://discord.com/developers/docs/interactions/message-components#buttons
  *
@@ -186,9 +187,9 @@ class Button extends Component
     }
 
     /**
-     * Sets the emoji of the button. Null to clear.
+     * Sets the emoji of the button.
      *
-     * @param Emoji|string|null $emoji Emoji to set.
+     * @param Emoji|string|null $emoji Emoji to set. `null` to clear.
      *
      * @return $this
      */

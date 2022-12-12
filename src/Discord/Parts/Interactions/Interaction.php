@@ -117,9 +117,9 @@ class Interaction extends Part
     }
 
     /**
-     * Returns the guild the interaction was invoked from. Null when invoked via DM.
+     * Returns the guild the interaction was invoked from.
      *
-     * @return Guild|null
+     * @return Guild|null `null` when invoked via DM.
      */
     protected function getGuildAttribute(): ?Guild
     {
@@ -149,9 +149,9 @@ class Interaction extends Part
     }
 
     /**
-     * Returns the member who invoked the interaction. Null when invoked via DM.
+     * Returns the member who invoked the interaction.
      *
-     * @return Member|null
+     * @return Member|null `null` when invoked via DM.
      */
     protected function getMemberAttribute(): ?Member
     {

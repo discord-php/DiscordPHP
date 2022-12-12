@@ -467,7 +467,7 @@ class Message extends Part
     /**
      * Returns the mention_roles attribute.
      *
-     * @return Collection<?Role> The roles that were mentioned. Null role only contains the ID in the collection.
+     * @return Collection<?Role> The roles that were mentioned. null role only contains the ID in the collection.
      */
     protected function getMentionRolesAttribute(): Collection
     {

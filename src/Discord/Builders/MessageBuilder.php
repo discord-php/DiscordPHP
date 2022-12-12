@@ -451,7 +451,7 @@ class MessageBuilder implements JsonSerializable
      * asynchronously and use the `addFileFromContent` function for tasks like these.
      *
      * @param string      $filepath Path to the file to send.
-     * @param string|null $filename Name to send the file as. Null for the base name of `$filepath`.
+     * @param string|null $filename Name to send the file as. `null` for the base name of `$filepath`.
      *
      * @return $this
      */

@@ -14,7 +14,8 @@ namespace Discord\Helpers;
 /**
  * Cache configuration class. To be used with Discord `cache` Options.
  *
- * @see Discord\Discord
+ * @see \Discord\Discord
+ * @see CacheWrapper
  *
  * @since 10.0.0
  *
