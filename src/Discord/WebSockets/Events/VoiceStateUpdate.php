@@ -44,13 +44,15 @@ class VoiceStateUpdate extends Event
                 }
 
                 /** @var ?VoiceStateUpdatePart */
-                if ($oldVoiceStatePart = yield $channel->members->cacheGet($data->user_id)) {
-                    // Move
-                    $statePart = $oldVoiceStatePart;
+                if ($cachedVoiceState = yield $channel->members->cacheGet($data->user_id)) {
                     // Copy
-                    $oldVoiceState = clone $oldVoiceStatePart;
-                    // Update
-                    $statePart->fill((array) $data);
+                    $oldVoiceState = clone $cachedVoiceState;
+                    if ($cachedVoiceState->channel_id == $data->channel_id) {
+                        // Move
+                        $statePart = $cachedVoiceState;
+                        // Update
+                        $statePart->fill((array) $data);
+                    }
                 }
 
                 if ($channel->id == $data->channel_id) {
