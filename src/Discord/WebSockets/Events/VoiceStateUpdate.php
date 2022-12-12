@@ -28,10 +28,15 @@ class VoiceStateUpdate extends Event
      */
     public function handle($data)
     {
-        $statePart = $oldVoiceState = null;
+        $oldVoiceState = null;
+        /** @var VoiceStateUpdatePart */
+        $statePart = $this->factory->part(VoiceStateUpdatePart::class, (array) $data, true);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            // Preload target new voice state channel
+            yield $guild->channels->cacheGet($data->channel_id);
+
             /** @var ?Channel */
             foreach ($guild->channels as $channel) {
                 if (! $channel->isVoiceBased()) {
@@ -39,27 +44,21 @@ class VoiceStateUpdate extends Event
                 }
 
                 /** @var ?VoiceStateUpdatePart */
-                if ($oldVoiceState = yield $channel->members->cacheGet($data->user_id)) {
-                    // Swap
-                    $statePart = $oldVoiceState;
-                    $oldVoiceState = clone $oldVoiceState;
-
+                if ($oldVoiceStatePart = yield $channel->members->cacheGet($data->user_id)) {
+                    // Move
+                    $statePart = $oldVoiceStatePart;
+                    // Copy
+                    $oldVoiceState = clone $oldVoiceStatePart;
+                    // Update
                     $statePart->fill((array) $data);
                 }
 
-                if ($statePart === null) {
-                    /** @var VoiceStateUpdatePart */
-                    $statePart = $this->factory->part(VoiceStateUpdatePart::class, (array) $data, true);
-                }
-
-                if (! isset($data->channel_id)) {
-                    // Remove old member states
+                if ($channel->id == $data->channel_id) {
+                    // Add/update this member to the voice channel
+                    yield $channel->members->cache->set($data->user_id, $statePart);
+                } else {
+                    // Remove each voice channels containing this member
                     yield $channel->members->cache->delete($data->user_id);
-                    break;
-                } elseif ($channel->id == $data->channel_id) {
-                    // Add member state to new channel
-                    $channel->members->set($data->user_id, $statePart);
-                    break;
                 }
             }
 
