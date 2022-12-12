@@ -1072,8 +1072,9 @@ class Channel extends Part
     /**
      * Sends a message to the channel.
      *
-     * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
-     * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
+     * Takes a `MessageBuilder` or content of the message for the first
+     * parameter. If the first parameter is an instance of `MessageBuilder`, the
+     * rest of the arguments are disregarded.
      *
      * @link https://discord.com/developers/docs/resources/channel#create-message
      *

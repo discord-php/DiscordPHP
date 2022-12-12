@@ -15,7 +15,8 @@ use Discord\Parts\Part;
 
 /**
  * Represents an object of options for different audit log action types.
- * Not all options will be present. See the Discord developer docs for more information.
+ * Not all options will be present. See the Discord developer docs for more
+ * information.
  *
  * @link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info
  *

@@ -19,6 +19,8 @@ use Discord\Parts\Guild\Guild;
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#voice-state-update
  *
+ * @see \Discord\Parts\WebSockets\VoiceStateUpdate
+ *
  * @since 2.1.3
  */
 class VoiceStateUpdate extends Event

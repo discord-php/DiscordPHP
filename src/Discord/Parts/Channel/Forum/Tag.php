@@ -14,7 +14,8 @@ namespace Discord\Parts\Channel\Forum;
 use Discord\Parts\Part;
 
 /**
- * An object that represents a tag that is able to be applied to a thread in a `GUILD_FORUM` channel.
+ * An object that represents a tag that is able to be applied to a thread in a
+ * `GUILD_FORUM` channel.
  *
  * @link https://discord.com/developers/docs/resources/channel#forum-tag-object
  *

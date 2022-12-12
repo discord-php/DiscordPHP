@@ -18,6 +18,8 @@ use Discord\WebSockets\Event;
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#typing-start
  *
+ * @see \Discord\Parts\WebSockets\TypingStart
+ *
  * @since 2.1.3
  */
 class TypingStart extends Event

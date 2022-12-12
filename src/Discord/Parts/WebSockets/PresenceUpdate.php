@@ -20,8 +20,9 @@ use Discord\Parts\User\Activity;
 use Discord\Parts\User\User;
 
 /**
- * A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on the WebSocket. It contains
- * information about the users presence such as their status (online/away) and their current game.
+ * A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on
+ * the WebSocket. It contains information about the users presence such as their
+ * status (online/away) and their current game.
  *
  * @since 2.1.3
  *

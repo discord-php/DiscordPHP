@@ -470,7 +470,8 @@ class Embed extends Part
     }
 
     /**
-     * Checks to see if adding a property has put us over Discord's 6000-char overall limit.
+     * Checks to see if adding a property has put us over Discord's 6000
+     * characters overall limit.
      *
      * @param int $addition
      *

@@ -15,7 +15,8 @@ use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
 
 /**
- * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
+ * A role defines permissions for the guild. Members can be added to the role.
+ * The role belongs to a guild.
  *
  * @link https://discord.com/developers/docs/topics/permissions#role-object
  *

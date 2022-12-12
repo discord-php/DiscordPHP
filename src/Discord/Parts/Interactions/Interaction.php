@@ -243,8 +243,8 @@ class Interaction extends Part
     }
 
     /**
-     * Acknowledges an interaction, creating a placeholder response message which can be edited later
-     * through the `updateOriginalResponse` function.
+     * Acknowledges an interaction, creating a placeholder response message
+     * which can be edited later through the `updateOriginalResponse` function.
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
@@ -427,8 +427,8 @@ class Interaction extends Part
     /**
      * Responds to the interaction with a payload.
      *
-     * This is a seperate function so that it can be overloaded when responding via
-     * webhook.
+     * This is a seperate function so that it can be overloaded when responding
+     * via webhook.
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response
      *

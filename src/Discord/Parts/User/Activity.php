@@ -41,12 +41,23 @@ use Discord\Parts\Part;
  */
 class Activity extends Part
 {
-    public const TYPE_GAME = 0; // Playing {$this->name}
-    public const TYPE_STREAMING = 1; // Streaming {$this->details}
-    public const TYPE_LISTENING = 2; // Listening to {$this->name}
-    public const TYPE_WATCHING = 3; // Watching {$this->name}
-    public const TYPE_CUSTOM = 4; // {$this->emoji} {$this->name}
-    public const TYPE_COMPETING = 5; // Competing in {$this->name}
+    /** Playing {name} */
+    public const TYPE_GAME = 0;
+
+    /** Streaming {details} */
+    public const TYPE_STREAMING = 1;
+
+    /** Listening to {name} */
+    public const TYPE_LISTENING = 2;
+
+    /** Watching {name} */
+    public const TYPE_WATCHING = 3;
+
+    /** {emoji} {name} */
+    public const TYPE_CUSTOM = 4;
+
+    /** Competing in {name} */
+    public const TYPE_COMPETING = 5;
 
     /** @deprecated 10.0.0 Use `Activity::TYPE_GAME` */
     public const TYPE_PLAYING = self::TYPE_GAME;
@@ -125,7 +136,7 @@ class Activity extends Part
     public function __toString(): string
     {
         switch ($this->type) {
-            case self::TYPE_PLAYING:
+            case self::TYPE_GAME:
                 return 'Playing '.$this->name;
             case self::TYPE_STREAMING:
                 return 'Streaming '.$this->details;

@@ -19,7 +19,8 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * A Guild Template is a code that when used, creates a guild based on a snapshot of an existing guild.
+ * A Guild Template is a code that when used, creates a guild based on a
+ * snapshot of an existing guild.
  *
  * @link https://discord.com/developers/docs/resources/guild-template
  *
@@ -120,7 +121,8 @@ class GuildTemplate extends Part
     }
 
     /**
-     * Creates a guild from this template. Can be used only by bots in less than 10 guilds.
+     * Creates a guild from this template. Can be used only by bots in less than
+     * 10 guilds.
      *
      * @link https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template
      *

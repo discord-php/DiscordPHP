@@ -22,7 +22,8 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
+ * Webhooks are a low-effort way to post messages to channels in Discord. They
+ * do not require a bot user or authentication to use.
  *
  * @link https://discord.com/developers/docs/resources/webhook#webhook-resource
  *

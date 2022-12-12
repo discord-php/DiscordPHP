@@ -810,7 +810,7 @@ class Message extends Part
     }
 
     /**
-     * Crossposts the message to any following channels (publish announcement message).
+     * Crossposts the message to any following channels (publish announcement).
      *
      * @link https://discord.com/developers/docs/resources/channel#crosspost-message
      *

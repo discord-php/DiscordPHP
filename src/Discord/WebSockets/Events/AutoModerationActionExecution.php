@@ -17,6 +17,8 @@ use Discord\Parts\WebSockets\AutoModerationActionExecution as ActionExecution;
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution
  *
+ * @see \Discord\Parts\WebSockets\AutoModerationActionExecution
+ *
  * @since 7.1.0
  */
 class AutoModerationActionExecution extends Event

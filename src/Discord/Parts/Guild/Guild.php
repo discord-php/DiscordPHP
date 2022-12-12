@@ -49,7 +49,8 @@ use function React\Promise\reject;
 use function React\Promise\resolve;
 
 /**
- * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
+ * A Guild is Discord's equivalent of a server. It contains all the Members,
+ * Channels, Roles, Bans etc.
  *
  * @link https://discord.com/developers/docs/resources/guild
  *
@@ -921,8 +922,7 @@ class Guild extends Part
     }
 
     /**
-     * Transfers ownership of the guild to
-     * another member.
+     * Transfers ownership of the guild to another member.
      *
      * @param Member|int  $member The member to transfer ownership to.
      * @param string|null $reason Reason for Audit Log.
@@ -1083,7 +1083,8 @@ class Guild extends Part
     }
 
     /**
-     * Returns a list of guild member objects whose username or nickname starts with a provided string.
+     * Returns a list of guild member objects whose username or nickname starts
+     * with a provided string.
      *
      * @link https://discord.com/developers/docs/resources/guild#search-guild-members
      *
@@ -1181,7 +1182,8 @@ class Guild extends Part
 
     /**
      * Begin a prune members operation.
-     * For large guilds it's recommended to set the compute_prune_count option to false, forcing 'pruned' to null.
+     * For large guilds it's recommended to set the `compute_prune_count` option
+     * to `false`, forcing 'pruned' to null.
      *
      * @link https://discord.com/developers/docs/resources/guild#begin-guild-prune
      *
@@ -1354,7 +1356,8 @@ class Guild extends Part
     }
 
     /**
-     * Modify a guild widget settings object for the guild. All attributes may be passed in with JSON and modified. Requires the MANAGE_GUILD permission.
+     * Modify a guild widget settings object for the guild. All attributes may
+     * be passed in with JSON and modified. Requires the MANAGE_GUILD permission.
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-widget
      *

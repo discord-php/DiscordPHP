@@ -12,7 +12,7 @@
 namespace Discord\Parts\Permissions;
 
 /**
- * {@inheritDoc}
+ * Represents a set of permissions for a given channel overwrite.
  *
  * @since 2.1.3
  *

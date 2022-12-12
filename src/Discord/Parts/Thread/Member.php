@@ -18,7 +18,8 @@ use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
- * Represents a member that belongs to a thread. Not the same as a user nor a guild member.
+ * Represents a member that belongs to a thread. Not the same as a user nor a
+ * guild member.
  *
  * @link https://discord.com/developers/docs/resources/channel#thread-member-object
  *
