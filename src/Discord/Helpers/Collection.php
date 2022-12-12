@@ -280,9 +280,8 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     }
 
     /**
-     * Runs a filter callback over the collection and
-     * returns a new collection based on the response
-     * of the callback.
+     * Runs a filter callback over the collection and returns a new collection
+     * based on the response of the callback.
      *
      * @param callable $callback
      *
@@ -302,15 +301,12 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     }
 
     /**
-     * Runs a filter callback over the collection and
-     * returns the first item where the callback returns
-     * `true` when given the item.
+     * Runs a filter callback over the collection and returns the first item
+     * where the callback returns `true` when given the item.
      *
-     * Returns `null` if no items returns `true` when called in
-     * the callback.
+     * @param callable $callback
      *
-     * @param  callable $callback
-     * @return mixed
+     * @return mixed `null` if no items returns `true` when called in the `$callback`.
      */
     public function find(callable $callback)
     {

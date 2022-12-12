@@ -16,7 +16,7 @@ use Discord\Parts\Embed\Embed;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Provides an easy way to have triggerable commands.
+ * Provides an easy way to have triggerable message based commands.
  *
  * @since 4.0.0
  */
@@ -209,9 +209,9 @@ class DiscordCommandClient extends Discord
     }
 
     /**
-     * Checks for a prefix in the message content, and returns the content
-     * of the message minus the prefix if a prefix was detected. If no prefix
-     * is detected, null is returned.
+     * Checks for a prefix in the message content, and returns the content of
+     * the message minus the prefix if a prefix was detected. If no prefix is
+     * detected, null is returned.
      *
      * @param string $content
      *

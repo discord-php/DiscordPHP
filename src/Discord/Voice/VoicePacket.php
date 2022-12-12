@@ -14,8 +14,8 @@ namespace Discord\Voice;
 /**
  * A voice packet received from Discord.
  *
- * Huge thanks to Austin and Michael from JDA for the constants and audio packets.
- * Check out their repo:
+ * Huge thanks to Austin and Michael from JDA for the constants and audio
+ * packets. Check out their repo:
  * https://github.com/DV8FromTheWorld/JDA
  *
  * @since 3.2.0

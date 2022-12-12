@@ -20,7 +20,8 @@ use JsonSerializable;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
- * This class is the base of all objects that are returned. All "Parts" extend off this base class.
+ * This class is the base of all objects that are returned. All "Parts" extend
+ * off this base class.
  *
  * @since 2.0.0
  */
@@ -133,7 +134,8 @@ abstract class Part implements ArrayAccess, JsonSerializable
     }
 
     /**
-     * Whether the part is considered partial i.e. missing information which can be fetched from Discord.
+     * Whether the part is considered partial i.e. missing information which can
+     * be fetched from Discord.
      *
      * @return bool
      */
@@ -411,9 +413,10 @@ abstract class Part implements ArrayAccess, JsonSerializable
     /**
      * Converts a string to studlyCase.
      *
-     * This is a port of updated laravel's implementation, a non-regex with static cache.
-     * The Discord\studly() is kept due to unintended bug and we do not want to introduce BC by replacing it.
-     * This method is private static as we may move it outside this class in future.
+     * This is a port of updated Laravel's implementation, a non-regex with
+     * static cache. The Discord\studly() is kept due to unintended bug and we
+     * do not want to introduce BC by replacing it. This method is private
+     * static as we may move it outside this class in future.
      *
      * @param string $string The string to convert.
      *

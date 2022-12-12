@@ -16,9 +16,10 @@ use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Request\Option;
 
 /**
- * RegisteredCommand represents a command that has been registered
- * with the Discord servers and has a handler to handle when the
- * command is triggered.
+ * RegisteredCommand represents a command that has been registered with the
+ * Discord servers and has a handler to handle when the command is triggered.
+ *
+ * https://discord.com/developers/docs/interactions/application-commands
  *
  * @since 7.0.0
  *
@@ -62,9 +63,8 @@ class RegisteredCommand
     private $subCommands;
 
     /**
-     * RegisteredCommand represents a command that has been registered
-     * with the Discord servers and has a handler to handle when the
-     * command is triggered.
+     * RegisteredCommand represents a command that has been registered with the
+     * Discord servers and has a handler to handle when the command is triggered.
      *
      * @param Discord  $discord
      * @param string   $name
@@ -79,8 +79,8 @@ class RegisteredCommand
     }
 
     /**
-     * Executes the command. Will search for a sub-command if given,
-     * otherwise executes the callback, if given.
+     * Executes the command. Will search for a sub-command if given, otherwise
+     * executes the callback, if given.
      *
      * @param array       $options
      * @param Interaction $interaction
@@ -110,8 +110,8 @@ class RegisteredCommand
     }
 
     /**
-     * Executes the command. Will search for a sub-command if given,
-     * otherwise executes the callback, if given.
+     * Executes the command. Will search for a sub-command if given, otherwise
+     * executes the callback, if given.
      *
      * @param Interaction $interaction
      *

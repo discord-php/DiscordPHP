@@ -14,12 +14,12 @@ namespace Discord\Helpers;
 /**
  * Cache configuration class. To be used with Discord `cache` Options.
  *
- * @see Discord
+ * @see Discord\Discord
  *
  * @since 10.0.0
  *
  * @property-read \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $interface The PSR-16 cache interface.
- * @property-read bool                                                        $separator The cache key prefix separator if supported by the interface. Usually dot `.` for generic cache or colon `:` for Redis/Memcached.
+ * @property-read string                                                      $separator The cache key prefix separator if supported by the interface. Usually dot `.` for generic cache or colon `:` for Redis/Memcached.
  */
 class CacheConfig
 {

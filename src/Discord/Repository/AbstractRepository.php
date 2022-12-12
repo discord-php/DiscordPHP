@@ -538,7 +538,8 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Runs a filter callback over the repository and returns a new collection based on the response of the callback.
+     * Runs a filter callback over the repository and returns a new collection
+     * based on the response of the callback.
      *
      * @param callable $callback
      *
@@ -569,7 +570,8 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Runs a filter callback over the repository and returns the first part where the callback returns `true` when given the part.
+     * Runs a filter callback over the repository and returns the first part
+     * where the callback returns `true` when given the part.
      *
      * @param callable $callback
      *

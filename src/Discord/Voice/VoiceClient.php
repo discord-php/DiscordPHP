@@ -1616,10 +1616,11 @@ class VoiceClient extends EventEmitter
 
     /**
      * Insert 5 frames of silence.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
      */
     private function insertSilence(): void
     {
-        // https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
         while (--$this->silenceRemaining > 0) {
             $this->sendBuffer(self::SILENCE_FRAME);
         }

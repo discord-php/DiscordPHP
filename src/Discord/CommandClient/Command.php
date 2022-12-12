@@ -305,7 +305,7 @@ class Command
      *
      * @param string $variable The variable to get.
      *
-     * @return string|int|false The value.
+     * @return mixed The value.
      */
     public function __get(string $variable)
     {
