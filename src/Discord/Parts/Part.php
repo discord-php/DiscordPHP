@@ -243,7 +243,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @return mixed
      *
      * @throws \Exception
-     * @see self::getAttribute() This function forwards onto getAttribute.
+     * @see Part::getAttribute() This function forwards onto getAttribute.
      */
     #[\ReturnTypeWillChange]
     public function offsetGet($key)
@@ -269,7 +269,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @param string $key   The attribute key.
      * @param mixed  $value The attribute value.
      *
-     * @see self::setAttribute() This function forwards onto setAttribute.
+     * @see Part::setAttribute() This function forwards onto setAttribute.
      */
     public function offsetSet($key, $value): void
     {
@@ -308,7 +308,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @param string $data Some serialized data.
      *
-     * @see self::setAttribute() The unserialized data is stored with setAttribute.
+     * @see Part::setAttribute() The unserialized data is stored with setAttribute.
      */
     public function unserialize($data): void
     {
@@ -333,7 +333,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @return array An array of public attributes.
      *
      * @throws \Exception
-     * @see self::getPublicAttributes() This function forwards onto getPublicAttributes.
+     * @see Part::getPublicAttributes() This function forwards onto getPublicAttributes.
      */
     public function jsonSerialize(): array
     {
@@ -443,7 +443,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @return string A JSON string of attributes.
      *
      * @throws \Exception
-     * @see self::getPublicAttributes() This function encodes getPublicAttributes into JSON.
+     * @see Part::getPublicAttributes() This function encodes getPublicAttributes into JSON.
      */
     public function __toString(): string
     {
@@ -456,7 +456,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @return array An array of public attributes.
      *
      * @throws \Exception
-     * @see self::getPublicAttributes() This function forwards onto getPublicAttributes.
+     * @see Part::getPublicAttributes() This function forwards onto getPublicAttributes.
      */
     public function __debugInfo(): array
     {
@@ -471,7 +471,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @return mixed The value of the attribute.
      *
      * @throws \Exception
-     * @see self::getAttribute() This function forwards onto getAttribute.
+     * @see Part::getAttribute() This function forwards onto getAttribute.
      */
     public function __get(string $key)
     {
@@ -484,7 +484,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @param string $key   The attributes key.
      * @param mixed  $value The attributes value.
      *
-     * @see self::setAttribute() This function forwards onto setAttribute.
+     * @see Part::setAttribute() This function forwards onto setAttribute.
      */
     public function __set(string $key, $value): void
     {
