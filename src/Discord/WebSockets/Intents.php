@@ -163,7 +163,7 @@ class Intents
      *
      * @link https://discord.com/developers/docs/topics/gateway#message-content-intent
      * @link https://dis.gd/mcfaq
-     * 
+     *
      * @since 7.3.0
      */
     public const MESSAGE_CONTENT = (1 << 15);

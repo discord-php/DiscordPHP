@@ -66,7 +66,7 @@ class Multipart
      * ];
      * ```
      *
-     * @param  array $field
+     * @param array $field
      *
      * @return $this
      */
