@@ -172,7 +172,7 @@ class RegisteredCommand
      *
      * @throws \LogicException
      *
-     * @return RegisteredCommand
+     * @return static
      */
     public function addSubCommand($name, callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {

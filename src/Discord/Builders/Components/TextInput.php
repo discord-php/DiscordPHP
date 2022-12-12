@@ -116,7 +116,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setCustomId($custom_id): self
     {
@@ -136,7 +136,7 @@ class TextInput extends Component
      *
      * @throws \InvalidArgumentException
      *
-     * @return self
+     * @return $this
      */
     public function setStyle(int $style): self
     {
@@ -156,7 +156,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setLabel(string $label): self
     {
@@ -177,7 +177,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setMinLength(?int $min_length): self
     {
@@ -198,7 +198,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setMaxLength(?int $max_length): self
     {
@@ -219,7 +219,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setPlaceholder(?string $placeholder): self
     {
@@ -237,7 +237,7 @@ class TextInput extends Component
      *
      * @param bool $required
      *
-     * @return self
+     * @return $this
      */
     public function setRequired(bool $required): self
     {
@@ -253,7 +253,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setValue(?string $value): self
     {

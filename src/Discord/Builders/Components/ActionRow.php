@@ -46,7 +46,7 @@ class ActionRow extends Component
      * @throws \InvalidArgumentException
      * @throws \OverflowException
      *
-     * @return self
+     * @return $this
      */
     public function addComponent(Component $component): self
     {
@@ -72,7 +72,7 @@ class ActionRow extends Component
      *
      * @param Component $component Component to remove.
      *
-     * @return self
+     * @return $this
      */
     public function removeComponent(Component $component): self
     {
@@ -86,7 +86,7 @@ class ActionRow extends Component
     /**
      * Removes all components from the action row.
      *
-     * @return self
+     * @return $this
      */
     public function clearComponents(): self
     {

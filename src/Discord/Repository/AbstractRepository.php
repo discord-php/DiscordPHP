@@ -456,7 +456,7 @@ abstract class AbstractRepository extends Collection
      *
      * @param Part $item
      *
-     * @return self
+     * @return $this
      */
     public function pushItem($item): self
     {

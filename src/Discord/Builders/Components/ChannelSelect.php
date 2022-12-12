@@ -39,7 +39,7 @@ class ChannelSelect extends SelectMenu
      *
      * @param int[] $channel_types Array of channel types.
      *
-     * @return self
+     * @return $this
      */
     public function setChannelTypes(array $channel_types): self
     {

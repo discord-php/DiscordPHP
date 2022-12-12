@@ -110,7 +110,7 @@ abstract class SelectMenu extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setCustomId($custom_id): self
     {
@@ -131,7 +131,7 @@ abstract class SelectMenu extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setPlaceholder(?string $placeholder): self
     {
@@ -152,7 +152,7 @@ abstract class SelectMenu extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setMinValues(?int $min_values): self
     {
@@ -173,7 +173,7 @@ abstract class SelectMenu extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setMaxValues(?int $max_values): self
     {
@@ -191,7 +191,7 @@ abstract class SelectMenu extends Component
      *
      * @param bool $disabled
      *
-     * @return self
+     * @return $this
      */
     public function setDisabled(bool $disabled = true): self
     {
@@ -221,7 +221,7 @@ abstract class SelectMenu extends Component
      * @param Discord  $discord  Discord client.
      * @param bool     $oneOff   Whether the listener should be removed after the selection is changed for the first time.
      *
-     * @return self
+     * @return $this
      *
      * @todo setListener callback return for each type.
      */
@@ -281,7 +281,7 @@ abstract class SelectMenu extends Component
     /**
      * Removes the listener from the button.
      *
-     * @return self
+     * @return $this
      */
     public function removeListener(): self
     {

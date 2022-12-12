@@ -68,7 +68,7 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
      * @param string $discrim
      * @param string $class
      *
-     * @return Collection
+     * @return static
      */
     public static function from(array $items = [], ?string $discrim = 'id', ?string $class = null)
     {
@@ -81,7 +81,7 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
      * @param string $class
      * @param string $discrim
      *
-     * @return Collection
+     * @return static
      */
     public static function for(string $class, ?string $discrim = 'id')
     {

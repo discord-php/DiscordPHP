@@ -194,7 +194,7 @@ class VoicePacket
      *
      * @param string $data Data from Discord.
      *
-     * @return self A voice packet.
+     * @return VoicePacket A voice packet.
      */
     public static function make(string $data): VoicePacket
     {
@@ -210,7 +210,7 @@ class VoicePacket
      *
      * @param Buffer $buffer The buffer to set.
      *
-     * @return self
+     * @return $this
      */
     public function setBuffer(Buffer $buffer): self
     {
