@@ -117,6 +117,7 @@ class Message extends Part
     public const TYPE_GUILD_INVITE_REMINDER = 22;
     public const TYPE_CONTEXT_MENU_COMMAND = 23;
     public const TYPE_AUTO_MODERATION_ACTION = 24;
+    public const TYPE_ROLE_SUBSCRIPTION_PURCHASE = 25;
 
     /** @deprecated 7.1.0 Use `Message::TYPE_USER_JOIN` */
     public const GUILD_MEMBER_JOIN = self::TYPE_USER_JOIN;

@@ -83,6 +83,8 @@ use function React\Promise\resolve;
  * @property-read bool               $feature_auto_moderation                    Guild has set up auto moderation rules.
  * @property-read bool               $feature_banner                             Guild has access to set a guild banner image.
  * @property-read bool               $feature_community                          Guild can enable welcome screen, Membership Screening, stage channels and discovery, and receives community updates.
+ * @property-read bool               $feature_creator_monetizable_provisional           Guild has enabled monetization.
+ * @property-read bool               $feature_creator_store_page                        Guild has enabled the role subscription promo page.
  * @property-read bool               $feature_developer_support_server           Guild has been set as a support server on the App Directory.
  * @property-read bool               $feature_discoverable                       Guild is able to be discovered in the directory.
  * @property-read bool               $feature_featurable                         Guild is able to be featured in the directory.
@@ -98,6 +100,8 @@ use function React\Promise\resolve;
  * @property-read bool               $feature_preview_enabled                    Guild can be previewed before joining via membership screening or the directory.
  * @property-read bool               $feature_private_threads                    Guild has access to create private threads.
  * @property-read bool               $feature_role_icons                         Guild is able to set role icons.
+ * @property-read bool               $feature_role_subscriptions_available_for_purchase Guild has role subscriptions that can be purchased.
+ * @property-read bool               $feature_role_subscriptions_enabled                Guild has enabled role subscriptions.
  * @property-read bool               $feature_ticketed_events_enabled            Guild has enabled ticketed events.
  * @property-read bool               $feature_vanity_url                         Guild has access to set a vanity url.
  * @property-read bool               $feature_verified                           Guild is verified.
@@ -245,6 +249,8 @@ class Guild extends Part
         'feature_auto_moderation',
         'feature_banner',
         'feature_community',
+        'feature_creator_monetizable_provisional',
+        'feature_creator_store_page',
         'feature_developer_support_server',
         'feature_discoverable',
         'feature_featurable',
@@ -260,6 +266,8 @@ class Guild extends Part
         'feature_preview_enabled',
         'feature_private_threads',
         'feature_role_icons',
+        'feature_role_subscriptions_available_for_purchase',
+        'feature_role_subscriptions_enabled',
         'feature_ticketed_events_enabled',
         'feature_vanity_url',
         'feature_verified',
@@ -579,6 +587,16 @@ class Guild extends Part
         return in_array('COMMUNITY', $this->features);
     }
 
+    protected function getFeatureCreatorMonetizableProvisionalAttribute(): bool
+    {
+        return in_array('CREATOR_MONETIZABLE_PROVISIONAL', $this->features);
+    }
+
+    protected function getFeatureCreatorStorePageAttribute(): bool
+    {
+        return in_array('CREATOR_STORE_PAGE', $this->features);
+    }
+
     protected function getFeatureDeveloperSupportServerAttribute(): bool
     {
         return in_array('DEVELOPER_SUPPORT_SERVER', $this->features);
@@ -677,6 +695,16 @@ class Guild extends Part
     protected function getFeatureRoleIconsAttribute(): bool
     {
         return in_array('ROLE_ICONS', $this->features);
+    }
+
+    protected function getFeatureRoleSubscriptionsAvailableForPurchaseAttribute(): bool
+    {
+        return in_array('ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE', $this->features);
+    }
+
+    protected function getFeatureRoleSubscriptionsEnabledAttribute(): bool
+    {
+        return in_array('ROLE_SUBSCRIPTIONS_ENABLED', $this->features);
     }
 
     /**

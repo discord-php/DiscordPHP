@@ -33,7 +33,7 @@ use Discord\Parts\Permissions\RolePermission;
  * @property      RolePermission $permissions   The permissions of the role.
  * @property      bool           $managed       Whether the role is managed by a Twitch subscriber feature.
  * @property      bool           $mentionable   Whether the role is mentionable.
- * @property      object|null    $tags          The tags this role has.
+ * @property      object|null    $tags          The tags this role has (bot_id, integration_id, premium_subscriber, subscription_listing_id, available_for_purchase).
  *
  * @property      string|null $guild_id The unique identifier of the guild that the role belongs to.
  * @property-read Guild|null  $guild    The guild that the role belongs to.
