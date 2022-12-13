@@ -929,7 +929,7 @@ class Channel extends Part
      * @link https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
      *
      * @param array          $options                          Thread params.
-     * @param bool           $options['private']               Whether the thread should be private. cannot start a private thread in a news channel channel. Ignored in forum channel.
+     * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in a news channel channel. Ignored in forum channel.
      * @param string         $options['name']                  The name of the thread.
      * @param int|null       $options['auto_archive_duration'] Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
      * @param bool|null      $options['invitable']             Whether non-moderators can add other non-moderators to a thread; only available when creating a private thread.
@@ -1009,10 +1009,6 @@ class Channel extends Part
                     return reject(new NoPermissionsException("You do not have permission to create public threads in the channel {$this->id}."));
                 }
             } else {
-                if (! $this->guild->feature_private_threads) {
-                    return reject(new \RuntimeException('Guild does not have access to private threads.'));
-                }
-
                 if ($botperms && ! $botperms->create_private_threads) {
                     return reject(new NoPermissionsException("You do not have permission to create private threads in the channel {$this->id}."));
                 }

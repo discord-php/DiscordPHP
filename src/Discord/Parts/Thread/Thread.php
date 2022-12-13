@@ -216,7 +216,7 @@ class Thread extends Part
      */
     protected function getInvitableAttribute(): ?bool
     {
-        return $this->thread_metadata->invitable;
+        return $this->thread_metadata->invitable ?? null;
     }
 
     /**
@@ -227,7 +227,7 @@ class Thread extends Part
      */
     protected function getAutoArchiveDurationAttribute(): ?int
     {
-        return $this->thread_metadata->auto_archive_duration;
+        return $this->thread_metadata->auto_archive_duration ?? null;
     }
 
     /**
