@@ -86,12 +86,18 @@ class StageInstance extends Part
      */
     public function getCreatableAttributes(): array
     {
-        return [
+        $attr = [
             'channel_id' => $this->channel_id,
             'topic' => $this->topic,
             'privacy_level' => $this->privacy_level ?? null,
             'send_start_notification' => $this->send_start_notification ?? null,
         ];
+
+        if (array_key_exists('guild_scheduled_event_id', $this->attributes)) {
+            $attr['guild_scheduled_event_id'] = $this->guild_scheduled_event_id;
+        }
+
+        return $attr;
     }
 
     /**
