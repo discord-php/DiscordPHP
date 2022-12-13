@@ -19,12 +19,14 @@ use Discord\Parts\User\Member;
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#presence-update
  *
+ * @see \Discord\Parts\WebSockets\PresenceUpdate
+ *
  * @since 2.1.3
  */
 class PresenceUpdate extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {

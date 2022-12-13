@@ -237,8 +237,8 @@ class Discord
     protected $heartbeatTimer;
 
     /**
-     * The timer that resends the heartbeat packet if
-     * a HEARTBEAT_ACK packet is not received in 5 seconds.
+     * The timer that resends the heartbeat packet if a HEARTBEAT_ACK packet is
+     * not received in 5 seconds.
      *
      * @var TimerInterface Timer.
      */
@@ -1158,7 +1158,7 @@ class Discord
         if (! is_null($activity)) {
             $activity = $activity->getRawAttributes();
 
-            if (! in_array($activity['type'], [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_COMPETING])) {
+            if (! in_array($activity['type'], [Activity::TYPE_GAME, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_COMPETING])) {
                 throw new \UnexpectedValueException("The given activity type ({$activity['type']}) is invalid.");
 
                 return;

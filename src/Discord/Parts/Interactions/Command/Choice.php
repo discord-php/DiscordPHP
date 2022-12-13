@@ -30,7 +30,7 @@ use function Discord\poly_strlen;
 class Choice extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'name',
@@ -45,7 +45,7 @@ class Choice extends Part
      * @param string           $name    name of the choice
      * @param string|int|float $value   value of the choice
      *
-     * @return self
+     * @return static
      */
     public static function new(Discord $discord, string $name, $value): self
     {
@@ -59,7 +59,7 @@ class Choice extends Part
      *
      * @throws \LengthException `$name` is not 1-100 characters long.
      *
-     * @return self
+     * @return $this
      */
     public function setName(string $name): self
     {
@@ -83,7 +83,7 @@ class Choice extends Part
      *
      * @throws \LengthException `$name` is not 1-100 characters long.
      *
-     * @return self
+     * @return $this
      */
     public function setNameLocalization(string $locale, ?string $name): self
     {
@@ -108,7 +108,7 @@ class Choice extends Part
      *
      * @throws \LengthException `string $value` is not 1-100 characters long.
      *
-     * @return self
+     * @return $this
      */
     public function setValue($value): self
     {

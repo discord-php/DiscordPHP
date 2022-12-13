@@ -14,17 +14,14 @@ namespace Discord\Voice;
 /**
  * A voice packet received from Discord.
  *
+ * Huge thanks to Austin and Michael from JDA for the constants and audio
+ * packets. Check out their repo:
+ * https://github.com/DV8FromTheWorld/JDA
+ *
  * @since 3.2.0
  */
 class VoicePacket
 {
-    /**
-     * Huge thanks to Austin and Michael from JDA for these constants
-     * and audio packets.
-     *
-     * Check out their repo:
-     * https://github.com/DV8FromTheWorld/JDA
-     */
     public const RTP_HEADER_BYTE_LENGTH = 12;
 
     public const RTP_VERSION_PAD_EXTEND_INDEX = 0;
@@ -128,7 +125,7 @@ class VoicePacket
     /**
      * Builds the header.
      *
-     * @return Buffer The header,
+     * @return Buffer The header.
      */
     protected function buildHeader(): Buffer
     {
@@ -197,7 +194,7 @@ class VoicePacket
      *
      * @param string $data Data from Discord.
      *
-     * @return self A voice packet.
+     * @return VoicePacket A voice packet.
      */
     public static function make(string $data): VoicePacket
     {
@@ -213,9 +210,9 @@ class VoicePacket
      *
      * @param Buffer $buffer The buffer to set.
      *
-     * @return self
+     * @return $this
      */
-    public function setBuffer(Buffer $buffer): VoicePacket
+    public function setBuffer(Buffer $buffer): self
     {
         $this->buffer = $buffer;
 

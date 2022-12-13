@@ -170,7 +170,7 @@ class Message extends Part
     public const FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD = (1 << 8);
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -212,7 +212,7 @@ class Message extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $repositories = [
         'reactions' => ReactionRepository::class,
@@ -467,7 +467,7 @@ class Message extends Part
     /**
      * Returns the mention_roles attribute.
      *
-     * @return Collection<?Role> The roles that were mentioned. Null role only contains the ID in the collection.
+     * @return Collection<?Role> The roles that were mentioned. null role only contains the ID in the collection.
      */
     protected function getMentionRolesAttribute(): Collection
     {
@@ -810,7 +810,7 @@ class Message extends Part
     }
 
     /**
-     * Crossposts the message to any following channels (publish announcement message).
+     * Crossposts the message to any following channels (publish announcement).
      *
      * @link https://discord.com/developers/docs/resources/channel#crosspost-message
      *
@@ -1111,7 +1111,7 @@ class Message extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/channel#edit-message-jsonform-params
      */
@@ -1124,7 +1124,7 @@ class Message extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

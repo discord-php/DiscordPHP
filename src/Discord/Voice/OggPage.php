@@ -111,8 +111,8 @@ class OggPage
 
     /**
      * Iterates through the packets contained within the stream, yielding an
-     * array containing binary data and whether the packet is complete, from
-     * a generator.
+     * array containing binary data and whether the packet is complete, from a
+     * generator.
      *
      * @return Generator
      */

@@ -26,7 +26,8 @@ use function React\Promise\resolve;
 
 /**
  * Represents a specific reaction to a message by a specific user.
- * Different from `Reaction` in the fact that `Reaction` represents a specific reaction to a message by _multiple_ members.
+ * Different from `Reaction` in the fact that `Reaction` represents a specific
+ * reaction to a message by _multiple_ members.
  *
  * @since 5.0.0
  *
@@ -46,7 +47,7 @@ use function React\Promise\resolve;
 class MessageReaction extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'user_id',
@@ -58,7 +59,7 @@ class MessageReaction extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isPartial(): bool
     {
@@ -68,7 +69,7 @@ class MessageReaction extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function fetch(): ExtendedPromiseInterface
     {

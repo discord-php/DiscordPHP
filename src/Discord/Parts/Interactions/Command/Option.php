@@ -53,7 +53,7 @@ class Option extends Part
     public const ATTACHMENT = 11;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'type',
@@ -115,7 +115,7 @@ class Option extends Part
      *
      * @throws \InvalidArgumentException `$type` is not 1-11.
      *
-     * @return self
+     * @return $this
      */
     public function setType(int $type): self
     {
@@ -138,7 +138,7 @@ class Option extends Part
      *
      * @throws \LengthException `$name` is more than 32 characters.
      *
-     * @return self
+     * @return $this
      */
     public function setName(string $name): self
     {
@@ -162,7 +162,7 @@ class Option extends Part
      *
      * @throws \LengthException `$name` is more than 32 characters.
      *
-     * @return self
+     * @return $this
      */
     public function setNameLocalization(string $locale, ?string $name): self
     {
@@ -182,7 +182,7 @@ class Option extends Part
      *
      * @throws \LengthException `$description` is more than 100 characters.
      *
-     * @return self
+     * @return $this
      */
     public function setDescription(string $description): self
     {
@@ -203,7 +203,7 @@ class Option extends Part
      *
      * @throws \LengthException `$description` is more than 100 characters.
      *
-     * @return self
+     * @return $this
      */
     public function setDescriptionLocalization(string $locale, ?string $description): self
     {
@@ -221,7 +221,7 @@ class Option extends Part
      *
      * @param bool $required requirement of the option (default false)
      *
-     * @return self
+     * @return $this
      */
     public function setRequired(bool $required = false): self
     {
@@ -235,7 +235,7 @@ class Option extends Part
      *
      * @param array|null $types types of the channel.
      *
-     * @return self
+     * @return $this
      */
     public function setChannelTypes(?array $types): self
     {
@@ -251,7 +251,7 @@ class Option extends Part
      *
      * @throws \OverflowException Command exceeds maximum 25 sub options.
      *
-     * @return self
+     * @return $this
      */
     public function addOption(Option $option): self
     {
@@ -271,7 +271,7 @@ class Option extends Part
      *
      * @throws \OverflowException Command exceeds maximum 25 choices.
      *
-     * @return self
+     * @return $this
      */
     public function addChoice(Choice $choice): self
     {
@@ -289,7 +289,7 @@ class Option extends Part
      *
      * @param string|Option $option Option object or name to remove.
      *
-     * @return self
+     * @return $this
      */
     public function removeOption($option): self
     {
@@ -312,7 +312,7 @@ class Option extends Part
      *
      * @param string|Choice $choice Choice object or name to remove.
      *
-     * @return self
+     * @return $this
      */
     public function removeChoice($choice): self
     {
@@ -335,7 +335,7 @@ class Option extends Part
      *
      * @param int|float|null $min_value integer for INTEGER options, double for NUMBER options.
      *
-     * @return self
+     * @return $this
      */
     public function setMinValue($min_value): self
     {
@@ -349,7 +349,7 @@ class Option extends Part
      *
      * @param int|float|null $max_value integer for INTEGER options, double for NUMBER options
      *
-     * @return self
+     * @return $this
      */
     public function setMaxValue($max_value): self
     {
@@ -366,7 +366,7 @@ class Option extends Part
      * @throws \LogicException
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setMinLength(?int $min_length): self
     {
@@ -391,7 +391,7 @@ class Option extends Part
      * @throws \LogicException
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setMaxLength(?int $max_length): self
     {
@@ -415,7 +415,7 @@ class Option extends Part
      *
      * @throws \DomainException Command option type is not string/integer/number.
      *
-     * @return self
+     * @return $this
      */
     public function setAutoComplete(?bool $autocomplete): self
     {

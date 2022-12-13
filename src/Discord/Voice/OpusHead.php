@@ -51,8 +51,8 @@ class OpusHead
     public int $channelCount;
 
     /**
-     * The number of samples (at 48 kHz) to discard from the decoder output
-     * when starting playback.
+     * The number of samples (at 48 kHz) to discard from the decoder output when
+     * starting playback.
      *
      * @var int
      */

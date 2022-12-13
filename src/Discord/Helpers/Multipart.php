@@ -66,8 +66,9 @@ class Multipart
      * ];
      * ```
      *
-     * @param  array $field
-     * @return self
+     * @param array $field
+     *
+     * @return $this
      */
     public function add(...$fields): self
     {

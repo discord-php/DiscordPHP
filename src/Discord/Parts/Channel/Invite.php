@@ -51,7 +51,7 @@ use Discord\Parts\User\User;
 class Invite extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'code',
@@ -288,7 +288,7 @@ class Invite extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

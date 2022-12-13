@@ -22,7 +22,8 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
+ * Webhooks are a low-effort way to post messages to channels in Discord. They
+ * do not require a bot user or authentication to use.
  *
  * @link https://discord.com/developers/docs/resources/webhook#webhook-resource
  *
@@ -52,7 +53,7 @@ class Webhook extends Part
     public const TYPE_APPLICATION = 3;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -70,7 +71,7 @@ class Webhook extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $repositories = [
         'messages' => WebhookMessageRepository::class,
@@ -232,7 +233,7 @@ class Webhook extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/webhook#create-webhook-json-params
      */
@@ -245,7 +246,7 @@ class Webhook extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/webhook#modify-webhook-json-params
      */
@@ -264,7 +265,7 @@ class Webhook extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

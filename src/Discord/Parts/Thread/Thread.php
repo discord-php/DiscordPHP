@@ -76,7 +76,7 @@ use function React\Promise\resolve;
 class Thread extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -98,14 +98,14 @@ class Thread extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $hidden = [
         'member',
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $repositories = [
         'messages' => MessageRepository::class,
@@ -113,7 +113,7 @@ class Thread extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function afterConstruct(): void
     {
@@ -220,8 +220,8 @@ class Thread extends Part
     }
 
     /**
-     * Returns the number of minutes of inactivity required for the thread
-     * to auto archive.
+     * Returns the number of minutes of inactivity required for the thread to
+     * auto archive.
      *
      * @return int|null
      */
@@ -251,7 +251,8 @@ class Thread extends Part
     }
 
     /**
-     * Set the number of minutes of inactivity required for the thread to auto archive.
+     * Set the number of minutes of inactivity required for the thread to auto
+     * archive.
      *
      * @param int $value
      */
@@ -263,8 +264,9 @@ class Thread extends Part
     /**
      * Returns the time that the thread's archive status was changed.
      *
-     * Note that this does not mean the time that the thread was archived - it can
-     * also mean the time when the thread was created, archived, unarchived etc.
+     * Note that this does not mean the time that the thread was archived - it
+     * can also mean the time when the thread was created, archived, unarchived
+     * etc.
      *
      * @return Carbon
      *
@@ -276,7 +278,8 @@ class Thread extends Part
     }
 
     /**
-     * Returns the timestamp when the thread was created; only populated for threads created after 2022-01-09.
+     * Returns the timestamp when the thread was created; only populated for
+     * threads created after 2022-01-09.
      *
      * @return Carbon|null
      *
@@ -526,8 +529,7 @@ class Thread extends Part
     }
 
     /**
-     * Fetches the message history of the thread with a given array
-     * of arguments.
+     * Fetches the message history of the thread with a given array of arguments.
      *
      * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
      *
@@ -662,8 +664,9 @@ class Thread extends Part
     /**
      * Sends a message to the thread.
      *
-     * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
-     * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
+     * Takes a `MessageBuilder` or content of the message for the first
+     * parameter. If the first parameter is an instance of `MessageBuilder`, the
+     * rest of the arguments are disregarded.
      *
      * @link https://discord.com/developers/docs/resources/channel#create-message
      *
@@ -805,7 +808,7 @@ class Thread extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message-json-params
      */
@@ -826,7 +829,7 @@ class Thread extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-thread
      */
@@ -853,7 +856,7 @@ class Thread extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

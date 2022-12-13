@@ -58,8 +58,9 @@ class OggStream
     }
 
     /**
-     * Create a new Ogg Opus stream from a buffer. This will read the Opus header
-     * and the Opus tags and return a new Ogg stream ready to read Opus packets.
+     * Create a new Ogg Opus stream from a buffer. This will read the Opus
+     * header and the Opus tags and return a new Ogg stream ready to read Opus
+     * packets.
      *
      * @param Buffer $buffer  Buffer to read Ogg Opus packets from.
      * @param ?int   $timeout Time in milliseconds before a buffer read times out.
@@ -109,7 +110,8 @@ class OggStream
     }
 
     /**
-     * Attempt to read an Ogg page from the buffer and parse it into Opus packets.
+     * Attempt to read an Ogg page from the buffer and parse it into Opus
+     * packets.
      *
      * @return ExtendedPromiseInterface<string[]|null> Promise containing an array of Opus packets.
      */

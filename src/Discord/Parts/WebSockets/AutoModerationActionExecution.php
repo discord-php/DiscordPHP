@@ -20,7 +20,8 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 
 /**
- * Sent when a rule is triggered and an action is executed (e.g. when a message is blocked).
+ * Sent when a rule is triggered and an action is executed (e.g. when a message
+ * is blocked).
  *
  * @link https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields
  *
@@ -47,7 +48,7 @@ use Discord\Parts\User\User;
 class AutoModerationActionExecution extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'guild_id',

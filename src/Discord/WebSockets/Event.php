@@ -151,7 +151,7 @@ abstract class Event
      *
      * @return Generator
      *
-     * @since 10.0.0 changed args from `Deferred &$deferred, $data` to `$data`, changed return from `void` to `Generator`.
+     * @since 10.0.0 Changed args from `Deferred &$deferred, $data` to `$data`, changed return from `void` to `Generator`.
      * @since 4.0.0
      */
     abstract public function handle($data);
@@ -160,6 +160,8 @@ abstract class Event
      * Cache User repository from Event data.
      *
      * @param object $userdata `$data->user` or `$data->member->user`
+     *
+     * @since 7.0.0
      */
     protected function cacheUser(object $userdata)
     {
@@ -176,6 +178,8 @@ abstract class Event
      *
      * @param MemberRepository $members    `$guild->members`
      * @param array            $memberdata `(array) $data->member`
+     *
+     * @since 10.0.0
      */
     protected function cacheMember(MemberRepository $members, array $memberdata)
     {

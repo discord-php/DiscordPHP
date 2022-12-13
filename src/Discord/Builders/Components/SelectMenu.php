@@ -20,8 +20,9 @@ use React\Promise\PromiseInterface;
 use function Discord\poly_strlen;
 
 /**
- * Select menus are interactive components that allow users to select one or more options from a dropdown list in messages.
- * On desktop, clicking on a select menu opens a dropdown-style UI
+ * Select menus are interactive components that allow users to select one or
+ * more options from a dropdown list in messages.
+ * On desktop, clicking on a select menu opens a dropdown-style UI.
  * On mobile, tapping a select menu opens up a half-sheet with the options.
  *
  * @link https://discord.com/developers/docs/interactions/message-components#select-menus
@@ -110,7 +111,7 @@ abstract class SelectMenu extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setCustomId($custom_id): self
     {
@@ -125,13 +126,12 @@ abstract class SelectMenu extends Component
 
     /**
      * Sets the placeholder string to display if nothing is selected.
-     * Maximum 150 characters. Null to clear placeholder.
      *
-     * @param string|null $placeholder
+     * @param string|null $placeholder Maximum 150 characters. `null` to clear placeholder.
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setPlaceholder(?string $placeholder): self
     {
@@ -146,13 +146,12 @@ abstract class SelectMenu extends Component
 
     /**
      * Sets the minimum number of options which must be chosen.
-     * Default 1, minimum 0 and maximum 25. Null to set as default.
      *
-     * @param int|null $min_values
+     * @param int|null $min_values Default `1`, minimum `0` and maximum `25`. `null` to set as default.
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setMinValues(?int $min_values): self
     {
@@ -167,13 +166,12 @@ abstract class SelectMenu extends Component
 
     /**
      * Sets the maximum number of options which must be chosen.
-     * Default 1 and maximum 25. Null to set as default.
      *
-     * @param int|null $max_values
+     * @param int|null $max_values Default `1` and maximum `25`. `null` to set as default.
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setMaxValues(?int $max_values): self
     {
@@ -191,7 +189,7 @@ abstract class SelectMenu extends Component
      *
      * @param bool $disabled
      *
-     * @return self
+     * @return $this
      */
     public function setDisabled(bool $disabled = true): self
     {
@@ -201,19 +199,23 @@ abstract class SelectMenu extends Component
     }
 
     /**
-     * Sets the callable listener for the select menu. The `$callback` function will be called when
-     * the selection of the menu is changed.
+     * Sets the callable listener for the select menu. The `$callback` function
+     * will be called when the selection of the menu is changed.
      *
-     * The callback function is called with the `Interaction` object as well as a `Collection` of
-     * selected options.
+     * The callback function is called with the `Interaction` object as well as
+     * a `Collection` of selected options.
      *
-     * If you do not respond to or acknowledge the `Interaction`, it will be acknowledged for you.
-     * Note that if you intend to respond to or acknowledge the interaction inside a promise, you should
-     * return a promise that resolves *after* you respond or acknowledge.
+     * If you do not respond to or acknowledge the `Interaction`, it will be
+     * acknowledged for you.
+     * Note that if you intend to respond to or acknowledge the interaction
+     * inside a promise, you should return a promise that resolves *after* you
+     * respond or acknowledge.
      *
-     * The callback will only be called once with the `$oneOff` parameter set to true.
-     * This can be changed to false, and the callback will be called each time the selection is changed.
-     * To remove the listener, you can pass `$callback` as null.
+     * The callback will only be called once with the `$oneOff` parameter set to
+     * true.
+     * This can be changed to false, and the callback will be called each time
+     * the selection is changed. To remove the listener, you can pass
+     * `$callback` as null.
      *
      * The select menu listener will not persist when the bot restarts.
      *
@@ -221,7 +223,7 @@ abstract class SelectMenu extends Component
      * @param Discord  $discord  Discord client.
      * @param bool     $oneOff   Whether the listener should be removed after the selection is changed for the first time.
      *
-     * @return self
+     * @return $this
      *
      * @todo setListener callback return for each type.
      */
@@ -281,7 +283,7 @@ abstract class SelectMenu extends Component
     /**
      * Removes the listener from the button.
      *
-     * @return self
+     * @return $this
      */
     public function removeListener(): self
     {
@@ -339,7 +341,7 @@ abstract class SelectMenu extends Component
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function jsonSerialize(): array
     {

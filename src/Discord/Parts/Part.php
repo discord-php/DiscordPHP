@@ -20,7 +20,8 @@ use JsonSerializable;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
- * This class is the base of all objects that are returned. All "Parts" extend off this base class.
+ * This class is the base of all objects that are returned. All "Parts" extend
+ * off this base class.
  *
  * @since 2.0.0
  */
@@ -133,7 +134,8 @@ abstract class Part implements ArrayAccess, JsonSerializable
     }
 
     /**
-     * Whether the part is considered partial i.e. missing information which can be fetched from Discord.
+     * Whether the part is considered partial i.e. missing information which can
+     * be fetched from Discord.
      *
      * @return bool
      */
@@ -243,7 +245,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @return mixed
      *
      * @throws \Exception
-     * @see self::getAttribute() This function forwards onto getAttribute.
+     * @see Part::getAttribute() This function forwards onto getAttribute.
      */
     #[\ReturnTypeWillChange]
     public function offsetGet($key)
@@ -269,7 +271,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @param string $key   The attribute key.
      * @param mixed  $value The attribute value.
      *
-     * @see self::setAttribute() This function forwards onto setAttribute.
+     * @see Part::setAttribute() This function forwards onto setAttribute.
      */
     public function offsetSet($key, $value): void
     {
@@ -308,7 +310,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @param string $data Some serialized data.
      *
-     * @see self::setAttribute() The unserialized data is stored with setAttribute.
+     * @see Part::setAttribute() The unserialized data is stored with setAttribute.
      */
     public function unserialize($data): void
     {
@@ -333,7 +335,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @return array An array of public attributes.
      *
      * @throws \Exception
-     * @see self::getPublicAttributes() This function forwards onto getPublicAttributes.
+     * @see Part::getPublicAttributes() This function forwards onto getPublicAttributes.
      */
     public function jsonSerialize(): array
     {
@@ -411,9 +413,10 @@ abstract class Part implements ArrayAccess, JsonSerializable
     /**
      * Converts a string to studlyCase.
      *
-     * This is a port of updated laravel's implementation, a non-regex with static cache.
-     * The Discord\studly() is kept due to unintended bug and we do not want to introduce BC by replacing it.
-     * This method is private static as we may move it outside this class in future.
+     * This is a port of updated Laravel's implementation, a non-regex with
+     * static cache. The Discord\studly() is kept due to unintended bug and we
+     * do not want to introduce BC by replacing it. This method is private
+     * static as we may move it outside this class in future.
      *
      * @param string $string The string to convert.
      *
@@ -443,7 +446,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @return string A JSON string of attributes.
      *
      * @throws \Exception
-     * @see self::getPublicAttributes() This function encodes getPublicAttributes into JSON.
+     * @see Part::getPublicAttributes() This function encodes getPublicAttributes into JSON.
      */
     public function __toString(): string
     {
@@ -456,7 +459,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @return array An array of public attributes.
      *
      * @throws \Exception
-     * @see self::getPublicAttributes() This function forwards onto getPublicAttributes.
+     * @see Part::getPublicAttributes() This function forwards onto getPublicAttributes.
      */
     public function __debugInfo(): array
     {
@@ -471,7 +474,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @return mixed The value of the attribute.
      *
      * @throws \Exception
-     * @see self::getAttribute() This function forwards onto getAttribute.
+     * @see Part::getAttribute() This function forwards onto getAttribute.
      */
     public function __get(string $key)
     {

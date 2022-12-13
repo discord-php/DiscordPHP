@@ -16,7 +16,8 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 
 /**
- * Sent on the message object when the message is a response to an Interaction without an existing message.
+ * Sent on the message object when the message is a response to an Interaction
+ * without an existing message.
  *
  * @link https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object
  *
@@ -33,7 +34,7 @@ use Discord\Parts\User\User;
 class MessageInteraction extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -47,7 +48,7 @@ class MessageInteraction extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $hidden = ['guild_id'];
 

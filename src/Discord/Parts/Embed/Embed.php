@@ -48,7 +48,7 @@ class Embed extends Part
     public const TYPE_LINK = 'link';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'title',
@@ -226,7 +226,7 @@ class Embed extends Part
      *
      * @throws \LengthException Embed text too long.
      *
-     * @return self
+     * @return $this
      */
     protected function setTitleAttribute(string $title): self
     {
@@ -248,7 +248,7 @@ class Embed extends Part
      *
      * @param string $title
      *
-     * @return self
+     * @return $this
      */
     public function setTitle(string $title): self
     {
@@ -264,7 +264,7 @@ class Embed extends Part
      *
      * @param string $type
      *
-     * @return self
+     * @return $this
      */
     public function setType(string $type): self
     {
@@ -278,7 +278,7 @@ class Embed extends Part
      *
      * @param string $description
      *
-     * @return self
+     * @return $this
      */
     public function setDescription(string $description): self
     {
@@ -292,7 +292,7 @@ class Embed extends Part
      *
      * @param mixed $color
      *
-     * @return self
+     * @return $this
      */
     public function setColor($color): self
     {
@@ -308,7 +308,7 @@ class Embed extends Part
      *
      * @throws \OverflowException Embed exceeds 25 fields.
      *
-     * @return self
+     * @return $this
      */
     public function addField(...$fields): self
     {
@@ -336,7 +336,7 @@ class Embed extends Part
      *
      * @throws \OverflowException
      *
-     * @return self
+     * @return $this
      */
     public function addFieldValues(string $name, string $value, bool $inline = false)
     {
@@ -356,7 +356,7 @@ class Embed extends Part
      *
      * @throws \LengthException Embed text too long.
      *
-     * @return self
+     * @return $this
      */
     public function setAuthor(string $name, string $iconurl = '', string $url = ''): self
     {
@@ -386,7 +386,7 @@ class Embed extends Part
      *
      * @throws \LengthException Embed text too long.
      *
-     * @return self
+     * @return $this
      */
     public function setFooter(string $text, string $iconurl = ''): self
     {
@@ -412,7 +412,7 @@ class Embed extends Part
      *
      * @param string|Attachment $url
      *
-     * @return self
+     * @return $this
      */
     public function setImage($url): self
     {
@@ -430,7 +430,7 @@ class Embed extends Part
      *
      * @param string $url
      *
-     * @return self
+     * @return $this
      */
     public function setThumbnail($url): self
     {
@@ -446,7 +446,7 @@ class Embed extends Part
      *
      * @throws \Exception
      *
-     * @return self
+     * @return $this
      */
     public function setTimestamp(?int $timestamp = null): self
     {
@@ -460,7 +460,7 @@ class Embed extends Part
      *
      * @param string $url
      *
-     * @return self
+     * @return $this
      */
     public function setURL(string $url): self
     {
@@ -470,7 +470,8 @@ class Embed extends Part
     }
 
     /**
-     * Checks to see if adding a property has put us over Discord's 6000-char overall limit.
+     * Checks to see if adding a property has put us over Discord's 6000
+     * characters overall limit.
      *
      * @param int $addition
      *

@@ -17,8 +17,12 @@ use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
 /**
- * Auto Moderation is a feature which allows each guild to set up rules that trigger based on some criteria. For example, a rule can trigger whenever a message contains a specific keyword.
- * Rules can be configured to automatically execute actions whenever they trigger. For example, if a user tries to send a message which contains a certain keyword, a rule can trigger and block the message before it is sent.
+ * Auto Moderation is a feature which allows each guild to set up rules that
+ * trigger based on some criteria. For example, a rule can trigger whenever a
+ * message contains a specific keyword.
+ * Rules can be configured to automatically execute actions whenever they
+ * trigger. For example, if a user tries to send a message which contains a
+ * certain keyword, a rule can trigger and block the message before it is sent.
  *
  * @link https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object
  *
@@ -41,7 +45,7 @@ use Discord\Parts\User\User;
 class Rule extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -153,7 +157,7 @@ class Rule extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule-json-params
      */
@@ -179,7 +183,7 @@ class Rule extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule-json-params
      */
@@ -202,7 +206,7 @@ class Rule extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

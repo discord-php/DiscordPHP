@@ -142,7 +142,7 @@ abstract class Permission extends Part
     private $permissions = [];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function __construct(Discord $discord, array $attributes = [], bool $created = false)
     {

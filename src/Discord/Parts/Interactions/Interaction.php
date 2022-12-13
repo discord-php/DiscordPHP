@@ -61,7 +61,7 @@ use function React\Promise\reject;
 class Interaction extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -117,9 +117,9 @@ class Interaction extends Part
     }
 
     /**
-     * Returns the guild the interaction was invoked from. Null when invoked via DM.
+     * Returns the guild the interaction was invoked from.
      *
-     * @return Guild|null
+     * @return Guild|null `null` when invoked via DM.
      */
     protected function getGuildAttribute(): ?Guild
     {
@@ -149,9 +149,9 @@ class Interaction extends Part
     }
 
     /**
-     * Returns the member who invoked the interaction. Null when invoked via DM.
+     * Returns the member who invoked the interaction.
      *
-     * @return Member|null
+     * @return Member|null `null` when invoked via DM.
      */
     protected function getMemberAttribute(): ?Member
     {
@@ -243,8 +243,8 @@ class Interaction extends Part
     }
 
     /**
-     * Acknowledges an interaction, creating a placeholder response message which can be edited later
-     * through the `updateOriginalResponse` function.
+     * Acknowledges an interaction, creating a placeholder response message
+     * which can be edited later through the `updateOriginalResponse` function.
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
@@ -427,8 +427,8 @@ class Interaction extends Part
     /**
      * Responds to the interaction with a payload.
      *
-     * This is a seperate function so that it can be overloaded when responding via
-     * webhook.
+     * This is a seperate function so that it can be overloaded when responding
+     * via webhook.
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response
      *

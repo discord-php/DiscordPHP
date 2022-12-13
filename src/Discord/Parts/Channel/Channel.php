@@ -145,7 +145,7 @@ class Channel extends Part
     public const FORUM_LAYOUT_GRID = 2;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -184,7 +184,7 @@ class Channel extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $repositories = [
         'overwrites' => OverwriteRepository::class,
@@ -197,7 +197,7 @@ class Channel extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function afterConstruct(): void
     {
@@ -1078,8 +1078,9 @@ class Channel extends Part
     /**
      * Sends a message to the channel.
      *
-     * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
-     * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
+     * Takes a `MessageBuilder` or content of the message for the first
+     * parameter. If the first parameter is an instance of `MessageBuilder`, the
+     * rest of the arguments are disregarded.
      *
      * @link https://discord.com/developers/docs/resources/channel#create-message
      *
@@ -1346,7 +1347,7 @@ class Channel extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-channel-json-params
      */
@@ -1388,7 +1389,7 @@ class Channel extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-guild-channel
      */
@@ -1456,7 +1457,7 @@ class Channel extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

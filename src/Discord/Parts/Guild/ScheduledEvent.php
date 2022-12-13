@@ -63,7 +63,7 @@ class ScheduledEvent extends Part
     public const STATUS_CANCELED = 4;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -85,9 +85,11 @@ class ScheduledEvent extends Part
     ];
 
     /**
-     * Get a list of guild scheduled event users subscribed to a guild scheduled event.
+     * Get a list of guild scheduled event users subscribed to a guild scheduled
+     * event.
      * Returns a list of guild scheduled event user objects on success.
-     * Guild member data, if it exists, is included if the with_member query parameter is set.
+     * Guild member data, if it exists, is included if the with_member query
+     * parameter is set.
      *
      * @link https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users
      *
@@ -256,7 +258,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event-json-params
      */
@@ -276,7 +278,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event-json-params
      */
@@ -308,7 +310,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

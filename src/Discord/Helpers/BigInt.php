@@ -12,7 +12,7 @@
 namespace Discord\Helpers;
 
 /**
- * Polyfill to handle big integer operation in 32 bit php using ext-gmp.
+ * Polyfill to handle big integer operation in 32 bit PHP using ext-gmp.
  *
  * @since 10.0.0 Renamed from Bitwise to BigInt
  * @since 7.0.0

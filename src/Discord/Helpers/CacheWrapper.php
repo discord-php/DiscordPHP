@@ -30,8 +30,6 @@ use function React\Promise\resolve;
  * @since 10.0.0
  *
  * @property-read \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $interface The actual ReactPHP PSR-16 CacheInterface.
- *
- * @internal
  */
 class CacheWrapper
 {
@@ -53,7 +51,7 @@ class CacheWrapper
     protected $items;
 
     /**
-     * The item class name.
+     * The item class name reference.
      *
      * @var string
      */
@@ -471,7 +469,8 @@ class CacheWrapper
     }
 
     /**
-     * Flush deleted items from cache and weaken items. Items with Bot's ID are exempt.
+     * Flush deleted items from cache and weaken items. Items with Bot's ID are
+     * exempt.
      *
      * @return int Flushed items.
      */

@@ -68,7 +68,7 @@ use function React\Promise\reject;
 class Member extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'user',
@@ -356,17 +356,16 @@ class Member extends Part
     /**
      * Gets the total permissions of the member.
      *
-     * Note that Discord permissions are complex and YOU
-     * need to account for the fact that you cannot edit
-     * a role higher than your own.
+     * Note that Discord permissions are complex and YOU need to account for the
+     * fact that you cannot edit a role higher than your own.
      *
      * @link https://discord.com/developers/docs/topics/permissions
      *
-     * @param Channel|Thread|null $channel
+     * @param Channel|Thread|null $channel The channel to check its permission overwrites. `null` for just Role.
      *
      * @throws \InvalidArgumentException
      *
-     * @return RolePermission|null Null if permission is failed to be determined.
+     * @return RolePermission|null `null` if permission is failed to be determined.
      */
     public function getPermissions($channel = null): ?RolePermission
     {
@@ -601,7 +600,7 @@ class Member extends Part
     /**
      * Returns the roles attribute.
      *
-     * @return Collection<?Role> A collection of roles the member is in. Null role only contains ID in the collection.
+     * @return Collection<?Role> A collection of roles the member is in. null role only contains ID in the collection.
      */
     protected function getRolesAttribute(): Collection
     {
@@ -749,7 +748,7 @@ class Member extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-member-json-params
      */
@@ -761,7 +760,7 @@ class Member extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {
