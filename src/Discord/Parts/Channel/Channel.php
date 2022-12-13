@@ -1365,11 +1365,14 @@ class Channel extends Part
             'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
 
-        if ($attr['type'] == self::TYPE_GUILD_FORUM) {
+        if ($attr['type'] == self::TYPE_GUILD_TEXT) {
+            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user ?? null;
+        } elseif ($attr['type'] == self::TYPE_GUILD_FORUM) {
             if (array_key_exists('default_reaction_emoji', $this->attributes)) {
                 $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
             }
 
+            $attr['flags'] = $this->flags ?? null;
             $attr['available_tags'] = $this->attributes['available_tags'] ?? null;
 
             if (array_key_exists('default_sort_order', $this->attributes)) {
@@ -1379,6 +1382,8 @@ class Channel extends Part
             if (array_key_exists('default_forum_layout', $this->attributes)) {
                 $attr['default_forum_layout'] = $this->default_forum_layout;
             }
+
+            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user ?? null;
         }
 
         return $attr;
