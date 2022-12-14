@@ -289,7 +289,7 @@ class Discord
     /**
      * zlib decompressor.
      *
-     * @var \Clue\React\Zlib\Decompressor
+     * @var \InflateContext|false
      */
     protected $zlibDecompressor;
 
@@ -631,12 +631,8 @@ class Discord
                     return;
                 }
 
-                $this->zlibDecompressor->once('data', function ($data) {
-                    $this->processWsMessage($data);
-                    $this->payloadBuffer = '';
-                });
-
-                $this->zlibDecompressor->write($this->payloadBuffer);
+                $this->processWsMessage(inflate_add($this->zlibDecompressor, $this->payloadBuffer));
+                $this->payloadBuffer = '';
             } else {
                 $this->processWsMessage(zlib_decode($payload));
             }
@@ -1320,13 +1316,10 @@ class Discord
             $params = [
                 'v' => self::GATEWAY_VERSION,
                 'encoding' => $this->encoding,
+                'compress' => 'zlib-stream',
             ];
 
-            if (class_exists('\Clue\React\Zlib\Decompressor')) {
-                $this->logger->warning('The `clue/zlib-react` is installed, Enabling experimental zlib-stream compressed gateway message.');
-                $this->zlibDecompressor = new \Clue\React\Zlib\Decompressor(ZLIB_ENCODING_DEFLATE);
-                $params['compress'] = 'zlib-stream';
-            }
+            $this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE);
 
             $query = http_build_query($params);
             $this->gateway = trim($gateway, '/').'/?'.$query;

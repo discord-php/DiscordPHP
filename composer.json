@@ -48,7 +48,6 @@
         "ext-libev": "For a faster, and more performant loop.",
         "ext-event": "For a faster, and more performant loop.",
         "ext-mbstring": "For accurate calculations of string length when handling non-english characters.",
-        "clue/zlib-react": "For gateway message transport compression with zlib-stream."
     },
     "scripts": {
         "cs": ["./vendor/bin/php-cs-fixer fix"],
