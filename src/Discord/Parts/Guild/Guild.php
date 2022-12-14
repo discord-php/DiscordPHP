@@ -57,74 +57,78 @@ use function React\Promise\resolve;
  * @since 2.0.0 Refactored as Part
  * @since 1.0.0
  *
- * @property      string             $id                                         The unique identifier of the guild.
- * @property      string             $name                                       The name of the guild.
- * @property      ?string            $icon                                       The URL to the guild icon.
- * @property      ?string|null       $icon_hash                                  The icon hash for the guild.
- * @property      ?string            $splash                                     The URL to the guild splash.
- * @property      ?string|null       $splash_hash                                The splash hash for the guild.
- * @property      ?string            $discovery_splash                           Discovery splash hash. Only for discoverable guilds.
- * @property      string             $owner_id                                   The unique identifier of the owner of the guild.
- * @property-read User|null          $owner                                      The owner of the guild.
- * @property      ?string|null       $region                                     The region the guild's voice channels are hosted in.
- * @property      string             $afk_channel_id                             The unique identifier of the AFK channel ID.
- * @property      int                $afk_timeout                                How long in seconds you will remain in the voice channel until you are moved into the AFK channel. Can be set to: 60, 300, 900, 1800, 3600.
- * @property      bool|null          $widget_enabled                             Is server widget enabled.
- * @property      ?string|null       $widget_channel_id                          Channel that the widget will create an invite to.
- * @property      int                $verification_level                         The verification level used for the guild.
- * @property      int                $default_message_notifications              Default notification level.
- * @property      int                $explicit_content_filter                    Explicit content filter level.
- * @property      RoleRepository     $roles                                      Roles in the guild.
- * @property      EmojiRepository    $emojis                                     Custom guild emojis.
- * @property      string[]           $features                                   An array of features that the guild has.
- * @property-read bool               $feature_animated_banner                    Guild has access to set an animated guild banner image.
- * @property-read bool               $feature_animated_icon                      Guild has access to set an animated guild icon.
- * @property-read bool               $feature_application_command_permissions_v2 Guild is using the old permissions configuration behavior.
- * @property-read bool               $feature_auto_moderation                    Guild has set up auto moderation rules.
- * @property-read bool               $feature_banner                             Guild has access to set a guild banner image.
- * @property-read bool               $feature_community                          Guild can enable welcome screen, Membership Screening, stage channels and discovery, and receives community updates.
- * @property-read bool               $feature_developer_support_server           Guild has been set as a support server on the App Directory.
- * @property-read bool               $feature_discoverable                       Guild is able to be discovered in the directory.
- * @property-read bool               $feature_featurable                         Guild is able to be featured in the directory.
- * @property-read bool               $feature_has_directory_entry                Guild is listed in a directory channel.
- * @property-read bool               $feature_invites_disabled                   Guild has paused invites, preventing new users from joining.
- * @property-read bool               $feature_invite_splash                      Guild has access to set an invite splash background.
- * @property-read bool               $feature_linked_to_hub                      Guild is in a Student Hub.
- * @property-read bool               $feature_member_verification_gate_enabled   Guild has enabled membership screening.
- * @property-read bool               $feature_monetization_enabled               Guild has enabled monetization.
- * @property-read bool               $feature_more_stickers                      Guild has increased custom sticker slots.
- * @property-read bool               $feature_news                               Guild has access to create news channels.
- * @property-read bool               $feature_partnered                          Guild is partnered.
- * @property-read bool               $feature_preview_enabled                    Guild can be previewed before joining via membership screening or the directory.
- * @property-read bool               $feature_private_threads                    Guild has access to create private threads.
- * @property-read bool               $feature_role_icons                         Guild is able to set role icons.
- * @property-read bool               $feature_ticketed_events_enabled            Guild has enabled ticketed events.
- * @property-read bool               $feature_vanity_url                         Guild has access to set a vanity url.
- * @property-read bool               $feature_verified                           Guild is verified.
- * @property-read bool               $feature_vip_regions                        Guild has access to set 384kbps bitrate in voice.
- * @property-read bool               $feature_welcome_screen_enabled             Guild has enabled the welcome screen.
- * @property      int                $mfa_level                                  MFA level required to join.
- * @property      ?string            $application_id                             Application that made the guild, if made by one.
- * @property      ?string            $system_channel_id                          Channel that system notifications are posted in.
- * @property      int                $system_channel_flags                       Flags for the system channel.
- * @property      ?string            $rules_channel_id                           Channel that the rules are in.
- * @property      int|null           $max_presences                              Maximum amount of presences allowed in the guild.
- * @property      int|null           $max_members                                Maximum amount of members allowed in the guild.
- * @property      ?string            $vanity_url_code                            Vanity URL code for the guild.
- * @property      ?string            $description                                Guild description of a guild.
- * @property      ?string            $banner                                     Banner hash.
- * @property      int                $premium_tier                               Server boost level.
- * @property      int|null           $premium_subscription_count                 Number of boosts in the guild.
- * @property      string             $preferred_locale                           Preferred locale of the guild.
- * @property      ?string            $public_updates_channel_id                  Notice channel id.
- * @property      int|null           $max_video_channel_users                    Maximum amount of users allowed in a video channel.
- * @property      int|null           $max_stage_video_channel_users              Maximum amount of users in a stage video channel.
- * @property      int|null           $approximate_member_count                   Approximate number of members in this guild, returned from the GET /guilds/<id> endpoint when with_counts is true.
- * @property      int|null           $approximate_presence_count                 Approximate number of non-offline members in this guild, returned from the GET /guilds/<id> endpoint when with_counts is true.
- * @property-read WelcomeScreen|null $welcome_screen                             The welcome screen of a Community guild, shown to new members, returned in an Invite's guild object. use `getWelcomeScreen` first to populate.
- * @property      int                $nsfw_level                                 The guild NSFW level.
- * @property      StickerRepository  $stickers                                   Custom guild stickers.
- * @property      bool               $premium_progress_bar_enabled               Whether the guild has the boost progress bar enabled.
+ * @property      string             $id                                                The unique identifier of the guild.
+ * @property      string             $name                                              The name of the guild.
+ * @property      ?string            $icon                                              The URL to the guild icon.
+ * @property      ?string|null       $icon_hash                                         The icon hash for the guild.
+ * @property      ?string            $splash                                            The URL to the guild splash.
+ * @property      ?string|null       $splash_hash                                       The splash hash for the guild.
+ * @property      ?string            $discovery_splash                                  Discovery splash hash. Only for discoverable guilds.
+ * @property      string             $owner_id                                          The unique identifier of the owner of the guild.
+ * @property-read User|null          $owner                                             The owner of the guild.
+ * @property      ?string|null       $region                                            The region the guild's voice channels are hosted in.
+ * @property      string             $afk_channel_id                                    The unique identifier of the AFK channel ID.
+ * @property      int                $afk_timeout                                       How long in seconds you will remain in the voice channel until you are moved into the AFK channel. Can be set to: 60, 300, 900, 1800, 3600.
+ * @property      bool|null          $widget_enabled                                    Is server widget enabled.
+ * @property      ?string|null       $widget_channel_id                                 Channel that the widget will create an invite to.
+ * @property      int                $verification_level                                The verification level used for the guild.
+ * @property      int                $default_message_notifications                     Default notification level.
+ * @property      int                $explicit_content_filter                           Explicit content filter level.
+ * @property      RoleRepository     $roles                                             Roles in the guild.
+ * @property      EmojiRepository    $emojis                                            Custom guild emojis.
+ * @property      string[]           $features                                          An array of features that the guild has.
+ * @property-read bool               $feature_animated_banner                           Guild has access to set an animated guild banner image.
+ * @property-read bool               $feature_animated_icon                             Guild has access to set an animated guild icon.
+ * @property-read bool               $feature_application_command_permissions_v2        Guild is using the old permissions configuration behavior.
+ * @property-read bool               $feature_auto_moderation                           Guild has set up auto moderation rules.
+ * @property-read bool               $feature_banner                                    Guild has access to set a guild banner image.
+ * @property-read bool               $feature_community                                 Guild can enable welcome screen, Membership Screening, stage channels and discovery, and receives community updates.
+ * @property-read bool               $feature_creator_monetizable_provisional           Guild has enabled monetization.
+ * @property-read bool               $feature_creator_store_page                        Guild has enabled the role subscription promo page.
+ * @property-read bool               $feature_developer_support_server                  Guild has been set as a support server on the App Directory.
+ * @property-read bool               $feature_discoverable                              Guild is able to be discovered in the directory.
+ * @property-read bool               $feature_featurable                                Guild is able to be featured in the directory.
+ * @property-read bool               $feature_has_directory_entry                       Guild is listed in a directory channel.
+ * @property-read bool               $feature_invites_disabled                          Guild has paused invites, preventing new users from joining.
+ * @property-read bool               $feature_invite_splash                             Guild has access to set an invite splash background.
+ * @property-read bool               $feature_linked_to_hub                             Guild is in a Student Hub.
+ * @property-read bool               $feature_member_verification_gate_enabled          Guild has enabled membership screening.
+ * @property-read bool               $feature_monetization_enabled                      Guild has enabled monetization.
+ * @property-read bool               $feature_more_stickers                             Guild has increased custom sticker slots.
+ * @property-read bool               $feature_news                                      Guild has access to create news channels.
+ * @property-read bool               $feature_partnered                                 Guild is partnered.
+ * @property-read bool               $feature_preview_enabled                           Guild can be previewed before joining via membership screening or the directory.
+ * @property-read bool               $feature_private_threads                           Guild has access to create private threads.
+ * @property-read bool               $feature_role_icons                                Guild is able to set role icons.
+ * @property-read bool               $feature_role_subscriptions_available_for_purchase Guild has role subscriptions that can be purchased.
+ * @property-read bool               $feature_role_subscriptions_enabled                Guild has enabled role subscriptions.
+ * @property-read bool               $feature_ticketed_events_enabled                   Guild has enabled ticketed events.
+ * @property-read bool               $feature_vanity_url                                Guild has access to set a vanity url.
+ * @property-read bool               $feature_verified                                  Guild is verified.
+ * @property-read bool               $feature_vip_regions                               Guild has access to set 384kbps bitrate in voice.
+ * @property-read bool               $feature_welcome_screen_enabled                    Guild has enabled the welcome screen.
+ * @property      int                $mfa_level                                         MFA level required to join.
+ * @property      ?string            $application_id                                    Application that made the guild, if made by one.
+ * @property      ?string            $system_channel_id                                 Channel that system notifications are posted in.
+ * @property      int                $system_channel_flags                              Flags for the system channel.
+ * @property      ?string            $rules_channel_id                                  Channel that the rules are in.
+ * @property      int|null           $max_presences                                     Maximum amount of presences allowed in the guild.
+ * @property      int|null           $max_members                                       Maximum amount of members allowed in the guild.
+ * @property      ?string            $vanity_url_code                                   Vanity URL code for the guild.
+ * @property      ?string            $description                                       Guild description of a guild.
+ * @property      ?string            $banner                                            Banner hash.
+ * @property      int                $premium_tier                                      Server boost level.
+ * @property      int|null           $premium_subscription_count                        Number of boosts in the guild.
+ * @property      string             $preferred_locale                                  Preferred locale of the guild.
+ * @property      ?string            $public_updates_channel_id                         Notice channel id.
+ * @property      int|null           $max_video_channel_users                           Maximum amount of users allowed in a video channel.
+ * @property      int|null           $max_stage_video_channel_users                     Maximum amount of users in a stage video channel.
+ * @property      int|null           $approximate_member_count                          Approximate number of members in this guild, returned from the GET /guilds/<id> endpoint when with_counts is true.
+ * @property      int|null           $approximate_presence_count                        Approximate number of non-offline members in this guild, returned from the GET /guilds/<id> endpoint when with_counts is true.
+ * @property-read WelcomeScreen|null $welcome_screen                                    The welcome screen of a Community guild, shown to new members, returned in an Invite's guild object. use `getWelcomeScreen` first to populate.
+ * @property      int                $nsfw_level                                        The guild NSFW level.
+ * @property      StickerRepository  $stickers                                          Custom guild stickers.
+ * @property      bool               $premium_progress_bar_enabled                      Whether the guild has the boost progress bar enabled.
  *
  * @property Carbon|null              $joined_at              A timestamp of when the current user joined the guild.
  * @property bool|null                $large                  Whether the guild is considered 'large' (over 250 members).
@@ -245,6 +249,8 @@ class Guild extends Part
         'feature_auto_moderation',
         'feature_banner',
         'feature_community',
+        'feature_creator_monetizable_provisional',
+        'feature_creator_store_page',
         'feature_developer_support_server',
         'feature_discoverable',
         'feature_featurable',
@@ -260,6 +266,8 @@ class Guild extends Part
         'feature_preview_enabled',
         'feature_private_threads',
         'feature_role_icons',
+        'feature_role_subscriptions_available_for_purchase',
+        'feature_role_subscriptions_enabled',
         'feature_ticketed_events_enabled',
         'feature_vanity_url',
         'feature_verified',
@@ -579,6 +587,16 @@ class Guild extends Part
         return in_array('COMMUNITY', $this->features);
     }
 
+    protected function getFeatureCreatorMonetizableProvisionalAttribute(): bool
+    {
+        return in_array('CREATOR_MONETIZABLE_PROVISIONAL', $this->features);
+    }
+
+    protected function getFeatureCreatorStorePageAttribute(): bool
+    {
+        return in_array('CREATOR_STORE_PAGE', $this->features);
+    }
+
     protected function getFeatureDeveloperSupportServerAttribute(): bool
     {
         return in_array('DEVELOPER_SUPPORT_SERVER', $this->features);
@@ -619,6 +637,16 @@ class Guild extends Part
         return in_array('MEMBER_VERIFICATION_GATE_ENABLED', $this->features);
     }
 
+    protected function getFeatureMonetizationEnabledAttribute(): bool
+    {
+        return in_array('MONETIZATION_ENABLED', $this->features);
+    }
+
+    protected function getFeatureMoreStickersAttribute(): bool
+    {
+        return in_array('MORE_STICKERS', $this->features);
+    }
+
     protected function getFeatureNewsAttribute(): bool
     {
         return in_array('NEWS', $this->features);
@@ -632,6 +660,31 @@ class Guild extends Part
     protected function getFeaturePreviewEnabledAttribute(): bool
     {
         return in_array('PREVIEW_ENABLED', $this->features);
+    }
+
+    protected function getFeaturePrivateThreadsAttribute(): bool
+    {
+        return in_array('PRIVATE_THREADS', $this->features);
+    }
+
+    protected function getFeatureRoleIconsAttribute(): bool
+    {
+        return in_array('ROLE_ICONS', $this->features);
+    }
+
+    protected function getFeatureRoleSubscriptionsAvailableForPurchaseAttribute(): bool
+    {
+        return in_array('ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE', $this->features);
+    }
+
+    protected function getFeatureRoleSubscriptionsEnabledAttribute(): bool
+    {
+        return in_array('ROLE_SUBSCRIPTIONS_ENABLED', $this->features);
+    }
+
+    protected function getFeatureTicketedEventsEnabledAttribute(): bool
+    {
+        return in_array('TICKETED_EVENTS_ENABLED', $this->features);
     }
 
     protected function getFeatureVanityUrlAttribute(): bool
@@ -652,31 +705,6 @@ class Guild extends Part
     protected function getFeatureWelcomeScreenEnabledAttribute(): bool
     {
         return in_array('WELCOME_SCREEN_ENABLED', $this->features);
-    }
-
-    protected function getFeatureTicketedEventsEnabledAttribute(): bool
-    {
-        return in_array('TICKETED_EVENTS_ENABLED', $this->features);
-    }
-
-    protected function getFeatureMonetizationEnabledAttribute(): bool
-    {
-        return in_array('MONETIZATION_ENABLED', $this->features);
-    }
-
-    protected function getFeatureMoreStickersAttribute(): bool
-    {
-        return in_array('MORE_STICKERS', $this->features);
-    }
-
-    protected function getFeaturePrivateThreadsAttribute(): bool
-    {
-        return in_array('PRIVATE_THREADS', $this->features);
-    }
-
-    protected function getFeatureRoleIconsAttribute(): bool
-    {
-        return in_array('ROLE_ICONS', $this->features);
     }
 
     /**
