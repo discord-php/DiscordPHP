@@ -75,6 +75,8 @@ use function React\Promise\resolve;
  */
 class Thread extends Part
 {
+    public const FLAG_PINNED = (1 << 1);
+
     /**
      * {@inheritDoc}
      */

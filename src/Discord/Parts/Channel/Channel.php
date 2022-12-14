@@ -134,6 +134,7 @@ class Channel extends Part
     public const VIDEO_QUALITY_AUTO = 1;
     public const VIDEO_QUALITY_FULL = 2;
 
+    /** @deprecated 10.0.0 Use `Thread::FLAG_PINNED` */
     public const FLAG_PINNED = (1 << 1);
     public const FLAG_REQUIRE_TAG = (1 << 4);
 
