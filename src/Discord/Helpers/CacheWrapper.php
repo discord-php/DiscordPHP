@@ -144,6 +144,7 @@ class CacheWrapper
      */
     public function set($key, $value, $ttl = null)
     {
+        $ttl ??= $this->config->ttl;
         $item = $this->serializer($value);
 
         $handleValue = function ($success) use ($key, $value) {
