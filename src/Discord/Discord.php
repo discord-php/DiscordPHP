@@ -1316,10 +1316,11 @@ class Discord
             $params = [
                 'v' => self::GATEWAY_VERSION,
                 'encoding' => $this->encoding,
-                'compress' => 'zlib-stream',
             ];
 
-            $this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE);
+            if ($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
+                $params['compress'] = 'zlib-stream';
+            }
 
             $query = http_build_query($params);
             $this->gateway = trim($gateway, '/').'/?'.$query;
