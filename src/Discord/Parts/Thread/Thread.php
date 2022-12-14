@@ -792,7 +792,7 @@ class Thread extends Part
 
         return $deferred->promise();
     }
-    
+
     /**
      * Returns the bot's permissions in the thread.
      *
@@ -823,6 +823,10 @@ class Thread extends Part
 
         if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
             $attr['invitable'] = $this->invitable;
+        }
+
+        if (array_key_exists('flags', $this->attributes)) {
+            $attr['flags'] = $this->flags;
         }
 
         return $attr;
