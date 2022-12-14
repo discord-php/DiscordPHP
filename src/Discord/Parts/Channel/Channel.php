@@ -85,7 +85,7 @@ use function React\Promise\resolve;
  * @property      ?Reaction|null      $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.
  * @property      int|null            $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a forum channel. this field is copied to the thread at creation time and does not live update.
  * @property      ?int|null           $default_sort_order                 The default sort order type used to order posts in forum channels.
- * @property      int|null            $default_forum_layout               The default layout type used to display posts in a forum channel.channels. Defaults to `0`, which indicates a layout view has not been set by a channel admin.
+ * @property      int|null            $default_forum_layout               The default layout type used to display posts in a forum channel. Defaults to `0`, which indicates a layout view has not been set by a channel admin.
  *
  * @property bool                    $is_private      Whether the channel is a private channel.
  * @property MemberRepository        $members         Voice channel only - members in the channel.
