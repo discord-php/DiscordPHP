@@ -30,6 +30,7 @@ use function React\Promise\resolve;
  * @since 10.0.0
  *
  * @property-read \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $interface The actual ReactPHP PSR-16 CacheInterface.
+ * @property-read CacheConfig                                                 $config    Cache configuration.
  */
 class CacheWrapper
 {
@@ -144,6 +145,7 @@ class CacheWrapper
      */
     public function set($key, $value, $ttl = null)
     {
+        $ttl ??= $this->config->ttl;
         $item = $this->serializer($value);
 
         $handleValue = function ($success) use ($key, $value) {
@@ -499,7 +501,7 @@ class CacheWrapper
 
     public function __get(string $name)
     {
-        if (in_array($name, ['interface'])) {
+        if (in_array($name, ['interface', 'config'])) {
             return $this->$name;
         }
     }

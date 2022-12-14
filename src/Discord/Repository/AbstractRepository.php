@@ -409,7 +409,7 @@ abstract class AbstractRepository extends Collection
             return;
         }
 
-        $this->cache->interface->set($this->cache->getPrefix().$offset, $this->cache->serializer($value));
+        $this->cache->interface->set($this->cache->getPrefix().$offset, $this->cache->serializer($value), $this->cache->config->ttl);
         $this->items[$offset] = $value;
     }
 
@@ -463,7 +463,7 @@ abstract class AbstractRepository extends Collection
         if (is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
             $this->items[$key] = $item;
-            $this->cache->interface->set($this->cache->getPrefix().$key, $this->cache->serializer($item));
+            $this->cache->interface->set($this->cache->getPrefix().$key, $this->cache->serializer($item), $this->cache->config->ttl);
         }
 
         return $this;
