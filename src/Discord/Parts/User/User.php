@@ -213,9 +213,9 @@ class User extends Part
      * @param string|null $format The image format.
      * @param int         $size   The size of the image.
      *
-     * @return string The URL to the clients avatar decoration.
+     * @return string|null The URL to the clients avatar decoration.
      */
-    public function getAvatarDecorationAttribute(?string $format = null, int $size = 288): string
+    public function getAvatarDecorationAttribute(?string $format = null, int $size = 288): ?string
     {
         if (! isset($this->attributes['avatar_decoration'])) {
             return null;
