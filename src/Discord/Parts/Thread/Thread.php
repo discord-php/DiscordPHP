@@ -827,10 +827,6 @@ class Thread extends Part
             $attr['invitable'] = $this->invitable;
         }
 
-        if (array_key_exists('flags', $this->attributes)) {
-            $attr['flags'] = $this->flags;
-        }
-
         return $attr;
     }
 

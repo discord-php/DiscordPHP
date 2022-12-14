@@ -1373,7 +1373,6 @@ class Channel extends Part
                 $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
             }
 
-            $attr['flags'] = $this->flags ?? null;
             $attr['available_tags'] = $this->attributes['available_tags'] ?? null;
 
             if (array_key_exists('default_sort_order', $this->attributes)) {
