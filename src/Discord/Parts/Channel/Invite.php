@@ -64,7 +64,6 @@ class Invite extends Part
         'approximate_presence_count',
         'approximate_member_count',
         'expires_at',
-        'stage_instance', // deprecated
         'guild_scheduled_event',
 
         // Extra metadata
