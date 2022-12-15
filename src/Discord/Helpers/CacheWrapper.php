@@ -423,8 +423,10 @@ class CacheWrapper
     {
         $data = (object) (get_object_vars($part) + ['attributes' => $part->getRawAttributes()]);
 
-        if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
-            $data = serialize($data);
+        if (! ($this->interface instanceof ArrayCache)) {
+            if ($this->interface instanceof \React\Cache\CacheInterface) {
+                $data = serialize($data);
+            }
 
             if ($this->config->compress) {
                 $data = zlib_encode($data, ZLIB_ENCODING_DEFLATE);
@@ -441,17 +443,20 @@ class CacheWrapper
      */
     public function unserializer($value)
     {
-        if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
+        if (! ($this->interface instanceof ArrayCache)) {
             if ($this->isZlibCompressed($value)) {
                 $value = zlib_decode($value);
             }
-            $tmp = unserialize($value);
-            if ($tmp === false) {
-                $this->discord->getLogger()->error('Malformed cache serialization', ['class' => $this->class, 'interface' => get_class($this->interface), 'serialized' => $value]);
 
-                return null;
+            if ($this->interface instanceof \React\Cache\CacheInterface) {
+                $tmp = unserialize($value);
+                if ($tmp === false) {
+                    $this->discord->getLogger()->error('Malformed cache serialization', ['class' => $this->class, 'interface' => get_class($this->interface), 'serialized' => $value]);
+
+                    return null;
+                }
+                $value = $tmp;
             }
-            $value = $tmp;
         }
 
         if (empty($value->attributes)) {
