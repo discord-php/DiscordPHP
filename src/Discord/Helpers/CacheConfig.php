@@ -67,7 +67,7 @@ class CacheConfig
         $this->interface = $interface;
         $this->sweep = $sweep;
         $interfaceName = get_class($interface);
-        if ($this->compress = $compress && stripos($interfaceName, 'Symfony') !== false) {
+        if (($this->compress = $compress) && stripos($interfaceName, 'Symfony') !== false) {
             trigger_error('Symfony cache is not compatible with option `$compress = true`, Use the DeflateMarshaller to compress data!');
         }
         if (null === $separator) {
