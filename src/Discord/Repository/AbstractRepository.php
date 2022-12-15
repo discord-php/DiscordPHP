@@ -134,9 +134,7 @@ abstract class AbstractRepository extends Collection
     /**
      * @param object $response
      *
-     * @return ExtendedPromiseInterface<static>
-     *
-     * @internal
+     * @return ExtendedPromiseInterface<$this>
      */
     protected function cacheFreshen($response): ExtendedPromiseInterface
     {
