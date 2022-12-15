@@ -194,8 +194,7 @@ class Discord
     protected $voiceClients = [];
 
     /**
-     * An array of large guilds that need to be requested for
-     * members.
+     * An array of large guilds that need to be requested for members.
      *
      * @var array Large guilds.
      */
@@ -294,8 +293,7 @@ class Discord
     protected $zlibDecompressor;
 
     /**
-     * Tracks the number of payloads the client
-     * has sent in the past 60 seconds.
+     * Tracks the number of payloads the client has sent in the past 60 seconds.
      *
      * @var int
      */
