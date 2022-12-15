@@ -66,7 +66,6 @@ use function React\Promise\resolve;
  * @property      ?string            $discovery_splash                                  Discovery splash hash. Only for discoverable guilds.
  * @property      string             $owner_id                                          The unique identifier of the owner of the guild.
  * @property-read User|null          $owner                                             The owner of the guild.
- * @property      ?string|null       $region                                            The region the guild's voice channels are hosted in.
  * @property      string             $afk_channel_id                                    The unique identifier of the AFK channel ID.
  * @property      int                $afk_timeout                                       How long in seconds you will remain in the voice channel until you are moved into the AFK channel. Can be set to: 60, 300, 900, 1800, 3600.
  * @property      bool|null          $widget_enabled                                    Is server widget enabled.
@@ -200,7 +199,6 @@ class Guild extends Part
         'banner',
         'owner_id',
         'application_id',
-        'region',
         'afk_channel_id',
         'afk_timeout',
         'system_channel_id',
@@ -982,6 +980,8 @@ class Guild extends Part
     /**
      * Validates the specified region.
      *
+     * @deprecated 10.0.0 Use `Channel::$rtc_region`.
+     *
      * @return ExtendedPromiseInterface
      *
      * @see Guild::REGION_DEFAULT The default region.
@@ -997,7 +997,7 @@ class Guild extends Part
                 return self::REGION_DEFAULT;
             }
 
-            return $this->region;
+            return 'deprecated';
         });
     }
 
