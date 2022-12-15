@@ -201,7 +201,6 @@ class Message extends Part
         'thread',
         'components',
         'sticker_items',
-        'stickers', // deprecated
         'position',
 
         // @internal
