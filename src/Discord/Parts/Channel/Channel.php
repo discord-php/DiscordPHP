@@ -134,6 +134,7 @@ class Channel extends Part
     public const VIDEO_QUALITY_AUTO = 1;
     public const VIDEO_QUALITY_FULL = 2;
 
+    /** @deprecated 10.0.0 Use `Thread::FLAG_PINNED` */
     public const FLAG_PINNED = (1 << 1);
     public const FLAG_REQUIRE_TAG = (1 << 4);
 
@@ -1365,7 +1366,9 @@ class Channel extends Part
             'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
 
-        if ($attr['type'] == self::TYPE_GUILD_FORUM) {
+        if ($attr['type'] == self::TYPE_GUILD_TEXT) {
+            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user ?? null;
+        } elseif ($attr['type'] == self::TYPE_GUILD_FORUM) {
             if (array_key_exists('default_reaction_emoji', $this->attributes)) {
                 $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
             }
@@ -1379,6 +1382,8 @@ class Channel extends Part
             if (array_key_exists('default_forum_layout', $this->attributes)) {
                 $attr['default_forum_layout'] = $this->default_forum_layout;
             }
+
+            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user ?? null;
         }
 
         return $attr;
