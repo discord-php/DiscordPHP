@@ -20,6 +20,16 @@ namespace Discord\WebSockets;
  */
 class Op
 {
+    /**
+     * Gateway Opcodes.
+     *
+     * All gateway events in Discord are tagged with an opcode that denotes the
+     * payload type. Your connection to our gateway may also sometimes close.
+     * When it does, you will receive a close code that tells you what happened.
+     *
+     * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
+     */
+
     /** Dispatches an event. */
     public const OP_DISPATCH = 0;
     /** Used for ping checking. */
@@ -45,9 +55,13 @@ class Op
     /** Used to acknowledge heartbeats. */
     public const OP_HEARTBEAT_ACK = 11;
 
-    ///////////////////////////////////////
-    ///////////////////////////////////////
-    ///////////////////////////////////////
+    /**
+     * Voice Opcodes.
+     *
+     * Our voice gateways have their own set of opcodes and close codes.
+     *
+     * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#voice-voice-opcodes
+     */
 
     /** Used to begin a voice WebSocket connection. */
     public const VOICE_IDENTIFY = 0;
@@ -63,12 +77,26 @@ class Op
     public const VOICE_SPEAKING = 5;
     /** Sent by the Discord servers to acknowledge heartbeat */
     public const VOICE_HEARTBEAT_ACK = 6;
+    /** Resume a connection. */
+    public const VOICE_RESUME = 7;
     /** Hello packet used to pass heartbeat interval */
     public const VOICE_HELLO = 8;
+    /** Acknowledge a successful session resume. */
+    public const VOICE_RESUMED = 9;
+    /** A client has disconnected from the voice channel. */
+    public const VOICE_CLIENT_DISCONNECT = 13;
 
-    ///////////////////////////////////////
-    ///////////////////////////////////////
-    ///////////////////////////////////////
+    /**
+     * Gateway Close Event Codes.
+     *
+     * In order to prevent broken reconnect loops, you should consider some
+     * close codes as a signal to stop reconnecting. This can be because your
+     * token expired, or your identification is invalid. This table explains
+     * what the application defined close codes for the gateway are, and which
+     * close codes you should not attempt to reconnect.
+     *
+     * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes
+     */
 
     /** Normal close or heartbeat is invalid. */
     public const CLOSE_NORMAL = 1000;
@@ -105,9 +133,11 @@ class Op
     /** Disallowed intents. */
     public const CLOSE_DISALLOWED_INTENTS = 4014;
 
-    ///////////////////////////////////////
-    ///////////////////////////////////////
-    ///////////////////////////////////////
+    /**
+     * Voice Close Event Codes.
+     *
+     * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#voice-voice-close-event-codes
+     */
 
     /** Can't find the server. */
     public const CLOSE_VOICE_SERVER_NOT_FOUND = 4011;

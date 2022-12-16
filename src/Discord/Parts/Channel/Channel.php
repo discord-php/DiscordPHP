@@ -202,7 +202,7 @@ class Channel extends Part
      */
     protected function afterConstruct(): void
     {
-        if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_GUILD_TEXT) {
+        if (! array_key_exists('bitrate', $this->attributes) && $this->isVoiceBased()) {
             $this->bitrate = 64000;
         }
     }
