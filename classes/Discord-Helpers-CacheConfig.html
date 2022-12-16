@@ -336,6 +336,13 @@
 </dt>
 <dd>Whether to automatically sweep cached items from memory, disabled by default.</dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Helpers-CacheConfig.html#property_ttl">$ttl</a>
+    <span>
+                        &nbsp;: null|int|<abbr title="\DateInterval">DateInterval</abbr>|float            </span>
+</dt>
+<dd>The default Time To Live for `$interface::set()` and `$interface::setMultiple()`.</dd>
+
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Helpers-CacheConfig.html#property_interface">$interface</a>
     <span>
@@ -516,6 +523,39 @@
         class="
             phpdocumentor-element
             -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_ttl">
+        $ttl
+        <a href="classes/Discord-Helpers-CacheConfig.html#property_ttl" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CacheConfig.php"><a href="files/src-discord-helpers-cacheconfig.html"><abbr title="src/Discord/Helpers/CacheConfig.php">CacheConfig.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">56</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The default Time To Live for `$interface::set()` and `$interface::setMultiple()`.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">null|int|<abbr title="\DateInterval">DateInterval</abbr>|float</span>
+    <span class="phpdocumentor-signature__name">$ttl</span>
+    </code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
             -protected
                                                         "
 >
@@ -596,14 +636,14 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CacheConfig.php"><a href="files/src-discord-helpers-cacheconfig.html"><abbr title="src/Discord/Helpers/CacheConfig.php">CacheConfig.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\React\Cache\CacheInterface">CacheInterface</abbr>|<abbr title="\Psr\SimpleCache\CacheInterface">CacheInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$interface</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$compress</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$sweep</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$separator</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\React\Cache\CacheInterface">CacheInterface</abbr>|<abbr title="\Psr\SimpleCache\CacheInterface">CacheInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$interface</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$compress</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$sweep</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$separator</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">null|int|<abbr title="\DateInterval">DateInterval</abbr>|float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ttl</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -644,6 +684,15 @@
 </section>
 
             </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$ttl</span>
+                : <span class="phpdocumentor-signature__argument__return-type">null|int|<abbr title="\DateInterval">DateInterval</abbr>|float</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The cache time to live default value to pass to the interface.</p>
+</section>
+
+            </dd>
             </dl>
 
     
@@ -667,7 +716,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CacheConfig.php"><a href="files/src-discord-helpers-cacheconfig.html"><abbr title="src/Discord/Helpers/CacheConfig.php">CacheConfig.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 

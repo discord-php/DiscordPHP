@@ -1418,7 +1418,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024largeGuilds",
             "name": "largeGuilds",
-            "summary": "An\u0020array\u0020of\u0020large\u0020guilds\u0020that\u0020need\u0020to\u0020be\u0020requested\u0020for\nmembers.",
+            "summary": "An\u0020array\u0020of\u0020large\u0020guilds\u0020that\u0020need\u0020to\u0020be\u0020requested\u0020for\u0020members.",
             "url": "classes/Discord-Discord.html#property_largeGuilds"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024largeSent",
@@ -1488,7 +1488,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024payloadCount",
             "name": "payloadCount",
-            "summary": "Tracks\u0020the\u0020number\u0020of\u0020payloads\u0020the\u0020client\nhas\u0020sent\u0020in\u0020the\u0020past\u002060\u0020seconds.",
+            "summary": "Tracks\u0020the\u0020number\u0020of\u0020payloads\u0020the\u0020client\u0020has\u0020sent\u0020in\u0020the\u0020past\u002060\u0020seconds.",
             "url": "classes/Discord-Discord.html#property_payloadCount"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024payloadTimer",
@@ -1910,6 +1910,11 @@ Search.appendIndex(
             "name": "separator",
             "summary": "",
             "url": "classes/Discord-Helpers-CacheConfig.html#property_separator"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\CacheConfig\u003A\u003A\u0024ttl",
+            "name": "ttl",
+            "summary": "The\u0020default\u0020Time\u0020To\u0020Live\u0020for\u0020\u0060\u0024interface\u003A\u003Aset\u0028\u0029\u0060\u0020and\u0020\u0060\u0024interface\u003A\u003AsetMultiple\u0028\u0029\u0060.",
+            "url": "classes/Discord-Helpers-CacheConfig.html#property_ttl"
         },                {
             "fqsen": "\\Discord\\Helpers\\CacheWrapper",
             "name": "CacheWrapper",
@@ -2686,20 +2691,20 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_SORT_ORDER_CREATION_DATE"
         },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFORUM_LAYOUT_DEFAULT",
-            "name": "FORUM_LAYOUT_DEFAULT",
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFORUM_LAYOUT_NOT_SET",
+            "name": "FORUM_LAYOUT_NOT_SET",
             "summary": "",
-            "url": "classes/Discord-Parts-Channel-Channel.html#constant_FORUM_LAYOUT_DEFAULT"
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_FORUM_LAYOUT_NOT_SET"
         },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFORUM_LAYOUT_LIST",
-            "name": "FORUM_LAYOUT_LIST",
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFORUM_LAYOUT_LIST_VIEW",
+            "name": "FORUM_LAYOUT_LIST_VIEW",
             "summary": "",
-            "url": "classes/Discord-Parts-Channel-Channel.html#constant_FORUM_LAYOUT_LIST"
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_FORUM_LAYOUT_LIST_VIEW"
         },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFORUM_LAYOUT_GRID",
-            "name": "FORUM_LAYOUT_GRID",
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFORUM_LAYOUT_GRID_VIEW",
+            "name": "FORUM_LAYOUT_GRID_VIEW",
             "summary": "",
-            "url": "classes/Discord-Parts-Channel-Channel.html#constant_FORUM_LAYOUT_GRID"
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_FORUM_LAYOUT_GRID_VIEW"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -3160,6 +3165,11 @@ Search.appendIndex(
             "name": "TYPE_AUTO_MODERATION_ACTION",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_AUTO_MODERATION_ACTION"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003ATYPE_ROLE_SUBSCRIPTION_PURCHASE",
+            "name": "TYPE_ROLE_SUBSCRIPTION_PURCHASE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_ROLE_SUBSCRIPTION_PURCHASE"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AGUILD_MEMBER_JOIN",
             "name": "GUILD_MEMBER_JOIN",
@@ -4481,6 +4491,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureCommunityAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureCreatorMonetizableProvisionalAttribute\u0028\u0029",
+            "name": "getFeatureCreatorMonetizableProvisionalAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureCreatorMonetizableProvisionalAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureCreatorStorePageAttribute\u0028\u0029",
+            "name": "getFeatureCreatorStorePageAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureCreatorStorePageAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureDeveloperSupportServerAttribute\u0028\u0029",
             "name": "getFeatureDeveloperSupportServerAttribute",
             "summary": "",
@@ -4521,6 +4541,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureMemberVerificationGateEnabledAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureMonetizationEnabledAttribute\u0028\u0029",
+            "name": "getFeatureMonetizationEnabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureMonetizationEnabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureMoreStickersAttribute\u0028\u0029",
+            "name": "getFeatureMoreStickersAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureMoreStickersAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureNewsAttribute\u0028\u0029",
             "name": "getFeatureNewsAttribute",
             "summary": "",
@@ -4535,6 +4565,31 @@ Search.appendIndex(
             "name": "getFeaturePreviewEnabledAttribute",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeaturePreviewEnabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeaturePrivateThreadsAttribute\u0028\u0029",
+            "name": "getFeaturePrivateThreadsAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeaturePrivateThreadsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureRoleIconsAttribute\u0028\u0029",
+            "name": "getFeatureRoleIconsAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureRoleIconsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureRoleSubscriptionsAvailableForPurchaseAttribute\u0028\u0029",
+            "name": "getFeatureRoleSubscriptionsAvailableForPurchaseAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureRoleSubscriptionsAvailableForPurchaseAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureRoleSubscriptionsEnabledAttribute\u0028\u0029",
+            "name": "getFeatureRoleSubscriptionsEnabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureRoleSubscriptionsEnabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureTicketedEventsEnabledAttribute\u0028\u0029",
+            "name": "getFeatureTicketedEventsEnabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureTicketedEventsEnabledAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureVanityUrlAttribute\u0028\u0029",
             "name": "getFeatureVanityUrlAttribute",
@@ -4555,31 +4610,6 @@ Search.appendIndex(
             "name": "getFeatureWelcomeScreenEnabledAttribute",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureWelcomeScreenEnabledAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureTicketedEventsEnabledAttribute\u0028\u0029",
-            "name": "getFeatureTicketedEventsEnabledAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureTicketedEventsEnabledAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureMonetizationEnabledAttribute\u0028\u0029",
-            "name": "getFeatureMonetizationEnabledAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureMonetizationEnabledAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureMoreStickersAttribute\u0028\u0029",
-            "name": "getFeatureMoreStickersAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureMoreStickersAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeaturePrivateThreadsAttribute\u0028\u0029",
-            "name": "getFeaturePrivateThreadsAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeaturePrivateThreadsAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureRoleIconsAttribute\u0028\u0029",
-            "name": "getFeatureRoleIconsAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureRoleIconsAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetVoiceRegions\u0028\u0029",
             "name": "getVoiceRegions",
@@ -6386,6 +6416,11 @@ Search.appendIndex(
             "summary": "Returns\u0020a\u0020formatted\u0020mention.",
             "url": "classes/Discord-Parts-Thread-Thread.html#method___toString"
         },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AFLAG_PINNED",
+            "name": "FLAG_PINNED",
+            "summary": "",
+            "url": "classes/Discord-Parts-Thread-Thread.html#constant_FLAG_PINNED"
+        },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
@@ -7186,6 +7221,11 @@ Search.appendIndex(
             "summary": "Freshens\u0020the\u0020repository\u0020cache.",
             "url": "classes/Discord-Repository-AbstractRepository.html#method_freshen"
         },                {
+            "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003AcacheFreshen\u0028\u0029",
+            "name": "cacheFreshen",
+            "summary": "",
+            "url": "classes/Discord-Repository-AbstractRepository.html#method_cacheFreshen"
+        },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003Acreate\u0028\u0029",
             "name": "create",
             "summary": "Builds\u0020a\u0020new,\u0020empty\u0020part.",
@@ -7428,7 +7468,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\ThreadRepository\u003A\u003AcacheFreshen\u0028\u0029",
             "name": "cacheFreshen",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Channel-ThreadRepository.html#method_cacheFreshen"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\ThreadRepository\u003A\u003Aactive\u0028\u0029",
@@ -9746,10 +9786,25 @@ Search.appendIndex(
             "summary": "Sent\u0020by\u0020the\u0020Discord\u0020servers\u0020to\u0020acknowledge\u0020heartbeat",
             "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_HEARTBEAT_ACK"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_RESUME",
+            "name": "VOICE_RESUME",
+            "summary": "Resume\u0020a\u0020connection.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_RESUME"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_HELLO",
             "name": "VOICE_HELLO",
             "summary": "Hello\u0020packet\u0020used\u0020to\u0020pass\u0020heartbeat\u0020interval",
             "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_HELLO"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_RESUMED",
+            "name": "VOICE_RESUMED",
+            "summary": "Acknowledge\u0020a\u0020successful\u0020session\u0020resume.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_RESUMED"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_CLIENT_DISCONNECT",
+            "name": "VOICE_CLIENT_DISCONNECT",
+            "summary": "A\u0020client\u0020has\u0020disconnected\u0020from\u0020the\u0020voice\u0020channel.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_CLIENT_DISCONNECT"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003ACLOSE_NORMAL",
             "name": "CLOSE_NORMAL",
