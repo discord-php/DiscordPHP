@@ -710,15 +710,11 @@ abstract class AbstractRepository extends Collection
     {
         foreach ($this->items as $offset => &$item) {
             if ($item instanceof WeakReference) {
-                if (! $item = $item->get()) {
-                    // Attempt to get resolved value if promise is resolved without waiting
-                    $item = nowait($this->cache->get($offset));
-                }
+                // Attempt to get resolved value if promise is resolved without waiting
+                $item = $item->get() ?? nowait($this->cache->get($offset));
             }
-
-            if ($item) {
-                yield $offset => $item;
-            }
+    
+            yield $offset => $item;
         }
     }
 
