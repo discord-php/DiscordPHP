@@ -706,22 +706,20 @@ abstract class AbstractRepository extends Collection
      *
      * @return Traversable
      */
-    public function getIterator(): Traversable
+    public function &getIterator(): Traversable
     {
-        return (function () {
-            foreach ($this->items as $offset => $item) {
-                if ($item instanceof WeakReference) {
-                    if (! $item = $item->get()) {
-                        // Attempt to get resolved value if promise is resolved without waiting
-                        $item = nowait($this->cache->get($offset));
-                    }
-                }
-
-                if ($item) {
-                    yield $offset => $this->items[$offset] = $item;
+        foreach ($this->items as $offset => &$item) {
+            if ($item instanceof WeakReference) {
+                if (! $item = $item->get()) {
+                    // Attempt to get resolved value if promise is resolved without waiting
+                    $item = nowait($this->cache->get($offset));
                 }
             }
-        })();
+
+            if ($item) {
+                yield $offset => $item;
+            }
+        }
     }
 
     public function __get(string $key)
