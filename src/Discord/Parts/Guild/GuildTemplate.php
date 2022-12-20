@@ -157,7 +157,7 @@ class GuildTemplate extends Part
                 /** @var ?Guild */
                 if (! $guildPart = $this->discord->guilds->get('id', $response->id)) {
                     /** @var Guild */
-                    $guildPart = $this->factory->part(Guild::class, (array) $response + ['roles' => $roles], true);
+                    $guildPart = $this->discord->guilds->create((array) $response + ['roles' => $roles], true);
 
                     foreach ($channels as $channel) {
                         $guildPart->channels->pushItem($guildPart->channels->create($channel, true));

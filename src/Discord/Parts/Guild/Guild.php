@@ -1101,7 +1101,7 @@ class Guild extends Part
                     if ($rolePart = $this->roles->get('id', $role->id)) {
                         $rolePart->fill((array) $role);
                     } else {
-                        $rolePart = $this->factory->part(Role::class, (array) $role + ['guild_id' => $this->id], true);
+                        $rolePart = $this->roles->create((array) $role + ['guild_id' => $this->id], true);
                         $this->roles->pushItem($rolePart);
                     }
                 }
@@ -1145,7 +1145,7 @@ class Guild extends Part
 
             foreach ($responses as $response) {
                 if (! $member = $this->members->get('id', $response->user->id)) {
-                    $member = $this->factory->part(Member::class, (array) $response + ['guild_id' => $this->id], true);
+                    $member = $this->members->create((array) $response + ['guild_id' => $this->id], true);
                     $this->members->pushItem($member);
                 }
 

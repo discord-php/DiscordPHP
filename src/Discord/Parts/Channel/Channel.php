@@ -1064,7 +1064,7 @@ class Channel extends Part
                 /** @var ?Message */
                 if (! $threadPart->messages->offsetExists($messageId)) {
                     // Don't store in the external cache
-                    $threadPart->messages->offsetSet($messageId, $this->factory->part(Message::class, (array) $response->message, true));
+                    $threadPart->messages->offsetSet($messageId, $threadPart->messages->create((array) $response->message, true));
                 }
             }
 
