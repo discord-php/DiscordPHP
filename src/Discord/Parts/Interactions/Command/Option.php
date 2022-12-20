@@ -79,7 +79,7 @@ class Option extends Part
      */
     protected function getChoicesAttribute(): ?Collection
     {
-        if (! isset($this->attributes['choices']) && (! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER]))) {
+        if (! isset($this->attributes['choices']) && ! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
             return null;
         }
 
