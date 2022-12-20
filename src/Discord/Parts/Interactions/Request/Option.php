@@ -48,7 +48,7 @@ class Option extends Part
      */
     protected function getOptionsAttribute()
     {
-        if (! isset($this->attributes['options']) && (isset($this->type) && ! in_array($this->type, [CommandOption::SUB_COMMAND, CommandOption::SUB_COMMAND_GROUP]))) {
+        if (! isset($this->attributes['options']) && ! in_array($this->type, [CommandOption::SUB_COMMAND, CommandOption::SUB_COMMAND_GROUP])) {
             return null;
         }
 

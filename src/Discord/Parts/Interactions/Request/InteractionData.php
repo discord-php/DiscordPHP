@@ -62,7 +62,7 @@ class InteractionData extends Part
      */
     protected function getOptionsAttribute()
     {
-        if (! isset($this->attributes['options']) && (isset($this->type) && $this->type != Command::CHAT_INPUT)) {
+        if (! isset($this->attributes['options']) && $this->type != Command::CHAT_INPUT) {
             return null;
         }
 

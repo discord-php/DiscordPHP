@@ -73,7 +73,7 @@ class Component extends Part
      */
     protected function getComponentsAttribute()
     {
-        if (! isset($this->attributes['components']) && (isset($this->type) && $this->type != ComponentBuilder::TYPE_ACTION_ROW)) {
+        if (! isset($this->attributes['components']) && $this->type != ComponentBuilder::TYPE_ACTION_ROW) {
             return null;
         }
 
