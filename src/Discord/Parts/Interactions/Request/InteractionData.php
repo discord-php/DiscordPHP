@@ -12,6 +12,7 @@
 namespace Discord\Parts\Interactions\Request;
 
 use Discord\Helpers\Collection;
+use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Part;
 
 /**
@@ -61,7 +62,7 @@ class InteractionData extends Part
      */
     protected function getOptionsAttribute()
     {
-        if (! isset($this->attributes['options'])) {
+        if (! isset($this->attributes['options']) && (isset($this->type) && $this->type != Command::CHAT_INPUT)) {
             return null;
         }
 

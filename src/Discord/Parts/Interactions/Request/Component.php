@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Interactions\Request;
 
+use Discord\Builders\Components\Component as ComponentBuilder;
 use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
@@ -72,7 +73,7 @@ class Component extends Part
      */
     protected function getComponentsAttribute()
     {
-        if (! isset($this->attributes['components'])) {
+        if (! isset($this->attributes['components']) && (isset($this->type) && $this->type != ComponentBuilder::TYPE_ACTION_ROW)) {
             return null;
         }
 

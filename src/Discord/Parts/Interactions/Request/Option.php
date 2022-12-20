@@ -12,6 +12,7 @@
 namespace Discord\Parts\Interactions\Request;
 
 use Discord\Helpers\Collection;
+use Discord\Parts\Interactions\Command\Option as CommandOption;
 use Discord\Parts\Part;
 
 /**
@@ -47,7 +48,7 @@ class Option extends Part
      */
     protected function getOptionsAttribute()
     {
-        if (! isset($this->attributes['options'])) {
+        if (! isset($this->attributes['options']) && (isset($this->type) && ! in_array($this->type, [CommandOption::SUB_COMMAND, CommandOption::SUB_COMMAND_GROUP]))) {
             return null;
         }
 
