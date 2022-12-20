@@ -435,7 +435,7 @@ class Message extends Part
                 if ($thread = $channel->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
-                $thread = $this->factory->part(Thread::class, $this->attributes['thread'], true);
+                $thread = $channel->threads->create((array) $this->attributes['thread'], true);
                 $channel->threads->pushItem($thread);
             }
         }
