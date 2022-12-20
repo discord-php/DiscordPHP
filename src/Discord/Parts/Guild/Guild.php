@@ -541,7 +541,7 @@ class Guild extends Part
      *
      * @return Collection[]|StageInstance[]
      */
-    protected function getStageInstancesAttribute(): ?Collection
+    protected function getStageInstancesAttribute(): Collection
     {
         $stage_instances = Collection::for(StageInstance::class);
 
