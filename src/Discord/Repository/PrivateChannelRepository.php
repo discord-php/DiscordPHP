@@ -26,6 +26,7 @@ use Discord\Http\Endpoint;
  * @method Channel|null first()
  * @method Channel|null last()
  * @method Channel|null find()
+ * @method Channel|null offsetGet(string|int $offset)
  */
 class PrivateChannelRepository extends AbstractRepository
 {
