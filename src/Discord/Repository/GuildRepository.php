@@ -27,7 +27,6 @@ use React\Promise\ExtendedPromiseInterface;
  * @method Guild|null first()
  * @method Guild|null last()
  * @method Guild|null find()
- * @method Guild|null offsetGet(string|int $offset)
  */
 class GuildRepository extends AbstractRepository
 {

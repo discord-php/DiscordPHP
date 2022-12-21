@@ -26,7 +26,6 @@ use Discord\Parts\User\User;
  * @method User|null first()
  * @method User|null last()
  * @method User|null find()
- * @method User|null offsetGet(string|int $offset)
  */
 class UserRepository extends AbstractRepository
 {
