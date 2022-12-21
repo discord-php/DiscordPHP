@@ -553,7 +553,7 @@ class Discord
             $await[] = $guild->members->cache->set($userId, $this->factory->part(Member::class, $member, true));
 
             if (! $this->users->offsetExists($userId)) {
-                $await[] = $this->users->cache->set($userId, $this->factory->part(User::class, (array) $member['user'], true));
+                $await[] = $this->users->cache->set($userId, $this->users->create((array) $member['user'], true));
             }
 
             ++$count;
