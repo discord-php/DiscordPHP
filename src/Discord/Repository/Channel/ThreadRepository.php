@@ -13,7 +13,6 @@ namespace Discord\Repository\Channel;
 
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
-use Discord\Parts\Thread\Member;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;
 use React\Promise\ExtendedPromiseInterface;
