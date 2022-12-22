@@ -88,7 +88,7 @@ class Command extends Part
 
         $options = Collection::for(Option::class, null);
 
-        foreach ($this->attributes['options'] as $option) {
+        foreach ($this->attributes['options'] ?? [] as $option) {
             $options->pushItem($this->factory->part(Option::class, (array) $option, true));
         }
 

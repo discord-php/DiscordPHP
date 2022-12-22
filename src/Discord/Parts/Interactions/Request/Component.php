@@ -79,7 +79,7 @@ class Component extends Part
 
         $components = Collection::for(Component::class, null);
 
-        foreach ($this->attributes['components'] as $component) {
+        foreach ($this->attributes['components'] ?? [] as $component) {
             $components->pushItem($this->factory->part(Component::class, (array) $component, true));
         }
 
