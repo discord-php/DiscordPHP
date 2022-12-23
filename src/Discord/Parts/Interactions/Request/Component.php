@@ -71,7 +71,7 @@ class Component extends Part
      *
      * @return Collection|Component[]|null $components
      */
-    protected function getComponentsAttribute()
+    protected function getComponentsAttribute(): ?Collection
     {
         if (! isset($this->attributes['components']) && $this->type != ComponentBuilder::TYPE_ACTION_ROW) {
             return null;

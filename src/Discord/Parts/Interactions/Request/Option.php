@@ -46,7 +46,7 @@ class Option extends Part
      *
      * @return Collection|Option[]|null $options
      */
-    protected function getOptionsAttribute()
+    protected function getOptionsAttribute(): ?Collection
     {
         if (! isset($this->attributes['options']) && ! in_array($this->type, [CommandOption::SUB_COMMAND, CommandOption::SUB_COMMAND_GROUP])) {
             return null;
