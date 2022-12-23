@@ -464,11 +464,7 @@ class Thread extends Part
                 $messages = Collection::for(Message::class);
 
                 foreach ($responses as $response) {
-                    if (! $message = $this->messages->get('id', $response->id)) {
-                        $message = $this->factory->part(Message::class, (array) $response, true);
-                    }
-
-                    $messages->pushItem($message);
+                    $messages->pushItem($this->messages->get('id', $response->id) ?: $this->factory->part(Message::class, (array) $response, true));
                 }
 
                 return $messages;
