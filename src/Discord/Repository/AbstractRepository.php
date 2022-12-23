@@ -225,6 +225,10 @@ abstract class AbstractRepository extends Collection
      */
     public function delete($part, ?string $reason = null): ExtendedPromiseInterface
     {
+        if (! isset($part)) {
+            return reject(new \Exception('You cannot delete a non-existant part.'));
+        }
+
         if (! ($part instanceof Part)) {
             $part = $this->factory->part($this->class, [$this->discrim => $part], true);
         }
@@ -713,7 +717,7 @@ abstract class AbstractRepository extends Collection
                 // Attempt to get resolved value if promise is resolved without waiting
                 $item = $item->get() ?? nowait($this->cache->get($offset));
             }
-    
+
             yield $offset => $item;
         }
     }
