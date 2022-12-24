@@ -22,10 +22,10 @@ DiscordPHP is a wrapper for the Discord REST, WebSocket and Voice APIs. Built on
 Requirements
 ============
 
-- `PHP 8.0 CLI<https://php.net>`_ or higher
+- `PHP 8.0<https://php.net>`_ or higher
 
   + Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
-  + x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.
+  + x86 (32-bit) PHP requires ``ext-gmp`` extension enabled.
 
 - ``ext-json`` for JSON parsing.
 - ``ext-zlib`` for gateway packet compression.
@@ -33,17 +33,13 @@ Requirements
 Recommended Extensions
 ----------------------
 
-- One of ``ext-uv``, ``ext-libev`` or ``evt-event`` (in order of preference) for a faster, and more performant event loop.
+- One of ``ext-uv``, ``ext-ev`` or ``evt-event`` (in order of preference) for a faster, and more performant event loop.
 - ``ext-mbstring`` if you may handle non-english characters.
-- ``ext-gmp`` if running 32-bit PHP.
 
 Voice Requirements
 ==================
 
-- x86_64 Windows, Linux or Darwin based OS.
-  
-  + If you are running on Windows, you must be using PHP 8.0.
-
+- 64-bit PHP
 - ``ext-sodium`` for voice encryption.
 - FFmpeg
 
@@ -63,7 +59,7 @@ We recommend installing `PHP Intelephense <https://intelephense.com/>`_ alongsid
 Installation
 ============
 
-Installation requries `Composer <https://getcomposer.org>`_.
+Installation requires `Composer <https://getcomposer.org>`_.
 
 To install the latest release::
 

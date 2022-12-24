@@ -32,7 +32,7 @@ Before you start using this Library, you **need** to know how PHP works, you nee
 
 #### Recommended Extensions
 
-- One of [`ext-uv`](https://github.com/amphp/ext-uv) (recommended), `ext-libev` or `ext-event` for a faster, and more performant event loop.
+- One of [`ext-uv`](https://github.com/amphp/ext-uv) (recommended), `ext-ev` or `ext-event` for a faster, and more performant event loop.
 - [`ext-mbstring`](https://www.php.net/manual/en/book.mbstring.php) if handling non-latin characters.
 
 #### Voice Requirements
