@@ -36,7 +36,7 @@ use Discord\Parts\User\User;
  * @property-read User|null             $creator          The user which first created this rule.
  * @property      int                   $event_type       The rule event type.
  * @property      int                   $trigger_type     The rule trigger type.
- * @property      object                $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `regex_patterns`, `presets`, `allow_list` and `mention_total_limit`).
+ * @property      object                $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `regex_patterns`, `presets`, `allow_list`, `mention_total_limit` and `mention_raid_protection_enabled`).
  * @property      Collection|Action[]   $actions          The actions which will execute when the rule is triggered.
  * @property      bool                  $enabled          Whether the rule is enabled.
  * @property      Collection|Roles[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).

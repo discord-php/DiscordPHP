@@ -98,6 +98,7 @@ use function React\Promise\resolve;
  * @property-read bool               $feature_partnered                                 Guild is partnered.
  * @property-read bool               $feature_preview_enabled                           Guild can be previewed before joining via membership screening or the directory.
  * @property-read bool               $feature_private_threads                           Guild has access to create private threads.
+ * @property-read bool               $feature_raid_alerts_enabled                       Guild has enabled alerts for join raids in the configured safety alerts channel.
  * @property-read bool               $feature_role_icons                                Guild is able to set role icons.
  * @property-read bool               $feature_role_subscriptions_available_for_purchase Guild has role subscriptions that can be purchased.
  * @property-read bool               $feature_role_subscriptions_enabled                Guild has enabled role subscriptions.
@@ -128,6 +129,7 @@ use function React\Promise\resolve;
  * @property      int                $nsfw_level                                        The guild NSFW level.
  * @property      StickerRepository  $stickers                                          Custom guild stickers.
  * @property      bool               $premium_progress_bar_enabled                      Whether the guild has the boost progress bar enabled.
+ * @property      string|null        $safety_alerts_channel_id                          The id of the channel where admins and moderators of Community guilds receive safety alerts from Discord.
  *
  * @property Carbon|null              $joined_at              A timestamp of when the current user joined the guild.
  * @property bool|null                $large                  Whether the guild is considered 'large' (over 250 members).
@@ -225,6 +227,7 @@ class Guild extends Part
         'welcome_screen',
         'nsfw_level',
         'premium_progress_bar_enabled',
+        'safety_alerts_channel_id',
 
         // events
         'joined_at',
@@ -263,6 +266,7 @@ class Guild extends Part
         'feature_partnered',
         'feature_preview_enabled',
         'feature_private_threads',
+        'feature_raid_alerts_enabled',
         'feature_role_icons',
         'feature_role_subscriptions_available_for_purchase',
         'feature_role_subscriptions_enabled',
@@ -663,6 +667,11 @@ class Guild extends Part
     protected function getFeaturePrivateThreadsAttribute(): bool
     {
         return in_array('PRIVATE_THREADS', $this->features);
+    }
+
+    protected function getFeatureRaidAlertsEnabledAttribute(): bool
+    {
+        return in_array('RAID_ALERTS_ENABLED', $this->features);
     }
 
     protected function getFeatureRoleIconsAttribute(): bool
@@ -1508,7 +1517,7 @@ class Guild extends Part
      * @throws \RuntimeException      Guild feature is already set.
      * @throws NoPermissionsException Missing various permissions:
      *                                administrator for COMMUNITY or DISCOVERABLE.
-     *                                manage_guild for INVITES_DISABLED.
+     *                                manage_guild for INVITES_DISABLED or RAID_ALERTS_ENABLED.
      *
      * @return ExtendedPromiseInterface<self> This guild.
      */
@@ -1518,14 +1527,14 @@ class Guild extends Part
             if ((isset($features['COMMUNITY']) || isset($features['DISCOVERABLE'])) && ! $botperms->administrator) {
                 return reject(new NoPermissionsException('You do not have administrator permission to modify the guild feature COMMUNITY or DISCOVERABLE.'));
             }
-            if (isset($features['INVITES_DISABLED']) && ! $botperms->manage_guild) {
-                return reject(new NoPermissionsException('You do not have manage guild permission to modify the guild feature INVITES_DISABLED.'));
+            if ((isset($features['INVITES_DISABLED']) || isset($features['RAID_ALERTS_ENABLED'])) && ! $botperms->manage_guild) {
+                return reject(new NoPermissionsException('You do not have manage guild permission to modify the guild feature INVITES_DISABLED or RAID_ALERTS_ENABLED.'));
             }
         }
 
         $setFeatures = $this->features;
         foreach ($features as $feature => $set) {
-            if (! in_array($feature, ['COMMUNITY', 'INVITES_DISABLED', 'DISCOVERABLE'])) {
+            if (! in_array($feature, ['COMMUNITY', 'INVITES_DISABLED', 'DISCOVERABLE', 'RAID_ALERTS_ENABLED'])) {
                 return reject(new \OutOfRangeException("Guild feature {$feature} is not mutable"));
             }
             $featureIdx = array_search($feature, $setFeatures);
@@ -1605,6 +1614,7 @@ class Guild extends Part
             'preferred_locale' => $this->preferred_locale ?? null,
             'description' => $this->description ?? null,
             'premium_progress_bar_enabled' => $this->premium_progress_bar_enabled,
+            'safety_alerts_channel_id' => $this->safety_alerts_channel_id,
         ];
     }
 
