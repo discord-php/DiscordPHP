@@ -396,7 +396,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/Discord-Helpers-Buffer.html#method_readRaw">readRaw()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: string|bool    </span>
 </dt>
 <dd>Reads from the buffer and returns in a string.</dd>
 
@@ -976,7 +976,7 @@ read.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">readRaw</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$length</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">readRaw</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$length</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|bool</span></code>
 
         <section class="phpdocumentor-description"><p>Returns false if there were not enough bytes in the buffer.</p>
 </section>
@@ -997,7 +997,7 @@ read.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">string|bool</span>
             &mdash;
             <section class="phpdocumentor-description"><p>The bytes read, or false if not enough bytes are present.</p>
 </section>

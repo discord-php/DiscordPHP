@@ -2641,6 +2641,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_NEWS"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_ANNOUNCEMENT",
+            "name": "TYPE_ANNOUNCEMENT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_ANNOUNCEMENT"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_NEWS_THREAD",
             "name": "TYPE_NEWS_THREAD",
             "summary": "",
@@ -4570,6 +4575,11 @@ Search.appendIndex(
             "name": "getFeaturePrivateThreadsAttribute",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeaturePrivateThreadsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureRaidAlertsEnabledAttribute\u0028\u0029",
+            "name": "getFeatureRaidAlertsEnabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureRaidAlertsEnabledAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureRoleIconsAttribute\u0028\u0029",
             "name": "getFeatureRoleIconsAttribute",
