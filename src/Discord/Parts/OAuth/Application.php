@@ -47,7 +47,7 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property string|null   $custom_install_url                The application's default custom authorization link, if enabled.
  * @property string|null   $role_connections_verification_url The application's role connection verification entry point, which when configured will render the app as a verification method in the guild role verification configuration.
  *
- * @property string        $invite_url             The invite URL to invite the bot to a guild.
+ * @property string $invite_url The invite URL to invite the bot to a guild.
  *
  * @property GlobalCommandRepository $commands The application global commands.
  */
