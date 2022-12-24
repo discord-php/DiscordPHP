@@ -189,7 +189,7 @@ final class BigInt
      *
      * @param mixed $value if not a float, it is discarded
      *
-     * @return mixed|string string if value is a float, otherwise discarded
+     * @return string|mixed string if value is a float, otherwise discarded
      */
     public static function floatCast($value)
     {

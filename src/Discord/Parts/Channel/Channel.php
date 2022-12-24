@@ -253,10 +253,7 @@ class Channel extends Part
         $recipients = Collection::for(User::class);
 
         foreach ($this->attributes['recipients'] ?? [] as $recipient) {
-            if (! $user = $this->discord->users->get('id', $recipient->id)) {
-                $user = $this->factory->part(User::class, (array) $recipient, true);
-            }
-            $recipients->pushItem($user);
+            $recipients->pushItem($this->discord->users->get('id', $recipient->id) ?: $this->factory->part(User::class, (array) $recipient, true));
         }
 
         return $recipients;
@@ -302,10 +299,7 @@ class Channel extends Part
             $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
-                if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->part(Message::class, (array) $response, true);
-                }
-                $messages->pushItem($message);
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->factory->part(Message::class, (array) $response, true));
             }
 
             return $messages;
@@ -776,10 +770,7 @@ class Channel extends Part
             $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
-                if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->part(Message::class, (array) $response, true);
-                }
-                $messages->pushItem($message);
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->factory->part(Message::class, (array) $response, true));
             }
 
             return $messages;
@@ -1066,7 +1057,7 @@ class Channel extends Part
                 /** @var ?Message */
                 if (! $threadPart->messages->offsetExists($messageId)) {
                     // Don't store in the external cache
-                    $threadPart->messages->offsetSet($messageId, $this->factory->part(Message::class, (array) $response->message, true));
+                    $threadPart->messages->offsetSet($messageId, $threadPart->messages->create((array) $response->message, true));
                 }
             }
 

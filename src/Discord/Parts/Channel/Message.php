@@ -326,11 +326,7 @@ class Message extends Part
         }
 
         foreach ($this->attributes['mention_channels'] ?? [] as $mention_channel) {
-            if (! $channel = $this->discord->getChannel($mention_channel->id)) {
-                $channel = $this->factory->part(Channel::class, (array) $mention_channel, true);
-            }
-
-            $collection->pushItem($channel);
+            $collection->pushItem($this->discord->getChannel($mention_channel->id) ?: $this->factory->part(Channel::class, (array) $mention_channel, true));
         }
 
         return $collection;
@@ -435,7 +431,7 @@ class Message extends Part
                 if ($thread = $channel->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
-                $thread = $this->factory->part(Thread::class, $this->attributes['thread'], true);
+                $thread = $channel->threads->create((array) $this->attributes['thread'], true);
                 $channel->threads->pushItem($thread);
             }
         }
@@ -498,10 +494,7 @@ class Message extends Part
         $users = Collection::for(User::class);
 
         foreach ($this->attributes['mentions'] ?? [] as $mention) {
-            if (! $user = $this->discord->users->get('id', $mention->id)) {
-                $user = $this->factory->part(User::class, (array) $mention, true);
-            }
-            $users->pushItem($user);
+            $users->pushItem($this->discord->users->get('id', $mention->id) ?: $this->factory->part(User::class, (array) $mention, true));
         }
 
         return $users;

@@ -34,7 +34,7 @@ class UserUpdate extends Event
             $userPart->fill((array) $data);
         } else {
             /** @var User */
-            $userPart = $this->factory->part(User::class, (array) $data, true);
+            $userPart = $this->discord->users->create((array) $data, true);
         }
         $this->discord->users->set($data->id, $userPart);
 
