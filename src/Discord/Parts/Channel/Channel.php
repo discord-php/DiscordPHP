@@ -122,6 +122,8 @@ class Channel extends Part
     public const TYPE_CATEGORY = self::TYPE_GUILD_CATEGORY;
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_ANNOUNCEMENT` */
     public const TYPE_NEWS = self::TYPE_GUILD_ANNOUNCEMENT;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_ANNOUNCEMENT` */
+    public const TYPE_ANNOUNCEMENT = self::TYPE_GUILD_ANNOUNCEMENT;
     /** @deprecated 10.0.0 Use `Channel::TYPE_ANNOUNCEMENT_THREAD` */
     public const TYPE_NEWS_THREAD = self::TYPE_ANNOUNCEMENT_THREAD;
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_STAGE_VOICE` */

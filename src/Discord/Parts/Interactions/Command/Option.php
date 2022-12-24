@@ -79,13 +79,13 @@ class Option extends Part
      */
     protected function getChoicesAttribute(): ?Collection
     {
-        if (! isset($this->attributes['choices'])) {
+        if (! isset($this->attributes['choices']) && ! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
             return null;
         }
 
         $choices = Collection::for(Choice::class, null);
 
-        foreach ($this->attributes['choices'] as $choice) {
+        foreach ($this->attributes['choices'] ?? [] as $choice) {
             $choices->pushItem($this->factory->part(Choice::class, (array) $choice, true));
         }
 

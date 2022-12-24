@@ -685,13 +685,13 @@ class Message extends Part
      */
     protected function getStickerItemsAttribute(): ?Collection
     {
-        if (! isset($this->attributes['sticker_items'])) {
+        if (! isset($this->attributes['sticker_items']) && ! in_array($this->type, [self::TYPE_DEFAULT, self::TYPE_REPLY])) {
             return null;
         }
 
         $sticker_items = Collection::for(Sticker::class);
 
-        foreach ($this->attributes['sticker_items'] as $sticker) {
+        foreach ($this->attributes['sticker_items'] ?? [] as $sticker) {
             $sticker_items->pushItem($this->factory->part(Sticker::class, (array) $sticker, true));
         }
 

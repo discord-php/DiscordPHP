@@ -539,9 +539,9 @@ class Guild extends Part
      *
      * @deprecated 10.0.0 Use `$channel->stage_instances`
      *
-     * @return Collection[]|StageInstance[]|null
+     * @return Collection[]|StageInstance[]
      */
-    protected function getStageInstancesAttribute(): ?Collection
+    protected function getStageInstancesAttribute(): Collection
     {
         $stage_instances = Collection::for(StageInstance::class);
 

@@ -12,6 +12,7 @@
 namespace Discord\Parts\Interactions\Request;
 
 use Discord\Helpers\Collection;
+use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Part;
 
 /**
@@ -59,15 +60,15 @@ class InteractionData extends Part
      *
      * @return Collection|Option[]|null $options
      */
-    protected function getOptionsAttribute()
+    protected function getOptionsAttribute(): ?Collection
     {
-        if (! isset($this->attributes['options'])) {
+        if (! isset($this->attributes['options']) && $this->type != Command::CHAT_INPUT) {
             return null;
         }
 
         $options = Collection::for(Option::class, 'name');
 
-        foreach ($this->attributes['options'] as $option) {
+        foreach ($this->attributes['options'] ?? [] as $option) {
             $options->pushItem($this->factory->part(Option::class, (array) $option, true));
         }
 
@@ -79,7 +80,7 @@ class InteractionData extends Part
      *
      * @return Collection|Component[]|null $components
      */
-    protected function getComponentsAttribute()
+    protected function getComponentsAttribute(): ?Collection
     {
         if (! isset($this->attributes['components'])) {
             return null;
