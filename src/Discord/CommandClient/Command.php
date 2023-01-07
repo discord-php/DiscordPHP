@@ -95,7 +95,7 @@ class Command
      */
     protected $client;
     /**
-     * @var Callable
+     * @var callable
      */
     protected $callable;
 
@@ -104,7 +104,7 @@ class Command
      *
      * @param DiscordCommandClient $client          The Discord Command Client.
      * @param string               $command         The command trigger.
-     * @param \Callable            $callable        The callable function.
+     * @param callable             $callable        The callable function.
      * @param string               $description     The short description of the command.
      * @param string               $longDescription The long description of the command.
      * @param string               $usage           The usage of the command.
@@ -159,7 +159,7 @@ class Command
      * Registers a new command.
      *
      * @param string           $command  The command name.
-     * @param \Callable|string $callable The function called when the command is executed.
+     * @param callable|string  $callable The function called when the command is executed.
      * @param array            $options  An array of options.
      *
      * @return Command    The command instance.
