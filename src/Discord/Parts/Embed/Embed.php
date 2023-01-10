@@ -351,10 +351,11 @@ class Embed extends Part
      * Set the author of this embed.
      *
      * @param string      $name    Maximum length is 256 characters.
-     * @param string|null $iconurl The URL to the icon.
-     * @param string|null $url     The URL to the author.
+     * @param string|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
+     * @param string|null $url     The URL to the author, only http(s) and attachments URLs are allowed.
      *
-     * @throws \LengthException Embed text too long.
+     * @throws \LengthException          Embed text too long.
+     * @throws \InvalidArgumentException Invalid scheme provided.
      *
      * @return $this
      */
@@ -367,6 +368,10 @@ class Embed extends Part
             throw new \LengthException('Author name can not be longer than 256 characters.');
         } elseif ($this->exceedsOverallLimit($length)) {
             throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+        } else if ($iconurl != null && preg_match('/^(http|https|attachment):\/\//i', $iconurl) != 1) {
+            throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
+        } else if ($url != null && preg_match('/^(http|https|attachment):\/\//i', $url) != 1) {
+            throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
         } else {
             $this->author = [
                 'name' => $name,
@@ -381,10 +386,11 @@ class Embed extends Part
     /**
      * Set the footer of this embed.
      *
-     * @param string      $text    Maximum length is 2048 characters.
-     * @param string|null $iconurl The URL to the icon.
-     *
-     * @throws \LengthException Embed text too long.
+     * @param string      $text     Maximum length is 2048 characters.
+     * @param string|null $iconurl  The URL to the icon, only http(s) and attachments URLs are allowed.
+     * 
+     * @throws \LengthException          Embed text too long.
+     * @throws \InvalidArgumentException Invalid scheme provided.
      *
      * @return $this
      */
@@ -397,6 +403,8 @@ class Embed extends Part
             throw new \LengthException('Footer text can not be longer than 2048 characters.');
         } elseif ($this->exceedsOverallLimit($length)) {
             throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
+        } else if ($iconurl != null && preg_match('/^(http|https|attachment):\/\//i', $iconurl) != 1) {
+            throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
         } else {
             $this->footer = [
                 'text' => $text,
@@ -410,16 +418,26 @@ class Embed extends Part
     /**
      * Set the image of this embed.
      *
-     * @param string|Attachment $url
+     * @param string|Attachment $url The URL to the image, only http(s) and attachments URLs are allowed.
      *
+     * @throws \InvalidArgumentException Invalid scheme provided.
+     * 
      * @return $this
      */
     public function setImage($url): self
     {
+        if (poly_strlen($url) === 0) {
+            return $this;
+        }
+
         if ($url instanceof Attachment) {
             $this->image = ['url' => 'attachment://'.$url->filename];
         } else {
-            $this->image = ['url' => (string) $url];
+            if (preg_match('/^(http|https|attachment):\/\//i', $url) == 1) {
+                $this->image = ['url' => (string) $url];
+            } else {
+                throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
+            }
         }
 
         return $this;
@@ -428,13 +446,23 @@ class Embed extends Part
     /**
      * Set the thumbnail of this embed.
      *
-     * @param string $url
+     * @param string $url The URL to the thumbnail, only http(s) and attachments URLs are allowed.
      *
+     * @throws \InvalidArgumentException Invalid scheme provided.
+     * 
      * @return $this
      */
     public function setThumbnail($url): self
     {
-        $this->thumbnail = ['url' => (string) $url];
+        if (poly_strlen($url) === 0) {
+            return $this;
+        }
+
+        if (preg_match('/^(http|https|attachment):\/\//i', $url) == 1) {
+            $this->thumbnail = ['url' => (string) $url];
+        } else {
+            throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
+        }
 
         return $this;
     }
@@ -561,3 +589,4 @@ class Embed extends Part
         ];
     }
 }
+a
