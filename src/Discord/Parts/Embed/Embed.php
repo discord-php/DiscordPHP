@@ -368,17 +368,35 @@ class Embed extends Part
             throw new \LengthException('Author name can not be longer than 256 characters.');
         } elseif ($this->exceedsOverallLimit($length)) {
             throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
-        } else if ($iconurl != null && preg_match('/^(http|https|attachment):\/\//i', $iconurl) != 1) {
-            throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
-        } else if ($url != null && preg_match('/^(http|https|attachment):\/\//i', $url) != 1) {
-            throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
-        } else {
-            $this->author = [
-                'name' => $name,
-                'icon_url' => $iconurl,
-                'url' => $url,
-            ];
         }
+
+        if ($iconurl !== null) {
+            $iconurl = filter_var($iconurl, FILTER_VALIDATE_URL);
+            if ($iconurl === false) {
+                throw new \InvalidArgumentException("Invalid url");
+            }
+            $iconurlscheme = parse_url($iconurl, PHP_URL_SCHEME);
+            if (!in_array($iconurlscheme, ["http","https","attachment"])) {
+                throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
+            }
+        }
+
+        if ($url !== null) {
+            $url = filter_var($url, FILTER_VALIDATE_URL);
+            if ($url === false) {
+                throw new \InvalidArgumentException("Invalid url");
+            }
+            $urlscheme = parse_url($url, PHP_URL_SCHEME);
+            if (!in_array($urlscheme, ["http","https","attachment"])) {
+                throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
+            }
+        }
+
+        $this->author = [
+            'name' => $name,
+            'icon_url' => $iconurl,
+            'url' => $url,
+        ];
 
         return $this;
     }
@@ -403,14 +421,24 @@ class Embed extends Part
             throw new \LengthException('Footer text can not be longer than 2048 characters.');
         } elseif ($this->exceedsOverallLimit($length)) {
             throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
-        } else if ($iconurl != null && preg_match('/^(http|https|attachment):\/\//i', $iconurl) != 1) {
-            throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
-        } else {
-            $this->footer = [
-                'text' => $text,
-                'icon_url' => $iconurl,
-            ];
         }
+
+        if ($iconurl !== null) {
+            $iconurl = filter_var($iconurl, FILTER_VALIDATE_URL);
+            if ($iconurl === false) {
+                throw new \InvalidArgumentException("Invalid url");
+            }
+            $iconurlscheme = parse_url($iconurl, PHP_URL_SCHEME);
+            if (!in_array($iconurlscheme, ["http","https","attachment"])) {
+                throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
+            }
+        }
+
+        $this->footer = [
+            'text' => $text,
+            'icon_url' => $iconurl,
+        ];
+        
 
         return $this;
     }
@@ -433,11 +461,16 @@ class Embed extends Part
         if ($url instanceof Attachment) {
             $this->image = ['url' => 'attachment://'.$url->filename];
         } else {
-            if (preg_match('/^(http|https|attachment):\/\//i', $url) == 1) {
-                $this->image = ['url' => (string) $url];
-            } else {
+            $url = filter_var($url, FILTER_VALIDATE_URL);
+            if ($url === false) {
+                throw new \InvalidArgumentException("Invalid url");
+            }
+            $urlscheme = parse_url($url, PHP_URL_SCHEME);
+            if (!in_array($urlscheme, ["http","https","attachment"])) {
                 throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
             }
+
+            $this->image = ['url' => (string) $url];
         }
 
         return $this;
@@ -458,12 +491,17 @@ class Embed extends Part
             return $this;
         }
 
-        if (preg_match('/^(http|https|attachment):\/\//i', $url) == 1) {
-            $this->thumbnail = ['url' => (string) $url];
-        } else {
+        $url = filter_var($url, FILTER_VALIDATE_URL);
+        if ($url === false) {
+            throw new \InvalidArgumentException("Invalid url");
+        }
+        $urlscheme = parse_url($url, PHP_URL_SCHEME);
+        if (!in_array($urlscheme, ["http","https","attachment"])) {
             throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
         }
 
+        $this->thumbnail = ['url' => (string) $url];
+        
         return $this;
     }
 
@@ -589,4 +627,5 @@ class Embed extends Part
         ];
     }
 }
-a
+
+?>
