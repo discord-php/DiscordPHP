@@ -46,7 +46,7 @@ class Embed extends Part
     public const TYPE_GIFV = 'gifv';
     public const TYPE_ARTICLE = 'article';
     public const TYPE_LINK = 'link';
-    
+
     /**
      * {@inheritDoc}
      */
