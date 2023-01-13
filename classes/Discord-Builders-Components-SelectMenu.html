@@ -262,13 +262,14 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Select menus are another interactive component that renders on messages.</p>
+            <p class="phpdocumentor-summary">Select menus are interactive components that allow users to select one or
+more options from a dropdown list in messages.</p>
 
-    <section class="phpdocumentor-description"><p>On desktop, clicking on a select menu opens a dropdown-style UI
+    <section class="phpdocumentor-description"><p>On desktop, clicking on a select menu opens a dropdown-style UI.
 On mobile, tapping a select menu opens up a half-sheet with the options.</p>
 </section>
 
@@ -279,12 +280,21 @@ On mobile, tapping a select menu opens up a half-sheet with the options.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/interactions/message-components#select-menus"><abbr title="https://discord.com/developers/docs/interactions/message-components#select-menus">https://discord.com/developers/docs/interactions/message-components#select-menus</abbr></a></span>
-                                        
-                                             
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/interactions/message-components#select-menus"> https://discord.com/developers/docs/interactions/message-components#select-menus </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Renamed from SelectMenu to StringSelect and made SelectMenu abstract</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -314,7 +324,35 @@ On mobile, tapping a select menu opens up a half-sheet with the options.</p>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_CHANNEL_SELECT">TYPE_CHANNEL_SELECT</a>
+    <span>
+        &nbsp;= 8                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_MENTIONABLE_SELECT">TYPE_MENTIONABLE_SELECT</a>
+    <span>
+        &nbsp;= 7                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_ROLE_SELECT">TYPE_ROLE_SELECT</a>
+    <span>
+        &nbsp;= 6                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_SELECT_MENU">TYPE_SELECT_MENU</a>
+    <span>
+        &nbsp;= 3                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_STRING_SELECT">TYPE_STRING_SELECT</a>
     <span>
         &nbsp;= 3                            </span>
 </dt>
@@ -327,56 +365,56 @@ On mobile, tapping a select menu opens up a half-sheet with the options.</p>
 </dt>
 <dd></dd>
 
-                    <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_USER_SELECT">TYPE_USER_SELECT</a>
+    <span>
+        &nbsp;= 5                            </span>
+</dt>
+<dd></dd>
+
+                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#property_custom_id">$custom_id</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>Custom ID to identify the select menu.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#property_disabled">$disabled</a>
     <span>
                         &nbsp;: bool|null            </span>
 </dt>
 <dd>Whether the select menu should be disabled.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#property_discord">$discord</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>|null            </span>
 </dt>
 <dd>Discord instance when the listener is set.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#property_listener">$listener</a>
     <span>
                         &nbsp;: callable|null            </span>
 </dt>
 <dd>Callback used to listen for `INTERACTION_CREATE` events.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#property_max_values">$max_values</a>
     <span>
                         &nbsp;: int|null            </span>
 </dt>
 <dd>Maximum number of options that must be selected.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#property_min_values">$min_values</a>
     <span>
                         &nbsp;: int|null            </span>
 </dt>
 <dd>Minimum number of options that must be selected.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Discord-Builders-Components-SelectMenu.html#property_options">$options</a>
-    <span>
-                        &nbsp;: array&lt;string|int, <a href="classes/Discord-Builders-Components-Option.html"><abbr title="\Discord\Builders\Components\Option">Option</abbr></a>&gt;            </span>
-</dt>
-<dd>Array of options that the select menu has.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#property_placeholder">$placeholder</a>
     <span>
                         &nbsp;: string|null            </span>
@@ -389,13 +427,6 @@ On mobile, tapping a select menu opens up a half-sheet with the options.</p>
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Creates a new select menu.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Builders-Components-SelectMenu.html#method_addOption">addOption()</a>
-    <span>
-                                &nbsp;: self    </span>
-</dt>
-<dd>Adds an option to the select menu. Maximum 25 options.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#method_getCustomId">getCustomId()</a>
@@ -419,13 +450,6 @@ On mobile, tapping a select menu opens up a half-sheet with the options.</p>
 <dd>Returns the minimum number of options that must be selected.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Builders-Components-SelectMenu.html#method_getOptions">getOptions()</a>
-    <span>
-                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
-</dt>
-<dd>Returns the array of options that the select menu has.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#method_getPlaceholder">getPlaceholder()</a>
     <span>
                                 &nbsp;: string|null    </span>
@@ -444,69 +468,62 @@ On mobile, tapping a select menu opens up a half-sheet with the options.</p>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
-<dd></dd>
+<dd>{@inheritDoc}</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#method_new">new()</a>
     <span>
-                                &nbsp;: self    </span>
+                                &nbsp;: static    </span>
 </dt>
 <dd>Creates a new select menu.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#method_removeListener">removeListener()</a>
     <span>
-                                &nbsp;: self    </span>
+                                &nbsp;: $this    </span>
 </dt>
 <dd>Removes the listener from the button.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Builders-Components-SelectMenu.html#method_removeOption">removeOption()</a>
-    <span>
-                                &nbsp;: self    </span>
-</dt>
-<dd>Removes an option from the select menu.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#method_setCustomId">setCustomId()</a>
     <span>
-                                &nbsp;: self    </span>
+                                &nbsp;: $this    </span>
 </dt>
 <dd>Sets the custom ID for the select menu.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#method_setDisabled">setDisabled()</a>
     <span>
-                                &nbsp;: self    </span>
+                                &nbsp;: $this    </span>
 </dt>
 <dd>Sets the select menus disabled state.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#method_setListener">setListener()</a>
     <span>
-                                &nbsp;: self    </span>
+                                &nbsp;: $this    </span>
 </dt>
-<dd>Sets the callable listener for the select menu. The `$callback` function will be called when
-the selection of the menu is changed.</dd>
+<dd>Sets the callable listener for the select menu. The `$callback` function
+will be called when the selection of the menu is changed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#method_setMaxValues">setMaxValues()</a>
     <span>
-                                &nbsp;: self    </span>
+                                &nbsp;: $this    </span>
 </dt>
 <dd>Sets the maximum number of options which must be chosen.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#method_setMinValues">setMinValues()</a>
     <span>
-                                &nbsp;: self    </span>
+                                &nbsp;: $this    </span>
 </dt>
 <dd>Sets the minimum number of options which must be chosen.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-SelectMenu.html#method_setPlaceholder">setPlaceholder()</a>
     <span>
-                                &nbsp;: self    </span>
+                                &nbsp;: $this    </span>
 </dt>
 <dd>Sets the placeholder string to display if nothing is selected.</dd>
 
@@ -536,7 +553,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -565,7 +582,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
@@ -586,6 +603,93 @@ the selection of the menu is changed.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_CHANNEL_SELECT">
+        TYPE_CHANNEL_SELECT
+        <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_CHANNEL_SELECT" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">33</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_CHANNEL_SELECT</span>
+    = <span class="phpdocumentor-signature__default-value">8</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_MENTIONABLE_SELECT">
+        TYPE_MENTIONABLE_SELECT
+        <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_MENTIONABLE_SELECT" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">32</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_MENTIONABLE_SELECT</span>
+    = <span class="phpdocumentor-signature__default-value">7</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_ROLE_SELECT">
+        TYPE_ROLE_SELECT
+        <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_ROLE_SELECT" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">31</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_ROLE_SELECT</span>
+    = <span class="phpdocumentor-signature__default-value">6</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_TYPE_SELECT_MENU">
         TYPE_SELECT_MENU
         <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_SELECT_MENU" class="headerlink"><i class="fas fa-link"></i></a>
@@ -594,7 +698,51 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_SELECT_MENU</span>
+    = <span class="phpdocumentor-signature__default-value">3</span>
+</code>
+
+
+    
+        <section class="phpdocumentor-description"></section>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.4.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Use <code class="prettyprint">Component::TYPE_STRING_SELECT</code></p>
+</section>
+
+                                    </dd>
+                        </dl>
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_STRING_SELECT">
+        TYPE_STRING_SELECT
+        <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_STRING_SELECT" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
     </aside>
 
@@ -602,7 +750,7 @@ the selection of the menu is changed.</dd>
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_SELECT_MENU</span>
+    <span class="phpdocumentor-signature__name">TYPE_STRING_SELECT</span>
     = <span class="phpdocumentor-signature__default-value">3</span>
 </code>
 
@@ -623,7 +771,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 
     </aside>
 
@@ -633,6 +781,35 @@ the selection of the menu is changed.</dd>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">TYPE_TEXT_INPUT</span>
     = <span class="phpdocumentor-signature__default-value">4</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_USER_SELECT">
+        TYPE_USER_SELECT
+        <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_USER_SELECT" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">30</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_USER_SELECT</span>
+    = <span class="phpdocumentor-signature__default-value">5</span>
 </code>
 
 
@@ -655,7 +832,7 @@ the selection of the menu is changed.</dd>
         class="
             phpdocumentor-element
             -property
-            -private
+            -protected
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="property_custom_id">
@@ -667,14 +844,14 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Custom ID to identify the select menu.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
+    <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$custom_id</span>
     </code>
@@ -688,7 +865,7 @@ the selection of the menu is changed.</dd>
         class="
             phpdocumentor-element
             -property
-            -private
+            -protected
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="property_disabled">
@@ -700,14 +877,14 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Whether the select menu should be disabled.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
+    <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">bool|null</span>
     <span class="phpdocumentor-signature__name">$disabled</span>
     </code>
@@ -721,7 +898,7 @@ the selection of the menu is changed.</dd>
         class="
             phpdocumentor-element
             -property
-            -private
+            -protected
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="property_discord">
@@ -733,14 +910,14 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">87</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Discord instance when the listener is set.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
+    <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>|null</span>
     <span class="phpdocumentor-signature__name">$discord</span>
     </code>
@@ -754,7 +931,7 @@ the selection of the menu is changed.</dd>
         class="
             phpdocumentor-element
             -property
-            -private
+            -protected
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="property_listener">
@@ -766,14 +943,14 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Callback used to listen for `INTERACTION_CREATE` events.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
+    <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">callable|null</span>
     <span class="phpdocumentor-signature__name">$listener</span>
     </code>
@@ -787,7 +964,7 @@ the selection of the menu is changed.</dd>
         class="
             phpdocumentor-element
             -property
-            -private
+            -protected
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="property_max_values">
@@ -799,14 +976,14 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Maximum number of options that must be selected.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
+    <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">int|null</span>
     <span class="phpdocumentor-signature__name">$max_values</span>
     </code>
@@ -822,7 +999,7 @@ the selection of the menu is changed.</dd>
         class="
             phpdocumentor-element
             -property
-            -private
+            -protected
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="property_min_values">
@@ -834,14 +1011,14 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Minimum number of options that must be selected.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
+    <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">int|null</span>
     <span class="phpdocumentor-signature__name">$min_values</span>
     </code>
@@ -857,40 +1034,7 @@ the selection of the menu is changed.</dd>
         class="
             phpdocumentor-element
             -property
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_options">
-        $options
-        <a href="classes/Discord-Builders-Components-SelectMenu.html#property_options" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">43</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Array of options that the select menu has.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/Discord-Builders-Components-Option.html"><abbr title="\Discord\Builders\Components\Option">Option</abbr></a>&gt;</span>
-    <span class="phpdocumentor-signature__name">$options</span>
-     = <span class="phpdocumentor-signature__default-value">[]</span></code>
-
-    
-    
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
+            -protected
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="property_placeholder">
@@ -902,14 +1046,14 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Placeholder string to display if nothing is selected. Maximum 150 characters.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
+    <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string|null</span>
     <span class="phpdocumentor-signature__name">$placeholder</span>
     </code>
@@ -939,7 +1083,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -977,73 +1121,6 @@ the selection of the menu is changed.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_addOption">
-        addOption()
-        <a href="classes/Discord-Builders-Components-SelectMenu.html#method_addOption" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">141</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Adds an option to the select menu. Maximum 25 options.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">addOption</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Builders-Components-Option.html"><abbr title="\Discord\Builders\Components\Option">Option</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$option</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$option</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Builders-Components-Option.html"><abbr title="\Discord\Builders\Components\Option">Option</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Option to add.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\OverflowException">OverflowException</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\UnexpectedValueException">UnexpectedValueException</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">self</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getCustomId">
         getCustomId()
         <a href="classes/Discord-Builders-Components-SelectMenu.html#method_getCustomId" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1051,7 +1128,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">341</span>
+    <span class="phpdocumentor-element-found-in__line">298</span>
 
     </aside>
 
@@ -1084,7 +1161,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">381</span>
+    <span class="phpdocumentor-element-found-in__line">328</span>
 
     </aside>
 
@@ -1117,7 +1194,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">371</span>
+    <span class="phpdocumentor-element-found-in__line">318</span>
 
     </aside>
 
@@ -1143,39 +1220,6 @@ the selection of the menu is changed.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getOptions">
-        getOptions()
-        <a href="classes/Discord-Builders-Components-SelectMenu.html#method_getOptions" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">351</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the array of options that the select menu has.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getOptions</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getPlaceholder">
         getPlaceholder()
         <a href="classes/Discord-Builders-Components-SelectMenu.html#method_getPlaceholder" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1183,7 +1227,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">361</span>
+    <span class="phpdocumentor-element-found-in__line">308</span>
 
     </aside>
 
@@ -1216,7 +1260,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">391</span>
+    <span class="phpdocumentor-element-found-in__line">338</span>
 
     </aside>
 
@@ -1249,11 +1293,12 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">399</span>
+    <span class="phpdocumentor-element-found-in__line">346</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">{@inheritDoc}</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">jsonSerialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -1261,19 +1306,6 @@ the selection of the menu is changed.</dd>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritDoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
@@ -1294,7 +1326,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">106</span>
+    <span class="phpdocumentor-element-found-in__line">102</span>
 
     </aside>
 
@@ -1302,7 +1334,7 @@ the selection of the menu is changed.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">new</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$custom_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">new</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$custom_id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">static</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1321,7 +1353,7 @@ the selection of the menu is changed.</dd>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">self</span>
+    <span class="phpdocumentor-signature__response_type">static</span>
             &mdash;
         
     
@@ -1339,7 +1371,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">331</span>
+    <span class="phpdocumentor-element-found-in__line">288</span>
 
     </aside>
 
@@ -1347,59 +1379,14 @@ the selection of the menu is changed.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">removeListener</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">removeListener</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">self</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_removeOption">
-        removeOption()
-        <a href="classes/Discord-Builders-Components-SelectMenu.html#method_removeOption" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">168</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Removes an option from the select menu.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">removeOption</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Builders-Components-Option.html"><abbr title="\Discord\Builders\Components\Option">Option</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$option</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$option</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Builders-Components-Option.html"><abbr title="\Discord\Builders\Components\Option">Option</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Option to remove.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">self</span>
+    <span class="phpdocumentor-signature__response_type">$this</span>
             &mdash;
         
     
@@ -1417,7 +1404,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">120</span>
+    <span class="phpdocumentor-element-found-in__line">116</span>
 
     </aside>
 
@@ -1425,7 +1412,7 @@ the selection of the menu is changed.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setCustomId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$custom_id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setCustomId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$custom_id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1456,7 +1443,7 @@ the selection of the menu is changed.</dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">self</span>
+    <span class="phpdocumentor-signature__response_type">$this</span>
             &mdash;
         
     
@@ -1474,7 +1461,7 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">247</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
     </aside>
 
@@ -1482,7 +1469,7 @@ the selection of the menu is changed.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setDisabled</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$disabled</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setDisabled</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$disabled</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1499,7 +1486,7 @@ the selection of the menu is changed.</dd>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">self</span>
+    <span class="phpdocumentor-signature__response_type">$this</span>
             &mdash;
         
     
@@ -1517,25 +1504,29 @@ the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">277</span>
+    <span class="phpdocumentor-element-found-in__line">230</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Sets the callable listener for the select menu. The `$callback` function will be called when
-the selection of the menu is changed.</p>
+        <p class="phpdocumentor-summary">Sets the callable listener for the select menu. The `$callback` function
+will be called when the selection of the menu is changed.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setListener</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$callback</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discord</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$oneOff</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setListener</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$callback</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discord</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$oneOff</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
-        <section class="phpdocumentor-description"><p>The callback function is called with the <code class="prettyprint">Interaction</code> object as well as a <code class="prettyprint">Collection</code> of
-selected options.</p>
-<p>If you do not respond to or acknowledge the <code class="prettyprint">Interaction</code>, it will be acknowledged for you.
-Note that if you intend to respond to or acknowledge the interaction inside a promise, you should
-return a promise that resolves <em>after</em> you respond or acknowledge.</p>
-<p>The callback will only be called once with the <code class="prettyprint">$oneOff</code> parameter set to true.
-This can be changed to false, and the callback will be called each time the selection is changed.
-To remove the listener, you can pass <code class="prettyprint">$callback</code> as null.</p>
+        <section class="phpdocumentor-description"><p>The callback function is called with the <code class="prettyprint">Interaction</code> object as well as
+a <code class="prettyprint">Collection</code> of selected options.</p>
+<p>If you do not respond to or acknowledge the <code class="prettyprint">Interaction</code>, it will be
+acknowledged for you.
+Note that if you intend to respond to or acknowledge the interaction
+inside a promise, you should return a promise that resolves <em>after</em> you
+respond or acknowledge.</p>
+<p>The callback will only be called once with the <code class="prettyprint">$oneOff</code> parameter set to
+true.
+This can be changed to false, and the callback will be called each time
+the selection is changed. To remove the listener, you can pass
+<code class="prettyprint">$callback</code> as null.</p>
 <p>The select menu listener will not persist when the bot restarts.</p>
 </section>
 
@@ -1571,9 +1562,24 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>setListener callback return for each type.</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">self</span>
+    <span class="phpdocumentor-signature__response_type">$this</span>
             &mdash;
         
     
@@ -1591,7 +1597,7 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">229</span>
+    <span class="phpdocumentor-element-found-in__line">176</span>
 
     </aside>
 
@@ -1599,11 +1605,9 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setMaxValues</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$max_values</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setMaxValues</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$max_values</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
-        <section class="phpdocumentor-description"><p>Default 1 and maximum 25. Null to set as default.</p>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1611,7 +1615,9 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
                 : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Default <code class="prettyprint">1</code> and maximum <code class="prettyprint">25</code>. <code class="prettyprint">null</code> to set as default.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1632,7 +1638,7 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">self</span>
+    <span class="phpdocumentor-signature__response_type">$this</span>
             &mdash;
         
     
@@ -1650,7 +1656,7 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">208</span>
+    <span class="phpdocumentor-element-found-in__line">156</span>
 
     </aside>
 
@@ -1658,11 +1664,9 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setMinValues</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$min_values</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setMinValues</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$min_values</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
-        <section class="phpdocumentor-description"><p>Default 1, minimum 0 and maximum 25. Null to set as default.</p>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1670,7 +1674,9 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
                 : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Default <code class="prettyprint">1</code>, minimum <code class="prettyprint">0</code> and maximum <code class="prettyprint">25</code>. <code class="prettyprint">null</code> to set as default.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1691,7 +1697,7 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">self</span>
+    <span class="phpdocumentor-signature__response_type">$this</span>
             &mdash;
         
     
@@ -1709,7 +1715,7 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">187</span>
+    <span class="phpdocumentor-element-found-in__line">136</span>
 
     </aside>
 
@@ -1717,11 +1723,9 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setPlaceholder</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$placeholder</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">setPlaceholder</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$placeholder</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
-        <section class="phpdocumentor-description"><p>Maximum 150 characters. Null to clear placeholder.</p>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1729,7 +1733,9 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
                 : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Maximum 150 characters. <code class="prettyprint">null</code> to clear placeholder.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -1750,7 +1756,7 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">self</span>
+    <span class="phpdocumentor-signature__response_type">$this</span>
             &mdash;
         
     
@@ -1768,7 +1774,7 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 

@@ -247,7 +247,7 @@
 
 <ul>
     <li>
-            <p><a href="https://php.net">PHP 7.4 CLI</a> or higher</p>
+            <p><a href="https://php.net">PHP 8.0</a> or higher</p>
             
 
 <ul>
@@ -255,7 +255,7 @@
             Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
         </li>
     <li>
-            x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.
+            x86 (32-bit) PHP requires <code>ext-gmp</code> extension enabled.
         </li>
 </ul>
         </li>
@@ -272,13 +272,10 @@
 
 <ul>
     <li>
-            One of <code>ext-uv</code>, <code>ext-libev</code> or <code>evt-event</code> (in order of preference) for a faster, and more performant event loop.
+            One of <code>ext-uv</code>, <code>ext-ev</code> or <code>evt-event</code> (in order of preference) for a faster, and more performant event loop.
         </li>
     <li>
             <code>ext-mbstring</code> if you may handle non-english characters.
-        </li>
-    <li>
-            <code>ext-gmp</code> if running 32-bit PHP.
         </li>
 </ul>
 </div>
@@ -288,14 +285,7 @@
 
 <ul>
     <li>
-            <p>x8664 Windows, Linux or Darwin based OS.</p>
-            
-
-<ul>
-    <li>
-            If you are running on Windows, you must be using PHP 8.0.
-        </li>
-</ul>
+            64-bit PHP
         </li>
     <li>
             <code>ext-sodium</code> for voice encryption.
@@ -327,7 +317,7 @@ Here are some commonly used editors:</p>
 </div>
 <div class="section" id="installation">
 <h1>Installation</h1>
-<p>Installation requries <a href="https://getcomposer.org">Composer</a>.</p>
+<p>Installation requires <a href="https://getcomposer.org">Composer</a>.</p>
 <p>To install the latest release:</p>
 <pre><code class="language- " >$ composer require team-reflex/discord-php
 </code></pre>

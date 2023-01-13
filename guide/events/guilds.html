@@ -247,7 +247,7 @@
     
 <ol>
     <li>
-            When the Bot is first starting and the guilds are becoming available.
+            When the Bot is first starting and the guilds are becoming available. (unless the listener is put inside after ‘ready’ event)
         </li>
     <li>
             When a guild was unavailable and is now available due to an outage.
@@ -256,8 +256,17 @@
             When the Bot joins a new guild.
         </li>
 </ol>
-<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_CREATE, function (Guild $guild, Discord $discord) {
-    // ...
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_CREATE, function (object $guild, Discord $discord) {
+    if (! ($guild instanceof Guild)) {
+        // the guild is unavailable due to an outage, $guild is a stdClass
+        // {
+        //     &quot;id&quot;: &quot;&quot;,
+        //     &quot;unavailable&quot;: true,
+        // }
+        return;
+    }
+
+    // the Bot has joined the guild
 });
 </code></pre>
 </div>
@@ -285,10 +294,10 @@
 <pre><code class="language-php " >$discord-&gt;on(Event::GUILD_DELETE, function (object $guild, Discord $discord, bool $unavailable) {
     // ...
     if ($unavailable) {
-        // the guild is unavailabe due to an outage
+        // the guild is unavailabe due to an outage, $guild is a stdClass
         // {
-        //     &quot;id&quot;: &quot;&quot; // guild ID
-        //     &quot;unavailable&quot;: true
+        //     &quot;guild_id&quot;: &quot;&quot;,
+        //     &quot;unavailable&quot;: &quot;&quot;,
         // }
     } else {
         // the Bot has been kicked from the guild
@@ -387,9 +396,9 @@
 <p>Called with a <code>Role</code> object when a role is deleted in a guild. <code>$role</code> may return <code>Role</code> object if it was cached.</p>
 <pre><code class="language-php " >$discord-&gt;on(Event::GUILD_ROLE_DELETE, function (object $role, Discord $discord) {
     if ($role instanceof Role) {
-        // Role is present in cache
+        // $role was cached
     }
-    // If the role is not present in the cache:
+    // $role was not in cache:
     else {
         // {
         //     &quot;guild_id&quot;: &quot;&quot; // role guild ID
@@ -450,8 +459,16 @@
 <div class="section" id="guild-integrations-update">
 <h2>Guild Integrations Update</h2>
 <p>Called with a cached <code>Guild</code> object when a guild integration is updated.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_INTEGRATIONS_UPDATE, function (?Guild $guild, Discord $discord) {
-    // ...
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_INTEGRATIONS_UPDATE, function (object $guild, Discord $discord) {
+    if ($guild instanceof Guild) {
+        // $guild was cached
+    }
+    // $guild was not in cache:
+    else {
+        // {
+        //     &quot;guild_id&quot;: &quot;&quot;,
+        // }
+    }
 });
 </code></pre>
 </div>
@@ -473,9 +490,19 @@
 </div>
 <div class="section" id="integration-delete">
 <h2>Integration Delete</h2>
-<p>Called with an old <code>Integration</code> object when a integration is deleted from a guild. <code>$integration</code><em>may</em> be <code>null</code> if Integration is not cached.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::INTEGRATION_DELETE, function (?Integration $integration, Discord $discord) {
-    // ...
+<p>Called with an old <code>Integration</code> object when a integration is deleted from a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::INTEGRATION_DELETE, function (object $integration, Discord $discord) {
+    if ($integration instanceof Integration) {
+        // $integration was cached
+    }
+    // $integration was not in cache:
+    else {
+        // {
+        //     &quot;id&quot;: &quot;&quot;,
+        //     &quot;guild_id&quot;: &quot;&quot;,
+        //     &quot;application_id&quot;: &quot;&quot;
+        // }
+    }
 });</code></pre>
 </div>
 </div>

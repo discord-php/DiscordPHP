@@ -301,8 +301,19 @@
 <div class="section" id="thread-delete">
 <h2>Thread Delete</h2>
 <p>Called with an old <code>Thread</code> object when a thread relevant to the Bot is deleted.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::THREAD_DELETE, function (?Thread $thread, Discord $discord) {
-    // ...
+<pre><code class="language-php " >$discord-&gt;on(Event::THREAD_DELETE, function (object $thread, Discord $discord) {
+    if ($thread instanceof Thread) {
+        // $thread was cached
+    }
+    // $thread was not in cache:
+    else {
+    // {
+    //     &quot;type&quot;: 0,
+    //     &quot;id&quot;: &quot;&quot;,
+    //     &quot;guild_id&quot;: &quot;&quot;,
+    //     &quot;parent_id&quot;: &quot;&quot;
+    // }
+    }
 });
 </code></pre>
 </div>

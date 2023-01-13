@@ -263,9 +263,9 @@
 <p>Called with an old <code>Message</code> object <em>or</em> the raw payload when a message is deleted. The <code>Message</code> object may be the raw payload if <code>storeMessages</code> is not enabled <em>or</em> the message was sent before the Bot was started. Discord does not provide a way to get deleted messages.</p>
 <pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_DELETE, function (object $message, Discord $discord) {
     if ($message instanceof Message) {
-        // Message is present in cache
+        // $message was cached
     }
-    // If the message is not present in the cache:
+    // $message was not in cache:
     else {
         // {
         //     &quot;id&quot;: &quot;&quot;, // deleted message ID,
@@ -282,9 +282,9 @@
 <pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_DELETE_BULK, function (Collection $messages, Discord $discord) {
     foreach ($messages as $message) {
         if ($message instanceof Message) {
-            // Message is present in cache
+            // $message was cached
         }
-        // If the message is not present in the cache:
+        // $message was not in cache:
         else {
             // {
             //     &quot;id&quot;: &quot;&quot;, // deleted message ID,

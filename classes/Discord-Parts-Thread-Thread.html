@@ -262,7 +262,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -270,6 +270,27 @@
 
 
 
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/topics/threads"> https://discord.com/developers/docs/topics/threads </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
 
 
@@ -282,7 +303,21 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Parts-Thread-Thread.html#constant_FLAG_PINNED">FLAG_PINNED</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 1                            </span>
+</dt>
+<dd></dd>
+
                     <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-Thread-Thread.html#property_applied_tags">$applied_tags</a>
+    <span>
+                        &nbsp;: array&lt;string|int, string&gt;|null            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Parts-Thread-Thread.html#property_archive_timestamp">$archive_timestamp</a>
     <span>
                         &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>            </span>
@@ -300,6 +335,13 @@
     <a href="classes/Discord-Parts-Thread-Thread.html#property_auto_archive_duration">$auto_archive_duration</a>
     <span>
                         &nbsp;: int|null            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-Thread-Thread.html#property_create_timestamp">$create_timestamp</a>
+    <span>
+                        &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null            </span>
 </dt>
 <dd></dd>
 
@@ -335,6 +377,13 @@
     <a href="classes/Discord-Parts-Thread-Thread.html#property_id">$id</a>
     <span>
                         &nbsp;: string            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-Thread-Thread.html#property_invitable">$invitable</a>
+    <span>
+                        &nbsp;: bool|null            </span>
 </dt>
 <dd></dd>
 
@@ -444,6 +493,13 @@
 <dd>Custom script data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-Thread-Thread.html#property_thread_metadata">$thread_metadata</a>
+    <span>
+                        &nbsp;: object            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Parts-Thread-Thread.html#property_total_message_sent">$total_message_sent</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -486,14 +542,7 @@
 <dd>The parts fillable attributes.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Parts-Part.html#property_fillAfterSave">$fillAfterSave</a>
-    <span>
-                        &nbsp;: bool            </span>
-</dt>
-<dd>Should we fill the part after saving?</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a>
+    <a href="classes/Discord-Parts-Thread-Thread.html#property_hidden">$hidden</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -505,13 +554,6 @@
                         &nbsp;: <abbr title="\Discord\Http\Http">Http</abbr>            </span>
 </dt>
 <dd>The HTTP client.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Parts-Part.html#property_regex">$regex</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>The regex pattern to replace variables with.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Parts-Thread-Thread.html#property_repositories">$repositories</a>
@@ -528,7 +570,7 @@
 <dd>An array of repositories.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Parts-Thread-Thread.html#property_visible">$visible</a>
+    <a href="classes/Discord-Parts-Part.html#property_visible">$visible</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -565,7 +607,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method___set">__set()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Handles dynamic set calls onto the part.</dd>
 
@@ -612,12 +654,18 @@
 <dd>Bulk deletes an array of messages.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Parts-Thread-Thread.html#method_ExtendedPromiseInterface">ExtendedPromiseInterface()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method_fetch">fetch()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, static&gt;    </span>
+                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, self&gt;    </span>
 </dt>
-<dd>Fetches any missing information about
-the part from Discord&#039;s servers.</dd>
+<dd>Fetches any missing information about the part from Discord&#039;s servers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method_fill">fill()</a>
@@ -625,6 +673,13 @@ the part from Discord&#039;s servers.</dd>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Fills the parts attributes from an array.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Parts-Thread-Thread.html#method_getBotPermissions">getBotPermissions()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>|null    </span>
+</dt>
+<dd>Returns the bot&#039;s permissions in the thread.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Thread-Thread.html#method_getCreatableAttributes">getCreatableAttributes()</a>
@@ -638,8 +693,7 @@ the part from Discord&#039;s servers.</dd>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;&gt;    </span>
 </dt>
-<dd>Fetches the message history of the thread with a given array
-of arguments.</dd>
+<dd>Fetches the message history of the thread with a given array of arguments.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Thread-Thread.html#method_getPinnedMessages">getPinnedMessages()</a>
@@ -681,9 +735,8 @@ of arguments.</dd>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd>Whether the part is considered partial
-i.e. missing information which can be
-fetched from Discord.</dd>
+<dd>Whether the part is considered partial i.e. missing information which can
+be fetched from Discord.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Thread-Thread.html#method_join">join()</a>
@@ -766,20 +819,6 @@ JSON. Used for JsonSerializable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Thread-Thread.html#method_sendMessage">sendMessage()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>    </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Parts-Thread-Thread.html#method_sendMessage">sendMessage()</a>
-    <span>
-                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>    </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Parts-Thread-Thread.html#method_sendMessage">sendMessage()</a>
-    <span>
                                 &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;    </span>
 </dt>
 <dd>Sends a message to the thread.</dd>
@@ -787,7 +826,7 @@ JSON. Used for JsonSerializable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method_serialize">serialize()</a>
     <span>
-                                &nbsp;: string    </span>
+                                &nbsp;: string|null    </span>
 </dt>
 <dd>Serializes the data. Used for Serializable.</dd>
 
@@ -815,12 +854,12 @@ JSON. Used for JsonSerializable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method_unserialize">unserialize()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Unserializes some data and stores it. Used for Serializable.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-Part.html#method_afterConstruct">afterConstruct()</a>
+    <a href="classes/Discord-Parts-Thread-Thread.html#method_afterConstruct">afterConstruct()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -834,27 +873,6 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Returns whether the thread is archived.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-Thread-Thread.html#method_getArchiverAttribute">getArchiverAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null    </span>
-</dt>
-<dd>Returns the user who archived the thread.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-Thread-Thread.html#method_getArchiverIdAttribute">getArchiverIdAttribute()</a>
-    <span>
-                                &nbsp;: string|null    </span>
-</dt>
-<dd>Returns the ID of the user who archived the thread.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-Thread-Thread.html#method_getArchiverMemberAttribute">getArchiverMemberAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null    </span>
-</dt>
-<dd>Returns the member object for the user who archived the thread.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Discord-Parts-Thread-Thread.html#method_getArchiveTimestampAttribute">getArchiveTimestampAttribute()</a>
     <span>
                                 &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>    </span>
@@ -866,8 +884,16 @@ JSON. Used for JsonSerializable.</dd>
     <span>
                                 &nbsp;: int|null    </span>
 </dt>
-<dd>Returns the number of minutes of inactivity required for the thread
-to auto archive.</dd>
+<dd>Returns the number of minutes of inactivity required for the thread to
+auto archive.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/Discord-Parts-Thread-Thread.html#method_getCreateTimestampAttribute">getCreateTimestampAttribute()</a>
+    <span>
+                                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null    </span>
+</dt>
+<dd>Returns the timestamp when the thread was created; only populated for
+threads created after 2022-01-09.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Discord-Parts-Thread-Thread.html#method_getGuildAttribute">getGuildAttribute()</a>
@@ -930,7 +956,8 @@ to auto archive.</dd>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>Set the number of minutes of inactivity required for the thread to auto archive.</dd>
+<dd>Set the number of minutes of inactivity required for the thread to auto
+archive.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Discord-Parts-Thread-Thread.html#method_setLockedAttribute">setLockedAttribute()</a>
@@ -960,11 +987,53 @@ to auto archive.</dd>
 </dt>
 <dd>Sets an attribute on the part.</dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/Discord-Parts-Part.html#method_studly">studly()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>Converts a string to studlyCase.</dd>
+
         </dl>
 
 
 
         
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="classes/Discord-Parts-Thread-Thread.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_PINNED">
+        FLAG_PINNED
+        <a href="classes/Discord-Parts-Thread-Thread.html#constant_FLAG_PINNED" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">78</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_PINNED</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 1</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+            </section>
 
         
     <section class="phpdocumentor-properties">
@@ -972,6 +1041,41 @@ to auto archive.</dd>
             Properties
             <a href="classes/Discord-Parts-Thread-Thread.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_applied_tags">
+        $applied_tags
+        <a href="classes/Discord-Parts-Thread-Thread.html#property_applied_tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, string&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$applied_tags</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The IDs of the set of tags that have been applied to a thread in a forum channel, limited to 5.</p>
+</section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
                     <article
         class="
             phpdocumentor-element
@@ -1084,6 +1188,41 @@ to auto archive.</dd>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_create_timestamp">
+        $create_timestamp
+        <a href="classes/Discord-Parts-Thread-Thread.html#property_create_timestamp" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
+    <span class="phpdocumentor-signature__name">$create_timestamp</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Timestamp when the thread was created; only populated for threads created after 2022-01-09.</p>
+</section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_created">
         $created
         <a href="classes/Discord-Parts-Part.html#property_created" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1093,7 +1232,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">106</span>
+    <span class="phpdocumentor-element-found-in__line">108</span>
 
     </aside>
 
@@ -1139,7 +1278,7 @@ to auto archive.</dd>
     <span class="phpdocumentor-signature__name">$flags</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Channel flags combined as a bitfield. <code class="prettyprint">PINNED</code> can only be set for threads in forum channels.</p>
+        <section class="phpdocumentor-description"><p>Channel flags combined as a bitfield. PINNED can only be set for threads in forum channels.</p>
 </section>
 
         <section class="phpdocumentor-description"></section>
@@ -1152,13 +1291,13 @@ to auto archive.</dd>
             phpdocumentor-element
             -property
             -public
-                                                        "
+                                                -read-only        "
 >
     <h4 class="phpdocumentor-element__name" id="property_guild">
         $guild
         <a href="classes/Discord-Parts-Thread-Thread.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
@@ -1245,6 +1384,41 @@ to auto archive.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>The ID of the thread.</p>
+</section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_invitable">
+        $invitable
+        <a href="classes/Discord-Parts-Thread-Thread.html#property_invitable" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">bool|null</span>
+    <span class="phpdocumentor-signature__name">$invitable</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Whether non-moderators can add other non-moderators to a thread; only available on private threads.</p>
 </section>
 
         <section class="phpdocumentor-description"></section>
@@ -1537,13 +1711,13 @@ to auto archive.</dd>
             phpdocumentor-element
             -property
             -public
-                                                        "
+                                                -read-only        "
 >
     <h4 class="phpdocumentor-element__name" id="property_owner">
         $owner
         <a href="classes/Discord-Parts-Thread-Thread.html#property_owner" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
@@ -1607,13 +1781,13 @@ to auto archive.</dd>
             phpdocumentor-element
             -property
             -public
-                                                        "
+                                                -read-only        "
 >
     <h4 class="phpdocumentor-element__name" id="property_owner_member">
         $owner_member
         <a href="classes/Discord-Parts-Thread-Thread.html#property_owner_member" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
@@ -1642,13 +1816,13 @@ to auto archive.</dd>
             phpdocumentor-element
             -property
             -public
-                                                        "
+                                                -read-only        "
 >
     <h4 class="phpdocumentor-element__name" id="property_parent">
         $parent
         <a href="classes/Discord-Parts-Thread-Thread.html#property_parent" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
@@ -1747,7 +1921,7 @@ to auto archive.</dd>
             phpdocumentor-element
             -property
             -public
-                                                        "
+                        -deprecated                                "
 >
     <h4 class="phpdocumentor-element__name" id="property_scriptData">
         $scriptData
@@ -1758,13 +1932,13 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Custom script data.</p>
 
-    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$scriptData</span>
@@ -1774,6 +1948,57 @@ to auto archive.</dd>
 </section>
 
     
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Relying on this variable with dynamic caching is discouraged.</p>
+</section>
+
+                                    </dd>
+                        </dl>
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_thread_metadata">
+        $thread_metadata
+        <a href="classes/Discord-Parts-Thread-Thread.html#property_thread_metadata" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">object</span>
+    <span class="phpdocumentor-signature__name">$thread_metadata</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Thread-specific fields not needed by other channels.</p>
+</section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1863,7 +2088,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
@@ -1968,7 +2193,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">69</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -1978,58 +2203,10 @@ to auto archive.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;type&#039;, &#039;guild_id&#039;, &#039;name&#039;, &#039;last_message_id&#039;, &#039;last_pin_timestamp&#039;, &#039;rate_limit_per_user&#039;, &#039;owner_id&#039;, &#039;parent_id&#039;, &#039;message_count&#039;, &#039;member_count&#039;, &#039;thread_metadata&#039;, &#039;flags&#039;, &#039;total_message_sent&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;type&#039;, &#039;guild_id&#039;, &#039;name&#039;, &#039;last_message_id&#039;, &#039;last_pin_timestamp&#039;, &#039;rate_limit_per_user&#039;, &#039;owner_id&#039;, &#039;parent_id&#039;, &#039;message_count&#039;, &#039;member_count&#039;, &#039;thread_metadata&#039;, &#039;member&#039;, &#039;total_message_sent&#039;, &#039;flags&#039;, &#039;applied_tags&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
-</section>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_fillAfterSave">
-        $fillAfterSave
-        <a href="classes/Discord-Parts-Part.html#property_fillAfterSave" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">120</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Should we fill the part after saving?</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$fillAfterSave</span>
-     = <span class="phpdocumentor-signature__default-value">true</span></code>
-
-    
-        <section class="phpdocumentor-description"><p>Whether the part will be saved after being filled.</p>
 </section>
 
     
@@ -2044,14 +2221,14 @@ to auto archive.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_hidden">
         $hidden
-        <a href="classes/Discord-Parts-Part.html#property_hidden" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Thread-Thread.html#property_hidden" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
@@ -2061,7 +2238,7 @@ to auto archive.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$hidden</span>
-     = <span class="phpdocumentor-signature__default-value">[]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;member&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>Attributes that are hidden from public.</p>
@@ -2112,41 +2289,6 @@ to auto archive.</dd>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_regex">
-        $regex
-        <a href="classes/Discord-Parts-Part.html#property_regex" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">113</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The regex pattern to replace variables with.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$regex</span>
-     = <span class="phpdocumentor-signature__default-value">&#039;/:([a-z_]+)/&#039;</span></code>
-
-    
-        <section class="phpdocumentor-description"><p>The regex which is used to replace placeholders.</p>
-</section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="property_repositories">
         $repositories
         <a href="classes/Discord-Parts-Thread-Thread.html#property_repositories" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2156,7 +2298,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">104</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 
     </aside>
 
@@ -2173,19 +2315,6 @@ to auto archive.</dd>
 </section>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
 </article>
                     <article
@@ -2204,7 +2333,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">99</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 
     </aside>
 
@@ -2230,14 +2359,14 @@ to auto archive.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_visible">
         $visible
-        <a href="classes/Discord-Parts-Thread-Thread.html#property_visible" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Part.html#property_visible" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
@@ -2247,24 +2376,11 @@ to auto archive.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$visible</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;guild&#039;, &#039;owner&#039;, &#039;owner_member&#039;, &#039;parent&#039;, &#039;archived&#039;, &#039;auto_archive_duration&#039;, &#039;archive_timestamp&#039;, &#039;locked&#039;, &#039;invitable&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
 </article>
             </section>
@@ -2287,7 +2403,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -2350,7 +2466,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">448</span>
+    <span class="phpdocumentor-element-found-in__line">464</span>
 
     </aside>
 
@@ -2380,7 +2496,7 @@ to auto archive.</dd>
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\self::getPublicAttributes()">self::getPublicAttributes()</abbr></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Part.html#method_getPublicAttributes"><abbr title="\Discord\Parts\Part::getPublicAttributes()">Part::getPublicAttributes()</abbr></a></span>
                                         
                                                  <section class="phpdocumentor-description"><p>This function forwards onto getPublicAttributes.</p>
 </section>
@@ -2409,7 +2525,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">463</span>
+    <span class="phpdocumentor-element-found-in__line">479</span>
 
     </aside>
 
@@ -2451,7 +2567,7 @@ to auto archive.</dd>
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\self::getAttribute()">self::getAttribute()</abbr></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Part.html#method_getAttribute"><abbr title="\Discord\Parts\Part::getAttribute()">Part::getAttribute()</abbr></a></span>
                                         
                                                  <section class="phpdocumentor-description"><p>This function forwards onto getAttribute.</p>
 </section>
@@ -2480,7 +2596,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">318</span>
+    <span class="phpdocumentor-element-found-in__line">303</span>
 
     </aside>
 
@@ -2513,7 +2629,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">476</span>
+    <span class="phpdocumentor-element-found-in__line">492</span>
 
     </aside>
 
@@ -2521,7 +2637,7 @@ to auto archive.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__set</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__set</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -2565,7 +2681,7 @@ to auto archive.</dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     
@@ -2583,7 +2699,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">833</span>
+    <span class="phpdocumentor-element-found-in__line">874</span>
 
     </aside>
 
@@ -2618,7 +2734,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">339</span>
+    <span class="phpdocumentor-element-found-in__line">324</span>
 
     </aside>
 
@@ -2693,12 +2809,11 @@ to auto archive.</dd>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/resources/channel#add-thread-member"><abbr title="https://discord.com/developers/docs/resources/channel#add-thread-member">https://discord.com/developers/docs/resources/channel#add-thread-member</abbr></a></span>
-                                        
-                                             
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#add-thread-member"> https://discord.com/developers/docs/resources/channel#add-thread-member </a>
+                    
                                     </dd>
                         </dl>
 
@@ -2766,7 +2881,7 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">731</span>
+    <span class="phpdocumentor-element-found-in__line">749</span>
 
     </aside>
 
@@ -2800,6 +2915,21 @@ to auto archive.</dd>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Make it in a trait along with Channel</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;&gt;</span>
@@ -2828,14 +2958,14 @@ to auto archive.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">deleteMessages</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|<abbr title="\Traversable">Traversable</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$messages</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">deleteMessages</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$messages</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$messages</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|<abbr title="\Traversable">Traversable</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -2858,17 +2988,59 @@ to auto archive.</dd>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/resources/channel#bulk-delete-messages"><abbr title="https://discord.com/developers/docs/resources/channel#bulk-delete-messages">https://discord.com/developers/docs/resources/channel#bulk-delete-messages</abbr></a></span>
-                                        
-                                             
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#bulk-delete-messages"> https://discord.com/developers/docs/resources/channel#bulk-delete-messages </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Make it in a trait along with Channel</p>
+</section>
+
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_ExtendedPromiseInterface">
+        ExtendedPromiseInterface()
+        <a href="classes/Discord-Parts-Thread-Thread.html#method_ExtendedPromiseInterface" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">ExtendedPromiseInterface</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"><p>&lt;Message&gt; sendMessage(MessageBuilder $builder)</p>
+</section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     
@@ -2886,16 +3058,15 @@ to auto archive.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">168</span>
+    <span class="phpdocumentor-element-found-in__line">154</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Fetches any missing information about
-the part from Discord&#039;s servers.</p>
+        <p class="phpdocumentor-summary">Fetches any missing information about the part from Discord&#039;s servers.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">fetch</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, static&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">fetch</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, self&gt;</span></code>
 
     
     
@@ -2918,7 +3089,7 @@ the part from Discord&#039;s servers.</p>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, static&gt;</span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, self&gt;</span>
             &mdash;
         
     
@@ -2936,7 +3107,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">178</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
@@ -2974,6 +3145,39 @@ the part from Discord&#039;s servers.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getBotPermissions">
+        getBotPermissions()
+        <a href="classes/Discord-Parts-Thread-Thread.html#method_getBotPermissions" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">799</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the bot&#039;s permissions in the thread.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getBotPermissions</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>|null</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>|null</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getCreatableAttributes">
         getCreatableAttributes()
         <a href="classes/Discord-Parts-Thread-Thread.html#method_getCreatableAttributes" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2981,7 +3185,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">779</span>
+    <span class="phpdocumentor-element-found-in__line">813</span>
 
     </aside>
 
@@ -3000,11 +3204,11 @@ the part from Discord&#039;s servers.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#start-thread-without-message-json-params"> https://discord.com/developers/docs/resources/channel#start-thread-without-message-json-params </a>
+                    
                                     </dd>
                         </dl>
 
@@ -3027,12 +3231,11 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">539</span>
+    <span class="phpdocumentor-element-found-in__line">540</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Fetches the message history of the thread with a given array
-of arguments.</p>
+        <p class="phpdocumentor-summary">Fetches the message history of the thread with a given array of arguments.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -3057,12 +3260,20 @@ of arguments.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/resources/channel#get-channel-messages"><abbr title="https://discord.com/developers/docs/resources/channel#get-channel-messages">https://discord.com/developers/docs/resources/channel#get-channel-messages</abbr></a></span>
-                                        
-                                             
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#get-channel-messages"> https://discord.com/developers/docs/resources/channel#get-channel-messages </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Make it in a trait along with Channel</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -3085,7 +3296,7 @@ of arguments.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">458</span>
+    <span class="phpdocumentor-element-found-in__line">460</span>
 
     </aside>
 
@@ -3104,12 +3315,20 @@ of arguments.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/resources/channel#get-pinned-messages"><abbr title="https://discord.com/developers/docs/resources/channel#get-pinned-messages">https://discord.com/developers/docs/resources/channel#get-pinned-messages</abbr></a></span>
-                                        
-                                             
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#get-pinned-messages"> https://discord.com/developers/docs/resources/channel#get-pinned-messages </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Make it in a trait along with Channel</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -3132,7 +3351,7 @@ of arguments.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">366</span>
+    <span class="phpdocumentor-element-found-in__line">351</span>
 
     </aside>
 
@@ -3181,7 +3400,7 @@ of arguments.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">392</span>
+    <span class="phpdocumentor-element-found-in__line">377</span>
 
     </aside>
 
@@ -3216,7 +3435,7 @@ of arguments.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">819</span>
+    <span class="phpdocumentor-element-found-in__line">859</span>
 
     </aside>
 
@@ -3229,19 +3448,6 @@ of arguments.</p>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
@@ -3264,7 +3470,7 @@ of arguments.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">798</span>
+    <span class="phpdocumentor-element-found-in__line">834</span>
 
     </aside>
 
@@ -3283,11 +3489,11 @@ of arguments.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#modify-channel-json-params-thread"> https://discord.com/developers/docs/resources/channel#modify-channel-json-params-thread </a>
+                    
                                     </dd>
                         </dl>
 
@@ -3310,13 +3516,12 @@ of arguments.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">155</span>
+    <span class="phpdocumentor-element-found-in__line">142</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Whether the part is considered partial
-i.e. missing information which can be
-fetched from Discord.</p>
+        <p class="phpdocumentor-summary">Whether the part is considered partial i.e. missing information which can
+be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -3364,12 +3569,11 @@ fetched from Discord.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/resources/channel#join-thread"><abbr title="https://discord.com/developers/docs/resources/channel#join-thread">https://discord.com/developers/docs/resources/channel#join-thread</abbr></a></span>
-                                        
-                                             
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#join-thread"> https://discord.com/developers/docs/resources/channel#join-thread </a>
+                    
                                     </dd>
                         </dl>
 
@@ -3392,7 +3596,7 @@ fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">355</span>
+    <span class="phpdocumentor-element-found-in__line">340</span>
 
     </aside>
 
@@ -3423,7 +3627,7 @@ JSON. Used for JsonSerializable.</p>
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\self::getPublicAttributes()">self::getPublicAttributes()</abbr></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Part.html#method_getPublicAttributes"><abbr title="\Discord\Parts\Part::getPublicAttributes()">Part::getPublicAttributes()</abbr></a></span>
                                         
                                                  <section class="phpdocumentor-description"><p>This function forwards onto getPublicAttributes.</p>
 </section>
@@ -3471,12 +3675,11 @@ JSON. Used for JsonSerializable.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/resources/channel#leave-thread"><abbr title="https://discord.com/developers/docs/resources/channel#leave-thread">https://discord.com/developers/docs/resources/channel#leave-thread</abbr></a></span>
-                                        
-                                             
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#leave-thread"> https://discord.com/developers/docs/resources/channel#leave-thread </a>
+                    
                                     </dd>
                         </dl>
 
@@ -3499,7 +3702,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">277</span>
+    <span class="phpdocumentor-element-found-in__line">263</span>
 
     </aside>
 
@@ -3546,7 +3749,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">264</span>
+    <span class="phpdocumentor-element-found-in__line">250</span>
 
     </aside>
 
@@ -3588,7 +3791,7 @@ JSON. Used for JsonSerializable.</p>
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\self::getAttribute()">self::getAttribute()</abbr></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Part.html#method_getAttribute"><abbr title="\Discord\Parts\Part::getAttribute()">Part::getAttribute()</abbr></a></span>
                                         
                                                  <section class="phpdocumentor-description"><p>This function forwards onto getAttribute.</p>
 </section>
@@ -3615,7 +3818,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">291</span>
+    <span class="phpdocumentor-element-found-in__line">276</span>
 
     </aside>
 
@@ -3658,7 +3861,7 @@ JSON. Used for JsonSerializable.</p>
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\self::setAttribute()">self::setAttribute()</abbr></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Part.html#method_setAttribute"><abbr title="\Discord\Parts\Part::setAttribute()">Part::setAttribute()</abbr></a></span>
                                         
                                                  <section class="phpdocumentor-description"><p>This function forwards onto setAttribute.</p>
 </section>
@@ -3685,7 +3888,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">301</span>
+    <span class="phpdocumentor-element-found-in__line">286</span>
 
     </aside>
 
@@ -3730,7 +3933,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">599</span>
+    <span class="phpdocumentor-element-found-in__line">604</span>
 
     </aside>
 
@@ -3768,12 +3971,28 @@ JSON. Used for JsonSerializable.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/resources/channel#pin-message"><abbr title="https://discord.com/developers/docs/resources/channel#pin-message">https://discord.com/developers/docs/resources/channel#pin-message</abbr></a></span>
-                                        
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#pin-message"> https://discord.com/developers/docs/resources/channel#pin-message </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
+                                                            
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Make it in a trait along with Channel</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -3827,12 +4046,11 @@ JSON. Used for JsonSerializable.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/resources/channel#remove-thread-member"><abbr title="https://discord.com/developers/docs/resources/channel#remove-thread-member">https://discord.com/developers/docs/resources/channel#remove-thread-member</abbr></a></span>
-                                        
-                                             
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#remove-thread-member"> https://discord.com/developers/docs/resources/channel#remove-thread-member </a>
+                    
                                     </dd>
                         </dl>
 
@@ -3900,7 +4118,7 @@ JSON. Used for JsonSerializable.</p>
         class="phpdocumentor-element
             -method
             -public
-                                                        "
+            -deprecated                                            "
 >
     <h4 class="phpdocumentor-element__name" id="method_sendEmbed">
         sendEmbed()
@@ -3909,13 +4127,13 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">715</span>
+    <span class="phpdocumentor-element-found-in__line">731</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Sends an embed to the thread.</p>
 
-    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">sendEmbed</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$embed</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;</span></code>
 
@@ -3940,12 +4158,31 @@ JSON. Used for JsonSerializable.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Use <code class="prettyprint">Channel::sendMessage</code> with <code class="prettyprint">MessageBuilder::addEmbed()</code></p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Thread-Thread.html#method_sendMessage"><abbr title="\Discord\Parts\Thread\Thread::sendMessage()">Thread::sendMessage()</abbr></a></span>
                                         
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Make it in a trait along with Channel</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -3968,125 +4205,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">sendMessage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$text</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tts = false</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a>|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$embed = null</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$allowed_mentions = null</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$replyTo = null</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$text</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$tts = false</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$embed = null</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a>|array&lt;string|int, mixed&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$allowed_mentions = null</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$replyTo = null</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_sendMessage">
-        sendMessage()
-        <a href="classes/Discord-Parts-Thread-Thread.html#method_sendMessage" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">sendMessage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Builders-MessageBuilder.html"><abbr title="\Discord\Builders\MessageBuilder">MessageBuilder</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$builder</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$builder</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Builders-MessageBuilder.html"><abbr title="\Discord\Builders\MessageBuilder">MessageBuilder</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_sendMessage">
-        sendMessage()
-        <a href="classes/Discord-Parts-Thread-Thread.html#method_sendMessage" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">669</span>
+    <span class="phpdocumentor-element-found-in__line">681</span>
 
     </aside>
 
@@ -4096,8 +4215,9 @@ JSON. Used for JsonSerializable.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">sendMessage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Builders-MessageBuilder.html"><abbr title="\Discord\Builders\MessageBuilder">MessageBuilder</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tts</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a>|array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$embed</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$allowed_mentions</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$replyTo</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;</span></code>
 
-        <section class="phpdocumentor-description"><p>Takes a <code class="prettyprint">MessageBuilder</code> or content of the message for the first parameter. If the first parameter
-is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of the arguments are disregarded.</p>
+        <section class="phpdocumentor-description"><p>Takes a <code class="prettyprint">MessageBuilder</code> or content of the message for the first
+parameter. If the first parameter is an instance of <code class="prettyprint">MessageBuilder</code>, the
+rest of the arguments are disregarded.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -4156,12 +4276,20 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/resources/channel#create-message"><abbr title="https://discord.com/developers/docs/resources/channel#create-message">https://discord.com/developers/docs/resources/channel#create-message</abbr></a></span>
-                                        
-                                             
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#create-message"> https://discord.com/developers/docs/resources/channel#create-message </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Make it in a trait along with Channel</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -4184,7 +4312,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">313</span>
+    <span class="phpdocumentor-element-found-in__line">298</span>
 
     </aside>
 
@@ -4192,14 +4320,14 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">serialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">serialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
+    <span class="phpdocumentor-signature__response_type">string|null</span>
             &mdash;
             <section class="phpdocumentor-description"><p>A string of serialized data.</p>
 </section>
@@ -4318,7 +4446,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">631</span>
+    <span class="phpdocumentor-element-found-in__line">640</span>
 
     </aside>
 
@@ -4356,12 +4484,28 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/resources/channel#unpin-message"><abbr title="https://discord.com/developers/docs/resources/channel#unpin-message">https://discord.com/developers/docs/resources/channel#unpin-message</abbr></a></span>
-                                        
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#unpin-message"> https://discord.com/developers/docs/resources/channel#unpin-message </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
+                                                            
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Make it in a trait along with Channel</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -4384,7 +4528,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">330</span>
+    <span class="phpdocumentor-element-found-in__line">315</span>
 
     </aside>
 
@@ -4392,7 +4536,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">unserialize</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">unserialize</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -4418,7 +4562,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\self::setAttribute()">self::setAttribute()</abbr></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Part.html#method_setAttribute"><abbr title="\Discord\Parts\Part::setAttribute()">Part::setAttribute()</abbr></a></span>
                                         
                                                  <section class="phpdocumentor-description"><p>The unserialized data is stored with setAttribute.</p>
 </section>
@@ -4427,7 +4571,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     
@@ -4440,12 +4584,12 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
 >
     <h4 class="phpdocumentor-element__name" id="method_afterConstruct">
         afterConstruct()
-        <a href="classes/Discord-Parts-Part.html#method_afterConstruct" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Thread-Thread.html#method_afterConstruct" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
@@ -4478,7 +4622,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">176</span>
+    <span class="phpdocumentor-element-found-in__line">199</span>
 
     </aside>
 
@@ -4502,153 +4646,6 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
         class="phpdocumentor-element
             -method
             -protected
-            -deprecated                                            "
->
-    <h4 class="phpdocumentor-element__name" id="method_getArchiverAttribute">
-        getArchiverAttribute()
-        <a href="classes/Discord-Parts-Thread-Thread.html#method_getArchiverAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">261</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the user who archived the thread.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getArchiverAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span></code>
-
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">deprecated</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.1.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Removed from API</p>
-</section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-            -deprecated                                            "
->
-    <h4 class="phpdocumentor-element__name" id="method_getArchiverIdAttribute">
-        getArchiverIdAttribute()
-        <a href="classes/Discord-Parts-Thread-Thread.html#method_getArchiverIdAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">219</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the ID of the user who archived the thread.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getArchiverIdAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
-
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">deprecated</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.1.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Removed from API</p>
-</section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-            -deprecated                                            "
->
-    <h4 class="phpdocumentor-element__name" id="method_getArchiverMemberAttribute">
-        getArchiverMemberAttribute()
-        <a href="classes/Discord-Parts-Thread-Thread.html#method_getArchiverMemberAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">277</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the member object for the user who archived the thread.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getArchiverMemberAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null</span></code>
-
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">deprecated</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.1.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Removed from API</p>
-</section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="method_getArchiveTimestampAttribute">
@@ -4658,7 +4655,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">294</span>
+    <span class="phpdocumentor-element-found-in__line">277</span>
 
     </aside>
 
@@ -4668,12 +4665,27 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">getArchiveTimestampAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr></span></code>
 
-        <section class="phpdocumentor-description"><p>Note that this does not mean the time that the thread was archived - it can
-also mean the time when the thread was created, archived, unarchived etc.</p>
+        <section class="phpdocumentor-description"><p>Note that this does not mean the time that the thread was archived - it
+can also mean the time when the thread was created, archived, unarchived
+etc.</p>
 </section>
 
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr></span>
@@ -4694,12 +4706,12 @@ also mean the time when the thread was created, archived, unarchived etc.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">207</span>
+    <span class="phpdocumentor-element-found-in__line">230</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns the number of minutes of inactivity required for the thread
-to auto archive.</p>
+        <p class="phpdocumentor-summary">Returns the number of minutes of inactivity required for the thread to
+auto archive.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -4721,6 +4733,54 @@ to auto archive.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getCreateTimestampAttribute">
+        getCreateTimestampAttribute()
+        <a href="classes/Discord-Parts-Thread-Thread.html#method_getCreateTimestampAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">290</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the timestamp when the thread was created; only populated for
+threads created after 2022-01-09.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getCreateTimestampAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
         getGuildAttribute()
         <a href="classes/Discord-Parts-Thread-Thread.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -4728,7 +4788,7 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">135</span>
 
     </aside>
 
@@ -4761,7 +4821,7 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">196</span>
+    <span class="phpdocumentor-element-found-in__line">219</span>
 
     </aside>
 
@@ -4794,7 +4854,7 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">162</span>
+    <span class="phpdocumentor-element-found-in__line">185</span>
 
     </aside>
 
@@ -4807,6 +4867,20 @@ to auto archive.</p>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
@@ -4827,7 +4901,7 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">186</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 
     </aside>
 
@@ -4860,7 +4934,7 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">145</span>
 
     </aside>
 
@@ -4893,7 +4967,7 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">155</span>
 
     </aside>
 
@@ -4926,7 +5000,7 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">148</span>
+    <span class="phpdocumentor-element-found-in__line">169</span>
 
     </aside>
 
@@ -4959,7 +5033,7 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">229</span>
+    <span class="phpdocumentor-element-found-in__line">240</span>
 
     </aside>
 
@@ -5002,11 +5076,12 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">249</span>
+    <span class="phpdocumentor-element-found-in__line">261</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Set the number of minutes of inactivity required for the thread to auto archive.</p>
+        <p class="phpdocumentor-summary">Set the number of minutes of inactivity required for the thread to auto
+archive.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -5045,7 +5120,7 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Thread.php"><a href="files/src-discord-parts-thread-thread.html"><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">239</span>
+    <span class="phpdocumentor-element-found-in__line">250</span>
 
     </aside>
 
@@ -5088,7 +5163,7 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">195</span>
+    <span class="phpdocumentor-element-found-in__line">181</span>
 
     </aside>
 
@@ -5144,7 +5219,7 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">214</span>
+    <span class="phpdocumentor-element-found-in__line">200</span>
 
     </aside>
 
@@ -5205,7 +5280,7 @@ to auto archive.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">241</span>
+    <span class="phpdocumentor-element-found-in__line">227</span>
 
     </aside>
 
@@ -5242,6 +5317,70 @@ to auto archive.</p>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_studly">
+        studly()
+        <a href="classes/Discord-Parts-Part.html#method_studly" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">427</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Converts a string to studlyCase.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">studly</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$string</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+        <section class="phpdocumentor-description"><p>This is a port of updated Laravel's implementation, a non-regex with
+static cache. The Discord\studly() is kept due to unintended bug and we
+do not want to introduce BC by replacing it. This method is private
+static as we may move it outside this class in future.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$string</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The string to convert.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string</span>
             &mdash;
         
     

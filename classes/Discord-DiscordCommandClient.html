@@ -260,14 +260,28 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">21</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Provides an easy way to have triggerable commands.</p>
+            <p class="phpdocumentor-summary">Provides an easy way to have triggerable message based commands.</p>
 
 
 
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">4.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
 
 
@@ -283,14 +297,14 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/Discord-Discord.html#constant_GATEWAY_VERSION">GATEWAY_VERSION</a>
     <span>
-        &nbsp;= 9                            </span>
+        &nbsp;= 10                            </span>
 </dt>
 <dd>The gateway version the client uses.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/Discord-Discord.html#constant_VERSION">VERSION</a>
     <span>
-        &nbsp;= &#039;v7.3.4&#039;                            </span>
+        &nbsp;= &#039;v10.0.0&#039;                            </span>
 </dt>
 <dd>The client version.</dd>
 
@@ -400,6 +414,13 @@
 <dd>A map of aliases for commands.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Discord-Discord.html#property_cacheConfig">$cacheConfig</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Helpers-CacheConfig.html"><abbr title="\Discord\Helpers\CacheConfig">CacheConfig</abbr></a>            </span>
+</dt>
+<dd>The cache configuration.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Discord.html#property_client">$client</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Parts-User-Client.html"><abbr title="\Discord\Parts\User\Client">Client</abbr></a>            </span>
@@ -474,8 +495,8 @@
     <span>
                         &nbsp;: <abbr title="\React\EventLoop\TimerInterface">TimerInterface</abbr>            </span>
 </dt>
-<dd>The timer that resends the heartbeat packet if
-a HEARTBEAT_ACK packet is not received in 5 seconds.</dd>
+<dd>The timer that resends the heartbeat packet if a HEARTBEAT_ACK packet is
+not received in 5 seconds.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Discord.html#property_heartbeatInterval">$heartbeatInterval</a>
@@ -510,8 +531,7 @@ a HEARTBEAT_ACK packet is not received in 5 seconds.</dd>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
-<dd>An array of large guilds that need to be requested for
-members.</dd>
+<dd>An array of large guilds that need to be requested for members.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Discord.html#property_largeSent">$largeSent</a>
@@ -553,8 +573,7 @@ members.</dd>
     <span>
                         &nbsp;: int            </span>
 </dt>
-<dd>Tracks the number of payloads the client
-has sent in the past 60 seconds.</dd>
+<dd>Tracks the number of payloads the client has sent in the past 60 seconds.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Discord.html#property_payloadTimer">$payloadTimer</a>
@@ -643,7 +662,7 @@ has sent in the past 60 seconds.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Discord.html#property_zlibDecompressor">$zlibDecompressor</a>
     <span>
-                        &nbsp;: <abbr title="\Clue\React\Zlib\Decompressor">Decompressor</abbr>            </span>
+                        &nbsp;: <abbr title="\InflateContext">InflateContext</abbr>|false            </span>
 </dt>
 <dd>zlib decompressor.</dd>
 
@@ -686,7 +705,7 @@ object.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Discord.html#method___set">__set()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: void    </span>
 </dt>
 <dd>Handles dynamic set calls to the client.</dd>
 
@@ -717,6 +736,13 @@ object.</dd>
                                 &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|<a href="classes/Discord-Repository-AbstractRepository.html"><abbr title="\Discord\Repository\AbstractRepository">AbstractRepository</abbr></a>    </span>
 </dt>
 <dd>Allows access to the part/repository factory.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Discord.html#method_getCacheConfig">getCacheConfig()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Helpers-CacheConfig.html"><abbr title="\Discord\Helpers\CacheConfig">CacheConfig</abbr></a>    </span>
+</dt>
+<dd>Gets the cache configuration.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Discord.html#method_getChannel">getChannel()</a>
@@ -884,9 +910,9 @@ object.</dd>
     <span>
                                 &nbsp;: string|null    </span>
 </dt>
-<dd>Checks for a prefix in the message content, and returns the content
-of the message minus the prefix if a prefix was detected. If no prefix
-is detected, null is returned.</dd>
+<dd>Checks for a prefix in the message content, and returns the content of
+the message minus the prefix if a prefix was detected. If no prefix is
+detected, null is returned.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Discord-Discord.html#method_connectWs">connectWs()</a>
@@ -1061,7 +1087,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
@@ -1071,7 +1097,7 @@ is detected, null is returned.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">int</span>
     <span class="phpdocumentor-signature__name">GATEWAY_VERSION</span>
-    = <span class="phpdocumentor-signature__default-value">9</span>
+    = <span class="phpdocumentor-signature__default-value">10</span>
 </code>
 
 
@@ -1091,7 +1117,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
@@ -1101,7 +1127,7 @@ is detected, null is returned.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">VERSION</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;v7.3.4&#039;</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;v10.0.0&#039;</span>
 </code>
 
 
@@ -1620,7 +1646,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -1646,6 +1672,39 @@ is detected, null is returned.</dd>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_cacheConfig">
+        $cacheConfig
+        <a href="classes/Discord-Discord.html#property_cacheConfig" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">328</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The cache configuration.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-CacheConfig.html"><abbr title="\Discord\Helpers\CacheConfig">CacheConfig</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$cacheConfig</span>
+    </code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_client">
         $client
         <a href="classes/Discord-Discord.html#property_client" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1655,7 +1714,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">323</span>
+    <span class="phpdocumentor-element-found-in__line">335</span>
 
     </aside>
 
@@ -1690,7 +1749,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">173</span>
+    <span class="phpdocumentor-element-found-in__line">180</span>
 
     </aside>
 
@@ -1725,7 +1784,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
@@ -1760,7 +1819,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -1795,7 +1854,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">166</span>
+    <span class="phpdocumentor-element-found-in__line">173</span>
 
     </aside>
 
@@ -1830,7 +1889,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">252</span>
+    <span class="phpdocumentor-element-found-in__line">258</span>
 
     </aside>
 
@@ -1865,7 +1924,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">273</span>
+    <span class="phpdocumentor-element-found-in__line">279</span>
 
     </aside>
 
@@ -1900,7 +1959,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">316</span>
+    <span class="phpdocumentor-element-found-in__line">321</span>
 
     </aside>
 
@@ -1935,7 +1994,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">259</span>
+    <span class="phpdocumentor-element-found-in__line">265</span>
 
     </aside>
 
@@ -1970,7 +2029,7 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">145</span>
+    <span class="phpdocumentor-element-found-in__line">152</span>
 
     </aside>
 
@@ -2005,12 +2064,12 @@ is detected, null is returned.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">238</span>
+    <span class="phpdocumentor-element-found-in__line">244</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">The timer that resends the heartbeat packet if
-a HEARTBEAT_ACK packet is not received in 5 seconds.</p>
+        <p class="phpdocumentor-summary">The timer that resends the heartbeat packet if a HEARTBEAT_ACK packet is
+not received in 5 seconds.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -2041,7 +2100,7 @@ a HEARTBEAT_ACK packet is not received in 5 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">223</span>
+    <span class="phpdocumentor-element-found-in__line">229</span>
 
     </aside>
 
@@ -2076,7 +2135,7 @@ a HEARTBEAT_ACK packet is not received in 5 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">245</span>
+    <span class="phpdocumentor-element-found-in__line">251</span>
 
     </aside>
 
@@ -2111,7 +2170,7 @@ a HEARTBEAT_ACK packet is not received in 5 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">230</span>
+    <span class="phpdocumentor-element-found-in__line">236</span>
 
     </aside>
 
@@ -2146,7 +2205,7 @@ a HEARTBEAT_ACK packet is not received in 5 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">309</span>
+    <span class="phpdocumentor-element-found-in__line">314</span>
 
     </aside>
 
@@ -2181,12 +2240,11 @@ a HEARTBEAT_ACK packet is not received in 5 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">195</span>
+    <span class="phpdocumentor-element-found-in__line">201</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">An array of large guilds that need to be requested for
-members.</p>
+        <p class="phpdocumentor-summary">An array of large guilds that need to be requested for members.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -2217,7 +2275,7 @@ members.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">208</span>
 
     </aside>
 
@@ -2252,7 +2310,7 @@ members.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -2287,7 +2345,7 @@ members.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">131</span>
 
     </aside>
 
@@ -2322,7 +2380,7 @@ members.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -2357,7 +2415,7 @@ members.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">280</span>
+    <span class="phpdocumentor-element-found-in__line">286</span>
 
     </aside>
 
@@ -2392,12 +2450,11 @@ members.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">295</span>
+    <span class="phpdocumentor-element-found-in__line">300</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Tracks the number of payloads the client
-has sent in the past 60 seconds.</p>
+        <p class="phpdocumentor-summary">Tracks the number of payloads the client has sent in the past 60 seconds.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -2426,7 +2483,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">302</span>
+    <span class="phpdocumentor-element-found-in__line">307</span>
 
     </aside>
 
@@ -2459,7 +2516,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">216</span>
+    <span class="phpdocumentor-element-found-in__line">222</span>
 
     </aside>
 
@@ -2494,7 +2551,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
+    <span class="phpdocumentor-element-found-in__line">166</span>
 
     </aside>
 
@@ -2529,7 +2586,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">266</span>
+    <span class="phpdocumentor-element-found-in__line">272</span>
 
     </aside>
 
@@ -2564,7 +2621,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">152</span>
+    <span class="phpdocumentor-element-found-in__line">159</span>
 
     </aside>
 
@@ -2599,7 +2656,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">180</span>
+    <span class="phpdocumentor-element-found-in__line">187</span>
 
     </aside>
 
@@ -2634,7 +2691,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -2669,7 +2726,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">209</span>
+    <span class="phpdocumentor-element-found-in__line">215</span>
 
     </aside>
 
@@ -2704,7 +2761,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">187</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
     </aside>
 
@@ -2739,7 +2796,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
@@ -2774,7 +2831,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">138</span>
+    <span class="phpdocumentor-element-found-in__line">145</span>
 
     </aside>
 
@@ -2809,7 +2866,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">131</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -2844,7 +2901,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">287</span>
+    <span class="phpdocumentor-element-found-in__line">293</span>
 
     </aside>
 
@@ -2852,7 +2909,7 @@ has sent in the past 60 seconds.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Clue\React\Zlib\Decompressor">Decompressor</abbr></span>
+        <span class="phpdocumentor-signature__type"><abbr title="\InflateContext">InflateContext</abbr>|false</span>
     <span class="phpdocumentor-signature__name">$zlibDecompressor</span>
     </code>
 
@@ -2877,7 +2934,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">330</span>
+    <span class="phpdocumentor-element-found-in__line">342</span>
 
     </aside>
 
@@ -2914,7 +2971,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1632</span>
+    <span class="phpdocumentor-element-found-in__line">1688</span>
 
     </aside>
 
@@ -2968,7 +3025,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -3027,7 +3084,7 @@ has sent in the past 60 seconds.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1647</span>
+    <span class="phpdocumentor-element-found-in__line">1703</span>
 
     </aside>
 
@@ -3061,7 +3118,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">449</span>
+    <span class="phpdocumentor-element-found-in__line">460</span>
 
     </aside>
 
@@ -3106,7 +3163,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1558</span>
+    <span class="phpdocumentor-element-found-in__line">1614</span>
 
     </aside>
 
@@ -3114,7 +3171,7 @@ object.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__set</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__set</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -3142,7 +3199,7 @@ object.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
         
     
@@ -3160,7 +3217,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1430</span>
+    <span class="phpdocumentor-element-found-in__line">1468</span>
 
     </aside>
 
@@ -3205,7 +3262,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">326</span>
+    <span class="phpdocumentor-element-found-in__line">334</span>
 
     </aside>
 
@@ -3270,7 +3327,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1448</span>
+    <span class="phpdocumentor-element-found-in__line">1486</span>
 
     </aside>
 
@@ -3306,7 +3363,7 @@ object.</p>
         class="phpdocumentor-element
             -method
             -public
-                                                        "
+            -deprecated                                            "
 >
     <h4 class="phpdocumentor-element__name" id="method_factory">
         factory()
@@ -3315,13 +3372,13 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1473</span>
+    <span class="phpdocumentor-element-found-in__line">1513</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Allows access to the part/repository factory.</p>
 
-    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">factory</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$class</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$created</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|<a href="classes/Discord-Repository-AbstractRepository.html"><abbr title="\Discord\Repository\AbstractRepository">AbstractRepository</abbr></a></span></code>
 
@@ -3371,10 +3428,64 @@ object.</p>
                                         
                                              
                                     </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Use <code class="prettyprint">new $class($discord, ...)</code>.</p>
+</section>
+
+                                    </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|<a href="classes/Discord-Repository-AbstractRepository.html"><abbr title="\Discord\Repository\AbstractRepository">AbstractRepository</abbr></a></span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getCacheConfig">
+        getCacheConfig()
+        <a href="classes/Discord-Discord.html#method_getCacheConfig" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1577</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets the cache configuration.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getCacheConfig</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$repository_class</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">AbstractRepository::class</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-CacheConfig.html"><abbr title="\Discord\Helpers\CacheConfig">CacheConfig</abbr></a></span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$repository_class</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">AbstractRepository::class</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-CacheConfig.html"><abbr title="\Discord\Helpers\CacheConfig">CacheConfig</abbr></a></span>
             &mdash;
         
     
@@ -3392,7 +3503,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1574</span>
+    <span class="phpdocumentor-element-found-in__line">1630</span>
 
     </aside>
 
@@ -3437,7 +3548,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">304</span>
+    <span class="phpdocumentor-element-found-in__line">312</span>
 
     </aside>
 
@@ -3493,7 +3604,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">437</span>
+    <span class="phpdocumentor-element-found-in__line">448</span>
 
     </aside>
 
@@ -3526,7 +3637,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1483</span>
+    <span class="phpdocumentor-element-found-in__line">1523</span>
 
     </aside>
 
@@ -3559,7 +3670,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1525</span>
+    <span class="phpdocumentor-element-found-in__line">1565</span>
 
     </aside>
 
@@ -3607,7 +3718,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1493</span>
+    <span class="phpdocumentor-element-found-in__line">1533</span>
 
     </aside>
 
@@ -3640,7 +3751,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1513</span>
+    <span class="phpdocumentor-element-found-in__line">1553</span>
 
     </aside>
 
@@ -3673,7 +3784,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1503</span>
+    <span class="phpdocumentor-element-found-in__line">1543</span>
 
     </aside>
 
@@ -3706,7 +3817,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1160</span>
+    <span class="phpdocumentor-element-found-in__line">1188</span>
 
     </aside>
 
@@ -3751,7 +3862,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">654</span>
+    <span class="phpdocumentor-element-found-in__line">676</span>
 
     </aside>
 
@@ -3805,7 +3916,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">570</span>
+    <span class="phpdocumentor-element-found-in__line">596</span>
 
     </aside>
 
@@ -3850,7 +3961,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">715</span>
+    <span class="phpdocumentor-element-found-in__line">737</span>
 
     </aside>
 
@@ -3893,7 +4004,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">698</span>
+    <span class="phpdocumentor-element-found-in__line">720</span>
 
     </aside>
 
@@ -3938,7 +4049,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">594</span>
+    <span class="phpdocumentor-element-found-in__line">620</span>
 
     </aside>
 
@@ -3983,7 +4094,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">926</span>
+    <span class="phpdocumentor-element-found-in__line">954</span>
 
     </aside>
 
@@ -4016,7 +4127,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1178</span>
+    <span class="phpdocumentor-element-found-in__line">1206</span>
 
     </aside>
 
@@ -4111,7 +4222,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1600</span>
+    <span class="phpdocumentor-element-found-in__line">1656</span>
 
     </aside>
 
@@ -4182,7 +4293,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">276</span>
+    <span class="phpdocumentor-element-found-in__line">284</span>
 
     </aside>
 
@@ -4236,7 +4347,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">233</span>
+    <span class="phpdocumentor-element-found-in__line">241</span>
 
     </aside>
 
@@ -4315,7 +4426,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1438</span>
+    <span class="phpdocumentor-element-found-in__line">1476</span>
 
     </aside>
 
@@ -4348,7 +4459,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">261</span>
+    <span class="phpdocumentor-element-found-in__line">269</span>
 
     </aside>
 
@@ -4407,7 +4518,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">287</span>
+    <span class="phpdocumentor-element-found-in__line">295</span>
 
     </aside>
 
@@ -4466,7 +4577,7 @@ object.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1120</span>
+    <span class="phpdocumentor-element-found-in__line">1148</span>
 
     </aside>
 
@@ -4555,13 +4666,13 @@ online, dnd, idle, invisible, offline</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">212</span>
+    <span class="phpdocumentor-element-found-in__line">220</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Checks for a prefix in the message content, and returns the content
-of the message minus the prefix if a prefix was detected. If no prefix
-is detected, null is returned.</p>
+        <p class="phpdocumentor-summary">Checks for a prefix in the message content, and returns the content of
+the message minus the prefix if a prefix was detected. If no prefix is
+detected, null is returned.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -4600,7 +4711,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1043</span>
+    <span class="phpdocumentor-element-found-in__line">1071</span>
 
     </aside>
 
@@ -4633,7 +4744,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">729</span>
+    <span class="phpdocumentor-element-found-in__line">751</span>
 
     </aside>
 
@@ -4678,7 +4789,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">508</span>
+    <span class="phpdocumentor-element-found-in__line">532</span>
 
     </aside>
 
@@ -4737,7 +4848,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">791</span>
+    <span class="phpdocumentor-element-found-in__line">819</span>
 
     </aside>
 
@@ -4782,7 +4893,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">808</span>
+    <span class="phpdocumentor-element-found-in__line">836</span>
 
     </aside>
 
@@ -4827,7 +4938,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">857</span>
+    <span class="phpdocumentor-element-found-in__line">885</span>
 
     </aside>
 
@@ -4872,7 +4983,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">843</span>
+    <span class="phpdocumentor-element-found-in__line">871</span>
 
     </aside>
 
@@ -4917,7 +5028,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">418</span>
+    <span class="phpdocumentor-element-found-in__line">433</span>
 
     </aside>
 
@@ -4976,7 +5087,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">828</span>
+    <span class="phpdocumentor-element-found-in__line">856</span>
 
     </aside>
 
@@ -5021,7 +5132,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">404</span>
+    <span class="phpdocumentor-element-found-in__line">419</span>
 
     </aside>
 
@@ -5066,7 +5177,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">391</span>
+    <span class="phpdocumentor-element-found-in__line">406</span>
 
     </aside>
 
@@ -5111,7 +5222,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">557</span>
+    <span class="phpdocumentor-element-found-in__line">583</span>
 
     </aside>
 
@@ -5156,7 +5267,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">870</span>
+    <span class="phpdocumentor-element-found-in__line">898</span>
 
     </aside>
 
@@ -5201,7 +5312,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">625</span>
+    <span class="phpdocumentor-element-found-in__line">647</span>
 
     </aside>
 
@@ -5246,7 +5357,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1093</span>
+    <span class="phpdocumentor-element-found-in__line">1121</span>
 
     </aside>
 
@@ -5279,7 +5390,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">399</span>
+    <span class="phpdocumentor-element-found-in__line">410</span>
 
     </aside>
 
@@ -5326,7 +5437,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/DiscordCommandClient.php"><a href="files/src-discord-discordcommandclient.html"><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">365</span>
+    <span class="phpdocumentor-element-found-in__line">374</span>
 
     </aside>
 
@@ -5373,7 +5484,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1335</span>
+    <span class="phpdocumentor-element-found-in__line">1361</span>
 
     </aside>
 
@@ -5434,7 +5545,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1073</span>
+    <span class="phpdocumentor-element-found-in__line">1101</span>
 
     </aside>
 
@@ -5487,7 +5598,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1274</span>
+    <span class="phpdocumentor-element-found-in__line">1302</span>
 
     </aside>
 
@@ -5532,7 +5643,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">954</span>
+    <span class="phpdocumentor-element-found-in__line">982</span>
 
     </aside>
 
@@ -5565,7 +5676,7 @@ is detected, null is returned.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1026</span>
+    <span class="phpdocumentor-element-found-in__line">1054</span>
 
     </aside>
 
