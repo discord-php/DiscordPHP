@@ -269,7 +269,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a></dt>
         <dd>The Discord client class.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-DiscordCommandClient.html"><abbr title="\Discord\DiscordCommandClient">DiscordCommandClient</abbr></a></dt>
-        <dd>Provides an easy way to have triggerable message based commands.</dd>
+        <dd>Provides an easy way to have triggerable commands.</dd>
     
     
     </dl>
@@ -335,7 +335,8 @@
     <span>
                                 &nbsp;: float    </span>
 </dt>
-<dd>Takes a snowflake and calculates the time that the snowflake was generated.</dd>
+<dd>Takes a snowflake and calculates the time that the snowflake
+was generated.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a href="namespaces/discord.html#function_escapeMarkdown">escapeMarkdown()</a>
@@ -355,13 +356,6 @@ A backslash will be added before the each formatting symbol.</dd>
 </dt>
 <dd>Run a deferred search in array.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -function -">
-    <a href="namespaces/discord.html#function_nowait">nowait()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>Attempts to return a resolved value from a synchronous promise.</dd>
-
     </dl>
 
         
@@ -379,7 +373,7 @@ A backslash will be added before the each formatting symbol.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
@@ -387,15 +381,14 @@ A backslash will be added before the each formatting symbol.</dd>
 
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">COLORTABLE</span>
     = <span class="phpdocumentor-signature__default-value">[&#039;indianred&#039; =&gt; 0xcd5c5c, &#039;lightcoral&#039; =&gt; 0xf08080, &#039;salmon&#039; =&gt; 0xfa8072, &#039;darksalmon&#039; =&gt; 0xe9967a, &#039;lightsalmon&#039; =&gt; 0xffa07a, &#039;crimson&#039; =&gt; 0xdc143c, &#039;red&#039; =&gt; 0xff0000, &#039;firebrick&#039; =&gt; 0xb22222, &#039;darkred&#039; =&gt; 0x8b0000, &#039;pink&#039; =&gt; 0xffc0cb, &#039;lightpink&#039; =&gt; 0xffb6c1, &#039;hotpink&#039; =&gt; 0xff69b4, &#039;deeppink&#039; =&gt; 0xff1493, &#039;mediumvioletred&#039; =&gt; 0xc71585, &#039;palevioletred&#039; =&gt; 0xdb7093, &#039;lightsalmon&#039; =&gt; 0xffa07a, &#039;coral&#039; =&gt; 0xff7f50, &#039;tomato&#039; =&gt; 0xff6347, &#039;orangered&#039; =&gt; 0xff4500, &#039;darkorange&#039; =&gt; 0xff8c00, &#039;orange&#039; =&gt; 0xffa500, &#039;gold&#039; =&gt; 0xffd700, &#039;yellow&#039; =&gt; 0xffff00, &#039;lightyellow&#039; =&gt; 0xffffe0, &#039;lemonchiffon&#039; =&gt; 0xfffacd, &#039;lightgoldenrodyellow&#039; =&gt; 0xfafad2, &#039;papayawhip&#039; =&gt; 0xffefd5, &#039;moccasin&#039; =&gt; 0xffe4b5, &#039;peachpuff&#039; =&gt; 0xffdab9, &#039;palegoldenrod&#039; =&gt; 0xeee8aa, &#039;khaki&#039; =&gt; 0xf0e68c, &#039;darkkhaki&#039; =&gt; 0xbdb76b, &#039;lavender&#039; =&gt; 0xe6e6fa, &#039;thistle&#039; =&gt; 0xd8bfd8, &#039;plum&#039; =&gt; 0xdda0dd, &#039;violet&#039; =&gt; 0xee82ee, &#039;orchid&#039; =&gt; 0xda70d6, &#039;fuchsia&#039; =&gt; 0xff00ff, &#039;magenta&#039; =&gt; 0xff00ff, &#039;mediumorchid&#039; =&gt; 0xba55d3, &#039;mediumpurple&#039; =&gt; 0x9370db, &#039;rebeccapurple&#039; =&gt; 0x663399, &#039;blueviolet&#039; =&gt; 0x8a2be2, &#039;darkviolet&#039; =&gt; 0x9400d3, &#039;darkorchid&#039; =&gt; 0x9932cc, &#039;darkmagenta&#039; =&gt; 0x8b008b, &#039;purple&#039; =&gt; 0x800080, &#039;indigo&#039; =&gt; 0x4b0082, &#039;slateblue&#039; =&gt; 0x6a5acd, &#039;darkslateblue&#039; =&gt; 0x483d8b, &#039;mediumslateblue&#039; =&gt; 0x7b68ee, &#039;greenyellow&#039; =&gt; 0xadff2f, &#039;chartreuse&#039; =&gt; 0x7fff00, &#039;lawngreen&#039; =&gt; 0x7cfc00, &#039;lime&#039; =&gt; 0xff00, &#039;limegreen&#039; =&gt; 0x32cd32, &#039;palegreen&#039; =&gt; 0x98fb98, &#039;lightgreen&#039; =&gt; 0x90ee90, &#039;mediumspringgreen&#039; =&gt; 0xfa9a, &#039;springgreen&#039; =&gt; 0xff7f, &#039;mediumseagreen&#039; =&gt; 0x3cb371, &#039;seagreen&#039; =&gt; 0x2e8b57, &#039;forestgreen&#039; =&gt; 0x228b22, &#039;green&#039; =&gt; 0x8000, &#039;darkgreen&#039; =&gt; 0x6400, &#039;yellowgreen&#039; =&gt; 0x9acd32, &#039;olivedrab&#039; =&gt; 0x6b8e23, &#039;olive&#039; =&gt; 0x808000, &#039;darkolivegreen&#039; =&gt; 0x556b2f, &#039;mediumaquamarine&#039; =&gt; 0x66cdaa, &#039;darkseagreen&#039; =&gt; 0x8fbc8b, &#039;lightseagreen&#039; =&gt; 0x20b2aa, &#039;darkcyan&#039; =&gt; 0x8b8b, &#039;teal&#039; =&gt; 0x8080, &#039;aqua&#039; =&gt; 0xffff, &#039;cyan&#039; =&gt; 0xffff, &#039;lightcyan&#039; =&gt; 0xe0ffff, &#039;paleturquoise&#039; =&gt; 0xafeeee, &#039;aquamarine&#039; =&gt; 0x7fffd4, &#039;turquoise&#039; =&gt; 0x40e0d0, &#039;mediumturquoise&#039; =&gt; 0x48d1cc, &#039;darkturquoise&#039; =&gt; 0xced1, &#039;cadetblue&#039; =&gt; 0x5f9ea0, &#039;steelblue&#039; =&gt; 0x4682b4, &#039;lightsteelblue&#039; =&gt; 0xb0c4de, &#039;powderblue&#039; =&gt; 0xb0e0e6, &#039;lightblue&#039; =&gt; 0xadd8e6, &#039;skyblue&#039; =&gt; 0x87ceeb, &#039;lightskyblue&#039; =&gt; 0x87cefa, &#039;deepskyblue&#039; =&gt; 0xbfff, &#039;dodgerblue&#039; =&gt; 0x1e90ff, &#039;cornflowerblue&#039; =&gt; 0x6495ed, &#039;mediumslateblue&#039; =&gt; 0x7b68ee, &#039;royalblue&#039; =&gt; 0x4169e1, &#039;blue&#039; =&gt; 0xff, &#039;mediumblue&#039; =&gt; 0xcd, &#039;darkblue&#039; =&gt; 0x8b, &#039;navy&#039; =&gt; 0x80, &#039;midnightblue&#039; =&gt; 0x191970, &#039;cornsilk&#039; =&gt; 0xfff8dc, &#039;blanchedalmond&#039; =&gt; 0xffebcd, &#039;bisque&#039; =&gt; 0xffe4c4, &#039;navajowhite&#039; =&gt; 0xffdead, &#039;wheat&#039; =&gt; 0xf5deb3, &#039;burlywood&#039; =&gt; 0xdeb887, &#039;tan&#039; =&gt; 0xd2b48c, &#039;rosybrown&#039; =&gt; 0xbc8f8f, &#039;sandybrown&#039; =&gt; 0xf4a460, &#039;goldenrod&#039; =&gt; 0xdaa520, &#039;darkgoldenrod&#039; =&gt; 0xb8860b, &#039;peru&#039; =&gt; 0xcd853f, &#039;chocolate&#039; =&gt; 0xd2691e, &#039;saddlebrown&#039; =&gt; 0x8b4513, &#039;sienna&#039; =&gt; 0xa0522d, &#039;brown&#039; =&gt; 0xa52a2a, &#039;maroon&#039; =&gt; 0x800000, &#039;white&#039; =&gt; 0xffffff, &#039;snow&#039; =&gt; 0xfffafa, &#039;honeydew&#039; =&gt; 0xf0fff0, &#039;mintcream&#039; =&gt; 0xf5fffa, &#039;azure&#039; =&gt; 0xf0ffff, &#039;aliceblue&#039; =&gt; 0xf0f8ff, &#039;ghostwhite&#039; =&gt; 0xf8f8ff, &#039;whitesmoke&#039; =&gt; 0xf5f5f5, &#039;seashell&#039; =&gt; 0xfff5ee, &#039;beige&#039; =&gt; 0xf5f5dc, &#039;oldlace&#039; =&gt; 0xfdf5e6, &#039;floralwhite&#039; =&gt; 0xfffaf0, &#039;ivory&#039; =&gt; 0xfffff0, &#039;antiquewhite&#039; =&gt; 0xfaebd7, &#039;linen&#039; =&gt; 0xfaf0e6, &#039;lavenderblush&#039; =&gt; 0xfff0f5, &#039;mistyrose&#039; =&gt; 0xffe4e1, &#039;gainsboro&#039; =&gt; 0xdcdcdc, &#039;lightgray&#039; =&gt; 0xd3d3d3, &#039;silver&#039; =&gt; 0xc0c0c0, &#039;darkgray&#039; =&gt; 0xa9a9a9, &#039;gray&#039; =&gt; 0x808080, &#039;dimgray&#039; =&gt; 0x696969, &#039;lightslategray&#039; =&gt; 0x778899, &#039;slategray&#039; =&gt; 0x708090, &#039;darkslategray&#039; =&gt; 0x2f4f4f, &#039;black&#039; =&gt; 0x0]</span>
 </code>
 
 
     
-        <section class="phpdocumentor-description"><p>HTML Color Table.</p>
-</section>
+        <section class="phpdocumentor-description"></section>
 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -404,12 +397,13 @@ A backslash will be added before the each formatting symbol.</dd>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
+                    <span class="phpdocumentor-tag__name">array</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">5.0.12</span>
                                                                                 
-                                             
+                                                 <section class="phpdocumentor-description"><p>HTML Color Table.</p>
+</section>
+
                                     </dd>
                         </dl>
 
@@ -429,7 +423,7 @@ A backslash will be added before the each formatting symbol.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
@@ -463,20 +457,6 @@ A backslash will be added before the each formatting symbol.</dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">4.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">bool</span>
@@ -494,7 +474,7 @@ A backslash will be added before the each formatting symbol.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">100</span>
 
     </aside>
 
@@ -519,20 +499,6 @@ A backslash will be added before the each formatting symbol.</dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">5.0.12</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">int</span>
@@ -550,7 +516,7 @@ A backslash will be added before the each formatting symbol.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">137</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
@@ -584,20 +550,6 @@ A backslash will be added before the each formatting symbol.</dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">5.0.12</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">bool</span>
@@ -613,7 +565,7 @@ A backslash will be added before the each formatting symbol.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">157</span>
+    <span class="phpdocumentor-element-found-in__line">146</span>
 
     </aside>
 
@@ -638,20 +590,6 @@ A backslash will be added before the each formatting symbol.</dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">5.0.12</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">string</span>
@@ -667,7 +605,7 @@ A backslash will be added before the each formatting symbol.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">178</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -690,20 +628,6 @@ A backslash will be added before the each formatting symbol.</dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">5.0.12</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">int</span>
@@ -719,7 +643,7 @@ A backslash will be added before the each formatting symbol.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">197</span>
+    <span class="phpdocumentor-element-found-in__line">182</span>
 
     </aside>
 
@@ -742,20 +666,6 @@ A backslash will be added before the each formatting symbol.</dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">5.1.0</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">string</span>
@@ -771,11 +681,12 @@ A backslash will be added before the each formatting symbol.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">224</span>
+    <span class="phpdocumentor-element-found-in__line">208</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Takes a snowflake and calculates the time that the snowflake was generated.</p>
+        <p class="phpdocumentor-summary">Takes a snowflake and calculates the time that the snowflake
+was generated.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
@@ -794,20 +705,6 @@ A backslash will be added before the each formatting symbol.</dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">5.1.1</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">float</span>
@@ -823,7 +720,7 @@ A backslash will be added before the each formatting symbol.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">280</span>
+    <span class="phpdocumentor-element-found-in__line">262</span>
 
     </aside>
 
@@ -851,20 +748,6 @@ A backslash will be added before the each formatting symbol.</p>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">6.0.2</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">string</span>
@@ -882,7 +765,7 @@ A backslash will be added before the each formatting symbol.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">297</span>
+    <span class="phpdocumentor-element-found-in__line">277</span>
 
     </aside>
 
@@ -890,7 +773,7 @@ A backslash will be added before the each formatting symbol.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">deferFind</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$array</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$callback</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\React\EventLoop\LoopInterface">LoopInterface</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$loop</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\Promise">Promise</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">deferFind</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$array</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$callback</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\React\EventLoop\LoopInterface">LoopInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$loop</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$canceller</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\Promise">Promise</abbr></span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -915,113 +798,30 @@ A backslash will be added before the each formatting symbol.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$loop</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\React\EventLoop\LoopInterface">LoopInterface</abbr>|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\React\EventLoop\LoopInterface">LoopInterface</abbr></span>
+                            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Loop interface, use $discord-&gt;getLoop()</p>
 </section>
 
             </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.0.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Handle <code class="prettyprint">$canceller</code> internally, use <code class="prettyprint">cancel()</code> from the returned promise.</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.1.0</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\Promise">Promise</abbr></span>
-            &mdash;
-        
-    
-</article>
-                    <article class="phpdocumentor-element -function - ">
-    <h4 class="phpdocumentor-element__name" id="function_nowait">
-        nowait()
-        <a href="namespaces/discord.html#function_nowait" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">347</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Attempts to return a resolved value from a synchronous promise.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility"></span>
-                    <span class="phpdocumentor-signature__name">nowait</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$promiseInterface</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-        <section class="phpdocumentor-description"><p>Like await() but only for resolvable blocking promise without touching the loop.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$promiseInterface</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
-                            </dt>
+                <span class="phpdocumentor-signature__argument__name">$canceller</span>
+                : <span class="phpdocumentor-signature__argument__return-type">callable</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The synchronous promise.</p>
+                    <section class="phpdocumentor-description"><p>Deprecated, use <code class="prettyprint">cancel()</code> from the returned promise</p>
 </section>
 
             </dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\React\Async\await()">await()</abbr></span>
-                                        
-                                                 <section class="phpdocumentor-description"><p>for asynchronous promise.</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\Promise">Promise</abbr></span>
             &mdash;
-            <section class="phpdocumentor-description"><p>null if failed to return.</p>
-</section>
-
+        
     
 </article>
             </section>

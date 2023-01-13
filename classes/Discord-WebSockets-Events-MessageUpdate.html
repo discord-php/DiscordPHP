@@ -262,11 +262,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/MessageUpdate.php"><a href="files/src-discord-websockets-events-messageupdate.html"><abbr title="src/Discord/WebSockets/Events/MessageUpdate.php">MessageUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Contains constants for WebSocket events as well as handlers for the events.</p>
+            <p class="phpdocumentor-summary">Contains constants for WebSocket events as well as handlers
+for the events.</p>
 
 
 
@@ -276,18 +277,11 @@
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
+                    <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/topics/gateway-events#message-update"> https://discord.com/developers/docs/topics/gateway-events#message-update </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.1.3</span>
-                                                                                
+                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/topics/gateway#message-update"><abbr title="https://discord.com/developers/docs/topics/gateway#message-update">https://discord.com/developers/docs/topics/gateway#message-update</abbr></a></span>
+                                        
                                              
                                     </dd>
                         </dl>
@@ -775,16 +769,10 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-WebSockets-Events-MessageUpdate.html#method_handle">handle()</a>
     <span>
-                                &nbsp;: <abbr title="\Discord\WebSockets\Generator">Generator</abbr>    </span>
+                                &nbsp;: void|<abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
-<dd>Transforms the given data, and updates the Discord instance if necessary.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-WebSockets-Event.html#method_cacheMember">cacheMember()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>Cache Member repository from Event data.</dd>
+<dd>Transforms the given data, and updates the
+Discord instance if necessary.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Discord-WebSockets-Event.html#method_cacheUser">cacheUser()</a>
@@ -2625,7 +2613,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 
     </aside>
 
@@ -2660,7 +2648,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">126</span>
 
     </aside>
 
@@ -2695,7 +2683,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -2734,7 +2722,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">142</span>
 
     </aside>
 
@@ -2742,11 +2730,29 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discord</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Discord\Http\Http">Http</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$http</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">Factory</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$factory</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discord</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$http</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Discord\Http\Http">Http</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The HTTP client.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$factory</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">Factory</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The factory.</p>
+</section>
+
+            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$discord</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a></span>
@@ -2779,7 +2785,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">193</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -2812,79 +2818,35 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/MessageUpdate.php"><a href="files/src-discord-websockets-events-messageupdate.html"><abbr title="src/Discord/WebSockets/Events/MessageUpdate.php">MessageUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Transforms the given data, and updates the Discord instance if necessary.</p>
+        <p class="phpdocumentor-summary">Transforms the given data, and updates the
+Discord instance if necessary.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">handle</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Discord\WebSockets\Generator">Generator</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">handle</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Helpers-Deferred.html"><abbr title="\Discord\Helpers\Deferred">Deferred</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$deferred</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void|<abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$deferred</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Helpers-Deferred.html"><abbr title="\Discord\Helpers\Deferred">Deferred</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The promise to use</p>
+</section>
+
+            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$data</span>
                 : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The data that was sent with the WebSocket.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Discord\WebSockets\Generator">Generator</abbr></span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_cacheMember">
-        cacheMember()
-        <a href="classes/Discord-WebSockets-Event.html#method_cacheMember" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">184</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Cache Member repository from Event data.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">cacheMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Repository-Guild-MemberRepository.html"><abbr title="\Discord\Repository\Guild\MemberRepository">MemberRepository</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$members</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberdata</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$members</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Repository-Guild-MemberRepository.html"><abbr title="\Discord\Repository\Guild\MemberRepository">MemberRepository</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p><code class="prettyprint">$guild-&gt;members</code></p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$memberdata</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p><code class="prettyprint">(array) $data-&gt;member</code></p>
+                    <section class="phpdocumentor-description"><p>The data that was sent with the WebSocket</p>
 </section>
 
             </dd>
@@ -2897,17 +2859,16 @@
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
+                    <span class="phpdocumentor-tag__name">inheritdoc</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.0.0</span>
                                                                                 
                                              
                                     </dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
+    <span class="phpdocumentor-signature__response_type">void|<abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
             &mdash;
         
     
@@ -2925,7 +2886,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">166</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -2943,27 +2904,11 @@
                 : <span class="phpdocumentor-signature__argument__return-type">object</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p><code class="prettyprint">$data-&gt;user</code> or <code class="prettyprint">$data-&gt;member-&gt;user</code></p>
-</section>
-
+                
             </dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">mixed</span>

@@ -264,27 +264,14 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
         
+    <section class="phpdocumentor-description"></section>
 
 
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">6.0.0</span>
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
 
 
@@ -312,7 +299,7 @@
                     <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Discord-Helpers-Buffer.html#property_buffer">$buffer</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: array&lt;string|int, <abbr title="\Discord\Helpers\char">char</abbr>&gt;            </span>
 </dt>
 <dd>Internal buffer.</dd>
 
@@ -331,11 +318,19 @@
 <dd>ReactPHP event loop.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a href="classes/Discord-Helpers-Buffer.html#property_readPointer">$readPointer</a>
+    <span>
+                        &nbsp;: int            </span>
+</dt>
+<dd>Pointer to the head of the buffer.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Discord-Helpers-Buffer.html#property_reads">$reads</a>
     <span>
                         &nbsp;: array&lt;string|int, <a href="classes/Discord-Helpers-Deferred.html"><abbr title="\Discord\Helpers\Deferred">Deferred</abbr></a>&gt;|array&lt;string|int, int&gt;            </span>
 </dt>
-<dd>Array of deferred reads waiting to be resolved.</dd>
+<dd>Array of deferred reads waiting to
+be resolved.</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Buffer.html#method___construct">__construct()</a>
@@ -349,21 +344,21 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>{@inheritDoc}</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Buffer.html#method_end">end()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>{@inheritDoc}</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Buffer.html#method_isWritable">isWritable()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>{@inheritDoc}</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Buffer.html#method_read">read()</a>
@@ -391,12 +386,12 @@
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd>{@inheritDoc}</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/Discord-Helpers-Buffer.html#method_readRaw">readRaw()</a>
     <span>
-                                &nbsp;: string|bool    </span>
+                                &nbsp;: mixed    </span>
 </dt>
 <dd>Reads from the buffer and returns in a string.</dd>
 
@@ -428,7 +423,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
@@ -436,9 +431,9 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-        <span class="phpdocumentor-signature__type">string</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, <abbr title="\Discord\Helpers\char">char</abbr>&gt;</span>
     <span class="phpdocumentor-signature__name">$buffer</span>
-     = <span class="phpdocumentor-signature__default-value">&#039;&#039;</span></code>
+     = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
     
     
@@ -461,7 +456,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -494,7 +489,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -520,6 +515,39 @@
             -private
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_readPointer">
+        $readPointer
+        <a href="classes/Discord-Helpers-Buffer.html#property_readPointer" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">26</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Pointer to the head of the buffer.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$readPointer</span>
+     = <span class="phpdocumentor-signature__default-value">0</span></code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_reads">
         $reads
         <a href="classes/Discord-Helpers-Buffer.html#property_reads" class="headerlink"><i class="fas fa-link"></i></a>
@@ -529,11 +557,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Array of deferred reads waiting to be resolved.</p>
+        <p class="phpdocumentor-summary">Array of deferred reads waiting to
+be resolved.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
@@ -566,7 +595,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
@@ -610,12 +639,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">198</span>
+    <span class="phpdocumentor-element-found-in__line">206</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">{@inheritDoc}</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">close</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -623,6 +651,19 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
@@ -643,12 +684,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">197</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">{@inheritDoc}</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">end</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -667,6 +707,19 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
@@ -687,12 +740,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">{@inheritDoc}</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">isWritable</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
@@ -700,6 +752,19 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">mixed</span>
@@ -720,7 +785,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -730,8 +795,8 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">read</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$length</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">null|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$format</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timeout</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">-1</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;mixed, <abbr title="\RuntimeException">RuntimeException</abbr>&gt;</span></code>
 
-        <section class="phpdocumentor-description"><p>The promise will resolve when there are enough bytes in the buffer to
-read.</p>
+        <section class="phpdocumentor-description"><p>The promise will resolve when there are enough bytes
+in the buffer to read.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -802,7 +867,7 @@ read.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">173</span>
+    <span class="phpdocumentor-element-found-in__line">181</span>
 
     </aside>
 
@@ -863,7 +928,7 @@ read.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
+    <span class="phpdocumentor-element-found-in__line">167</span>
 
     </aside>
 
@@ -924,12 +989,11 @@ read.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">{@inheritDoc}</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">write</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -948,6 +1012,19 @@ read.</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">bool</span>
@@ -968,7 +1045,7 @@ read.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Buffer.php"><a href="files/src-discord-helpers-buffer.html"><abbr title="src/Discord/Helpers/Buffer.php">Buffer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">95</span>
 
     </aside>
 
@@ -976,9 +1053,10 @@ read.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">readRaw</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$length</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|bool</span></code>
+                    <span class="phpdocumentor-signature__name">readRaw</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$length</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"><p>Returns false if there were not enough bytes in the buffer.</p>
+        <section class="phpdocumentor-description"><p>Returns false if there were not enough bytes in
+the buffer.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -997,7 +1075,7 @@ read.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|bool</span>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
             &mdash;
             <section class="phpdocumentor-description"><p>The bytes read, or false if not enough bytes are present.</p>
 </section>

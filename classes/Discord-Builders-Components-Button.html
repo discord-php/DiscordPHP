@@ -262,14 +262,13 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Buttons are interactive components that render in messages.</p>
+            <p class="phpdocumentor-summary">Buttons are interactive components that render on messages.</p>
 
-    <section class="phpdocumentor-description"><p>They can be clicked by users, and send an interaction to your app when
-clicked.</p>
+    <section class="phpdocumentor-description"><p>They can be clicked by users, and send an interaction to your app when clicked.</p>
 </section>
 
 
@@ -279,18 +278,11 @@ clicked.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
+                    <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/interactions/message-components#buttons"> https://discord.com/developers/docs/interactions/message-components#buttons </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.0.0</span>
-                                                                                
+                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/interactions/message-components#buttons"><abbr title="https://discord.com/developers/docs/interactions/message-components#buttons">https://discord.com/developers/docs/interactions/message-components#buttons</abbr></a></span>
+                                        
                                              
                                     </dd>
                         </dl>
@@ -356,35 +348,7 @@ clicked.</p>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_CHANNEL_SELECT">TYPE_CHANNEL_SELECT</a>
-    <span>
-        &nbsp;= 8                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_MENTIONABLE_SELECT">TYPE_MENTIONABLE_SELECT</a>
-    <span>
-        &nbsp;= 7                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_ROLE_SELECT">TYPE_ROLE_SELECT</a>
-    <span>
-        &nbsp;= 6                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_SELECT_MENU">TYPE_SELECT_MENU</a>
-    <span>
-        &nbsp;= 3                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_STRING_SELECT">TYPE_STRING_SELECT</a>
     <span>
         &nbsp;= 3                            </span>
 </dt>
@@ -394,13 +358,6 @@ clicked.</p>
     <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_TEXT_INPUT">TYPE_TEXT_INPUT</a>
     <span>
         &nbsp;= 4                            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_USER_SELECT">TYPE_USER_SELECT</a>
-    <span>
-        &nbsp;= 5                            </span>
 </dt>
 <dd></dd>
 
@@ -514,7 +471,7 @@ clicked.</p>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
-<dd>{@inheritDoc}</dd>
+<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-Button.html#method_new">new()</a>
@@ -526,42 +483,42 @@ clicked.</p>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-Button.html#method_removeListener">removeListener()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Removes the listener from the button.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-Button.html#method_setCustomId">setCustomId()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the custom ID of the button.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-Button.html#method_setDisabled">setDisabled()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the button as disabled/not disabled.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-Button.html#method_setEmoji">setEmoji()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
-<dd>Sets the emoji of the button.</dd>
+<dd>Sets the emoji of the button. Null to clear.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-Button.html#method_setLabel">setLabel()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the label of the button.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-Button.html#method_setListener">setListener()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the callable listener for the button. The `$callback` will be called when the button
 is pressed.</dd>
@@ -569,14 +526,14 @@ is pressed.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-Button.html#method_setStyle">setStyle()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the style of the button.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-Components-Button.html#method_setUrl">setUrl()</a>
     <span>
-                                &nbsp;: $this    </span>
+                                &nbsp;: self    </span>
 </dt>
 <dd>Sets the URL of the button. Only valid for link buttons.tatic.</dd>
 
@@ -606,7 +563,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
@@ -635,7 +592,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -664,7 +621,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
@@ -693,7 +650,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
@@ -722,7 +679,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
@@ -751,7 +708,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
@@ -780,7 +737,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">24</span>
 
     </aside>
 
@@ -801,93 +758,6 @@ is pressed.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_CHANNEL_SELECT">
-        TYPE_CHANNEL_SELECT
-        <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_CHANNEL_SELECT" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">33</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_CHANNEL_SELECT</span>
-    = <span class="phpdocumentor-signature__default-value">8</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_MENTIONABLE_SELECT">
-        TYPE_MENTIONABLE_SELECT
-        <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_MENTIONABLE_SELECT" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">32</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_MENTIONABLE_SELECT</span>
-    = <span class="phpdocumentor-signature__default-value">7</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_ROLE_SELECT">
-        TYPE_ROLE_SELECT
-        <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_ROLE_SELECT" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">31</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_ROLE_SELECT</span>
-    = <span class="phpdocumentor-signature__default-value">6</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_TYPE_SELECT_MENU">
         TYPE_SELECT_MENU
         <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_SELECT_MENU" class="headerlink"><i class="fas fa-link"></i></a>
@@ -896,51 +766,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_SELECT_MENU</span>
-    = <span class="phpdocumentor-signature__default-value">3</span>
-</code>
-
-
-    
-        <section class="phpdocumentor-description"></section>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">deprecated</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.4.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Use <code class="prettyprint">Component::TYPE_STRING_SELECT</code></p>
-</section>
-
-                                    </dd>
-                        </dl>
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_STRING_SELECT">
-        TYPE_STRING_SELECT
-        <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_STRING_SELECT" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
@@ -948,7 +774,7 @@ is pressed.</dd>
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_STRING_SELECT</span>
+    <span class="phpdocumentor-signature__name">TYPE_SELECT_MENU</span>
     = <span class="phpdocumentor-signature__default-value">3</span>
 </code>
 
@@ -969,7 +795,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -979,35 +805,6 @@ is pressed.</dd>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">TYPE_TEXT_INPUT</span>
     = <span class="phpdocumentor-signature__default-value">4</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_USER_SELECT">
-        TYPE_USER_SELECT
-        <a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_USER_SELECT" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">30</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_USER_SELECT</span>
-    = <span class="phpdocumentor-signature__default-value">5</span>
 </code>
 
 
@@ -1042,7 +839,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -1075,7 +872,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -1108,7 +905,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -1141,7 +938,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -1174,7 +971,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -1207,7 +1004,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -1240,7 +1037,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -1273,7 +1070,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
@@ -1310,7 +1107,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">100</span>
 
     </aside>
 
@@ -1378,7 +1175,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">408</span>
+    <span class="phpdocumentor-element-found-in__line">405</span>
 
     </aside>
 
@@ -1411,7 +1208,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">398</span>
+    <span class="phpdocumentor-element-found-in__line">395</span>
 
     </aside>
 
@@ -1444,7 +1241,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">388</span>
+    <span class="phpdocumentor-element-found-in__line">385</span>
 
     </aside>
 
@@ -1477,7 +1274,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">378</span>
+    <span class="phpdocumentor-element-found-in__line">375</span>
 
     </aside>
 
@@ -1510,7 +1307,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">418</span>
+    <span class="phpdocumentor-element-found-in__line">415</span>
 
     </aside>
 
@@ -1543,7 +1340,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">428</span>
+    <span class="phpdocumentor-element-found-in__line">425</span>
 
     </aside>
 
@@ -1576,12 +1373,11 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">436</span>
+    <span class="phpdocumentor-element-found-in__line">433</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">{@inheritDoc}</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">jsonSerialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -1589,6 +1385,19 @@ is pressed.</dd>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
@@ -1609,7 +1418,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">126</span>
 
     </aside>
 
@@ -1663,7 +1472,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">368</span>
+    <span class="phpdocumentor-element-found-in__line">365</span>
 
     </aside>
 
@@ -1671,14 +1480,14 @@ is pressed.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">removeListener</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">removeListener</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">$this</span>
+    <span class="phpdocumentor-signature__response_type">self</span>
             &mdash;
         
     
@@ -1696,7 +1505,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">243</span>
+    <span class="phpdocumentor-element-found-in__line">240</span>
 
     </aside>
 
@@ -1704,7 +1513,7 @@ is pressed.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setCustomId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$custom_id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setCustomId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$custom_id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1743,7 +1552,7 @@ is pressed.</dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">$this</span>
+    <span class="phpdocumentor-signature__response_type">self</span>
             &mdash;
         
     
@@ -1761,7 +1570,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">285</span>
+    <span class="phpdocumentor-element-found-in__line">282</span>
 
     </aside>
 
@@ -1769,7 +1578,7 @@ is pressed.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setDisabled</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$disabled</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setDisabled</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$disabled</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1786,7 +1595,7 @@ is pressed.</dd>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">$this</span>
+    <span class="phpdocumentor-signature__response_type">self</span>
             &mdash;
         
     
@@ -1804,15 +1613,15 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">196</span>
+    <span class="phpdocumentor-element-found-in__line">193</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Sets the emoji of the button.</p>
+        <p class="phpdocumentor-summary">Sets the emoji of the button. Null to clear.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setEmoji</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$emoji</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setEmoji</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$emoji</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1822,7 +1631,7 @@ is pressed.</dd>
                 : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|string|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Emoji to set. <code class="prettyprint">null</code> to clear.</p>
+                    <section class="phpdocumentor-description"><p>Emoji to set.</p>
 </section>
 
             </dd>
@@ -1831,7 +1640,7 @@ is pressed.</dd>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">$this</span>
+    <span class="phpdocumentor-signature__response_type">self</span>
             &mdash;
         
     
@@ -1849,7 +1658,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">178</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -1857,7 +1666,7 @@ is pressed.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setLabel</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$label</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setLabel</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$label</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1890,7 +1699,7 @@ is pressed.</dd>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">$this</span>
+    <span class="phpdocumentor-signature__response_type">self</span>
             &mdash;
         
     
@@ -1908,7 +1717,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">314</span>
+    <span class="phpdocumentor-element-found-in__line">311</span>
 
     </aside>
 
@@ -1917,7 +1726,7 @@ is pressed.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setListener</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$callback</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discord</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$oneOff</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setListener</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$callback</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discord</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$oneOff</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
         <section class="phpdocumentor-description"><p>If you do not respond to or acknowledge the <code class="prettyprint">Interaction</code>, it will be acknowledged for you.
 Note that if you intend to respond to or acknowledge the interaction inside a promise, you should
@@ -1976,7 +1785,7 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">$this</span>
+    <span class="phpdocumentor-signature__response_type">self</span>
             &mdash;
         
     
@@ -1994,7 +1803,7 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">146</span>
+    <span class="phpdocumentor-element-found-in__line">143</span>
 
     </aside>
 
@@ -2002,7 +1811,7 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setStyle</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$style</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setStyle</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$style</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
         <section class="phpdocumentor-description"><p>If the button is originally a link button, the link attribute will be cleared.
 If the button was changed to a link button, the listener will be cleared.</p>
@@ -2036,7 +1845,7 @@ If the button was changed to a link button, the listener will be cleared.</p>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">$this</span>
+    <span class="phpdocumentor-signature__response_type">self</span>
             &mdash;
         
     
@@ -2054,7 +1863,7 @@ If the button was changed to a link button, the listener will be cleared.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">267</span>
+    <span class="phpdocumentor-element-found-in__line">264</span>
 
     </aside>
 
@@ -2062,7 +1871,7 @@ If the button was changed to a link button, the listener will be cleared.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setUrl</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$url</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setUrl</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$url</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -2093,7 +1902,7 @@ If the button was changed to a link button, the listener will be cleared.</p>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">$this</span>
+    <span class="phpdocumentor-signature__response_type">self</span>
             &mdash;
         
     
@@ -2111,7 +1920,7 @@ If the button was changed to a link button, the listener will be cleared.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
