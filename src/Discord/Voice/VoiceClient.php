@@ -852,10 +852,7 @@ class VoiceClient extends EventEmitter
                     $this->timestamp = 0;
                 }
 
-                $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
-                $delay = $nextTime - microtime(true);
-
-                $this->readOpusTimer = $this->loop->addTimer($delay, $readOpus);
+                $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
             }, function ($e) use ($deferred) {
                 $this->reset();
                 $deferred->resolve();
