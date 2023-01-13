@@ -46,7 +46,7 @@ class Embed extends Part
     public const TYPE_GIFV = 'gifv';
     public const TYPE_ARTICLE = 'article';
     public const TYPE_LINK = 'link';
-
+    
     /**
      * {@inheritDoc}
      */
@@ -371,23 +371,13 @@ class Embed extends Part
         }
 
         if ($iconurl !== null) {
-            $iconurl = filter_var($iconurl, FILTER_VALIDATE_URL);
-            if ($iconurl === false) {
-                throw new \InvalidArgumentException("Invalid url");
-            }
-            $iconurlscheme = parse_url($iconurl, PHP_URL_SCHEME);
-            if (!in_array($iconurlscheme, ["http","https","attachment"])) {
+            if (! $this->checkUrl($iconurl)) {
                 throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
             }
         }
 
         if ($url !== null) {
-            $url = filter_var($url, FILTER_VALIDATE_URL);
-            if ($url === false) {
-                throw new \InvalidArgumentException("Invalid url");
-            }
-            $urlscheme = parse_url($url, PHP_URL_SCHEME);
-            if (!in_array($urlscheme, ["http","https","attachment"])) {
+            if (! $this->checkUrl($url)) {
                 throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
             }
         }
@@ -424,12 +414,7 @@ class Embed extends Part
         }
 
         if ($iconurl !== null) {
-            $iconurl = filter_var($iconurl, FILTER_VALIDATE_URL);
-            if ($iconurl === false) {
-                throw new \InvalidArgumentException("Invalid url");
-            }
-            $iconurlscheme = parse_url($iconurl, PHP_URL_SCHEME);
-            if (!in_array($iconurlscheme, ["http","https","attachment"])) {
+           if (! $this->checkUrl($iconurl)) {
                 throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
             }
         }
@@ -461,12 +446,7 @@ class Embed extends Part
         if ($url instanceof Attachment) {
             $this->image = ['url' => 'attachment://'.$url->filename];
         } else {
-            $url = filter_var($url, FILTER_VALIDATE_URL);
-            if ($url === false) {
-                throw new \InvalidArgumentException("Invalid url");
-            }
-            $urlscheme = parse_url($url, PHP_URL_SCHEME);
-            if (!in_array($urlscheme, ["http","https","attachment"])) {
+            if (! $this->checkUrl($url)) {
                 throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
             }
 
@@ -490,13 +470,8 @@ class Embed extends Part
         if (poly_strlen($url) === 0) {
             return $this;
         }
-
-        $url = filter_var($url, FILTER_VALIDATE_URL);
-        if ($url === false) {
-            throw new \InvalidArgumentException("Invalid url");
-        }
-        $urlscheme = parse_url($url, PHP_URL_SCHEME);
-        if (!in_array($urlscheme, ["http","https","attachment"])) {
+        
+        if (! $this->checkUrl($url)) {
             throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
         }
 
@@ -533,6 +508,18 @@ class Embed extends Part
         $this->url = $url;
 
         return $this;
+    }
+
+    /**
+     * Checks to see if url meets criteria for embeds.
+     *
+     * @param string $url
+     * 
+     * @return bool
+     */
+    protected function checkUrl(string $url): bool
+    {
+        return in_array(strstr($url, '://', true), ['http', 'https', 'attachment']);
     }
 
     /**
