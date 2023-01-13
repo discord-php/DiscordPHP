@@ -8,6 +8,12 @@
             "email": "david.cole1340@gmail.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/discord-php/DiscordPHP/issues",
+        "wiki": "https://github.com/discord-php/DiscordPHP/wiki",
+        "docs": "https://discord-php.github.io/DiscordPHP/",
+        "chat": "https://discord.gg/dphp"
+    },
     "require": {
         "php": "^7.4|^8.0",
         "nesbot/carbon": "^2.38",
