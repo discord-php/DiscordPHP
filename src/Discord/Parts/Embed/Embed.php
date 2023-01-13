@@ -326,15 +326,15 @@ class Embed extends Part
     /**
      * Set the author of this embed.
      *
-     * @param string $name    Maximum length is 256 characters.
-     * @param string $iconurl The URL to the icon.
-     * @param string $url     The URL to the author.
+     * @param string      $name    Maximum length is 256 characters.
+     * @param string|null $iconurl The URL to the icon.
+     * @param string|null $url     The URL to the author.
      *
      * @throws \LengthException
      *
      * @return self
      */
-    public function setAuthor(string $name, string $iconurl = '', string $url = ''): self
+    public function setAuthor(string $name, ?string $iconurl = null, ?string $url = null): self
     {
         if (poly_strlen($name) === 0) {
             $this->author = null;
@@ -356,14 +356,14 @@ class Embed extends Part
     /**
      * Set the footer of this embed.
      *
-     * @param string $text    Maximum length is 2048 characters.
-     * @param string $iconurl The URL to the icon.
+     * @param string      $text    Maximum length is 2048 characters.
+     * @param string|null $iconurl The URL to the icon.
      *
      * @throws \LengthException
      *
      * @return self
      */
-    public function setFooter(string $text, string $iconurl = ''): self
+    public function setFooter(string $text, ?string $iconurl = null): self
     {
         if (poly_strlen($text) === 0) {
             $this->footer = null;
