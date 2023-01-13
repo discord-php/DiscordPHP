@@ -371,13 +371,13 @@ class Embed extends Part
         }
 
         if ($iconurl !== null) {
-            if (! $this->checkUrl($iconurl)) {
+            if (! in_array(strstr($iconurl, '://', true), ['http', 'https', 'attachment'])) {
                 throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
             }
         }
 
         if ($url !== null) {
-            if (! $this->checkUrl($url)) {
+            if (! in_array(strstr($url, '://', true), ['http', 'https', 'attachment'])) {
                 throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
             }
         }
@@ -414,7 +414,7 @@ class Embed extends Part
         }
 
         if ($iconurl !== null) {
-           if (! $this->checkUrl($iconurl)) {
+           if (! in_array(strstr($iconurl, '://', true), ['http', 'https', 'attachment'])) {
                 throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
             }
         }
@@ -446,7 +446,7 @@ class Embed extends Part
         if ($url instanceof Attachment) {
             $this->image = ['url' => 'attachment://'.$url->filename];
         } else {
-            if (! $this->checkUrl($url)) {
+            if (! in_array(strstr($url, '://', true), ['http', 'https', 'attachment'])) {
                 throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
             }
 
@@ -471,7 +471,7 @@ class Embed extends Part
             return $this;
         }
         
-        if (! $this->checkUrl($url)) {
+        if (! in_array(strstr($url, '://', true), ['http', 'https', 'attachment'])) {
             throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
         }
 
@@ -508,18 +508,6 @@ class Embed extends Part
         $this->url = $url;
 
         return $this;
-    }
-
-    /**
-     * Checks to see if url meets criteria for embeds.
-     *
-     * @param string $url
-     * 
-     * @return bool
-     */
-    protected function checkUrl(string $url): bool
-    {
-        return in_array(strstr($url, '://', true), ['http', 'https', 'attachment']);
     }
 
     /**
