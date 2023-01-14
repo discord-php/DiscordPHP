@@ -359,7 +359,7 @@ class Embed extends Part
      *
      * @return $this
      */
-    public function setAuthor(string $name, ?string $iconurl = null, ?string $url = null): self
+    public function setAuthor(string $name, $iconurl = null, ?string $url = null): self
     {
         $length = poly_strlen($name);
         if ($length === 0) {
@@ -401,7 +401,7 @@ class Embed extends Part
      *
      * @return $this
      */
-    public function setFooter(string $text, ?string $iconurl = null): self
+    public function setFooter(string $text, $iconurl = null): self
     {
         $length = poly_strlen($text);
         if ($length === 0) {
