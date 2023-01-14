@@ -350,9 +350,9 @@ class Embed extends Part
     /**
      * Set the author of this embed.
      *
-     * @param string      $name    Maximum length is 256 characters.
-     * @param string|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
-     * @param string|null $url     The URL to the author, only http(s) and attachments URLs are allowed.
+     * @param string                 $name    Maximum length is 256 characters.
+     * @param string|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
+     * @param string|null            $url     The URL to the author, only http(s) URLs are allowed.
      *
      * @throws \LengthException          Embed text too long.
      * @throws \InvalidArgumentException Invalid scheme provided.
@@ -370,16 +370,15 @@ class Embed extends Part
             throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
         }
 
-        if ($iconurl !== null) {
-            if (! in_array(strstr($iconurl, '://', true), ['http', 'https', 'attachment'])) {
-                throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
-            }
+        if ($iconurl instanceof Attachment) {
+            $iconurl = 'attachment://'.$iconurl->filename;
+        }
+        if (! $this->checkEmbedUrl($iconurl)) {
+            throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
         }
 
-        if ($url !== null) {
-            if (! in_array(strstr($url, '://', true), ['http', 'https', 'attachment'])) {
-                throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
-            }
+        if (! $this->checkEmbedUrl($url, ['http', 'https'])) {
+            throw new \InvalidArgumentException("Url scheme only supports http(s)");
         }
 
         $this->author = [
@@ -394,8 +393,8 @@ class Embed extends Part
     /**
      * Set the footer of this embed.
      *
-     * @param string      $text     Maximum length is 2048 characters.
-     * @param string|null $iconurl  The URL to the icon, only http(s) and attachments URLs are allowed.
+     * @param string                 $text     Maximum length is 2048 characters.
+     * @param string|Attachment|null $iconurl  The URL to the icon, only http(s) and attachments URLs are allowed.
      * 
      * @throws \LengthException          Embed text too long.
      * @throws \InvalidArgumentException Invalid scheme provided.
@@ -413,10 +412,11 @@ class Embed extends Part
             throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
         }
 
-        if ($iconurl !== null) {
-           if (! in_array(strstr($iconurl, '://', true), ['http', 'https', 'attachment'])) {
-                throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
-            }
+        if ($iconurl instanceof Attachment) {
+            $iconurl = 'attachment://'.$iconurl->filename;
+        }
+        if (! $this->checkEmbedUrl($iconurl)) {
+            throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
         }
 
         $this->footer = [
@@ -431,7 +431,7 @@ class Embed extends Part
     /**
      * Set the image of this embed.
      *
-     * @param string|Attachment $url The URL to the image, only http(s) and attachments URLs are allowed.
+     * @param string|Attachment|null $url The URL to the image, only http(s) and attachments URLs are allowed.
      *
      * @throws \InvalidArgumentException Invalid scheme provided.
      * 
@@ -439,19 +439,14 @@ class Embed extends Part
      */
     public function setImage($url): self
     {
-        if (poly_strlen($url) === 0) {
-            return $this;
-        }
-
         if ($url instanceof Attachment) {
-            $this->image = ['url' => 'attachment://'.$url->filename];
-        } else {
-            if (! in_array(strstr($url, '://', true), ['http', 'https', 'attachment'])) {
-                throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
-            }
-
-            $this->image = ['url' => (string) $url];
+            $url = 'attachment://'.$url->filename;
         }
+        if (! $this->checkEmbedUrl($url)) {
+            throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
+        }         
+
+        $this->image = ['url' => $url];
 
         return $this;
     }
@@ -459,7 +454,7 @@ class Embed extends Part
     /**
      * Set the thumbnail of this embed.
      *
-     * @param string $url The URL to the thumbnail, only http(s) and attachments URLs are allowed.
+     * @param string|Attachment|null $url The URL to the thumbnail, only http(s) and attachments URLs are allowed.
      *
      * @throws \InvalidArgumentException Invalid scheme provided.
      * 
@@ -467,15 +462,14 @@ class Embed extends Part
      */
     public function setThumbnail($url): self
     {
-        if (poly_strlen($url) === 0) {
-            return $this;
+        if ($url instanceof Attachment) {
+            $url = 'attachment://'.$url->filename;
         }
-        
-        if (! in_array(strstr($url, '://', true), ['http', 'https', 'attachment'])) {
+        if (! $this->checkEmbedUrl($url)) {
             throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
         }
 
-        $this->thumbnail = ['url' => (string) $url];
+        $this->thumbnail = ['url' => $url];
         
         return $this;
     }
@@ -508,6 +502,26 @@ class Embed extends Part
         $this->url = $url;
 
         return $this;
+    }
+
+    /**
+     * Checks to see if an url is valid to be used in embeds.
+     *
+     * @param ?string $url
+     *
+     * @return bool
+     */
+    protected function checkEmbedUrl(?string $url, array $allowed = ['http', 'https', 'attachment']): bool
+    {
+        if (null === $url) return true;
+
+        if ($url === '') return false;
+
+        if (! in_array(strstr($url, '://', true), $allowed) return false;
+
+        if (filter_var($url, FILTER_VALIDATE_URL) === false) return false;
+
+        return true;
     }
 
     /**
