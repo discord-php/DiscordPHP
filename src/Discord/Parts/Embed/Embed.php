@@ -517,9 +517,9 @@ class Embed extends Part
 
         if ($url === '') return false;
 
-        if (! in_array(strstr($url, '://', true), $allowed) return false;
-
         if (filter_var($url, FILTER_VALIDATE_URL) === false) return false;
+
+        if (! in_array(parse_url($url, PHP_URL_SCHEME), $allowed) return false;
 
         return true;
     }
