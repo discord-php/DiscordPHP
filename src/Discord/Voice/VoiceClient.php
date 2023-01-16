@@ -346,6 +346,13 @@ class VoiceClient extends EventEmitter
     protected $buffer;
 
     /**
+     * Paused Timestamp
+     * 
+     * @var float Microtime of when the playback was paused
+     */
+    protected $pausedTimestamp = 0;
+
+    /**
      * Constructs the Voice Client instance.
      *
      * @param WebSocket       $websocket The main WebSocket client.
@@ -816,8 +823,11 @@ class VoiceClient extends EventEmitter
         $ogg = null;
 
         $loops = 0;
+        
         $readOpus = function () use ($deferred, &$ogg, &$readOpus, &$loops) {
             $this->readOpusTimer = null;
+            
+            $loops += 1;
 
             // If the client is paused, delay by frame size and check again.
             if ($this->paused) {
@@ -836,8 +846,6 @@ class VoiceClient extends EventEmitter
                     return;
                 }
 
-                $loops += 1;
-
                 // increment sequence
                 // uint16 overflow protection
                 if (++$this->seq >= 2 ** 16) {
@@ -852,7 +860,10 @@ class VoiceClient extends EventEmitter
                     $this->timestamp = 0;
                 }
 
-                $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
+                $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
+                $delay = $nextTime - microtime(true);
+
+                $this->readOpusTimer = $this->loop->addTimer($delay, $readOpus);
             }, function ($e) use ($deferred) {
                 $this->reset();
                 $deferred->resolve();
@@ -1214,6 +1225,7 @@ class VoiceClient extends EventEmitter
             throw new \RuntimeException('Audio is already paused.');
         }
 
+        $this->pausedTimestamp = microtime(true);
         $this->paused = true;
         $this->silenceRemaining = 5;
     }
