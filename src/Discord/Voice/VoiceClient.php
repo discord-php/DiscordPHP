@@ -346,13 +346,6 @@ class VoiceClient extends EventEmitter
     protected $buffer;
 
     /**
-     * Paused Timestamp
-     * 
-     * @var float Microtime of when the playback was paused
-     */
-    protected $pausedTimestamp = 0;
-
-    /**
      * Constructs the Voice Client instance.
      *
      * @param WebSocket       $websocket The main WebSocket client.
@@ -1225,7 +1218,6 @@ class VoiceClient extends EventEmitter
             throw new \RuntimeException('Audio is already paused.');
         }
 
-        $this->pausedTimestamp = microtime(true);
         $this->paused = true;
         $this->silenceRemaining = 5;
     }
