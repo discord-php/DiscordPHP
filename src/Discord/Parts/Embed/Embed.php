@@ -616,5 +616,3 @@ class Embed extends Part
         ];
     }
 }
-
-?>
