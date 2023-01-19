@@ -54,7 +54,6 @@ class Intents
      * - GUILD_BAN_ADD
      * - GUILD_BAN_REMOVE
      */
-    public const GUILD_BANS = (1 << 2); /* deprecated */
     public const GUILD_MODERATION = (1 << 2);
 
     /**
