@@ -45,7 +45,7 @@ use ReflectionClass;
 class AuditLog extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'application_commands',
@@ -179,11 +179,7 @@ class AuditLog extends Part
         $collection = Collection::for(User::class);
 
         foreach ($this->attributes['users'] ?? [] as $user) {
-            if (! $userPart = $this->discord->users->get('id', $user->id)) {
-                $userPart = $this->factory->part(User::class, (array) $user, true);
-            }
-
-            $collection->pushItem($userPart);
+            $collection->pushItem($this->discord->users->get('id', $user->id) ?: $this->factory->part(User::class, (array) $user, true));
         }
 
         return $collection;

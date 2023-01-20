@@ -27,7 +27,7 @@ use Discord\Parts\Thread\Thread;
 class MessageReactionAdd extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {
@@ -52,7 +52,7 @@ class MessageReactionAdd extends Event
         $reaction = new MessageReaction($this->discord, (array) $data, true);
 
         /** @var ?Message */
-        if ($channel && $message = yield $channel->messages->cacheGet($data->message_id)) {
+        if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
             $me = $data->user_id == $this->discord->id;
 
             /** @var ?Reaction */
@@ -71,7 +71,8 @@ class MessageReactionAdd extends Event
             $message->reactions->pushItem($react);
         }
 
-        if (isset($data->member->user)) {
+        if (isset($data->member) && $guild) {
+            $this->cacheMember($guild->members, (array) $data->member);
             $this->cacheUser($data->member->user);
         }
 

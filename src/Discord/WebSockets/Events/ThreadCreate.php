@@ -24,7 +24,7 @@ use Discord\WebSockets\Event;
 class ThreadCreate extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {
@@ -35,10 +35,7 @@ class ThreadCreate extends Event
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?Channel */
             if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
-                if ($parent->type == Channel::TYPE_GUILD_FORUM) {
-                    $parent->last_message_id = $data->id;
-                    $threadPart->last_message_id = $data->id;
-                }
+                $parent->last_message_id = $data->id;
                 $parent->threads->set($data->id, $threadPart);
             }
         }

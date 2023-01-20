@@ -46,7 +46,7 @@ use function React\Promise\resolve;
 class Reaction extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'count',
@@ -60,7 +60,7 @@ class Reaction extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isPartial(): bool
     {
@@ -68,7 +68,7 @@ class Reaction extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function fetch(): ExtendedPromiseInterface
     {
@@ -127,7 +127,7 @@ class Reaction extends Part
 
             foreach ((array) $response as $user) {
                 if (! $part = $this->discord->users->get('id', $user->id)) {
-                    $part = $this->factory->part(User::class, (array) $user, true);
+                    $part = $this->discord->users->create((array) $user, true);
                     $this->discord->users->pushItem($part);
                 }
 
@@ -206,24 +206,29 @@ class Reaction extends Part
      *
      * @return Channel|Thread
      */
-    protected function getChannelAttribute()
+    protected function getChannelAttribute(): Part
     {
-        if ($channel = $this->discord->getChannel($this->channel_id)) {
-            return $channel;
-        }
-
         if ($guild = $this->guild) {
-            foreach ($guild->channels as $channel) {
-                if ($thread = $channel->threads->get('id', $this->channel_id)) {
+            $channels = $guild->channels;
+            if ($channel = $channels->get('id', $this->channel_id)) {
+                return $channel;
+            }
+            foreach ($channels as $parent) {
+                if ($thread = $parent->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
             }
         }
 
+        // @todo potentially slow
+        if ($channel = $this->discord->getChannel($this->channel_id)) {
+            return $channel;
+        }
+
         return $this->factory->part(Channel::class, [
             'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
-        ]);
+        ], true);
     }
 
     /**
@@ -241,7 +246,7 @@ class Reaction extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

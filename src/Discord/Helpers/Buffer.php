@@ -30,8 +30,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     private $buffer = '';
 
     /**
-     * Array of deferred reads waiting to
-     * be resolved.
+     * Array of deferred reads waiting to be resolved.
      *
      * @var Deferred[]|int[]
      */
@@ -58,7 +57,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function write($data): bool
     {
@@ -80,12 +79,11 @@ class Buffer extends EventEmitter implements WritableStreamInterface
 
     /**
      * Reads from the buffer and returns in a string.
-     * Returns false if there were not enough bytes in
-     * the buffer.
+     * Returns false if there were not enough bytes in the buffer.
      *
      * @param int $length Number of bytes to read.
      *
-     * @return mixed The bytes read, or false if not enough bytes are present.
+     * @return string|bool The bytes read, or false if not enough bytes are present.
      */
     private function readRaw(int $length)
     {
@@ -101,8 +99,8 @@ class Buffer extends EventEmitter implements WritableStreamInterface
 
     /**
      * Reads from the buffer and returns a promise.
-     * The promise will resolve when there are enough bytes
-     * in the buffer to read.
+     * The promise will resolve when there are enough bytes in the buffer to
+     * read.
      *
      * @param int         $length  Number of bytes to read.
      * @param null|string $format  Format to read the bytes in. See `pack()`.
@@ -178,7 +176,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isWritable()
     {
@@ -186,7 +184,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function end($data = null): void
     {
@@ -195,7 +193,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function close(): void
     {

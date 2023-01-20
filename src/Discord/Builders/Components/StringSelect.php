@@ -43,7 +43,7 @@ class StringSelect extends SelectMenu
      * @throws \OverflowException
      * @throws \UnexpectedValueException
      *
-     * @return self
+     * @return $this
      */
     public function addOption(Option $option): self
     {
@@ -70,7 +70,7 @@ class StringSelect extends SelectMenu
      *
      * @param Option $option Option to remove.
      *
-     * @return self
+     * @return $this
      */
     public function removeOption(Option $option): self
     {

@@ -36,7 +36,7 @@ class StageInstance extends Part
     public const PRIVACY_LEVEL_GROUP_ONLY = 2;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -80,22 +80,28 @@ class StageInstance extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/stage-instance#create-stage-instance-json-params
      */
     public function getCreatableAttributes(): array
     {
-        return [
+        $attr = [
             'channel_id' => $this->channel_id,
             'topic' => $this->topic,
             'privacy_level' => $this->privacy_level ?? null,
             'send_start_notification' => $this->send_start_notification ?? null,
         ];
+
+        if (array_key_exists('guild_scheduled_event_id', $this->attributes)) {
+            $attr['guild_scheduled_event_id'] = $this->guild_scheduled_event_id;
+        }
+
+        return $attr;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance-json-params
      */
@@ -108,7 +114,7 @@ class StageInstance extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

@@ -33,14 +33,14 @@ use React\Promise\ExtendedPromiseInterface;
 class ReactionRepository extends AbstractRepository
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $endpoints = [
         'delete' => Endpoint::MESSAGE_REACTION_EMOJI,
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $class = Reaction::class;
 
@@ -49,7 +49,7 @@ class ReactionRepository extends AbstractRepository
      *
      * {@inheritDoc}
      *
-     * @param Part|string $part The Reaction part or unicode emoji to delete.
+     * @param Reaction|string $part The Reaction part or unicode emoji to delete.
      *
      * @return ExtendedPromiseInterface<Reaction>
      *

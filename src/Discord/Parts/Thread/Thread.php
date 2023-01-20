@@ -21,6 +21,7 @@ use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Member as ThreadMember;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -65,7 +66,7 @@ use function React\Promise\resolve;
  * @property      Carbon|null   $create_timestamp      Timestamp when the thread was created; only populated for threads created after 2022-01-09.
  * @property      int|null      $total_message_sent    Number of messages ever sent in a thread, it's similar to `message_count` on message creation, but will not decrement the number when a message is deleted.
  * @property      int|null      $flags                 Channel flags combined as a bitfield. PINNED can only be set for threads in forum channels.
- * @property      string[]|null $applied_tags          The IDs of the set of tags that have been applied to a thread in a forum channel.
+ * @property      string[]|null $applied_tags          The IDs of the set of tags that have been applied to a thread in a forum channel, limited to 5.
  *
  * @property MessageRepository $messages Repository of messages sent in the thread.
  * @property MemberRepository  $members  Repository of members in the thread.
@@ -74,8 +75,10 @@ use function React\Promise\resolve;
  */
 class Thread extends Part
 {
+    public const FLAG_PINNED = (1 << 1);
+
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -97,14 +100,14 @@ class Thread extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $hidden = [
         'member',
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $repositories = [
         'messages' => MessageRepository::class,
@@ -112,7 +115,7 @@ class Thread extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function afterConstruct(): void
     {
@@ -215,18 +218,18 @@ class Thread extends Part
      */
     protected function getInvitableAttribute(): ?bool
     {
-        return $this->thread_metadata->invitable;
+        return $this->thread_metadata->invitable ?? null;
     }
 
     /**
-     * Returns the number of minutes of inactivity required for the thread
-     * to auto archive.
+     * Returns the number of minutes of inactivity required for the thread to
+     * auto archive.
      *
      * @return int|null
      */
     protected function getAutoArchiveDurationAttribute(): ?int
     {
-        return $this->thread_metadata->auto_archive_duration;
+        return $this->thread_metadata->auto_archive_duration ?? null;
     }
 
     /**
@@ -250,7 +253,8 @@ class Thread extends Part
     }
 
     /**
-     * Set the number of minutes of inactivity required for the thread to auto archive.
+     * Set the number of minutes of inactivity required for the thread to auto
+     * archive.
      *
      * @param int $value
      */
@@ -262,8 +266,9 @@ class Thread extends Part
     /**
      * Returns the time that the thread's archive status was changed.
      *
-     * Note that this does not mean the time that the thread was archived - it can
-     * also mean the time when the thread was created, archived, unarchived etc.
+     * Note that this does not mean the time that the thread was archived - it
+     * can also mean the time when the thread was created, archived, unarchived
+     * etc.
      *
      * @return Carbon
      *
@@ -275,7 +280,8 @@ class Thread extends Part
     }
 
     /**
-     * Returns the timestamp when the thread was created; only populated for threads created after 2022-01-09.
+     * Returns the timestamp when the thread was created; only populated for
+     * threads created after 2022-01-09.
      *
      * @return Carbon|null
      *
@@ -458,11 +464,7 @@ class Thread extends Part
                 $messages = Collection::for(Message::class);
 
                 foreach ($responses as $response) {
-                    if (! $message = $this->messages->get('id', $response->id)) {
-                        $message = $this->factory->part(Message::class, (array) $response, true);
-                    }
-
-                    $messages->pushItem($message);
+                    $messages->pushItem($this->messages->get('id', $response->id) ?: $this->factory->part(Message::class, (array) $response, true));
                 }
 
                 return $messages;
@@ -525,8 +527,7 @@ class Thread extends Part
     }
 
     /**
-     * Fetches the message history of the thread with a given array
-     * of arguments.
+     * Fetches the message history of the thread with a given array of arguments.
      *
      * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
      *
@@ -661,8 +662,9 @@ class Thread extends Part
     /**
      * Sends a message to the thread.
      *
-     * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
-     * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
+     * Takes a `MessageBuilder` or content of the message for the first
+     * parameter. If the first parameter is an instance of `MessageBuilder`, the
+     * rest of the arguments are disregarded.
      *
      * @link https://discord.com/developers/docs/resources/channel#create-message
      *
@@ -766,7 +768,7 @@ class Thread extends Part
             if ($filterResult) {
                 $messages->pushItem($message);
 
-                if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
+                if ($options['limit'] !== false && count($messages) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
                     $deferred->resolve($messages);
 
@@ -790,7 +792,21 @@ class Thread extends Part
     }
 
     /**
-     * @inheritDoc
+     * Returns the bot's permissions in the thread.
+     *
+     * @return RolePermission|null
+     */
+    public function getBotPermissions(): ?RolePermission
+    {
+        if (! $guild = $this->guild) {
+            return null;
+        }
+
+        return $guild->members->get('id', $this->discord->id)->getPermissions($this);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message-json-params
      */
@@ -811,7 +827,7 @@ class Thread extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-thread
      */
@@ -838,7 +854,7 @@ class Thread extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {
@@ -855,7 +871,7 @@ class Thread extends Part
      *
      * @return string A formatted mention.
      */
-    public function __toString()
+    public function __toString(): string
     {
         return "<#{$this->id}>";
     }

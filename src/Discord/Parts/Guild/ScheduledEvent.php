@@ -63,7 +63,7 @@ class ScheduledEvent extends Part
     public const STATUS_CANCELED = 4;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -85,9 +85,11 @@ class ScheduledEvent extends Part
     ];
 
     /**
-     * Get a list of guild scheduled event users subscribed to a guild scheduled event.
+     * Get a list of guild scheduled event users subscribed to a guild scheduled
+     * event.
      * Returns a list of guild scheduled event user objects on success.
-     * Guild member data, if it exists, is included if the with_member query parameter is set.
+     * Guild member data, if it exists, is included if the with_member query
+     * parameter is set.
      *
      * @link https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users
      *
@@ -128,10 +130,10 @@ class ScheduledEvent extends Part
 
             foreach ($responses as $response) {
                 if (isset($response->member) && ! $user = $guild->members->get('id', $response->user->id)) {
-                    $user = $this->factory->part(Member::class, (array) $response->member, true);
+                    $user = $guild->members->create((array) $response->member, true);
                     $guild->members->pushItem($user);
                 } elseif (! $user = $this->discord->users->get('id', $response->user->id)) {
-                    $user = $this->factory->part(User::class, (array) $response->user, true);
+                    $user = $this->discord->users->create((array) $response->user, true);
                     $this->discord->users->pushItem($user);
                 }
 
@@ -155,12 +157,18 @@ class ScheduledEvent extends Part
     /**
      * Returns the channel attribute.
      *
-     * @return Channel The channel in which the scheduled event will be hosted, or null.
+     * @return Channel|null The channel in which the scheduled event will be hosted, or null.
      */
     protected function getChannelAttribute(): ?Channel
     {
         if (! isset($this->attributes['channel_id'])) {
             return null;
+        }
+
+        if ($guild = $this->guild) {
+            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+                return $channel;
+            }
         }
 
         return $this->discord->getChannel($this->attributes['channel_id']);
@@ -250,7 +258,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event-json-params
      */
@@ -270,7 +278,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event-json-params
      */
@@ -302,7 +310,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

@@ -67,7 +67,7 @@ use function React\Promise\resolve;
  * @property      ?string|null        $last_message_id                    The unique identifier of the last message sent in the channel (or thread for forum channels) (may not point to an existing or valid message or thread).
  * @property      int|null            $bitrate                            The bitrate of the channel. Only for voice channels.
  * @property      int|null            $user_limit                         The user limit of the channel.
- * @property      int|null            $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message.
+ * @property      int|null            $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message (slow mode).
  * @property      Collection|User[]   $recipients                         A collection of all the recipients in the channel. Only for DM or group channels.
  * @property-read User|null           $recipient                          The first recipient of the channel. Only for DM or group channels.
  * @property-read string|null         $recipient_id                       The ID of the recipient of the channel, if it is a DM channel.
@@ -81,10 +81,11 @@ use function React\Promise\resolve;
  * @property      int|null            $default_auto_archive_duration      Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
  * @property      string|null         $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on an application command interaction.
  * @property      int|null            $flags                              Channel flags combined as a bitfield.
- * @property      Collection|Tag[]    $available_tags                     Set of tags that can be used in a forum channel.
+ * @property      Collection|Tag[]    $available_tags                     Set of tags that can be used in a forum channel, limited to 20.
  * @property      ?Reaction|null      $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.
  * @property      int|null            $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a forum channel. this field is copied to the thread at creation time and does not live update.
  * @property      ?int|null           $default_sort_order                 The default sort order type used to order posts in forum channels.
+ * @property      int|null            $default_forum_layout               The default layout type used to display posts in a forum channel. Defaults to `0`, which indicates a layout view has not been set by a channel admin.
  *
  * @property bool                    $is_private      Whether the channel is a private channel.
  * @property MemberRepository        $members         Voice channel only - members in the channel.
@@ -121,6 +122,8 @@ class Channel extends Part
     public const TYPE_CATEGORY = self::TYPE_GUILD_CATEGORY;
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_ANNOUNCEMENT` */
     public const TYPE_NEWS = self::TYPE_GUILD_ANNOUNCEMENT;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_ANNOUNCEMENT` */
+    public const TYPE_ANNOUNCEMENT = self::TYPE_GUILD_ANNOUNCEMENT;
     /** @deprecated 10.0.0 Use `Channel::TYPE_ANNOUNCEMENT_THREAD` */
     public const TYPE_NEWS_THREAD = self::TYPE_ANNOUNCEMENT_THREAD;
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_STAGE_VOICE` */
@@ -133,14 +136,19 @@ class Channel extends Part
     public const VIDEO_QUALITY_AUTO = 1;
     public const VIDEO_QUALITY_FULL = 2;
 
+    /** @deprecated 10.0.0 Use `Thread::FLAG_PINNED` */
     public const FLAG_PINNED = (1 << 1);
     public const FLAG_REQUIRE_TAG = (1 << 4);
 
     public const SORT_ORDER_LATEST_ACTIVITY = 0;
-    public const SORT_ORDER_CREATION_DATE = 0;
+    public const SORT_ORDER_CREATION_DATE = 1;
+
+    public const FORUM_LAYOUT_NOT_SET = 0;
+    public const FORUM_LAYOUT_LIST_VIEW = 1;
+    public const FORUM_LAYOUT_GRID_VIEW = 2;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -169,13 +177,17 @@ class Channel extends Part
         'default_reaction_emoji',
         'default_thread_rate_limit_per_user',
         'default_sort_order',
+        'default_forum_layout',
 
         // @internal
         'is_private',
+
+        // repositories
+        'permission_overwrites',
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $repositories = [
         'overwrites' => OverwriteRepository::class,
@@ -188,23 +200,11 @@ class Channel extends Part
     ];
 
     /**
-     * @inheritDoc
-     */
-    public function fill(array $attributes): void
-    {
-        parent::fill($attributes);
-
-        if (isset($attributes['permission_overwrites'])) {
-            $this->setPermissionOverwritesAttribute($attributes['permission_overwrites']);
-        }
-    }
-
-    /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function afterConstruct(): void
     {
-        if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_GUILD_TEXT) {
+        if (! array_key_exists('bitrate', $this->attributes) && $this->isVoiceBased()) {
             $this->bitrate = 64000;
         }
     }
@@ -253,10 +253,7 @@ class Channel extends Part
         $recipients = Collection::for(User::class);
 
         foreach ($this->attributes['recipients'] ?? [] as $recipient) {
-            if (! $user = $this->discord->users->get('id', $recipient->id)) {
-                $user = $this->factory->part(User::class, (array) $recipient, true);
-            }
-            $recipients->pushItem($user);
+            $recipients->pushItem($this->discord->users->get('id', $recipient->id) ?: $this->factory->part(User::class, (array) $recipient, true));
         }
 
         return $recipients;
@@ -302,10 +299,7 @@ class Channel extends Part
             $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
-                if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->part(Message::class, (array) $response, true);
-                }
-                $messages->pushItem($message);
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->factory->part(Message::class, (array) $response, true));
             }
 
             return $messages;
@@ -576,20 +570,21 @@ class Channel extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#create-channel-invite
      *
-     * @param array  $options                          An array of options. All fields are optional.
-     * @param int    $options['max_age']               The time that the invite will be valid in seconds.
-     * @param int    $options['max_uses']              The amount of times the invite can be used.
-     * @param bool   $options['temporary']             Whether the invite is for temporary membership.
-     * @param bool   $options['unique']                Whether the invite code should be unique (useful for creating many unique one time use invites).
-     * @param int    $options['target_type']           The type of target for this voice channel invite.
-     * @param string $options['target_user_id']        The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel.
-     * @param string $options['target_application_id'] The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag.
+     * @param array       $options                          An array of options. All fields are optional.
+     * @param int         $options['max_age']               The time that the invite will be valid in seconds.
+     * @param int         $options['max_uses']              The amount of times the invite can be used.
+     * @param bool        $options['temporary']             Whether the invite is for temporary membership.
+     * @param bool        $options['unique']                Whether the invite code should be unique (useful for creating many unique one time use invites).
+     * @param int         $options['target_type']           The type of target for this voice channel invite.
+     * @param string      $options['target_user_id']        The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel.
+     * @param string      $options['target_application_id'] The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag.
+     * @param string|null $reason                           Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing create_instant_invite permission.
      *
      * @return ExtendedPromiseInterface<Invite>
      */
-    public function createInvite($options = []): ExtendedPromiseInterface
+    public function createInvite($options = [], ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->canInvite()) {
             return reject(new \RuntimeException('You cannot create invite in this type of channel.'));
@@ -624,7 +619,12 @@ class Channel extends Part
 
         $options = $resolver->resolve($options);
 
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id), $options)
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id), $options, $headers)
             ->then(function ($response) {
                 /** @var ?Invite */
                 if (! $invitePart = $this->invites->get('code', $response->code)) {
@@ -770,10 +770,7 @@ class Channel extends Part
             $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
-                if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->part(Message::class, (array) $response, true);
-                }
-                $messages->pushItem($message);
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->factory->part(Message::class, (array) $response, true));
             }
 
             return $messages;
@@ -865,13 +862,11 @@ class Channel extends Part
     /**
      * Sets the permission overwrites attribute.
      *
-     * @param array $overwrites
+     * @param ?array $overwrites
      */
     protected function setPermissionOverwritesAttribute(?array $overwrites): void
     {
-        $this->attributes['permission_overwrites'] = $overwrites;
-
-        foreach ($overwrites as $overwrite) {
+        foreach ($overwrites ?? [] as $overwrite) {
             $overwrite = (array) $overwrite;
             /** @var Overwrite */
             if ($overwritePart = $this->overwrites->offsetGet($overwrite['id'])) {
@@ -879,6 +874,12 @@ class Channel extends Part
             }
             $this->overwrites->pushItem($overwritePart ?: $this->overwrites->create($overwrite, true));
         }
+
+        if (! empty($this->attributes['permission_overwrites']) && $clean = array_diff(array_column($this->attributes['permission_overwrites'], 'id'), array_column($overwrites ?? [], 'id'))) {
+            $this->overwrites->cache->deleteMultiple($clean);
+        }
+
+        $this->attributes['permission_overwrites'] = $overwrites;
     }
 
     /**
@@ -919,18 +920,23 @@ class Channel extends Part
      * Starts a thread in the channel.
      *
      * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message
+     * @link https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
      *
      * @param array          $options                          Thread params.
-     * @param bool           $options['private']               Whether the thread should be private. cannot start a private thread in a news channel channel. Ignored in forum channel.
+     * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in a news channel channel. Ignored in forum channel.
      * @param string         $options['name']                  The name of the thread.
      * @param int|null       $options['auto_archive_duration'] Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
      * @param bool|null      $options['invitable']             Whether non-moderators can add other non-moderators to a thread; only available when creating a private thread.
      * @param ?int|null      $options['rate_limit_per_user']   Amount of seconds a user has to wait before sending another message (0-21600).
      * @param MessageBuilder $options['message']               Contents of the first message in the forum thread.
-     * @param string[]|null  $options['applied_tags']          The IDs of the set of tags that have been applied to a thread in a forum channel.
+     * @param string[]|null  $options['applied_tags']          The IDs of the set of tags that have been applied to a thread in a forum channel, limited to 5.
      * @param string|null    $reason                           Reason for Audit Log.
      *
      * @throws \RuntimeException
+     * @throws NoPermissionsException Missing various permissions:
+     *                                create_private_threads when creating a private thread.
+     *                                create_public_threads when creating a public thread.
+     *                                send_messages when creating a forum post.
      *
      * @return ExtendedPromiseInterface<Thread>
      *
@@ -952,6 +958,8 @@ class Channel extends Part
             ->setAllowedValues('rate_limit_per_user', fn ($value) => $value >= 0 && $value <= 21600)
             ->setRequired('name');
 
+        $botperms = $this->getBotPermissions();
+
         if ($this->type == self::TYPE_GUILD_FORUM) {
             $resolver
                 ->setDefined([
@@ -970,6 +978,14 @@ class Channel extends Part
 
                     return $values;
                 });
+
+            $options = $resolver->resolve($options);
+
+            if ($botperms && ! $botperms->send_messages) {
+                return reject(new NoPermissionsException("You do not have permission to create forum posts in the channel {$this->id}."));
+            }
+
+            $options['type'] = self::TYPE_PUBLIC_THREAD;
         } else {
             $resolver
                 ->setDefined([
@@ -979,26 +995,30 @@ class Channel extends Part
                 ->setAllowedTypes('private', 'bool')
                 ->setAllowedTypes('invitable', 'bool')
                 ->setDefaults(['private' => false]);
-        }
 
-        $options = $resolver->resolve($options);
+            $options = $resolver->resolve($options);
 
-        if ($this->type != self::TYPE_GUILD_FORUM && $options['private'] && ! $this->guild->feature_private_threads) {
-            return reject(new \RuntimeException('Guild does not have access to private threads.'));
-        }
-
-        if ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
             if ($options['private']) {
-                return reject(new \RuntimeException('You cannot start a private thread within a news channel.'));
+                if ($botperms && ! $botperms->create_public_threads) {
+                    return reject(new NoPermissionsException("You do not have permission to create public threads in the channel {$this->id}."));
+                }
+            } else {
+                if ($botperms && ! $botperms->create_private_threads) {
+                    return reject(new NoPermissionsException("You do not have permission to create private threads in the channel {$this->id}."));
+                }
             }
 
-            $options['type'] = self::TYPE_ANNOUNCEMENT_THREAD;
-        } elseif ($this->type == self::TYPE_GUILD_TEXT) {
-            $options['type'] = $options['private'] ? self::TYPE_PRIVATE_THREAD : self::TYPE_PUBLIC_THREAD;
-        } elseif ($this->type == self::TYPE_GUILD_FORUM) {
-            $options['type'] = self::TYPE_PUBLIC_THREAD;
-        } else {
-            return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
+            if ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
+                if ($options['private']) {
+                    return reject(new \RuntimeException('You cannot start a private thread within a news channel.'));
+                }
+
+                $options['type'] = self::TYPE_ANNOUNCEMENT_THREAD;
+            } elseif ($this->type == self::TYPE_GUILD_TEXT) {
+                $options['type'] = $options['private'] ? self::TYPE_PRIVATE_THREAD : self::TYPE_PUBLIC_THREAD;
+            } else {
+                return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
+            }
         }
 
         $headers = [];
@@ -1037,7 +1057,7 @@ class Channel extends Part
                 /** @var ?Message */
                 if (! $threadPart->messages->offsetExists($messageId)) {
                     // Don't store in the external cache
-                    $threadPart->messages->offsetSet($messageId, $this->factory->part(Message::class, (array) $response->message, true));
+                    $threadPart->messages->offsetSet($messageId, $threadPart->messages->create((array) $response->message, true));
                 }
             }
 
@@ -1048,8 +1068,9 @@ class Channel extends Part
     /**
      * Sends a message to the channel.
      *
-     * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
-     * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
+     * Takes a `MessageBuilder` or content of the message for the first
+     * parameter. If the first parameter is an instance of `MessageBuilder`, the
+     * rest of the arguments are disregarded.
      *
      * @link https://discord.com/developers/docs/resources/channel#create-message
      *
@@ -1212,11 +1233,11 @@ class Channel extends Part
             if ($filterResult) {
                 $messages->pushItem($message);
 
-                if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
+                if ($options['limit'] !== false && count($messages) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
                     $deferred->resolve($messages);
 
-                    if (! is_null($timer)) {
+                    if ($timer !== null) {
                         $this->discord->getLoop()->cancelTimer($timer);
                     }
                 }
@@ -1316,7 +1337,7 @@ class Channel extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-channel-json-params
      */
@@ -1338,7 +1359,9 @@ class Channel extends Part
             'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
 
-        if ($attr['type'] == self::TYPE_GUILD_FORUM) {
+        if ($attr['type'] == self::TYPE_GUILD_TEXT) {
+            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user ?? null;
+        } elseif ($attr['type'] == self::TYPE_GUILD_FORUM) {
             if (array_key_exists('default_reaction_emoji', $this->attributes)) {
                 $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
             }
@@ -1348,13 +1371,19 @@ class Channel extends Part
             if (array_key_exists('default_sort_order', $this->attributes)) {
                 $attr['default_sort_order'] = $this->default_sort_order;
             }
+
+            if (array_key_exists('default_forum_layout', $this->attributes)) {
+                $attr['default_forum_layout'] = $this->default_forum_layout;
+            }
+
+            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user ?? null;
         }
 
         return $attr;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-guild-channel
      */
@@ -1362,23 +1391,45 @@ class Channel extends Part
     {
         $attr = [
             'name' => $this->name,
-            'type' => $this->type,
             'position' => $this->position,
-            'topic' => $this->topic,
-            'nsfw' => $this->nsfw,
-            'rate_limit_per_user' => $this->rate_limit_per_user,
-            'bitrate' => $this->bitrate,
-            'user_limit' => $this->user_limit,
-            'parent_id' => $this->parent_id,
-            'rtc_region' => $this->rtc_region,
-            'video_quality_mode' => $this->video_quality_mode,
-            'permission_overwrites' => array_values($this->overwrites->map(function (Overwrite $overwrite) {
-                return $overwrite->getUpdatableAttributes();
-            })->toArray()),
-            'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
 
-        if ($this->type == self::TYPE_GUILD_FORUM) {
+        if ($this->type == self::TYPE_GUILD_TEXT) {
+            $attr['type'] = $this->type;
+            $attr['topic'] = $this->topic;
+            $attr['nsfw'] = $this->nsfw;
+            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
+            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
+        } elseif ($this->type == self::TYPE_GUILD_VOICE) {
+            $attr['nsfw'] = $this->nsfw;
+            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['bitrate'] = $this->bitrate;
+            $attr['user_limit'] = $this->user_limit;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['rtc_region'] = $this->rtc_region;
+            $attr['video_quality_mode'] = $this->video_quality_mode;
+        } elseif ($this->type == self::TYPE_GROUP_DM) {
+            $attr['icon'] = $this->icon;
+        } elseif ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
+            $attr['type'] = $this->type;
+            $attr['topic'] = $this->topic;
+            $attr['nsfw'] = $this->nsfw;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
+        } elseif ($this->type == self::TYPE_GUILD_STAGE_VOICE) {
+            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['bitrate'] = $this->bitrate;
+            $attr['rtc_region'] = $this->rtc_region;
+            $attr['video_quality_mode'] = $this->video_quality_mode;
+        } elseif ($this->type == self::TYPE_GUILD_FORUM) {
+            $attr['topic'] = $this->topic;
+            $attr['nsfw'] = $this->nsfw;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
             $attr['flags'] = $this->flags;
             $attr['available_tags'] = $this->attributes['available_tags'];
             $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
@@ -1390,13 +1441,17 @@ class Channel extends Part
             if (array_key_exists('default_sort_order', $this->attributes)) {
                 $attr['default_sort_order'] = $this->default_sort_order;
             }
+
+            if (array_key_exists('default_forum_layout', $this->attributes)) {
+                $attr['default_forum_layout'] = $this->default_forum_layout;
+            }
         }
 
         return $attr;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

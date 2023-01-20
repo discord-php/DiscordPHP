@@ -61,7 +61,7 @@ use function React\Promise\reject;
 class Interaction extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -117,9 +117,9 @@ class Interaction extends Part
     }
 
     /**
-     * Returns the guild the interaction was invoked from. Null when invoked via DM.
+     * Returns the guild the interaction was invoked from.
      *
-     * @return Guild|null
+     * @return Guild|null `null` when invoked via DM.
      */
     protected function getGuildAttribute(): ?Guild
     {
@@ -129,13 +129,19 @@ class Interaction extends Part
     /**
      * Returns the channel the interaction was invoked from.
      *
-     * @return Channel|null
+     * @return Channel|Thread|null
      */
-    protected function getChannelAttribute(): ?Channel
+    protected function getChannelAttribute(): ?Part
     {
         if ($guild = $this->guild) {
-            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+            $channels = $guild->channels;
+            if ($channel = $channels->get('id', $this->channel_id)) {
                 return $channel;
+            }
+            foreach ($channels as $parent) {
+                if ($thread = $parent->threads->get('id', $this->channel_id)) {
+                    return $thread;
+                }
             }
         }
 
@@ -143,9 +149,9 @@ class Interaction extends Part
     }
 
     /**
-     * Returns the member who invoked the interaction. Null when invoked via DM.
+     * Returns the member who invoked the interaction.
      *
-     * @return Member|null
+     * @return Member|null `null` when invoked via DM.
      */
     protected function getMemberAttribute(): ?Member
     {
@@ -237,8 +243,8 @@ class Interaction extends Part
     }
 
     /**
-     * Acknowledges an interaction, creating a placeholder response message which can be edited later
-     * through the `updateOriginalResponse` function.
+     * Acknowledges an interaction, creating a placeholder response message
+     * which can be edited later through the `updateOriginalResponse` function.
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
@@ -274,7 +280,7 @@ class Interaction extends Part
      */
     public function updateMessage(MessageBuilder $builder): ExtendedPromiseInterface
     {
-        if ($this->type != InteractionType::MESSAGE_COMPONENT) {
+        if (! in_array($this->type, [InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
             return reject(new \LogicException('You can only update messages that occur due to a message component interaction.'));
         }
 
@@ -421,8 +427,8 @@ class Interaction extends Part
     /**
      * Responds to the interaction with a payload.
      *
-     * This is a seperate function so that it can be overloaded when responding via
-     * webhook.
+     * This is a seperate function so that it can be overloaded when responding
+     * via webhook.
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response
      *

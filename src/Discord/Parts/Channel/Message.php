@@ -71,7 +71,7 @@ use function React\Promise\reject;
  * @property      int|null                    $flags              Message flags.
  * @property      Message|null                $referenced_message The message that is referenced in a reply.
  * @property      MessageInteraction|null     $interaction        Sent if the message is a response to an Interaction.
- * @property      Thread|null                 $thread             The thread that the message was sent in.
+ * @property      Thread|null                 $thread             The thread that was started from this message, includes thread member object.
  * @property      Collection|Component[]|null $components         Sent if the message contains components like buttons, action rows, or other interactive components.
  * @property      Collection|Sticker[]|null   $sticker_items      Stickers attached to the message.
  * @property      int|null                    $position           A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
@@ -117,6 +117,7 @@ class Message extends Part
     public const TYPE_GUILD_INVITE_REMINDER = 22;
     public const TYPE_CONTEXT_MENU_COMMAND = 23;
     public const TYPE_AUTO_MODERATION_ACTION = 24;
+    public const TYPE_ROLE_SUBSCRIPTION_PURCHASE = 25;
 
     /** @deprecated 7.1.0 Use `Message::TYPE_USER_JOIN` */
     public const GUILD_MEMBER_JOIN = self::TYPE_USER_JOIN;
@@ -170,7 +171,7 @@ class Message extends Part
     public const FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD = (1 << 8);
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -186,7 +187,6 @@ class Message extends Part
         'mention_channels',
         'attachments',
         'embeds',
-        'reactions',
         'nonce',
         'pinned',
         'webhook_id',
@@ -201,16 +201,18 @@ class Message extends Part
         'thread',
         'components',
         'sticker_items',
-        'stickers', // deprecated
         'position',
 
         // @internal
         'guild_id',
         'member',
+
+        // repositories
+        'reactions',
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $repositories = [
         'reactions' => ReactionRepository::class,
@@ -324,11 +326,7 @@ class Message extends Part
         }
 
         foreach ($this->attributes['mention_channels'] ?? [] as $mention_channel) {
-            if (! $channel = $this->discord->getChannel($mention_channel->id)) {
-                $channel = $this->factory->part(Channel::class, (array) $mention_channel, true);
-            }
-
-            $collection->pushItem($channel);
+            $collection->pushItem($this->discord->getChannel($mention_channel->id) ?: $this->factory->part(Channel::class, (array) $mention_channel, true));
         }
 
         return $collection;
@@ -351,23 +349,35 @@ class Message extends Part
     }
 
     /**
-     * Sets the reactions attriubte.
+     * Sets the reactions attribute.
      *
-     * @param array $reactions
+     * @param ?array $reactions
      */
-    protected function setReactionsAttribute(array $reactions)
+    protected function setReactionsAttribute(?array $reactions): void
     {
-        $this->attributes['reactions'] = $reactions;
-
-        foreach ($reactions as $reaction) {
+        $keepReactions = [];
+        foreach ($reactions ?? [] as $reaction) {
+            $keepReactions[] = $reactionKey = $reaction->emoji->id ?? $reaction->emoji->name;
             $reaction = (array) $reaction;
             /** @var Reaction */
-            if ($reactionPart = $this->reactions->offsetGet($reaction['emoji']->id ?? $reaction['emoji']->name)) {
+            if ($reactionPart = $this->reactions->offsetGet($reactionKey)) {
                 $reactionPart->fill($reaction);
                 $reactionPart->created = $this->created;
             }
             $this->reactions->pushItem($reactionPart ?: $this->reactions->create($reaction, $this->created));
         }
+
+        $oldReactions = [];
+        if (! empty($this->attributes['reactions'])) {
+            foreach ($this->attributes['reactions'] as $oldReaction) {
+                $oldReactions[] = $oldReaction->emoji->id ?? $oldReaction->emoji->name;
+            }
+            if ($clean = array_diff($oldReactions, $keepReactions)) {
+                $this->reactions->cache->deleteMultiple($clean);
+            }
+        }
+
+        $this->attributes['reactions'] = $reactions;
     }
 
     /**
@@ -378,19 +388,21 @@ class Message extends Part
     protected function getChannelAttribute(): Part
     {
         if ($guild = $this->guild) {
-            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+            $channels = $guild->channels;
+            if ($channel = $channels->get('id', $this->channel_id)) {
                 return $channel;
+            }
+
+            foreach ($channels as $parent) {
+                if ($thread = $parent->threads->get('id', $this->channel_id)) {
+                    return $thread;
+                }
             }
         }
 
         // @todo potentially slow
         if ($channel = $this->discord->getChannel($this->channel_id)) {
             return $channel;
-        }
-
-        // @todo deprecate
-        if ($thread = $this->thread) {
-            return $thread;
         }
 
         return $this->factory->part(Channel::class, [
@@ -400,7 +412,10 @@ class Message extends Part
     }
 
     /**
-     * Returns the thread which the message was sent in.
+     * Returns the thread that was started from this message, includes thread member object.
+     *
+     * @since 10.0.0 This only returns a thread that was started on this message, not the thread of the message.
+     * @since 7.0.0
      *
      * @return Thread|null
      */
@@ -416,7 +431,7 @@ class Message extends Part
                 if ($thread = $channel->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
-                $thread = $this->factory->part(Thread::class, $this->attributes['thread'], true);
+                $thread = $channel->threads->create((array) $this->attributes['thread'], true);
                 $channel->threads->pushItem($thread);
             }
         }
@@ -448,7 +463,7 @@ class Message extends Part
     /**
      * Returns the mention_roles attribute.
      *
-     * @return Collection<?Role> The roles that were mentioned. Null role only contains the ID in the collection.
+     * @return Collection<?Role> The roles that were mentioned. null role only contains the ID in the collection.
      */
     protected function getMentionRolesAttribute(): Collection
     {
@@ -479,10 +494,7 @@ class Message extends Part
         $users = Collection::for(User::class);
 
         foreach ($this->attributes['mentions'] ?? [] as $mention) {
-            if (! $user = $this->discord->users->get('id', $mention->id)) {
-                $user = $this->factory->part(User::class, (array) $mention, true);
-            }
-            $users->pushItem($user);
+            $users->pushItem($this->discord->users->get('id', $mention->id) ?: $this->factory->part(User::class, (array) $mention, true));
         }
 
         return $users;
@@ -666,13 +678,13 @@ class Message extends Part
      */
     protected function getStickerItemsAttribute(): ?Collection
     {
-        if (! isset($this->attributes['sticker_items'])) {
+        if (! isset($this->attributes['sticker_items']) && ! in_array($this->type, [self::TYPE_DEFAULT, self::TYPE_REPLY])) {
             return null;
         }
 
         $sticker_items = Collection::for(Sticker::class);
 
-        foreach ($this->attributes['sticker_items'] as $sticker) {
+        foreach ($this->attributes['sticker_items'] ?? [] as $sticker) {
             $sticker_items->pushItem($this->factory->part(Sticker::class, (array) $sticker, true));
         }
 
@@ -791,11 +803,14 @@ class Message extends Part
     }
 
     /**
-     * Crossposts the message to any following channels.
+     * Crossposts the message to any following channels (publish announcement).
      *
      * @link https://discord.com/developers/docs/resources/channel#crosspost-message
      *
-     * @throws \RuntimeException Message has already been crossposted.
+     * @throws \RuntimeException      Message has already been crossposted.
+     * @throws NoPermissionsException Missing permission:
+     *                                send_messages if this message author is the bot.
+     *                                manage_messages if this message author is other user.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -803,6 +818,20 @@ class Message extends Part
     {
         if ($this->crossposted) {
             return reject(new \RuntimeException('This message has already been crossposted.'));
+        }
+
+        if ($channel = $this->channel) {
+            if ($botperms = $channel->getBotPermissions()) {
+                if ($this->user_id == $this->discord->id) {
+                    if (! $botperms->send_messages) {
+                        return reject(new NoPermissionsException("You do not have permission to crosspost message in channel {$this->id}."));
+                    }
+                } else {
+                    if (! $botperms->manage_messages) {
+                        return reject(new NoPermissionsException("You do not have permission to crosspost others message in channel {$this->id}."));
+                    }
+                }
+            }
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_CROSSPOST_MESSAGE, $this->channel_id, $this->id))->then(function ($response) {
@@ -862,12 +891,21 @@ class Message extends Part
      *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
+     * @throws NoPermissionsException Missing read_message_history permission.
+     *
      * @return ExtendedPromiseInterface
      */
     public function react($emoticon): ExtendedPromiseInterface
     {
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
+        }
+
+        if ($channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->read_message_history) {
+                return reject(new NoPermissionsException("You do not have permission to read message history in channel {$channel->id}."));
+            }
         }
 
         return $this->http->put(Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->id, urlencode($emoticon)));
@@ -884,6 +922,7 @@ class Message extends Part
      * @param string|null       $id       The user reaction to delete (if not all).
      *
      * @throws \UnexpectedValueException Invalid reaction `$type`.
+     * @throws NoPermissionsException    Missing manage_messages permission when deleting others reaction.
      *
      * @return ExtendedPromiseInterface
      */
@@ -910,6 +949,13 @@ class Message extends Part
                 break;
             default:
                 return reject(new \UnexpectedValueException('Invalid reaction type'));
+        }
+
+        if (($type != self::REACT_DELETE_ME || $id != $this->discord->id) && $channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete reaction by others in channel {$channel->id}."));
+            }
         }
 
         return $this->http->delete($url);
@@ -951,12 +997,20 @@ class Message extends Part
      *
      * @return ExtendedPromiseInterface
      *
-     * @throws \RuntimeException This type of message cannot be deleted.
+     * @throws \RuntimeException      This type of message cannot be deleted.
+     * @throws NoPermissionsException Missing manage_messages permission when deleting others message.
      */
     public function delete(): ExtendedPromiseInterface
     {
         if (! $this->isDeletable()) {
             return reject(new \RuntimeException("Cannot delete this type of message: {$this->type}", 50021));
+        }
+
+        if ($this->user_id != $this->discord->id && $channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete message by others in channel {$channel->id}."));
+            }
         }
 
         return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id));
@@ -992,11 +1046,11 @@ class Message extends Part
             if ($filterResult) {
                 $reactions->pushItem($reaction);
 
-                if ($options['limit'] !== false && sizeof($reactions) >= $options['limit']) {
+                if ($options['limit'] !== false && count($reactions) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_REACTION_ADD, $eventHandler);
                     $deferred->resolve($reactions);
 
-                    if (! is_null($timer)) {
+                    if ($timer !== null) {
                         $this->discord->getLoop()->cancelTimer($timer);
                     }
                 }
@@ -1050,7 +1104,7 @@ class Message extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/channel#edit-message-jsonform-params
      */
@@ -1063,7 +1117,7 @@ class Message extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

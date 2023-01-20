@@ -66,8 +66,9 @@ class Multipart
      * ];
      * ```
      *
-     * @param  array $field
-     * @return self
+     * @param array $field
+     *
+     * @return $this
      */
     public function add(...$fields): self
     {
@@ -106,7 +107,7 @@ class Multipart
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $body = '';
 

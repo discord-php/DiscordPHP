@@ -24,7 +24,7 @@ use Discord\Parts\Guild\Guild;
 class GuildEmojisUpdate extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {
@@ -33,7 +33,6 @@ class GuildEmojisUpdate extends Event
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            // @todo load all emojis from cache?
             $oldEmojis->merge($guild->emojis);
             $guild->emojis->clear();
         }
@@ -51,7 +50,7 @@ class GuildEmojisUpdate extends Event
             $emojiParts->pushItem($this->factory->part(Emoji::class, (array) $emoji, true));
         }
 
-        if ($guild) {
+        if (isset($guild)) {
             yield $guild->emojis->cache->setMultiple($emojiParts->toArray());
         }
 

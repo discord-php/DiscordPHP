@@ -23,36 +23,38 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  *
  * @since 7.0.0
  *
- * @property string        $id                     The client ID of the OAuth application.
- * @property string        $name                   The name of the OAuth application.
- * @property string|null   $icon                   The icon URL of the OAuth application.
- * @property string        $icon_hash              The icon hash of the OAuth application.
- * @property string        $description            The description of the OAuth application.
- * @property string[]      $rpc_origins            An array of RPC origin URLs.
- * @property bool          $bot_public             When false only app owner can join the app's bot to guilds.
- * @property bool          $bot_require_code_grant When true the app's bot will only join upon completion of the full oauth2 code grant flow.
- * @property string|null   $terms_of_service_url   The url of the app's terms of service.
- * @property string|null   $privacy_policy_url     The url of the app's privacy policy
- * @property User|null     $owner                  The owner of the OAuth application.
- * @property string        $verify_key             The hex encoded key for verification in interactions and the GameSDK's GetTicket.
- * @property object|null   $team                   If the application belongs to a team, this will be a list of the members of that team.
- * @property string|null   $guild_id               If this application is a game sold on Discord, this field will be the guild to which it has been linked.
- * @property string|null   $primary_sku_id         If this application is a game sold on Discord, this field will be the id of the "Game SKU" that is created, if exists.
- * @property string|null   $slug                   If this application is a game sold on Discord, this field will be the URL slug that links to the store page.
- * @property string|null   $cover_image            The application's default rich presence invite cover image URL.
- * @property string|null   $cover_image_hash       The application's default rich presence invite cover image hash.
- * @property int           $flags                  The application's public flags.
- * @property string[]|null $tags                   Up to 5 tags describing the content and functionality of the application.
- * @property object|null   $install_params         Settings for the application's default in-app authorization link, if enabled.
- * @property string|null   $custom_install_url     The application's default custom authorization link, if enabled.
- * @property string        $invite_url             The invite URL to invite the bot to a guild.
+ * @property string        $id                                The client ID of the OAuth application.
+ * @property string        $name                              The name of the OAuth application.
+ * @property string|null   $icon                              The icon URL of the OAuth application.
+ * @property string        $icon_hash                         The icon hash of the OAuth application.
+ * @property string        $description                       The description of the OAuth application.
+ * @property string[]      $rpc_origins                       An array of RPC origin URLs.
+ * @property bool          $bot_public                        When false only app owner can join the app's bot to guilds.
+ * @property bool          $bot_require_code_grant            When true the app's bot will only join upon completion of the full oauth2 code grant flow.
+ * @property string|null   $terms_of_service_url              The url of the app's terms of service.
+ * @property string|null   $privacy_policy_url                The url of the app's privacy policy
+ * @property User|null     $owner                             The owner of the OAuth application.
+ * @property string        $verify_key                        The hex encoded key for verification in interactions and the GameSDK's GetTicket.
+ * @property object|null   $team                              If the application belongs to a team, this will be a list of the members of that team.
+ * @property string|null   $guild_id                          If this application is a game sold on Discord, this field will be the guild to which it has been linked.
+ * @property string|null   $primary_sku_id                    If this application is a game sold on Discord, this field will be the id of the "Game SKU" that is created, if exists.
+ * @property string|null   $slug                              If this application is a game sold on Discord, this field will be the URL slug that links to the store page.
+ * @property string|null   $cover_image                       The application's default rich presence invite cover image URL.
+ * @property string|null   $cover_image_hash                  The application's default rich presence invite cover image hash.
+ * @property int           $flags                             The application's public flags.
+ * @property string[]|null $tags                              Up to 5 tags describing the content and functionality of the application.
+ * @property object|null   $install_params                    Settings for the application's default in-app authorization link, if enabled.
+ * @property string|null   $custom_install_url                The application's default custom authorization link, if enabled.
+ * @property string|null   $role_connections_verification_url The application's role connection verification entry point, which when configured will render the app as a verification method in the guild role verification configuration.
+ *
+ * @property string $invite_url The invite URL to invite the bot to a guild.
  *
  * @property GlobalCommandRepository $commands The application global commands.
  */
 class Application extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'bot_public',
@@ -75,6 +77,7 @@ class Application extends Part
         'tags',
         'install_params',
         'custom_install_url',
+        'role_connections_verification_url',
     ];
 
     public const GATEWAY_PRESENCE = (1 << 12);
@@ -89,7 +92,7 @@ class Application extends Part
     public const ACTIVE = (1 << 24);
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $repositories = [
         'commands' => GlobalCommandRepository::class,
@@ -194,7 +197,7 @@ class Application extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

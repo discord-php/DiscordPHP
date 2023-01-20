@@ -51,7 +51,7 @@ use Discord\Parts\User\User;
 class Invite extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'code',
@@ -64,7 +64,6 @@ class Invite extends Part
         'approximate_presence_count',
         'approximate_member_count',
         'expires_at',
-        'stage_instance', // deprecated
         'guild_scheduled_event',
 
         // Extra metadata
@@ -288,7 +287,7 @@ class Invite extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

@@ -22,7 +22,8 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
+ * Webhooks are a low-effort way to post messages to channels in Discord. They
+ * do not require a bot user or authentication to use.
  *
  * @link https://discord.com/developers/docs/resources/webhook#webhook-resource
  *
@@ -30,10 +31,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @property      string       $id             The id of the webhook.
  * @property      int          $type           The type of webhook.
- * @property      ?string|null $guild_id       The guild ID this is for, if any.
- * @property-read Guild|null   $guild          The guild this is for, if any.
- * @property      ?string|null $channel_id     The channel ID this is for, if any.
- * @property-read Channel|null $channel        The channel ID this is for, if any.
+ * @property      ?string|null $guild_id       The guild ID this webhook is for, if any.
+ * @property-read Guild|null   $guild          The guild this webhook is for, if any.
+ * @property      ?string|null $channel_id     The channel ID this webhook is for, if any.
+ * @property-read Channel|null $channel        The channel this webhook is for, if any.
  * @property      User|null    $user           The user that created the webhook.
  * @property      ?string      $name           The name of the webhook.
  * @property      ?string      $avatar         The avatar of the webhook.
@@ -52,7 +53,7 @@ class Webhook extends Part
     public const TYPE_APPLICATION = 3;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -70,7 +71,7 @@ class Webhook extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $repositories = [
         'messages' => WebhookMessageRepository::class,
@@ -232,7 +233,7 @@ class Webhook extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/webhook#create-webhook-json-params
      */
@@ -245,7 +246,7 @@ class Webhook extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/webhook#modify-webhook-json-params
      */
@@ -264,7 +265,7 @@ class Webhook extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

@@ -38,8 +38,6 @@ class DiscordSingleton
         $redis = (new Clue\React\Redis\Factory($loop))->createLazyClient('localhost:6379');
         $cache = new WyriHaximus\React\Cache\Redis($redis);
 
-        //$cache = new seregazhuk\React\Cache\Memcached\Memcached($loop);
-
         //$cache = new WyriHaximus\React\Cache\Filesystem(React\Filesystem\Filesystem::create($loop), getenv('RUNNER_TEMP').DIRECTORY_SEPARATOR);
 
         //$memcached = new \Memcached();
@@ -57,7 +55,7 @@ class DiscordSingleton
             'token' => getenv('DISCORD_TOKEN'),
             'loop' => $loop,
             'logger' => $logger,
-            'cacheInterface' => $cache,
+            'cache' => $cache,
         ]);
 
         $e = null;

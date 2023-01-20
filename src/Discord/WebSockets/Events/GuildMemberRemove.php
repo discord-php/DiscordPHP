@@ -23,7 +23,7 @@ use Discord\Parts\Guild\Guild;
 class GuildMemberRemove extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {
@@ -41,7 +41,6 @@ class GuildMemberRemove extends Event
         } else {
             /** @var Member */
             $memberPart = $this->factory->part(Member::class, (array) $data);
-            $memberPart->guild_id = $data->guild_id;
         }
 
         $this->cacheUser($data->user);

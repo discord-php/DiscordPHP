@@ -34,7 +34,8 @@ use function React\Promise\resolve;
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @property-read CacheWrapper $cache The react/cache wrapper.
+ * @property-read string       $discrim The discriminator.
+ * @property-read CacheWrapper $cache   The react/cache wrapper.
  */
 abstract class AbstractRepository extends Collection
 {
@@ -89,7 +90,7 @@ abstract class AbstractRepository extends Collection
         $this->http = $discord->getHttpClient();
         $this->factory = $discord->getFactory();
         $this->vars = $vars;
-        $this->cache = new CacheWrapper($discord, $discord->getCache(static::class), $this->items, $this->class, $this->vars);
+        $this->cache = new CacheWrapper($discord, $discord->getCacheConfig(static::class), $this->items, $this->class, $this->vars);
 
         parent::__construct([], $this->discrim, $this->class);
     }
@@ -134,8 +135,6 @@ abstract class AbstractRepository extends Collection
      * @param object $response
      *
      * @return ExtendedPromiseInterface<static>
-     *
-     * @internal
      */
     protected function cacheFreshen($response): ExtendedPromiseInterface
     {
@@ -226,6 +225,10 @@ abstract class AbstractRepository extends Collection
      */
     public function delete($part, ?string $reason = null): ExtendedPromiseInterface
     {
+        if (! isset($part)) {
+            return reject(new \Exception('You cannot delete a non-existant part.'));
+        }
+
         if (! ($part instanceof Part)) {
             $part = $this->factory->part($this->class, [$this->discrim => $part], true);
         }
@@ -408,7 +411,7 @@ abstract class AbstractRepository extends Collection
             return;
         }
 
-        $this->cache->interface->set($this->cache->getPrefix().$offset, $this->cache->serializer($value));
+        $this->cache->interface->set($this->cache->getPrefix().$offset, $this->cache->serializer($value), $this->cache->config->ttl);
         $this->items[$offset] = $value;
     }
 
@@ -455,14 +458,14 @@ abstract class AbstractRepository extends Collection
      *
      * @param Part $item
      *
-     * @return self
+     * @return $this
      */
     public function pushItem($item): self
     {
         if (is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
             $this->items[$key] = $item;
-            $this->cache->interface->set($this->cache->getPrefix().$key, $this->cache->serializer($item));
+            $this->cache->interface->set($this->cache->getPrefix().$key, $this->cache->serializer($item), $this->cache->config->ttl);
         }
 
         return $this;
@@ -537,7 +540,8 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Runs a filter callback over the repository and returns a new collection based on the response of the callback.
+     * Runs a filter callback over the repository and returns a new collection
+     * based on the response of the callback.
      *
      * @param callable $callback
      *
@@ -568,7 +572,8 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Runs a filter callback over the repository and returns the first part where the callback returns `true` when given the part.
+     * Runs a filter callback over the repository and returns the first part
+     * where the callback returns `true` when given the part.
      *
      * @param callable $callback
      *
@@ -617,6 +622,16 @@ abstract class AbstractRepository extends Collection
         }
 
         return $items;
+    }
+
+    /**
+     * Get the keys of the items.
+     *
+     * @return int[]|string[]
+     */
+    public function keys()
+    {
+        return array_keys($this->items);
     }
 
     /**
@@ -683,7 +698,7 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function jsonSerialize(): array
     {
@@ -695,27 +710,21 @@ abstract class AbstractRepository extends Collection
      *
      * @return Traversable
      */
-    public function getIterator(): Traversable
+    public function &getIterator(): Traversable
     {
-        return (function () {
-            foreach ($this->items as $offset => $item) {
-                if ($item instanceof WeakReference) {
-                    if (! $item = $item->get()) {
-                        // Attempt to get resolved value if promise is resolved without waiting
-                        $item = nowait($this->cache->get($offset));
-                    }
-                }
-
-                if ($item) {
-                    yield $offset => $this->items[$offset] = $item;
-                }
+        foreach ($this->items as $offset => &$item) {
+            if ($item instanceof WeakReference) {
+                // Attempt to get resolved value if promise is resolved without waiting
+                $item = $item->get() ?? nowait($this->cache->get($offset));
             }
-        })();
+
+            yield $offset => $item;
+        }
     }
 
     public function __get(string $key)
     {
-        if (in_array($key, ['cache'])) {
+        if (in_array($key, ['discrim', 'cache'])) {
             return $this->$key;
         }
     }

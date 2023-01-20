@@ -26,7 +26,7 @@ use Discord\WebSockets\Intents;
 class MessageCreate extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {
@@ -45,19 +45,18 @@ class MessageCreate extends Event
             $this->discord->private_channels->set($data->channel_id, $channel);
         }
 
-        if (isset($data->guild_id)) {
-            /** @var ?Guild */
-            $guild = yield $this->discord->guilds->cacheGet($data->guild_id);
-
-            if (! isset($channel)) {
-                /** @var ?Channel|?Thread */
-                if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
-                    if ($channel instanceof Thread && $parent = $channel->parent) {
-                        if ($parent->type == Channel::TYPE_GUILD_FORUM) {
-                            $parent->last_message_id = $data->id;
-                            $channel->message_count++;
-                            $channel->total_message_sent++;
-                        }
+        /** @var ?Guild */
+        if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if (! isset($channel) && ! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                /** @var Channel */
+                foreach ($guild->channels as $parent) {
+                    /** @var ?Thread */
+                    if ($thread = yield $parent->threads->cacheGet($data->channel_id)) {
+                        $thread->message_count++;
+                        $thread->total_message_sent++;
+                        $channel = $thread;
+                        break;
                     }
                 }
             }
@@ -70,8 +69,22 @@ class MessageCreate extends Event
             }
         }
 
+        if (isset($channel)) {
+            $channel->last_message_id = $data->id;
+        }
+
         if (isset($data->author) && ! isset($data->webhook_id)) {
+            if (isset($data->member) && $guild) {
+                $this->cacheMember($guild->members, (array) $data->member + ['user' => $data->author]);
+            }
             $this->cacheUser($data->author);
+        }
+
+        foreach ($data->mentions ?? [] as $user) {
+            if (isset($user->member) && $guild) {
+                $this->cacheMember($guild->members, (array) $user->member + ['user' => $user]);
+            }
+            $this->cacheUser($user);
         }
 
         if (isset($data->interaction->user)) {

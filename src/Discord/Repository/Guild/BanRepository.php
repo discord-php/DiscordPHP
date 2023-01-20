@@ -36,12 +36,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BanRepository extends AbstractRepository
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $discrim = 'user_id';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_BANS,
@@ -50,7 +50,7 @@ class BanRepository extends AbstractRepository
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $class = Ban::class;
 
@@ -82,12 +82,12 @@ class BanRepository extends AbstractRepository
             'delete_message_days',
         ])
         ->setAllowedTypes('delete_message_seconds', 'int')
-        ->setAllowedTypes('delete_message_days', 'int')
+        ->setAllowedTypes('delete_message_days', ['int', 'null'])
         ->setAllowedValues('delete_message_seconds', function ($value) {
             return $value >= 0 && $value <= 604800;
         })
         ->setAllowedValues('delete_message_days', function ($value) {
-            return $value >= 1 && $value <= 7;
+            return $value === null || ($value >= 0 && $value <= 7);
         });
 
         $content = $resolver->resolve($options);

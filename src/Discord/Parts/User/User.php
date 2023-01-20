@@ -73,7 +73,7 @@ class User extends Part
     public const PREMIUM_NITRO_BASIC = 3;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -107,7 +107,7 @@ class User extends Part
         }
 
         return $this->http->post(Endpoint::USER_CURRENT_CHANNELS, ['recipient_id' => $this->id])->then(function ($response) {
-            $channel = $this->factory->part(Channel::class, (array) $response, true);
+            $channel = $this->discord->private_channels->create((array) $response, true);
             $this->discord->private_channels->pushItem($channel);
 
             return $channel;
@@ -254,7 +254,7 @@ class User extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

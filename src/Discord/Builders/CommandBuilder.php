@@ -57,7 +57,7 @@ class CommandBuilder implements JsonSerializable
     /**
      * Creates a new command builder.
      *
-     * @return self
+     * @return static
      */
     public static function new(): self
     {
@@ -111,7 +111,7 @@ class CommandBuilder implements JsonSerializable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function jsonSerialize(): array
     {

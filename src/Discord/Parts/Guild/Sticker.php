@@ -45,13 +45,12 @@ class Sticker extends Part
     public const FORMAT_TYPE_LOTTIE = 3;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
         'name',
         'tags',
-        'asset',
         'type',
         'format_type',
         'description',
@@ -63,7 +62,7 @@ class Sticker extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isPartial(): bool
     {
@@ -139,7 +138,7 @@ class Sticker extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/sticker#modify-guild-sticker-json-params
      */
@@ -158,7 +157,7 @@ class Sticker extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

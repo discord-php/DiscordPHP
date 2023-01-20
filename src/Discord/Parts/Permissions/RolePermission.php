@@ -12,7 +12,7 @@
 namespace Discord\Parts\Permissions;
 
 /**
- * @inheritDoc
+ * Represents a set of permissions for a given role.
  *
  * @since 2.1.3
  *
@@ -53,11 +53,12 @@ namespace Discord\Parts\Permissions;
  * @property bool $manage_nicknames
  * @property bool $manage_emojis_and_stickers
  * @property bool $moderate_members
+ * @property bool $view_creator_monetization_analytics
  */
 class RolePermission extends Permission
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getPermissions(): array
     {

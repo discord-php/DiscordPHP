@@ -127,7 +127,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Creates a new message builder.
      *
-     * @return self
+     * @return static
      */
     public static function new(): self
     {
@@ -141,7 +141,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setContent(string $content): self
     {
@@ -161,7 +161,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @throws \LengthException `$nonce` string exceeds 25 characters.
      *
-     * @return self
+     * @return $this
      */
     public function setNonce($nonce = null): self
     {
@@ -181,7 +181,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @throws \LengthException `$username` exceeds 80 characters.
      *
-     * @return self
+     * @return $this
      */
     public function setUsername(string $username): self
     {
@@ -199,7 +199,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param string $avatar_url New webhook avatar URL.
      *
-     * @return self
+     * @return $this
      */
     public function setAvatarUrl(string $avatar_url): self
     {
@@ -213,7 +213,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param bool $tts
      *
-     * @return self
+     * @return $this
      */
     public function setTts(bool $tts = false): self
     {
@@ -239,7 +239,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @throws \OverflowException Builder exceeds 10 embeds.
      *
-     * @return self
+     * @return $this
      */
     public function addEmbed(...$embeds): self
     {
@@ -263,7 +263,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Embed[]|array $embeds
      *
-     * @return self
+     * @return $this
      */
     public function setEmbeds(array $embeds): self
     {
@@ -279,7 +279,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param array $allowed_mentions
      *
-     * @return self
+     * @return $this
      */
     public function setAllowedMentions(array $allowed_mentions): self
     {
@@ -293,7 +293,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Message|null $message
      *
-     * @return self
+     * @return $this
      */
     public function setReplyTo(?Message $message = null): self
     {
@@ -310,7 +310,7 @@ class MessageBuilder implements JsonSerializable
      * @throws \InvalidArgumentException Component is not a type of `ActionRow` or `SelectMenu`
      * @throws \OverflowException        Builder exceeds 5 components.
      *
-     * @return self
+     * @return $this
      */
     public function addComponent(Component $component): self
     {
@@ -332,7 +332,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Component $component Component to remove.
      *
-     * @return self
+     * @return $this
      */
     public function removeComponent(Component $component): self
     {
@@ -348,7 +348,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param array $components New message components.
      *
-     * @return self
+     * @return $this
      */
     public function setComponents(array $components): self
     {
@@ -378,7 +378,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @throws \OverflowException Builder exceeds 3 stickers.
      *
-     * @return self
+     * @return $this
      */
     public function addSticker($sticker): self
     {
@@ -400,7 +400,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param string|Sticker $sticker Sticker to remove.
      *
-     * @return self
+     * @return $this
      */
     public function removeSticker($sticker): self
     {
@@ -420,7 +420,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param array $stickers New sticker ids.
      *
-     * @return self
+     * @return $this
      */
     public function setStickers(array $stickers): self
     {
@@ -451,9 +451,9 @@ class MessageBuilder implements JsonSerializable
      * asynchronously and use the `addFileFromContent` function for tasks like these.
      *
      * @param string      $filepath Path to the file to send.
-     * @param string|null $filename Name to send the file as. Null for the base name of `$filepath`.
+     * @param string|null $filename Name to send the file as. `null` for the base name of `$filepath`.
      *
-     * @return self
+     * @return $this
      */
     public function addFile(string $filepath, ?string $filename = null): self
     {
@@ -470,7 +470,7 @@ class MessageBuilder implements JsonSerializable
      * @param string $filename Name to send the file as.
      * @param string $content  Content of the file.
      *
-     * @return self
+     * @return $this
      */
     public function addFileFromContent(string $filename, string $content): self
     {
@@ -496,7 +496,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Removes all files from the builder.
      *
-     * @return self
+     * @return $this
      */
     public function clearFiles(): self
     {
@@ -510,7 +510,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Attachment|string|int $attachment Attachment objects or IDs to add
      *
-     * @return self
+     * @return $this
      */
     public function addAttachment(...$attachments): self
     {
@@ -540,7 +540,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Removes all attachments from the message.
      *
-     * @return self
+     * @return $this
      */
     public function clearAttachments(): self
     {
@@ -557,7 +557,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param int $flags
      *
-     * @return self
+     * @return $this
      */
     public function _setFlags(int $flags): self
     {
@@ -612,7 +612,7 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function jsonSerialize(): array
     {

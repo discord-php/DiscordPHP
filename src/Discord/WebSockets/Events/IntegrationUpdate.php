@@ -23,7 +23,7 @@ use Discord\Parts\Guild\Integration;
 class IntegrationUpdate extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {
@@ -46,7 +46,7 @@ class IntegrationUpdate extends Event
             $integrationPart = $this->factory->part(Integration::class, (array) $data, true);
         }
 
-        if ($guild) {
+        if (isset($guild)) {
             $guild->integrations->set($data->id, $integrationPart);
         }
 

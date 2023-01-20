@@ -17,12 +17,14 @@ use Discord\WebSockets\Event;
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#voice-server-update
  *
+ * @see \Discord\Parts\WebSockets\VoiceServerUpdate
+ *
  * @since 4.0.0
  */
 class VoiceServerUpdate extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {

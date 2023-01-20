@@ -15,7 +15,8 @@ use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
 
 /**
- * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
+ * A role defines permissions for the guild. Members can be added to the role.
+ * The role belongs to a guild.
  *
  * @link https://discord.com/developers/docs/topics/permissions#role-object
  *
@@ -32,7 +33,7 @@ use Discord\Parts\Permissions\RolePermission;
  * @property      RolePermission $permissions   The permissions of the role.
  * @property      bool           $managed       Whether the role is managed by a Twitch subscriber feature.
  * @property      bool           $mentionable   Whether the role is mentionable.
- * @property      object|null    $tags          The tags this role has.
+ * @property      object|null    $tags          The tags this role has (`bot_id`, `integration_id`, `premium_subscriber`, `subscription_listing_id`, `available_for_purchase`, and `guild_connections`).
  *
  * @property      string|null $guild_id The unique identifier of the guild that the role belongs to.
  * @property-read Guild|null  $guild    The guild that the role belongs to.
@@ -40,7 +41,7 @@ use Discord\Parts\Permissions\RolePermission;
 class Role extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -129,7 +130,7 @@ class Role extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-role-json-params
      */
@@ -147,7 +148,7 @@ class Role extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-json-params
      */
@@ -173,7 +174,7 @@ class Role extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {
@@ -193,7 +194,7 @@ class Role extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRawAttributes(): array
     {

@@ -19,8 +19,9 @@ use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
 /**
- * A TypingStart part is used when the `TYPING_START` event is fired on the WebSocket. It contains
- * information such as when the event was fired and then channel it was fired in.
+ * A TypingStart part is used when the `TYPING_START` event is fired on the
+ * WebSocket. It contains information such as when the event was fired and then
+ * channel it was fired in.
  *
  * @since 2.1.3
  *
@@ -38,7 +39,7 @@ use Discord\Parts\User\User;
 class TypingStart extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'channel_id',
@@ -53,15 +54,16 @@ class TypingStart extends Part
      *
      * @return Channel|Thread|null The channel that the user started typing in.
      */
-    protected function getChannelAttribute()
+    protected function getChannelAttribute(): ?Part
     {
         if ($guild = $this->guild) {
-            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+            $channels = $guild->channels;
+            if ($channel = $channels->get('id', $this->channel_id)) {
                 return $channel;
             }
 
-            foreach ($guild->channels as $channel) {
-                if ($thread = $channel->threads->get('id', $this->channel_id)) {
+            foreach ($channels as $parent) {
+                if ($thread = $parent->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
             }

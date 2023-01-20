@@ -95,13 +95,13 @@ class Option extends Component
     }
 
     /**
-     * Sets the description of the option. Null to clear.
+     * Sets the description of the option.
      *
-     * @param string|null $description Description of the option. Maximum 100 characters.
+     * @param string|null $description Description of the option. Maximum 100 characters. `null` to clear.
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setDescription(?string $description): self
     {
@@ -115,11 +115,11 @@ class Option extends Component
     }
 
     /**
-     * Sets the emoji of the option. Null to clear.
+     * Sets the emoji of the option.
      *
-     * @param Emoji|string|null $emoji Emoji to set.
+     * @param Emoji|string|null $emoji Emoji to set. `null` to clear.
      *
-     * @return self
+     * @return $this
      */
     public function setEmoji($emoji): self
     {
@@ -163,7 +163,7 @@ class Option extends Component
      *
      * @param bool $default
      *
-     * @return self
+     * @return $this
      */
     public function setDefault(bool $default = true): self
     {
@@ -223,7 +223,7 @@ class Option extends Component
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function jsonSerialize(): array
     {

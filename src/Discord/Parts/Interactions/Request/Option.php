@@ -12,6 +12,7 @@
 namespace Discord\Parts\Interactions\Request;
 
 use Discord\Helpers\Collection;
+use Discord\Parts\Interactions\Command\Option as CommandOption;
 use Discord\Parts\Part;
 
 /**
@@ -30,7 +31,7 @@ use Discord\Parts\Part;
 class Option extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'name',
@@ -45,15 +46,15 @@ class Option extends Part
      *
      * @return Collection|Option[]|null $options
      */
-    protected function getOptionsAttribute()
+    protected function getOptionsAttribute(): ?Collection
     {
-        if (! isset($this->attributes['options'])) {
+        if (! isset($this->attributes['options']) && ! in_array($this->type, [CommandOption::SUB_COMMAND, CommandOption::SUB_COMMAND_GROUP])) {
             return null;
         }
 
         $options = Collection::for(Option::class, 'name');
 
-        foreach ($this->attributes['options'] as $option) {
+        foreach ($this->attributes['options'] ?? [] as $option) {
             $options->pushItem($this->factory->part(Option::class, (array) $option, true));
         }
 
@@ -61,7 +62,7 @@ class Option extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

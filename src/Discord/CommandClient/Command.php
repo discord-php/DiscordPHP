@@ -64,6 +64,13 @@ class Command
     protected $cooldownMessage;
 
     /**
+     * Help visibility.
+     *
+     * @var bool wether visible in help or not.
+     */
+    protected $showHelp;
+
+    /**
      * An array of cooldowns for commands.
      *
      * @var array Cooldowns.
@@ -88,7 +95,7 @@ class Command
      */
     protected $client;
     /**
-     * @var Callable
+     * @var callable
      */
     protected $callable;
 
@@ -97,12 +104,13 @@ class Command
      *
      * @param DiscordCommandClient $client          The Discord Command Client.
      * @param string               $command         The command trigger.
-     * @param \Callable            $callable        The callable function.
+     * @param callable             $callable        The callable function.
      * @param string               $description     The short description of the command.
      * @param string               $longDescription The long description of the command.
      * @param string               $usage           The usage of the command.
      * @param int                  $cooldown        The cooldown of the command in milliseconds.
      * @param string               $cooldownMessage The cooldown message to show when a cooldown is in effect.
+     * @param bool                 $showHelp        The visibility in help of the command.
      */
     public function __construct(
         DiscordCommandClient $client,
@@ -112,7 +120,8 @@ class Command
         string $longDescription,
         string $usage,
         int $cooldown,
-        string $cooldownMessage
+        string $cooldownMessage,
+        bool $showHelp = true
     ) {
         $this->client = $client;
         $this->command = $command;
@@ -122,6 +131,7 @@ class Command
         $this->usage = $usage;
         $this->cooldown = $cooldown;
         $this->cooldownMessage = $cooldownMessage;
+        $this->showHelp = $showHelp;
     }
 
     /**
@@ -149,7 +159,7 @@ class Command
      * Registers a new command.
      *
      * @param string           $command  The command name.
-     * @param \Callable|string $callable The function called when the command is executed.
+     * @param callable|string  $callable The function called when the command is executed.
      * @param array            $options  An array of options.
      *
      * @return Command    The command instance.
@@ -269,10 +279,16 @@ class Command
      */
     public function getHelp(string $prefix): array
     {
+        if (! $this->showHelp) {
+            return [];
+        }
+
         $subCommandsHelp = [];
 
         foreach ($this->subCommands as $command) {
-            $subCommandsHelp[] = $command->getHelp($prefix.$this->command.' ');
+            if ($command->showHelp) {
+                $subCommandsHelp[] = $command->getHelp($prefix.$this->command.' ');
+            }
         }
 
         return [
@@ -289,11 +305,11 @@ class Command
      *
      * @param string $variable The variable to get.
      *
-     * @return string|int|false The value.
+     * @return mixed The value.
      */
     public function __get(string $variable)
     {
-        $allowed = ['command', 'description', 'longDescription', 'usage', 'cooldown', 'cooldownMessage'];
+        $allowed = ['command', 'description', 'longDescription', 'usage', 'cooldown', 'cooldownMessage', 'showHelp'];
 
         if (in_array($variable, $allowed)) {
             return $this->{$variable};

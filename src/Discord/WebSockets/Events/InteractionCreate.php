@@ -12,8 +12,9 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\InteractionType;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Interaction;
-use Discord\Parts\User\User;
+use Discord\Repository\Guild\MemberRepository;
 use Discord\WebSockets\Event;
 
 /**
@@ -24,7 +25,7 @@ use Discord\WebSockets\Event;
 class InteractionCreate extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {
@@ -35,11 +36,23 @@ class InteractionCreate extends Event
             if ($userPart = $this->discord->users->get('id', $snowflake)) {
                 $userPart->fill((array) $user);
             } else {
-                $this->discord->users->pushItem($this->factory->part(User::class, (array) $user, true));
+                $this->discord->users->pushItem($this->discord->users->create((array) $user, true));
             }
         }
 
-        if (isset($data->member->user)) {
+        if (isset($data->member)) {
+            // Do not load guild from cache as it may delay interaction codes.
+            /** @var ?Guild */
+            if ($guild = $this->discord->guilds->offsetGet($data->guild_id)) {
+                $members = $guild->members;
+
+                foreach ($data->data->resolved->members ?? [] as $snowflake => $member) {
+                    $this->cacheMember($members, (array) $member + ['user' => $data->data->resolved->users->$snowflake]);
+                }
+
+                $this->cacheMember($members, (array) $data->member);
+            }
+
             // User caching from member
             $this->cacheUser($data->member->user);
         }
@@ -78,5 +91,18 @@ class InteractionCreate extends Event
         }
 
         return $interaction;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function cacheMember(MemberRepository $members, array $memberdata)
+    {
+        // Do not load members from cache as it may delay interaction codes.
+        if ($member = $members->offsetGet('id', $memberdata['user']->id)) {
+            $member->fill($memberdata);
+        } else {
+            $members->pushItem($members->create($memberdata, true));
+        }
     }
 }

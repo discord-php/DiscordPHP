@@ -27,7 +27,7 @@ use Discord\Parts\Thread\Thread;
 class MessageReactionRemove extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {
@@ -52,7 +52,7 @@ class MessageReactionRemove extends Event
         $reaction = new MessageReaction($this->discord, (array) $data, true);
 
         /** @var ?Message */
-        if ($channel && $message = yield $channel->messages->cacheGet($data->message_id)) {
+        if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
             /** @var Reaction */
             if ($react = yield $message->reactions->cacheGet($reaction->reaction_id)) {
                 if ($data->user_id == $this->discord->id) {

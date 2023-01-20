@@ -23,7 +23,7 @@ use Discord\Parts\Guild\Guild;
 class ApplicationCommandPermissionsUpdate extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {
@@ -51,7 +51,7 @@ class ApplicationCommandPermissionsUpdate extends Event
             $commandPermissionsPart = $this->factory->part(CommandPermissions::class, (array) $data, true);
         }
 
-        if ($guild && isset($commandPermissionsPart)) {
+        if (isset($guild) && $commandPermissionsPart) {
             // Permission set / updated
             $guild->command_permissions->set($data->id, $commandPermissionsPart);
         }

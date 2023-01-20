@@ -42,7 +42,7 @@ class Command extends Part
     public const MESSAGE = 3;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -82,13 +82,13 @@ class Command extends Part
      */
     protected function getOptionsAttribute(): ?Collection
     {
-        if (! isset($this->attributes['options'])) {
+        if (! isset($this->attributes['options']) && (isset($this->type) && $this->type != self::CHAT_INPUT)) {
             return null;
         }
 
         $options = Collection::for(Option::class, null);
 
-        foreach ($this->attributes['options'] as $option) {
+        foreach ($this->attributes['options'] ?? [] as $option) {
             $options->pushItem($this->factory->part(Option::class, (array) $option, true));
         }
 
@@ -98,7 +98,7 @@ class Command extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return Guild|null The guild attribute. Null for global command.
+     * @return Guild|null The guild attribute. `null` for global command.
      */
     protected function getGuildAttribute(): ?Guild
     {
@@ -110,7 +110,7 @@ class Command extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command-json-params
      * @link https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command-json-params
@@ -144,7 +144,7 @@ class Command extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command-json-params
      */
@@ -185,7 +185,7 @@ class Command extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

@@ -23,12 +23,11 @@ use Discord\Parts\Guild\Guild;
 class GuildRoleUpdate extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {
-        $role = (array) $data->role;
-        $role['guild_id'] = $data->guild_id;
+        $role = (array) $data->role + ['guild_id' => $data->guild_id];
         $rolePart = $oldRole = null;
 
         /** @var ?Guild */
@@ -48,7 +47,7 @@ class GuildRoleUpdate extends Event
             $rolePart = $this->factory->part(Role::class, $role, true);
         }
 
-        if ($guild) {
+        if (isset($guild)) {
             $guild->roles->set($data->role->id, $rolePart);
         }
 

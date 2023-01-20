@@ -30,10 +30,9 @@ use function React\Promise\resolve;
  * @since 10.0.0
  *
  * @property-read \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $interface The actual ReactPHP PSR-16 CacheInterface.
- *
- * @internal
+ * @property-read CacheConfig                                                 $config    Cache configuration.
  */
-final class CacheWrapper
+class CacheWrapper
 {
     /**
      * @var Discord
@@ -53,7 +52,7 @@ final class CacheWrapper
     protected $items;
 
     /**
-     * The item class name.
+     * The item class name reference.
      *
      * @var string
      */
@@ -67,64 +66,40 @@ final class CacheWrapper
     protected $prefix;
 
     /**
-     * @var ?callable Sweeper callback
+     * Cache configuration.
+     *
+     * @var CacheConfig
      */
-    protected $sweeper;
+    protected $config;
 
     /**
-     * @param Discord                                                     $discord
-     * @param \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $cacheInterface The actual CacheInterface.
-     * @param array                                                       &$items         Repository items passed by reference.
-     * @param string                                                      &$class         Part class name.
-     * @param string[]                                                    $vars           Variable containing hierarchy parent IDs.
+     * @param Discord     $discord
+     * @param CacheConfig $config  The cache configuration.
+     * @param array       &$items  Repository items passed by reference.
+     * @param string      &$class  Part class name.
+     * @param string[]    $vars    Variable containing hierarchy parent IDs.
      *
      * @internal
      */
-    public function __construct(Discord $discord, $cacheInterface, &$items, string &$class, array $vars)
+    public function __construct(Discord $discord, $config, &$items, string &$class, array $vars)
     {
         $this->discord = $discord;
-        $this->interface = $cacheInterface;
+        $this->config = $config;
         $this->items = &$items;
         $this->class = &$class;
 
-        $separator = '.';
-        $cacheInterfaceName = get_class($cacheInterface);
-        if (stripos($cacheInterfaceName, 'Redis') !== false || stripos($cacheInterfaceName, 'Memcached') !== false) {
-            $separator = ':';
-        }
+        $this->interface = $config->interface;
+        $this->prefix = implode($config->separator, [substr(strrchr($this->class, '\\'), 1)] + $vars).$config->separator;
 
-        $this->prefix = implode($separator, [substr(strrchr($this->class, '\\'), 1)] + $vars).$separator;
-
-        if ($discord->options['cacheSweep']) {
+        if ($config->sweep) {
             // Sweep every heartbeat ack
-            $this->sweeper = function ($time, Discord $discord) {
-                $flushing = 0;
-                foreach ($this->items as $key => $item) {
-                    if ($item === null) {
-                        // Item was removed from memory, delete from cache
-                        $this->delete($key);
-                        $flushing++;
-                    } elseif ($item instanceof Part) {
-                        // Skip ID related to Bot
-                        if ($key != $discord->id) {
-                            // Item is no longer used other than in the repository, weaken so it can be garbage collected
-                            $this->items[$key] = WeakReference::create($item);
-                        }
-                    }
-                }
-                if ($flushing) {
-                    $this->discord->getLogger()->debug('Flushing repository cache', ['count' => $flushing, 'class' => $this->class]);
-                }
-            };
-            $discord->on('heartbeat-ack', $this->sweeper);
+            $discord->on('heartbeat-ack', [$this, 'sweep']);
         }
     }
 
     public function __destruct()
     {
-        if ($this->sweeper) {
-            $this->discord->removeListener('heartbeat-ack', $this->sweeper);
-        }
+        $this->discord->removeListener('heartbeat-ack', [$this, 'sweep']);
     }
 
     /**
@@ -170,6 +145,7 @@ final class CacheWrapper
      */
     public function set($key, $value, $ttl = null)
     {
+        $ttl ??= $this->config->ttl;
         $item = $this->serializer($value);
 
         $handleValue = function ($success) use ($key, $value) {
@@ -396,6 +372,49 @@ final class CacheWrapper
     }
 
     /**
+     * Checks if a value is zlib compressed by checking the magic bytes.
+     *
+     * @param string $data The data to check.
+     *
+     * @return bool whether it's zlib compressed data or not.
+     *
+     * @link https://www.rfc-editor.org/rfc/rfc1950
+     *
+     * @since 10.0.0
+     */
+    protected function isZlibCompressed(string $data): bool
+    {
+        $data = unpack('Ccmf/Cflg', $data);
+        $cmethod = $data['cmf'] & 0xF;
+        $cinfo = ($data['cmf'] & 0xF0) >> 4;
+        // $fcheck = $data['flg'] & 0x1F;
+        // $fdict = ($data['flg'] & 0x20) >> 5;
+        $flevel = ($data['flg'] & 0xC0) >> 6;
+
+        // Ensure compression method is deflate
+        if ($cmethod !== 8) {
+            return false;
+        }
+
+        // Ensure cinfo <= 32K window size
+        if ($cinfo > 7) {
+            return false;
+        }
+
+        // Ensure [CMF][FLG] is a multiple of 31 as determined by fcheck
+        if (($data['cmf'] * 256 + $data['flg']) % 31 !== 0) {
+            return false;
+        }
+
+        // Ensure valid compression level
+        if ($flevel > 3) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @param Part $part
      *
      * @return object|string
@@ -404,8 +423,14 @@ final class CacheWrapper
     {
         $data = (object) (get_object_vars($part) + ['attributes' => $part->getRawAttributes()]);
 
-        if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
-            return serialize($data);
+        if (! ($this->interface instanceof ArrayCache)) {
+            if ($this->interface instanceof \React\Cache\CacheInterface) {
+                $data = serialize($data);
+            }
+
+            if ($this->config->compress) {
+                $data = zlib_encode($data, ZLIB_ENCODING_DEFLATE);
+            }
         }
 
         return $data;
@@ -418,14 +443,20 @@ final class CacheWrapper
      */
     public function unserializer($value)
     {
-        if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
-            $tmp = unserialize($value);
-            if ($tmp === false) {
-                $this->discord->getLogger()->error('Malformed cache serialization', ['class' => $this->class, 'interface' => get_class($this->interface), 'serialized' => $value]);
-
-                return null;
+        if (! ($this->interface instanceof ArrayCache)) {
+            if ($this->isZlibCompressed($value)) {
+                $value = zlib_decode($value);
             }
-            $value = $tmp;
+
+            if ($this->interface instanceof \React\Cache\CacheInterface) {
+                $tmp = unserialize($value);
+                if ($tmp === false) {
+                    $this->discord->getLogger()->error('Malformed cache serialization', ['class' => $this->class, 'interface' => get_class($this->interface), 'serialized' => $value]);
+
+                    return null;
+                }
+                $value = $tmp;
+            }
         }
 
         if (empty($value->attributes)) {
@@ -444,9 +475,38 @@ final class CacheWrapper
         return $part;
     }
 
+    /**
+     * Flush deleted items from cache and weaken items. Items with Bot's ID are
+     * exempt.
+     *
+     * @return int Flushed items.
+     */
+    public function sweep(): int
+    {
+        $flushing = 0;
+        foreach ($this->items as $key => $item) {
+            if ($item === null) {
+                // Item was removed from memory, delete from cache
+                $this->delete($key);
+                $flushing++;
+            } elseif ($item instanceof Part) {
+                // Skip ID related to Bot
+                if ($key != $this->discord->id) {
+                    // Item is no longer used other than in the repository, weaken so it can be garbage collected
+                    $this->items[$key] = WeakReference::create($item);
+                }
+            }
+        }
+        if ($flushing) {
+            $this->discord->getLogger()->debug('Flushing repository cache', ['count' => $flushing, 'class' => $this->class]);
+        }
+
+        return $flushing;
+    }
+
     public function __get(string $name)
     {
-        if (in_array($name, ['interface'])) {
+        if (in_array($name, ['interface', 'config'])) {
             return $this->$name;
         }
     }

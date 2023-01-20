@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Interactions\Request;
 
+use Discord\Builders\Components\Component as ComponentBuilder;
 use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
@@ -44,7 +45,7 @@ use Discord\Parts\Part;
 class Component extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'type',
@@ -70,15 +71,15 @@ class Component extends Part
      *
      * @return Collection|Component[]|null $components
      */
-    protected function getComponentsAttribute()
+    protected function getComponentsAttribute(): ?Collection
     {
-        if (! isset($this->attributes['components'])) {
+        if (! isset($this->attributes['components']) && $this->type != ComponentBuilder::TYPE_ACTION_ROW) {
             return null;
         }
 
         $components = Collection::for(Component::class, null);
 
-        foreach ($this->attributes['components'] as $component) {
+        foreach ($this->attributes['components'] ?? [] as $component) {
             $components->pushItem($this->factory->part(Component::class, (array) $component, true));
         }
 
@@ -100,7 +101,7 @@ class Component extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

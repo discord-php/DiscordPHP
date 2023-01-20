@@ -8,8 +8,14 @@
             "email": "david.cole1340@gmail.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/discord-php/DiscordPHP/issues",
+        "wiki": "https://github.com/discord-php/DiscordPHP/wiki",
+        "docs": "https://discord-php.github.io/DiscordPHP/",
+        "chat": "https://discord.gg/dphp"
+    },
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0",
         "nesbot/carbon": "^2.38",
         "ratchet/pawl": "^0.4.1",
         "react/datagram": "^1.8",
@@ -19,7 +25,7 @@
         "react/event-loop": "^1.2",
         "ext-json": "*",
         "ext-zlib": "*",
-        "discord-php/http": "^10.1.3",
+        "discord-php/http": "^10.1.7",
         "react/child-process": "^0.6.3",
         "discord/interactions": "^2.2",
         "react/async": "^4.0 || ^3.0",
@@ -31,7 +37,6 @@
         "friendsofphp/php-cs-fixer": "^3",
         "phpunit/phpunit": "^9.4.4",
         "davidcole1340/reactsh": "dev-master",
-        "seregazhuk/react-cache-memcached": "^1.0",
         "wyrihaximus/react-cache-redis": "^3.0 || ^4.0",
         "symfony/cache": "^5.4"
     },
@@ -46,10 +51,9 @@
     "suggest": {
         "ext-gmp": "For 64 bit calculations on x86 (32 bit) PHP.",
         "ext-uv": "For a faster, and more performant loop. Preferred.",
-        "ext-libev": "For a faster, and more performant loop.",
+        "ext-ev": "For a faster, and more performant loop.",
         "ext-event": "For a faster, and more performant loop.",
-        "ext-mbstring": "For accurate calculations of string length when handling non-english characters.",
-        "clue/zlib-react": "For gateway message transport compression with zlib-stream."
+        "ext-mbstring": "For accurate calculations of string length when handling non-english characters."
     },
     "scripts": {
         "cs": ["./vendor/bin/php-cs-fixer fix"],

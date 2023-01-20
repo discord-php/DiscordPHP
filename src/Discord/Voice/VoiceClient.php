@@ -222,7 +222,7 @@ class VoiceClient extends EventEmitter
      *
      * @var bool Whether the voice client is currently paused.
      */
-    protected $isPaused = false;
+    protected $paused = false;
 
     /**
      * Have we sent the login frame yet?
@@ -608,7 +608,7 @@ class VoiceClient extends EventEmitter
         $this->emit('ws-close', [$op, $reason, $this]);
 
         // Cancel heartbeat timers
-        if (! is_null($this->heartbeat)) {
+        if ($this->heartbeat !== null) {
             $this->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
@@ -672,9 +672,9 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Plays a file on the voice stream.
+     * Plays a file/url on the voice stream.
      *
-     * @param string $file     The file to play.
+     * @param string $file     The file/url to play.
      * @param int    $channels Deprecated, Discord only supports 2 channels.
      *
      * @throws FileNotFoundException
@@ -686,7 +686,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! file_exists($file)) {
+        if (filter_var($file, FILTER_VALIDATE_URL) === false && ! file_exists($file)) {
             $deferred->reject(new FileNotFoundException("Could not find the file \"{$file}\"."));
 
             return $deferred->promise();
@@ -816,11 +816,14 @@ class VoiceClient extends EventEmitter
         $ogg = null;
 
         $loops = 0;
+        
         $readOpus = function () use ($deferred, &$ogg, &$readOpus, &$loops) {
             $this->readOpusTimer = null;
+            
+            $loops += 1;
 
             // If the client is paused, delay by frame size and check again.
-            if ($this->isPaused) {
+            if ($this->paused) {
                 $this->insertSilence();
                 $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
 
@@ -835,8 +838,6 @@ class VoiceClient extends EventEmitter
 
                     return;
                 }
-
-                $loops += 1;
 
                 // increment sequence
                 // uint16 overflow protection
@@ -931,7 +932,7 @@ class VoiceClient extends EventEmitter
             $this->readOpusTimer = null;
 
             // If the client is paused, delay by frame size and check again.
-            if ($this->isPaused) {
+            if ($this->paused) {
                 $this->insertSilence();
                 $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
 
@@ -1004,7 +1005,7 @@ class VoiceClient extends EventEmitter
         $this->setSpeaking(false);
         $this->streamTime = 0;
         $this->startTime = 0;
-        $this->isPaused = false;
+        $this->paused = false;
         $this->silenceRemaining = 5;
     }
 
@@ -1213,7 +1214,11 @@ class VoiceClient extends EventEmitter
             throw new \RuntimeException('Audio must be playing to pause it.');
         }
 
-        $this->isPaused = true;
+        if ($this->paused) {
+            throw new \RuntimeException('Audio is already paused.');
+        }
+
+        $this->paused = true;
         $this->silenceRemaining = 5;
     }
 
@@ -1228,7 +1233,11 @@ class VoiceClient extends EventEmitter
             throw new \RuntimeException('Audio must be playing to unpause it.');
         }
 
-        $this->isPaused = false;
+        if (! $this->paused) {
+            throw new \RuntimeException('Audio is already playing.');
+        }
+
+        $this->paused = false;
         $this->timestamp = microtime(true) * 1000;
     }
 
@@ -1322,6 +1331,16 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Checks if we are paused.
+     *
+     * @return bool Whether we are paused.
+     */
+    public function isPaused(): bool
+    {
+        return $this->paused;
+    }
+
+    /**
      * Handles a voice state update.
      *
      * @param object $data The WebSocket data.
@@ -1342,7 +1361,7 @@ class VoiceClient extends EventEmitter
 
         $ss = $this->speakingStatus->get('user_id', $data->user_id);
 
-        if (is_null($ss)) {
+        if ($ss === null) {
             return; // not in our channel
         }
 
@@ -1598,11 +1617,12 @@ class VoiceClient extends EventEmitter
 
     /**
      * Insert 5 frames of silence.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
      */
     private function insertSilence(): void
     {
-        // https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
-        while ($this->silenceRemaining--) {
+        while (--$this->silenceRemaining > 0) {
             $this->sendBuffer(self::SILENCE_FRAME);
         }
     }

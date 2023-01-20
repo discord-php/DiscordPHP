@@ -14,7 +14,6 @@ namespace Discord\WebSockets\Events;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Thread\Member;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
 
@@ -54,7 +53,7 @@ class ThreadListSync extends Event
             foreach ($data->members as $member) {
                 /** @var ?Thread */
                 if ($threadPart = $threadParts[$member->id] ?? null) {
-                    $threadPart->members->set($member->user_id, $this->factory->part(Member::class, (array) $member, true));
+                    $threadPart->members->set($member->user_id, $threadPart->members->create((array) $member, true));
                 }
             }
         }

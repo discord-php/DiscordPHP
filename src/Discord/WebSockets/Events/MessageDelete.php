@@ -25,7 +25,7 @@ use Discord\Parts\Thread\Thread;
 class MessageDelete extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {
@@ -40,15 +40,23 @@ class MessageDelete extends Event
         } else {
             /** @var ?Guild */
             if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Channel|Thread */
-                if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                /** @var ?Channel */
+                if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                    /** @var Channel */
+                    foreach ($guild->channels as $parent) {
+                        /** @var ?Thread */
+                        if ($thread = yield $parent->threads->cacheGet($data->channel_id)) {
+                            $channel = $thread;
+                            break;
+                        }
+                    }
+                }
+
+                if (isset($channel)) {
                     /** @var ?Message */
                     $messagePart = yield $channel->messages->cachePull($data->id);
-
-                    if ($channel instanceof Thread && $parent = $channel->parent) {
-                        if ($parent->type == Channel::TYPE_GUILD_FORUM) {
-                            $channel->message_count--;
-                        }
+                    if ($channel instanceof Thread) {
+                        $channel->message_count--;
                     }
                 }
             }

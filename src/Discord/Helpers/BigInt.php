@@ -12,7 +12,7 @@
 namespace Discord\Helpers;
 
 /**
- * Polyfill to handle big integer operation in 32 bit php using ext-gmp.
+ * Polyfill to handle big integer operation in 32 bit PHP using ext-gmp.
  *
  * @since 10.0.0 Renamed from Bitwise to BigInt
  * @since 7.0.0
@@ -39,125 +39,125 @@ final class BigInt
     }
 
     /**
-     * @param \GMP|int|string $a
-     * @param \GMP|int|string $b
+     * @param \GMP|int|string $num1
+     * @param \GMP|int|string $num2
      *
-     * @return \GMP|int $a & $b
+     * @return \GMP|int $num1 & $num2
      */
-    public static function and($a, $b)
+    public static function and($num1, $num2)
     {
         if (self::$is_32_gmp) {
-            return \gmp_and(self::floatCast($a), self::floatCast($b));
+            return \gmp_and(self::floatCast($num1), self::floatCast($num2));
         }
 
-        return $a & $b;
+        return $num1 & $num2;
     }
 
     /**
-     * @param \GMP|int|string $a
-     * @param \GMP|int|string $b
+     * @param \GMP|int|string $num1
+     * @param \GMP|int|string $num2
      *
-     * @return \GMP|int $a | $b
+     * @return \GMP|int $num1 | $num2
      */
-    public static function or($a, $b)
+    public static function or($num1, $num2)
     {
         if (self::$is_32_gmp) {
-            return \gmp_or(self::floatCast($a), self::floatCast($b));
+            return \gmp_or(self::floatCast($num1), self::floatCast($num2));
         }
 
-        return $a | $b;
+        return $num1 | $num2;
     }
 
     /**
-     * @param \GMP|int|string $a
-     * @param \GMP|int|string $b
+     * @param \GMP|int|string $num1
+     * @param \GMP|int|string $num2
      *
-     * @return \GMP|int $a ^ $b
+     * @return \GMP|int $num1 ^ $num2
      */
-    public static function xor($a, $b)
+    public static function xor($num1, $num2)
     {
         if (self::$is_32_gmp) {
-            return \gmp_xor(self::floatCast($a), self::floatCast($b));
+            return \gmp_xor(self::floatCast($num1), self::floatCast($num2));
         }
 
-        return $a ^ $b;
+        return $num1 ^ $num2;
     }
 
     /**
-     * @param \GMP|int|string $a
+     * @param \GMP|int|string $value
      *
-     * @return \GMP|int ~ $a
+     * @return \GMP|int ~ $value
      */
-    public static function not($a)
+    public static function not($value)
     {
         if (self::$is_32_gmp) {
-            return \gmp_sub(\gmp_neg(self::floatCast($a)), 1);
+            return \gmp_sub(\gmp_neg(self::floatCast($value)), 1);
         }
 
-        return ~$a;
+        return ~$value;
     }
 
     /**
-     * @param \GMP|int|string $a
-     * @param int             $b
+     * @param \GMP|int|string $num1
+     * @param int             $num2
      *
-     * @return \GMP|int $a << $b
+     * @return \GMP|int $num1 << $num2
      */
-    public static function shiftLeft($a, int $b)
+    public static function shiftLeft($num1, int $num2)
     {
         if (self::$is_32_gmp) {
-            return \gmp_mul(self::floatCast($a), \gmp_pow(2, $b));
+            return \gmp_mul(self::floatCast($num1), \gmp_pow(2, $num2));
         }
 
-        return $a << $b;
+        return $num1 << $num2;
     }
 
     /**
-     * @param \GMP|int|string $a
-     * @param int             $b
+     * @param \GMP|int|string $num1
+     * @param int             $num2
      *
-     * @return \GMP|int $a >> $b
+     * @return \GMP|int $num1 >> $num2
      */
-    public static function shiftRight($a, int $b)
+    public static function shiftRight($num1, int $num2)
     {
         if (self::$is_32_gmp) {
-            return \gmp_div(self::floatCast($a), \gmp_pow(2, $b));
+            return \gmp_div(self::floatCast($num1), \gmp_pow(2, $num2));
         }
 
-        return $a >> $b;
+        return $num1 >> $num2;
     }
 
     /**
-     * @param \GMP|int|string $a
-     * @param int             $b
+     * @param \GMP|int|string $num1
+     * @param int             $num2
      *
-     * @return bool $a & (1 << $b)
+     * @return bool $num1 & (1 << $num2)
      */
-    public static function test($a, int $b): bool
+    public static function test($num1, int $num2): bool
     {
         if (self::$is_32_gmp) {
-            return \gmp_testbit(self::floatCast($a), $b);
+            return \gmp_testbit(self::floatCast($num1), $num2);
         }
 
-        return $a & (1 << $b);
+        return $num1 & (1 << $num2);
     }
 
     /**
-     * @param \GMP|int|string $a
-     * @param int             $b
+     * @param \GMP|int|string $num1
+     * @param int             $num2
      *
-     * @return \GMP|int $a |= (1 << $b)
+     * @return \GMP|int $num1 |= (1 << $num2)
      */
-    public static function set($a, int $b)
+    public static function set($num1, int $num2)
     {
         if (self::$is_32_gmp) {
-            $gmp = \gmp_init(self::floatCast($a));
-            \gmp_setbit($gmp, $b);
+            $gmp = \gmp_init(self::floatCast($num1));
+            \gmp_setbit($gmp, $num2);
 
             return $gmp;
         }
 
-        return $a |= (1 << $b);
+        return $num1 |= (1 << $num2);
     }
 
     /**
@@ -189,7 +189,7 @@ final class BigInt
      *
      * @param mixed $value if not a float, it is discarded
      *
-     * @return mixed|string string if value is a float, otherwise discarded
+     * @return string|mixed string if value is a float, otherwise discarded
      */
     public static function floatCast($value)
     {

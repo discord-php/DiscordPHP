@@ -13,7 +13,6 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Thread\Member;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
 
@@ -46,7 +45,12 @@ class ThreadMembersUpdate extends Event
                 }
 
                 foreach ($data->added_members ?? [] as $member) {
-                    $thread->members->set($member->user_id, $this->factory->part(Member::class, (array) $member, true));
+                    $thread->members->set($member->user_id, $thread->members->create((array) $member, true));
+
+                    if (isset($member->member)) {
+                        $this->cacheMember($guild->members, (array) $member->member);
+                        $this->cacheUser($member->member->user);
+                    }
                 }
 
                 return $thread;

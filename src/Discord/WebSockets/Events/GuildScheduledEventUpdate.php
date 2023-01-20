@@ -23,7 +23,7 @@ use Discord\Parts\Guild\ScheduledEvent;
 class GuildScheduledEventUpdate extends Event
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function handle($data)
     {
@@ -46,7 +46,7 @@ class GuildScheduledEventUpdate extends Event
             $scheduledEventPart = $this->factory->part(ScheduledEvent::class, (array) $data, true);
         }
 
-        if ($guild) {
+        if (isset($guild)) {
             $guild->guild_scheduled_events->set($data->id, $scheduledEventPart);
         }
 

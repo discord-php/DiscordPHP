@@ -117,6 +117,7 @@ abstract class Permission extends Part
         'manage_nicknames' => 27,
         'manage_emojis_and_stickers' => 30,
         'moderate_members' => 40,
+        'view_creator_monetization_analytics' => 41,
     ];
 
     /**
@@ -141,7 +142,7 @@ abstract class Permission extends Part
     private $permissions = [];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function __construct(Discord $discord, array $attributes = [], bool $created = false)
     {
@@ -209,11 +210,7 @@ abstract class Permission extends Part
         }
 
         foreach ($this->permissions as $permission => $value) {
-            if (BigInt::test($bitwise, $value)) {
-                $this->attributes[$permission] = true;
-            } else {
-                $this->attributes[$permission] = false;
-            }
+            $this->attributes[$permission] = BigInt::test($bitwise, $value);
         }
     }
 

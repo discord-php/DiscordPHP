@@ -14,6 +14,7 @@ namespace Discord\WebSockets;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
+use Discord\Repository\Guild\MemberRepository;
 use Evenement\EventEmitterTrait;
 
 /**
@@ -150,7 +151,7 @@ abstract class Event
      *
      * @return Generator
      *
-     * @since 10.0.0 changed args from `Deferred &$deferred, $data` to `$data`, changed return from `void` to `Generator`.
+     * @since 10.0.0 Changed args from `Deferred &$deferred, $data` to `$data`, changed return from `void` to `Generator`.
      * @since 4.0.0
      */
     abstract public function handle($data);
@@ -158,15 +159,34 @@ abstract class Event
     /**
      * Cache User repository from Event data.
      *
-     * @param object $userdata
+     * @param object $userdata `$data->user` or `$data->member->user`
+     *
+     * @since 7.0.0
      */
-    protected function cacheUser($userdata)
+    protected function cacheUser(object $userdata)
     {
-        // User caching
-        if ($user = $this->discord->users->get('id', $userdata->id)) {
+        $users = $this->discord->users;
+        if ($user = $users->get('id', $userdata->id)) {
             $user->fill((array) $userdata);
         } else {
-            $this->discord->users->pushItem($this->factory->part(\Discord\Parts\User\User::class, (array) $userdata, true));
+            $users->pushItem($users->create((array) $userdata, true));
+        }
+    }
+
+    /**
+     * Cache Member repository from Event data.
+     *
+     * @param MemberRepository $members    `$guild->members`
+     * @param array            $memberdata `(array) $data->member`
+     *
+     * @since 10.0.0
+     */
+    protected function cacheMember(MemberRepository $members, array $memberdata)
+    {
+        if ($member = $members->get('id', $memberdata['user']->id)) {
+            $member->fill($memberdata);
+        } else {
+            $members->pushItem($members->create($memberdata, true));
         }
     }
 

@@ -19,7 +19,8 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * A Guild Template is a code that when used, creates a guild based on a snapshot of an existing guild.
+ * A Guild Template is a code that when used, creates a guild based on a
+ * snapshot of an existing guild.
  *
  * @link https://discord.com/developers/docs/resources/guild-template
  *
@@ -41,7 +42,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class GuildTemplate extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'code',
@@ -120,7 +121,8 @@ class GuildTemplate extends Part
     }
 
     /**
-     * Creates a guild from this template. Can be used only by bots in less than 10 guilds.
+     * Creates a guild from this template. Can be used only by bots in less than
+     * 10 guilds.
      *
      * @link https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template
      *
@@ -155,7 +157,7 @@ class GuildTemplate extends Part
                 /** @var ?Guild */
                 if (! $guildPart = $this->discord->guilds->get('id', $response->id)) {
                     /** @var Guild */
-                    $guildPart = $this->factory->part(Guild::class, (array) $response + ['roles' => $roles], true);
+                    $guildPart = $this->discord->guilds->create((array) $response + ['roles' => $roles], true);
 
                     foreach ($channels as $channel) {
                         $guildPart->channels->pushItem($guildPart->channels->create($channel, true));
@@ -179,7 +181,7 @@ class GuildTemplate extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild-template#create-guild-template-json-params
      */
@@ -192,7 +194,7 @@ class GuildTemplate extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild-template#modify-guild-template-json-params
      */
@@ -210,7 +212,7 @@ class GuildTemplate extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRepositoryAttributes(): array
     {

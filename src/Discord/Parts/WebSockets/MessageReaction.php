@@ -26,7 +26,8 @@ use function React\Promise\resolve;
 
 /**
  * Represents a specific reaction to a message by a specific user.
- * Different from `Reaction` in the fact that `Reaction` represents a specific reaction to a message by _multiple_ members.
+ * Different from `Reaction` in the fact that `Reaction` represents a specific
+ * reaction to a message by _multiple_ members.
  *
  * @since 5.0.0
  *
@@ -46,7 +47,7 @@ use function React\Promise\resolve;
 class MessageReaction extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'user_id',
@@ -58,7 +59,7 @@ class MessageReaction extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isPartial(): bool
     {
@@ -68,7 +69,7 @@ class MessageReaction extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function fetch(): ExtendedPromiseInterface
     {
@@ -134,15 +135,16 @@ class MessageReaction extends Part
      *
      * @return Channel|Thread
      */
-    protected function getChannelAttribute()
+    protected function getChannelAttribute(): Part
     {
         if ($guild = $this->guild) {
-            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+            $channels = $guild->channels;
+            if ($channel = $channels->get('id', $this->channel_id)) {
                 return $channel;
             }
 
-            foreach ($guild->channels as $channel) {
-                if ($thread = $channel->threads->get('id', $this->channel_id)) {
+            foreach ($channels as $parent) {
+                if ($thread = $parent->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
             }
@@ -157,7 +159,7 @@ class MessageReaction extends Part
         return $this->factory->part(Channel::class, [
             'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
-        ]);
+        ], true);
     }
 
     /**

@@ -40,7 +40,7 @@ use Discord\Parts\User\User;
 class Resolved extends Part
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'users',
@@ -55,7 +55,7 @@ class Resolved extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $hidden = ['guild_id'];
 
@@ -73,11 +73,7 @@ class Resolved extends Part
         $collection = Collection::for(User::class);
 
         foreach ($this->attributes['users'] as $snowflake => $user) {
-            if (! $userPart = $this->discord->users->get('id', $snowflake)) {
-                $userPart = $this->factory->part(User::class, (array) $user, true);
-            }
-
-            $collection->pushItem($userPart);
+            $collection->pushItem($this->discord->users->get('id', $snowflake) ?: $this->factory->part(User::class, (array) $user, true));
         }
 
         return $collection;
@@ -196,7 +192,7 @@ class Resolved extends Part
                 }
             }
 
-            $collection->pushItem($messagePart ?? $this->factory->part(Message::class, (array) $message, true));
+            $collection->pushItem($messagePart ?? $this->factory->part(Message::class, (array) $message + ['guild_id' => $this->guild_id], true));
         }
 
         return $collection;

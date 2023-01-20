@@ -14,6 +14,7 @@ namespace Discord;
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
 use Discord\Helpers\BigInt;
+use Discord\Helpers\CacheConfig;
 use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
@@ -193,8 +194,7 @@ class Discord
     protected $voiceClients = [];
 
     /**
-     * An array of large guilds that need to be requested for
-     * members.
+     * An array of large guilds that need to be requested for members.
      *
      * @var array Large guilds.
      */
@@ -236,8 +236,8 @@ class Discord
     protected $heartbeatTimer;
 
     /**
-     * The timer that resends the heartbeat packet if
-     * a HEARTBEAT_ACK packet is not received in 5 seconds.
+     * The timer that resends the heartbeat packet if a HEARTBEAT_ACK packet is
+     * not received in 5 seconds.
      *
      * @var TimerInterface Timer.
      */
@@ -288,13 +288,12 @@ class Discord
     /**
      * zlib decompressor.
      *
-     * @var \Clue\React\Zlib\Decompressor
+     * @var \InflateContext|false
      */
     protected $zlibDecompressor;
 
     /**
-     * Tracks the number of payloads the client
-     * has sent in the past 60 seconds.
+     * Tracks the number of payloads the client has sent in the past 60 seconds.
      *
      * @var int
      */
@@ -322,11 +321,11 @@ class Discord
     protected $factory;
 
     /**
-     * The react/cache interface.
+     * The cache configuration.
      *
-     * @var \React\Cache\CacheInterface[]|\Psr\SimpleCache\CacheInterface[]
+     * @var CacheConfig
      */
-    protected $cache;
+    protected $cacheConfig;
 
     /**
      * The Client class.
@@ -368,8 +367,8 @@ class Discord
 
         $this->logger->debug('Initializing DiscordPHP '.self::VERSION.' (DiscordPHP-Http: '.Http::VERSION.' & Gateway: v'.self::GATEWAY_VERSION.') on PHP '.PHP_VERSION);
 
-        $this->cache = $options['cacheInterface'];
-        $this->logger->warning('Attached experimental CacheInterface: '.get_class($this->cache[AbstractRepository::class]));
+        $this->cacheConfig = $options['cache'];
+        $this->logger->warning('Attached experimental CacheInterface: '.get_class($this->getCacheConfig()->interface));
 
         $connector = new SocketConnector($options['socket_options'], $this->loop);
         $this->wsFactory = new Connector($this->loop, $connector);
@@ -554,7 +553,7 @@ class Discord
             $await[] = $guild->members->cache->set($userId, $this->factory->part(Member::class, $member, true));
 
             if (! $this->users->offsetExists($userId)) {
-                $await[] = $this->users->cache->set($userId, $this->factory->part(User::class, (array) $member['user'], true));
+                $await[] = $this->users->cache->set($userId, $this->users->create((array) $member['user'], true));
             }
 
             ++$count;
@@ -630,12 +629,8 @@ class Discord
                     return;
                 }
 
-                $this->zlibDecompressor->once('data', function ($data) {
-                    $this->processWsMessage($data);
-                    $this->payloadBuffer = '';
-                });
-
-                $this->zlibDecompressor->write($this->payloadBuffer);
+                $this->processWsMessage(inflate_add($this->zlibDecompressor, $this->payloadBuffer));
+                $this->payloadBuffer = '';
             } else {
                 $this->processWsMessage(zlib_decode($payload));
             }
@@ -692,7 +687,7 @@ class Discord
             $this->heartbeatAckTimer = null;
         }
 
-        if (! is_null($this->payloadTimer)) {
+        if ($this->payloadTimer !== null) {
             $this->loop->cancelTimer($this->payloadTimer);
             $this->payloadTimer = null;
         }
@@ -1022,7 +1017,7 @@ class Discord
             $sendChunks = function () use (&$sendChunks, &$chunks) {
                 $chunk = array_pop($chunks);
 
-                if (is_null($chunk)) {
+                if ($chunk === null) {
                     return;
                 }
 
@@ -1157,7 +1152,7 @@ class Discord
         if (! is_null($activity)) {
             $activity = $activity->getRawAttributes();
 
-            if (! in_array($activity['type'], [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_COMPETING])) {
+            if (! in_array($activity['type'], [Activity::TYPE_GAME, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_COMPETING])) {
                 throw new \UnexpectedValueException("The given activity type ({$activity['type']}) is invalid.");
 
                 return;
@@ -1321,9 +1316,7 @@ class Discord
                 'encoding' => $this->encoding,
             ];
 
-            if (class_exists('\Clue\React\Zlib\Decompressor')) {
-                $this->logger->warning('The `clue/zlib-react` is installed, Enabling experimental zlib-stream compressed gateway message.');
-                $this->zlibDecompressor = new \Clue\React\Zlib\Decompressor(ZLIB_ENCODING_DEFLATE);
+            if ($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
                 $params['compress'] = 'zlib-stream';
             }
 
@@ -1333,7 +1326,7 @@ class Discord
             $deferred->resolve(['gateway' => $this->gateway, 'session' => (array) $session]);
         };
 
-        if (is_null($gateway)) {
+        if ($gateway === null) {
             $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
                 if ($response->shards > 1) {
                     $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interrested in assisting us with sharding support development.');
@@ -1385,8 +1378,7 @@ class Discord
                 'intents',
                 'socket_options',
                 'dnsConfig',
-                'cacheInterface',
-                'cacheSweep',
+                'cache',
             ])
             ->setDefaults([
                 'logger' => null,
@@ -1396,8 +1388,7 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
-                'cacheInterface' => new ArrayCache(),
-                'cacheSweep' => false,
+                'cache' => new ArrayCache(),
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1409,10 +1400,13 @@ class Discord
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
-            ->setAllowedTypes('cacheInterface', ['array', \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
-            ->setAllowedTypes('cacheSweep', 'bool')
-            ->setNormalizer('cacheInterface', function ($options, $value) {
+            ->setAllowedTypes('cache', ['array', CacheConfig::class, \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
+            ->setNormalizer('cache', function ($options, $value) {
                 if (! is_array($value)) {
+                    if (! ($value instanceof CacheConfig)) {
+                        $value = new CacheConfig($value);
+                    }
+
                     return [AbstractRepository::class => $value];
                 }
 
@@ -1574,19 +1568,19 @@ class Discord
     }
 
     /**
-     * Gets the cache interface.
+     * Gets the cache configuration.
      *
      * @param string $name Repository class name.
      *
-     * @return \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface
+     * @return CacheConfig
      */
-    public function getCache($repository_class = AbstractRepository::class)
+    public function getCacheConfig($repository_class = AbstractRepository::class)
     {
-        if (! isset($this->cache[$repository_class])) {
+        if (! isset($this->cacheConfig[$repository_class])) {
             $repository_class = AbstractRepository::class;
         }
 
-        return $this->cache[$repository_class];
+        return $this->cacheConfig[$repository_class];
     }
 
     /**
@@ -1598,13 +1592,13 @@ class Discord
      */
     public function __get(string $name)
     {
-        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'cache'];
+        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};
         }
 
-        if (is_null($this->client)) {
+        if ($this->client === null) {
             return;
         }
 
@@ -1617,7 +1611,7 @@ class Discord
      * @param string $name  Variable name.
      * @param mixed  $value Value to set.
      */
-    public function __set(string $name, $value)
+    public function __set(string $name, $value): void
     {
         if (is_null($this->client)) {
             return;
