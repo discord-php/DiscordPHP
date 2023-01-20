@@ -188,7 +188,7 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
      */
     public function pushItem($item): Collection
     {
-        if (is_null($this->discrim)) {
+        if ($this->discrim === null) {
             $this->items[] = $item;
 
             return $this;
