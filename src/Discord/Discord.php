@@ -687,7 +687,7 @@ class Discord
             $this->heartbeatAckTimer = null;
         }
 
-        if (! is_null($this->payloadTimer)) {
+        if ($this->payloadTimer !== null) {
             $this->loop->cancelTimer($this->payloadTimer);
             $this->payloadTimer = null;
         }
@@ -1017,7 +1017,7 @@ class Discord
             $sendChunks = function () use (&$sendChunks, &$chunks) {
                 $chunk = array_pop($chunks);
 
-                if (is_null($chunk)) {
+                if ($chunk === null) {
                     return;
                 }
 
@@ -1326,7 +1326,7 @@ class Discord
             $deferred->resolve(['gateway' => $this->gateway, 'session' => (array) $session]);
         };
 
-        if (is_null($gateway)) {
+        if ($gateway === null) {
             $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
                 if ($response->shards > 1) {
                     $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interrested in assisting us with sharding support development.');
@@ -1598,7 +1598,7 @@ class Discord
             return $this->{$name};
         }
 
-        if (is_null($this->client)) {
+        if ($this->client === null) {
             return;
         }
 
