@@ -608,7 +608,7 @@ class VoiceClient extends EventEmitter
         $this->emit('ws-close', [$op, $reason, $this]);
 
         // Cancel heartbeat timers
-        if (! is_null($this->heartbeat)) {
+        if ($this->heartbeat !== null) {
             $this->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
@@ -1361,7 +1361,7 @@ class VoiceClient extends EventEmitter
 
         $ss = $this->speakingStatus->get('user_id', $data->user_id);
 
-        if (is_null($ss)) {
+        if ($ss === null) {
             return; // not in our channel
         }
 
