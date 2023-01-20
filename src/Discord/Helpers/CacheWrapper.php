@@ -385,14 +385,14 @@ class CacheWrapper
     protected function isZlibCompressed(string $data): bool
     {
         $data = unpack('Ccmf/Cflg', $data);
-        $cm = $data['cmf'] & 0xF;
+        $cmethod = $data['cmf'] & 0xF;
         $cinfo = ($data['cmf'] & 0xF0) >> 4;
         // $fcheck = $data['flg'] & 0x1F;
         // $fdict = ($data['flg'] & 0x20) >> 5;
         $flevel = ($data['flg'] & 0xC0) >> 6;
 
         // Ensure compression method is deflate
-        if ($cm !== 8) {
+        if ($cmethod !== 8) {
             return false;
         }
 
