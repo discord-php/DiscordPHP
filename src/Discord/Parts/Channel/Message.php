@@ -1050,7 +1050,7 @@ class Message extends Part
                     $this->discord->removeListener(Event::MESSAGE_REACTION_ADD, $eventHandler);
                     $deferred->resolve($reactions);
 
-                    if (! is_null($timer)) {
+                    if ($timer !== null) {
                         $this->discord->getLoop()->cancelTimer($timer);
                     }
                 }
