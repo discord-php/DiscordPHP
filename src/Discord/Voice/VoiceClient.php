@@ -608,12 +608,12 @@ class VoiceClient extends EventEmitter
         $this->emit('ws-close', [$op, $reason, $this]);
 
         // Cancel heartbeat timers
-        if ($this->heartbeat !== null) {
+        if (null !== $this->heartbeat) {
             $this->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
-        if (! is_null($this->udpHeartbeat)) {
+        if (null !== $this->udpHeartbeat) {
             $this->loop->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
@@ -832,7 +832,7 @@ class VoiceClient extends EventEmitter
 
             $ogg->getPacket()->then(function ($packet) use (&$readOpus, &$loops, $deferred) {
                 // EOF for Ogg stream.
-                if ($packet === null) {
+                if (null === $packet) {
                     $this->reset();
                     $deferred->resolve();
 
@@ -981,7 +981,7 @@ class VoiceClient extends EventEmitter
         })->then(function ($metadata) use ($readOpus) {
             $metadata = json_decode($metadata, true);
 
-            if ($metadata !== null) {
+            if (null !== $metadata) {
                 $this->frameSize = $metadata['opus']['frame_size'] / 48;
             }
 
@@ -1290,12 +1290,12 @@ class VoiceClient extends EventEmitter
 
         $this->heartbeat_interval = null;
 
-        if (! is_null($this->heartbeat)) {
+        if (null !== $this->heartbeat) {
             $this->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
-        if (! is_null($this->udpHeartbeat)) {
+        if (null !== $this->udpHeartbeat) {
             $this->loop->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
@@ -1350,7 +1350,7 @@ class VoiceClient extends EventEmitter
         $removeDecoder = function ($ss) {
             $decoder = $this->voiceDecoders[$ss->ssrc] ?? null;
 
-            if (is_null($decoder)) {
+            if (null === $decoder) {
                 return; // no voice decoder to remove
             }
 
@@ -1361,7 +1361,7 @@ class VoiceClient extends EventEmitter
 
         $ss = $this->speakingStatus->get('user_id', $data->user_id);
 
-        if ($ss === null) {
+        if (null === $ss) {
             return; // not in our channel
         }
 
@@ -1415,12 +1415,12 @@ class VoiceClient extends EventEmitter
         $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
         $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
 
-        if (is_null($ss)) {
+        if (null === $ss) {
             // for some reason we don't have a speaking status
             return;
         }
 
-        if (is_null($decoder)) {
+        if (null === $decoder) {
             // make a decoder
             if (! isset($this->recieveStreams[$ss->ssrc])) {
                 $this->recieveStreams[$ss->ssrc] = new RecieveStream();
@@ -1491,7 +1491,7 @@ class VoiceClient extends EventEmitter
         foreach ($binaries as $binary) {
             $output = $this->checkForExecutable($binary);
 
-            if ($output !== null) {
+            if (null !== $output) {
                 $this->ffmpeg = $output;
 
                 return true;
@@ -1565,7 +1565,7 @@ class VoiceClient extends EventEmitter
             'pipe:1',
         ];
 
-        if ($preArgs !== null) {
+        if (null !== $preArgs) {
             $flags = array_merge($preArgs, $flags);
         }
 
@@ -1589,7 +1589,7 @@ class VoiceClient extends EventEmitter
      */
     public function dcaDecode(int $channels = 2, ?int $frameSize = null): Process
     {
-        if (is_null($frameSize)) {
+        if (null === $frameSize) {
             $frameSize = round($this->frameSize * 48);
         }
 

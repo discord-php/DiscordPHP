@@ -677,17 +677,17 @@ class Discord
     {
         $this->connected = false;
 
-        if (! is_null($this->heartbeatTimer)) {
+        if (null !== $this->heartbeatTimer) {
             $this->loop->cancelTimer($this->heartbeatTimer);
             $this->heartbeatTimer = null;
         }
 
-        if (! is_null($this->heartbeatAckTimer)) {
+        if (null !== $this->heartbeatAckTimer) {
             $this->loop->cancelTimer($this->heartbeatAckTimer);
             $this->heartbeatAckTimer = null;
         }
 
-        if ($this->payloadTimer !== null) {
+        if (null !== $this->payloadTimer) {
             $this->loop->cancelTimer($this->payloadTimer);
             $this->payloadTimer = null;
         }
@@ -750,64 +750,70 @@ class Discord
      */
     protected function handleDispatch(object $data): void
     {
-        $handlers = [
-            Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
-            Event::RESUMED => 'handleResume',
-            Event::READY => 'handleReady',
-            Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
-            Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
-        ];
+        $hData = $this->handlers->getHandler($data->t);
 
-        if (! is_null($hData = $this->handlers->getHandler($data->t))) {
-            /** @var Event */
-            $handler = new $hData['class']($this);
-
-            $deferred = new Deferred();
-            $deferred->promise()->done(function ($d) use ($data, $hData) {
-                if (is_array($d) && count($d) == 2) {
-                    list($new, $old) = $d;
-                } else {
-                    $new = $d;
-                    $old = null;
-                }
-
-                $this->emit($data->t, [$new, $this, $old]);
-
-                foreach ($hData['alternatives'] as $alternative) {
-                    $this->emit($alternative, [$d, $this]);
-                }
-
-                if ($data->t == Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
-                    $this->emit('mention', [$new, $this, $old]);
-                }
-            }, function ($e) use ($data) {
-                if ($e instanceof \Error) {
-                    throw $e;
-                } elseif ($e instanceof \Exception) {
-                    $this->logger->error('exception while trying to handle dispatch packet', ['packet' => $data->t, 'exception' => $e]);
-                } else {
-                    $this->logger->warning('rejection while trying to handle dispatch packet', ['packet' => $data->t, 'rejection' => $e]);
-                }
-            });
-
-            $parse = [
-                Event::GUILD_CREATE,
-                Event::GUILD_DELETE,
+        if (null === $hdata) {
+            $handlers = [
+                Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
+                Event::RESUMED => 'handleResume',
+                Event::READY => 'handleReady',
+                Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
+                Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
             ];
 
-            if (! $this->emittedReady && (! in_array($data->t, $parse))) {
-                $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
-                    /** @var ExtendedPromiseInterface */
-                    $promise = coroutine([$handler, 'handle'], $data->d);
-                    $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
-                };
+            if (isset($handlers[$data->t])) {
+                $this->{$handlers[$data->t]}($data);
+            }
+
+            return;
+        }
+
+        /** @var Event */
+        $handler = new $hData['class']($this);
+
+        $deferred = new Deferred();
+        $deferred->promise()->done(function ($d) use ($data, $hData) {
+            if (is_array($d) && count($d) == 2) {
+                list($new, $old) = $d;
             } else {
+                $new = $d;
+                $old = null;
+            }
+
+            $this->emit($data->t, [$new, $this, $old]);
+
+            foreach ($hData['alternatives'] as $alternative) {
+                $this->emit($alternative, [$d, $this]);
+            }
+
+            if ($data->t == Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
+                $this->emit('mention', [$new, $this, $old]);
+            }
+        }, function ($e) use ($data) {
+            if ($e instanceof \Error) {
+                throw $e;
+            } elseif ($e instanceof \Exception) {
+                $this->logger->error('exception while trying to handle dispatch packet', ['packet' => $data->t, 'exception' => $e]);
+            } else {
+                $this->logger->warning('rejection while trying to handle dispatch packet', ['packet' => $data->t, 'rejection' => $e]);
+            }
+        });
+
+        $parse = [
+            Event::GUILD_CREATE,
+            Event::GUILD_DELETE,
+        ];
+
+        if (! $this->emittedReady && (! in_array($data->t, $parse))) {
+            $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
                 /** @var ExtendedPromiseInterface */
                 $promise = coroutine([$handler, 'handle'], $data->d);
                 $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
-            }
-        } elseif (isset($handlers[$data->t])) {
-            $this->{$handlers[$data->t]}($data);
+            };
+        } else {
+            /** @var ExtendedPromiseInterface */
+            $promise = coroutine([$handler, 'handle'], $data->d);
+            $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
         }
     }
 
@@ -839,7 +845,7 @@ class Discord
         $diff = $received - $this->heartbeatTime;
         $time = $diff * 1000;
 
-        if (! is_null($this->heartbeatAckTimer)) {
+        if (null !== $this->heartbeatAckTimer) {
             $this->loop->cancelTimer($this->heartbeatAckTimer);
             $this->heartbeatAckTimer = null;
         }
@@ -897,7 +903,7 @@ class Discord
      */
     protected function identify(bool $resume = true): bool
     {
-        if ($resume && $this->reconnecting && ! is_null($this->sessionId)) {
+        if ($resume && $this->reconnecting && null !== $this->sessionId) {
             $payload = [
                 'op' => Op::OP_RESUME,
                 'd' => [
@@ -1017,7 +1023,7 @@ class Discord
             $sendChunks = function () use (&$sendChunks, &$chunks) {
                 $chunk = array_pop($chunks);
 
-                if ($chunk === null) {
+                if (null === $chunk) {
                     return;
                 }
 
@@ -1149,7 +1155,7 @@ class Discord
     {
         $idle = $idle ? time() * 1000 : null;
 
-        if (! is_null($activity)) {
+        if (null !== $activity) {
             $activity = $activity->getRawAttributes();
 
             if (! in_array($activity['type'], [Activity::TYPE_GAME, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_COMPETING])) {
@@ -1245,7 +1251,7 @@ class Discord
             $data['dnsConfig'] = $discord->options['dnsConfig'];
             $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-            if (is_null($logger)) {
+            if (null === $logger) {
                 $logger = $this->logger;
             }
 
@@ -1326,7 +1332,7 @@ class Discord
             $deferred->resolve(['gateway' => $this->gateway, 'session' => (array) $session]);
         };
 
-        if ($gateway === null) {
+        if (null === $gateway) {
             $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
                 if ($response->shards > 1) {
                     $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interrested in assisting us with sharding support development.');
@@ -1417,7 +1423,7 @@ class Discord
 
         $options['loop'] ??= LoopFactory::create();
 
-        if (is_null($options['logger'])) {
+        if (null === $options['logger']) {
             $logger = new Monolog('DiscordPHP');
             $logger->pushHandler(new StreamHandler('php://stdout', Monolog::DEBUG));
             $options['logger'] = $logger;
@@ -1598,7 +1604,7 @@ class Discord
             return $this->{$name};
         }
 
-        if ($this->client === null) {
+        if (null === $this->client) {
             return;
         }
 
@@ -1613,7 +1619,7 @@ class Discord
      */
     public function __set(string $name, $value): void
     {
-        if (is_null($this->client)) {
+        if (null === $this->client) {
             return;
         }
 
@@ -1687,7 +1693,7 @@ class Discord
      */
     public function __call(string $name, array $params)
     {
-        if (is_null($this->client)) {
+        if (null === $this->client) {
             return;
         }
 
