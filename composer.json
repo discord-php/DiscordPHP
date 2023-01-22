@@ -30,7 +30,7 @@
         "discord/interactions": "^2.2",
         "react/async": "^4.0 || ^3.0",
         "react/cache": "^0.5 || ^0.6 || ^1.0",
-        "psr/simple-cache": "^1.0"
+        "psr/simple-cache": "^1.0 || ^2.0 || ^3.0"
     },
     "require-dev": {
         "symfony/var-dumper": "*",
