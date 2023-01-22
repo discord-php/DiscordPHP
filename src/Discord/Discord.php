@@ -1360,6 +1360,12 @@ class Discord
      */
     protected function resolveOptions(array $options = []): array
     {
+        $cacheAllowedTypes = ['array', CacheConfig::class, \React\Cache\CacheInterface::class];
+
+        if (interface_exists('Psr\SimpleCache\CacheInterface')) {
+            $cacheAllowedTypes[] = \Psr\SimpleCache\CacheInterface::class;
+        }
+
         $resolver = new OptionsResolver();
 
         $resolver
@@ -1400,7 +1406,7 @@ class Discord
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
-            ->setAllowedTypes('cache', ['array', CacheConfig::class, \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
+            ->setAllowedTypes('cache', $cacheAllowedTypes)
             ->setNormalizer('cache', function ($options, $value) {
                 if (! is_array($value)) {
                     if (! ($value instanceof CacheConfig)) {
