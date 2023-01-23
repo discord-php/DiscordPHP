@@ -373,13 +373,10 @@ class Embed extends Part
         if ($iconurl instanceof Attachment) {
             $iconurl = 'attachment://'.$iconurl->filename;
         }
-        if (! $this->checkEmbedUrl($iconurl)) {
-            throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
-        }
+        
+        $this->ensureValidUrl($iconurl);
 
-        if (! $this->checkEmbedUrl($url, ['http', 'https'])) {
-            throw new \InvalidArgumentException("Url scheme only supports http(s)");
-        }
+        $this->ensureValidUrl($url, ['http', 'https']);
 
         $this->author = [
             'name' => $name,
@@ -415,9 +412,8 @@ class Embed extends Part
         if ($iconurl instanceof Attachment) {
             $iconurl = 'attachment://'.$iconurl->filename;
         }
-        if (! $this->checkEmbedUrl($iconurl)) {
-            throw new \InvalidArgumentException("Iconurl scheme only supports http(s) and attachments");
-        }
+        
+        $this->ensureValidUrl($iconurl);
 
         $this->footer = [
             'text' => $text,
@@ -442,9 +438,8 @@ class Embed extends Part
         if ($url instanceof Attachment) {
             $url = 'attachment://'.$url->filename;
         }
-        if (! $this->checkEmbedUrl($url)) {
-            throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
-        }         
+        
+        $this->ensureValidUrl($url);
 
         $this->image = ['url' => $url];
 
@@ -465,9 +460,8 @@ class Embed extends Part
         if ($url instanceof Attachment) {
             $url = 'attachment://'.$url->filename;
         }
-        if (! $this->checkEmbedUrl($url)) {
-            throw new \InvalidArgumentException("Url scheme only supports http(s) and attachments");
-        }
+
+        $this->ensureValidUrl($url);
 
         $this->thumbnail = ['url' => $url];
         
@@ -505,23 +499,19 @@ class Embed extends Part
     }
 
     /**
-     * Checks to see if an url is valid to be used in embeds.
+     * Ensures a url is valid for use in embeds.
      *
      * @param ?string $url
      *
-     * @return bool
+     * @return void
+     *
+     * @throws \InvalidArgumentException
      */
-    protected function checkEmbedUrl(?string $url, array $allowed = ['http', 'https', 'attachment']): bool
+    function ensureValidUrl(?string $url = null, array $allowed = ['http', 'https', 'attachment'])
     {
-        if (null === $url) return true;
-
-        if ($url === '') return false;
-
-        if (filter_var($url, FILTER_VALIDATE_URL) === false) return false;
-
-        if (! in_array(parse_url($url, PHP_URL_SCHEME), $allowed) return false;
-
-        return true;
+        if (null !== $url && ! in_array(parse_url($url, PHP_URL_SCHEME), $allowed)) {
+            throw new \InvalidArgumentException('Url scheme only supports http(s) and attachments');
+        }
     }
 
     /**
