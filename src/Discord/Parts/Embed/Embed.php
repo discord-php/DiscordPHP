@@ -510,7 +510,7 @@ class Embed extends Part
     function ensureValidUrl(?string $url = null, array $allowed = ['http', 'https', 'attachment'])
     {
         if (null !== $url && ! in_array(parse_url($url, PHP_URL_SCHEME), $allowed)) {
-            throw new \InvalidArgumentException('Url scheme only supports http(s) and attachments');
+            throw new \InvalidArgumentException('Url scheme only supports '.implode(', ', $allowed));
         }
     }
 
