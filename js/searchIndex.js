@@ -8821,6 +8821,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_AUTO_MODERATION_ACTION_EXECUTION"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGUILD_AUDIT_LOG_ENTRY_CREATE",
+            "name": "GUILD_AUDIT_LOG_ENTRY_CREATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GUILD_AUDIT_LOG_ENTRY_CREATE"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ACHANNEL_CREATE",
             "name": "CHANNEL_CREATE",
             "summary": "",
@@ -9040,6 +9045,16 @@ Search.appendIndex(
             "name": "handle",
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-ChannelUpdate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildAuditLogEntryCreate",
+            "name": "GuildAuditLogEntryCreate",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-GuildAuditLogEntryCreate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildAuditLogEntryCreate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-GuildAuditLogEntryCreate.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildBanAdd",
             "name": "GuildBanAdd",
@@ -9601,10 +9616,10 @@ Search.appendIndex(
             "summary": "Guild\u0020member\u0020events\u0020\u0028Privileged\u0029.",
             "url": "classes/Discord-WebSockets-Intents.html#constant_GUILD_MEMBERS"
         },                {
-            "fqsen": "\\Discord\\WebSockets\\Intents\u003A\u003AGUILD_BANS",
-            "name": "GUILD_BANS",
-            "summary": "Guild\u0020ban\u0020events.",
-            "url": "classes/Discord-WebSockets-Intents.html#constant_GUILD_BANS"
+            "fqsen": "\\Discord\\WebSockets\\Intents\u003A\u003AGUILD_MODERATION",
+            "name": "GUILD_MODERATION",
+            "summary": "Guild\u0020moderation\u0020events.",
+            "url": "classes/Discord-WebSockets-Intents.html#constant_GUILD_MODERATION"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Intents\u003A\u003AGUILD_EMOJIS_AND_STICKERS",
             "name": "GUILD_EMOJIS_AND_STICKERS",

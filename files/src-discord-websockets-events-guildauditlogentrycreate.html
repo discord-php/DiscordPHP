@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-                    <title>DiscordPHP Documentation</title>
+            <title>DiscordPHP Documentation</title>
     
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
     <link rel="icon" href="images/favicon.ico"/>
@@ -61,7 +60,7 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/faq.html" class="-active">FAQ</a>
+    <a href="guide/faq.html" class="">FAQ</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -236,37 +235,41 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="faq">
-<h1>FAQ</h1>
-</div>
-<div class="section" id="caaf66e8d6ab16a2ac7c6fe0397e0d3a15e0a4cb">
-<h1><code>Class 'X' not found</code></h1>
-<p>You most likely haven't imported the class that you are trying to use. Please check the <a href="http://discord-php.github.io/DiscordPHP/namespaces/discord">class reference</a> and search for the class that you are trying to use. Add an import statement at the top of the file like shown on the right.</p>
-<pre><code class="language-php " >&lt;?php
+                    <ul class="phpdocumentor-breadcrumbs">
+    </ul>
 
-use Discord\X;
+    <article class="phpdocumentor-element -file">
+        <h2 class="phpdocumentor-content__title">GuildAuditLogEntryCreate.php</h2>
 
-</code></pre>
-<p>If you don't want to have to import a class every time, you should look into the PHP Intelephense language server (written above) which will do automatic imports for you.</p>
-</div>
-<div class="section" id="there-are-less-members-and-or-users-than-expected">
-<h1>There are less members and/or users than expected</h1>
-<p>Server members are guarded by a priviliged server intent which must be enabled in the <a href="https://discord.com/developers/applications">Discord Developer Portal</a>. Note that you will need to verify your bot if you use this intent and pass 100 guilds.</p>
-<p>You also need to enable the <code>loadAllMembers</code> option in your code, as shown on the right.</p>
-<pre><code class="language-php " >$discord = new Discord([
-    &#039;token&#039; =&gt; &#039;...&#039;,
-    &#039;loadAllMembers&#039; =&gt; true, // Enable this option
-]);
+        
+    <section class="phpdocumentor-description"></section>
 
-</code></pre>
-<p>If you are using DiscordPHP Version 6 or greater, you need to enable the <code>GUILD_MEMBERS</code> intent as well as the <code>loadAllMembers</code> option. The shown code will enable all intents minus the <code>GUILD_PRESENCES</code> intent (which is also priviliged).</p>
-<pre><code class="language-php " >$discord = new Discord([
-    &#039;token&#039; =&gt; &#039;...&#039;,
-    &#039;loadAllMembers&#039; =&gt; true,
-    &#039;intents&#039; =&gt; Intents::getDefaultIntents() | Intents::GUILD_MEMBERS // Enable the `GUILD_MEMBERS` intent
-])</code></pre>
-</div>
 
+
+
+
+
+<h3 id="interfaces_class_traits">
+    Interfaces, Classes, Traits and Enums
+    <a href="#interfaces_class_traits" class="headerlink"><i class="fas fa-link"></i></a>
+</h3>
+
+<dl class="phpdocumentor-table-of-contents">
+    
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-WebSockets-Events-GuildAuditLogEntryCreate.html"><abbr title="\Discord\WebSockets\Events\GuildAuditLogEntryCreate">GuildAuditLogEntryCreate</abbr></a></dt>
+        <dd>Contains constants for WebSocket events as well as handlers for the events.</dd>
+    
+    
+    </dl>
+
+
+
+
+
+        
+
+        
+    </article>
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
@@ -280,7 +283,7 @@ use Discord\X;
 </section>
             </div>
         </div>
-        <a href="#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="files/src-discord-websockets-events-guildauditlogentrycreate.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

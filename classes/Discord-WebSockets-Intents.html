@@ -335,13 +335,6 @@
 <dd>Direct message events.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/Discord-WebSockets-Intents.html#constant_GUILD_BANS">GUILD_BANS</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 2                            </span>
-</dt>
-<dd>Guild ban events.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/Discord-WebSockets-Intents.html#constant_GUILD_EMOJIS_AND_STICKERS">GUILD_EMOJIS_AND_STICKERS</a>
     <span>
         &nbsp;= 1 &lt;&lt; 3                            </span>
@@ -389,6 +382,13 @@
         &nbsp;= 1 &lt;&lt; 9                            </span>
 </dt>
 <dd>Guild message events.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Intents.html#constant_GUILD_MODERATION">GUILD_MODERATION</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 2                            </span>
+</dt>
+<dd>Guild moderation events.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/Discord-WebSockets-Intents.html#constant_GUILD_PRESENCES">GUILD_PRESENCES</a>
@@ -646,40 +646,6 @@ representing the enabled intents. Useful for debugging.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_GUILD_BANS">
-        GUILD_BANS
-        <a href="classes/Discord-WebSockets-Intents.html#constant_GUILD_BANS" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Intents.php"><a href="files/src-discord-websockets-intents.html"><abbr title="src/Discord/WebSockets/Intents.php">Intents.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">57</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Guild ban events.</p>
-
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">GUILD_BANS</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 2</span>
-</code>
-
-
-        <section class="phpdocumentor-description"><ul>
-<li>GUILD_BAN_ADD</li>
-<li>GUILD_BAN_REMOVE</li>
-</ul>
-</section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_GUILD_EMOJIS_AND_STICKERS">
         GUILD_EMOJIS_AND_STICKERS
         <a href="classes/Discord-WebSockets-Intents.html#constant_GUILD_EMOJIS_AND_STICKERS" class="headerlink"><i class="fas fa-link"></i></a>
@@ -915,6 +881,41 @@ representing the enabled intents. Useful for debugging.</dd>
 <li>MESSAGE_UPDATE</li>
 <li>MESSAGE_DELETE</li>
 <li>MESSAGE_DELETE_BULK</li>
+</ul>
+</section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_GUILD_MODERATION">
+        GUILD_MODERATION
+        <a href="classes/Discord-WebSockets-Intents.html#constant_GUILD_MODERATION" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Intents.php"><a href="files/src-discord-websockets-intents.html"><abbr title="src/Discord/WebSockets/Intents.php">Intents.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">57</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Guild moderation events.</p>
+
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">GUILD_MODERATION</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 2</span>
+</code>
+
+
+        <section class="phpdocumentor-description"><ul>
+<li>GUILD_AUDIT_LOG_ENTRY_CREATE</li>
+<li>GUILD_BAN_ADD</li>
+<li>GUILD_BAN_REMOVE</li>
 </ul>
 </section>
 
