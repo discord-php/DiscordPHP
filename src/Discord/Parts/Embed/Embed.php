@@ -505,12 +505,12 @@ class Embed extends Part
      *
      * @return void
      *
-     * @throws \InvalidArgumentException
+     * @throws \DomainException
      */
     function ensureValidUrl(?string $url = null, array $allowed = ['http', 'https', 'attachment'])
     {
         if (null !== $url && ! in_array(parse_url($url, PHP_URL_SCHEME), $allowed)) {
-            throw new \InvalidArgumentException('Url scheme only supports '.implode(', ', $allowed));
+            throw new \DomainException('Url scheme only supports '.implode(', ', $allowed));
         }
     }
 
