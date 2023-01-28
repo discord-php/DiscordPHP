@@ -80,6 +80,7 @@ class Invite extends Part
 
     public const TARGET_TYPE_STREAM = 1;
     public const TARGET_TYPE_EMBEDDED_APPLICATION = 2;
+    public const TARGET_TYPE_ROLE_SUBSCRIPTIONS_PURCHASE = 3;
 
     /**
      * Returns the id attribute.
