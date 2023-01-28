@@ -3701,6 +3701,11 @@ Search.appendIndex(
             "summary": "Set\u0020the\u0020URL\u0020of\u0020this\u0020embed.",
             "url": "classes/Discord-Parts-Embed-Embed.html#method_setURL"
         },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003AensureValidUrl\u0028\u0029",
+            "name": "ensureValidUrl",
+            "summary": "Ensures\u0020a\u0020url\u0020is\u0020valid\u0020for\u0020use\u0020in\u0020embeds.",
+            "url": "classes/Discord-Parts-Embed-Embed.html#method_ensureValidUrl"
+        },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003AexceedsOverallLimit\u0028\u0029",
             "name": "exceedsOverallLimit",
             "summary": "Checks\u0020to\u0020see\u0020if\u0020adding\u0020a\u0020property\u0020has\u0020put\u0020us\u0020over\u0020Discord\u0027s\u00206000\ncharacters\u0020overall\u0020limit.",
