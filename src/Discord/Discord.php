@@ -752,7 +752,7 @@ class Discord
     {
         $hData = $this->handlers->getHandler($data->t);
 
-        if (null === $hdata) {
+        if (null === $hData) {
             $handlers = [
                 Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
                 Event::RESUMED => 'handleResume',
