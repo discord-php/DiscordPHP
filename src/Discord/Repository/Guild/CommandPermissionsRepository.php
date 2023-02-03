@@ -45,4 +45,14 @@ class CommandPermissionsRepository extends AbstractRepository
      * {@inheritDoc}
      */
     protected $class = CommandPermissions::class;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct(Discord $discord, array $vars = [])
+    {
+        $vars['application_id'] = $discord->application->id; // For the bot's Application Guild Commands
+
+        parent::__construct($discord, $vars);
+    }
 }
