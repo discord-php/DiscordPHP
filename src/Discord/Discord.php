@@ -251,7 +251,7 @@ class Discord
     protected $heartbeatTime;
 
     /**
-     * Whether `ready` has been emitted.
+     * Whether `init` has been emitted.
      *
      * @var bool Emitted.
      */
