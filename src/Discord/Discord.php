@@ -255,7 +255,7 @@ class Discord
      *
      * @var bool Emitted.
      */
-    protected $emittedReady = false;
+    protected $emittedInit = false;
 
     /**
      * The gateway URL that the WebSocket client will connect to.
@@ -379,7 +379,7 @@ class Discord
         }
 
         $function = function () use (&$function) {
-            $this->emittedReady = true;
+            $this->emittedInit = true;
             $this->removeListener('ready', $function);
         };
 
@@ -795,7 +795,7 @@ class Discord
                 Event::GUILD_DELETE,
             ];
 
-            if (! $this->emittedReady && (! in_array($data->t, $parse))) {
+            if (! $this->emittedInit && (! in_array($data->t, $parse))) {
                 $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
                     /** @var ExtendedPromiseInterface */
                     $promise = coroutine([$handler, 'handle'], $data->d);
@@ -1120,7 +1120,7 @@ class Discord
      */
     protected function ready()
     {
-        if ($this->emittedReady) {
+        if ($this->emittedInit) {
             return false;
         }
 
