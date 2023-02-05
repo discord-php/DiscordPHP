@@ -80,7 +80,7 @@ class DiscordCommandClient extends Discord
                     $args = str_getcsv($withoutPrefix, ' ');
                     $command = array_shift($args);
 
-                    if ($command !== null && $this->commandClientOptions['caseInsensitiveCommands']) {
+                    if (null !== $command && $this->commandClientOptions['caseInsensitiveCommands']) {
                         $command = strtolower($command);
                     }
 
@@ -113,7 +113,7 @@ class DiscordCommandClient extends Discord
                         $commandString = array_shift($args);
                         $newCommand = $command->getCommand($commandString);
 
-                        if (is_null($newCommand)) {
+                        if (null === $newCommand) {
                             return "The command {$commandString} does not exist.";
                         }
 
@@ -240,7 +240,7 @@ class DiscordCommandClient extends Discord
      */
     public function registerCommand(string $command, $callable, array $options = []): Command
     {
-        if ($command !== null && $this->commandClientOptions['caseInsensitiveCommands']) {
+        if (null !== $command && $this->commandClientOptions['caseInsensitiveCommands']) {
             $command = strtolower($command);
         }
         if (array_key_exists($command, $this->commands)) {
@@ -251,7 +251,7 @@ class DiscordCommandClient extends Discord
         $this->commands[$command] = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
-            if ($alias !== null && $this->commandClientOptions['caseInsensitiveCommands']) {
+            if (null !== $alias && $this->commandClientOptions['caseInsensitiveCommands']) {
                 $alias = strtolower($alias);
             }
             $this->registerAlias($alias, $command);

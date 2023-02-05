@@ -59,13 +59,23 @@ $discord->on(Event::GUILD_DELETE, function (object $guild, Discord $discord, boo
 });
 ```
 
-## Guild Bans
+## Guild Moderation
 
-Requires the `Intents::GUILD_BANS` intent and `ban_members` permission.
+Requires the `Intents::GUILD_MODERATION` intent and `ban_members` or `view_audit_log` permission.
+
+### Guild Audit Log Entry Create
+
+Called with an `Audit Log Entry` object when an audit log entry is created. Requires the `view_audit_log` permission.
+
+```php
+$discord->on(Event::GUILD_AUDIT_LOG_ENTRY_CREATE, function (Entry $entry, Discord $discord) {
+    // ...
+});
+```
 
 ### Guild Ban Add
 
-Called with a `Ban` object when a member is banned from a guild.
+Called with a `Ban` object when a member is banned from a guild. Requires the `ban_members` permission.
 
 ```php
 $discord->on(Event::GUILD_BAN_ADD, function (Ban $ban, Discord $discord) {
@@ -75,7 +85,7 @@ $discord->on(Event::GUILD_BAN_ADD, function (Ban $ban, Discord $discord) {
 
 ### Guild Ban Remove
 
-Called with a `Ban` object when a user is unbanned from a guild.
+Called with a `Ban` object when a user is unbanned from a guild. Requires the `ban_members` permission.
 
 ```php
 $discord->on(Event::GUILD_BAN_REMOVE, function (Ban $ban, Discord $discord) {

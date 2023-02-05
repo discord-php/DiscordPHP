@@ -772,7 +772,7 @@ class Thread extends Part
                     $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
                     $deferred->resolve($messages);
 
-                    if (! is_null($timer)) {
+                    if (null !== $timer) {
                         $this->discord->getLoop()->cancelTimer($timer);
                     }
                 }

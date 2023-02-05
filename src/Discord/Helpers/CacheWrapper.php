@@ -113,7 +113,7 @@ class CacheWrapper
     public function get($key, $default = null)
     {
         $handleValue = function ($value) use ($key) {
-            if ($value === null) {
+            if (null === $value) {
                 unset($this->items[$key]);
             } else {
                 $value = $this->items[$key] = $this->unserializer($value);
@@ -214,7 +214,7 @@ class CacheWrapper
         if (is_callable([$this->interface, 'getMultiple'])) {
             $handleValue = function ($values) {
                 foreach ($values as $key => &$value) {
-                    if ($value === null) {
+                    if (null === $value) {
                         unset($this->items[$key]);
                     } else {
                         $value = $this->items[$key] = $this->unserializer($value);
@@ -385,14 +385,14 @@ class CacheWrapper
     protected function isZlibCompressed(string $data): bool
     {
         $data = unpack('Ccmf/Cflg', $data);
-        $cm = $data['cmf'] & 0xF;
+        $cmethod = $data['cmf'] & 0xF;
         $cinfo = ($data['cmf'] & 0xF0) >> 4;
         // $fcheck = $data['flg'] & 0x1F;
         // $fdict = ($data['flg'] & 0x20) >> 5;
         $flevel = ($data['flg'] & 0xC0) >> 6;
 
         // Ensure compression method is deflate
-        if ($cm !== 8) {
+        if ($cmethod !== 8) {
             return false;
         }
 
@@ -485,7 +485,7 @@ class CacheWrapper
     {
         $flushing = 0;
         foreach ($this->items as $key => $item) {
-            if ($item === null) {
+            if (null === $item) {
                 // Item was removed from memory, delete from cache
                 $this->delete($key);
                 $flushing++;
