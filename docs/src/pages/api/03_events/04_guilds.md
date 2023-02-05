@@ -8,7 +8,7 @@ Requires the `Intents::GUILDS` intent.
 
 Called with a `Guild` object in one of the following situations:
 
-1. When the Bot is first starting and the guilds are becoming available. (unless the listener is put inside after 'ready' event)
+1. When the Bot is first starting and the guilds are becoming available. (unless the listener is put inside after 'init' event)
 2. When a guild was unavailable and is now available due to an outage.
 3. When the Bot joins a new guild.
 
