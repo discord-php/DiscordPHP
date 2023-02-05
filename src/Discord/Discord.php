@@ -1115,7 +1115,7 @@ class Discord
     }
 
     /**
-     * Emits ready if it has not been emitted already.
+     * Emits init if it has not been emitted already.
      * @return false|void
      */
     protected function ready()
@@ -1125,7 +1125,10 @@ class Discord
         }
 
         $this->logger->info('client is ready');
-        $this->emit('ready', [$this]);
+        $this->emit('init', [$this]);
+
+        /* deprecated */
+        $this->emit('ready', [$this]); // deprecated
 
         foreach ($this->unparsedPackets as $parser) {
             $parser();
