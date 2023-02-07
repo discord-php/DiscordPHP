@@ -740,11 +740,7 @@ class Member extends Part
      */
     protected function getFlagsAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['flags'])) {
-            return null;
-        }
-
-        return $this->attributes['flags'];
+        return $this->attributes['flags'] ?? null;
     }
 
     /**
