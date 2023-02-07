@@ -1134,7 +1134,10 @@ class Discord
         $this->emit('init', [$this]);
 
         /* deprecated */
-        $this->emit('ready', [$this]); // deprecated
+        if (isset($this->listeners['ready'])) {
+            $this->logger->info('The \'ready\' event is deprecated and will be removed in a future version of DiscordPHP. Please use \'init\' instead.');
+            $this->emit('ready', [$this]);
+        }
 
         foreach ($this->unparsedPackets as $parser) {
             $parser();
