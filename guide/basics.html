@@ -286,9 +286,9 @@ include __DIR__.&#039;/vendor/autoload.php&#039;;
 <p><code>shardId</code> is the ID of the bot shard.</p>
 <p><code>shardCount</code> is the number of shards that you are using.</p>
 <hr />
-<p>Gateway events should be registered inside the <code>ready</code> event, which is emitted once when the bot first starts and has connected to the gateway.</p>
+<p>Gateway events should be registered inside the <code>init</code> event, which is emitted once when the bot first starts and has connected to the gateway.</p>
 <p>To register an event we use the <code>$discord->on(...)</code> function, which registers a handler. A list of events is available <a href="https://github.com/discord-php/DiscordPHP/blob/master/src/Discord/WebSockets/Event.php#L30-L75">here</a>. They are described in more detail in further sections of the documentation. All events take a callback which is called when the event is triggered, and the callback is called with an object representing the content of the event and an instance of the <code>Discord</code> client.</p>
-<pre><code class="language-php " >$discord-&gt;on(&#039;ready&#039;, function (Discord $discord) {
+<pre><code class="language-php " >$discord-&gt;on(&#039;init&#039;, function (Discord $discord) {
 
     $discord-&gt;on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
         // ... handle message sent

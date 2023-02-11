@@ -125,8 +125,8 @@ Useful if you want to use other React components. By default, a new loop is crea
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php">    <span class="token string single-quoted-string">'shardCount'</span> <span class="token operator">=></span> <span class="token number">5</span><span class="token punctuation">,</span></code></pre></div>
 <div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">]);</code></pre></div>
 <hr>
-<p>Gateway events should be registered inside the <code class="language-text">ready</code> event, which is emitted once when the bot first starts and has connected to the gateway.</p>
-<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'ready'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></code></pre></div>
+<p>Gateway events should be registered inside the <code class="language-text">init</code> event, which is emitted once when the bot first starts and has connected to the gateway.</p>
+<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'init'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></code></pre></div>
 <p>To register an event we use the <code class="language-text">$discord->on(...)</code> function, which registers a handler.
 A list of events is available <a href="https://github.com/discord-php/DiscordPHP/blob/master/src/Discord/WebSockets/Event.php#L30-L75">here</a>. They are described in more detail in further sections of the documentation.
 All events take a callback which is called when the event is triggered, and the callback is called with an object representing the content of the event and an instance of the <code class="language-text">Discord</code> client.</p>
@@ -148,7 +148,7 @@ Most events also requires the respective Intents enabled (as well privileged one
 <p>To listen on gateway events, use the event emitter callback and <code class="language-text">Event</code> name constants.
 Some events are internally handled by the library and may not be registered a listener:</p>
 <ul>
-<li><code class="language-text">Event::READY</code> (not to be confused with <code class="language-text">'ready'</code>)</li>
+<li><code class="language-text">Event::READY</code></li>
 <li><code class="language-text">Event::RESUMED</code></li>
 <li><code class="language-text">Event::GUILD_MEMBERS_CHUNK</code></li>
 </ul>
@@ -257,7 +257,7 @@ Some events are internally handled by the library and may not be registered a li
 <h3>Guild Create</h3>
 <p>Called with a <code class="language-text">Guild</code> object in one of the following situations:</p>
 <ol>
-<li>When the Bot is first starting and the guilds are becoming available. (unless the listener is put inside after 'ready' event)</li>
+<li>When the Bot is first starting and the guilds are becoming available. (unless the listener is put inside after 'init' event)</li>
 <li>When a guild was unavailable and is now available due to an outage.</li>
 <li>When the Bot joins a new guild.</li>
 </ol>

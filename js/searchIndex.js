@@ -1228,7 +1228,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003Aready\u0028\u0029",
             "name": "ready",
-            "summary": "Emits\u0020ready\u0020if\u0020it\u0020has\u0020not\u0020been\u0020emitted\u0020already.",
+            "summary": "Emits\u0020init\u0020if\u0020it\u0020has\u0020not\u0020been\u0020emitted\u0020already.",
             "url": "classes/Discord-Discord.html#method_ready"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AupdatePresence\u0028\u0029",
@@ -1456,10 +1456,10 @@ Search.appendIndex(
             "summary": "The\u0020time\u0020that\u0020the\u0020last\u0020heartbeat\u0020packet\u0020was\u0020sent.",
             "url": "classes/Discord-Discord.html#property_heartbeatTime"
         },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024emittedReady",
-            "name": "emittedReady",
-            "summary": "Whether\u0020\u0060ready\u0060\u0020has\u0020been\u0020emitted.",
-            "url": "classes/Discord-Discord.html#property_emittedReady"
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024emittedInit",
+            "name": "emittedInit",
+            "summary": "Whether\u0020\u0060init\u0060\u0020has\u0020been\u0020emitted.",
+            "url": "classes/Discord-Discord.html#property_emittedInit"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024gateway",
             "name": "gateway",
