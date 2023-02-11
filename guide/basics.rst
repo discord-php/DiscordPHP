@@ -71,13 +71,13 @@ The following options should only be used by large bots that require sharding. I
 
 ----
 
-Gateway events should be registered inside the ``ready`` event, which is emitted once when the bot first starts and has connected to the gateway.
+Gateway events should be registered inside the ``init`` event, which is emitted once when the bot first starts and has connected to the gateway.
 
 To register an event we use the ``$discord->on(...)`` function, which registers a handler. A list of events is available `here <https://github.com/discord-php/DiscordPHP/blob/master/src/Discord/WebSockets/Event.php#L30-L75>`_. They are described in more detail in further sections of the documentation. All events take a callback which is called when the event is triggered, and the callback is called with an object representing the content of the event and an instance of the ``Discord`` client.
 
 .. code:: php
 
-   $discord->on('ready', function (Discord $discord) {
+   $discord->on('init', function (Discord $discord) {
 
        $discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
            // ... handle message sent

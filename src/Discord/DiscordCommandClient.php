@@ -59,7 +59,7 @@ class DiscordCommandClient extends Discord
 
         parent::__construct($discordOptions);
 
-        $this->on('ready', function () {
+        $this->on('init', function () {
             $this->commandClientOptions['prefix'] = str_replace('@mention', (string) $this->user, $this->commandClientOptions['prefix']);
             $this->commandClientOptions['name'] = str_replace('<UsernamePlaceholder>', $this->username, $this->commandClientOptions['name']);
 

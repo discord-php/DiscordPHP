@@ -26,7 +26,7 @@ $discord = new Discord([
 ]);
 
 // When the Bot is ready
-$discord->on('ready', function (Discord $discord) {
+$discord->on('init', function (Discord $discord) {
 
     // Listen for messages
     $discord->on('message', function (Message $message, Discord $discord) {
