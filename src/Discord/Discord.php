@@ -1134,8 +1134,11 @@ class Discord
         $this->emit('init', [$this]);
 
         /* deprecated */
-        if (count($this->listeners['ready']) > 1) {
-            $this->logger->info('The \'ready\' event is deprecated and will be removed in a future version of DiscordPHP. Please use \'init\' instead.');
+        if ($this->listeners['ready']) {
+            if (count($this->listeners['ready']) > 1 || count($this->onceListeners["ready"]) > 1) {
+                $this->logger->info('The \'ready\' event is deprecated and will be removed in a future version of DiscordPHP. Please use \'init\' instead.');
+            }
+
             $this->emit('ready', [$this]);
         }
 
