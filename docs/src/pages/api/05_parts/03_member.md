@@ -175,11 +175,11 @@ Returns a [role permission](#permissions) in a promise.
 | channel | [Channel](#channel) or null | the channel to get the effective permissions for |
 
 ```php
-$member->getPermissions($channel);
+$permissions = $member->getPermissions($channel);
 
 // or
 
-$member->getPermissions();
+$permissions = $member->getPermissions();
 ```
 
 ### Get guild specific avatar URL
