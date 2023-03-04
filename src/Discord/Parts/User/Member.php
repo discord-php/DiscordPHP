@@ -54,6 +54,7 @@ use function React\Promise\reject;
  * @property      bool|null           $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
  * @property      RolePermission|null $permissions                  Total permissions of the member in the channel, including overwrites, returned when in the interaction object.
  * @property      Carbon|null         $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
+ * @property      int                 $flags                        Guild member flags.
  * @property      string|null         $guild_id                     The unique identifier of the guild that the member belongs to.
  * @property-read Guild|null          $guild                        The guild that the member belongs to.
  *
@@ -67,6 +68,10 @@ use function React\Promise\reject;
  */
 class Member extends Part
 {
+    public const FLAGS_DID_REJOIN = 0;
+    public const FLAGS_COMPLETED_ONBOARDING = 1;
+    public const FLAGS_BYPASSES_VERIFICATION = 2;
+    public const FLAGS_STARTED_ONBOARDING = 3;
     /**
      * {@inheritDoc}
      */
@@ -82,6 +87,7 @@ class Member extends Part
         'pending',
         'permissions',
         'communication_disabled_until',
+        'flags',
 
         // partial
         'guild_id',
