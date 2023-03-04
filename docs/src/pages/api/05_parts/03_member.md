@@ -166,7 +166,7 @@ Gets the effective permissions of the member:
 - When given a channel, returns the effective permissions of a member in a channel.
 - Otherwise, returns the effective permissions of a member in a guild.
 
-Returns a [role permission](#permissions) in a promise.
+Returns a [role permission](#permissions).
 
 #### Parameters
 
