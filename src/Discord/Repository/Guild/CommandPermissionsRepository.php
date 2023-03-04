@@ -11,6 +11,7 @@
 
 namespace Discord\Repository\Guild;
 
+use Discord\Discord;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\CommandPermissions;
 use Discord\Repository\AbstractRepository;
