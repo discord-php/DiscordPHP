@@ -430,8 +430,10 @@ class VoiceClient extends EventEmitter
 
                 $this->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
 
-                $buffer = new Buffer(70);
-                $buffer->writeUInt32BE($this->ssrc, 3);
+                $buffer = new Buffer(74);
+                $buffer[1] = "\x01";
+                $buffer[3] = "\x46";
+                $buffer->writeUInt32BE($this->ssrc, 4);
                 /** @var ExtendedPromiseInterface */
                 $promise = $udpfac->createClient("{$data->d->ip}:{$this->udpPort}");
 
@@ -460,7 +462,7 @@ class VoiceClient extends EventEmitter
                     $decodeUDP = function ($message) use (&$decodeUDP, $client, &$ip, &$port) {
                         $message = (string) $message;
                         // let's get our IP
-                        $ip_start = 4;
+                        $ip_start = 8;
                         $ip = substr($message, $ip_start);
                         $ip_end = strpos($ip, "\x00");
                         $ip = substr($ip, 0, $ip_end);
