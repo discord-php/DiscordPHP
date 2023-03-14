@@ -127,7 +127,7 @@ class Emoji extends Part
     public function __toString(): string
     {
         if ($this->id) {
-            return '<'.($this->animated ? 'a:' : '')."{$this->name}:{$this->id}>";
+            return '<'.($this->animated ? 'a:' : ':')."{$this->name}:{$this->id}>";
         }
 
         return $this->name;
