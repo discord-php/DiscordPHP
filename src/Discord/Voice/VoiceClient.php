@@ -302,6 +302,13 @@ class VoiceClient extends EventEmitter
      * @var bool Whether the voice client is reconnecting.
      */
     protected $reconnecting = false;
+    
+    /**
+     * Is the voice client being closed by user?
+     *
+     * @var bool Whether the voice client is being closed by user.
+     */
+    protected $userClose = false;
 
     /**
      * The logger.
@@ -625,8 +632,8 @@ class VoiceClient extends EventEmitter
             $this->client->close();
         }
 
-        // Don't reconnect on a critical opcode.
-        if (in_array($op, Op::getCriticalVoiceCloseCodes())) {
+        // Don't reconnect on a critical opcode or if closed by user.
+        if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this->userClose) {
             $this->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
             $this->emit('close');
         } else {
@@ -1287,6 +1294,7 @@ class VoiceClient extends EventEmitter
             ],
         ]);
 
+        $this->userClose = true;
         $this->client->close();
         $this->voiceWebsocket->close();
 
