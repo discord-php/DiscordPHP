@@ -1136,9 +1136,6 @@ class Channel extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-             if (isset($response->id)) {
-                $this->last_message_id = $response->id;
-            }
             return $this->messages->get('id', $response->id) ?? $this->messages->create((array) $response, true);
         });
     }
