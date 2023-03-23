@@ -1299,7 +1299,7 @@ class Channel extends Part
      */
     public function isTextBased()
     {
-        return in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_DM, self::TYPE_GUILD_VOICE, self::TYPE_GROUP_DM, self::TYPE_PUBLIC_THREAD, self::TYPE_PRIVATE_THREAD, self::TYPE_GUILD_ANNOUNCEMENT. self::TYPE_GUILD_FORUM]);
+        return in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_DM, self::TYPE_GUILD_VOICE, self::TYPE_GROUP_DM, self::TYPE_PUBLIC_THREAD, self::TYPE_PRIVATE_THREAD, self::TYPE_GUILD_ANNOUNCEMENT]);
     }
 
     /**
