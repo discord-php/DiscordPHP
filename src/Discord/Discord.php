@@ -804,7 +804,7 @@ class Discord
 
         $parse = [
             Event::GUILD_CREATE,
-            Event::GUILD_DELETE
+            Event::GUILD_DELETE,
         ];
         $promise = coroutine([$handler, 'handle'], $data->d);
         
