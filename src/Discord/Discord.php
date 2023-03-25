@@ -771,7 +771,6 @@ class Discord
         /** @var Event */
         $handler = new $hData['class']($this);
 
-        $deferred = new Deferred();
         $onResolve = function ($d) use ($data, $hData) {
             if (is_array($d) && count($d) === 2) {
                 [$new, $old] = $d;
