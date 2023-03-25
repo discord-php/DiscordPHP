@@ -806,13 +806,14 @@ class Discord
             Event::GUILD_CREATE,
             Event::GUILD_DELETE,
         ];
-        $promise = coroutine([$handler, 'handle'], $data->d);
         
         if (! $this->emittedInit && ! in_array($data->t, $parse)) {
-            $this->unparsedPackets[] = function () use (&$onResolve, &$onReject) {
+            $this->unparsedPackets[] = function () use (&$onResolve, &$onReject, &$data) {
+                $promise = coroutine([$handler, 'handle'], $data->d);
                 $promise->done(&$onResolve, &$onReject);
             };
         } else {
+            $promise = coroutine([$handler, 'handle'], $data->d);
             $promise->done($onResolve, $onReject);
         }
     }
