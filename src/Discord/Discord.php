@@ -810,7 +810,7 @@ class Discord
         
         if (! $this->emittedInit && ! in_array($data->t, $parse)) {
             $this->unparsedPackets[] = function () use (&$deferred, &$data) {
-                $promise->done(&$onResolve], &$onReject);
+                $promise->done(&$onResolve, &$onReject);
             };
         } else {
             $promise->done($onResolve, $onReject);
