@@ -809,7 +809,7 @@ class Discord
         $promise = coroutine([$handler, 'handle'], $data->d);
         
         if (! $this->emittedInit && ! in_array($data->t, $parse)) {
-            $this->unparsedPackets[] = function () use (&$deferred, &$data) {
+            $this->unparsedPackets[] = function () use (&$onResolve, &$onReject) {
                 $promise->done(&$onResolve, &$onReject);
             };
         } else {
