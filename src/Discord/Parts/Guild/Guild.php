@@ -134,7 +134,6 @@ use function React\Promise\resolve;
  * @property Carbon|null              $joined_at              A timestamp of when the current user joined the guild.
  * @property bool|null                $large                  Whether the guild is considered 'large' (over 250 members).
  * @property int|null                 $member_count           How many members are in the guild.
- * @property object[]|null            $voice_states           Array of voice states.
  * @property MemberRepository         $members                Users in the guild.
  * @property ChannelRepository        $channels               Channels in the guild.
  * @property ScheduledeventRepository $guild_scheduled_events The scheduled events in the guild.
