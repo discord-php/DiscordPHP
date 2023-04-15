@@ -735,6 +735,22 @@ class Thread extends Part
     }
 
     /**
+     * Broadcasts that you are typing to the thread. Lasts for 5 seconds.
+     *
+     * @link https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
+     *
+     * @since 10.0.0
+     *
+     * @throws \RuntimeException
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function broadcastTyping(): ExtendedPromiseInterface
+    {
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_TYPING, $this->id));
+    }
+
+    /**
      * Creates a message collector for the channel.
      *
      * @param callable $filter  The filter function. Returns true or false.
