@@ -125,8 +125,8 @@ Useful if you want to use other React components. By default, a new loop is crea
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php">    <span class="token string single-quoted-string">'shardCount'</span> <span class="token operator">=></span> <span class="token number">5</span><span class="token punctuation">,</span></code></pre></div>
 <div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">]);</code></pre></div>
 <hr>
-<p>Gateway events should be registered inside the <code class="language-text">init</code> event, which is emitted once when the bot first starts and has connected to the gateway.</p>
-<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'init'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></code></pre></div>
+<p>Gateway events should be registered inside the <code class="language-text">ready</code> event, which is emitted once when the bot first starts and has connected to the gateway.</p>
+<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'ready'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></code></pre></div>
 <p>To register an event we use the <code class="language-text">$discord->on(...)</code> function, which registers a handler.
 A list of events is available <a href="https://github.com/discord-php/DiscordPHP/blob/master/src/Discord/WebSockets/Event.php#L30-L75">here</a>. They are described in more detail in further sections of the documentation.
 All events take a callback which is called when the event is triggered, and the callback is called with an object representing the content of the event and an instance of the <code class="language-text">Discord</code> client.</p>
@@ -257,7 +257,7 @@ Some events are internally handled by the library and may not be registered a li
 <h3>Guild Create</h3>
 <p>Called with a <code class="language-text">Guild</code> object in one of the following situations:</p>
 <ol>
-<li>When the Bot is first starting and the guilds are becoming available. (unless the listener is put inside after 'init' event)</li>
+<li>When the Bot is first starting and the guilds are becoming available. (unless the listener is put inside after 'ready' event)</li>
 <li>When a guild was unavailable and is now available due to an outage.</li>
 <li>When the Bot joins a new guild.</li>
 </ol>
@@ -1952,7 +1952,7 @@ Use the second parameter to specify local file path instead.</p>
 <li>When given a channel, returns the effective permissions of a member in a channel.</li>
 <li>Otherwise, returns the effective permissions of a member in a guild.</li>
 </ul>
-<p>Returns a <a href="#permissions">role permission</a> in a promise.</p>
+<p>Returns a <a href="#permissions">role permission</a>.</p>
 <h4>Parameters</h4>
 <table>
 <thead>
@@ -1970,15 +1970,11 @@ Use the second parameter to specify local file path instead.</p>
 </tr>
 </tbody>
 </table>
-<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$member</span><span class="token operator">-></span><span class="token function">getPermissions</span><span class="token punctuation">(</span><span class="token variable">$channel</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">done</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">RolePermission</span> <span class="token variable">$permission</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">// ...</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$member</span><span class="token operator">-></span><span class="token function">getPermissions</span><span class="token punctuation">(</span><span class="token variable">$channel</span><span class="token punctuation">);</span>
 
 <span class="token comment">// or</span>
 
-<span class="token variable">$member</span><span class="token operator">-></span><span class="token function">getPermissions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">done</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">RolePermission</span> <span class="token variable">$permission</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">// ...</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<span class="token variable">$member</span><span class="token operator">-></span><span class="token function">getPermissions</span><span class="token punctuation">(</span><span class="token punctuation">);</span></code></pre></div>
 <h3>Get guild specific avatar URL</h3>
 <p>Gets the server-specific avatar URL for the member. Only call this function if you need to change the format or size of the image, otherwise use <code class="language-text">$member->avatar</code>. Returns a string.</p>
 <h4>Parameters</h4>
