@@ -58,7 +58,7 @@ namespace Discord\Parts\Permissions;
 class RolePermission extends Permission
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public static function getPermissions(): array
     {

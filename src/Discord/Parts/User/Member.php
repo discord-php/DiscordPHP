@@ -73,7 +73,7 @@ class Member extends Part
     public const FLAGS_BYPASSES_VERIFICATION = 2;
     public const FLAGS_STARTED_ONBOARDING = 3;
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'user',
@@ -754,7 +754,7 @@ class Member extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-member-json-params
      */
@@ -766,7 +766,7 @@ class Member extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

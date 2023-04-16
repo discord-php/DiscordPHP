@@ -34,7 +34,7 @@ class Overwrite extends Part
     public const TYPE_MEMBER = 1;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -75,7 +75,7 @@ class Overwrite extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @see Channel::getUpdatableAttributes()
      */
@@ -90,7 +90,7 @@ class Overwrite extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {
@@ -100,7 +100,7 @@ class Overwrite extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRawAttributes(): array
     {

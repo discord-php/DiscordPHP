@@ -45,7 +45,7 @@ use ReflectionClass;
 class AuditLog extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'application_commands',

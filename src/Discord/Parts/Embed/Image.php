@@ -29,7 +29,7 @@ use Discord\Parts\Part;
 class Image extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'url',

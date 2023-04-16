@@ -57,7 +57,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function write($data): bool
     {
@@ -176,7 +176,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function isWritable()
     {
@@ -184,7 +184,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function end($data = null): void
     {
@@ -193,7 +193,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function close(): void
     {

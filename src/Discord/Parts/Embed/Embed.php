@@ -48,7 +48,7 @@ class Embed extends Part
     public const TYPE_LINK = 'link';
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'title',
@@ -390,9 +390,9 @@ class Embed extends Part
     /**
      * Set the footer of this embed.
      *
-     * @param string                 $text     Maximum length is 2048 characters.
-     * @param string|Attachment|null $iconurl  The URL to the icon, only http(s) and attachments URLs are allowed.
-     * 
+     * @param string                 $text    Maximum length is 2048 characters.
+     * @param string|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
+     *
      * @throws \LengthException          Embed text too long.
      * @throws \InvalidArgumentException Invalid scheme provided.
      *
@@ -420,7 +420,6 @@ class Embed extends Part
             'icon_url' => $iconurl,
         ];
         
-
         return $this;
     }
 
@@ -430,7 +429,7 @@ class Embed extends Part
      * @param string|Attachment|null $url The URL to the image, only http(s) and attachments URLs are allowed.
      *
      * @throws \InvalidArgumentException Invalid scheme provided.
-     * 
+     *
      * @return $this
      */
     public function setImage($url): self
@@ -452,7 +451,7 @@ class Embed extends Part
      * @param string|Attachment|null $url The URL to the thumbnail, only http(s) and attachments URLs are allowed.
      *
      * @throws \InvalidArgumentException Invalid scheme provided.
-     * 
+     *
      * @return $this
      */
     public function setThumbnail($url): self
@@ -503,11 +502,10 @@ class Embed extends Part
      *
      * @param ?string $url
      *
-     * @return void
      *
      * @throws \DomainException
      */
-    function ensureValidUrl(?string $url = null, array $allowed = ['http', 'https', 'attachment'])
+    public function ensureValidUrl(?string $url = null, array $allowed = ['http', 'https', 'attachment'])
     {
         if (null !== $url && ! in_array(parse_url($url, PHP_URL_SCHEME), $allowed)) {
             throw new \DomainException('Url scheme only supports '.implode(', ', $allowed));

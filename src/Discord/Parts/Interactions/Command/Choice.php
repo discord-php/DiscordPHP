@@ -30,7 +30,7 @@ use function Discord\poly_strlen;
 class Choice extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'name',

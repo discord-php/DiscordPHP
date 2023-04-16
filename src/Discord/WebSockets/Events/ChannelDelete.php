@@ -22,7 +22,7 @@ use Discord\WebSockets\Event;
 class ChannelDelete extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

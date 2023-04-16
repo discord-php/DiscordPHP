@@ -36,7 +36,7 @@ use React\Promise\ExtendedPromiseInterface;
 class Widget extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -84,7 +84,7 @@ class Widget extends Part
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function fetch(): ExtendedPromiseInterface
     {

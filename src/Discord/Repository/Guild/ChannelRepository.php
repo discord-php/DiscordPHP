@@ -32,7 +32,7 @@ use Discord\Repository\AbstractRepository;
 class ChannelRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_CHANNELS,
@@ -43,7 +43,7 @@ class ChannelRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Channel::class;
 }

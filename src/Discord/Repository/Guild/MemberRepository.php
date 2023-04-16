@@ -34,7 +34,7 @@ use React\Promise\ExtendedPromiseInterface;
 class MemberRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_MEMBERS,
@@ -44,7 +44,7 @@ class MemberRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Member::class;
 
@@ -64,7 +64,7 @@ class MemberRepository extends AbstractRepository
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @param array $queryparams Query string params to add to the request, leave null to paginate all members (Warning: Be careful to use this on very large guild)
      */

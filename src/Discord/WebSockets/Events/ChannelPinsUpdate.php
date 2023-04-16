@@ -21,7 +21,7 @@ use Discord\WebSockets\Event;
 class ChannelPinsUpdate extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

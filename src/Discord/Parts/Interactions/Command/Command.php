@@ -42,7 +42,7 @@ class Command extends Part
     public const MESSAGE = 3;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -110,7 +110,7 @@ class Command extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command-json-params
      * @link https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command-json-params
@@ -144,7 +144,7 @@ class Command extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command-json-params
      */
@@ -185,7 +185,7 @@ class Command extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

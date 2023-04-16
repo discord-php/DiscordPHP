@@ -33,7 +33,7 @@ use Discord\Parts\Part;
 class CommandPermissions extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -69,7 +69,7 @@ class CommandPermissions extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getUpdatableAttributes(): array
     {
@@ -79,7 +79,7 @@ class CommandPermissions extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

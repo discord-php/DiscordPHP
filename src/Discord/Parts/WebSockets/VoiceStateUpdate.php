@@ -45,7 +45,7 @@ use Discord\Parts\User\User;
 class VoiceStateUpdate extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'guild_id',

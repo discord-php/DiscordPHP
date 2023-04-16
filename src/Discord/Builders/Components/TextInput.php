@@ -314,7 +314,7 @@ class TextInput extends Component
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {

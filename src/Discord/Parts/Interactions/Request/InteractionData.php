@@ -37,7 +37,7 @@ use Discord\Parts\Part;
 class InteractionData extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',

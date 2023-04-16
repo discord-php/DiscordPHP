@@ -158,9 +158,9 @@ class Command
     /**
      * Registers a new command.
      *
-     * @param string           $command  The command name.
-     * @param callable|string  $callable The function called when the command is executed.
-     * @param array            $options  An array of options.
+     * @param string          $command  The command name.
+     * @param callable|string $callable The function called when the command is executed.
+     * @param array           $options  An array of options.
      *
      * @return Command    The command instance.
      * @throws \Exception

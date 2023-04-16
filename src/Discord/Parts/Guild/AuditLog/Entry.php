@@ -92,7 +92,7 @@ class Entry extends Part
     // AUDIT LOG ENTRY TYPES
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'target_id',

@@ -25,7 +25,7 @@ use Discord\WebSockets\Event;
 class InteractionCreate extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {
@@ -94,7 +94,7 @@ class InteractionCreate extends Event
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function cacheMember(MemberRepository $members, array $memberdata)
     {

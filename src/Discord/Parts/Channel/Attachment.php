@@ -34,7 +34,7 @@ use Discord\Parts\Part;
 class Attachment extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',

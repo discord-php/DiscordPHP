@@ -24,7 +24,7 @@ use Discord\WebSockets\Event;
 class ThreadCreate extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

@@ -24,7 +24,7 @@ use Discord\Parts\Guild\Guild;
 class StageInstanceCreate extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

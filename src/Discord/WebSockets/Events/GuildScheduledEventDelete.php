@@ -23,7 +23,7 @@ use Discord\Parts\Guild\ScheduledEvent;
 class GuildScheduledEventDelete extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

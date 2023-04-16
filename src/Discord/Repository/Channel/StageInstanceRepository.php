@@ -33,7 +33,7 @@ use Discord\Repository\AbstractRepository;
 class StageInstanceRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'get' => Endpoint::STAGE_INSTANCE,
@@ -43,7 +43,7 @@ class StageInstanceRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = StageInstance::class;
 }

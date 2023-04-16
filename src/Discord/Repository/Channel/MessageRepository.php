@@ -33,7 +33,7 @@ use Discord\Repository\AbstractRepository;
 class MessageRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'get' => Endpoint::CHANNEL_MESSAGE,
@@ -42,12 +42,12 @@ class MessageRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Message::class;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __construct(Discord $discord, array $vars = [])
     {

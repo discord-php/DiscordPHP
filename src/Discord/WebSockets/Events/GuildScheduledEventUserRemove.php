@@ -21,7 +21,7 @@ use Discord\WebSockets\Event;
 class GuildScheduledEventUserRemove extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

@@ -32,7 +32,7 @@ use Discord\Repository\AbstractRepository;
 class GlobalCommandRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GLOBAL_APPLICATION_COMMANDS,
@@ -43,7 +43,7 @@ class GlobalCommandRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Command::class;
 }

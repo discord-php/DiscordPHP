@@ -171,7 +171,7 @@ class Message extends Part
     public const FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD = (1 << 8);
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -212,7 +212,7 @@ class Message extends Part
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $repositories = [
         'reactions' => ReactionRepository::class,
@@ -1104,7 +1104,7 @@ class Message extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/channel#edit-message-jsonform-params
      */
@@ -1117,7 +1117,7 @@ class Message extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

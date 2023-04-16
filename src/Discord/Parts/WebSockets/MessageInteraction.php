@@ -34,7 +34,7 @@ use Discord\Parts\User\User;
 class MessageInteraction extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -48,7 +48,7 @@ class MessageInteraction extends Part
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $hidden = ['guild_id'];
 

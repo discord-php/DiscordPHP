@@ -23,7 +23,7 @@ use Discord\Parts\Guild\Guild;
 class GuildRoleCreate extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {
