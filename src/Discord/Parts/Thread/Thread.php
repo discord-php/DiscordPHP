@@ -480,7 +480,7 @@ class Thread extends Part
      * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
      *
      * @param array|Traversable $messages An array of messages to delete.
-     * @param string|null $reason   Reason for Audit Log (only for bulk messages).
+     * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
      *
      * @return ExtendedPromiseInterface
      *
