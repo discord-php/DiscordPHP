@@ -57,6 +57,7 @@
     },
     "scripts": {
         "cs": ["./vendor/bin/php-cs-fixer fix"],
+        "cs-verify": ["./vendor/bin/php-cs-fixer fix src --diff --dry-run"],
         "unit": ["./vendor/bin/phpunit --testdox"],
         "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage --testdox"]
     }
