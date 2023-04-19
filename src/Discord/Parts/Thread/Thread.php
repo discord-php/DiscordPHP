@@ -16,6 +16,7 @@ use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
@@ -30,7 +31,9 @@ use Discord\Repository\Thread\MemberRepository;
 use Discord\WebSockets\Event;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Traversable;
 
+use function Discord\getSnowflakeTimestamp;
 use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -476,8 +479,8 @@ class Thread extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
      *
-     * @param array       $messages
-     * @param string|null $reason   Reason for Audit Log (only for bulk messages).
+     * @param array|Traversable $messages An array of messages to delete.
+     * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
      *
      * @return ExtendedPromiseInterface
      *
@@ -485,42 +488,42 @@ class Thread extends Part
      */
     public function deleteMessages($messages, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! is_array($messages)) {
-            return reject(new \Exception('$messages must be an array.'));
+        if (! is_array($messages) && ! ($messages instanceof Traversable)) {
+            return reject(new \InvalidArgumentException('$messages must be an array or implement Traversable.'));
         }
 
-        $count = count($messages);
-
-        if ($count == 0) {
-            return resolve();
-        } elseif ($count == 1) {
-            foreach ($messages as $message) {
-                if ($message instanceof Message) {
-                    $message = $message->id;
-                }
-
-                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete messages in the thread {$this->id}."));
             }
         }
 
-        $headers = [];
+        $headers = $promises = $messagesBulk = $messagesSingle = [];
         if (isset($reason)) {
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        $promises = [];
-        $chunks = array_chunk(array_map(function ($message) {
+        foreach ($messages as $message) {
             if ($message instanceof Message) {
-                return $message->id;
+                $message = $message->id;
             }
 
-            return $message;
-        }, $messages), 100);
+            if (getSnowflakeTimestamp($message) < time() - 1209600) {
+                $messagesSingle[] = $message;
+            } else {
+                $messagesBulk[] = $message;
+            }
+        }
 
-        foreach ($chunks as $messages) {
-            $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), [
-                'messages' => $messages,
-            ], $headers);
+        while (count($messagesBulk) > 1) {
+            $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messagesBulk, 0, 100)], $headers);
+            $messagesBulk = array_slice($messagesBulk, 100);
+        }
+
+        $messagesSingle = array_merge($messagesSingle, $messagesBulk);
+
+        foreach ($messagesSingle as $message) {
+            $promises[] = $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
         }
 
         return all($promises);
