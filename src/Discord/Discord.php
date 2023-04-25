@@ -47,6 +47,7 @@ use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
+use Monolog\Formatter\LineFormatter;
 use Psr\Log\LoggerInterface;
 use React\Cache\ArrayCache;
 use React\Promise\ExtendedPromiseInterface;
@@ -1433,8 +1434,10 @@ class Discord
         $options['loop'] ??= LoopFactory::create();
 
         if (null === $options['logger']) {
-            $logger = new Monolog('DiscordPHP');
-            $logger->pushHandler(new StreamHandler('php://stdout', Monolog::DEBUG));
+            $streamHandler = new StreamHandler('php://stdout', Monolog::DEBUG);
+            $lineFormatter = new LineFormatter(null, null, true, true);
+            $streamHandler->setFormatter($lineFormatter);
+            $logger = new Monolog('DiscordPHP', [$streamHandler]);
             $options['logger'] = $logger;
         }
 
