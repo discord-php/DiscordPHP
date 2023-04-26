@@ -37,6 +37,7 @@ class ThreadCreate extends Event
             /** @var ?Channel */
             if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
                 $parent->last_message_id = $data->id;
+                $parent->threads->set($data->id, $threadPart);
                 /** @var ?Message */
                 if ($messageSource = yield $parent->messages->cacheGet($data->id)) {
                     if ($messageSource->has_thread) {
@@ -44,7 +45,6 @@ class ThreadCreate extends Event
                         $parent->messages->set($messageSource->id, $messageSource);
                     }
                 }
-                $parent->threads->set($data->id, $threadPart);
             }
         }
 
