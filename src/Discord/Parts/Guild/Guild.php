@@ -1017,7 +1017,8 @@ class Guild extends Part
      * @param array                   $options                An array of options.
      * @param string|Member|User|null $options['user_id']     filter the log for actions made by a user
      * @param int|null                $options['action_type'] the type of audit log event
-     * @param string|Entry|null       $options['before']      filter the log before a certain entry id
+     * @param string|Entry|null       $options['before']      filter the log before a certain entry id (sort by descending)
+     * @param string|Entry|null       $options['affter']      filter the log after a certain entry id (sort by ascending)
      * @param int|null                $options['limit']       how many entries are returned (default 50, minimum 1, maximum 100)
      *
      * @throws NoPermissionsException Missing view_audit_log permission.
@@ -1031,16 +1032,19 @@ class Guild extends Part
             'user_id',
             'action_type',
             'before',
+            'after',
             'limit',
         ])
         ->setAllowedTypes('user_id', ['string', 'int', Member::class, User::class])
         ->setAllowedTypes('action_type', 'int')
         ->setAllowedTypes('before', ['string', 'int', Entry::class])
+        ->setAllowedTypes('after', ['string', 'int', Entry::class])
         ->setAllowedTypes('limit', 'int')
         ->setAllowedValues('action_type', array_values((new ReflectionClass(Entry::class))->getConstants()))
         ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100))
         ->setNormalizer('user_id', normalizePartId())
-        ->setNormalizer('before', normalizePartId());
+        ->setNormalizer('before', normalizePartId())
+        ->setNormalizer('after', normalizePartId());
 
         $options = $resolver->resolve($options);
 
