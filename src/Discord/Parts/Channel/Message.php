@@ -763,6 +763,7 @@ class Message extends Part
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGE_THREADS, $this->channel_id, $this->id), $options, $headers)->then(function ($response) use ($channel) {
+            $this->attributes['thread'] ??= $response;
             if ($channel) {
                 /** @var ?Thread */
                 if (! $threadPart = $channel->threads->offsetGet($response->id)) {
