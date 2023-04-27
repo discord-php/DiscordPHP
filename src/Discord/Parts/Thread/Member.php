@@ -13,7 +13,9 @@ namespace Discord\Parts\Thread;
 
 use Carbon\Carbon;
 use Discord\Http\Endpoint;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\User\Member as GuildMember;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
 
@@ -25,11 +27,12 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @since 7.0.0
  *
- * @property      string|null $id             ID of the thread.
- * @property      string|null $user_id        ID of the user that the member object represents.
- * @property-read User|null   $user           The user that the member object represents.
- * @property      Carbon      $join_timestamp The time that the member joined the thread.
- * @property      int         $flags          Flags relating to the member. Only used for client notifications.
+ * @property      string|null      $id             ID of the thread.
+ * @property      string|null      $user_id        ID of the user that the member object represents.
+ * @property-read User|null        $user           The user that the member object represents.
+ * @property      Carbon           $join_timestamp The time that the member joined the thread.
+ * @property      int              $flags          Flags relating to the member. Only used for client notifications.
+ * @property-read GuildMember|null $member         Additional information about the user.
  */
 class Member extends Part
 {
@@ -41,6 +44,9 @@ class Member extends Part
         'user_id',
         'join_timestamp',
         'flags',
+        'member',
+        // @internal and events only
+        'guild_id',
     ];
 
     /**
@@ -63,6 +69,41 @@ class Member extends Part
     protected function getJoinTimestampAttribute(): Carbon
     {
         return new Carbon($this->attributes['join_timestamp']);
+    }
+
+    /**
+     * Returns the guild member that the thread member represents.
+     *
+     * @return GuildMember|null
+     *
+     * @since 10.0.0
+     */
+    protected function getMemberAttribute(): ?GuildMember
+    {
+        if (! isset($this->attributes['member'])) {
+            if ($guild = $this->getGuildAttribute()) {
+                return $guild->members->get('id', $this->user_id);
+            }
+
+            return null;
+        }
+
+        $memberData = (array) $this->attributes['member'];
+        if (isset($this->guild_id)) {
+            $memberData['guild_id'] = $this->guild_id;
+        }
+
+        return $this->factory->part(Member::class, $memberData, true);
+    }
+
+    /**
+     * Returns the guild attribute based on internal `guild_id`.
+     *
+     * @return Guild|null The guild attribute.
+     */
+    private function getGuildAttribute(): ?Guild
+    {
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 
     /**

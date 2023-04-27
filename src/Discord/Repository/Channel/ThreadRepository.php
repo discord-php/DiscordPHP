@@ -72,7 +72,7 @@ class ThreadRepository extends AbstractRepository
             foreach ($items as $thread) {
                 foreach ($members as $member) {
                     if ($member->id == $thread->id) {
-                        $thread->members->cache->set($member->id, $thread->members->create($member, true));
+                        $thread->members->cache->set($member->id, $thread->members->create((array) $member + ['guild_id' => $thread->guild_id], true));
                         break;
                     }
                 }

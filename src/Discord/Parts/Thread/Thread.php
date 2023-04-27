@@ -126,6 +126,7 @@ class Thread extends Part
             $memberPart = $this->members->create((array) $this->attributes['member'] + [
                 'id' => $this->id,
                 'user_id' => $this->discord->id,
+                'guild_id' => $this->guild_id,
             ], $this->created);
             $memberPart->created = &$this->created;
             $this->members->pushItem($memberPart);
