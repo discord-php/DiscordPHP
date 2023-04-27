@@ -118,6 +118,8 @@ class Message extends Part
     public const TYPE_CONTEXT_MENU_COMMAND = 23;
     public const TYPE_AUTO_MODERATION_ACTION = 24;
     public const TYPE_ROLE_SUBSCRIPTION_PURCHASE = 25;
+    public const TYPE_INTERACTION_PREMIUM_UPSELL = 26;
+    public const TYPE_GUILD_APPLICATION_PREMIUM_SUBSCRIPTION = 32;
 
     /** @deprecated 7.1.0 Use `Message::TYPE_USER_JOIN` */
     public const GUILD_MEMBER_JOIN = self::TYPE_USER_JOIN;
@@ -1101,6 +1103,7 @@ class Message extends Part
             self::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING,
             self::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING,
             self::TYPE_THREAD_STARTER_MESSAGE,
+            self::TYPE_GUILD_APPLICATION_PREMIUM_SUBSCRIPTION,
         ]);
     }
 
