@@ -180,6 +180,8 @@ class Guild extends Part
     public const SUPPRESS_PREMIUM_SUBSCRIPTION = (1 << 1);
     public const SUPPRESS_GUILD_REMINDER_NOTIFICATIONS = (1 << 2);
     public const SUPPRESS_JOIN_NOTIFICATION_REPLIES = (1 << 3);
+    public const SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATIONS = (1 << 4);
+    public const SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATION_REPLIES = (1 << 5);
 
     public const HUB_TYPE_DEFAULT = 0;
     public const HUB_TYPE_HIGH_SCHOOL = 1;
