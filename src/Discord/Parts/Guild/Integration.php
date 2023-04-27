@@ -26,7 +26,7 @@ use Discord\Parts\User\User;
  * @property      string           $id                  Integration id.
  * @property      string           $name                Integration name.
  * @property      string           $type                Integration type (twitch, youtube, discord, or guild_subscription).
- * @property      bool|null        $enabled             Is this integration enabled?
+ * @property      bool             $enabled             Is this integration enabled?
  * @property      bool|null        $syncing             Is this integration syncing?
  * @property      string|null      $role_id             Id that this integration uses for "subscribers".
  * @property-read Role|null        $role                Role that this integration uses for "subscribers".
