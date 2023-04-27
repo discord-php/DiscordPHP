@@ -1412,7 +1412,7 @@ class Discord
             ->setAllowedTypes('loadAllMembers', ['bool', 'array'])
             ->setAllowedTypes('disabledEvents', 'array')
             ->setAllowedTypes('storeMessages', 'bool')
-            ->setAllowedTypes('retrieveBans', 'bool')
+            ->setAllowedTypes('retrieveBans', ['bool', 'array'])
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
