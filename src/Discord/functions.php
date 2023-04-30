@@ -354,3 +354,10 @@ function nowait(PromiseInterface $promiseInterface)
 
     return $resolved;
 }
+
+/**
+ * File namespaces that were changed in new versions are aliased
+ */
+class_alias(\Discord\Repository\Channel\StageInstanceRepository::class, '\Discord\Repository\Guild\StageInstanceRepository'); // @since 10.0.0
+class_alias(\Discord\Parts\Guild\CommandPermissions::class, '\Discord\Parts\Interactions\Command\Overwrite'); // @since 10.0.0
+class_alias(\Discord\Repository\Guild\CommandPermissionsRepository::class, '\Discord\Repository\Guild\OverwriteRepository'); // @since 10.0.0
