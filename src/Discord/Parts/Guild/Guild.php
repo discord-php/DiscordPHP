@@ -842,7 +842,7 @@ class Guild extends Part
      * @param string      $options['name']        Name of the sticker.
      * @param string|null $options['description'] Description of the sticker (empty or 2-100 characters).
      * @param string      $options['tags']        Autocomplete/suggestion tags for the sticker (max 200 characters).
-     * @param string      $filepath               The sticker file to upload, must be a PNG, APNG, GIF, or Lottie JSON file, max 500 KB.
+     * @param string      $filepath               The sticker file to upload, must be a PNG, APNG, GIF, or Lottie JSON file, max 512 KB.
      * @param string|null $reason                 Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing manage_guild_expressions permission.
