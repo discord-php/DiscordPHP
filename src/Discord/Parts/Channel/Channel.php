@@ -74,6 +74,7 @@ use function React\Promise\resolve;
  * @property      ?string|null        $icon                               Icon hash.
  * @property      string|null         $owner_id                           The ID of the DM creator. Only for DM or group channels.
  * @property      string|null         $application_id                     ID of the group DM creator if it is a bot.
+ * @property      bool|null           $managed                            Whether the channel is managed by an application via the `gdm.join` OAuth2 scope. Only for group DM channels.
  * @property      ?string|null        $parent_id                          ID of the parent channel.
  * @property      Carbon|null         $last_pin_timestamp                 When the last message was pinned.
  * @property      ?string|null        $rtc_region                         Voice region id for the voice channel, automatic when set to null.
@@ -166,6 +167,7 @@ class Channel extends Part
         'icon',
         'owner_id',
         'application_id',
+        'managed',
         'parent_id',
         'last_pin_timestamp',
         'rtc_region',
