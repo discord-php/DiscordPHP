@@ -1348,20 +1348,40 @@ class Channel extends Part
             'type' => $this->type,
             'bitrate' => $this->bitrate,
             'permission_overwrites' => $this->permission_overwrites,
-            'topic' => $this->topic,
-            'user_limit' => $this->user_limit,
-            'rate_limit_per_user' => $this->rate_limit_per_user,
             'position' => $this->position,
-            'parent_id' => $this->parent_id,
-            'nsfw' => $this->nsfw,
-            'rtc_region' => $this->rtc_region,
-            'video_quality_mode' => $this->video_quality_mode,
-            'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
 
         if ($attr['type'] == self::TYPE_GUILD_TEXT) {
+            $attr['topic'] = $this->topic;
+            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['nsfw'] = $this->nsfw;
+            $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
             $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user ?? null;
+        } elseif ($this->type == self::TYPE_GUILD_VOICE) {
+            $attr['user_limit'] = $this->user_limit;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['nsfw'] = $this->nsfw;
+            $attr['rtc_region'] = $this->rtc_region;
+            $attr['video_quality_mode'] = $this->video_quality_mode;
+        } elseif ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
+            $attr['topic'] = $this->topic;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['nsfw'] = $this->nsfw;
+            $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
+        } elseif ($this->type == self::TYPE_GUILD_STAGE_VOICE) {
+            $attr['user_limit'] = $this->user_limit;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['nsfw'] = $this->nsfw;
+            $attr['rtc_region'] = $this->rtc_region;
+            $attr['video_quality_mode'] = $this->video_quality_mode;
         } elseif ($attr['type'] == self::TYPE_GUILD_FORUM) {
+            $attr['topic'] = $this->topic;
+            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['nsfw'] = $this->nsfw;
+            $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
+
             if (array_key_exists('default_reaction_emoji', $this->attributes)) {
                 $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
             }
