@@ -129,22 +129,18 @@ class Sticker extends Part
      */
     public function __toString(): string
     {
-        $format = '';
+        $format = 'png';
 
         switch ($this->attributes['format_type']) {
-            case self::FORMAT_TYPE_PNG:
-            case self::FORMAT_TYPE_APNG:
-                $format = '.png';
-                break;
             case self::FORMAT_TYPE_LOTTIE:
-                $format = '.lottie';
+                $format = 'lottie';
                 break;
             case self::FORMAT_TYPE_GIF:
-                $format = '.gif';
+                $format = 'gif';
                 break;
         }
 
-        return "https://cdn.discordapp.com/stickers/{$this->id}{$format}";
+        return "https://cdn.discordapp.com/stickers/{$this->id}.{$format}";
     }
 
     /**
