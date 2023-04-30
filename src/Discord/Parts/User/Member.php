@@ -509,6 +509,46 @@ class Member extends Part
     }
 
     /**
+     * Sets verification bypasses flag on a member.
+     *
+     * @param bool $bypasses_verification Whether member is exempt from guild verification requirements.
+     * @param string|null $reason         Reason for Audit Log.
+     *
+     * @throws NoPermissionsException Missing `moderate_members` permission.
+     *
+     * @return ExtendedPromiseInterface<Member>
+     */
+    public function setBypassesVerification(bool $bypasses_verification, ?string $reason = null): ExtendedPromiseInterface
+    {
+        if ($guild = $this->guild) {
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->moderate_members) {
+                    return reject(new NoPermissionsException("You do not have permission to modify member flag in the guild {$guild->id}."));
+                }
+            }
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        $flags = $this->flags;
+        if ($bypasses_verification) {
+            $flags |= self::FLAGS_BYPASSES_VERIFICATION;
+        } else {
+            $flags &= ~self::FLAGS_BYPASSES_VERIFICATION;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['flags' => $flags ], $headers)
+            ->then(function ($response) {
+                $this->attributes['flags'] = $response->flags;
+
+                return $this;
+            });
+    }
+
+    /**
      * Returns the member nickname or display name with optional #discriminator.
      *
      * @return string Either nick or global_name or username with optional #discriminator.
