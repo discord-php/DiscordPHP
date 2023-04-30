@@ -120,6 +120,10 @@ class Message extends Part
     public const TYPE_AUTO_MODERATION_ACTION = 24;
     public const TYPE_ROLE_SUBSCRIPTION_PURCHASE = 25;
     public const TYPE_INTERACTION_PREMIUM_UPSELL = 26;
+    public const TYPE_STAGE_START = 27;
+    public const TYPE_STAGE_END = 28;
+    public const TYPE_STAGE_SPEAKER = 29;
+    public const TYPE_STAGE_TOPIC = 31;
     public const TYPE_GUILD_APPLICATION_PREMIUM_SUBSCRIPTION = 32;
 
     /** @deprecated 7.1.0 Use `Message::TYPE_USER_JOIN` */
