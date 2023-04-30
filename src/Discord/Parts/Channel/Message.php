@@ -727,8 +727,19 @@ class Message extends Part
      *
      * @since 10.0.0 Arguments for `$name` and `$auto_archive_duration` are now inside `$options`
      */
-    public function startThread(array $options, ?string $reason = null): ExtendedPromiseInterface
+    public function startThread(array|string $options, string|null|int $reason = null, ?string $_reason = null): ExtendedPromiseInterface
     {
+        // Old v7 signature
+        if (is_string($options)) {
+            $options = [
+                'name' => $options,
+            ];
+            if (! is_string($reason)) {
+                $options['auto_archive_duration'] = $reason ?? 1440;
+            }
+            $reason = $_reason;
+        }
+
         $resolver = new OptionsResolver();
         $resolver
             ->setDefined([
