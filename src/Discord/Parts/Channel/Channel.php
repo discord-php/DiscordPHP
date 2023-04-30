@@ -725,7 +725,8 @@ class Channel extends Part
      *
      * @param array $options
      *
-     * @throws NoPermissionsException Missing read_message_history permission.
+     * @throws NoPermissionsException Missing `read_message_history` permission.
+     *                                Or also missing `connect` permission for text in voice.
      * @throws \RangeException
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
@@ -735,6 +736,10 @@ class Channel extends Part
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->read_message_history) {
                 return reject(new NoPermissionsException("You do not have permission to read message history in the channel {$this->id}."));
+            }
+
+            if ($this->type == self::TYPE_GUILD_VOICE && ! $botperms->connect) {
+                return reject(new NoPermissionsException("You do not have permission to connect in the channel {$this->id}."));
             }
         }
 
