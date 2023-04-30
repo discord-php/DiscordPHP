@@ -1358,18 +1358,18 @@ class Channel extends Part
             $attr['nsfw'] = $this->nsfw;
             $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
             $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user ?? null;
-        } elseif ($this->type == self::TYPE_GUILD_VOICE) {
+        } elseif ($attr['type'] == self::TYPE_GUILD_VOICE) {
             $attr['user_limit'] = $this->user_limit;
             $attr['parent_id'] = $this->parent_id;
             $attr['nsfw'] = $this->nsfw;
             $attr['rtc_region'] = $this->rtc_region;
             $attr['video_quality_mode'] = $this->video_quality_mode;
-        } elseif ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
+        } elseif ($attr['type'] == self::TYPE_GUILD_ANNOUNCEMENT) {
             $attr['topic'] = $this->topic;
             $attr['parent_id'] = $this->parent_id;
             $attr['nsfw'] = $this->nsfw;
             $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
-        } elseif ($this->type == self::TYPE_GUILD_STAGE_VOICE) {
+        } elseif ($attr['type'] == self::TYPE_GUILD_STAGE_VOICE) {
             $attr['user_limit'] = $this->user_limit;
             $attr['parent_id'] = $this->parent_id;
             $attr['nsfw'] = $this->nsfw;
