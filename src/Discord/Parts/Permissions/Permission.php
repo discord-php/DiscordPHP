@@ -64,6 +64,7 @@ abstract class Permission extends Part
         'use_vad' => 25,
         'manage_events' => 33,
         'use_embedded_activities' => 39,
+        'use_soundboard' => 42,
     ];
 
     /**
