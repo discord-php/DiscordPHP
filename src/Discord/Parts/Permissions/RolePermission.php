@@ -51,7 +51,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $view_guild_insights
  * @property bool $change_nickname
  * @property bool $manage_nicknames
- * @property bool $manage_emojis_and_stickers
+ * @property bool $manage_guild_expressions
  * @property bool $moderate_members
  * @property bool $view_creator_monetization_analytics
  */
