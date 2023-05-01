@@ -520,11 +520,11 @@ class Member extends Part
      */
     public function setBypassesVerification(bool $bypasses_verification, ?string $reason = null): ExtendedPromiseInterface
     {
-        if ($this->guild) {
-            $botPermissions = $this->guild->getBotPermissions();
-
-            if (null !== $botPermissions && !$botPermissions->moderate_members) {
-                return reject(new NoPermissionsException("You do not have permission to modify member flag in the guild {$this->guild->id}."));
+        if ($guild = $this->guild) {
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->moderate_members) {
+                    return reject(new NoPermissionsException("You do not have permission to modify member flag in the guild {$guild->id}."));
+                }
             }
         }
 
