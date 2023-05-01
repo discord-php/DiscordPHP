@@ -94,7 +94,7 @@ abstract class Permission extends Part
         'view_guild_insights' => 19,
         'change_nickname' => 26,
         'manage_nicknames' => 27,
-        'manage_emojis_and_stickers' => 30,
+        'manage_guild_expressions' => 30,
         'moderate_members' => 40,
         'view_creator_monetization_analytics' => 41,
     ];
