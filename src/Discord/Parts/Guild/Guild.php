@@ -772,7 +772,7 @@ class Guild extends Part
      * @param string|null $filepath         The path to the file if specified will override image data string.
      * @param string|null $reason           Reason for Audit Log.
      *
-     * @throws NoPermissionsException Missing manage_emojis_and_stickers permission.
+     * @throws NoPermissionsException Missing manage_guild_expressions permission.
      * @throws FileNotFoundException  File does not exist.
      *
      * @return ExtendedPromiseInterface<Emoji>
@@ -799,7 +799,7 @@ class Guild extends Part
         $options = $resolver->resolve($options);
 
         $botperms = $this->getBotPermissions();
-        if ($botperms && ! $botperms->manage_emojis_and_stickers) {
+        if ($botperms && ! $botperms->manage_guild_expressions) {
             return reject(new NoPermissionsException("You do not have permission to create emojis in the guild {$this->id}."));
         }
 
@@ -845,7 +845,7 @@ class Guild extends Part
      * @param string      $filepath               The sticker file to upload, must be a PNG, APNG, or Lottie JSON file, max 500 KB.
      * @param string|null $reason                 Reason for Audit Log.
      *
-     * @throws NoPermissionsException Missing manage_emojis_and_stickers permission.
+     * @throws NoPermissionsException Missing manage_guild_expressions permission.
      * @throws FileNotFoundException  The file does not exist.
      * @throws \LengthException       Description is not 2-100 characters long.
      * @throws \DomainException       File format is not PNG, APNG, or Lottie JSON.
@@ -871,7 +871,7 @@ class Guild extends Part
         $options = $resolver->resolve($options);
 
         $botperms = $this->getBotPermissions();
-        if ($botperms && ! $botperms->manage_emojis_and_stickers) {
+        if ($botperms && ! $botperms->manage_guild_expressions) {
             return reject(new NoPermissionsException("You do not have permission to create stickers in the guild {$this->id}."));
         }
 
