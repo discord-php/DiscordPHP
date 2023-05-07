@@ -21,7 +21,7 @@ use Discord\Parts\Part;
  * @since 7.1.0
  *
  * @property int                 $type     The type of action.
- * @property ActionMetadata|null $metadata Additional metadata needed during execution for this specific action type.
+ * @property ActionMetadata|null $metadata Additional metadata needed during execution for this specific action type (may contain `channel_id` and `duration_seconds`).
  */
 class Action extends Part
 {
