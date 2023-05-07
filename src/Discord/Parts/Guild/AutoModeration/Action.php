@@ -20,8 +20,8 @@ use Discord\Parts\Part;
  *
  * @since 7.1.0
  *
- * @property int         $type     The type of action.
- * @property object|null $metadata Additional metadata needed during execution for this specific action type (may contain `channel_id` and `duration_seconds`).
+ * @property int                 $type     The type of action.
+ * @property ActionMetadata|null $metadata Additional metadata needed during execution for this specific action type (may contain `channel_id` and `duration_seconds`).
  */
 class Action extends Part
 {
@@ -36,6 +36,11 @@ class Action extends Part
     public const TYPE_BLOCK_MESSAGE = 1;
     public const TYPE_SEND_ALERT_MESSAGE = 2;
     public const TYPE_TIMEOUT = 3;
+
+    public function setMetadataAttribute(object|array $metadata): void
+    {
+        $this->attributes['metadata'] = ($metadata instanceof ActionMetadata ? $metadata : new ActionMetadata((object) $metadata));
+    }
 
     /**
      * {@inheritDoc}
