@@ -39,7 +39,7 @@ use Monolog\Logger as Monolog;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
-use React\EventLoop\Loop;
+use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
@@ -1431,7 +1431,7 @@ class Discord
 
         $options = $resolver->resolve($options);
 
-        $options['loop'] ??= Loop::get();
+        $options['loop'] ??= LoopFactory::create();
 
         if (null === $options['logger']) {
             $streamHandler = new StreamHandler('php://stdout', Monolog::DEBUG);
