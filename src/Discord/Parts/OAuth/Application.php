@@ -80,6 +80,7 @@ class Application extends Part
         'role_connections_verification_url',
     ];
 
+    public const APPLICATION_AUTO_MODERATION_RULE_CREATE_BADGE = (1 << 6);
     public const GATEWAY_PRESENCE = (1 << 12);
     public const GATEWAY_PRESENCE_LIMITED = (1 << 13);
     public const GATEWAY_GUILD_MEMBERS = (1 << 14);
