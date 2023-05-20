@@ -18,13 +18,16 @@ $discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord
 
 ### Message Update
 
-Called with two `Message` objects when a message is updated in a guild or private channel.
+Called with `Message` or `stdClass` objects when a message is updated in a guild or private channel.
+The `$message` may be an instance of `stdClass` if it was partial, otherwise a `Message`.
 The old message may be null if `storeMessages` is not enabled _or_ the message was sent before the Bot was started.
 Discord does not provide a way to get message update history.
 
 ```php
-$discord->on(Event::MESSAGE_UPDATE, function (Message $message, Discord $discord, ?Message $oldMessage) {
-    // ...
+$discord->on(Event::MESSAGE_UPDATE, function (object $message, Discord $discord, ?Message $oldMessage) {
+    if ($message instanceof Message) { // Check for non partial message
+        // ...
+    }
 });
 ```
 

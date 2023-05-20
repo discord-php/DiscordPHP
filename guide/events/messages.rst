@@ -21,7 +21,7 @@ Called with a ``Message`` object when a message is sent in a guild or private ch
 Message Update
 ==============
 
-Called with two ``Message`` objects when a message is updated in a guild or private channel. The old message may be null if ``storeMessages`` is not enabled *or* the message was sent before the Bot was started. Discord does not provide a way to get message update history.
+Called with ``Message`` objects when a message is updated in a guild or private channel. The `$message` may be an instance of `stdClass` if it was partial, otherwise a `Message`. The old message may be null if ``storeMessages`` is not enabled *or* the message was sent before the Bot was started. Discord does not provide a way to get message update history.
 
 .. code:: php
 
