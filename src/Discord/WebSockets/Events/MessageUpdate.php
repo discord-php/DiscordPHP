@@ -66,13 +66,13 @@ class MessageUpdate extends Event
             }
         }
 
-        if ($oldMessagePart === null) {
+        if ($oldMessagePart === null && isset($data->type)) { // Message has type means not partial
             /** @var Message */
             $messagePart = $this->factory->part(Message::class, (array) $data, true);
         }
 
-        if (isset($channel) && ($oldMessagePart || $this->discord->options['storeMessages'])) {
-            $channel->messages->set($data->id, $cacheMessagePart ?? $messagePart);
+        if (isset($channel) && ($oldMessagePart || $this->discord->options['storeMessages']) && $setMessageData = $cacheMessagePart ?? $messagePart) { // Skip partial messages
+            $channel->messages->set($data->id, $setMessageData);
         }
 
         if (isset($data->author) && ! isset($data->webhook_id)) {
@@ -89,6 +89,6 @@ class MessageUpdate extends Event
             $this->cacheUser($user);
         }
 
-        return [$messagePart, $oldMessagePart];
+        return [$messagePart ?? $data, $oldMessagePart];
     }
 }
