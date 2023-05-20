@@ -86,6 +86,7 @@ use function React\Promise\reject;
  * @property-read bool $ephemeral                              Whether this message is only visible to the user who invoked the Interaction.
  * @property-read bool $loading                                Whether this message is an Interaction Response and the bot is "thinking".
  * @property-read bool $failed_to_mention_some_roles_in_thread This message failed to mention some roles and add their members to the thread.
+ * @property-read bool $suppress_notifications                 This message will not trigger push and desktop notifications.
  *
  * @property      string|null $guild_id The unique identifier of the guild that the channel the message was sent in belongs to.
  * @property-read Guild|null  $guild    The guild that the message was sent in.
@@ -172,6 +173,7 @@ class Message extends Part
     public const FLAG_EPHEMERAL = (1 << 6);
     public const FLAG_LOADING = (1 << 7);
     public const FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD = (1 << 8);
+    public const FLAG_SUPPRESS_NOTIFICATIONS = (1 << 12);
 
     /**
      * {@inheritDoc}
@@ -310,6 +312,16 @@ class Message extends Part
     protected function getFailedToMentionSomeRolesInThreadAttribute(): bool
     {
         return (bool) ($this->flags & self::FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD);
+    }
+
+    /**
+     * Gets the suppress notification attribute.
+     *
+     * @return bool
+     */
+    protected function getSuppressNotificationsAttribute(): bool
+    {
+        return (bool) ($this->flags & self::FLAG_SUPPRESS_NOTIFICATIONS);
     }
 
     /**
