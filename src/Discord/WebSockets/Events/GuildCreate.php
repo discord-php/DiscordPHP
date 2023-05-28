@@ -51,6 +51,18 @@ class GuildCreate extends Event
             }
         }
         foreach ($data->presences as $presence) {
+            if (! array_key_exists($presence->user->id, $members)) {
+                $this->discord->getLogger()->warning('Presence data exists but no member data was received', [
+                    'user_id' => $presence->user->id,
+                    'guild_id' => $data->id,
+                    'large' => $data->large,
+                    'member_count' => $data->member_count,
+                    'members_count' => count($data->members),
+                    'rawMembers_looped' => count($rawMembers),
+                    'presences_count' => count($data->presences),
+                ]);
+                continue;
+            }
             $members[$presence->user->id]->fill((array) $presence);
         }
         if (! empty($members)) {
