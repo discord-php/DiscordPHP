@@ -28,6 +28,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @property string       $id            The unique identifier of the client.
  * @property string       $username      The username of the client.
  * @property string       $discriminator The unique discriminator of the client.
+ * @property string|null  $global_name   The user's display name, if it is set. For bots, this is the application name.
  * @property ?string      $avatar        The avatar URL of the client.
  * @property string|null  $avatar_hash   The avatar hash of the client.
  * @property bool         $bot           Whether the client is a bot.
@@ -57,6 +58,7 @@ class Client extends Part
         'flags',
         'email',
         'discriminator',
+        'global_name',
         'bot',
         'avatar',
 
