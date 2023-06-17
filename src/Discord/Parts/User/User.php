@@ -31,7 +31,7 @@ use function React\Promise\resolve;
  * @property string       $username      The username of the user.
  * @property string       $discriminator The discriminator of the user.
  * @property string|null  $global_name   The user's display name, if it is set. For bots, this is the application name.
- * @property string       $displayname   The username and discriminator of the user.
+ * @property string       $displayname   The the display name of the client.
  * @property ?string      $avatar        The avatar URL of the user.
  * @property string|null  $avatar_hash   The avatar hash of the user.
  * @property bool|null    $bot           Whether the user is a bot.
