@@ -30,7 +30,8 @@ use function React\Promise\resolve;
  * @property string       $id            The unique identifier of the user.
  * @property string       $username      The username of the user.
  * @property string       $discriminator The discriminator of the user.
- * @property string       $displayname   The username and discriminator of the user.
+ * @property string|null  $global_name   The user's display name, if it is set. For bots, this is the application name.
+ * @property string       $displayname   The the display name of the client.
  * @property ?string      $avatar        The avatar URL of the user.
  * @property string|null  $avatar_hash   The avatar hash of the user.
  * @property bool|null    $bot           Whether the user is a bot.
@@ -79,6 +80,7 @@ class User extends Part
         'id',
         'username',
         'discriminator',
+        'global_name',
         'avatar',
         'bot',
         'system',
@@ -154,13 +156,13 @@ class User extends Part
     }
 
     /**
-     * Returns the username with the discriminator.
+     * Returns the display name of the client.
      *
-     * @return string Username#Discriminator
+     * @return string Either global_name or username with optional #discriminator.
      */
     protected function getDisplaynameAttribute(): string
     {
-        return $this->username.'#'.$this->discriminator;
+        return $this->global_name ?? $this->username.($this->discriminator !== '0' ? '#'.$this->discriminator : '');
     }
 
     /**
