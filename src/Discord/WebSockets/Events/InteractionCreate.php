@@ -99,7 +99,7 @@ class InteractionCreate extends Event
     protected function cacheMember(MemberRepository $members, array $memberdata)
     {
         // Do not load members from cache as it may delay interaction codes.
-        if ($member = $members->offsetGet('id', $memberdata['user']->id)) {
+        if ($member = $members->offsetGet($memberdata['user']->id)) {
             $member->fill($memberdata);
         } else {
             $members->pushItem($members->create($memberdata, true));
