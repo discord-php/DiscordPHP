@@ -413,6 +413,8 @@ abstract class Part implements ArrayAccess, JsonSerializable
     /**
      * Return key-value attributes if it has been filled.
      *
+     * To be used with fields marked "optional and nullable" from the API.
+     *
      * @return array
      */
     protected function makeOptionalAttributes(array $attributes): array
