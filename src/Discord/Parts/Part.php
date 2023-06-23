@@ -411,6 +411,25 @@ abstract class Part implements ArrayAccess, JsonSerializable
     }
 
     /**
+     * Return key-value attributes if it has been filled.
+     *
+     * To be used with fields marked "optional and nullable" from the API.
+     *
+     * @return array
+     */
+    protected function makeOptionalAttributes(array $attributes): array
+    {
+        $attr = [];
+        foreach ($attributes as $key => $value) {
+            if (array_key_exists($key, $this->attributes)) {
+                $attr[$key] = $value;
+            }
+        }
+
+        return $attr;
+    }
+
+    /**
      * Converts a string to studlyCase.
      *
      * This is a port of updated Laravel's implementation, a non-regex with
