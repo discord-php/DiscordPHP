@@ -1399,6 +1399,9 @@ class Channel extends Part
         $attr = [
             'name' => $this->name,
             'position' => $this->position,
+            'permission_overwrites' => array_values($this->overwrites->map(
+                fn (Overwrite $overwrite) => $overwrite->getUpdatableAttributes()
+            )->toArray()), // TODO: check if async cache works fine
         ];
 
         if ($this->type == self::TYPE_GUILD_TEXT) {
