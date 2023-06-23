@@ -136,15 +136,15 @@ class Role extends Part
      */
     public function getCreatableAttributes(): array
     {
-        return [
+        return $this->makeOptionalAttributes([
             'name' => $this->name,
-            'permissions' => $this->permissions->bitwise,
+            'permissions' => (string) $this->permissions,
             'color' => $this->color,
             'hoist' => $this->hoist,
             'icon' => $this->icon_hash,
-            'unicode_emoji' => $this->unicode_emoji ?? null,
+            'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
-        ];
+        ]);
     }
 
     /**
@@ -154,23 +154,15 @@ class Role extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        $attr = [
+        return $this->makeOptionalAttributes([
             'name' => $this->name,
-            'permissions' => $this->permissions->bitwise,
+            'permissions' => (string) $this->permissions,
             'color' => $this->color,
             'hoist' => $this->hoist,
+            'icon' => $this->icon_hash,
+            'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
-        ];
-
-        if (array_key_exists('icon', $this->attributes)) {
-            $attr['icon'] = $this->icon_hash;
-        }
-
-        if (array_key_exists('unicode_emoji', $this->attributes)) {
-            $attr['unicode_emoji'] = $this->unicode_emoji;
-        }
-
-        return $attr;
+        ]);
     }
 
     /**
