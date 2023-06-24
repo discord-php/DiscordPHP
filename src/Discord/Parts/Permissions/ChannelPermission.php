@@ -16,39 +16,23 @@ namespace Discord\Parts\Permissions;
  *
  * @since 2.1.3
  *
- * @property bool $connect
- * @property bool $mute_members
- * @property bool $deafen_members
- * @property bool $move_members
- * @property bool $request_to_speak
- * @property bool $manage_events
- *
- * @property bool $priority_speaker
- * @property bool $stream
- * @property bool $connect
- * @property bool $speak
- * @property bool $mute_members
- * @property bool $deafen_members
- * @property bool $move_members
- * @property bool $use_vad
- * @property bool $manage_events
- * @property bool $use_embedded_activities
- *
- * @property bool $add_reactions
- * @property bool $send_messages
- * @property bool $send_tts_messages
- * @property bool $manage_messages
- * @property bool $embed_links
- * @property bool $attach_files
- * @property bool $read_message_history
- * @property bool $use_external_emojis
- * @property bool $manage_webhooks
- * @property bool $use_application_commands
- * @property bool $manage_threads
- * @property bool $create_public_threads
- * @property bool $create_private_threads
- * @property bool $use_external_stickers
- * @property bool $send_messages_in_threads
+ * @property bool $priority_speaker         Allows for using priority speaker in a voice channel
+ * @property bool $stream                   Allows the user to go live
+ * @property bool $connect                  Allows for joining of a voice channel
+ * @property bool $speak                    Allows for speaking in a voice channel
+ * @property bool $mute_members             Allows for muting members in a voice channel
+ * @property bool $deafen_members           Allows for deafening of members in a voice channel
+ * @property bool $move_members             Allows for moving of members between voice channels
+ * @property bool $use_vad                  Allows for using voice-activity-detection in a voice channel
+ * @property bool $request_to_speak         Allows for requesting to speak in stage channels. (*This permission is under active development and may be changed or removed.*)
+ * @property bool $manage_events            Allows for creating, editing, and deleting scheduled events
+ * @property bool $manage_threads           Allows for deleting and archiving threads, and viewing all private threads
+ * @property bool $create_public_threads    Allows for creating public and announcement threads
+ * @property bool $create_private_threads   Allows for creating private threads
+ * @property bool $send_messages_in_threads Allows for sending messages in threads
+ * @property bool $use_embedded_activities  Allows for using Activities (applications with the `EMBEDDED` flag) in a voice channel
+ * @property bool $use_soundboard           Allows for using soundboard in a voice channel
+ * @property bool $use_external_sounds      Allows the usage of custom soundboard sounds from other servers
  */
 class ChannelPermission extends Permission
 {
