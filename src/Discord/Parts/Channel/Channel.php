@@ -66,7 +66,7 @@ use function React\Promise\resolve;
  * @property      bool|null           $nsfw                               Whether the channel is NSFW.
  * @property      ?string|null        $last_message_id                    The unique identifier of the last message sent in the channel (or thread for forum channels) (may not point to an existing or valid message or thread).
  * @property      int|null            $bitrate                            The bitrate of the channel. Only for voice channels.
- * @property      int|null            $user_limit                         The user limit of the channel.
+ * @property      int|null            $user_limit                         The user limit of the channel. Max 99 for voice channels and 10000 for stage channels (0 refers to no limit).
  * @property      int|null            $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message (slow mode).
  * @property      Collection|User[]   $recipients                         A collection of all the recipients in the channel. Only for DM or group channels.
  * @property-read User|null           $recipient                          The first recipient of the channel. Only for DM or group channels.
@@ -1318,7 +1318,16 @@ class Channel extends Part
      */
     public function isTextBased()
     {
-        return in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_DM, self::TYPE_GUILD_VOICE, self::TYPE_GROUP_DM, self::TYPE_PUBLIC_THREAD, self::TYPE_PRIVATE_THREAD, self::TYPE_GUILD_ANNOUNCEMENT]);
+        return in_array($this->type, [
+            self::TYPE_GUILD_TEXT,
+            self::TYPE_DM,
+            self::TYPE_GUILD_VOICE,
+            self::TYPE_GROUP_DM,
+            self::TYPE_PUBLIC_THREAD,
+            self::TYPE_PRIVATE_THREAD,
+            self::TYPE_GUILD_ANNOUNCEMENT,
+            self::TYPE_GUILD_STAGE_VOICE
+        ]);
     }
 
     /**
@@ -1441,7 +1450,9 @@ class Channel extends Part
             $attr['parent_id'] = $this->parent_id;
             $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
         } elseif ($this->type == self::TYPE_GUILD_STAGE_VOICE) {
+            $attr['nsfw'] = $this->nsfw;
             $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['user_limit'] = $this->user_limit;
             $attr['parent_id'] = $this->parent_id;
             $attr['bitrate'] = $this->bitrate;
             $attr['rtc_region'] = $this->rtc_region;
