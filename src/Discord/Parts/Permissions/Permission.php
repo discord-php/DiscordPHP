@@ -215,6 +215,26 @@ abstract class Permission extends Part
         }
     }
 
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 10.0.0 Use `manage_guild_expressions`
+     */
+    protected function getManageEmojisAndStickersAttribute()
+    {
+        return $this->attributes['manage_guild_expressions'] ?? null;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 10.0.0 Use `manage_guild_expressions`
+     */
+    protected function setManageEmojisAndStickersAttribute($value): void
+    {
+        $this->attributes['manage_guild_expressions'] = $value;
+    }
+
     public function __toString(): string
     {
         return (string) $this->bitwise;
