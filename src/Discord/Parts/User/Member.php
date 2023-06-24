@@ -41,9 +41,8 @@ use function React\Promise\reject;
  *
  * @property      User|null           $user                         The user part of the member.
  * @property-read string|null         $username                     The username of the member.
- * @property-read string|null         $discriminator                The discriminator of the member.
  * @property      ?string|null        $nick                         The nickname of the member.
- * @property-read string              $displayname                  The nickname or username with discriminator of the member.
+ * @property-read string              $displayname                  The nickname or display name with optional discriminator of the member.
  * @property      ?string|null        $avatar                       The avatar URL of the member or null if member has no guild avatar.
  * @property      ?string|null        $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
  * @property      Collection|Role[]   $roles                        A collection of Roles that the member has.
@@ -510,13 +509,15 @@ class Member extends Part
     }
 
     /**
-     * Returns the member nickname or username with the discriminator.
+     * Returns the member nickname or display name with optional #discriminator.
      *
-     * @return string Nickname#Discriminator
+     * @return string Either nick or global_name or username with optional #discriminator.
      */
     protected function getDisplaynameAttribute(): string
     {
-        return ($this->nick ?? $this->username).'#'.$this->discriminator;
+        $user = $this->user;
+
+        return ($this->nick ?? $user->global_name ?? $user->username) . ($user->discriminator ? '#' . $user->discriminator : '');
     }
 
     /**
@@ -568,6 +569,8 @@ class Member extends Part
 
     /**
      * Returns the discriminator attribute.
+     *
+     * @deprecated 10.0.0 Use `$member->user->discriminator`
      *
      * @return string|null The discriminator of the member.
      */
