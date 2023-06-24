@@ -41,7 +41,6 @@ use function React\Promise\reject;
  *
  * @property      User|null           $user                         The user part of the member.
  * @property-read string|null         $username                     The username of the member.
- * @property-read string|null         $discriminator                The discriminator of the member.
  * @property      ?string|null        $nick                         The nickname of the member.
  * @property-read string              $displayname                  The nickname or display name with discriminator of the member.
  * @property      ?string|null        $avatar                       The avatar URL of the member or null if member has no guild avatar.
@@ -570,6 +569,8 @@ class Member extends Part
 
     /**
      * Returns the discriminator attribute.
+     *
+     * @deprecated 10.0.0 Use `$member->user->discriminator`
      *
      * @return string|null The discriminator of the member.
      */
