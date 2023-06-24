@@ -42,7 +42,7 @@ use function React\Promise\reject;
  * @property      User|null           $user                         The user part of the member.
  * @property-read string|null         $username                     The username of the member.
  * @property      ?string|null        $nick                         The nickname of the member.
- * @property-read string              $displayname                  The nickname or display name with discriminator of the member.
+ * @property-read string              $displayname                  The nickname or display name with optional discriminator of the member.
  * @property      ?string|null        $avatar                       The avatar URL of the member or null if member has no guild avatar.
  * @property      ?string|null        $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
  * @property      Collection|Role[]   $roles                        A collection of Roles that the member has.
