@@ -33,6 +33,8 @@ namespace Discord\Parts\Permissions;
  * @property bool $use_vad
  * @property bool $manage_events
  * @property bool $use_embedded_activities
+ * @property bool $use_soundboard
+ * @property bool $use_external_sounds
  *
  * @property bool $add_reactions
  * @property bool $send_messages

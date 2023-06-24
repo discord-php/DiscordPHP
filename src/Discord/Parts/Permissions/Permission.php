@@ -29,6 +29,7 @@ use Discord\Parts\Part;
  * @property bool       $view_channel
  * @property bool       $mention_everyone
  * @property bool       $manage_roles
+ * @property bool       $send_voice_messages
  */
 abstract class Permission extends Part
 {
@@ -65,6 +66,7 @@ abstract class Permission extends Part
         'manage_events' => 33,
         'use_embedded_activities' => 39,
         'use_soundboard' => 42,
+        'use_external_sounds' => 45,
     ];
 
     /**
@@ -123,6 +125,7 @@ abstract class Permission extends Part
         'manage_webhooks' => 29,
         'use_application_commands' => 31,
         'use_external_stickers' => 37,
+        'send_voice_messages' => 46,
     ];
 
     /**
