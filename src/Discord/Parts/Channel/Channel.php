@@ -1371,40 +1371,81 @@ class Channel extends Part
      */
     public function getCreatableAttributes(): array
     {
-        $attr = [
-            'name' => $this->name,
+        // Required
+        $attr = ['name' => $this->name];
+
+        // Marked "Channel Type: All" in documentation
+        $attr += $this->makeOptionalAttributes([
             'type' => $this->type,
-            'bitrate' => $this->bitrate,
             'permission_overwrites' => $this->permission_overwrites,
-            'topic' => $this->topic,
-            'user_limit' => $this->user_limit,
-            'rate_limit_per_user' => $this->rate_limit_per_user,
             'position' => $this->position,
-            'parent_id' => $this->parent_id,
-            'nsfw' => $this->nsfw,
-            'rtc_region' => $this->rtc_region,
-            'video_quality_mode' => $this->video_quality_mode,
-            'default_auto_archive_duration' => $this->default_auto_archive_duration,
-        ];
+        ]);
 
-        if ($attr['type'] == self::TYPE_GUILD_TEXT) {
-            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user ?? null;
-        } elseif ($attr['type'] == self::TYPE_GUILD_FORUM) {
-            if (array_key_exists('default_reaction_emoji', $this->attributes)) {
-                $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
-            }
+        switch ($this->type) {
+            case self::TYPE_GUILD_TEXT:
+                $attr += $this->makeOptionalAttributes([
+                    'topic' => $this->topic,
+                    'rate_limit_per_user' => $this->rate_limit_per_user,
+                    'parent_id' => $this->parent_id,
+                    'nsfw' => $this->nsfw,
+                    'default_auto_archive_duration' => $this->default_auto_archive_duration,
+                    'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user,
+                ]);
+                break;
 
-            $attr['available_tags'] = $this->attributes['available_tags'] ?? null;
+            case self::TYPE_GUILD_VOICE:
+                $attr += $this->makeOptionalAttributes([
+                    'bitrate' => $this->bitrate,
+                    'user_limit' => $this->user_limit,
+                    'rate_limit_per_user' => $this->rate_limit_per_user,
+                    'parent_id' => $this->parent_id,
+                    'nsfw' => $this->nsfw,
+                    'rtc_region' => $this->rtc_region,
+                    'video_quality_mode' => $this->video_quality_mode,
+                ]);
+                break;
 
-            if (array_key_exists('default_sort_order', $this->attributes)) {
-                $attr['default_sort_order'] = $this->default_sort_order;
-            }
+            case self::TYPE_GUILD_ANNOUNCEMENT:
+                $attr += $this->makeOptionalAttributes([
+                    'topic' => $this->topic,
+                    'parent_id' => $this->parent_id,
+                    'nsfw' => $this->nsfw,
+                    'default_auto_archive_duration' => $this->default_auto_archive_duration,
+                ]);
+                break;
 
-            if (array_key_exists('default_forum_layout', $this->attributes)) {
-                $attr['default_forum_layout'] = $this->default_forum_layout;
-            }
+            case self::TYPE_GUILD_STAGE_VOICE:
+                $attr += $this->makeOptionalAttributes([
+                    'bitrate' => $this->bitrate,
+                    'user_limit' => $this->user_limit,
+                    'rate_limit_per_user' => $this->rate_limit_per_user,
+                    'parent_id' => $this->parent_id,
+                    'nsfw' => $this->nsfw,
+                    'rtc_region' => $this->rtc_region,
+                    'video_quality_mode' => $this->video_quality_mode,
+                ]);
+                break;
 
-            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user ?? null;
+            case self::TYPE_GUILD_FORUM:
+                $attr += $this->makeOptionalAttributes([
+                    'topic' => $this->topic,
+                    'rate_limit_per_user' => $this->rate_limit_per_user,
+                    'parent_id' => $this->parent_id,
+                    'nsfw' => $this->nsfw,
+                    'default_auto_archive_duration' => $this->default_auto_archive_duration,
+                    'default_reaction_emoji' => $this->attributes['default_reaction_emoji'] ?? null,
+                    'available_tags' => $this->attributes['available_tags'] ?? null,
+                    'default_sort_order' => $this->default_sort_order,
+                    'default_forum_layout' => $this->default_forum_layout,
+                    'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user, // Canceled documentation #5606
+                ]);
+                break;
+
+            case null:
+                // Type was not specified but we must not assume its default to GUILD_TEXT as that is determined by API
+                $this->discord->getLogger()->warning('Not specifying channel type, creating with all filled attributes');
+                $attr += $this->makeOptionalAttributes($this->getRawAttributes()); // Send the raw attributes
+                break;
         }
 
         return $attr;
