@@ -517,7 +517,7 @@ class Member extends Part
     {
         $user = $this->user;
 
-        return ($this->nick ?? $user->global_name ?? $user->username) . ($user->discriminator ? '#' . $this->discriminator : '');
+        return ($this->nick ?? $user->global_name ?? $user->username) . ($user->discriminator ? '#' . $user->discriminator : '');
     }
 
     /**
