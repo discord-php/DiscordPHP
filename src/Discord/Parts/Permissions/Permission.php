@@ -18,39 +18,56 @@ use Discord\Parts\Part;
 /**
  * Permission represents a set of permissions for a given role or overwrite.
  *
+ * Note: The const declared here are the bit position, not the bitwise value.
+ *
  * @link https://discord.com/developers/docs/topics/permissions
  *
  * @since 2.1.3 Namespace moved from Guild to Permissions
  * @since 2.0.0
  *
- * @property int|string $bitwise
- * @property bool       $create_instant_invite
- * @property bool       $manage_channels
- * @property bool       $view_channel
- * @property bool       $mention_everyone
- * @property bool       $manage_roles
- * @property bool       $send_voice_messages
+ * @property int|string $bitwise                  Bitwise value of the enabled/disabled permissions
+ * @property bool       $create_instant_invite    Allows creation of instant invites
+ * @property bool       $manage_channels          Allows management and editing of channels
+ * @property bool       $add_reactions            Allows for the addition of reactions to messages
+ * @property bool       $view_channel             Allows guild members to view a channel, which includes reading messages in text channels and joining voice channels
+ * @property bool       $send_messages            Allows for sending messages in a channel and creating threads in a forum (does not allow sending messages in threads)
+ * @property bool       $send_tts_messages        Allows for sending of `/tts` messages
+ * @property bool       $manage_messages          Allows for deletion of other users messages
+ * @property bool       $embed_links              Links sent by users with this permission will be auto-embedded
+ * @property bool       $attach_files             Allows for uploading images and files
+ * @property bool       $read_message_history     Allows for reading of message history
+ * @property bool       $mention_everyone         Allows for using the `@everyone` tag to notify all users in a channel, and the `@here` tag to notify all online users in a channel
+ * @property bool       $use_external_emojis      Allows the usage of custom emojis from other servers
+ * @property bool       $manage_roles             Allows management and editing of roles
+ * @property bool       $manage_webhooks          Allows management and editing of webhooks
+ * @property bool       $use_application_commands Allows members to use application commands, including slash commands and context menu commands.
+ * @property bool       $use_external_stickers    Allows the usage of custom stickers from other servers
+ * @property bool       $send_voice_messages      Allows sending voice messages
  */
 abstract class Permission extends Part
 {
     /**
-     * Array of permissions that only apply to stage channels.
-     * i.e. indicated S in documentation.
+     * Array of permissions that only apply to text channels.
+     * i.e. indicated T in documentation.
+     * 
+     * The constant values here are the bit position, not the bitwise value
+     *
+     * @see ChannelPermission
      *
      * @var array
      */
-    public const STAGE_PERMISSIONS = [
-        'stream' => 9,
-        'connect' => 20,
-        'mute_members' => 22,
-        'move_members' => 24,
-        'request_to_speak' => 32,
-        'manage_events' => 33,
+    public const TEXT_PERMISSIONS = [
+        'manage_threads' => 34,
+        'create_public_threads' => 35,
+        'create_private_threads' => 36,
+        'send_messages_in_threads' => 38,
     ];
 
     /**
      * Array of permissions that only apply to voice channels.
      * i.e. indicated V in documentation.
+     *
+     * @see ChannelPermission
      *
      * @var array
      */
@@ -70,36 +87,20 @@ abstract class Permission extends Part
     ];
 
     /**
-     * Array of permissions that only apply to text channels.
-     * i.e. indicated T in documentation.
+     * Array of permissions that only apply to stage channels.
+     * i.e. indicated S in documentation.
+     *
+     * @see ChannelPermission
      *
      * @var array
      */
-    public const TEXT_PERMISSIONS = [
-        'manage_threads' => 34,
-        'create_public_threads' => 35,
-        'create_private_threads' => 36,
-        'send_messages_in_threads' => 38,
-    ];
-
-    /**
-     * Array of permissions that can only be applied to roles.
-     * i.e. indicated empty in documentation.
-     *
-     * @var array
-     */
-    public const ROLE_PERMISSIONS = [
-        'kick_members' => 1,
-        'ban_members' => 2,
-        'administrator' => 3,
-        'manage_guild' => 5,
-        'view_audit_log' => 7,
-        'view_guild_insights' => 19,
-        'change_nickname' => 26,
-        'manage_nicknames' => 27,
-        'manage_guild_expressions' => 30,
-        'moderate_members' => 40,
-        'view_creator_monetization_analytics' => 41,
+    public const STAGE_PERMISSIONS = [
+        'stream' => 9,
+        'connect' => 20,
+        'mute_members' => 22,
+        'move_members' => 24,
+        'request_to_speak' => 32,
+        'manage_events' => 33,
     ];
 
     /**
@@ -126,6 +127,28 @@ abstract class Permission extends Part
         'use_application_commands' => 31,
         'use_external_stickers' => 37,
         'send_voice_messages' => 46,
+    ];
+
+    /**
+     * Array of permissions that can only be applied to roles.
+     * i.e. indicated empty in documentation.
+     *
+     * @see RolePermission
+     *
+     * @var array
+     */
+    public const ROLE_PERMISSIONS = [
+        'kick_members' => 1,
+        'ban_members' => 2,
+        'administrator' => 3,
+        'manage_guild' => 5,
+        'view_audit_log' => 7,
+        'view_guild_insights' => 19,
+        'change_nickname' => 26,
+        'manage_nicknames' => 27,
+        'manage_guild_expressions' => 30,
+        'moderate_members' => 40,
+        'view_creator_monetization_analytics' => 41,
     ];
 
     /**
@@ -209,8 +232,6 @@ abstract class Permission extends Part
     }
 
     /**
-     * @inheritdoc
-     *
      * @deprecated 10.0.0 Use `manage_guild_expressions`
      */
     protected function getManageEmojisAndStickersAttribute()
@@ -219,11 +240,9 @@ abstract class Permission extends Part
     }
 
     /**
-     * @inheritdoc
-     *
      * @deprecated 10.0.0 Use `manage_guild_expressions`
      */
-    protected function setManageEmojisAndStickersAttribute($value): void
+    protected function setManageEmojisAndStickersAttribute(bool $value): void
     {
         $this->attributes['manage_guild_expressions'] = $value;
     }
