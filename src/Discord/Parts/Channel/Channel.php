@@ -949,8 +949,20 @@ class Channel extends Part
      *
      * @since 10.0.0 Arguments for `$name`, `$private` and `$auto_archive_duration` are now inside `$options`
      */
-    public function startThread(array $options, ?string $reason = null): ExtendedPromiseInterface
+    public function startThread(array|string $options, string|null|bool $reason = null, int $_auto_archive_duration = 1440, ?string $_reason = null): ExtendedPromiseInterface
     {
+        // Old v7 signature
+        if (is_string($options)) {
+            $options = [
+                'name' => $options,
+                'auto_archive_duration' => $_auto_archive_duration,
+            ];
+            if (is_bool($reason)) {
+                $options['private'] = $reason;
+            }
+            $reason = $_reason;
+        }
+
         $resolver = new OptionsResolver();
         $resolver
             ->setDefined([
