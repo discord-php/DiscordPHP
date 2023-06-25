@@ -21,7 +21,7 @@ use Discord\Parts\Part;
  * @since 7.1.0
  *
  * @property int                 $type     The type of action.
- * @property ActionMetadata|null $metadata Additional metadata needed during execution for this specific action type (may contain `channel_id` and `duration_seconds`).
+ * @property ActionMetadata|null $metadata Additional metadata needed during execution for this specific action type.
  */
 class Action extends Part
 {
@@ -39,7 +39,12 @@ class Action extends Part
 
     public function setMetadataAttribute(object|array $metadata): void
     {
-        $this->attributes['metadata'] = ($metadata instanceof ActionMetadata ? $metadata : new ActionMetadata((object) $metadata));
+        if (! ($metadata instanceof ActionMetadata)) {
+            $metadata = $this->factory->part(ActionMetadata::class, (array) $metadata);
+            $metadata->created = &$this->created;
+        }
+
+        $this->attributes['metadata'] = $metadata;
     }
 
     /**

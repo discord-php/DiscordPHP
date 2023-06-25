@@ -11,7 +11,7 @@
 
 namespace Discord\Parts\Guild\AutoModeration;
 
-use Discord\Parts\Metadata;
+use Discord\Parts\Part;
 
 /**
  * Additional data used when an action is executed. Different fields are
@@ -20,30 +20,19 @@ use Discord\Parts\Metadata;
  * @link https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-action-metadata
  *
  * @since 10.0.0
+ *
+ * @property string      $channel_id       Channel to which user content should be logged. For `SEND_ALERT_MESSAGE`.
+ * @property int         $duration_seconds Timeout duration in seconds. Maximum of 2419200 seconds (4 weeks). For `TYPE_TIMEOUT`.
+ * @property string|null $custom_message   Additional explanation that will be shown to members whenever their message is blocked. Maximum of 150 characters. For `TYPE_BLOCK_MESSAGE`.
  */
-class ActionMetadata extends Metadata
+class ActionMetadata extends Part
 {
     /**
-     * Channel to which user content should be logged.
-     *
-     * @see Action::TYPE_SEND_ALERT_MESSAGE
+     * {@inheritDoc}
      */
-    public string $channel_id;
-
-    /**
-     * Timeout duration in seconds.
-     * Maximum of 2419200 seconds (4 weeks).
-     * 
-     * @see Action::TYPE_TIMEOUT
-     */
-    public int $duration_seconds;
-
-    /**
-     * Additional explanation that will be shown to members whenever their
-     * message is blocked.
-     * Maximum of 150 characters.
-     * 
-     * @see Action::TYPE_BLOCK_MESSAGE
-     */
-    public string $custom_message;
+    protected $fillable = [
+        'channel_id',
+        'duration_seconds',
+        'custom_message',
+    ];
 }
