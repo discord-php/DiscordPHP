@@ -21,7 +21,7 @@ use Discord\Parts\Part;
  * @since 7.1.0
  *
  * @property int                 $type     The type of action.
- * @property ActionMetadata|null $metadata Additional metadata needed during execution for this specific action type (may contain `channel_id` and `duration_seconds`).
+ * @property ActionMetadata|null $metadata Additional metadata needed during execution for this specific action type.
  */
 class Action extends Part
 {
@@ -37,14 +37,18 @@ class Action extends Part
     public const TYPE_SEND_ALERT_MESSAGE = 2;
     public const TYPE_TIMEOUT = 3;
 
-    public function setMetadataAttribute(object|array $metadata): void
+    /**
+     * Get the Metadata Attributes
+     *
+     * @return ?ActionMetadata
+     */
+    public function getMetadataAttribute(): ?ActionMetadata
     {
-        if (! ($metadata instanceof ActionMetadata)) {
-            $metadata = $this->factory->part(ActionMetadata::class, (array) $metadata);
-            $metadata->created = &$this->created;
+        if (! isset($this->attributes['metadata'])) {
+            return null;
         }
 
-        $this->attributes['metadata'] = $metadata;
+        return $this->createOf(ActionMetadata::class, $this->attributes['metadata']);
     }
 
     /**
@@ -56,11 +60,7 @@ class Action extends Part
     {
         $attr = [
             'type' => $this->type,
-        ];
-
-        if (isset($this->attributes['metadata'])) {
-            $attr['metadata'] = $this->metadata;
-        }
+        ] + $this->makeOptionalAttributes(['metadata']);
 
         return $attr;
     }

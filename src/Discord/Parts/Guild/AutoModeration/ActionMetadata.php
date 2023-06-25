@@ -35,4 +35,13 @@ class ActionMetadata extends Part
         'duration_seconds',
         'custom_message',
     ];
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPublicAttributes(): array
+    {
+        // Return raw as the attributes might only contain one of the fillable
+        return $this->getRawAttributes();
+    }
 }
