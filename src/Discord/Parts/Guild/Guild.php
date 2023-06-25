@@ -842,13 +842,13 @@ class Guild extends Part
      * @param string      $options['name']        Name of the sticker.
      * @param string|null $options['description'] Description of the sticker (empty or 2-100 characters).
      * @param string      $options['tags']        Autocomplete/suggestion tags for the sticker (max 200 characters).
-     * @param string      $filepath               The sticker file to upload, must be a PNG, APNG, GIF, or Lottie JSON file, max 512 KB.
+     * @param string      $filepath               The sticker file to upload, must be a PNG, APNG, or Lottie JSON file, max 512 KB.
      * @param string|null $reason                 Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing manage_guild_expressions permission.
      * @throws FileNotFoundException  The file does not exist.
      * @throws \LengthException       Description is not 2-100 characters long.
-     * @throws \DomainException       File format is not PNG, APNG, GIF, or Lottie JSON.
+     * @throws \DomainException       File format is not PNG, APNG, or Lottie JSON.
      * @throws \RuntimeException      Guild is not verified or partnered to upload Lottie stickers.
      *
      * @return ExtendedPromiseInterface<Sticker>
@@ -892,12 +892,12 @@ class Guild extends Part
             $contentTypes = [
                 'png' => 'image/png',
                 'apng' => 'image/apng',
-                'gif' => 'image/gif',
+                //'gif' => 'image/gif', // Currently disabled in API
                 'lottie' => 'application/json',
             ];
 
             if (! array_key_exists($extension, $contentTypes)) {
-                return reject(new \DomainException("File format must be PNG, APNG, GIF, or Lottie JSON, given {$extension}."));
+                return reject(new \DomainException("File format must be PNG, APNG, or Lottie JSON, given {$extension}."));
             }
 
             $contentType = $contentTypes[$extension];
