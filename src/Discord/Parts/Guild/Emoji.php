@@ -140,15 +140,10 @@ class Emoji extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        $attr = [
+        return $this->makeOptionalAttributes([
             'name' => $this->name,
-        ];
-
-        if (array_key_exists('roles', $this->attributes)) {
-            $attr['roles'] = $this->attributes['roles'];
-        }
-
-        return $attr;
+            'roles' => $this->attributes['roles'],
+        ]);
     }
 
     /**

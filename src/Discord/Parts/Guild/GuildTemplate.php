@@ -189,8 +189,9 @@ class GuildTemplate extends Part
     {
         return [
             'name' => $this->name,
-            'description' => $this->description ?? null,
-        ];
+        ] + $this->makeOptionalAttributes([
+            'description' => $this->description,
+        ]);
     }
 
     /**
@@ -200,15 +201,10 @@ class GuildTemplate extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        $attr = [
+        return $this->makeOptionalAttributes([
             'name' => $this->name,
-        ];
-
-        if (array_key_exists('description', $this->attributes)) {
-            $attr['description'] = $this->description;
-        }
-
-        return $attr;
+            'description' => $this->description,
+        ]);
     }
 
     /**
