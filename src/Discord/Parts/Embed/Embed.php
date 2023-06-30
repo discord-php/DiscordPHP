@@ -139,7 +139,7 @@ class Embed extends Part
      */
     protected function getFieldsAttribute(): Collection
     {
-        $fields = new Collection([], 'name', Field::class);
+        $fields = new Collection([], 'id', Field::class);
 
         if (! array_key_exists('fields', $this->attributes)) {
             return $fields;
