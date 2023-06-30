@@ -219,6 +219,8 @@ function imageToBase64(string $filepath): string
  *
  * @return float
  *
+ * @link https://discord.com/developers/docs/reference#snowflakes
+ *
  * @since 5.1.1
  */
 function getSnowflakeTimestamp(string $snowflake)
@@ -243,6 +245,27 @@ function getSnowflakeTimestamp(string $snowflake)
     }
 
     return $timestamp;
+}
+
+/**
+ * Generates snowflake from timestamp.
+ *
+ * @param string $timestamp
+ *
+ * @return string
+ *
+ * @link https://discord.com/developers/docs/reference#snowflakes
+ *
+ * @since 10.0.0
+ */
+function generateSnowflake(string $timestamp = 'now') :string
+{
+    $snowflake = \str_pad(\base_convert(\strtotime($timestamp) - 1420070400, 10, 2), 42, 0, \STR_PAD_LEFT);
+    $snowflake .= \str_pad(\base_convert(\rand(0, 31), 10, 2), 5, 0, \STR_PAD_LEFT);
+    $snowflake .= \str_pad(\base_convert(\rand(0, 31), 10, 2), 5, 0, \STR_PAD_LEFT);
+    $snowflake .= \str_pad(\base_convert(\rand(0, 4095), 10, 2), 12, 0, \STR_PAD_LEFT);
+
+    return (string) \base_convert($snowflake, 2, 10);
 }
 
 /**
