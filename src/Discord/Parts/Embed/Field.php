@@ -20,6 +20,7 @@ use Discord\Parts\Part;
  *
  * @since 4.0.3
  *
+ * @property string    $id     A generated snowflake.
  * @property string    $name   The name of the field.
  * @property string    $value  The value of the field.
  * @property bool|null $inline Whether the field should be displayed in-line.
@@ -30,10 +31,19 @@ class Field extends Part
      * {@inheritDoc}
      */
     protected $fillable = [
+        'id',
         'name',
         'value',
         'inline',
     ];
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function afterConstruct(): void
+    {
+        $this->id = generateSnowflake();
+    }
 
     /**
      * Gets the inline attribute.
