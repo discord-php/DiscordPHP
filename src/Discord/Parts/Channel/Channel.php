@@ -43,6 +43,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 
 use function Discord\getSnowflakeTimestamp;
+use function Discord\nowait;
 use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -873,20 +874,41 @@ class Channel extends Part
      */
     protected function setPermissionOverwritesAttribute(?array $overwrites): void
     {
-        foreach ($overwrites ?? [] as $overwrite) {
-            $overwrite = (array) $overwrite;
-            /** @var Overwrite */
-            if ($overwritePart = $this->overwrites->offsetGet($overwrite['id'])) {
-                $overwritePart->fill($overwrite);
+        if ($overwrites) {
+            foreach ($overwrites as $overwrite) {
+                $overwrite = (array) $overwrite;
+                /** @var Overwrite */
+                if ($overwritePart = $this->overwrites->offsetGet($overwrite['id'])) {
+                    $overwritePart->fill($overwrite);
+                }
+                $this->overwrites->pushItem($overwritePart ?: $this->overwrites->create($overwrite, true));
             }
-            $this->overwrites->pushItem($overwritePart ?: $this->overwrites->create($overwrite, true));
-        }
-
-        if (! empty($this->attributes['permission_overwrites']) && $clean = array_diff(array_column($this->attributes['permission_overwrites'], 'id'), array_column($overwrites ?? [], 'id'))) {
-            $this->overwrites->cache->deleteMultiple($clean);
+        } else {
+            if (null === nowait($this->overwrites->cache->clear())) {
+                foreach ($this->overwrites->keys as $key) {
+                    $this->overwrites->offsetUnset($key);
+                }
+            }
         }
 
         $this->attributes['permission_overwrites'] = $overwrites;
+    }
+
+    /**
+     * Gets the permission overwrites attribute.
+     *
+     * @param ?array $overwrites
+     */
+    protected function getPermissionOverwritesAttribute(): ?array
+    {
+        $overwrites = null;
+
+        /** @var Overwrite */
+        foreach ($this->overwrites as $overwrite) {
+            $overwrites[] = $overwrite->getRawAttributes();
+        }
+
+        return $overwrites ?? $this->attributes['permission_overwrites'] ?? null;
     }
 
     /**
@@ -1469,12 +1491,8 @@ class Channel extends Part
         $attr = [
             'name' => $this->name,
             'position' => $this->position,
+            'permission_overwrites' => $this->permission_overwrites,
         ];
-        // Using iterator instead of map() since we need to get from cache, not collections.
-        /** @var Overwrite */
-        foreach ($this->overwrites as $overwrite) {
-            $attr['permission_overwrites'][] = $overwrite->getUpdatableAttributes();
-        }
 
         switch ($this->type) {
             case self::TYPE_GUILD_TEXT:
