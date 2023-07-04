@@ -141,6 +141,33 @@ class Member extends Part
     }
 
     /**
+     * Kick the member from the guild.
+     *
+     * @param string|null     $reason  Reason for Audit Log.
+     *
+     * @throws NoPermissionsException Missing kick_members permission.
+     *
+     * @return ExtendedPromiseInterface<Member>
+     */
+    public function kick(?string $reason = null): ExtendedPromiseInterface
+    {
+        if ($guild = $this->guild) {
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->kick_members) {
+                    return reject(new NoPermissionsException("You do not have permission to kick members in the guild {$guild->id}."));
+                }
+            }
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), null, $headers);
+    }
+
+    /**
      * Sets the nickname of the member.
      *
      * @param ?string|null $nick   The nickname of the member.
