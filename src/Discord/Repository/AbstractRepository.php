@@ -610,7 +610,7 @@ abstract class AbstractRepository extends Collection
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $items = [];
 
@@ -629,7 +629,7 @@ abstract class AbstractRepository extends Collection
      *
      * @return int[]|string[]
      */
-    public function keys()
+    public function keys(): array
     {
         return array_keys($this->items);
     }

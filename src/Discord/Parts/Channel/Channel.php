@@ -885,7 +885,7 @@ class Channel extends Part
             }
         } else {
             if (null === nowait($this->overwrites->cache->clear())) {
-                foreach ($this->overwrites->keys as $key) {
+                foreach ($this->overwrites->keys() as $key) {
                     $this->overwrites->offsetUnset($key);
                 }
             }
