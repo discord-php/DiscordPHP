@@ -170,10 +170,13 @@ class Rule extends Part
             'actions' => array_values($this->actions->map(function (Action $action) {
                 return $action->getCreatableAttributes();
             })->toArray()),
-            'enabled' => $this->enabled ?? false,
-            'exempt_roles' => $this->attributes['exempt_roles'] ?? null,
-            'exempt_channels' => $this->attributes['exempt_channels'] ?? null,
         ];
+
+        $attr += $this->makeOptionalAttributes([
+            'enabled' => $this->enabled,
+            'exempt_roles' => $this->attributes['exempt_roles'] ?? [],
+            'exempt_channels' => $this->attributes['exempt_channels'] ?? [],
+        ]);
 
         if (in_array($this->trigger_type, [self::TRIGGER_TYPE_KEYWORD, self::TRIGGER_TYPE_KEYWORD_PRESET, self::TRIGGER_TYPE_MENTION_SPAM])) {
             $attr['trigger_metadata'] = $this->trigger_metadata;
