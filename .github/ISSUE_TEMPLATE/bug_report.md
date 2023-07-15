@@ -7,7 +7,7 @@ labels: bug
 ---
 
 <!-- Please keep issues strictly about bugs and feature requests. -->
-<!-- If you need help, please join our Discord server. The link is in the README. -->
+<!-- For any other questions, either join our discord at https://discord.gg/dphp or click on "Discussions" above. -->
 
 <!-- Please provide your PHP and DiscordPHP version. This will help us debug. -->
 <!-- PHP version can be retrieved by running `php -v` -->
