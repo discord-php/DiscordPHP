@@ -37,6 +37,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $move_members
  * @property bool $use_vad
  * @property bool $request_to_speak
+ * @property bool $create_events
  * @property bool $manage_events
  * @property bool $manage_threads
  * @property bool $create_public_threads

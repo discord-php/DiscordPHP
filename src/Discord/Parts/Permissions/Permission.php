@@ -80,6 +80,7 @@ abstract class Permission extends Part
         'deafen_members' => 23,
         'move_members' => 24,
         'use_vad' => 25,
+        'create_events' => 43,
         'manage_events' => 33,
         'use_embedded_activities' => 39,
         'use_soundboard' => 42,
@@ -100,6 +101,7 @@ abstract class Permission extends Part
         'mute_members' => 22,
         'move_members' => 24,
         'request_to_speak' => 32,
+        'create_events' => 43,
         'manage_events' => 33,
     ];
 

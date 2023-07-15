@@ -25,7 +25,8 @@ namespace Discord\Parts\Permissions;
  * @property bool $move_members             Allows for moving of members between voice channels
  * @property bool $use_vad                  Allows for using voice-activity-detection in a voice channel
  * @property bool $request_to_speak         Allows for requesting to speak in stage channels. (*This permission is under active development and may be changed or removed.*)
- * @property bool $manage_events            Allows for creating, editing, and deleting scheduled events
+ * @property bool $create_events            Allows for creating scheduled events
+ * @property bool $manage_events            Allows for editing, and deleting scheduled events
  * @property bool $manage_threads           Allows for deleting and archiving threads, and viewing all private threads
  * @property bool $create_public_threads    Allows for creating public and announcement threads
  * @property bool $create_private_threads   Allows for creating private threads
