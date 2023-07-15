@@ -42,6 +42,7 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property string|null   $cover_image                       The application's default rich presence invite cover image URL.
  * @property string|null   $cover_image_hash                  The application's default rich presence invite cover image hash.
  * @property int           $flags                             The application's public flags.
+ * @property int|null      $approximate_guild_count           The application's approximate count of the app's guild membership.
  * @property string[]|null $tags                              Up to 5 tags describing the content and functionality of the application.
  * @property object|null   $install_params                    Settings for the application's default in-app authorization link, if enabled.
  * @property string|null   $custom_install_url                The application's default custom authorization link, if enabled.
@@ -78,6 +79,7 @@ class Application extends Part
         'install_params',
         'custom_install_url',
         'role_connections_verification_url',
+        'approximate_guild_count',
     ];
 
     public const APPLICATION_AUTO_MODERATION_RULE_CREATE_BADGE = (1 << 6);
