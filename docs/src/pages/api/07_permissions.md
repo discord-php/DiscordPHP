@@ -71,6 +71,7 @@ Represents permissions for text, voice, and stage instance channels.
 - `deafen_members`
 - `move_members`
 - `use_vad`
+- `create_events`
 - `manage_events`
 - `use_embedded_activities` was `start_embedded_activities`
 
@@ -85,6 +86,7 @@ Represents permissions for text, voice, and stage instance channels.
 - `deafen_members`
 - `move_members`
 - `request_to_speak`
+- `create_events`
 - `manage_events`
 
 ### Role Permissions
