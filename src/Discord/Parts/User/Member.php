@@ -127,17 +127,26 @@ class Member extends Part
      * @param int|null    $daysToDeleteMessages The amount of days to delete messages from.
      * @param string|null $reason               Reason of the Ban.
      *
-     * @throws \RuntimeException Member has no `$guild`
+     * @throws \RuntimeException      Member has no `$guild`.
+     * @throws NoPermissionsException Missing `ban_members` permission.
      *
      * @return ExtendedPromiseInterface<Ban>
      */
     public function ban(?int $daysToDeleteMessages = null, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! $guild = $this->guild) {
-            return reject(new \RuntimeException('Member has no Guild Part'));
-        }
+        return $this->discord->guilds->cacheGet($this->guild_id)->then(function (?Guild $guild) use ($daysToDeleteMessages, $reason) {
+            if (null === $guild) {
+                return reject(new \RuntimeException('Member has no Guild Part'));
+            }
 
-        return $guild->bans->ban($this, ['delete_message_days' => $daysToDeleteMessages], $reason);
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->ban_members) {
+                    return reject(new NoPermissionsException("You do not have permission to ban members in the guild {$guild->id}."));
+                }
+            }
+
+            return $guild->bans->ban($this, ['delete_message_days' => $daysToDeleteMessages], $reason);
+        });
     }
 
     /**
@@ -145,13 +154,18 @@ class Member extends Part
      *
      * @param string|null $reason Reason for Audit Log.
      *
+     * @throws \RuntimeException      Member has no `$guild`.
      * @throws NoPermissionsException Missing `kick_members` permission.
      *
      * @return ExtendedPromiseInterface<self>
      */
     public function kick(?string $reason = null): ExtendedPromiseInterface
     {
-        return $this->discord->guilds->cacheGet($this->guild_id)->then(function (Guild $guild) use ($reason) {
+        return $this->discord->guilds->cacheGet($this->guild_id)->then(function (?Guild $guild) use ($reason) {
+            if (null === $guild) {
+                return new \RuntimeException('Member has no Guild Part');
+            }
+
             if ($botperms = $guild->getBotPermissions()) {
                 if (! $botperms->kick_members) {
                     return reject(new NoPermissionsException("You do not have permission to kick members in the guild {$guild->id}."));
