@@ -15,7 +15,6 @@ use ArrayAccess;
 use Carbon\Carbon;
 use Discord\Discord;
 use Discord\Factory\Factory;
-use Discord\Http\Http;
 use JsonSerializable;
 use React\Promise\ExtendedPromiseInterface;
 
@@ -24,16 +23,11 @@ use React\Promise\ExtendedPromiseInterface;
  * off this base class.
  *
  * @since 2.0.0
+ *
+ * @property-read Http $http The DiscordPHP-Http Client
  */
 abstract class Part implements ArrayAccess, JsonSerializable
 {
-    /**
-     * The HTTP client.
-     *
-     * @var Http Client.
-     */
-    protected $http;
-
     /**
      * The factory.
      *
@@ -117,7 +111,6 @@ abstract class Part implements ArrayAccess, JsonSerializable
     public function __construct(Discord $discord, array $attributes = [], bool $created = false)
     {
         $this->discord = $discord;
-        $this->http = $discord->getHttpClient();
         $this->factory = $discord->getFactory();
 
         $this->created = $created;
@@ -497,6 +490,10 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     public function __get(string $key)
     {
+        if ($key == 'http') {
+            return $this->discord->getHttpClient();
+        }
+
         return $this->getAttribute($key);
     }
 
