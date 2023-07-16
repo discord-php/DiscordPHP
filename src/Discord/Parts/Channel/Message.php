@@ -22,7 +22,6 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
@@ -32,7 +31,8 @@ use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
 use Discord\Repository\Channel\ReactionRepository;
 use React\EventLoop\TimerInterface;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function React\Promise\reject;
@@ -739,11 +739,11 @@ class Message extends Part
      * @throws \RuntimeException      Channel type is not guild text or news.
      * @throws NoPermissionsException Missing create_public_threads permission to create or manage_threads permission to set rate_limit_per_user.
      *
-     * @return ExtendedPromiseInterface<Thread>
+     * @return PromiseInterface<Thread>
      *
      * @since 10.0.0 Arguments for `$name` and `$auto_archive_duration` are now inside `$options`
      */
-    public function startThread(array|string $options, string|null|int $reason = null, ?string $_reason = null): ExtendedPromiseInterface
+    public function startThread(array|string $options, string|null|int $reason = null, ?string $_reason = null): PromiseInterface
     {
         // Old v7 signature
         if (is_string($options)) {
@@ -819,9 +819,9 @@ class Message extends Part
      *
      * @param string|MessageBuilder $message The reply message.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function reply($message): ExtendedPromiseInterface
+    public function reply($message): PromiseInterface
     {
         $channel = $this->channel;
 
@@ -844,9 +844,9 @@ class Message extends Part
      *                                send_messages if this message author is the bot.
      *                                manage_messages if this message author is other user.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function crosspost(): ExtendedPromiseInterface
+    public function crosspost(): PromiseInterface
     {
         if ($this->crossposted) {
             return reject(new \RuntimeException('This message has already been crossposted.'));
@@ -882,14 +882,14 @@ class Message extends Part
      * @param int                   $delay   Delay after text will be sent in milliseconds.
      * @param TimerInterface        &$timer  Delay timer passed by reference.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function delayedReply($message, int $delay, &$timer = null): ExtendedPromiseInterface
+    public function delayedReply($message, int $delay, &$timer = null): PromiseInterface
     {
         $deferred = new Deferred();
 
         $timer = $this->discord->getLoop()->addTimer($delay / 1000, function () use ($message, $deferred) {
-            $this->reply($message)->done([$deferred, 'resolve'], [$deferred, 'reject']);
+            $this->reply($message)->then([$deferred, 'resolve'])->catch([$deferred, 'reject']);
         });
 
         return $deferred->promise();
@@ -905,12 +905,12 @@ class Message extends Part
      *
      * @return ExtendedPromseInterface
      */
-    public function delayedDelete(int $delay, &$timer = null): ExtendedPromiseInterface
+    public function delayedDelete(int $delay, &$timer = null): PromiseInterface
     {
         $deferred = new Deferred();
 
         $timer = $this->discord->getLoop()->addTimer($delay / 1000, function () use ($deferred) {
-            $this->delete()->done([$deferred, 'resolve'], [$deferred, 'reject']);
+            $this->delete()->then([$deferred, 'resolve'])->catch([$deferred, 'reject']);
         });
 
         return $deferred->promise();
@@ -925,9 +925,9 @@ class Message extends Part
      *
      * @throws NoPermissionsException Missing read_message_history permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function react($emoticon): ExtendedPromiseInterface
+    public function react($emoticon): PromiseInterface
     {
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
@@ -956,9 +956,9 @@ class Message extends Part
      * @throws \UnexpectedValueException Invalid reaction `$type`.
      * @throws NoPermissionsException    Missing manage_messages permission when deleting others reaction.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function deleteReaction(int $type, $emoticon = null, ?string $id = null): ExtendedPromiseInterface
+    public function deleteReaction(int $type, $emoticon = null, ?string $id = null): PromiseInterface
     {
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
@@ -1000,9 +1000,9 @@ class Message extends Part
      *
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function edit(MessageBuilder $message): ExtendedPromiseInterface
+    public function edit(MessageBuilder $message): PromiseInterface
     {
         return $this->_edit($message)->then(function ($response) {
             $this->fill((array) $response);
@@ -1011,7 +1011,7 @@ class Message extends Part
         });
     }
 
-    private function _edit(MessageBuilder $message): ExtendedPromiseInterface
+    private function _edit(MessageBuilder $message): PromiseInterface
     {
         if ($message->requiresMultipart()) {
             $multipart = $message->toMultipart();
@@ -1027,12 +1027,12 @@ class Message extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#delete-message
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      *
      * @throws \RuntimeException      This type of message cannot be deleted.
      * @throws NoPermissionsException Missing manage_messages permission when deleting others message.
      */
-    public function delete(): ExtendedPromiseInterface
+    public function delete(): PromiseInterface
     {
         if (! $this->isDeletable()) {
             return reject(new \RuntimeException("Cannot delete this type of message: {$this->type}", 50021));
@@ -1055,9 +1055,9 @@ class Message extends Part
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
-     * @return ExtendedPromiseInterface<Collection<MessageReaction>>
+     * @return PromiseInterface<Collection<MessageReaction>>
      */
-    public function createReactionCollector(callable $filter, array $options = []): ExtendedPromiseInterface
+    public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
         $reactions = new Collection([], null, null);
@@ -1106,9 +1106,9 @@ class Message extends Part
      *
      * @param Embed $embed
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function addEmbed(Embed $embed): ExtendedPromiseInterface
+    public function addEmbed(Embed $embed): PromiseInterface
     {
         return $this->edit(MessageBuilder::new()
             ->addEmbed($embed));

@@ -17,7 +17,7 @@ use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
 use JsonSerializable;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 /**
  * This class is the base of all objects that are returned. All "Parts" extend
@@ -149,9 +149,9 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @throws \RuntimeException The part is not fetchable.
      *
-     * @return ExtendedPromiseInterface<self>
+     * @return PromiseInterface<self>
      */
-    public function fetch(): ExtendedPromiseInterface
+    public function fetch(): PromiseInterface
     {
         throw new \RuntimeException('This part is not fetchable.');
     }

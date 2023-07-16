@@ -11,12 +11,12 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Discord\Http\Endpoint;
+use React\Promise\Deferred;
 
 use function React\Promise\all;
 
@@ -119,9 +119,9 @@ class GuildCreate extends Event
                 if (isset($lastUserId)) {
                     $bind->addQuery('after', $lastUserId);
                 }
-                $this->http->get($bind)->done(function ($bans) use (&$banPagination, $guildPart, $loadBans) {
+                $this->http->get($bind)->then(function ($bans) use (&$banPagination, $guildPart, $loadBans) {
                     if (empty($bans)) {
-                        $loadBans->resolve();
+                        $loadBans->resolve(true);
 
                         return;
                     }
@@ -133,7 +133,7 @@ class GuildCreate extends Event
                     }
 
                     $banPagination($lastUserId);
-                }, [$loadBans, 'resolve']);
+                })->catch([$loadBans, 'resolve']);
             };
             $banPagination();
             yield $loadBans->promise();

@@ -42,7 +42,6 @@ use Ratchet\RFC6455\Messaging\Message;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
-use Discord\Helpers\Deferred;
 use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
@@ -50,7 +49,8 @@ use Evenement\EventEmitterTrait;
 use Monolog\Formatter\LineFormatter;
 use Psr\Log\LoggerInterface;
 use React\Cache\ArrayCache;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -470,10 +470,10 @@ class Discord
         $unavailable = [];
 
         foreach ($content->guilds as $guild) {
-            /** @var ExtendedPromiseInterface */
+            /** @var PromiseInterface */
             $promise = coroutine([$event, 'handle'], $guild);
 
-            $promise->done(function ($d) use (&$unavailable) {
+            $promise->then(function ($d) use (&$unavailable) {
                 if (! empty($d->unavailable)) {
                     $unavailable[$d->id] = $d->unavailable;
                 }
@@ -499,7 +499,7 @@ class Discord
                 unset($unavailable[$guild->id]);
             }
             if (count($unavailable) < 1) {
-                $guildLoad->resolve();
+                $guildLoad->resolve(true);
             }
         };
         $this->on(Event::GUILD_CREATE, $onGuildCreate);
@@ -510,18 +510,18 @@ class Discord
                 unset($unavailable[$guild->id]);
             }
             if (count($unavailable) < 1) {
-                $guildLoad->resolve();
+                $guildLoad->resolve(true);
             }
         };
         $this->on(Event::GUILD_DELETE, $onGuildDelete);
 
-        $guildLoad->promise()->always(function () use ($onGuildCreate, $onGuildDelete) {
+        $guildLoad->promise()->finally(function () use ($onGuildCreate, $onGuildDelete) {
             $this->removeListener(Event::GUILD_CREATE, $onGuildCreate);
             $this->removeListener(Event::GUILD_DELETE, $onGuildDelete);
             $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
 
             $this->setupChunking();
-        })->done();
+        });
     }
 
     /**
@@ -773,7 +773,7 @@ class Discord
         $handler = new $hData['class']($this);
 
         $deferred = new Deferred();
-        $deferred->promise()->done(function ($d) use ($data, $hData) {
+        $deferred->promise()->then(function ($d) use ($data, $hData) {
             if (is_array($d) && count($d) == 2) {
                 list($new, $old) = $d;
             } else {
@@ -790,7 +790,7 @@ class Discord
             if ($data->t == Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
                 $this->emit('mention', [$new, $this, $old]);
             }
-        }, function ($e) use ($data) {
+        })->catch(function ($e) use ($data) {
             if ($e instanceof \Error) {
                 throw $e;
             } elseif ($e instanceof \Exception) {
@@ -807,14 +807,14 @@ class Discord
 
         if (! $this->emittedInit && (! in_array($data->t, $parse))) {
             $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
-                /** @var ExtendedPromiseInterface */
+                /** @var PromiseInterface */
                 $promise = coroutine([$handler, 'handle'], $data->d);
-                $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
+                $promise->then([$deferred, 'resolve'])->catch([$deferred, 'reject']);
             };
         } else {
-            /** @var ExtendedPromiseInterface */
+            /** @var PromiseInterface */
             $promise = coroutine([$handler, 'handle'], $data->d);
-            $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
+            $promise->then([$deferred, 'resolve'])->catch([$deferred, 'reject']);
         }
     }
 
@@ -1077,7 +1077,7 @@ class Discord
      */
     protected function connectWs(): void
     {
-        $this->setGateway()->done(function ($gateway) {
+        $this->setGateway()->then(function ($gateway) {
             if (isset($gateway['session']) && $session = $gateway['session']) {
                 if ($session['remaining'] < 2) {
                     $this->logger->error('exceeded number of reconnects allowed, waiting before attempting reconnect', $session);
@@ -1091,12 +1091,9 @@ class Discord
 
             $this->logger->info('starting connection to websocket', ['gateway' => $this->gateway]);
 
-            /** @var ExtendedPromiseInterface */
+            /** @var PromiseInterface */
             $promise = ($this->wsFactory)($this->gateway);
-            $promise->done(
-                [$this, 'handleWsConnection'],
-                [$this, 'handleWsConnectionFailed']
-            );
+            $promise->then([$this, 'handleWsConnection'])->catch([$this, 'handleWsConnectionFailed']);
         });
     }
 
@@ -1219,7 +1216,7 @@ class Discord
      *
      * @return PromiseInterface
      */
-    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null, bool $check = true): ExtendedPromiseInterface
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null, bool $check = true): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1313,9 +1310,9 @@ class Discord
      *
      * @param string|null $gateway Gateway URL to set.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    protected function setGateway(?string $gateway = null): ExtendedPromiseInterface
+    protected function setGateway(?string $gateway = null): PromiseInterface
     {
         $deferred = new Deferred();
         $defaultSession = [
@@ -1343,12 +1340,12 @@ class Discord
         };
 
         if (null === $gateway) {
-            $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
+            $this->http->get(Endpoint::GATEWAY_BOT)->then(function ($response) use ($buildParams) {
                 if ($response->shards > 1) {
                     $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interrested in assisting us with sharding support development.');
                 }
                 $buildParams($this->resume_gateway_url ?? $response->url, $response->session_start_limit);
-            }, function ($e) use ($buildParams) {
+            })->catch(function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.
                 $this->logger->warning('could not retrieve gateway, using default');
                 $buildParams('wss://gateway.discord.gg');
@@ -1359,7 +1356,7 @@ class Discord
 
         $deferred->promise()->then(function ($gateway) {
             $this->logger->info('gateway retrieved and set', $gateway);
-        }, function ($e) {
+        })->catch(function ($e) {
             $this->logger->error('error obtaining gateway', ['e' => $e->getMessage()]);
         });
 

@@ -29,7 +29,7 @@ use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
 use function React\Promise\reject;
@@ -225,9 +225,9 @@ class Interaction extends Part
      *
      * @throws \LogicException Interaction is not Message Component or Modal Submit.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function acknowledge(): ExtendedPromiseInterface
+    public function acknowledge(): PromiseInterface
     {
         if ($this->type == InteractionType::APPLICATION_COMMAND) {
             return $this->acknowledgeWithResponse();
@@ -252,9 +252,9 @@ class Interaction extends Part
      *
      * @throws \LogicException Interaction is not Application Command, Message Component, or Modal Submit.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function acknowledgeWithResponse(bool $ephemeral = false): ExtendedPromiseInterface
+    public function acknowledgeWithResponse(bool $ephemeral = false): PromiseInterface
     {
         if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
             return reject(new \LogicException('You can only acknowledge application command, message component, or modal submit interactions.'));
@@ -276,9 +276,9 @@ class Interaction extends Part
      *
      * @throws \LogicException Interaction is not Message Component.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function updateMessage(MessageBuilder $builder): ExtendedPromiseInterface
+    public function updateMessage(MessageBuilder $builder): PromiseInterface
     {
         if (! in_array($this->type, [InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
             return reject(new \LogicException('You can only update messages that occur due to a message component interaction.'));
@@ -297,9 +297,9 @@ class Interaction extends Part
      *
      * @throws \RuntimeException Interaction is not created yet.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function getOriginalResponse(): ExtendedPromiseInterface
+    public function getOriginalResponse(): PromiseInterface
     {
         if (! $this->created) {
             return reject(new \RuntimeException('Interaction has not been created yet.'));
@@ -322,15 +322,15 @@ class Interaction extends Part
      *
      * @throws \RuntimeException Interaction is not responded yet.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function updateOriginalResponse(MessageBuilder $builder): ExtendedPromiseInterface
+    public function updateOriginalResponse(MessageBuilder $builder): PromiseInterface
     {
         if (! $this->responded) {
             return reject(new \RuntimeException('Interaction has not been responded to.'));
         }
 
-        return (function () use ($builder): ExtendedPromiseInterface {
+        return (function () use ($builder): PromiseInterface {
             if ($builder->requiresMultipart()) {
                 $multipart = $builder->toMultipart();
 
@@ -350,9 +350,9 @@ class Interaction extends Part
      *
      * @throws \RuntimeException Interaction is not responded yet.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function deleteOriginalResponse(): ExtendedPromiseInterface
+    public function deleteOriginalResponse(): PromiseInterface
     {
         if (! $this->responded) {
             return reject(new \RuntimeException('Interaction has not been responded to.'));
@@ -371,9 +371,9 @@ class Interaction extends Part
      *
      * @throws \RuntimeException Interaction is not responded yet.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function sendFollowUpMessage(MessageBuilder $builder, bool $ephemeral = false): ExtendedPromiseInterface
+    public function sendFollowUpMessage(MessageBuilder $builder, bool $ephemeral = false): PromiseInterface
     {
         if (! $this->responded && $this->type != InteractionType::MESSAGE_COMPONENT) {
             return reject(new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.'));
@@ -383,7 +383,7 @@ class Interaction extends Part
             $builder->_setFlags(Message::FLAG_EPHEMERAL);
         }
 
-        return (function () use ($builder): ExtendedPromiseInterface {
+        return (function () use ($builder): PromiseInterface {
             if ($builder->requiresMultipart()) {
                 $multipart = $builder->toMultipart();
 
@@ -406,9 +406,9 @@ class Interaction extends Part
      *
      * @throws \LogicException Interaction is not Application Command, Message Component, or Modal Submit.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function respondWithMessage(MessageBuilder $builder, bool $ephemeral = false): ExtendedPromiseInterface
+    public function respondWithMessage(MessageBuilder $builder, bool $ephemeral = false): PromiseInterface
     {
         if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
             return reject(new \LogicException('You can only acknowledge application command, message component, or modal submit interactions.'));
@@ -437,9 +437,9 @@ class Interaction extends Part
      *
      * @throws \RuntimeException Interaction is already responded.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    protected function respond(array $payload, ?Multipart $multipart = null): ExtendedPromiseInterface
+    protected function respond(array $payload, ?Multipart $multipart = null): PromiseInterface
     {
         if ($this->responded) {
             return reject(new \RuntimeException('Interaction has already been responded to.'));
@@ -472,7 +472,7 @@ class Interaction extends Part
      *
      * @throws \RuntimeException Interaction is not responded yet.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
     public function updateFollowUpMessage(string $message_id, MessageBuilder $builder)
     {
@@ -480,7 +480,7 @@ class Interaction extends Part
             return reject(new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.'));
         }
 
-        return (function () use ($message_id, $builder): ExtendedPromiseInterface {
+        return (function () use ($message_id, $builder): PromiseInterface {
             if ($builder->requiresMultipart()) {
                 $multipart = $builder->toMultipart();
 
@@ -502,9 +502,9 @@ class Interaction extends Part
      *
      * @throws \RuntimeException Interaction is not created yet.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function getFollowUpMessage(string $message_id): ExtendedPromiseInterface
+    public function getFollowUpMessage(string $message_id): PromiseInterface
     {
         if (! $this->created) {
             return reject(new \RuntimeException('Interaction has not been created yet.'));
@@ -527,9 +527,9 @@ class Interaction extends Part
      *
      * @throws \RuntimeException Interaction is not responded yet.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function deleteFollowUpMessage(string $message_id): ExtendedPromiseInterface
+    public function deleteFollowUpMessage(string $message_id): PromiseInterface
     {
         if (! $this->responded) {
             return reject(new \RuntimeException('Interaction has not been responded to.'));
@@ -547,9 +547,9 @@ class Interaction extends Part
      *
      * @throws \LogicException Interaction is not Autocomplete.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function autoCompleteResult(array $choices): ExtendedPromiseInterface
+    public function autoCompleteResult(array $choices): PromiseInterface
     {
         if ($this->type != InteractionType::APPLICATION_COMMAND_AUTOCOMPLETE) {
             return reject(new \LogicException('You can only respond command option results with auto complete interactions.'));
@@ -574,9 +574,9 @@ class Interaction extends Part
      * @throws \LogicException  Interaction is Ping or Modal Submit.
      * @throws \LengthException Modal title is longer than 45 characters.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function showModal(string $title, string $custom_id, array $components, ?callable $submit = null): ExtendedPromiseInterface
+    public function showModal(string $title, string $custom_id, array $components, ?callable $submit = null): PromiseInterface
     {
         if (in_array($this->type, [InteractionType::PING, InteractionType::MODAL_SUBMIT])) {
             return reject(new \LogicException('You cannot pop up a modal from a ping or modal submit interaction.'));

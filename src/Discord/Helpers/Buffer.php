@@ -14,7 +14,8 @@ namespace Discord\Helpers;
 use Discord\Exceptions\BufferTimedOutException;
 use Evenement\EventEmitter;
 use React\EventLoop\LoopInterface;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 use React\Stream\WritableStreamInterface;
 
 /**
@@ -106,11 +107,11 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      * @param null|string $format  Format to read the bytes in. See `pack()`.
      * @param int         $timeout Time in milliseconds before the read times out.
      *
-     * @return ExtendedPromiseInterface<mixed, \RuntimeException>
+     * @return PromiseInterface<mixed, \RuntimeException>
      *
      * @throws \RuntimeException When there is an error unpacking the read bytes.
      */
-    public function read(int $length, ?string $format = null, ?int $timeout = -1): ExtendedPromiseInterface
+    public function read(int $length, ?string $format = null, ?int $timeout = -1): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -152,11 +153,11 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      *
      * @param int $timeout Time in milliseconds before the read times out.
      *
-     * @return ExtendedPromiseInterface<int, \RuntimeException>
+     * @return PromiseInterface<int, \RuntimeException>
      *
      * @throws \RuntimeException When there is an error unpacking the read bytes.
      */
-    public function readInt32(int $timeout = -1): ExtendedPromiseInterface
+    public function readInt32(int $timeout = -1): PromiseInterface
     {
         return $this->read(4, 'l', $timeout);
     }
@@ -166,11 +167,11 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      *
      * @param int $timeout Time in milliseconds before the read times out.
      *
-     * @return ExtendedPromiseInterface<int, \RuntimeException>
+     * @return PromiseInterface<int, \RuntimeException>
      *
      * @throws \RuntimeException When there is an error unpacking the read bytes.
      */
-    public function readInt16(int $timeout = -1): ExtendedPromiseInterface
+    public function readInt16(int $timeout = -1): PromiseInterface
     {
         return $this->read(2, 'v', $timeout);
     }

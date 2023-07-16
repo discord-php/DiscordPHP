@@ -18,7 +18,7 @@ use Discord\Parts\Part;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
@@ -83,7 +83,7 @@ class Client extends Part
     {
         $this->application = $this->factory->part(Application::class, [], true);
 
-        $this->http->get(Endpoint::APPLICATION_CURRENT)->done(function ($response) {
+        $this->http->get(Endpoint::APPLICATION_CURRENT)->then(function ($response) {
             $this->application->fill((array) $response);
             $this->created = true;
         });
@@ -142,9 +142,9 @@ class Client extends Part
     /**
      * Saves the client instance.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function save(): ExtendedPromiseInterface
+    public function save(): PromiseInterface
     {
         return $this->http->patch(Endpoint::USER_CURRENT, $this->getUpdatableAttributes());
     }

@@ -26,10 +26,10 @@ use React\Datagram\Factory as DatagramFactory;
 use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DNSFactory;
 use React\EventLoop\LoopInterface;
-use Discord\Helpers\Deferred;
 use Psr\Log\LoggerInterface;
 use React\ChildProcess\Process;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 use React\Stream\ReadableResourceStream as Stream;
 use React\EventLoop\TimerInterface;
 use React\Stream\ReadableResourceStream;
@@ -400,13 +400,10 @@ class VoiceClient extends EventEmitter
     public function initSockets(): void
     {
         $wsfac = new WsFactory($this->loop);
-        /** @var ExtendedPromiseInterface */
+        /** @var PromiseInterface */
         $promise = $wsfac("wss://{$this->endpoint}?v={$this->version}");
 
-        $promise->done(
-            [$this, 'handleWebSocketConnection'],
-            [$this, 'handleWebSocketError']
-        );
+        $promise->then([$this, 'handleWebSocketConnection'])->catch([$this, 'handleWebSocketError']);
     }
 
     /**
@@ -441,10 +438,10 @@ class VoiceClient extends EventEmitter
                 $buffer[1] = "\x01";
                 $buffer[3] = "\x46";
                 $buffer->writeUInt32BE($this->ssrc, 4);
-                /** @var ExtendedPromiseInterface */
+                /** @var PromiseInterface */
                 $promise = $udpfac->createClient("{$data->d->ip}:{$this->udpPort}");
 
-                $promise->done(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
+                $promise->then(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
                     $this->logger->debug('connected to voice UDP');
                     $this->client = $client;
 
@@ -502,7 +499,7 @@ class VoiceClient extends EventEmitter
                     };
 
                     $client->on('message', $decodeUDP);
-                }, function ($e) {
+                })->catch(function ($e) {
                     $this->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
                     $this->emit('error', [$e]);
                 });
@@ -689,9 +686,9 @@ class VoiceClient extends EventEmitter
      * @throws FileNotFoundException
      * @throws \RuntimeException
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function playFile(string $file, int $channels = 2): ExtendedPromiseInterface
+    public function playFile(string $file, int $channels = 2): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -729,9 +726,9 @@ class VoiceClient extends EventEmitter
      * @throws \RuntimeException
      * @throws \InvalidArgumentException Thrown when the stream passed to playRawStream is not a valid resource.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function playRawStream($stream, int $channels = 2, int $audioRate = 48000): ExtendedPromiseInterface
+    public function playRawStream($stream, int $channels = 2, int $audioRate = 48000): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -776,9 +773,9 @@ class VoiceClient extends EventEmitter
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function playOggStream($stream): ExtendedPromiseInterface
+    public function playOggStream($stream): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -843,7 +840,7 @@ class VoiceClient extends EventEmitter
                 // EOF for Ogg stream.
                 if (null === $packet) {
                     $this->reset();
-                    $deferred->resolve();
+                    $deferred->resolve(true);
 
                     return;
                 }
@@ -868,7 +865,7 @@ class VoiceClient extends EventEmitter
                 $this->readOpusTimer = $this->loop->addTimer($delay, $readOpus);
             }, function ($e) use ($deferred) {
                 $this->reset();
-                $deferred->resolve();
+                $deferred->resolve(true);
             });
         };
 
@@ -888,13 +885,13 @@ class VoiceClient extends EventEmitter
      *
      * @param resource|Process|Stream $stream The DCA stream to be sent.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      * @throws \Exception
      *
      * @deprecated 10.0.0 DCA is now deprecated in DiscordPHP, switch to using
      *                    `playOggStream` with raw Ogg Opus.
      */
-    public function playDCAStream($stream): ExtendedPromiseInterface
+    public function playDCAStream($stream): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -970,7 +967,7 @@ class VoiceClient extends EventEmitter
                 $this->readOpusTimer = $this->loop->addTimer(($this->frameSize - 1) / 1000, $readOpus);
             }, function () use ($deferred) {
                 $this->reset();
-                $deferred->resolve();
+                $deferred->resolve(true);
             });
         };
 
