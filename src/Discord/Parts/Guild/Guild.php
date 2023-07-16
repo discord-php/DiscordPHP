@@ -1578,21 +1578,22 @@ class Guild extends Part
     {
         return [
             'name' => $this->name,
+        ] + $this->makeOptionalAttributes([
             'icon' => $this->attributes['icon'] ?? null,
             'verification_level' => $this->verification_level,
             'default_message_notifications' => $this->default_message_notifications,
             'explicit_content_filter' => $this->explicit_content_filter,
             'roles' => array_values(array_map(function (Role $role) {
                 return $role->getCreatableAttributes();
-            }, $this->roles->toArray())) ?: null,
+            }, $this->roles->toArray())),
             'channels' => array_values(array_map(function (Channel $channel) {
                 return $channel->getCreatableAttributes();
-            }, $this->channels->toArray())) ?: null,
+            }, $this->channels->toArray())),
             'afk_channel_id' => $this->afk_channel_id,
             'afk_timeout' => $this->afk_timeout,
             'system_channel_id' => $this->system_channel_id,
             'system_channel_flags' => $this->system_channel_flags,
-        ];
+        ]);
     }
 
     /**
@@ -1602,26 +1603,26 @@ class Guild extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        return [
+        return $this->makeOptionalAttributes([
             'name' => $this->name,
-            'verification_level' => $this->verification_level ?? null,
-            'default_message_notifications' => $this->default_message_notifications ?? null,
-            'explicit_content_filter' => $this->explicit_content_filter ?? null,
-            'afk_channel_id' => $this->afk_channel_id ?? null,
+            'verification_level' => $this->verification_level,
+            'default_message_notifications' => $this->default_message_notifications,
+            'explicit_content_filter' => $this->explicit_content_filter,
+            'afk_channel_id' => $this->afk_channel_id,
             'afk_timeout' => $this->afk_timeout,
             'icon' => $this->attributes['icon'] ?? null,
             'splash' => $this->splash_hash,
             'discovery_splash' => $this->attributes['discovery_splash'] ?? null,
             'banner' => $this->attributes['banner'] ?? null,
-            'system_channel_id' => $this->system_channel_id ?? null,
+            'system_channel_id' => $this->system_channel_id,
             'system_channel_flags' => $this->system_channel_flags,
-            'rules_channel_id' => $this->rules_channel_id ?? null,
-            'public_updates_channel_id' => $this->public_updates_channel_id ?? null,
-            'preferred_locale' => $this->preferred_locale ?? null,
-            'description' => $this->description ?? null,
+            'rules_channel_id' => $this->rules_channel_id,
+            'public_updates_channel_id' => $this->public_updates_channel_id,
+            'preferred_locale' => $this->preferred_locale,
+            'description' => $this->description,
             'premium_progress_bar_enabled' => $this->premium_progress_bar_enabled,
             'safety_alerts_channel_id' => $this->safety_alerts_channel_id,
-        ];
+        ]);
     }
 
     /**

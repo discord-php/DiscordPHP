@@ -119,26 +119,20 @@ class Command extends Part
     {
         $attr = [
             'name' => $this->name,
-            'name_localizations' => $this->name_localizations ?? null,
-            'description' => $this->description,
-            'description_localizations' => $this->description_localizations ?? null,
-            'default_member_permissions' => $this->default_member_permissions ?? null,
-            'default_permission' => $this->default_permission ?? true,
-            'type' => $this->type,
         ];
 
-        if (array_key_exists('options', $this->attributes)) {
-            $attr['options'] = $this->attributes['options'];
-        }
+        $attr += $this->makeOptionalAttributes([
+            'name_localizations' => $this->name_localizations,
+            'description' => $this->description,
+            'description_localizations' => $this->description_localizations,
+            'options' => $this->attributes['options'],
+            'default_member_permissions' => $this->default_member_permissions,
+            'default_permission' => $this->default_permission,
+            'type' => $this->type,
+            'nsfw' => $this->nsfw,
 
-        // Guild command might omit this fillable
-        if (array_key_exists('dm_permission', $this->attributes)) {
-            $attr['dm_permission'] = $this->dm_permission;
-        }
-
-        if (array_key_exists('nsfw', $this->attributes)) {
-            $attr['nsfw'] = $this->nsfw;
-        }
+            'dm_permission' => $this->dm_permission,  // Guild command might omit this fillable
+        ]);
 
         return $attr;
     }
@@ -150,35 +144,21 @@ class Command extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        $attr = [
+        $attr = $this->makeOptionalAttributes([
             'name' => $this->name,
+            'name_localizations' => $this->name_localizations,
             'description' => $this->description,
+            'description_localizations' => $this->description_localizations,
+            'options' => $this->attributes['options'],
             'default_member_permissions' => $this->default_member_permissions,
-            'type' => $this->type,
-        ];
+            'default_permission' => $this->default_permission,
+            'nsfw' => $this->nsfw,
+        ]);
 
-        if (array_key_exists('options', $this->attributes)) {
-            $attr['options'] = $this->attributes['options'];
-        }
-
-        if (array_key_exists('name_localizations', $this->attributes)) {
-            $attr['name_localizations'] = $this->name_localizations;
-        }
-
-        if (array_key_exists('description_localizations', $this->attributes)) {
-            $attr['description_localizations'] = $this->description_localizations;
-        }
-
-        if (array_key_exists('default_permission', $this->attributes)) {
-            $attr['default_permission'] = $this->default_permission;
-        }
-
-        if (array_key_exists('dm_permission', $this->attributes)) {
-            $attr['dm_permission'] = $this->dm_permission;
-        }
-
-        if (array_key_exists('nsfw', $this->attributes)) {
-            $attr['nsfw'] = $this->nsfw;
+        if (! isset($this->guild_id)) {
+            $attr += $this->makeOptionalAttributes([
+                'dm_permission' => $this->dm_permission,
+            ]);
         }
 
         return $attr;

@@ -241,8 +241,9 @@ class Webhook extends Part
     {
         return [
             'name' => $this->name,
-            'avatar' => $this->avatar ?? null,
-        ];
+        ] + $this->makeOptionalAttributes([
+            'avatar' => $this->avatar,
+        ]);
     }
 
     /**
@@ -252,16 +253,11 @@ class Webhook extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        $attr = [
+        return $this->makeOptionalAttributes([
             'name' => $this->name,
             'channel_id' => $this->channel_id,
-        ];
-
-        if (array_key_exists('avatar', $this->attributes)) {
-            $attr['avatar'] = $this->avatar;
-        }
-
-        return $attr;
+            'avatar' => $this->avatar,
+        ]);
     }
 
     /**

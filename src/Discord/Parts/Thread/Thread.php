@@ -833,14 +833,19 @@ class Thread extends Part
     {
         $attr = [
             'name' => $this->name,
-            'auto_archive_duration' => $this->auto_archive_duration,
-            'type' => $this->type,
-            'rate_limit_per_user' => $this->rate_limit_per_user,
         ];
 
         if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
-            $attr['invitable'] = $this->invitable;
+            $attr += $this->makeOptionalAttributes([
+                'invitable' => $this->invitable
+            ]);
         }
+
+        $attr += $this->makeOptionalAttributes([
+            'auto_archive_duration' => $this->auto_archive_duration,
+            'type' => $this->type,
+            'rate_limit_per_user' => $this->rate_limit_per_user,
+        ]);
 
         return $attr;
     }
@@ -854,20 +859,20 @@ class Thread extends Part
     {
         $attr = [
             'name' => $this->name,
-            'rate_limit_per_user' => $this->rate_limit_per_user,
             'archived' => $this->archived,
             'auto_archive_duration' => $this->auto_archive_duration,
             'locked' => $this->locked,
-            'flags' => $this->flags,
+            'rate_limit_per_user' => $this->rate_limit_per_user,
         ];
 
         if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
             $attr['invitable'] = $this->invitable;
         }
 
-        if (array_key_exists('applied_tags', $this->attributes)) {
-            $attr['applied_tags'] = $this->applied_tags;
-        }
+        $attr += $this->makeOptionalAttributes([
+            'flags' => $this->flags,
+            'applied_tags' => $this->applied_tags,
+        ]);
 
         return $attr;
     }

@@ -43,6 +43,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 
 use function Discord\getSnowflakeTimestamp;
+use function Discord\nowait;
 use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -873,20 +874,41 @@ class Channel extends Part
      */
     protected function setPermissionOverwritesAttribute(?array $overwrites): void
     {
-        foreach ($overwrites ?? [] as $overwrite) {
-            $overwrite = (array) $overwrite;
-            /** @var Overwrite */
-            if ($overwritePart = $this->overwrites->offsetGet($overwrite['id'])) {
-                $overwritePart->fill($overwrite);
+        if ($overwrites) {
+            foreach ($overwrites as $overwrite) {
+                $overwrite = (array) $overwrite;
+                /** @var Overwrite */
+                if ($overwritePart = $this->overwrites->offsetGet($overwrite['id'])) {
+                    $overwritePart->fill($overwrite);
+                }
+                $this->overwrites->pushItem($overwritePart ?: $this->overwrites->create($overwrite, true));
             }
-            $this->overwrites->pushItem($overwritePart ?: $this->overwrites->create($overwrite, true));
-        }
-
-        if (! empty($this->attributes['permission_overwrites']) && $clean = array_diff(array_column($this->attributes['permission_overwrites'], 'id'), array_column($overwrites ?? [], 'id'))) {
-            $this->overwrites->cache->deleteMultiple($clean);
+        } else {
+            if (null === nowait($this->overwrites->cache->clear())) {
+                foreach ($this->overwrites->keys() as $key) {
+                    $this->overwrites->offsetUnset($key);
+                }
+            }
         }
 
         $this->attributes['permission_overwrites'] = $overwrites;
+    }
+
+    /**
+     * Gets the permission overwrites attribute.
+     *
+     * @param ?array $overwrites
+     */
+    protected function getPermissionOverwritesAttribute(): ?array
+    {
+        $overwrites = null;
+
+        /** @var Overwrite */
+        foreach ($this->overwrites as $overwrite) {
+            $overwrites[] = $overwrite->getRawAttributes();
+        }
+
+        return $overwrites ?? $this->attributes['permission_overwrites'] ?? null;
     }
 
     /**
@@ -1444,7 +1466,7 @@ class Channel extends Part
             case null:
                 // Type was not specified but we must not assume its default to GUILD_TEXT as that is determined by API
                 $this->discord->getLogger()->warning('Not specifying channel type, creating with all filled attributes');
-                $attr += $this->makeOptionalAttributes($this->getRawAttributes()); // Send the raw attributes
+                $attr += $this->getRawAttributes(); // Send the remaining raw attributes
                 break;
         }
 
@@ -1458,67 +1480,76 @@ class Channel extends Part
      */
     public function getUpdatableAttributes(): array
     {
+        if ($this->type == self::TYPE_GROUP_DM) {
+            return [
+                'name' => $this->name,
+                'icon' => $this->icon,
+            ];
+        }
+
+        // Marked "Channel Type: All" in documentation
         $attr = [
             'name' => $this->name,
             'position' => $this->position,
-            'permission_overwrites' => array_values($this->overwrites->map(
-                fn (Overwrite $overwrite) => $overwrite->getUpdatableAttributes()
-            )->toArray()), // TODO: check if async cache works fine
+            'permission_overwrites' => $this->permission_overwrites,
         ];
 
-        if ($this->type == self::TYPE_GUILD_TEXT) {
-            $attr['type'] = $this->type;
-            $attr['topic'] = $this->topic;
-            $attr['nsfw'] = $this->nsfw;
-            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
-            $attr['parent_id'] = $this->parent_id;
-            $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
-            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
-        } elseif ($this->type == self::TYPE_GUILD_VOICE) {
-            $attr['nsfw'] = $this->nsfw;
-            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
-            $attr['bitrate'] = $this->bitrate;
-            $attr['user_limit'] = $this->user_limit;
-            $attr['parent_id'] = $this->parent_id;
-            $attr['rtc_region'] = $this->rtc_region;
-            $attr['video_quality_mode'] = $this->video_quality_mode;
-        } elseif ($this->type == self::TYPE_GROUP_DM) {
-            $attr['icon'] = $this->icon;
-        } elseif ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
-            $attr['type'] = $this->type;
-            $attr['topic'] = $this->topic;
-            $attr['nsfw'] = $this->nsfw;
-            $attr['parent_id'] = $this->parent_id;
-            $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
-        } elseif ($this->type == self::TYPE_GUILD_STAGE_VOICE) {
-            $attr['nsfw'] = $this->nsfw;
-            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
-            $attr['user_limit'] = $this->user_limit;
-            $attr['parent_id'] = $this->parent_id;
-            $attr['bitrate'] = $this->bitrate;
-            $attr['rtc_region'] = $this->rtc_region;
-            $attr['video_quality_mode'] = $this->video_quality_mode;
-        } elseif ($this->type == self::TYPE_GUILD_FORUM) {
-            $attr['topic'] = $this->topic;
-            $attr['nsfw'] = $this->nsfw;
-            $attr['parent_id'] = $this->parent_id;
-            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
-            $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
-            $attr['flags'] = $this->flags;
-            $attr['available_tags'] = $this->attributes['available_tags'];
-            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
+        switch ($this->type) {
+            case self::TYPE_GUILD_TEXT:
+                $attr['type'] = $this->type;
+                $attr['topic'] = $this->topic;
+                $attr['nsfw'] = $this->nsfw;
+                $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+                $attr['parent_id'] = $this->parent_id;
+                $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
+                $attr += $this->makeOptionalAttributes([
+                    'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user,
+                ]);
+                break;
 
-            if (array_key_exists('default_reaction_emoji', $this->attributes)) {
-                $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
-            }
+            case self::TYPE_GUILD_VOICE:
+                $attr['nsfw'] = $this->nsfw;
+                $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+                $attr['bitrate'] = $this->bitrate;
+                $attr['user_limit'] = $this->user_limit;
+                $attr['parent_id'] = $this->parent_id;
+                $attr['rtc_region'] = $this->rtc_region;
+                $attr['video_quality_mode'] = $this->video_quality_mode;
+                break;
 
-            if (array_key_exists('default_sort_order', $this->attributes)) {
-                $attr['default_sort_order'] = $this->default_sort_order;
-            }
+            case self::TYPE_GUILD_ANNOUNCEMENT:
+                $attr['type'] = $this->type;
+                $attr['topic'] = $this->topic;
+                $attr['nsfw'] = $this->nsfw;
+                $attr['parent_id'] = $this->parent_id;
+                $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
+                break;
 
-            if (array_key_exists('default_forum_layout', $this->attributes)) {
-                $attr['default_forum_layout'] = $this->default_forum_layout;
-            }
+            case self::TYPE_GUILD_STAGE_VOICE:
+                $attr['nsfw'] = $this->nsfw;
+                $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+                $attr['bitrate'] = $this->bitrate;
+                $attr['user_limit'] = $this->user_limit;
+                $attr['parent_id'] = $this->parent_id;
+                $attr['rtc_region'] = $this->rtc_region;
+                $attr['video_quality_mode'] = $this->video_quality_mode;
+                break;
+
+            case self::TYPE_GUILD_FORUM:
+                $attr['topic'] = $this->topic;
+                $attr['nsfw'] = $this->nsfw;
+                $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+                $attr['parent_id'] = $this->parent_id;
+                $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
+                $attr += $this->makeOptionalAttributes([
+                    'flags' => $this->flags,
+                    'available_tags' => $this->attributes['available_tags'],
+                    'default_reaction_emoji' => $this->attributes['default_reaction_emoji'],
+                    'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user,
+                    'default_sort_order' => $this->default_sort_order,
+                    'default_forum_layout' => $this->default_forum_layout,
+                ]);
+                break;
         }
 
         return $attr;

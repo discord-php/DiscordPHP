@@ -150,16 +150,11 @@ class Sticker extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        $attr = [
+        return $this->makeOptionalAttributes([
             'name' => $this->name,
+            'description' => $this->description,
             'tags' => $this->attributes['tags'],
-        ];
-
-        if (array_key_exists('description', $this->attributes)) {
-            $attr['description'] = $this->description;
-        }
-
-        return $attr;
+        ]);
     }
 
     /**
