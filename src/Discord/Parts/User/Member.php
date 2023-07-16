@@ -172,7 +172,7 @@ class Member extends Part
                 }
             }
 
-            return $guild->members->kick($this, $reason);
+            return $guild->members->delete($this, $reason);
         });
     }
 
