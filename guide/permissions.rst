@@ -80,8 +80,8 @@ Voice Channel Permissions
 -  ``deafen_members``
 -  ``move_members``
 -  ``use_vad``
--  ``create_events``
 -  ``manage_events``
+-  ``create_events``
 -  ``use_embedded_activities`` was ``start_embedded_activities``
 
 Stage Instance Channel Permissions
@@ -96,8 +96,8 @@ Stage Instance Channel Permissions
 -  ``deafen_members``
 -  ``move_members``
 -  ``request_to_speak``
--  ``create_events``
 -  ``manage_events``
+-  ``create_events``
 
 Role Permissions
 ================
