@@ -141,30 +141,25 @@ class Member extends Part
     }
 
     /**
-     * Kick the member from the guild.
+     * Alias for `$guild->members->delete()`.
      *
-     * @param string|null     $reason  Reason for Audit Log.
+     * @param string|null $reason Reason for Audit Log.
      *
-     * @throws NoPermissionsException Missing kick_members permission.
+     * @throws NoPermissionsException Missing `kick_members` permission.
      *
-     * @return ExtendedPromiseInterface<Member>
+     * @return ExtendedPromiseInterface<self>
      */
     public function kick(?string $reason = null): ExtendedPromiseInterface
     {
-        if ($guild = $this->guild) {
+        return $this->discord->guilds->cacheGet($this->guild_id)->then(function (Guild $guild) use ($reason) {
             if ($botperms = $guild->getBotPermissions()) {
                 if (! $botperms->kick_members) {
                     return reject(new NoPermissionsException("You do not have permission to kick members in the guild {$guild->id}."));
                 }
             }
-        }
 
-        $headers = [];
-        if (isset($reason)) {
-            $headers['X-Audit-Log-Reason'] = $reason;
-        }
-
-        return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), null, $headers);
+            return $guild->members->kick($this, $reason);
+        });
     }
 
     /**
