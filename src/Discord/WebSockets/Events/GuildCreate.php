@@ -133,7 +133,7 @@ class GuildCreate extends Event
                     }
 
                     $banPagination($lastUserId);
-                })->catch([$loadBans, 'resolve']);
+                }, [$loadBans, 'resolve']);
             };
             $banPagination();
             yield $loadBans->promise();

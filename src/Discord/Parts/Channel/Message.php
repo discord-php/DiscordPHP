@@ -889,7 +889,7 @@ class Message extends Part
         $deferred = new Deferred();
 
         $timer = $this->discord->getLoop()->addTimer($delay / 1000, function () use ($message, $deferred) {
-            $this->reply($message)->then([$deferred, 'resolve'])->catch([$deferred, 'reject']);
+            $this->reply($message)->then([$deferred, 'resolve'], [$deferred, 'reject']);
         });
 
         return $deferred->promise();
@@ -910,7 +910,7 @@ class Message extends Part
         $deferred = new Deferred();
 
         $timer = $this->discord->getLoop()->addTimer($delay / 1000, function () use ($deferred) {
-            $this->delete()->then([$deferred, 'resolve'])->catch([$deferred, 'reject']);
+            $this->delete()->then([$deferred, 'resolve'], [$deferred, 'reject']);
         });
 
         return $deferred->promise();

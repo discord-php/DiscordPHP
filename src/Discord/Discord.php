@@ -790,7 +790,7 @@ class Discord
             if ($data->t == Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
                 $this->emit('mention', [$new, $this, $old]);
             }
-        })->catch(function ($e) use ($data) {
+        }, function ($e) use ($data) {
             if ($e instanceof \Error) {
                 throw $e;
             } elseif ($e instanceof \Exception) {
@@ -809,12 +809,12 @@ class Discord
             $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
                 /** @var PromiseInterface */
                 $promise = coroutine([$handler, 'handle'], $data->d);
-                $promise->then([$deferred, 'resolve'])->catch([$deferred, 'reject']);
+                $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
             };
         } else {
             /** @var PromiseInterface */
             $promise = coroutine([$handler, 'handle'], $data->d);
-            $promise->then([$deferred, 'resolve'])->catch([$deferred, 'reject']);
+            $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
         }
     }
 
@@ -1093,7 +1093,7 @@ class Discord
 
             /** @var PromiseInterface */
             $promise = ($this->wsFactory)($this->gateway);
-            $promise->then([$this, 'handleWsConnection'])->catch([$this, 'handleWsConnectionFailed']);
+            $promise->then([$this, 'handleWsConnection'], [$this, 'handleWsConnectionFailed']);
         });
     }
 
@@ -1345,7 +1345,7 @@ class Discord
                     $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interrested in assisting us with sharding support development.');
                 }
                 $buildParams($this->resume_gateway_url ?? $response->url, $response->session_start_limit);
-            })->catch(function ($e) use ($buildParams) {
+            }, function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.
                 $this->logger->warning('could not retrieve gateway, using default');
                 $buildParams('wss://gateway.discord.gg');
@@ -1356,7 +1356,7 @@ class Discord
 
         $deferred->promise()->then(function ($gateway) {
             $this->logger->info('gateway retrieved and set', $gateway);
-        })->catch(function ($e) {
+        }, function ($e) {
             $this->logger->error('error obtaining gateway', ['e' => $e->getMessage()]);
         });
 

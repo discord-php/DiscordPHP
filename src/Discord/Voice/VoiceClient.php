@@ -403,7 +403,7 @@ class VoiceClient extends EventEmitter
         /** @var PromiseInterface */
         $promise = $wsfac("wss://{$this->endpoint}?v={$this->version}");
 
-        $promise->then([$this, 'handleWebSocketConnection'])->catch([$this, 'handleWebSocketError']);
+        $promise->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
     }
 
     /**
@@ -499,7 +499,7 @@ class VoiceClient extends EventEmitter
                     };
 
                     $client->on('message', $decodeUDP);
-                })->catch(function ($e) {
+                }, function ($e) {
                     $this->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
                     $this->emit('error', [$e]);
                 });
