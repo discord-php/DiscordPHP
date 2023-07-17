@@ -51,7 +51,6 @@ use Psr\Log\LoggerInterface;
 use React\Cache\ArrayCache;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
-use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
