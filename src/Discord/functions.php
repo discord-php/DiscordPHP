@@ -313,7 +313,7 @@ function deferFind($array, callable $callback, $loop = null): Promise
 
         if (! $iterator->valid()) {
             $loop->cancelTimer($timer);
-            $deferred->reject((new \Exception('Loop done.'));
+            $deferred->reject(new \Exception('Loop done.');
 
             return;
         }
