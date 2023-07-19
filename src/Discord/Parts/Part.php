@@ -432,6 +432,16 @@ abstract class Part implements ArrayAccess, JsonSerializable
     }
 
     /**
+     * Get the Discord instance that owns this Part.
+     *
+     * @return Discord
+     */
+    public function getDiscord()
+    {
+        return $this->discord;
+    }
+
+    /**
      * Converts a string to studlyCase.
      *
      * This is a port of updated Laravel's implementation, a non-regex with
