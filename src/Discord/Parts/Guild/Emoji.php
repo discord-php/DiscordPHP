@@ -142,7 +142,7 @@ class Emoji extends Part
     {
         return $this->makeOptionalAttributes([
             'name' => $this->name,
-            'roles' => $this->attributes['roles'],
+            'roles' => $this->attributes['roles'] ?? null,
         ]);
     }
 

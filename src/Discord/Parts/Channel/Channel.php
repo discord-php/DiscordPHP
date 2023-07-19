@@ -1456,7 +1456,7 @@ class Channel extends Part
                     'nsfw' => $this->nsfw,
                     'default_auto_archive_duration' => $this->default_auto_archive_duration,
                     'default_reaction_emoji' => $this->attributes['default_reaction_emoji'] ?? null,
-                    'available_tags' => $this->attributes['available_tags'] ?? null,
+                    'available_tags',
                     'default_sort_order' => $this->default_sort_order,
                     'default_forum_layout' => $this->default_forum_layout,
                     'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user, // Canceled documentation #5606
@@ -1543,7 +1543,7 @@ class Channel extends Part
                 $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
                 $attr += $this->makeOptionalAttributes([
                     'flags' => $this->flags,
-                    'available_tags' => $this->attributes['available_tags'],
+                    'available_tags',
                     'default_reaction_emoji' => $this->attributes['default_reaction_emoji'],
                     'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user,
                     'default_sort_order' => $this->default_sort_order,
