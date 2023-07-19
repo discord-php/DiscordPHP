@@ -174,8 +174,8 @@ class Rule extends Part
 
         $attr += $this->makeOptionalAttributes([
             'enabled' => $this->enabled,
-            'exempt_roles' => $this->attributes['exempt_roles'] ?? [],
-            'exempt_channels' => $this->attributes['exempt_channels'] ?? [],
+            'exempt_roles',
+            'exempt_channels',
         ]);
 
         if (in_array($this->trigger_type, [self::TRIGGER_TYPE_KEYWORD, self::TRIGGER_TYPE_KEYWORD_PRESET, self::TRIGGER_TYPE_MENTION_SPAM])) {

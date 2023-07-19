@@ -423,6 +423,8 @@ abstract class Part implements ArrayAccess, JsonSerializable
         foreach ($attributes as $key => $value) {
             if (array_key_exists($key, $this->attributes)) {
                 $attr[$key] = $value;
+            } elseif (is_int($key) && array_key_exists($value, $this->attributes)) {
+                $attr[$value] = $this->attributes[$value];
             }
         }
 
