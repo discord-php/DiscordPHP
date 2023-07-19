@@ -108,12 +108,12 @@ class Interaction extends Part
             return null;
         }
 
-        $adata = (array) $this->attributes['data'];
-        if (! isset($adata['guild_id']) && isset($this->attributes['guild_id'])) {
-            $adata['guild_id'] = $this->guild_id;
+        $adata = $this->attributes['data'];
+        if (! isset($adata->guild_id) && isset($this->attributes['guild_id'])) {
+            $adata->guild_id = $this->guild_id;
         }
 
-        return $this->factory->part(InteractionData::class, $adata, true);
+        return $this->createOf(InteractionData::class, $adata);
     }
 
     /**

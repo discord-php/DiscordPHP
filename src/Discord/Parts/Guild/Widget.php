@@ -91,6 +91,7 @@ class Widget extends Part
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_WIDGET, $this->id))
             ->then(function ($response) {
                 $this->fill((array) $response);
+                $this->created = true;
 
                 return $this;
             });

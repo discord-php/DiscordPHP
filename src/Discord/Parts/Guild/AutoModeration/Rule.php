@@ -102,7 +102,7 @@ class Rule extends Part
         $actions = Collection::for(Action::class, null);
 
         foreach ($this->attributes['actions'] as $action) {
-            $actions->pushItem($this->factory->part(Action::class, (array) $action, true));
+            $actions->pushItem($this->createOf(Action::class, $action));
         }
 
         return $actions;

@@ -442,6 +442,28 @@ abstract class Part implements ArrayAccess, JsonSerializable
     }
 
     /**
+     * Create a Part where the `created` status is referenced by this Part.
+     *
+     * @internal
+     *
+     * @see \Discord\Factory\Factory::part()
+     *
+     * @since 10.0.0
+     *
+     * @param string       $class The attribute Part class to build.
+     * @param array|object $data  Data to create the object.
+     *
+     * @return Part
+     */
+    public function createOf(string $class, array|object $data): Part
+    {
+        $ofPart = $this->factory->part($class, (array) $data, $this->created);
+        $ofPart->created = &$this->created;
+
+        return $ofPart;
+    }
+
+    /**
      * Converts a string to studlyCase.
      *
      * This is a port of updated Laravel's implementation, a non-regex with

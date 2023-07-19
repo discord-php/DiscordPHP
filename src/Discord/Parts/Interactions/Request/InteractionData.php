@@ -69,7 +69,7 @@ class InteractionData extends Part
         $options = Collection::for(Option::class, 'name');
 
         foreach ($this->attributes['options'] ?? [] as $option) {
-            $options->pushItem($this->factory->part(Option::class, (array) $option, true));
+            $options->pushItem($this->createOf(Option::class, $option));
         }
 
         return $options;
@@ -89,7 +89,7 @@ class InteractionData extends Part
         $components = Collection::for(Component::class, null);
 
         foreach ($this->attributes['components'] as $component) {
-            $components->pushItem($this->factory->part(Component::class, (array) $component, true));
+            $components->pushItem($this->createOf(Component::class, $component));
         }
 
         return $components;
@@ -111,6 +111,6 @@ class InteractionData extends Part
             $adata->guild_id = $this->guild_id;
         }
 
-        return $this->factory->part(Resolved::class, (array) $adata, true);
+        return $this->createOf(Resolved::class, $adata);
     }
 }

@@ -55,7 +55,7 @@ class Option extends Part
         $options = Collection::for(Option::class, 'name');
 
         foreach ($this->attributes['options'] ?? [] as $option) {
-            $options->pushItem($this->factory->part(Option::class, (array) $option, true));
+            $options->pushItem($this->createOf(Option::class, $option));
         }
 
         return $options;

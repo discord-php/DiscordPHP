@@ -315,11 +315,15 @@ class Guild extends Part
         // @todo move each repository fill to the setChannelAttributes methods?
         foreach ($attributes['channels'] ?? [] as $channel) {
             $channel = (array) $channel;
-            /** @var Channel */
+            /** @var ?Channel */
             if ($channelPart = $this->channels->offsetGet($channel['id'])) {
                 $channelPart->fill($channel);
+            } else {
+                /** @var Channel */
+                $channelPart = $this->channels->create($channel, $this->created);
             }
-            $this->channels->pushItem($channelPart ?: $this->channels->create($channel, true));
+            $channelPart->created = &$this->created;
+            $this->channels->pushItem($channelPart);
         }
     }
 
@@ -332,11 +336,15 @@ class Guild extends Part
     {
         foreach ($roles ?? [] as $role) {
             $role = (array) $role;
-            /** @var Role */
+            /** @var ?Role */
             if ($rolePart = $this->roles->offsetGet($role['id'])) {
                 $rolePart->fill($role);
+            } else {
+                /** @var Role */
+                $rolePart = $this->roles->create($role, $this->created);
             }
-            $this->roles->pushItem($rolePart ?: $this->roles->create($role, $this->created));
+            $rolePart->created = &$this->created;
+            $this->roles->pushItem($rolePart);
         }
 
         if (! empty($this->attributes['roles']) && $clean = array_diff(array_column($this->attributes['roles'], 'id'), array_column($roles ?? [], 'id'))) {
@@ -355,11 +363,15 @@ class Guild extends Part
     {
         foreach ($emojis ?? [] as $emoji) {
             $emoji = (array) $emoji;
-            /** @var Emoji */
+            /** @var ?Emoji */
             if ($emojiPart = $this->emojis->offsetGet($emoji['id'])) {
                 $emojiPart->fill($emoji);
+            } else {
+                /** @var Emoji */
+                $emojiPart = $this->emojis->create($emoji, $this->created);
             }
-            $this->emojis->pushItem($emojiPart ?: $this->emojis->create($emoji, $this->created));
+            $emojiPart->created = &$this->created;
+            $this->emojis->pushItem($emojiPart);
         }
 
         if (! empty($this->attributes['emojis']) && $clean = array_diff(array_column($this->attributes['emojis'], 'id'), array_column($emojis ?? [], 'id'))) {
@@ -378,11 +390,15 @@ class Guild extends Part
     {
         foreach ($stickers ?? [] as $sticker) {
             $sticker = (array) $sticker;
-            /** @var Sticker */
+            /** @var ?Sticker */
             if ($stickerPart = $this->stickers->offsetGet($sticker['id'])) {
                 $stickerPart->fill($sticker);
+            } else {
+                /** @var Sticker */
+                $stickerPart = $this->stickers->create($sticker, $this->created);
             }
-            $this->stickers->pushItem($stickerPart ?: $this->stickers->create($sticker, $this->created));
+            $stickerPart->created = &$this->created;
+            $this->stickers->pushItem($stickerPart);
         }
 
         if (! empty($this->attributes['stickers']) && $clean = array_diff(array_column($this->attributes['stickers'], 'id'), array_column($stickers ?? [], 'id'))) {
@@ -826,6 +842,7 @@ class Guild extends Part
             ->then(function ($response) {
                 if (! $emojiPart = $this->emojis->get('id', $response->id)) {
                     $emojiPart = $this->emojis->create((array) $response, true);
+                    $emojiPart->created = &$this->created;
                     $this->emojis->pushItem($emojiPart);
                 }
 
@@ -941,6 +958,7 @@ class Guild extends Part
             ->then(function ($response) {
                 if (! $stickerPart = $this->stickers->get('id', $response->id)) {
                     $stickerPart = $this->stickers->create((array) $response, true);
+                    $stickerPart->created = &$this->created;
                     $this->stickers->pushItem($stickerPart);
                 }
 
@@ -1117,6 +1135,7 @@ class Guild extends Part
                         $rolePart->fill((array) $role);
                     } else {
                         $rolePart = $this->roles->create((array) $role, true);
+                        $rolePart->created = &$this->created;
                         $this->roles->pushItem($rolePart);
                     }
                 }
@@ -1322,7 +1341,7 @@ class Guild extends Part
             return null;
         }
 
-        return $this->factory->part(WelcomeScreen::class, (array) $this->attributes['welcome_screen'], true);
+        return $this->createOf(WelcomeScreen::class, $this->attributes['welcome_screen']);
     }
 
     /**
@@ -1452,7 +1471,7 @@ class Guild extends Part
      */
     public function getWidget(): ExtendedPromiseInterface
     {
-        return $this->factory->part(Widget::class, ['id' => $this->id])->fetch();
+        return (new Widget($this->discord, ['id' => $this->id]))->fetch();
     }
 
     /**
