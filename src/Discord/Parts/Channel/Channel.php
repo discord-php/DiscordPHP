@@ -716,7 +716,7 @@ class Channel extends Part
             }
         }
 
-        return $this->getMessageHistory(['limit' => $value])->then(function ($messages) use ($reason) {
+        return $this->getMessageHistory(['limit' => $value, 'cache' => false])->then(function ($messages) use ($reason) {
             return $this->deleteMessages($messages, $reason);
         });
     }
@@ -726,15 +726,21 @@ class Channel extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
      *
-     * @param array $options
+     * @param array               $options           Array of options.
+     * @param string|Message|null $options['around'] Get messages around this message ID.
+     * @param string|Message|null $options['before'] Get messages before this message ID.
+     * @param string|Message|null $options['after']  Get messages after this message ID.
+     * @param int|null            $options['limit']  Max number of messages to return (1-100). Defaults to 50.
      *
      * @throws NoPermissionsException Missing `read_message_history` permission.
      *                                Or also missing `connect` permission for text in voice.
      * @throws \RangeException
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
+     *
+     * @todo Make it in a trait along with Thread
      */
-    public function getMessageHistory(array $options): ExtendedPromiseInterface
+    public function getMessageHistory(array $options = []): ExtendedPromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->read_message_history) {
@@ -747,11 +753,12 @@ class Channel extends Part
         }
 
         $resolver = new OptionsResolver();
-        $resolver->setDefaults(['limit' => 100, 'cache' => true]);
+        $resolver->setDefaults(['limit' => 50, 'cache' => true]);
         $resolver->setDefined(['before', 'after', 'around']);
         $resolver->setAllowedTypes('before', [Message::class, 'string']);
         $resolver->setAllowedTypes('after', [Message::class, 'string']);
         $resolver->setAllowedTypes('around', [Message::class, 'string']);
+        $resolver->setAllowedTypes('limit', 'integer');
         $resolver->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100));
 
         $options = $resolver->resolve($options);
