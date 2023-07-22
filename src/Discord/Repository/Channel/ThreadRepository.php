@@ -13,7 +13,6 @@ namespace Discord\Repository\Channel;
 
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
-use Discord\Parts\Thread\Member;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;
 use React\Promise\ExtendedPromiseInterface;
@@ -58,6 +57,7 @@ class ThreadRepository extends AbstractRepository
     {
         foreach ($response->threads as $value) {
             $value = array_merge($this->vars, (array) $value);
+            /** @var Thread */
             $part = $this->factory->create($this->class, $value, true);
             $items[$part->{$this->discrim}] = $part;
         }
@@ -72,7 +72,7 @@ class ThreadRepository extends AbstractRepository
             foreach ($items as $thread) {
                 foreach ($members as $member) {
                     if ($member->id == $thread->id) {
-                        $thread->members->cache->set($member->id, $this->factory->part(Member::class, (array) $member, true));
+                        $thread->members->cache->set($member->id, $thread->members->create((array) $member, true));
                         break;
                     }
                 }
@@ -159,11 +159,12 @@ class ThreadRepository extends AbstractRepository
         $collection = Collection::for(Thread::class);
 
         foreach ($response->threads as $thread) {
+            /** @var Thread */
             $thread = $this->factory->part(Thread::class, (array) $thread, true);
 
             foreach ($response->members as $member) {
                 if ($member->id == $thread->id) {
-                    $thread->members->pushItem($this->factory->part(Member::class, (array) $member, true));
+                    $thread->members->pushItem($thread->members->create((array) $member, true));
                 }
             }
 

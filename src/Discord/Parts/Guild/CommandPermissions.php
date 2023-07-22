@@ -86,6 +86,7 @@ class CommandPermissions extends Part
         return [
             'guild_id' => $this->guild_id,
             'application_id' => $this->application_id,
+            'command_id' => $this->id,
         ];
     }
 

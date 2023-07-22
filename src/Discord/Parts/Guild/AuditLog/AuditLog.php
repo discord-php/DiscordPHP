@@ -97,7 +97,7 @@ class AuditLog extends Part
         $collection = Collection::for(Entry::class);
 
         foreach ($this->attributes['audit_log_entries'] ?? [] as $entry) {
-            $collection->pushItem($this->factory->part(Entry::class, (array) $entry, true));
+            $collection->pushItem($this->createOf(Entry::class, $entry));
         }
 
         return $collection;
@@ -179,11 +179,7 @@ class AuditLog extends Part
         $collection = Collection::for(User::class);
 
         foreach ($this->attributes['users'] ?? [] as $user) {
-            if (! $userPart = $this->discord->users->get('id', $user->id)) {
-                $userPart = $this->factory->part(User::class, (array) $user, true);
-            }
-
-            $collection->pushItem($userPart);
+            $collection->pushItem($this->discord->users->get('id', $user->id) ?: $this->factory->part(User::class, (array) $user, true));
         }
 
         return $collection;

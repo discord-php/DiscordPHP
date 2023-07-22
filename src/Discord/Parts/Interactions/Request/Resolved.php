@@ -73,11 +73,7 @@ class Resolved extends Part
         $collection = Collection::for(User::class);
 
         foreach ($this->attributes['users'] as $snowflake => $user) {
-            if (! $userPart = $this->discord->users->get('id', $snowflake)) {
-                $userPart = $this->factory->part(User::class, (array) $user, true);
-            }
-
-            $collection->pushItem($userPart);
+            $collection->pushItem($this->discord->users->get('id', $snowflake) ?: $this->factory->part(User::class, (array) $user, true));
         }
 
         return $collection;

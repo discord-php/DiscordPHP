@@ -59,7 +59,7 @@ class DiscordCommandClient extends Discord
 
         parent::__construct($discordOptions);
 
-        $this->on('ready', function () {
+        $this->on('init', function () {
             $this->commandClientOptions['prefix'] = str_replace('@mention', (string) $this->user, $this->commandClientOptions['prefix']);
             $this->commandClientOptions['name'] = str_replace('<UsernamePlaceholder>', $this->username, $this->commandClientOptions['name']);
 
@@ -80,7 +80,7 @@ class DiscordCommandClient extends Discord
                     $args = str_getcsv($withoutPrefix, ' ');
                     $command = array_shift($args);
 
-                    if ($command !== null && $this->commandClientOptions['caseInsensitiveCommands']) {
+                    if (null !== $command && $this->commandClientOptions['caseInsensitiveCommands']) {
                         $command = strtolower($command);
                     }
 
@@ -113,7 +113,7 @@ class DiscordCommandClient extends Discord
                         $commandString = array_shift($args);
                         $newCommand = $command->getCommand($commandString);
 
-                        if (is_null($newCommand)) {
+                        if (null === $newCommand) {
                             return "The command {$commandString} does not exist.";
                         }
 
@@ -232,7 +232,7 @@ class DiscordCommandClient extends Discord
      * Registers a new command.
      *
      * @param string           $command  The command name.
-     * @param \Callable|string $callable The function called when the command is executed.
+     * @param callable|string  $callable The function called when the command is executed.
      * @param array            $options  An array of options.
      *
      * @return Command    The command instance.
@@ -240,7 +240,7 @@ class DiscordCommandClient extends Discord
      */
     public function registerCommand(string $command, $callable, array $options = []): Command
     {
-        if ($command !== null && $this->commandClientOptions['caseInsensitiveCommands']) {
+        if (null !== $command && $this->commandClientOptions['caseInsensitiveCommands']) {
             $command = strtolower($command);
         }
         if (array_key_exists($command, $this->commands)) {
@@ -251,7 +251,7 @@ class DiscordCommandClient extends Discord
         $this->commands[$command] = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
-            if ($alias !== null && $this->commandClientOptions['caseInsensitiveCommands']) {
+            if (null !== $alias && $this->commandClientOptions['caseInsensitiveCommands']) {
                 $alias = strtolower($alias);
             }
             $this->registerAlias($alias, $command);
@@ -326,7 +326,7 @@ class DiscordCommandClient extends Discord
      * Builds a command and returns it.
      *
      * @param string           $command  The command name.
-     * @param \Callable|string $callable The function called when the command is executed.
+     * @param callable|string  $callable The function called when the command is executed.
      * @param array            $options  An array of options.
      *
      * @return Command[]|array[] The command instance and options.

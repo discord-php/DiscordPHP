@@ -7,7 +7,7 @@ labels: features
 ---
 
 <!-- Please keep issues strictly about bugs and feature requests. -->
-<!-- If you need help, please join our Discord server. The link is in the README. -->
+<!-- For any other questions, either join our discord at https://discord.gg/dphp or click on "Discussions" above. -->
 
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]

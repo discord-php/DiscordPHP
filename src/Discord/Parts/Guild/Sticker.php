@@ -43,6 +43,7 @@ class Sticker extends Part
     public const FORMAT_TYPE_PNG = 1;
     public const FORMAT_TYPE_APNG = 2;
     public const FORMAT_TYPE_LOTTIE = 3;
+    public const FORMAT_TYPE_GIF = 4;
 
     /**
      * {@inheritDoc}
@@ -51,7 +52,6 @@ class Sticker extends Part
         'id',
         'name',
         'tags',
-        'asset',
         'type',
         'format_type',
         'description',
@@ -131,8 +131,13 @@ class Sticker extends Part
     {
         $format = 'png';
 
-        if ($this->attributes['format_type'] == self::FORMAT_TYPE_LOTTIE) {
-            $format = 'lottie';
+        switch ($this->attributes['format_type']) {
+            case self::FORMAT_TYPE_LOTTIE:
+                $format = 'lottie';
+                break;
+            case self::FORMAT_TYPE_GIF:
+                $format = 'gif';
+                break;
         }
 
         return "https://cdn.discordapp.com/stickers/{$this->id}.{$format}";
@@ -145,16 +150,11 @@ class Sticker extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        $attr = [
+        return $this->makeOptionalAttributes([
             'name' => $this->name,
+            'description' => $this->description,
             'tags' => $this->attributes['tags'],
-        ];
-
-        if (array_key_exists('description', $this->attributes)) {
-            $attr['description'] = $this->description;
-        }
-
-        return $attr;
+        ]);
     }
 
     /**

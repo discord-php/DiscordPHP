@@ -83,7 +83,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      *
      * @param int $length Number of bytes to read.
      *
-     * @return mixed The bytes read, or false if not enough bytes are present.
+     * @return string|bool The bytes read, or false if not enough bytes are present.
      */
     private function readRaw(int $length)
     {

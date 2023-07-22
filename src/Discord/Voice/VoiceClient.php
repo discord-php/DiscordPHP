@@ -302,6 +302,13 @@ class VoiceClient extends EventEmitter
      * @var bool Whether the voice client is reconnecting.
      */
     protected $reconnecting = false;
+    
+    /**
+     * Is the voice client being closed by user?
+     *
+     * @var bool Whether the voice client is being closed by user.
+     */
+    protected $userClose = false;
 
     /**
      * The logger.
@@ -430,8 +437,10 @@ class VoiceClient extends EventEmitter
 
                 $this->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
 
-                $buffer = new Buffer(70);
-                $buffer->writeUInt32BE($this->ssrc, 3);
+                $buffer = new Buffer(74);
+                $buffer[1] = "\x01";
+                $buffer[3] = "\x46";
+                $buffer->writeUInt32BE($this->ssrc, 4);
                 /** @var ExtendedPromiseInterface */
                 $promise = $udpfac->createClient("{$data->d->ip}:{$this->udpPort}");
 
@@ -460,7 +469,7 @@ class VoiceClient extends EventEmitter
                     $decodeUDP = function ($message) use (&$decodeUDP, $client, &$ip, &$port) {
                         $message = (string) $message;
                         // let's get our IP
-                        $ip_start = 4;
+                        $ip_start = 8;
                         $ip = substr($message, $ip_start);
                         $ip_end = strpos($ip, "\x00");
                         $ip = substr($ip, 0, $ip_end);
@@ -608,12 +617,12 @@ class VoiceClient extends EventEmitter
         $this->emit('ws-close', [$op, $reason, $this]);
 
         // Cancel heartbeat timers
-        if (! is_null($this->heartbeat)) {
+        if (null !== $this->heartbeat) {
             $this->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
-        if (! is_null($this->udpHeartbeat)) {
+        if (null !== $this->udpHeartbeat) {
             $this->loop->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
@@ -623,8 +632,8 @@ class VoiceClient extends EventEmitter
             $this->client->close();
         }
 
-        // Don't reconnect on a critical opcode.
-        if (in_array($op, Op::getCriticalVoiceCloseCodes())) {
+        // Don't reconnect on a critical opcode or if closed by user.
+        if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this->userClose) {
             $this->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
             $this->emit('close');
         } else {
@@ -816,8 +825,11 @@ class VoiceClient extends EventEmitter
         $ogg = null;
 
         $loops = 0;
+        
         $readOpus = function () use ($deferred, &$ogg, &$readOpus, &$loops) {
             $this->readOpusTimer = null;
+            
+            $loops += 1;
 
             // If the client is paused, delay by frame size and check again.
             if ($this->paused) {
@@ -829,14 +841,12 @@ class VoiceClient extends EventEmitter
 
             $ogg->getPacket()->then(function ($packet) use (&$readOpus, &$loops, $deferred) {
                 // EOF for Ogg stream.
-                if ($packet === null) {
+                if (null === $packet) {
                     $this->reset();
                     $deferred->resolve();
 
                     return;
                 }
-
-                $loops += 1;
 
                 // increment sequence
                 // uint16 overflow protection
@@ -980,7 +990,7 @@ class VoiceClient extends EventEmitter
         })->then(function ($metadata) use ($readOpus) {
             $metadata = json_decode($metadata, true);
 
-            if ($metadata !== null) {
+            if (null !== $metadata) {
                 $this->frameSize = $metadata['opus']['frame_size'] / 48;
             }
 
@@ -1284,17 +1294,18 @@ class VoiceClient extends EventEmitter
             ],
         ]);
 
+        $this->userClose = true;
         $this->client->close();
         $this->voiceWebsocket->close();
 
         $this->heartbeat_interval = null;
 
-        if (! is_null($this->heartbeat)) {
+        if (null !== $this->heartbeat) {
             $this->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
-        if (! is_null($this->udpHeartbeat)) {
+        if (null !== $this->udpHeartbeat) {
             $this->loop->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
@@ -1349,7 +1360,7 @@ class VoiceClient extends EventEmitter
         $removeDecoder = function ($ss) {
             $decoder = $this->voiceDecoders[$ss->ssrc] ?? null;
 
-            if (is_null($decoder)) {
+            if (null === $decoder) {
                 return; // no voice decoder to remove
             }
 
@@ -1360,7 +1371,7 @@ class VoiceClient extends EventEmitter
 
         $ss = $this->speakingStatus->get('user_id', $data->user_id);
 
-        if (is_null($ss)) {
+        if (null === $ss) {
             return; // not in our channel
         }
 
@@ -1414,12 +1425,12 @@ class VoiceClient extends EventEmitter
         $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
         $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
 
-        if (is_null($ss)) {
+        if (null === $ss) {
             // for some reason we don't have a speaking status
             return;
         }
 
-        if (is_null($decoder)) {
+        if (null === $decoder) {
             // make a decoder
             if (! isset($this->recieveStreams[$ss->ssrc])) {
                 $this->recieveStreams[$ss->ssrc] = new RecieveStream();
@@ -1490,7 +1501,7 @@ class VoiceClient extends EventEmitter
         foreach ($binaries as $binary) {
             $output = $this->checkForExecutable($binary);
 
-            if ($output !== null) {
+            if (null !== $output) {
                 $this->ffmpeg = $output;
 
                 return true;
@@ -1564,7 +1575,7 @@ class VoiceClient extends EventEmitter
             'pipe:1',
         ];
 
-        if ($preArgs !== null) {
+        if (null !== $preArgs) {
             $flags = array_merge($preArgs, $flags);
         }
 
@@ -1588,7 +1599,7 @@ class VoiceClient extends EventEmitter
      */
     public function dcaDecode(int $channels = 2, ?int $frameSize = null): Process
     {
-        if (is_null($frameSize)) {
+        if (null === $frameSize) {
             $frameSize = round($this->frameSize * 48);
         }
 

@@ -49,12 +49,12 @@ class Intents
     public const GUILD_MEMBERS = (1 << 1);
 
     /**
-     * Guild ban events.
-     *
+     * Guild moderation events.
+     * - GUILD_AUDIT_LOG_ENTRY_CREATE
      * - GUILD_BAN_ADD
      * - GUILD_BAN_REMOVE
      */
-    public const GUILD_BANS = (1 << 2);
+    public const GUILD_MODERATION = (1 << 2);
 
     /**
      * Guild emoji and sticker events.

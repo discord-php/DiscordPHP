@@ -33,7 +33,7 @@ use Discord\Parts\Permissions\RolePermission;
  * @property      RolePermission $permissions   The permissions of the role.
  * @property      bool           $managed       Whether the role is managed by a Twitch subscriber feature.
  * @property      bool           $mentionable   Whether the role is mentionable.
- * @property      object|null    $tags          The tags this role has.
+ * @property      object|null    $tags          The tags this role has (`bot_id`, `integration_id`, `premium_subscriber`, `subscription_listing_id`, `available_for_purchase`, and `guild_connections`).
  *
  * @property      string|null $guild_id The unique identifier of the guild that the role belongs to.
  * @property-read Guild|null  $guild    The guild that the role belongs to.
@@ -68,7 +68,7 @@ class Role extends Part
     protected function setPermissionsAttribute($permission): void
     {
         if (! ($permission instanceof RolePermission)) {
-            $permission = $this->factory->part(RolePermission::class, ['bitwise' => $permission], true);
+            $permission = $this->createOf(RolePermission::class, ['bitwise' => $permission]);
         }
 
         $this->attributes['permissions'] = $permission;
@@ -136,15 +136,15 @@ class Role extends Part
      */
     public function getCreatableAttributes(): array
     {
-        return [
+        return $this->makeOptionalAttributes([
             'name' => $this->name,
-            'permissions' => $this->permissions->bitwise,
+            'permissions' => (string) $this->permissions,
             'color' => $this->color,
             'hoist' => $this->hoist,
             'icon' => $this->icon_hash,
-            'unicode_emoji' => $this->unicode_emoji ?? null,
+            'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
-        ];
+        ]);
     }
 
     /**
@@ -154,23 +154,15 @@ class Role extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        $attr = [
+        return $this->makeOptionalAttributes([
             'name' => $this->name,
-            'permissions' => $this->permissions->bitwise,
+            'permissions' => (string) $this->permissions,
             'color' => $this->color,
             'hoist' => $this->hoist,
+            'icon' => $this->icon_hash,
+            'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
-        ];
-
-        if (array_key_exists('icon', $this->attributes)) {
-            $attr['icon'] = $this->icon_hash;
-        }
-
-        if (array_key_exists('unicode_emoji', $this->attributes)) {
-            $attr['unicode_emoji'] = $this->unicode_emoji;
-        }
-
-        return $attr;
+        ]);
     }
 
     /**

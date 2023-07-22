@@ -108,12 +108,12 @@ class Interaction extends Part
             return null;
         }
 
-        $adata = (array) $this->attributes['data'];
-        if (! isset($adata['guild_id']) && isset($this->attributes['guild_id'])) {
-            $adata['guild_id'] = $this->guild_id;
+        $adata = $this->attributes['data'];
+        if (! isset($adata->guild_id) && isset($this->attributes['guild_id'])) {
+            $adata->guild_id = $this->guild_id;
         }
 
-        return $this->factory->part(InteractionData::class, $adata, true);
+        return $this->createOf(InteractionData::class, $adata);
     }
 
     /**
@@ -280,7 +280,7 @@ class Interaction extends Part
      */
     public function updateMessage(MessageBuilder $builder): ExtendedPromiseInterface
     {
-        if ($this->type != InteractionType::MESSAGE_COMPONENT) {
+        if (! in_array($this->type, [InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
             return reject(new \LogicException('You can only update messages that occur due to a message component interaction.'));
         }
 

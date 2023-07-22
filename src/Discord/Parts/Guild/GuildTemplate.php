@@ -79,7 +79,7 @@ class GuildTemplate extends Part
             return $guild;
         }
 
-        return $this->factory->part(Guild::class, (array) $this->attributes['serialized_source_guild'], true);
+        return $this->createOf(Guild::class, $this->attributes['serialized_source_guild']);
     }
 
     /**
@@ -157,7 +157,7 @@ class GuildTemplate extends Part
                 /** @var ?Guild */
                 if (! $guildPart = $this->discord->guilds->get('id', $response->id)) {
                     /** @var Guild */
-                    $guildPart = $this->factory->part(Guild::class, (array) $response + ['roles' => $roles], true);
+                    $guildPart = $this->discord->guilds->create((array) $response + ['roles' => $roles], true);
 
                     foreach ($channels as $channel) {
                         $guildPart->channels->pushItem($guildPart->channels->create($channel, true));
@@ -189,8 +189,9 @@ class GuildTemplate extends Part
     {
         return [
             'name' => $this->name,
-            'description' => $this->description ?? null,
-        ];
+        ] + $this->makeOptionalAttributes([
+            'description' => $this->description,
+        ]);
     }
 
     /**
@@ -200,15 +201,10 @@ class GuildTemplate extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        $attr = [
+        return $this->makeOptionalAttributes([
             'name' => $this->name,
-        ];
-
-        if (array_key_exists('description', $this->attributes)) {
-            $attr['description'] = $this->description;
-        }
-
-        return $attr;
+            'description' => $this->description,
+        ]);
     }
 
     /**

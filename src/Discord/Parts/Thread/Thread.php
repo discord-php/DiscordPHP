@@ -16,6 +16,7 @@ use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
@@ -30,7 +31,9 @@ use Discord\Repository\Thread\MemberRepository;
 use Discord\WebSockets\Event;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Traversable;
 
+use function Discord\getSnowflakeTimestamp;
 use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -75,6 +78,8 @@ use function React\Promise\resolve;
  */
 class Thread extends Part
 {
+    public const FLAG_PINNED = (1 << 1);
+
     /**
      * {@inheritDoc}
      */
@@ -118,10 +123,12 @@ class Thread extends Part
     protected function afterConstruct(): void
     {
         if (isset($this->attributes['member'])) {
-            $this->members->pushItem($this->factory->part(ThreadMember::class, (array) $this->attributes['member'] + [
+            $memberPart = $this->members->create((array) $this->attributes['member'] + [
                 'id' => $this->id,
                 'user_id' => $this->discord->id,
-            ], true));
+            ], $this->created);
+            $memberPart->created = &$this->created;
+            $this->members->pushItem($memberPart);
         }
     }
 
@@ -462,11 +469,7 @@ class Thread extends Part
                 $messages = Collection::for(Message::class);
 
                 foreach ($responses as $response) {
-                    if (! $message = $this->messages->get('id', $response->id)) {
-                        $message = $this->factory->part(Message::class, (array) $response, true);
-                    }
-
-                    $messages->pushItem($message);
+                    $messages->pushItem($this->messages->get('id', $response->id) ?: $this->createOf(Message::class, $response));
                 }
 
                 return $messages;
@@ -478,8 +481,8 @@ class Thread extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
      *
-     * @param array       $messages
-     * @param string|null $reason   Reason for Audit Log (only for bulk messages).
+     * @param array|Traversable $messages An array of messages to delete.
+     * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
      *
      * @return ExtendedPromiseInterface
      *
@@ -487,42 +490,42 @@ class Thread extends Part
      */
     public function deleteMessages($messages, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! is_array($messages)) {
-            return reject(new \Exception('$messages must be an array.'));
+        if (! is_array($messages) && ! ($messages instanceof Traversable)) {
+            return reject(new \InvalidArgumentException('$messages must be an array or implement Traversable.'));
         }
 
-        $count = count($messages);
-
-        if ($count == 0) {
-            return resolve();
-        } elseif ($count == 1) {
-            foreach ($messages as $message) {
-                if ($message instanceof Message) {
-                    $message = $message->id;
-                }
-
-                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete messages in the thread {$this->id}."));
             }
         }
 
-        $headers = [];
+        $headers = $promises = $messagesBulk = $messagesSingle = [];
         if (isset($reason)) {
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        $promises = [];
-        $chunks = array_chunk(array_map(function ($message) {
+        foreach ($messages as $message) {
             if ($message instanceof Message) {
-                return $message->id;
+                $message = $message->id;
             }
 
-            return $message;
-        }, $messages), 100);
+            if (getSnowflakeTimestamp($message) < time() - 1209600) {
+                $messagesSingle[] = $message;
+            } else {
+                $messagesBulk[] = $message;
+            }
+        }
 
-        foreach ($chunks as $messages) {
-            $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), [
-                'messages' => $messages,
-            ], $headers);
+        while (count($messagesBulk) > 1) {
+            $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messagesBulk, 0, 100)], $headers);
+            $messagesBulk = array_slice($messagesBulk, 100);
+        }
+
+        $messagesSingle = array_merge($messagesSingle, $messagesBulk);
+
+        foreach ($messagesSingle as $message) {
+            $promises[] = $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
         }
 
         return all($promises);
@@ -533,21 +536,26 @@ class Thread extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
      *
-     * @param array $options
+     * @param array               $options           Array of options.
+     * @param string|Message|null $options['around'] Get messages around this message ID.
+     * @param string|Message|null $options['before'] Get messages before this message ID.
+     * @param string|Message|null $options['after']  Get messages after this message ID.
+     * @param int|null            $options['limit']  Max number of messages to return (1-100). Defaults to 50.
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
      *
      * @todo Make it in a trait along with Channel
      */
-    public function getMessageHistory(array $options): ExtendedPromiseInterface
+    public function getMessageHistory(array $options = []): ExtendedPromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver
-            ->setDefaults(['limit' => 100, 'cache' => false])
+            ->setDefaults(['limit' => 50, 'cache' => false])
             ->setDefined(['before', 'after', 'around'])
             ->setAllowedTypes('before', [Message::class, 'string'])
             ->setAllowedTypes('after', [Message::class, 'string'])
             ->setAllowedTypes('around', [Message::class, 'string'])
+            ->setAllowedTypes('limit', 'integer')
             ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100));
 
         $options = $resolver->resolve($options);
@@ -578,7 +586,7 @@ class Thread extends Part
 
             foreach ($responses as $response) {
                 if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->part(Message::class, (array) $response, true);
+                    $message = $this->createOf(Message::class, $response);
                     $this->messages->pushItem($message);
                 }
 
@@ -713,7 +721,12 @@ class Thread extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            return $this->messages->get('id', $response->id) ?? $this->messages->create((array) $response, true);
+            if (! $messagePart = $this->messages->get('id', $response->id)) {
+                $messagePart = $this->messages->create((array) $response, true);
+                $messagePart->created = &$this->created;
+            }
+
+            return $messagePart; 
         });
     }
 
@@ -734,6 +747,22 @@ class Thread extends Part
     {
         return $this->sendMessage(MessageBuilder::new()
             ->addEmbed($embed));
+    }
+
+    /**
+     * Broadcasts that you are typing to the thread. Lasts for 5 seconds.
+     *
+     * @link https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
+     *
+     * @since 10.0.0
+     *
+     * @throws \RuntimeException
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function broadcastTyping(): ExtendedPromiseInterface
+    {
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_TYPING, $this->id));
     }
 
     /**
@@ -774,7 +803,7 @@ class Thread extends Part
                     $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
                     $deferred->resolve($messages);
 
-                    if (! is_null($timer)) {
+                    if (null !== $timer) {
                         $this->discord->getLoop()->cancelTimer($timer);
                     }
                 }
@@ -792,7 +821,7 @@ class Thread extends Part
 
         return $deferred->promise();
     }
-    
+
     /**
      * Returns the bot's permissions in the thread.
      *
@@ -816,14 +845,19 @@ class Thread extends Part
     {
         $attr = [
             'name' => $this->name,
-            'auto_archive_duration' => $this->auto_archive_duration,
-            'type' => $this->type,
-            'rate_limit_per_user' => $this->rate_limit_per_user,
         ];
 
         if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
-            $attr['invitable'] = $this->invitable;
+            $attr += $this->makeOptionalAttributes([
+                'invitable' => $this->invitable
+            ]);
         }
+
+        $attr += $this->makeOptionalAttributes([
+            'auto_archive_duration' => $this->auto_archive_duration,
+            'type' => $this->type,
+            'rate_limit_per_user' => $this->rate_limit_per_user,
+        ]);
 
         return $attr;
     }
@@ -837,20 +871,20 @@ class Thread extends Part
     {
         $attr = [
             'name' => $this->name,
-            'rate_limit_per_user' => $this->rate_limit_per_user,
             'archived' => $this->archived,
             'auto_archive_duration' => $this->auto_archive_duration,
             'locked' => $this->locked,
-            'flags' => $this->flags,
+            'rate_limit_per_user' => $this->rate_limit_per_user,
         ];
 
         if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
             $attr['invitable'] = $this->invitable;
         }
 
-        if (array_key_exists('applied_tags', $this->attributes)) {
-            $attr['applied_tags'] = $this->applied_tags;
-        }
+        $attr += $this->makeOptionalAttributes([
+            'flags' => $this->flags,
+            'applied_tags' => $this->applied_tags,
+        ]);
 
         return $attr;
     }

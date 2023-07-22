@@ -12,6 +12,7 @@
 namespace Discord\Parts\Interactions\Request;
 
 use Discord\Helpers\Collection;
+use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Part;
 
 /**
@@ -59,16 +60,16 @@ class InteractionData extends Part
      *
      * @return Collection|Option[]|null $options
      */
-    protected function getOptionsAttribute()
+    protected function getOptionsAttribute(): ?Collection
     {
-        if (! isset($this->attributes['options'])) {
+        if (! isset($this->attributes['options']) && $this->type != Command::CHAT_INPUT) {
             return null;
         }
 
         $options = Collection::for(Option::class, 'name');
 
-        foreach ($this->attributes['options'] as $option) {
-            $options->pushItem($this->factory->part(Option::class, (array) $option, true));
+        foreach ($this->attributes['options'] ?? [] as $option) {
+            $options->pushItem($this->createOf(Option::class, $option));
         }
 
         return $options;
@@ -79,7 +80,7 @@ class InteractionData extends Part
      *
      * @return Collection|Component[]|null $components
      */
-    protected function getComponentsAttribute()
+    protected function getComponentsAttribute(): ?Collection
     {
         if (! isset($this->attributes['components'])) {
             return null;
@@ -88,7 +89,7 @@ class InteractionData extends Part
         $components = Collection::for(Component::class, null);
 
         foreach ($this->attributes['components'] as $component) {
-            $components->pushItem($this->factory->part(Component::class, (array) $component, true));
+            $components->pushItem($this->createOf(Component::class, $component));
         }
 
         return $components;
@@ -110,6 +111,6 @@ class InteractionData extends Part
             $adata->guild_id = $this->guild_id;
         }
 
-        return $this->factory->part(Resolved::class, (array) $adata, true);
+        return $this->createOf(Resolved::class, $adata);
     }
 }

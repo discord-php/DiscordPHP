@@ -30,6 +30,7 @@ use function React\Promise\resolve;
  * @since 10.0.0
  *
  * @property-read \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $interface The actual ReactPHP PSR-16 CacheInterface.
+ * @property-read CacheConfig                                                 $config    Cache configuration.
  */
 class CacheWrapper
 {
@@ -112,7 +113,7 @@ class CacheWrapper
     public function get($key, $default = null)
     {
         $handleValue = function ($value) use ($key) {
-            if ($value === null) {
+            if (null === $value) {
                 unset($this->items[$key]);
             } else {
                 $value = $this->items[$key] = $this->unserializer($value);
@@ -144,6 +145,7 @@ class CacheWrapper
      */
     public function set($key, $value, $ttl = null)
     {
+        $ttl ??= $this->config->ttl;
         $item = $this->serializer($value);
 
         $handleValue = function ($success) use ($key, $value) {
@@ -212,7 +214,7 @@ class CacheWrapper
         if (is_callable([$this->interface, 'getMultiple'])) {
             $handleValue = function ($values) {
                 foreach ($values as $key => &$value) {
-                    if ($value === null) {
+                    if (null === $value) {
                         unset($this->items[$key]);
                     } else {
                         $value = $this->items[$key] = $this->unserializer($value);
@@ -383,14 +385,14 @@ class CacheWrapper
     protected function isZlibCompressed(string $data): bool
     {
         $data = unpack('Ccmf/Cflg', $data);
-        $cm = $data['cmf'] & 0xF;
+        $cmethod = $data['cmf'] & 0xF;
         $cinfo = ($data['cmf'] & 0xF0) >> 4;
         // $fcheck = $data['flg'] & 0x1F;
         // $fdict = ($data['flg'] & 0x20) >> 5;
         $flevel = ($data['flg'] & 0xC0) >> 6;
 
         // Ensure compression method is deflate
-        if ($cm !== 8) {
+        if ($cmethod !== 8) {
             return false;
         }
 
@@ -421,8 +423,10 @@ class CacheWrapper
     {
         $data = (object) (get_object_vars($part) + ['attributes' => $part->getRawAttributes()]);
 
-        if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
-            $data = serialize($data);
+        if (! ($this->interface instanceof ArrayCache)) {
+            if ($this->interface instanceof \React\Cache\CacheInterface) {
+                $data = serialize($data);
+            }
 
             if ($this->config->compress) {
                 $data = zlib_encode($data, ZLIB_ENCODING_DEFLATE);
@@ -439,17 +443,20 @@ class CacheWrapper
      */
     public function unserializer($value)
     {
-        if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
+        if (! ($this->interface instanceof ArrayCache)) {
             if ($this->isZlibCompressed($value)) {
                 $value = zlib_decode($value);
             }
-            $tmp = unserialize($value);
-            if ($tmp === false) {
-                $this->discord->getLogger()->error('Malformed cache serialization', ['class' => $this->class, 'interface' => get_class($this->interface), 'serialized' => $value]);
 
-                return null;
+            if ($this->interface instanceof \React\Cache\CacheInterface) {
+                $tmp = unserialize($value);
+                if ($tmp === false) {
+                    $this->discord->getLogger()->error('Malformed cache serialization', ['class' => $this->class, 'interface' => get_class($this->interface), 'serialized' => $value]);
+
+                    return null;
+                }
+                $value = $tmp;
             }
-            $value = $tmp;
         }
 
         if (empty($value->attributes)) {
@@ -478,7 +485,7 @@ class CacheWrapper
     {
         $flushing = 0;
         foreach ($this->items as $key => $item) {
-            if ($item === null) {
+            if (null === $item) {
                 // Item was removed from memory, delete from cache
                 $this->delete($key);
                 $flushing++;
@@ -499,7 +506,7 @@ class CacheWrapper
 
     public function __get(string $name)
     {
-        if (in_array($name, ['interface'])) {
+        if (in_array($name, ['interface', 'config'])) {
             return $this->$name;
         }
     }

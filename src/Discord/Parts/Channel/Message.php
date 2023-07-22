@@ -44,37 +44,38 @@ use function React\Promise\reject;
  *
  * @since 2.0.0
  *
- * @property      string                      $id                 The unique identifier of the message.
- * @property      string                      $channel_id         The unique identifier of the channel that the message was went in.
- * @property-read Channel|Thread|null         $channel            The channel that the message was sent in.
- * @property      User|null                   $author             The author of the message. Will be a webhook if sent from one.
- * @property-read string|null                 $user_id            The user id of the author.
- * @property      string                      $content            The content of the message if it is a normal message.
- * @property      Carbon                      $timestamp          A timestamp of when the message was sent.
- * @property      Carbon|null                 $edited_timestamp   A timestamp of when the message was edited, or null.
- * @property      bool                        $tts                Whether the message was sent as a text-to-speech message.
- * @property      bool                        $mention_everyone   Whether the message contained an @everyone mention.
- * @property      Collection|User[]           $mentions           A collection of the users mentioned in the message.
- * @property      Collection|Role[]           $mention_roles      A collection of roles that were mentioned in the message.
- * @property      Collection|Channel[]        $mention_channels   Collection of mentioned channels.
- * @property      Collection|Attachment[]     $attachments        Collection of attachment objects.
- * @property      Collection|Embed[]          $embeds             A collection of embed objects.
- * @property      ReactionRepository          $reactions          Collection of reactions on the message.
- * @property      string|null                 $nonce              A randomly generated string that provides verification for the client. Not required.
- * @property      bool                        $pinned             Whether the message is pinned to the channel.
- * @property      string|null                 $webhook_id         ID of the webhook that made the message, if any.
- * @property      int                         $type               The type of message.
- * @property      object|null                 $activity           Current message activity. Requires rich presence.
- * @property      object|null                 $application        Application of message. Requires rich presence.
- * @property      string|null                 $application_id     If the message is a response to an Interaction, this is the id of the interaction's application.
- * @property      object|null                 $message_reference  Message that is referenced by this message.
- * @property      int|null                    $flags              Message flags.
- * @property      Message|null                $referenced_message The message that is referenced in a reply.
- * @property      MessageInteraction|null     $interaction        Sent if the message is a response to an Interaction.
- * @property      Thread|null                 $thread             The thread that was started from this message, includes thread member object.
- * @property      Collection|Component[]|null $components         Sent if the message contains components like buttons, action rows, or other interactive components.
- * @property      Collection|Sticker[]|null   $sticker_items      Stickers attached to the message.
- * @property      int|null                    $position           A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
+ * @property      string                      $id                     The unique identifier of the message.
+ * @property      string                      $channel_id             The unique identifier of the channel that the message was went in.
+ * @property-read Channel|Thread              $channel                The channel that the message was sent in.
+ * @property      User|null                   $author                 The author of the message. Will be a webhook if sent from one.
+ * @property-read string|null                 $user_id                The user id of the author.
+ * @property      string                      $content                The content of the message if it is a normal message.
+ * @property      Carbon                      $timestamp              A timestamp of when the message was sent.
+ * @property      Carbon|null                 $edited_timestamp       A timestamp of when the message was edited, or null.
+ * @property      bool                        $tts                    Whether the message was sent as a text-to-speech message.
+ * @property      bool                        $mention_everyone       Whether the message contained an @everyone mention.
+ * @property      Collection|User[]           $mentions               A collection of the users mentioned in the message.
+ * @property      Collection|Role[]           $mention_roles          A collection of roles that were mentioned in the message.
+ * @property      Collection|Channel[]        $mention_channels       Collection of mentioned channels.
+ * @property      Collection|Attachment[]     $attachments            Collection of attachment objects.
+ * @property      Collection|Embed[]          $embeds                 A collection of embed objects.
+ * @property      ReactionRepository          $reactions              Collection of reactions on the message.
+ * @property      string|null                 $nonce                  A randomly generated string that provides verification for the client. Not required.
+ * @property      bool                        $pinned                 Whether the message is pinned to the channel.
+ * @property      string|null                 $webhook_id             ID of the webhook that made the message, if any.
+ * @property      int                         $type                   The type of message.
+ * @property      object|null                 $activity               Current message activity. Requires rich presence.
+ * @property      object|null                 $application            Application of message. Requires rich presence.
+ * @property      string|null                 $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
+ * @property      object|null                 $message_reference      Message that is referenced by this message.
+ * @property      int|null                    $flags                  Message flags.
+ * @property      Message|null                $referenced_message     The message that is referenced in a reply.
+ * @property      MessageInteraction|null     $interaction            Sent if the message is a response to an Interaction.
+ * @property      Thread|null                 $thread                 The thread that was started from this message, includes thread member object.
+ * @property      Collection|Component[]|null $components             Sent if the message contains components like buttons, action rows, or other interactive components.
+ * @property      Collection|Sticker[]|null   $sticker_items          Stickers attached to the message.
+ * @property      int|null                    $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
+ * @property      object|null                 $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
  *
  * @property-read bool $crossposted                            Message has been crossposted.
  * @property-read bool $is_crosspost                           Message is a crosspost from another channel.
@@ -85,6 +86,7 @@ use function React\Promise\reject;
  * @property-read bool $ephemeral                              Whether this message is only visible to the user who invoked the Interaction.
  * @property-read bool $loading                                Whether this message is an Interaction Response and the bot is "thinking".
  * @property-read bool $failed_to_mention_some_roles_in_thread This message failed to mention some roles and add their members to the thread.
+ * @property-read bool $suppress_notifications                 This message will not trigger push and desktop notifications.
  *
  * @property      string|null $guild_id The unique identifier of the guild that the channel the message was sent in belongs to.
  * @property-read Guild|null  $guild    The guild that the message was sent in.
@@ -117,6 +119,13 @@ class Message extends Part
     public const TYPE_GUILD_INVITE_REMINDER = 22;
     public const TYPE_CONTEXT_MENU_COMMAND = 23;
     public const TYPE_AUTO_MODERATION_ACTION = 24;
+    public const TYPE_ROLE_SUBSCRIPTION_PURCHASE = 25;
+    public const TYPE_INTERACTION_PREMIUM_UPSELL = 26;
+    public const TYPE_STAGE_START = 27;
+    public const TYPE_STAGE_END = 28;
+    public const TYPE_STAGE_SPEAKER = 29;
+    public const TYPE_STAGE_TOPIC = 31;
+    public const TYPE_GUILD_APPLICATION_PREMIUM_SUBSCRIPTION = 32;
 
     /** @deprecated 7.1.0 Use `Message::TYPE_USER_JOIN` */
     public const GUILD_MEMBER_JOIN = self::TYPE_USER_JOIN;
@@ -168,6 +177,7 @@ class Message extends Part
     public const FLAG_EPHEMERAL = (1 << 6);
     public const FLAG_LOADING = (1 << 7);
     public const FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD = (1 << 8);
+    public const FLAG_SUPPRESS_NOTIFICATIONS = (1 << 12);
 
     /**
      * {@inheritDoc}
@@ -200,8 +210,8 @@ class Message extends Part
         'thread',
         'components',
         'sticker_items',
-        'stickers', // deprecated
         'position',
+        'role_subscription_data',
 
         // @internal
         'guild_id',
@@ -309,6 +319,16 @@ class Message extends Part
     }
 
     /**
+     * Gets the suppress notification attribute.
+     *
+     * @return bool
+     */
+    protected function getSuppressNotificationsAttribute(): bool
+    {
+        return (bool) ($this->flags & self::FLAG_SUPPRESS_NOTIFICATIONS);
+    }
+
+    /**
      * Gets the mention_channels attribute.
      *
      * @return Collection|Channel[]
@@ -326,11 +346,7 @@ class Message extends Part
         }
 
         foreach ($this->attributes['mention_channels'] ?? [] as $mention_channel) {
-            if (! $channel = $this->discord->getChannel($mention_channel->id)) {
-                $channel = $this->factory->part(Channel::class, (array) $mention_channel, true);
-            }
-
-            $collection->pushItem($channel);
+            $collection->pushItem($this->discord->getChannel($mention_channel->id) ?: $this->factory->part(Channel::class, (array) $mention_channel, true));
         }
 
         return $collection;
@@ -346,7 +362,7 @@ class Message extends Part
         $attachments = Collection::for(Attachment::class);
 
         foreach ($this->attributes['attachments'] ?? [] as $attachment) {
-            $attachments->pushItem($this->factory->part(Attachment::class, (array) $attachment, true));
+            $attachments->pushItem($this->createOf(Attachment::class, $attachment));
         }
 
         return $attachments;
@@ -363,12 +379,15 @@ class Message extends Part
         foreach ($reactions ?? [] as $reaction) {
             $keepReactions[] = $reactionKey = $reaction->emoji->id ?? $reaction->emoji->name;
             $reaction = (array) $reaction;
-            /** @var Reaction */
+            /** @var ?Reaction */
             if ($reactionPart = $this->reactions->offsetGet($reactionKey)) {
                 $reactionPart->fill($reaction);
-                $reactionPart->created = $this->created;
+            } else {
+                /** @var Reaction */
+                $reactionPart = $this->reactions->create($reaction, $this->created);
             }
-            $this->reactions->pushItem($reactionPart ?: $this->reactions->create($reaction, $this->created));
+            $reactionPart->created = &$this->created;
+            $this->reactions->pushItem($reactionPart);
         }
 
         $oldReactions = [];
@@ -435,7 +454,8 @@ class Message extends Part
                 if ($thread = $channel->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
-                $thread = $this->factory->part(Thread::class, $this->attributes['thread'], true);
+                $thread = $channel->threads->create((array) $this->attributes['thread'], $channel->created);
+                $thread->created = &$channel->created;
                 $channel->threads->pushItem($thread);
             }
         }
@@ -498,10 +518,7 @@ class Message extends Part
         $users = Collection::for(User::class);
 
         foreach ($this->attributes['mentions'] ?? [] as $mention) {
-            if (! $user = $this->discord->users->get('id', $mention->id)) {
-                $user = $this->factory->part(User::class, (array) $mention, true);
-            }
-            $users->pushItem($user);
+            $users->pushItem($this->discord->users->get('id', $mention->id) ?: $this->factory->part(User::class, (array) $mention, true));
         }
 
         return $users;
@@ -568,7 +585,7 @@ class Message extends Part
         $embeds = new Collection([], null);
 
         foreach ($this->attributes['embeds'] ?? [] as $embed) {
-            $embeds->pushItem($this->factory->part(Embed::class, (array) $embed, true));
+            $embeds->pushItem($this->createOf(Embed::class, $embed));
         }
 
         return $embeds;
@@ -585,7 +602,7 @@ class Message extends Part
             return null;
         }
 
-        return $this->factory->part(MessageInteraction::class, (array) $this->attributes['interaction'] + ['guild_id' => $this->guild_id], true);
+        return $this->createOf(MessageInteraction::class, (array) $this->attributes['interaction'] + ['guild_id' => $this->guild_id]);
     }
 
     /**
@@ -672,7 +689,7 @@ class Message extends Part
         $components = Collection::for(Component::class, null);
 
         foreach ($this->attributes['components'] as $component) {
-            $components->pushItem($this->factory->part(Component::class, (array) $component, true));
+            $components->pushItem($this->createOf(Component::class, $component));
         }
 
         return $components;
@@ -685,13 +702,13 @@ class Message extends Part
      */
     protected function getStickerItemsAttribute(): ?Collection
     {
-        if (! isset($this->attributes['sticker_items'])) {
+        if (! isset($this->attributes['sticker_items']) && ! in_array($this->type, [self::TYPE_DEFAULT, self::TYPE_REPLY])) {
             return null;
         }
 
         $sticker_items = Collection::for(Sticker::class);
 
-        foreach ($this->attributes['sticker_items'] as $sticker) {
+        foreach ($this->attributes['sticker_items'] ?? [] as $sticker) {
             $sticker_items->pushItem($this->factory->part(Sticker::class, (array) $sticker, true));
         }
 
@@ -730,8 +747,19 @@ class Message extends Part
      *
      * @since 10.0.0 Arguments for `$name` and `$auto_archive_duration` are now inside `$options`
      */
-    public function startThread(array $options, ?string $reason = null): ExtendedPromiseInterface
+    public function startThread(array|string $options, string|null|int $reason = null, ?string $_reason = null): ExtendedPromiseInterface
     {
+        // Old v7 signature
+        if (is_string($options)) {
+            $options = [
+                'name' => $options,
+            ];
+            if (! is_string($reason)) {
+                $options['auto_archive_duration'] = $reason ?? 1440;
+            }
+            $reason = $_reason;
+        }
+
         $resolver = new OptionsResolver();
         $resolver
             ->setDefined([
@@ -770,14 +798,16 @@ class Message extends Part
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGE_THREADS, $this->channel_id, $this->id), $options, $headers)->then(function ($response) use ($channel) {
+            $this->attributes['thread'] ??= $response;
             if ($channel) {
                 /** @var ?Thread */
-                if (! $threadPart = $channel->threads->offsetGet($response->id)) {
-                    /** @var Thread */
-                    $threadPart = $channel->threads->create((array) $response, true);
-                } else {
+                if ($threadPart = $channel->threads->offsetGet($response->id)) {
                     $threadPart->fill((array) $response);
+                } else {
+                    /** @var Thread */
+                    $threadPart = $channel->threads->create((array) $response, $channel->created);
                 }
+                $threadPart->created = &$channel->created;
                 $channel->threads->pushItem($threadPart);
 
                 return $threadPart;
@@ -1057,7 +1087,7 @@ class Message extends Part
                     $this->discord->removeListener(Event::MESSAGE_REACTION_ADD, $eventHandler);
                     $deferred->resolve($reactions);
 
-                    if (! is_null($timer)) {
+                    if (null !== $timer) {
                         $this->discord->getLoop()->cancelTimer($timer);
                     }
                 }
@@ -1107,6 +1137,7 @@ class Message extends Part
             self::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING,
             self::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING,
             self::TYPE_THREAD_STARTER_MESSAGE,
+            self::TYPE_GUILD_APPLICATION_PREMIUM_SUBSCRIPTION,
         ]);
     }
 

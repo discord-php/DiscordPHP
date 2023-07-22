@@ -95,6 +95,7 @@ class CommandBuilder implements JsonSerializable
             'description_localizations',
             'default_member_permissions',
             'default_permission',
+            'dm_permission',
         ];
 
         foreach ($optionals as $optional) {
