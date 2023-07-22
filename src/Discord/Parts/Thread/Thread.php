@@ -123,10 +123,12 @@ class Thread extends Part
     protected function afterConstruct(): void
     {
         if (isset($this->attributes['member'])) {
-            $this->members->pushItem($this->factory->part(ThreadMember::class, (array) $this->attributes['member'] + [
+            $memberPart = $this->members->create((array) $this->attributes['member'] + [
                 'id' => $this->id,
                 'user_id' => $this->discord->id,
-            ], true));
+            ], $this->created);
+            $memberPart->created = &$this->created;
+            $this->members->pushItem($memberPart);
         }
     }
 
@@ -467,7 +469,7 @@ class Thread extends Part
                 $messages = Collection::for(Message::class);
 
                 foreach ($responses as $response) {
-                    $messages->pushItem($this->messages->get('id', $response->id) ?: $this->factory->part(Message::class, (array) $response, true));
+                    $messages->pushItem($this->messages->get('id', $response->id) ?: $this->createOf(Message::class, $response));
                 }
 
                 return $messages;
@@ -584,7 +586,7 @@ class Thread extends Part
 
             foreach ($responses as $response) {
                 if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->part(Message::class, (array) $response, true);
+                    $message = $this->createOf(Message::class, $response);
                     $this->messages->pushItem($message);
                 }
 
@@ -719,7 +721,12 @@ class Thread extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            return $this->messages->get('id', $response->id) ?? $this->messages->create((array) $response, true);
+            if (! $messagePart = $this->messages->get('id', $response->id)) {
+                $messagePart = $this->messages->create((array) $response, true);
+                $messagePart->created = &$this->created;
+            }
+
+            return $messagePart; 
         });
     }
 

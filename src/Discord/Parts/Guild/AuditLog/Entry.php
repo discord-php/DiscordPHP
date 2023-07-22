@@ -133,6 +133,6 @@ class Entry extends Part
      */
     protected function getOptionsAttribute(): Options
     {
-        return $this->factory->part(Options::class, (array) $this->attributes['options'] ?? [], true);
+        return $this->createOf(Options::class, $this->attributes['options'] ?? []);
     }
 }

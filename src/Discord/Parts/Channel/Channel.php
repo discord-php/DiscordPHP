@@ -302,7 +302,7 @@ class Channel extends Part
             $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
-                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->factory->part(Message::class, (array) $response, true));
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->createOf(Message::class, $response));
             }
 
             return $messages;
@@ -336,8 +336,8 @@ class Channel extends Part
         $allow = array_fill_keys($allow, true);
         $deny = array_fill_keys($deny, true);
 
-        $allowPart = $this->factory->part(ChannelPermission::class, $allow);
-        $denyPart = $this->factory->part(ChannelPermission::class, $deny);
+        $allowPart = $this->factory->part(ChannelPermission::class, $allow, $this->created);
+        $denyPart = $this->factory->part(ChannelPermission::class, $deny, $this->created);
 
         $overwrite = $this->factory->part(Overwrite::class, [
             'id' => $part->id,
@@ -345,7 +345,7 @@ class Channel extends Part
             'type' => $type,
             'allow' => $allowPart->bitwise,
             'deny' => $denyPart->bitwise,
-        ]);
+        ], $this->created);
 
         return $this->setOverwrite($part, $overwrite, $reason);
     }
@@ -633,6 +633,7 @@ class Channel extends Part
                 if (! $invitePart = $this->invites->get('code', $response->code)) {
                     /** @var Invite */
                     $invitePart = $this->invites->create((array) $response, true);
+                    $invitePart->created = &$this->created;
                     $this->invites->pushItem($invitePart);
                 }
 
@@ -785,7 +786,7 @@ class Channel extends Part
             $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
-                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->factory->part(Message::class, (array) $response, true));
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->createOf(Message::class, $response));
             }
 
             return $messages;
@@ -884,11 +885,15 @@ class Channel extends Part
         if ($overwrites) {
             foreach ($overwrites as $overwrite) {
                 $overwrite = (array) $overwrite;
-                /** @var Overwrite */
+                /** @var ?Overwrite */
                 if ($overwritePart = $this->overwrites->offsetGet($overwrite['id'])) {
                     $overwritePart->fill($overwrite);
+                } else {
+                    /** @var Overwrite */
+                    $overwritePart = $this->overwrites->create($overwrite, $this->created);
                 }
-                $this->overwrites->pushItem($overwritePart ?: $this->overwrites->create($overwrite, true));
+                $overwritePart->created = &$this->created;
+                $this->overwrites->pushItem($overwritePart);
             }
         } else {
             if (null === nowait($this->overwrites->cache->clear())) {
@@ -930,7 +935,7 @@ class Channel extends Part
         $available_tags = Collection::for(Tag::class);
 
         foreach ($this->attributes['available_tags'] ?? [] as $available_tag) {
-            $available_tags->pushItem($this->factory->part(Tag::class, (array) $available_tag, true));
+            $available_tags->pushItem($this->createOf(Tag::class, $available_tag));
         }
 
         return $available_tags;
@@ -949,7 +954,7 @@ class Channel extends Part
             return null;
         }
 
-        return $this->factory->part(Reaction::class, (array) $this->attributes['default_reaction_emoji'], true);
+        return $this->createOf(Reaction::class, $this->attributes['default_reaction_emoji']);
     }
 
     /**
@@ -1100,12 +1105,15 @@ class Channel extends Part
                 /** @var Thread */
                 $threadPart = $this->threads->create((array) $response, true);
             }
+            $threadPart->created = &$this->created;
             $this->threads->pushItem($threadPart);
             if ($messageId = ($response->message->id ?? null)) {
                 /** @var ?Message */
                 if (! $threadPart->messages->offsetExists($messageId)) {
                     // Don't store in the external cache
-                    $threadPart->messages->offsetSet($messageId, $threadPart->messages->create((array) $response->message, true));
+                    $messagePart = $threadPart->messages->create((array) $response->message, true);
+                    $messagePart->created = &$threadPart->created;
+                    $threadPart->messages->offsetSet($messageId, $messagePart);
                 }
             }
 
@@ -1184,7 +1192,12 @@ class Channel extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            return $this->messages->get('id', $response->id) ?? $this->messages->create((array) $response, true);
+            if (! $messagePart = $this->messages->get('id', $response->id)) {
+                $messagePart = $this->messages->create((array) $response, true);
+                $messagePart->created = &$this->created;
+            }
+
+            return $messagePart; 
         });
     }
 

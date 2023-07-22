@@ -413,7 +413,7 @@ class Member extends Part
 
         // Create from computed base permissions
         /** @var RolePermission */
-        $newPermission = $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
+        $newPermission = $guild->createOf(RolePermission::class, ['bitwise' => $bitwise]);
 
         // If computed roles has Administrator permission
         if ($newPermission->administrator) {
@@ -472,7 +472,7 @@ class Member extends Part
         }
 
         // Re-create the Role Permissions from the computed overwrites
-        return $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
+        return $guild->createOf(RolePermission::class, ['bitwise' => $bitwise]);
     }
 
     /**
@@ -581,7 +581,7 @@ class Member extends Part
         $activities = Collection::for(Activity::class, null);
 
         foreach ($this->attributes['activities'] ?? [] as $activity) {
-            $activities->pushItem($this->factory->part(Activity::class, (array) $activity, true));
+            $activities->pushItem($this->createOf(Activity::class, $activity));
         }
 
         return $activities;
