@@ -45,7 +45,7 @@ class ThreadMembersUpdate extends Event
                 }
 
                 foreach ($data->added_members ?? [] as $member) {
-                    $thread->members->set($member->user_id, $thread->members->create((array) $member, true));
+                    $thread->members->set($member->user_id, $thread->members->create($member, true));
 
                     if (isset($member->member)) {
                         $this->cacheMember($guild->members, (array) $member->member);

@@ -154,16 +154,16 @@ abstract class AbstractRepository extends Collection
     /**
      * Builds a new, empty part.
      *
-     * @param array $attributes The attributes for the new part.
-     * @param bool  $created
+     * @param array|object $attributes The attributes for the new part.
+     * @param bool         $created
      *
      * @return Part The new part.
      *
      * @throws \Exception
      */
-    public function create(array $attributes = [], bool $created = false): Part
+    public function create(array|object $attributes = [], bool $created = false): Part
     {
-        $attributes = array_merge($attributes, $this->vars);
+        $attributes = array_merge((array) $attributes, $this->vars);
 
         return $this->factory->part($this->class, $attributes, $created);
     }
@@ -337,8 +337,8 @@ abstract class AbstractRepository extends Collection
         $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
         return $this->http->get($endpoint)->then(function ($response) use ($part, $id) {
-            $part->fill(array_merge($this->vars, (array) $response));
             $part->created = true;
+            $part->fill(array_merge($this->vars, (array) $response));
 
             return $this->cache->set($id, $part)->then(fn ($success) => $part);
         });

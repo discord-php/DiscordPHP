@@ -171,7 +171,7 @@ abstract class Event
         if ($user = $users->get('id', $userdata->id)) {
             $user->fill((array) $userdata);
         } else {
-            $users->pushItem($users->create((array) $userdata, true));
+            $users->pushItem($users->create($userdata, true));
         }
     }
 
