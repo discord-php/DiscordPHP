@@ -846,7 +846,7 @@ class Guild extends Part
         return $this->http->post(Endpoint::bind(Endpoint::GUILD_EMOJIS, $this->id), $options, $headers)
             ->then(function ($response) {
                 if (! $emojiPart = $this->emojis->get('id', $response->id)) {
-                    $emojiPart = $this->emojis->create((array) $response, true);
+                    $emojiPart = $this->emojis->create($response, true);
                     $this->emojis->pushItem($emojiPart);
                 }
 
@@ -961,7 +961,7 @@ class Guild extends Part
         return $this->http->post(Endpoint::bind(Endpoint::GUILD_STICKERS, $this->id), (string) $multipart, $headers)
             ->then(function ($response) {
                 if (! $stickerPart = $this->stickers->get('id', $response->id)) {
-                    $stickerPart = $this->stickers->create((array) $response, true);
+                    $stickerPart = $this->stickers->create($response, true);
                     $this->stickers->pushItem($stickerPart);
                 }
 
@@ -1137,7 +1137,7 @@ class Guild extends Part
                     if ($rolePart = $this->roles->get('id', $role->id)) {
                         $rolePart->fill((array) $role);
                     } else {
-                        $rolePart = $this->roles->create((array) $role, true);
+                        $rolePart = $this->roles->create($role, true);
                         $this->roles->pushItem($rolePart);
                     }
                 }
@@ -1181,7 +1181,7 @@ class Guild extends Part
 
             foreach ($responses as $response) {
                 if (! $member = $this->members->get('id', $response->user->id)) {
-                    $member = $this->members->create((array) $response, true);
+                    $member = $this->members->create($response, true);
                     $this->members->pushItem($member);
                 }
 

@@ -632,7 +632,7 @@ class Channel extends Part
                 /** @var ?Invite */
                 if (! $invitePart = $this->invites->get('code', $response->code)) {
                     /** @var Invite */
-                    $invitePart = $this->invites->create((array) $response, true);
+                    $invitePart = $this->invites->create($response, true);
                     $this->invites->pushItem($invitePart);
                 }
 
@@ -1103,14 +1103,14 @@ class Channel extends Part
                 $threadPart->fill((array) $response);
             } else {
                 /** @var Thread */
-                $threadPart = $this->threads->create((array) $response, true);
+                $threadPart = $this->threads->create($response, true);
             }
             $this->threads->pushItem($threadPart);
             if ($messageId = ($response->message->id ?? null)) {
                 /** @var ?Message */
                 if (! $threadPart->messages->offsetExists($messageId)) {
                     // Don't store in the external cache
-                    $messagePart = $threadPart->messages->create((array) $response->message, true);
+                    $messagePart = $threadPart->messages->create($response->message, true);
                     $threadPart->messages->offsetSet($messageId, $messagePart);
                 }
             }
@@ -1191,7 +1191,7 @@ class Channel extends Part
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
             if (! $messagePart = $this->messages->get('id', $response->id)) {
-                $messagePart = $this->messages->create((array) $response, true);
+                $messagePart = $this->messages->create($response, true);
             }
 
             return $messagePart; 

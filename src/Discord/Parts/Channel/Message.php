@@ -454,7 +454,7 @@ class Message extends Part
                 if ($thread = $channel->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
-                $thread = $channel->threads->create((array) $this->attributes['thread'], $channel->created);
+                $thread = $channel->threads->create($this->attributes['thread'], $channel->created);
                 $thread->created = &$channel->created;
                 $channel->threads->pushItem($thread);
             }
@@ -805,7 +805,7 @@ class Message extends Part
                     $threadPart->fill((array) $response);
                 } else {
                     /** @var Thread */
-                    $threadPart = $channel->threads->create((array) $response, $channel->created);
+                    $threadPart = $channel->threads->create($response, $channel->created);
                     $threadPart->created = &$channel->created;
                 }
                 $channel->threads->pushItem($threadPart);

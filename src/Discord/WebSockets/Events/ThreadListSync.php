@@ -53,7 +53,7 @@ class ThreadListSync extends Event
             foreach ($data->members as $member) {
                 /** @var ?Thread */
                 if ($threadPart = $threadParts[$member->id] ?? null) {
-                    $threadPart->members->set($member->user_id, $threadPart->members->create((array) $member, true));
+                    $threadPart->members->set($member->user_id, $threadPart->members->create($member, true));
                 }
             }
         }

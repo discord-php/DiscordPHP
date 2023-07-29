@@ -47,7 +47,7 @@ class GuildCreate extends Event
             $members[$userId] = $this->factory->part(Member::class, (array) $rawMembers[$userId], true);
 
             if (! $this->discord->users->offsetExists($userId)) {
-                $await[] = $this->discord->users->cache->set($userId, $this->discord->users->create((array) $member->user, true));
+                $await[] = $this->discord->users->cache->set($userId, $this->discord->users->create($member->user, true));
             }
         }
         foreach ($data->presences as $presence) {
@@ -77,26 +77,26 @@ class GuildCreate extends Event
                 if (! isset($voice_state->member) && isset($rawMembers[$userId])) {
                     $voice_state->member = $rawMembers[$userId];
                 }
-                $await[] = $voiceChannel->members->cache->set($userId, $voiceChannel->members->create((array) $voice_state, true));
+                $await[] = $voiceChannel->members->cache->set($userId, $voiceChannel->members->create($voice_state, true));
             }
         }
 
         foreach ($data->threads as $thread) {
             /** @var ?Channel */
             if ($parent = $guildPart->channels->offsetGet($thread->parent_id)) {
-                $await[] = $parent->threads->cache->set($thread->id, $parent->threads->create((array) $thread, true));
+                $await[] = $parent->threads->cache->set($thread->id, $parent->threads->create($thread, true));
             }
         }
 
         foreach ($data->stage_instances as $stageInstance) {
             /** @var ?Channel */
             if ($channel = $guildPart->channels->offsetGet($stageInstance->channel_id)) {
-                $await[] = $channel->stage_instances->cache->set($stageInstance->id, $channel->stage_instances->create((array) $stageInstance, true));
+                $await[] = $channel->stage_instances->cache->set($stageInstance->id, $channel->stage_instances->create($stageInstance, true));
             }
         }
 
         foreach ($data->guild_scheduled_events as $scheduledEvent) {
-            $await[] = $guildPart->guild_scheduled_events->cache->set($scheduledEvent->id, $guildPart->guild_scheduled_events->create((array) $scheduledEvent, true));
+            $await[] = $guildPart->guild_scheduled_events->cache->set($scheduledEvent->id, $guildPart->guild_scheduled_events->create($scheduledEvent, true));
         }
 
         $all = yield all($await)->then(function () use (&$guildPart) {
@@ -129,7 +129,7 @@ class GuildCreate extends Event
                     foreach ($bans as $ban) {
                         $lastUserId = $ban->user->id;
                         $ban->guild_id = $guildPart->id;
-                        $guildPart->bans->cache->set($lastUserId, $guildPart->bans->create((array) $ban, true));
+                        $guildPart->bans->cache->set($lastUserId, $guildPart->bans->create($ban, true));
                     }
 
                     $banPagination($lastUserId);
