@@ -12,6 +12,7 @@
 namespace Discord\Parts\User;
 
 use Discord\Builders\MessageBuilder;
+use Discord\Helpers\BigInt;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
@@ -47,7 +48,8 @@ use function React\Promise\resolve;
  * @property int|null     $premium_type           Type of nitro subscription.
  * @property int|null     $public_flags           Public flags on the user.
  * @property int|null     $avatar_decoration      The user's avatar decoration URL.
- * @property int|null     $avatar_decoration_hash The user's avatar decoration hash. *
+ * @property int|null     $avatar_decoration_hash The user's avatar decoration hash.
+ *
  * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
 class User extends Part
@@ -178,7 +180,7 @@ class User extends Part
     public function getAvatarAttribute(?string $format = null, int $size = 1024): string
     {
         if (empty($this->attributes['avatar'])) {
-            $avatarDiscrim = (int) $this->discriminator % 5;
+            $avatarDiscrim = (int) (($this->discriminator) ? $this->discriminator % 5 : BigInt::shiftRight($this->id, 22) % 6);
 
             return "https://cdn.discordapp.com/embed/avatars/{$avatarDiscrim}.png?size={$size}";
         }
