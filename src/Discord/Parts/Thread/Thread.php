@@ -469,7 +469,7 @@ class Thread extends Part
                 $messages = Collection::for(Message::class);
 
                 foreach ($responses as $response) {
-                    $messages->pushItem($this->messages->get('id', $response->id) ?: $this->createOf(Message::class, $response));
+                    $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
                 }
 
                 return $messages;
@@ -586,7 +586,7 @@ class Thread extends Part
 
             foreach ($responses as $response) {
                 if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->createOf(Message::class, $response);
+                    $message = $this->messages->create($response, true);
                     $this->messages->pushItem($message);
                 }
 
@@ -723,7 +723,6 @@ class Thread extends Part
         })()->then(function ($response) {
             if (! $messagePart = $this->messages->get('id', $response->id)) {
                 $messagePart = $this->messages->create((array) $response, true);
-                $messagePart->created = &$this->created;
             }
 
             return $messagePart; 

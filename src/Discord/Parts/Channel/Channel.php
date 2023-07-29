@@ -302,7 +302,7 @@ class Channel extends Part
             $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
-                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->createOf(Message::class, $response));
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
             }
 
             return $messages;
@@ -633,7 +633,6 @@ class Channel extends Part
                 if (! $invitePart = $this->invites->get('code', $response->code)) {
                     /** @var Invite */
                     $invitePart = $this->invites->create((array) $response, true);
-                    $invitePart->created = &$this->created;
                     $this->invites->pushItem($invitePart);
                 }
 
@@ -786,7 +785,7 @@ class Channel extends Part
             $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
-                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->createOf(Message::class, $response));
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
             }
 
             return $messages;
@@ -883,16 +882,17 @@ class Channel extends Part
     protected function setPermissionOverwritesAttribute(?array $overwrites): void
     {
         if ($overwrites) {
+            $overwritesDiscrim = $this->overwrites->discrim;
             foreach ($overwrites as $overwrite) {
                 $overwrite = (array) $overwrite;
                 /** @var ?Overwrite */
-                if ($overwritePart = $this->overwrites->offsetGet($overwrite['id'])) {
+                if ($overwritePart = $this->overwrites->offsetGet($overwrite[$overwritesDiscrim])) {
                     $overwritePart->fill($overwrite);
                 } else {
                     /** @var Overwrite */
                     $overwritePart = $this->overwrites->create($overwrite, $this->created);
+                    $overwritePart->created = &$this->created;
                 }
-                $overwritePart->created = &$this->created;
                 $this->overwrites->pushItem($overwritePart);
             }
         } else {
@@ -1105,14 +1105,12 @@ class Channel extends Part
                 /** @var Thread */
                 $threadPart = $this->threads->create((array) $response, true);
             }
-            $threadPart->created = &$this->created;
             $this->threads->pushItem($threadPart);
             if ($messageId = ($response->message->id ?? null)) {
                 /** @var ?Message */
                 if (! $threadPart->messages->offsetExists($messageId)) {
                     // Don't store in the external cache
                     $messagePart = $threadPart->messages->create((array) $response->message, true);
-                    $messagePart->created = &$threadPart->created;
                     $threadPart->messages->offsetSet($messageId, $messagePart);
                 }
             }
@@ -1194,7 +1192,6 @@ class Channel extends Part
         })()->then(function ($response) {
             if (! $messagePart = $this->messages->get('id', $response->id)) {
                 $messagePart = $this->messages->create((array) $response, true);
-                $messagePart->created = &$this->created;
             }
 
             return $messagePart; 

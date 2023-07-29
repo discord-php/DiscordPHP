@@ -236,6 +236,7 @@ class Guild extends Part
         'member_count',
 
         // repositories
+        'channels',
         'roles',
         'emojis',
         'stickers',
@@ -308,23 +309,24 @@ class Guild extends Part
     /**
      * {@inheritDoc}
      */
-    public function fill(array $attributes): void
+    protected function setChannelsAttribute(?array $channels): void
     {
-        parent::fill($attributes);
-
-        // @todo move each repository fill to the setChannelAttributes methods?
-        foreach ($attributes['channels'] ?? [] as $channel) {
+        $channelsDiscrim = $this->channels->discrim;
+        $clean = array_diff($this->channels->keys(), array_column($channels ?? [], $channelsDiscrim));
+        foreach ($channels ?? [] as $channel) {
             $channel = (array) $channel;
             /** @var ?Channel */
-            if ($channelPart = $this->channels->offsetGet($channel['id'])) {
+            if ($channelPart = $this->channels->offsetGet($channel[$channelsDiscrim])) {
                 $channelPart->fill($channel);
             } else {
                 /** @var Channel */
                 $channelPart = $this->channels->create($channel, $this->created);
+                $channelPart->created = &$this->created;
             }
-            $channelPart->created = &$this->created;
             $this->channels->pushItem($channelPart);
         }
+
+        $this->channels->cache->deleteMultiple($clean);
     }
 
     /**
@@ -334,20 +336,21 @@ class Guild extends Part
      */
     protected function setRolesAttribute(?array $roles): void
     {
+        $rolesDiscrim = $this->roles->discrim;
         foreach ($roles ?? [] as $role) {
             $role = (array) $role;
             /** @var ?Role */
-            if ($rolePart = $this->roles->offsetGet($role['id'])) {
+            if ($rolePart = $this->roles->offsetGet($role[$rolesDiscrim])) {
                 $rolePart->fill($role);
             } else {
                 /** @var Role */
                 $rolePart = $this->roles->create($role, $this->created);
+                $rolePart->created = &$this->created;
             }
-            $rolePart->created = &$this->created;
             $this->roles->pushItem($rolePart);
         }
 
-        if (! empty($this->attributes['roles']) && $clean = array_diff(array_column($this->attributes['roles'], 'id'), array_column($roles ?? [], 'id'))) {
+        if (! empty($this->attributes['roles']) && $clean = array_diff(array_column($this->attributes['roles'], $rolesDiscrim), array_column($roles ?? [], $rolesDiscrim))) {
             $this->roles->cache->deleteMultiple($clean);
         }
 
@@ -361,20 +364,21 @@ class Guild extends Part
      */
     protected function setEmojisAttribute(?array $emojis): void
     {
+        $emojisDiscrim = $this->emojis->discrim;
         foreach ($emojis ?? [] as $emoji) {
             $emoji = (array) $emoji;
             /** @var ?Emoji */
-            if ($emojiPart = $this->emojis->offsetGet($emoji['id'])) {
+            if ($emojiPart = $this->emojis->offsetGet($emoji[$emojisDiscrim])) {
                 $emojiPart->fill($emoji);
             } else {
                 /** @var Emoji */
                 $emojiPart = $this->emojis->create($emoji, $this->created);
+                $emojiPart->created = &$this->created;
             }
-            $emojiPart->created = &$this->created;
             $this->emojis->pushItem($emojiPart);
         }
 
-        if (! empty($this->attributes['emojis']) && $clean = array_diff(array_column($this->attributes['emojis'], 'id'), array_column($emojis ?? [], 'id'))) {
+        if (! empty($this->attributes['emojis']) && $clean = array_diff(array_column($this->attributes['emojis'], $emojisDiscrim), array_column($emojis ?? [], $emojisDiscrim))) {
             $this->emojis->cache->deleteMultiple($clean);
         }
 
@@ -388,20 +392,21 @@ class Guild extends Part
      */
     protected function setStickersAttribute(?array $stickers): void
     {
+        $stickersDiscrim = $this->stickers->discrim;
         foreach ($stickers ?? [] as $sticker) {
             $sticker = (array) $sticker;
             /** @var ?Sticker */
-            if ($stickerPart = $this->stickers->offsetGet($sticker['id'])) {
+            if ($stickerPart = $this->stickers->offsetGet($sticker[$stickersDiscrim])) {
                 $stickerPart->fill($sticker);
             } else {
                 /** @var Sticker */
                 $stickerPart = $this->stickers->create($sticker, $this->created);
+                $stickerPart->created = &$this->created;
             }
-            $stickerPart->created = &$this->created;
             $this->stickers->pushItem($stickerPart);
         }
 
-        if (! empty($this->attributes['stickers']) && $clean = array_diff(array_column($this->attributes['stickers'], 'id'), array_column($stickers ?? [], 'id'))) {
+        if (! empty($this->attributes['stickers']) && $clean = array_diff(array_column($this->attributes['stickers'], $stickersDiscrim), array_column($stickers ?? [], $stickersDiscrim))) {
             $this->stickers->cache->deleteMultiple($clean);
         }
 
@@ -842,7 +847,6 @@ class Guild extends Part
             ->then(function ($response) {
                 if (! $emojiPart = $this->emojis->get('id', $response->id)) {
                     $emojiPart = $this->emojis->create((array) $response, true);
-                    $emojiPart->created = &$this->created;
                     $this->emojis->pushItem($emojiPart);
                 }
 
@@ -958,7 +962,6 @@ class Guild extends Part
             ->then(function ($response) {
                 if (! $stickerPart = $this->stickers->get('id', $response->id)) {
                     $stickerPart = $this->stickers->create((array) $response, true);
-                    $stickerPart->created = &$this->created;
                     $this->stickers->pushItem($stickerPart);
                 }
 
@@ -1135,7 +1138,6 @@ class Guild extends Part
                         $rolePart->fill((array) $role);
                     } else {
                         $rolePart = $this->roles->create((array) $role, true);
-                        $rolePart->created = &$this->created;
                         $this->roles->pushItem($rolePart);
                     }
                 }

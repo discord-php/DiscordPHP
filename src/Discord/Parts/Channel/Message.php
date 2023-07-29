@@ -385,8 +385,8 @@ class Message extends Part
             } else {
                 /** @var Reaction */
                 $reactionPart = $this->reactions->create($reaction, $this->created);
+                $reactionPart->created = &$this->created;
             }
-            $reactionPart->created = &$this->created;
             $this->reactions->pushItem($reactionPart);
         }
 
@@ -806,8 +806,8 @@ class Message extends Part
                 } else {
                     /** @var Thread */
                     $threadPart = $channel->threads->create((array) $response, $channel->created);
+                    $threadPart->created = &$channel->created;
                 }
-                $threadPart->created = &$channel->created;
                 $channel->threads->pushItem($threadPart);
 
                 return $threadPart;
