@@ -14,7 +14,7 @@ namespace Discord\Repository\Guild;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Repository\AbstractRepository;
-use React\Promise\PromiseInterface;
+use React\Promise\Promise;
 
 use function React\Promise\resolve;
 
@@ -55,9 +55,9 @@ class ScheduledEventRepository extends AbstractRepository
      *
      * @param bool $with_user_count Whether to include number of users subscribed to each event
      *
-     * @return PromiseInterface<ScheduledEvent>
+     * @return Promise<ScheduledEvent>
      */
-    public function fetch(string $id, bool $fresh = false, bool $with_user_count = false): PromiseInterface
+    public function fetch(string $id, bool $fresh = false, bool $with_user_count = false): Promise
     {
         if (! $with_user_count) {
             return parent::fetch($id, $fresh);

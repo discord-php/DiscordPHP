@@ -19,7 +19,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
-use React\Promise\PromiseInterface;
+use React\Promise\Promise;
 
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -71,7 +71,7 @@ class MessageReaction extends Part
     /**
      * {@inheritDoc}
      */
-    public function fetch(): PromiseInterface
+    public function fetch(): Promise
     {
         $promise = resolve();
 
@@ -229,14 +229,14 @@ class MessageReaction extends Part
      *
      * @throws \RuntimeException Reaction has no user id.
      *
-     * @return PromiseInterface
+     * @return Promise
      *
      * @see Message::deleteReaction()
      *
      * @link https://discord.com/developers/docs/resources/channel#delete-own-reaction
      * @link https://discord.com/developers/docs/resources/channel#delete-user-reaction
      */
-    public function delete(?int $type = null): PromiseInterface
+    public function delete(?int $type = null): Promise
     {
         if ($type === null) {
             if ($this->user_id == $this->discord->id) {

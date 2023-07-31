@@ -15,7 +15,7 @@ use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
-use React\Promise\PromiseInterface;
+use React\Promise\Promise;
 
 use function Discord\poly_strlen;
 
@@ -263,7 +263,7 @@ abstract class SelectMenu extends Component
                     }
                 };
 
-                if ($response instanceof PromiseInterface) {
+                if ($response instanceof Promise) {
                     $response->then($ack);
                 } else {
                     $ack();

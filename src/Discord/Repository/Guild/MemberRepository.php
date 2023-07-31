@@ -15,7 +15,7 @@ use Discord\Http\Endpoint;
 use Discord\Parts\User\Member;
 use Discord\Repository\AbstractRepository;
 use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use React\Promise\Promise;
 
 /**
  * Contains members of a guild.
@@ -56,9 +56,9 @@ class MemberRepository extends AbstractRepository
      * @param Member      $member The member to kick.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return PromiseInterface
+     * @return Promise
      */
-    public function kick(Member $member, ?string $reason = null): PromiseInterface
+    public function kick(Member $member, ?string $reason = null): Promise
     {
         return $this->delete($member, $reason);
     }
@@ -68,7 +68,7 @@ class MemberRepository extends AbstractRepository
      *
      * @param array $queryparams Query string params to add to the request, leave null to paginate all members (Warning: Be careful to use this on very large guild)
      */
-    public function freshen(array $queryparams = null): PromiseInterface
+    public function freshen(array $queryparams = null): Promise
     {
         if (isset($queryparams)) {
             return parent::freshen($queryparams);

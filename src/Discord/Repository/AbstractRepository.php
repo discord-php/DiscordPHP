@@ -18,7 +18,7 @@ use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
-use React\Promise\PromiseInterface;
+use React\Promise\Promise;
 use Traversable;
 use WeakReference;
 
@@ -100,11 +100,11 @@ abstract class AbstractRepository extends Collection
      *
      * @param array $queryparams Query string params to add to the request (no validation)
      *
-     * @return PromiseInterface<static>
+     * @return Promise<static>
      *
      * @throws \Exception
      */
-    public function freshen(array $queryparams = []): PromiseInterface
+    public function freshen(array $queryparams = []): Promise
     {
         if (! isset($this->endpoints['all'])) {
             return reject(new \Exception('You cannot freshen this repository.'));
@@ -134,9 +134,9 @@ abstract class AbstractRepository extends Collection
     /**
      * @param object $response
      *
-     * @return PromiseInterface<static>
+     * @return Promise<static>
      */
-    protected function cacheFreshen($response): PromiseInterface
+    protected function cacheFreshen($response): Promise
     {
         foreach ($response as $value) {
             $value = array_merge($this->vars, (array) $value);
@@ -174,11 +174,11 @@ abstract class AbstractRepository extends Collection
      * @param Part        $part   The part to save.
      * @param string|null $reason Reason for Audit Log (if supported).
      *
-     * @return PromiseInterface<Part>
+     * @return Promise<Part>
      *
      * @throws \Exception
      */
-    public function save(Part $part, ?string $reason = null): PromiseInterface
+    public function save(Part $part, ?string $reason = null): Promise
     {
         if ($part->created) {
             if (! isset($this->endpoints['update'])) {
@@ -219,11 +219,11 @@ abstract class AbstractRepository extends Collection
      * @param Part|string $part   The part to delete.
      * @param string|null $reason Reason for Audit Log (if supported).
      *
-     * @return PromiseInterface<Part>
+     * @return Promise<Part>
      *
      * @throws \Exception
      */
-    public function delete($part, ?string $reason = null): PromiseInterface
+    public function delete($part, ?string $reason = null): Promise
     {
         if (! isset($part)) {
             return reject(new \Exception('You cannot delete a non-existant part.'));
@@ -265,11 +265,11 @@ abstract class AbstractRepository extends Collection
      * @param Part  $part        The part to get fresh values.
      * @param array $queryparams Query string params to add to the request (no validation)
      *
-     * @return PromiseInterface<Part>
+     * @return Promise<Part>
      *
      * @throws \Exception
      */
-    public function fresh(Part $part, array $queryparams = []): PromiseInterface
+    public function fresh(Part $part, array $queryparams = []): Promise
     {
         if (! $part->created) {
             return reject(new \Exception('You cannot get a non-existant part.'));
@@ -301,9 +301,9 @@ abstract class AbstractRepository extends Collection
      *
      * @throws \Exception
      *
-     * @return PromiseInterface<Part>
+     * @return Promise<Part>
      */
-    public function fetch(string $id, bool $fresh = false): PromiseInterface
+    public function fetch(string $id, bool $fresh = false): Promise
     {
         if (! $fresh) {
             if (isset($this->items[$id])) {
@@ -391,9 +391,9 @@ abstract class AbstractRepository extends Collection
      *
      * @param string|int $offset
      *
-     * @return PromiseInterface<?Part>
+     * @return Promise<?Part>
      */
-    public function cacheGet($offset): PromiseInterface
+    public function cacheGet($offset): Promise
     {
         return resolve($this->offsetGet($offset) ?? $this->cache->get($offset));
     }
@@ -444,9 +444,9 @@ abstract class AbstractRepository extends Collection
      * @param string|int $key
      * @param ?Part      $default
      *
-     * @return PromiseInterface<?Part>
+     * @return Promise<?Part>
      */
-    public function cachePull($key, $default = null): PromiseInterface
+    public function cachePull($key, $default = null): Promise
     {
         return $this->cacheGet($key)->then(fn ($item) => ($item === null) ? $default : $this->cache->delete($key)->then(fn ($success) => $item));
     }

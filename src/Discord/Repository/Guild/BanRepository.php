@@ -16,7 +16,7 @@ use Discord\Parts\Guild\Ban;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
-use React\Promise\PromiseInterface;
+use React\Promise\Promise;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -63,9 +63,9 @@ class BanRepository extends AbstractRepository
      * @param array              $options Array of Ban options 'delete_message_seconds' or 'delete_message_days' (deprecated).
      * @param string|null        $reason  Reason for Audit Log.
      *
-     * @return PromiseInterface<Ban>
+     * @return Promise<Ban>
      */
-    public function ban($user, array $options = [], ?string $reason = null): PromiseInterface
+    public function ban($user, array $options = [], ?string $reason = null): Promise
     {
         $content = [];
         $headers = [];
@@ -122,9 +122,9 @@ class BanRepository extends AbstractRepository
      * @param User|Ban|string $ban    User or Ban Part, or User ID
      * @param string|null     $reason Reason for Audit Log.
      *
-     * @return PromiseInterface
+     * @return Promise
      */
-    public function unban($ban, ?string $reason = null): PromiseInterface
+    public function unban($ban, ?string $reason = null): Promise
     {
         if ($ban instanceof User || $ban instanceof Member) {
             $ban = $ban->id;

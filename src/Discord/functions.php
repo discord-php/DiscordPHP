@@ -22,7 +22,7 @@ use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 use React\Promise\Promise;
-use React\Promise\PromiseInterface;
+use React\Promise\Promise;
 use Symfony\Component\OptionsResolver\Options;
 
 /**
@@ -336,7 +336,7 @@ function deferFind($array, callable $callback, $loop = null): Promise
  * Attempts to return a resolved value from a synchronous promise.
  * Like await() but only for resolvable blocking promise without touching the loop.
  *
- * @param PromiseInterface $promiseInterface The synchronous promise.
+ * @param Promise $promiseInterface The synchronous promise.
  *
  * @return mixed null if failed to return.
  *
@@ -344,7 +344,7 @@ function deferFind($array, callable $callback, $loop = null): Promise
  *
  * @since 10.0.0
  */
-function nowait(PromiseInterface $promiseInterface)
+function nowait(Promise $promiseInterface)
 {
     $resolved = null;
 

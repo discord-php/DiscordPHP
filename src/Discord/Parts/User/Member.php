@@ -28,7 +28,7 @@ use Discord\Parts\Permissions\Permission;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\PresenceUpdate;
-use React\Promise\PromiseInterface;
+use React\Promise\Promise;
 
 use function React\Promise\reject;
 
@@ -63,7 +63,7 @@ use function React\Promise\reject;
  * @property      Collection|Activity[] $activities    User's current activities.
  * @property      object                $client_status Current client status.
  *
- * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
+ * @method Promise<Message> sendMessage(MessageBuilder $builder)
  */
 class Member extends Part
 {
@@ -129,9 +129,9 @@ class Member extends Part
      *
      * @throws \RuntimeException Member has no `$guild`
      *
-     * @return PromiseInterface<Ban>
+     * @return Promise<Ban>
      */
-    public function ban(?int $daysToDeleteMessages = null, ?string $reason = null): PromiseInterface
+    public function ban(?int $daysToDeleteMessages = null, ?string $reason = null): Promise
     {
         if (! $guild = $this->guild) {
             return reject(new \RuntimeException('Member has no Guild Part'));
@@ -148,9 +148,9 @@ class Member extends Part
      *
      * @throws NoPermissionsException Missing manage_nicknames permission.
      *
-     * @return PromiseInterface<Member>
+     * @return Promise<Member>
      */
-    public function setNickname(?string $nick = null, ?string $reason = null): PromiseInterface
+    public function setNickname(?string $nick = null, ?string $reason = null): Promise
     {
         $payload = [
             'nick' => $nick ?? '',
@@ -188,9 +188,9 @@ class Member extends Part
      * @param Channel|?string $channel The channel to move the member to.
      * @param string|null     $reason  Reason for Audit Log.
      *
-     * @return PromiseInterface<Member>
+     * @return Promise<Member>
      */
-    public function moveMember($channel, ?string $reason = null): PromiseInterface
+    public function moveMember($channel, ?string $reason = null): Promise
     {
         if ($channel instanceof Channel) {
             $channel = $channel->id;
@@ -218,9 +218,9 @@ class Member extends Part
      * @throws \RuntimeException
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return PromiseInterface
+     * @return Promise
      */
-    public function addRole($role, ?string $reason = null): PromiseInterface
+    public function addRole($role, ?string $reason = null): Promise
     {
         if ($role instanceof Role) {
             $role = $role->id;
@@ -262,9 +262,9 @@ class Member extends Part
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return PromiseInterface
+     * @return Promise
      */
-    public function removeRole($role, ?string $reason = null): PromiseInterface
+    public function removeRole($role, ?string $reason = null): Promise
     {
         if ($role instanceof Role) {
             $role = $role->id;
@@ -301,9 +301,9 @@ class Member extends Part
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return PromiseInterface<Member>
+     * @return Promise<Member>
      */
-    public function setRoles(array $roles, ?string $reason = null): PromiseInterface
+    public function setRoles(array $roles, ?string $reason = null): Promise
     {
         foreach ($roles as $i => $role) {
             if ($role instanceof Role) {
@@ -348,9 +348,9 @@ class Member extends Part
      *
      * @throws \RuntimeException
      *
-     * @return PromiseInterface<Message>
+     * @return Promise<Message>
      */
-    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): PromiseInterface
+    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): Promise
     {
         if ($user = $this->user) {
             return $user->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
@@ -483,9 +483,9 @@ class Member extends Part
      *
      * @throws NoPermissionsException Missing moderate_members permission.
      *
-     * @return PromiseInterface<Member>
+     * @return Promise<Member>
      */
-    public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): PromiseInterface
+    public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): Promise
     {
         if ($guild = $this->guild) {
             if ($botperms = $guild->getBotPermissions()) {
@@ -516,9 +516,9 @@ class Member extends Part
      *
      * @throws NoPermissionsException Missing `moderate_members` permission.
      *
-     * @return PromiseInterface<Member>
+     * @return Promise<Member>
      */
-    public function setBypassesVerification(bool $bypasses_verification, ?string $reason = null): PromiseInterface
+    public function setBypassesVerification(bool $bypasses_verification, ?string $reason = null): Promise
     {
         if ($guild = $this->guild) {
             if ($botperms = $guild->getBotPermissions()) {

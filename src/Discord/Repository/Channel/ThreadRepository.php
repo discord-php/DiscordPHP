@@ -15,7 +15,7 @@ use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;
-use React\Promise\PromiseInterface;
+use React\Promise\Promise;
 
 use function React\Promise\resolve;
 
@@ -53,7 +53,7 @@ class ThreadRepository extends AbstractRepository
     /**
      * {@inheritDoc}
      */
-    protected function cacheFreshen($response): PromiseInterface
+    protected function cacheFreshen($response): Promise
     {
         foreach ($response->threads as $value) {
             $value = array_merge($this->vars, (array) $value);
@@ -87,9 +87,9 @@ class ThreadRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/channel#list-active-threads
      *
-     * @return PromiseInterface<Collection<Thread>>
+     * @return Promise<Collection<Thread>>
      */
-    public function active(): PromiseInterface
+    public function active(): Promise
     {
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_THREADS_ACTIVE, $this->vars['guild_id']))
             ->then(function ($response) {
@@ -111,9 +111,9 @@ class ThreadRepository extends AbstractRepository
      *
      * @throws \InvalidArgumentException
      *
-     * @return PromiseInterface<Collection<Thread>>
+     * @return Promise<Collection<Thread>>
      */
-    public function archived(bool $private = false, bool $joined = false, ?int $limit = null, $before = null): PromiseInterface
+    public function archived(bool $private = false, bool $joined = false, ?int $limit = null, $before = null): Promise
     {
         if ($joined) {
             if (! $private) {

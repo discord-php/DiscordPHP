@@ -14,7 +14,7 @@ namespace Discord\Repository\Channel;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Reaction;
 use Discord\Repository\AbstractRepository;
-use React\Promise\PromiseInterface;
+use React\Promise\Promise;
 
 /**
  * Contains reactions on a message.
@@ -51,11 +51,11 @@ class ReactionRepository extends AbstractRepository
      *
      * @param Reaction|string $part The Reaction part or unicode emoji to delete.
      *
-     * @return PromiseInterface<Reaction>
+     * @return Promise<Reaction>
      *
      * @since 10.0.0
      */
-    public function delete($part, ?string $reason = null): PromiseInterface
+    public function delete($part, ?string $reason = null): Promise
     {
         // Deal with unicode emoji
         if (is_string($part) && ! is_numeric($part)) {

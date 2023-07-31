@@ -16,7 +16,7 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
-use React\Promise\PromiseInterface;
+use React\Promise\Promise;
 
 use function React\Promise\resolve;
 
@@ -47,7 +47,7 @@ use function React\Promise\resolve;
  * @property int|null     $premium_type  Type of nitro subscription.
  * @property int|null     $public_flags  Public flags on the user.
  *
- * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
+ * @method Promise<Message> sendMessage(MessageBuilder $builder)
  */
 class User extends Part
 {
@@ -100,9 +100,9 @@ class User extends Part
      *
      * @link https://discord.com/developers/docs/resources/user#create-dm
      *
-     * @return PromiseInterface<Channel>
+     * @return Promise<Channel>
      */
-    public function getPrivateChannel(): PromiseInterface
+    public function getPrivateChannel(): Promise
     {
         if ($channel = $this->discord->private_channels->get('recipient_id', $this->id)) {
             return resolve($channel);
@@ -130,9 +130,9 @@ class User extends Part
      * @param array|null            $allowed_mentions Allowed mentions object for the message.
      * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
      *
-     * @return PromiseInterface<Message>
+     * @return Promise<Message>
      */
-    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): PromiseInterface
+    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): Promise
     {
         return $this->getPrivateChannel()->then(function (Channel $channel) use ($message, $tts, $embed, $allowed_mentions, $replyTo) {
             return $channel->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
@@ -146,9 +146,9 @@ class User extends Part
      *
      * @throws \RuntimeException
      *
-     * @return PromiseInterface
+     * @return Promise
      */
-    public function broadcastTyping(): PromiseInterface
+    public function broadcastTyping(): Promise
     {
         return $this->getPrivateChannel()->then(function (Channel $channel) {
             return $channel->broadcastTyping();

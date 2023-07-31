@@ -39,7 +39,7 @@ use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
-use React\Promise\PromiseInterface;
+use React\Promise\Promise;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -399,9 +399,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
-     * @return PromiseInterface<Collection|Invite[]>
+     * @return Promise<Collection|Invite[]>
      */
-    public function getInvites(): PromiseInterface
+    public function getInvites(): Promise
     {
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_guild) {
@@ -429,9 +429,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing ban_members permission.
      *
-     * @return PromiseInterface
+     * @return Promise
      */
-    public function unban($user): PromiseInterface
+    public function unban($user): Promise
     {
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->ban_members) {
@@ -720,9 +720,9 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/voice#list-voice-regions
      *
-     * @return PromiseInterface<Collection>
+     * @return Promise<Collection>
      */
-    public function getVoiceRegions(): PromiseInterface
+    public function getVoiceRegions(): Promise
     {
         if (null !== $this->regions) {
             return resolve($this->regions);
@@ -747,9 +747,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return PromiseInterface<Role>
+     * @return Promise<Role>
      */
-    public function createRole(array $data = [], ?string $reason = null): PromiseInterface
+    public function createRole(array $data = [], ?string $reason = null): Promise
     {
         $botperms = $this->getBotPermissions();
 
@@ -775,9 +775,9 @@ class Guild extends Part
      * @throws NoPermissionsException Missing manage_guild_expressions permission.
      * @throws FileNotFoundException  File does not exist.
      *
-     * @return PromiseInterface<Emoji>
+     * @return Promise<Emoji>
      */
-    public function createEmoji(array $options, ?string $filepath = null, ?string $reason = null): PromiseInterface
+    public function createEmoji(array $options, ?string $filepath = null, ?string $reason = null): Promise
     {
         $resolver = new OptionsResolver();
         $resolver
@@ -851,9 +851,9 @@ class Guild extends Part
      * @throws \DomainException       File format is not PNG, APNG, or Lottie JSON.
      * @throws \RuntimeException      Guild is not verified or partnered to upload Lottie stickers.
      *
-     * @return PromiseInterface<Sticker>
+     * @return Promise<Sticker>
      */
-    public function createSticker(array $options, string $filepath, ?string $reason = null): PromiseInterface
+    public function createSticker(array $options, string $filepath, ?string $reason = null): Promise
     {
         $resolver = new OptionsResolver();
         $resolver
@@ -951,9 +951,9 @@ class Guild extends Part
     /**
      * Leaves the guild.
      *
-     * @return PromiseInterface
+     * @return Promise
      */
-    public function leave(): PromiseInterface
+    public function leave(): Promise
     {
         return $this->discord->guilds->leave($this->id);
     }
@@ -966,9 +966,9 @@ class Guild extends Part
      *
      * @throws \RuntimeException Ownership not transferred correctly.
      *
-     * @return PromiseInterface
+     * @return Promise
      */
-    public function transferOwnership($member, ?string $reason = null): PromiseInterface
+    public function transferOwnership($member, ?string $reason = null): Promise
     {
         if ($member instanceof Member) {
             $member = $member->id;
@@ -993,11 +993,11 @@ class Guild extends Part
      *
      * @deprecated 10.0.0 Use `Channel::$rtc_region`.
      *
-     * @return PromiseInterface
+     * @return Promise
      *
      * @see Guild::REGION_DEFAULT The default region.
      */
-    public function validateRegion(): PromiseInterface
+    public function validateRegion(): Promise
     {
         return $this->getVoiceRegions()->then(function () {
             $regions = $this->regions->map(function ($region) {
@@ -1026,9 +1026,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing view_audit_log permission.
      *
-     * @return PromiseInterface<AuditLog>
+     * @return Promise<AuditLog>
      */
-    public function getAuditLog(array $options = []): PromiseInterface
+    public function getAuditLog(array $options = []): Promise
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1092,9 +1092,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return PromiseInterface<self>
+     * @return Promise<self>
      */
-    public function updateRolePositions(array $roles): PromiseInterface
+    public function updateRolePositions(array $roles): Promise
     {
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_roles) {
@@ -1135,9 +1135,9 @@ class Guild extends Part
      * @param string|null $options['query'] Query string to match username(s) and nickname(s) against
      * @param int|null    $options['limit'] How many entries are returned (default 1, minimum 1, maximum 1000)
      *
-     * @return PromiseInterface<Collection|Member[]>
+     * @return Promise<Collection|Member[]>
      */
-    public function searchMembers(array $options): PromiseInterface
+    public function searchMembers(array $options): Promise
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1182,9 +1182,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing kick_members permission.
      *
-     * @return PromiseInterface<int> The number of members that would be removed.
+     * @return Promise<int> The number of members that would be removed.
      */
-    public function getPruneCount(array $options = []): PromiseInterface
+    public function getPruneCount(array $options = []): Promise
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1238,9 +1238,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing kick_members permission.
      *
-     * @return PromiseInterface<?int> The number of members that were removed in the prune operation.
+     * @return Promise<?int> The number of members that were removed in the prune operation.
      */
-    public function beginPrune(array $options = [], ?string $reason = null): PromiseInterface
+    public function beginPrune(array $options = [], ?string $reason = null): Promise
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1289,9 +1289,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission when the welcome screen is not enabled.
      *
-     * @return PromiseInterface<WelcomeScreen>
+     * @return Promise<WelcomeScreen>
      */
-    public function getWelcomeScreen(bool $fresh = false): PromiseInterface
+    public function getWelcomeScreen(bool $fresh = false): Promise
     {
         if (! $this->feature_welcome_screen_enabled) {
             $botperms = $this->getBotPermissions();
@@ -1337,9 +1337,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
-     * @return PromiseInterface<WelcomeScreen> The updated Welcome Screen.
+     * @return Promise<WelcomeScreen> The updated Welcome Screen.
      */
-    public function updateWelcomeScreen(array $options): PromiseInterface
+    public function updateWelcomeScreen(array $options): Promise
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1381,9 +1381,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
-     * @return PromiseInterface
+     * @return Promise
      */
-    public function getWidgetSettings(): PromiseInterface
+    public function getWidgetSettings(): Promise
     {
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_guild) {
@@ -1411,9 +1411,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
-     * @return PromiseInterface The updated guild widget object.
+     * @return Promise The updated guild widget object.
      */
-    public function updateWidgetSettings(array $options, ?string $reason = null): PromiseInterface
+    public function updateWidgetSettings(array $options, ?string $reason = null): Promise
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1448,9 +1448,9 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-widget
      *
-     * @return PromiseInterface<Widget>
+     * @return Promise<Widget>
      */
-    public function getWidget(): PromiseInterface
+    public function getWidget(): Promise
     {
         return $this->factory->part(Widget::class, ['id' => $this->id])->fetch();
     }
@@ -1463,9 +1463,9 @@ class Guild extends Part
      * @throws \RuntimeException      No possible channels to create Invite on.
      * @throws NoPermissionsException
      *
-     * @return PromiseInterface<Invite>
+     * @return Promise<Invite>
      */
-    public function createInvite(...$args): PromiseInterface
+    public function createInvite(...$args): Promise
     {
         $channel = $this->channels->find(function (Channel $channel) {
             if ($channel->canInvite()) {
@@ -1494,9 +1494,9 @@ class Guild extends Part
      * @param int         $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return PromiseInterface<self> This guild.
+     * @return Promise<self> This guild.
      */
-    public function updateMFALevel(int $level, ?string $reason = null): PromiseInterface
+    public function updateMFALevel(int $level, ?string $reason = null): Promise
     {
         $headers = [];
         if (isset($reason)) {
@@ -1525,9 +1525,9 @@ class Guild extends Part
      *                                administrator for COMMUNITY or DISCOVERABLE.
      *                                manage_guild for INVITES_DISABLED or RAID_ALERTS_ENABLED.
      *
-     * @return PromiseInterface<self> This guild.
+     * @return Promise<self> This guild.
      */
-    public function setFeatures(array $features, ?string $reason = null): PromiseInterface
+    public function setFeatures(array $features, ?string $reason = null): Promise
     {
         if ($botperms = $this->getBotPermissions()) {
             if ((isset($features['COMMUNITY']) || isset($features['DISCOVERABLE'])) && ! $botperms->administrator) {
