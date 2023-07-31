@@ -81,7 +81,7 @@ class AutoModerationActionExecution extends Part
      */
     protected function getActionAttribute(): Action
     {
-        return $this->factory->part(Action::class, (array) $this->attributes['action'], true);
+        return $this->createOf(Action::class, $this->attributes['action']);
     }
 
     /**

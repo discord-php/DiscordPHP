@@ -302,7 +302,7 @@ class Channel extends Part
             $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
-                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->factory->part(Message::class, (array) $response, true));
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
             }
 
             return $messages;
@@ -336,8 +336,8 @@ class Channel extends Part
         $allow = array_fill_keys($allow, true);
         $deny = array_fill_keys($deny, true);
 
-        $allowPart = $this->factory->part(ChannelPermission::class, $allow);
-        $denyPart = $this->factory->part(ChannelPermission::class, $deny);
+        $allowPart = $this->factory->part(ChannelPermission::class, $allow, $this->created);
+        $denyPart = $this->factory->part(ChannelPermission::class, $deny, $this->created);
 
         $overwrite = $this->factory->part(Overwrite::class, [
             'id' => $part->id,
@@ -345,7 +345,7 @@ class Channel extends Part
             'type' => $type,
             'allow' => $allowPart->bitwise,
             'deny' => $denyPart->bitwise,
-        ]);
+        ], $this->created);
 
         return $this->setOverwrite($part, $overwrite, $reason);
     }
@@ -632,7 +632,7 @@ class Channel extends Part
                 /** @var ?Invite */
                 if (! $invitePart = $this->invites->get('code', $response->code)) {
                     /** @var Invite */
-                    $invitePart = $this->invites->create((array) $response, true);
+                    $invitePart = $this->invites->create($response, true);
                     $this->invites->pushItem($invitePart);
                 }
 
@@ -716,7 +716,7 @@ class Channel extends Part
             }
         }
 
-        return $this->getMessageHistory(['limit' => $value])->then(function ($messages) use ($reason) {
+        return $this->getMessageHistory(['limit' => $value, 'cache' => false])->then(function ($messages) use ($reason) {
             return $this->deleteMessages($messages, $reason);
         });
     }
@@ -726,7 +726,11 @@ class Channel extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
      *
-     * @param array $options
+     * @param array               $options           Array of options.
+     * @param string|Message|null $options['around'] Get messages around this message ID.
+     * @param string|Message|null $options['before'] Get messages before this message ID.
+     * @param string|Message|null $options['after']  Get messages after this message ID.
+     * @param int|null            $options['limit']  Max number of messages to return (1-100). Defaults to 50.
      *
      * @throws NoPermissionsException Missing `read_message_history` permission.
      *                                Or also missing `connect` permission for text in voice.
@@ -734,7 +738,7 @@ class Channel extends Part
      *
      * @return Promise<Collection<Message>>
      */
-    public function getMessageHistory(array $options): Promise
+    public function getMessageHistory(array $options = []): Promise
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->read_message_history) {
@@ -747,11 +751,12 @@ class Channel extends Part
         }
 
         $resolver = new OptionsResolver();
-        $resolver->setDefaults(['limit' => 100, 'cache' => true]);
+        $resolver->setDefaults(['limit' => 50, 'cache' => true]);
         $resolver->setDefined(['before', 'after', 'around']);
         $resolver->setAllowedTypes('before', [Message::class, 'string']);
         $resolver->setAllowedTypes('after', [Message::class, 'string']);
         $resolver->setAllowedTypes('around', [Message::class, 'string']);
+        $resolver->setAllowedTypes('limit', 'integer');
         $resolver->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100));
 
         $options = $resolver->resolve($options);
@@ -778,7 +783,7 @@ class Channel extends Part
             $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
-                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->factory->part(Message::class, (array) $response, true));
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
             }
 
             return $messages;
@@ -875,13 +880,18 @@ class Channel extends Part
     protected function setPermissionOverwritesAttribute(?array $overwrites): void
     {
         if ($overwrites) {
+            $overwritesDiscrim = $this->overwrites->discrim;
             foreach ($overwrites as $overwrite) {
                 $overwrite = (array) $overwrite;
-                /** @var Overwrite */
-                if ($overwritePart = $this->overwrites->offsetGet($overwrite['id'])) {
+                /** @var ?Overwrite */
+                if ($overwritePart = $this->overwrites->offsetGet($overwrite[$overwritesDiscrim])) {
                     $overwritePart->fill($overwrite);
+                } else {
+                    /** @var Overwrite */
+                    $overwritePart = $this->overwrites->create($overwrite, $this->created);
+                    $overwritePart->created = &$this->created;
                 }
-                $this->overwrites->pushItem($overwritePart ?: $this->overwrites->create($overwrite, true));
+                $this->overwrites->pushItem($overwritePart);
             }
         } else {
             if (null === nowait($this->overwrites->cache->clear())) {
@@ -923,7 +933,7 @@ class Channel extends Part
         $available_tags = Collection::for(Tag::class);
 
         foreach ($this->attributes['available_tags'] ?? [] as $available_tag) {
-            $available_tags->pushItem($this->factory->part(Tag::class, (array) $available_tag, true));
+            $available_tags->pushItem($this->createOf(Tag::class, $available_tag));
         }
 
         return $available_tags;
@@ -942,7 +952,7 @@ class Channel extends Part
             return null;
         }
 
-        return $this->factory->part(Reaction::class, (array) $this->attributes['default_reaction_emoji'], true);
+        return $this->createOf(Reaction::class, $this->attributes['default_reaction_emoji']);
     }
 
     /**
@@ -1091,14 +1101,15 @@ class Channel extends Part
                 $threadPart->fill((array) $response);
             } else {
                 /** @var Thread */
-                $threadPart = $this->threads->create((array) $response, true);
+                $threadPart = $this->threads->create($response, true);
             }
             $this->threads->pushItem($threadPart);
             if ($messageId = ($response->message->id ?? null)) {
                 /** @var ?Message */
                 if (! $threadPart->messages->offsetExists($messageId)) {
                     // Don't store in the external cache
-                    $threadPart->messages->offsetSet($messageId, $threadPart->messages->create((array) $response->message, true));
+                    $messagePart = $threadPart->messages->create($response->message, true);
+                    $threadPart->messages->offsetSet($messageId, $messagePart);
                 }
             }
 
@@ -1177,7 +1188,11 @@ class Channel extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            return $this->messages->get('id', $response->id) ?? $this->messages->create((array) $response, true);
+            if (! $messagePart = $this->messages->get('id', $response->id)) {
+                $messagePart = $this->messages->create($response, true);
+            }
+
+            return $messagePart; 
         });
     }
 
@@ -1456,7 +1471,7 @@ class Channel extends Part
                     'nsfw' => $this->nsfw,
                     'default_auto_archive_duration' => $this->default_auto_archive_duration,
                     'default_reaction_emoji' => $this->attributes['default_reaction_emoji'] ?? null,
-                    'available_tags' => $this->attributes['available_tags'] ?? null,
+                    'available_tags',
                     'default_sort_order' => $this->default_sort_order,
                     'default_forum_layout' => $this->default_forum_layout,
                     'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user, // Canceled documentation #5606
@@ -1543,7 +1558,7 @@ class Channel extends Part
                 $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
                 $attr += $this->makeOptionalAttributes([
                     'flags' => $this->flags,
-                    'available_tags' => $this->attributes['available_tags'],
+                    'available_tags',
                     'default_reaction_emoji' => $this->attributes['default_reaction_emoji'],
                     'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user,
                     'default_sort_order' => $this->default_sort_order,

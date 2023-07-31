@@ -86,7 +86,7 @@ class Option extends Part
         $choices = Collection::for(Choice::class, null);
 
         foreach ($this->attributes['choices'] ?? [] as $choice) {
-            $choices->pushItem($this->factory->part(Choice::class, (array) $choice, true));
+            $choices->pushItem($this->createOf(Choice::class, $choice));
         }
 
         return $choices;
@@ -102,7 +102,7 @@ class Option extends Part
         $options = Collection::for(Option::class, null);
 
         foreach ($this->attributes['options'] ?? [] as $option) {
-            $options->pushItem($this->factory->part(Option::class, (array) $option, true));
+            $options->pushItem($this->createOf(Option::class, $option));
         }
 
         return $options;

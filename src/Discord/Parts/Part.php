@@ -423,10 +423,44 @@ abstract class Part implements ArrayAccess, JsonSerializable
         foreach ($attributes as $key => $value) {
             if (array_key_exists($key, $this->attributes)) {
                 $attr[$key] = $value;
+            } elseif (is_int($key) && array_key_exists($value, $this->attributes)) {
+                $attr[$value] = $this->attributes[$value];
             }
         }
 
         return $attr;
+    }
+
+    /**
+     * Get the Discord instance that owns this Part.
+     *
+     * @return Discord
+     */
+    public function getDiscord()
+    {
+        return $this->discord;
+    }
+
+    /**
+     * Create a Part where the `created` status is referenced by this Part.
+     *
+     * @internal
+     *
+     * @see \Discord\Factory\Factory::part()
+     *
+     * @since 10.0.0
+     *
+     * @param string       $class The attribute Part class to build.
+     * @param array|object $data  Data to create the object.
+     *
+     * @return Part
+     */
+    public function createOf(string $class, array|object $data): Part
+    {
+        $ofPart = $this->factory->part($class, (array) $data, $this->created);
+        $ofPart->created = &$this->created;
+
+        return $ofPart;
     }
 
     /**

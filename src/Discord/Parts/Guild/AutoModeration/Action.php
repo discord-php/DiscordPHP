@@ -20,8 +20,8 @@ use Discord\Parts\Part;
  *
  * @since 7.1.0
  *
- * @property int         $type     The type of action.
- * @property object|null $metadata Additional metadata needed during execution for this specific action type (may contain `channel_id` and `duration_seconds`).
+ * @property int                 $type     The type of action.
+ * @property ActionMetadata|null $metadata Additional metadata needed during execution for this specific action type.
  */
 class Action extends Part
 {
@@ -38,6 +38,20 @@ class Action extends Part
     public const TYPE_TIMEOUT = 3;
 
     /**
+     * Get the Metadata Attributes
+     *
+     * @return ?ActionMetadata
+     */
+    public function getMetadataAttribute(): ?ActionMetadata
+    {
+        if (! isset($this->attributes['metadata'])) {
+            return null;
+        }
+
+        return $this->createOf(ActionMetadata::class, $this->attributes['metadata']);
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @see Rule::getCreatableAttributes()
@@ -46,11 +60,7 @@ class Action extends Part
     {
         $attr = [
             'type' => $this->type,
-        ];
-
-        if (isset($this->attributes['metadata'])) {
-            $attr['metadata'] = $this->metadata;
-        }
+        ] + $this->makeOptionalAttributes(['metadata']);
 
         return $attr;
     }

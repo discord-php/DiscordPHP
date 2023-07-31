@@ -127,17 +127,53 @@ class Member extends Part
      * @param int|null    $daysToDeleteMessages The amount of days to delete messages from.
      * @param string|null $reason               Reason of the Ban.
      *
-     * @throws \RuntimeException Member has no `$guild`
+     * @throws \RuntimeException      Member has no `$guild`.
+     * @throws NoPermissionsException Missing `ban_members` permission.
      *
      * @return Promise<Ban>
      */
     public function ban(?int $daysToDeleteMessages = null, ?string $reason = null): Promise
     {
-        if (! $guild = $this->guild) {
-            return reject(new \RuntimeException('Member has no Guild Part'));
-        }
+        return $this->discord->guilds->cacheGet($this->guild_id)->then(function (?Guild $guild) use ($daysToDeleteMessages, $reason) {
+            if (null === $guild) {
+                return reject(new \RuntimeException('Member has no Guild Part'));
+            }
 
-        return $guild->bans->ban($this, ['delete_message_days' => $daysToDeleteMessages], $reason);
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->ban_members) {
+                    return reject(new NoPermissionsException("You do not have permission to ban members in the guild {$guild->id}."));
+                }
+            }
+
+            return $guild->bans->ban($this, ['delete_message_days' => $daysToDeleteMessages], $reason);
+        });
+    }
+
+    /**
+     * Alias for `$guild->members->delete()`.
+     *
+     * @param string|null $reason Reason for Audit Log.
+     *
+     * @throws \RuntimeException      Member has no `$guild`.
+     * @throws NoPermissionsException Missing `kick_members` permission.
+     *
+     * @return ExtendedPromiseInterface<self>
+     */
+    public function kick(?string $reason = null): ExtendedPromiseInterface
+    {
+        return $this->discord->guilds->cacheGet($this->guild_id)->then(function (?Guild $guild) use ($reason) {
+            if (null === $guild) {
+                return new \RuntimeException('Member has no Guild Part');
+            }
+
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->kick_members) {
+                    return reject(new NoPermissionsException("You do not have permission to kick members in the guild {$guild->id}."));
+                }
+            }
+
+            return $guild->members->delete($this, $reason);
+        });
     }
 
     /**
@@ -413,7 +449,7 @@ class Member extends Part
 
         // Create from computed base permissions
         /** @var RolePermission */
-        $newPermission = $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
+        $newPermission = $guild->createOf(RolePermission::class, ['bitwise' => $bitwise]);
 
         // If computed roles has Administrator permission
         if ($newPermission->administrator) {
@@ -472,7 +508,7 @@ class Member extends Part
         }
 
         // Re-create the Role Permissions from the computed overwrites
-        return $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
+        return $guild->createOf(RolePermission::class, ['bitwise' => $bitwise]);
     }
 
     /**
@@ -581,7 +617,7 @@ class Member extends Part
         $activities = Collection::for(Activity::class, null);
 
         foreach ($this->attributes['activities'] ?? [] as $activity) {
-            $activities->pushItem($this->factory->part(Activity::class, (array) $activity, true));
+            $activities->pushItem($this->createOf(Activity::class, $activity));
         }
 
         return $activities;

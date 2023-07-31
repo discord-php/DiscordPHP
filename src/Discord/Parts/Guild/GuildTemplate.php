@@ -79,7 +79,7 @@ class GuildTemplate extends Part
             return $guild;
         }
 
-        return $this->factory->part(Guild::class, (array) $this->attributes['serialized_source_guild'], true);
+        return $this->createOf(Guild::class, $this->attributes['serialized_source_guild']);
     }
 
     /**

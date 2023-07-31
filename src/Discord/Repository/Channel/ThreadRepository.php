@@ -72,7 +72,7 @@ class ThreadRepository extends AbstractRepository
             foreach ($items as $thread) {
                 foreach ($members as $member) {
                     if ($member->id == $thread->id) {
-                        $thread->members->cache->set($member->id, $thread->members->create((array) $member, true));
+                        $thread->members->cache->set($member->id, $thread->members->create($member, true));
                         break;
                     }
                 }
@@ -164,7 +164,7 @@ class ThreadRepository extends AbstractRepository
 
             foreach ($response->members as $member) {
                 if ($member->id == $thread->id) {
-                    $thread->members->pushItem($thread->members->create((array) $member, true));
+                    $thread->members->pushItem($thread->members->create($member, true));
                 }
             }
 

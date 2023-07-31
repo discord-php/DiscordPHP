@@ -69,6 +69,7 @@ class Interaction extends Part
         'type',
         'data',
         'guild_id',
+        'channel',
         'channel_id',
         'member',
         'user',
@@ -108,12 +109,12 @@ class Interaction extends Part
             return null;
         }
 
-        $adata = (array) $this->attributes['data'];
-        if (! isset($adata['guild_id']) && isset($this->attributes['guild_id'])) {
-            $adata['guild_id'] = $this->guild_id;
+        $adata = $this->attributes['data'];
+        if (! isset($adata->guild_id) && isset($this->attributes['guild_id'])) {
+            $adata->guild_id = $this->guild_id;
         }
 
-        return $this->factory->part(InteractionData::class, $adata, true);
+        return $this->createOf(InteractionData::class, $adata);
     }
 
     /**
@@ -133,19 +134,25 @@ class Interaction extends Part
      */
     protected function getChannelAttribute(): ?Part
     {
+        $channelId = $this->attributes['channel']->id ?? $this->channel_id;
         if ($guild = $this->guild) {
             $channels = $guild->channels;
-            if ($channel = $channels->get('id', $this->channel_id)) {
+            if (
+                ! in_array($this->attributes['channel']->type ?? null, [Channel::TYPE_PUBLIC_THREAD, CHANNEL::TYPE_PRIVATE_THREAD, CHANNEL::TYPE_ANNOUNCEMENT_THREAD])
+                && $channel = $channels->get('id', $channelId)
+            )
+            {
                 return $channel;
-            }
-            foreach ($channels as $parent) {
-                if ($thread = $parent->threads->get('id', $this->channel_id)) {
-                    return $thread;
+            } else {
+                foreach ($channels as $parent) {
+                    if ($thread = $parent->threads->get('id', $channelId)) {
+                        return $thread;
+                    }
                 }
             }
         }
 
-        return $this->discord->getChannel($this->channel_id);
+        return $this->discord->getChannel($channelId);
     }
 
     /**
