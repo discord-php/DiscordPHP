@@ -13,7 +13,7 @@ namespace Discord\Voice;
 
 use Discord\Exceptions\BufferTimedOutException;
 use Discord\Helpers\Buffer;
-use React\Promise\Promise;
+use React\Promise\PromiseInterface;
 use React\Promise\Promise;
 
 use function React\Promise\resolve;
@@ -65,9 +65,9 @@ class OggStream
      * @param Buffer $buffer  Buffer to read Ogg Opus packets from.
      * @param ?int   $timeout Time in milliseconds before a buffer read times out.
      *
-     * @return Promise<OggStream> A promise containing the Ogg stream.
+     * @return PromiseInterface<OggStream> A promise containing the Ogg stream.
      */
-    public static function fromBuffer(Buffer $buffer, ?int $timeout = -1): Promise
+    public static function fromBuffer(Buffer $buffer, ?int $timeout = -1): PromiseInterface
     {
         /** @var OpusHead */
         $header = null;
@@ -86,9 +86,9 @@ class OggStream
     /**
      * Attempt to get a packet from the Ogg stream.
      *
-     * @return Promise<string|null> Promise containing an Opus packet. If null, indicates EOF.
+     * @return PromiseInterface<string|null> Promise containing an Opus packet. If null, indicates EOF.
      */
-    public function getPacket(): Promise
+    public function getPacket(): PromiseInterface
     {
         if ($this->packets === null) {
             return resolve(null);
@@ -113,9 +113,9 @@ class OggStream
      * Attempt to read an Ogg page from the buffer and parse it into Opus
      * packets.
      *
-     * @return Promise<string[]|null> Promise containing an array of Opus packets.
+     * @return PromiseInterface<string[]|null> Promise containing an array of Opus packets.
      */
-    private function parsePackets(): Promise
+    private function parsePackets(): PromiseInterface
     {
         return new Promise(function ($resolve, $reject) {
             OggPage::fromBuffer($this->buffer, timeout: 0)->then(function ($page) use ($resolve) {

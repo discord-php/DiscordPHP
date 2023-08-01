@@ -50,7 +50,7 @@ use Monolog\Formatter\LineFormatter;
 use Psr\Log\LoggerInterface;
 use React\Cache\ArrayCache;
 use React\Promise\Deferred;
-use React\Promise\Promise;
+use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -469,7 +469,7 @@ class Discord
         $unavailable = [];
 
         foreach ($content->guilds as $guild) {
-            /** @var Promise */
+            /** @var PromiseInterface */
             $promise = coroutine([$event, 'handle'], $guild);
 
             $promise->then(function ($d) use (&$unavailable) {
@@ -806,12 +806,12 @@ class Discord
 
         if (! $this->emittedInit && (! in_array($data->t, $parse))) {
             $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
-                /** @var Promise */
+                /** @var PromiseInterface */
                 $promise = coroutine([$handler, 'handle'], $data->d);
                 $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
             };
         } else {
-            /** @var Promise */
+            /** @var PromiseInterface */
             $promise = coroutine([$handler, 'handle'], $data->d);
             $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
         }
@@ -1090,7 +1090,7 @@ class Discord
 
             $this->logger->info('starting connection to websocket', ['gateway' => $this->gateway]);
 
-            /** @var Promise */
+            /** @var PromiseInterface */
             $promise = ($this->wsFactory)($this->gateway);
             $promise->then([$this, 'handleWsConnection'], [$this, 'handleWsConnectionFailed']);
         });
@@ -1213,9 +1213,9 @@ class Discord
      *
      * @throws \RuntimeException
      *
-     * @return Promise
+     * @return PromiseInterface
      */
-    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null, bool $check = true): Promise
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null, bool $check = true): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1309,9 +1309,9 @@ class Discord
      *
      * @param string|null $gateway Gateway URL to set.
      *
-     * @return Promise
+     * @return PromiseInterface
      */
-    protected function setGateway(?string $gateway = null): Promise
+    protected function setGateway(?string $gateway = null): PromiseInterface
     {
         $deferred = new Deferred();
         $defaultSession = [

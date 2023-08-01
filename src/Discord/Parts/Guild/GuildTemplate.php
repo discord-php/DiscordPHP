@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Discord\Http\Endpoint;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use React\Promise\Promise;
+use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -130,9 +130,9 @@ class GuildTemplate extends Part
      * @param string      $options['name'] The name of the guild (2-100 characters).
      * @param string|null $options['icon'] The base64 128x128 image for the guild icon.
      *
-     * @return Promise<Guild>
+     * @return PromiseInterface<Guild>
      */
-    public function createGuild($options = []): Promise
+    public function createGuild($options = []): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver

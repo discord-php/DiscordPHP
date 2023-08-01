@@ -14,7 +14,7 @@ namespace Discord\Helpers;
 use Discord\Discord;
 use Discord\Parts\Part;
 use React\Cache\ArrayCache;
-use React\Promise\Promise;
+use React\Promise\PromiseInterface;
 use Throwable;
 use WeakReference;
 
@@ -108,7 +108,7 @@ class CacheWrapper
      * @param string $key
      * @param mixed  $default
      *
-     * @return Promise<Part>
+     * @return PromiseInterface<Part>
      */
     public function get($key, $default = null)
     {
@@ -128,7 +128,7 @@ class CacheWrapper
             return reject($throwable);
         }
 
-        if ($result instanceof Promise) {
+        if ($result instanceof PromiseInterface) {
             return $result->then($handleValue);
         }
 
@@ -141,7 +141,7 @@ class CacheWrapper
      * @param string $key
      * @param Part   $value
      *
-     * @return Promise<bool>
+     * @return PromiseInterface<bool>
      */
     public function set($key, $value, $ttl = null)
     {
@@ -162,7 +162,7 @@ class CacheWrapper
             return reject($throwable);
         }
 
-        if ($result instanceof Promise) {
+        if ($result instanceof PromiseInterface) {
             return $result->then($handleValue);
         }
 
@@ -174,7 +174,7 @@ class CacheWrapper
      *
      * @param string $key
      *
-     * @return Promise<bool>|bool
+     * @return PromiseInterface<bool>|bool
      */
     public function delete($key)
     {
@@ -192,7 +192,7 @@ class CacheWrapper
             return reject($throwable);
         }
 
-        if ($result instanceof Promise) {
+        if ($result instanceof PromiseInterface) {
             return $result->then($handleValue);
         }
 
@@ -207,7 +207,7 @@ class CacheWrapper
      * @param array $keys
      * @param ?Part $default
      *
-     * @return Promise<array>
+     * @return PromiseInterface<array>
      */
     public function getMultiple(array $keys, $default = null)
     {
@@ -230,7 +230,7 @@ class CacheWrapper
                 return reject($throwable);
             }
 
-            if ($result instanceof Promise) {
+            if ($result instanceof PromiseInterface) {
                 return $result->then($handleValue);
             }
 
@@ -254,7 +254,7 @@ class CacheWrapper
      * @param Part[] $values
      * @param ?int   $ttl
      *
-     * @return Promise<bool>
+     * @return PromiseInterface<bool>
      */
     public function setMultiple(array $values, $ttl = null)
     {
@@ -274,7 +274,7 @@ class CacheWrapper
      *
      * @param array $keys
      *
-     * @return Promise<bool>
+     * @return PromiseInterface<bool>
      */
     public function deleteMultiple(array $keys)
     {
@@ -297,7 +297,7 @@ class CacheWrapper
                 return reject($throwable);
             }
 
-            if ($result instanceof Promise) {
+            if ($result instanceof PromiseInterface) {
                 return $result->then($handleValue);
             }
 
@@ -318,7 +318,7 @@ class CacheWrapper
      *
      * For react/cache 0.5 polyfill.
      *
-     * @return Promise<bool>
+     * @return PromiseInterface<bool>
      */
     public function clear()
     {
@@ -332,7 +332,7 @@ class CacheWrapper
      *
      * @param string $key
      *
-     * @return Promise<bool>
+     * @return PromiseInterface<bool>
      */
     public function has($key)
     {
@@ -354,7 +354,7 @@ class CacheWrapper
             return reject($throwable);
         }
 
-        if ($result instanceof Promise) {
+        if ($result instanceof PromiseInterface) {
             return $result->then($handleValue);
         }
 

@@ -13,7 +13,7 @@ namespace Discord\Repository;
 
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
-use React\Promise\Promise;
+use React\Promise\PromiseInterface;
 
 /**
  * Contains guilds that the client is in.
@@ -54,9 +54,9 @@ class GuildRepository extends AbstractRepository
      *
      * @param Guild|string $guild
      *
-     * @return Promise
+     * @return PromiseInterface
      */
-    public function leave($guild): Promise
+    public function leave($guild): PromiseInterface
     {
         if ($guild instanceof Guild) {
             $guild = $guild->id;

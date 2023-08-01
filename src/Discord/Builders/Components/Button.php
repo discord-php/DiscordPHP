@@ -15,7 +15,7 @@ use Discord\Discord;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
-use React\Promise\Promise;
+use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
 
@@ -343,7 +343,7 @@ class Button extends Component
                     }
                 };
 
-                if ($response instanceof Promise) {
+                if ($response instanceof PromiseInterface) {
                     $response->then($ack);
                 } else {
                     $ack();

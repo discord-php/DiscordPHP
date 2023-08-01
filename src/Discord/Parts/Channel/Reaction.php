@@ -17,7 +17,7 @@ use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use React\Promise\Promise;
+use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function Discord\normalizePartId;
@@ -70,7 +70,7 @@ class Reaction extends Part
     /**
      * {@inheritDoc}
      */
-    public function fetch(): Promise
+    public function fetch(): PromiseInterface
     {
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->message_id))
             ->then(function ($message) {
@@ -101,9 +101,9 @@ class Reaction extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#get-reactions
      *
-     * @return Promise<Collection|Users[]>
+     * @return PromiseInterface<Collection|Users[]>
      */
-    public function getUsers(array $options = []): Promise
+    public function getUsers(array $options = []): PromiseInterface
     {
         $query = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, urlencode($this->emoji->id === null ? $this->emoji->name : "{$this->emoji->name}:{$this->emoji->id}"));
 
@@ -144,9 +144,9 @@ class Reaction extends Part
      *
      * @see Message::getUsers()
      *
-     * @return Promise<Collection|Users[]>
+     * @return PromiseInterface<Collection|Users[]>
      */
-    public function getAllUsers(): Promise
+    public function getAllUsers(): PromiseInterface
     {
         $response = Collection::for(User::class);
         $getUsers = function ($after = null) use (&$getUsers, $response) {

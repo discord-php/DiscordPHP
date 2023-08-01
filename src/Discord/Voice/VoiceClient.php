@@ -29,7 +29,7 @@ use React\EventLoop\LoopInterface;
 use Psr\Log\LoggerInterface;
 use React\ChildProcess\Process;
 use React\Promise\Deferred;
-use React\Promise\Promise;
+use React\Promise\PromiseInterface;
 use React\Stream\ReadableResourceStream as Stream;
 use React\EventLoop\TimerInterface;
 use React\Stream\ReadableResourceStream;
@@ -400,7 +400,7 @@ class VoiceClient extends EventEmitter
     public function initSockets(): void
     {
         $wsfac = new WsFactory($this->loop);
-        /** @var Promise */
+        /** @var PromiseInterface */
         $promise = $wsfac("wss://{$this->endpoint}?v={$this->version}");
 
         $promise->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
@@ -438,7 +438,7 @@ class VoiceClient extends EventEmitter
                 $buffer[1] = "\x01";
                 $buffer[3] = "\x46";
                 $buffer->writeUInt32BE($this->ssrc, 4);
-                /** @var Promise */
+                /** @var PromiseInterface */
                 $promise = $udpfac->createClient("{$data->d->ip}:{$this->udpPort}");
 
                 $promise->then(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
@@ -686,9 +686,9 @@ class VoiceClient extends EventEmitter
      * @throws FileNotFoundException
      * @throws \RuntimeException
      *
-     * @return Promise
+     * @return PromiseInterface
      */
-    public function playFile(string $file, int $channels = 2): Promise
+    public function playFile(string $file, int $channels = 2): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -726,9 +726,9 @@ class VoiceClient extends EventEmitter
      * @throws \RuntimeException
      * @throws \InvalidArgumentException Thrown when the stream passed to playRawStream is not a valid resource.
      *
-     * @return Promise
+     * @return PromiseInterface
      */
-    public function playRawStream($stream, int $channels = 2, int $audioRate = 48000): Promise
+    public function playRawStream($stream, int $channels = 2, int $audioRate = 48000): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -773,9 +773,9 @@ class VoiceClient extends EventEmitter
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      *
-     * @return Promise
+     * @return PromiseInterface
      */
-    public function playOggStream($stream): Promise
+    public function playOggStream($stream): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -885,13 +885,13 @@ class VoiceClient extends EventEmitter
      *
      * @param resource|Process|Stream $stream The DCA stream to be sent.
      *
-     * @return Promise
+     * @return PromiseInterface
      * @throws \Exception
      *
      * @deprecated 10.0.0 DCA is now deprecated in DiscordPHP, switch to using
      *                    `playOggStream` with raw Ogg Opus.
      */
-    public function playDCAStream($stream): Promise
+    public function playDCAStream($stream): PromiseInterface
     {
         $deferred = new Deferred();
 

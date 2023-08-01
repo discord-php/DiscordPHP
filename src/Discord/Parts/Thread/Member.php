@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Discord\Http\Endpoint;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use React\Promise\Promise;
+use React\Promise\PromiseInterface;
 
 /**
  * Represents a member that belongs to a thread. Not the same as a user nor a
@@ -70,9 +70,9 @@ class Member extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#remove-thread-member
      *
-     * @return Promise
+     * @return PromiseInterface
      */
-    public function remove(): Promise
+    public function remove(): PromiseInterface
     {
         return $this->http->delete(Endpoint::bind(Endpoint::THREAD_MEMBER, $this->id, $this->user_id));
     }

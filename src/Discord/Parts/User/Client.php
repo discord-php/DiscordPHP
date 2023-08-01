@@ -18,7 +18,7 @@ use Discord\Parts\Part;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
-use React\Promise\Promise;
+use React\Promise\PromiseInterface;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
@@ -142,9 +142,9 @@ class Client extends Part
     /**
      * Saves the client instance.
      *
-     * @return Promise
+     * @return PromiseInterface
      */
-    public function save(): Promise
+    public function save(): PromiseInterface
     {
         return $this->http->patch(Endpoint::USER_CURRENT, $this->getUpdatableAttributes());
     }
