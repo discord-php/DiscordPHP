@@ -123,10 +123,12 @@ class Thread extends Part
     protected function afterConstruct(): void
     {
         if (isset($this->attributes['member'])) {
-            $this->members->pushItem($this->factory->part(ThreadMember::class, (array) $this->attributes['member'] + [
+            $memberPart = $this->members->create((array) $this->attributes['member'] + [
                 'id' => $this->id,
                 'user_id' => $this->discord->id,
-            ], true));
+            ], $this->created);
+            $memberPart->created = &$this->created;
+            $this->members->pushItem($memberPart);
         }
     }
 
@@ -467,7 +469,7 @@ class Thread extends Part
                 $messages = Collection::for(Message::class);
 
                 foreach ($responses as $response) {
-                    $messages->pushItem($this->messages->get('id', $response->id) ?: $this->factory->part(Message::class, (array) $response, true));
+                    $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
                 }
 
                 return $messages;
@@ -534,21 +536,26 @@ class Thread extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
      *
-     * @param array $options
+     * @param array               $options           Array of options.
+     * @param string|Message|null $options['around'] Get messages around this message ID.
+     * @param string|Message|null $options['before'] Get messages before this message ID.
+     * @param string|Message|null $options['after']  Get messages after this message ID.
+     * @param int|null            $options['limit']  Max number of messages to return (1-100). Defaults to 50.
      *
      * @return PromiseInterface<Collection<Message>>
      *
      * @todo Make it in a trait along with Channel
      */
-    public function getMessageHistory(array $options): PromiseInterface
+    public function getMessageHistory(array $options = []): Promise
     {
         $resolver = new OptionsResolver();
         $resolver
-            ->setDefaults(['limit' => 100, 'cache' => false])
+            ->setDefaults(['limit' => 50, 'cache' => false])
             ->setDefined(['before', 'after', 'around'])
             ->setAllowedTypes('before', [Message::class, 'string'])
             ->setAllowedTypes('after', [Message::class, 'string'])
             ->setAllowedTypes('around', [Message::class, 'string'])
+            ->setAllowedTypes('limit', 'integer')
             ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100));
 
         $options = $resolver->resolve($options);
@@ -579,7 +586,7 @@ class Thread extends Part
 
             foreach ($responses as $response) {
                 if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->part(Message::class, (array) $response, true);
+                    $message = $this->messages->create($response, true);
                     $this->messages->pushItem($message);
                 }
 
@@ -714,7 +721,7 @@ class Thread extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            return $this->messages->get('id', $response->id) ?? $this->messages->create((array) $response, true);
+            return $this->messages->get('id', $response->id) ?: $this->messages->create($response, true); 
         });
     }
 

@@ -97,7 +97,7 @@ class AuditLog extends Part
         $collection = Collection::for(Entry::class);
 
         foreach ($this->attributes['audit_log_entries'] ?? [] as $entry) {
-            $collection->pushItem($this->factory->part(Entry::class, (array) $entry, true));
+            $collection->pushItem($this->createOf(Entry::class, $entry));
         }
 
         return $collection;

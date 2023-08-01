@@ -89,7 +89,7 @@ class Command extends Part
         $options = Collection::for(Option::class, null);
 
         foreach ($this->attributes['options'] ?? [] as $option) {
-            $options->pushItem($this->factory->part(Option::class, (array) $option, true));
+            $options->pushItem($this->createOf(Option::class, $option));
         }
 
         return $options;
@@ -125,7 +125,7 @@ class Command extends Part
             'name_localizations' => $this->name_localizations,
             'description' => $this->description,
             'description_localizations' => $this->description_localizations,
-            'options' => $this->attributes['options'],
+            'options',
             'default_member_permissions' => $this->default_member_permissions,
             'default_permission' => $this->default_permission,
             'type' => $this->type,
@@ -149,7 +149,7 @@ class Command extends Part
             'name_localizations' => $this->name_localizations,
             'description' => $this->description,
             'description_localizations' => $this->description_localizations,
-            'options' => $this->attributes['options'],
+            'options',
             'default_member_permissions' => $this->default_member_permissions,
             'default_permission' => $this->default_permission,
             'nsfw' => $this->nsfw,

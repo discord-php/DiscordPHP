@@ -362,7 +362,7 @@ class Message extends Part
         $attachments = Collection::for(Attachment::class);
 
         foreach ($this->attributes['attachments'] ?? [] as $attachment) {
-            $attachments->pushItem($this->factory->part(Attachment::class, (array) $attachment, true));
+            $attachments->pushItem($this->createOf(Attachment::class, $attachment));
         }
 
         return $attachments;
@@ -379,12 +379,15 @@ class Message extends Part
         foreach ($reactions ?? [] as $reaction) {
             $keepReactions[] = $reactionKey = $reaction->emoji->id ?? $reaction->emoji->name;
             $reaction = (array) $reaction;
-            /** @var Reaction */
+            /** @var ?Reaction */
             if ($reactionPart = $this->reactions->offsetGet($reactionKey)) {
                 $reactionPart->fill($reaction);
-                $reactionPart->created = $this->created;
+            } else {
+                /** @var Reaction */
+                $reactionPart = $this->reactions->create($reaction, $this->created);
+                $reactionPart->created = &$this->created;
             }
-            $this->reactions->pushItem($reactionPart ?: $this->reactions->create($reaction, $this->created));
+            $this->reactions->pushItem($reactionPart);
         }
 
         $oldReactions = [];
@@ -451,7 +454,8 @@ class Message extends Part
                 if ($thread = $channel->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
-                $thread = $channel->threads->create((array) $this->attributes['thread'], true);
+                $thread = $channel->threads->create($this->attributes['thread'], $channel->created);
+                $thread->created = &$channel->created;
                 $channel->threads->pushItem($thread);
             }
         }
@@ -581,7 +585,7 @@ class Message extends Part
         $embeds = new Collection([], null);
 
         foreach ($this->attributes['embeds'] ?? [] as $embed) {
-            $embeds->pushItem($this->factory->part(Embed::class, (array) $embed, true));
+            $embeds->pushItem($this->createOf(Embed::class, $embed));
         }
 
         return $embeds;
@@ -598,7 +602,7 @@ class Message extends Part
             return null;
         }
 
-        return $this->factory->part(MessageInteraction::class, (array) $this->attributes['interaction'] + ['guild_id' => $this->guild_id], true);
+        return $this->createOf(MessageInteraction::class, (array) $this->attributes['interaction'] + ['guild_id' => $this->guild_id]);
     }
 
     /**
@@ -685,7 +689,7 @@ class Message extends Part
         $components = Collection::for(Component::class, null);
 
         foreach ($this->attributes['components'] as $component) {
-            $components->pushItem($this->factory->part(Component::class, (array) $component, true));
+            $components->pushItem($this->createOf(Component::class, $component));
         }
 
         return $components;
@@ -797,11 +801,12 @@ class Message extends Part
             $this->attributes['thread'] ??= $response;
             if ($channel) {
                 /** @var ?Thread */
-                if (! $threadPart = $channel->threads->offsetGet($response->id)) {
-                    /** @var Thread */
-                    $threadPart = $channel->threads->create((array) $response, true);
-                } else {
+                if ($threadPart = $channel->threads->offsetGet($response->id)) {
                     $threadPart->fill((array) $response);
+                } else {
+                    /** @var Thread */
+                    $threadPart = $channel->threads->create($response, $channel->created);
+                    $threadPart->created = &$channel->created;
                 }
                 $channel->threads->pushItem($threadPart);
 

@@ -36,7 +36,7 @@ class InteractionCreate extends Event
             if ($userPart = $this->discord->users->get('id', $snowflake)) {
                 $userPart->fill((array) $user);
             } else {
-                $this->discord->users->pushItem($this->discord->users->create((array) $user, true));
+                $this->discord->users->pushItem($this->discord->users->create($user, true));
             }
         }
 

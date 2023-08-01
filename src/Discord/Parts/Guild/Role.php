@@ -68,7 +68,7 @@ class Role extends Part
     protected function setPermissionsAttribute($permission): void
     {
         if (! ($permission instanceof RolePermission)) {
-            $permission = $this->factory->part(RolePermission::class, ['bitwise' => $permission], true);
+            $permission = $this->createOf(RolePermission::class, ['bitwise' => $permission]);
         }
 
         $this->attributes['permissions'] = $permission;

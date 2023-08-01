@@ -127,7 +127,7 @@ class Reaction extends Part
 
             foreach ((array) $response as $user) {
                 if (! $part = $this->discord->users->get('id', $user->id)) {
-                    $part = $this->discord->users->create((array) $user, true);
+                    $part = $this->discord->users->create($user, true);
                     $this->discord->users->pushItem($part);
                 }
 

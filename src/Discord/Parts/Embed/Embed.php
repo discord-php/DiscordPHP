@@ -147,7 +147,7 @@ class Embed extends Part
 
         foreach ($this->attributes['fields'] as $field) {
             if (! ($field instanceof Field)) {
-                $field = $this->factory->part(Field::class, (array) $field, true);
+                $field = $this->createOf(Field::class, $field);
             }
 
             $fields->pushItem($field);

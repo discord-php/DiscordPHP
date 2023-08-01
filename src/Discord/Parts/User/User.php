@@ -12,6 +12,7 @@
 namespace Discord\Parts\User;
 
 use Discord\Builders\MessageBuilder;
+use Discord\Helpers\BigInt;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
@@ -27,25 +28,27 @@ use function React\Promise\resolve;
  *
  * @since 2.0.0
  *
- * @property string       $id            The unique identifier of the user.
- * @property string       $username      The username of the user.
- * @property string       $discriminator The discriminator of the user.
- * @property string|null  $global_name   The user's display name, if it is set. For bots, this is the application name.
- * @property string       $displayname   The the display name of the client.
- * @property ?string      $avatar        The avatar URL of the user.
- * @property string|null  $avatar_hash   The avatar hash of the user.
- * @property bool|null    $bot           Whether the user is a bot.
- * @property bool|null    $system        Whether the user is a Discord system user.
- * @property bool|null    $mfa_enabled   Whether MFA is enabled.
- * @property ?string|null $banner        The banner URL of the user.
- * @property string|null  $banner_hash   The banner hash of the user.
- * @property ?int|null    $accent_color  The user's banner color encoded as an integer representation of hexadecimal color code.
- * @property string|null  $locale        User locale.
- * @property bool|null    $verified      Whether the user is verified.
- * @property ?string|null $email         User email.
- * @property int|null     $flags         User flags.
- * @property int|null     $premium_type  Type of nitro subscription.
- * @property int|null     $public_flags  Public flags on the user.
+ * @property string       $id                     The unique identifier of the user.
+ * @property string       $username               The username of the user.
+ * @property string       $discriminator          The discriminator of the user.
+ * @property string|null  $global_name            The user's display name, if it is set. For bots, this is the application name.
+ * @property string       $displayname            The the display name of the client.
+ * @property ?string      $avatar                 The avatar URL of the user.
+ * @property string|null  $avatar_hash            The avatar hash of the user.
+ * @property bool|null    $bot                    Whether the user is a bot.
+ * @property bool|null    $system                 Whether the user is a Discord system user.
+ * @property bool|null    $mfa_enabled            Whether MFA is enabled.
+ * @property ?string|null $banner                 The banner URL of the user.
+ * @property string|null  $banner_hash            The banner hash of the user.
+ * @property ?int|null    $accent_color           The user's banner color encoded as an integer representation of hexadecimal color code.
+ * @property string|null  $locale                 User locale.
+ * @property bool|null    $verified               Whether the user is verified.
+ * @property ?string|null $email                  User email.
+ * @property int|null     $flags                  User flags.
+ * @property int|null     $premium_type           Type of nitro subscription.
+ * @property int|null     $public_flags           Public flags on the user.
+ * @property int|null     $avatar_decoration      The user's avatar decoration URL.
+ * @property int|null     $avatar_decoration_hash The user's avatar decoration hash.
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
@@ -82,6 +85,7 @@ class User extends Part
         'discriminator',
         'global_name',
         'avatar',
+        'avatar_decoration',
         'bot',
         'system',
         'mfa_enabled',
@@ -109,7 +113,7 @@ class User extends Part
         }
 
         return $this->http->post(Endpoint::USER_CURRENT_CHANNELS, ['recipient_id' => $this->id])->then(function ($response) {
-            $channel = $this->discord->private_channels->create((array) $response, true);
+            $channel = $this->discord->private_channels->create($response, true);
             $this->discord->private_channels->pushItem($channel);
 
             return $channel;
@@ -176,7 +180,7 @@ class User extends Part
     public function getAvatarAttribute(?string $format = null, int $size = 1024): string
     {
         if (empty($this->attributes['avatar'])) {
-            $avatarDiscrim = (int) $this->discriminator % 5;
+            $avatarDiscrim = (int) (($this->discriminator) ? $this->discriminator % 5 : BigInt::shiftRight($this->id, 22) % 6);
 
             return "https://cdn.discordapp.com/embed/avatars/{$avatarDiscrim}.png?size={$size}";
         }
@@ -204,6 +208,45 @@ class User extends Part
     protected function getAvatarHashAttribute(): ?string
     {
         return $this->attributes['avatar'];
+    }
+
+    /**
+     * Returns the avatar decoration URL for the client.
+     *
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
+     *
+     * @return string|null The URL to the clients avatar decoration.
+     */
+    public function getAvatarDecorationAttribute(?string $format = null, int $size = 288): ?string
+    {
+        if (! isset($this->attributes['avatar_decoration'])) {
+            return null;
+        }
+
+        if (isset($format)) {
+            $allowed = ['png', 'jpg', 'webp'];
+
+            if (! in_array(strtolower($format), $allowed)) {
+                $format = 'png';
+            }
+        } elseif (strpos($this->attributes['avatar_decoration'], 'a_') === 0) {
+            $format = 'png';
+        } else {
+            $format = 'png';
+        }
+
+        return "https://cdn.discordapp.com/avatar-decorations/{$this->id}/{$this->attributes['avatar_decoration']}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the avatar decoration hash for the client.
+     *
+     * @return ?string The client avatar decoration's hash.
+     */
+    protected function getAvatarDecorationHashAttribute(): ?string
+    {
+        return $this->attributes['avatar_decoration'];
     }
 
     /**
