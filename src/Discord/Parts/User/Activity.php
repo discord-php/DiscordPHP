@@ -30,7 +30,7 @@ use Discord\Parts\Part;
  * @property object|null   $timestamps     Unix timestamps for start and/or end of the game.
  * @property string|null   $application_id Application id for the game.
  * @property ?string|null  $details        What the player is currently doing.
- * @property ?string|null  $state          The user's current party status.
+ * @property ?string|null  $state          The user's current party status, or text used for a custom status.
  * @property Emoji|null    $emoji          The emoji used for a custom status.
  * @property object|null   $party          Information for the current party of the player.
  * @property object|null   $assets         Images for the presence and their hover texts.
@@ -145,7 +145,7 @@ class Activity extends Part
             case self::TYPE_WATCHING:
                 return 'Watching '.$this->name;
             case self::TYPE_CUSTOM:
-                return "{$this->emoji} {$this->name}";
+                return "{$this->emoji} {$this->state}";
             case self::TYPE_COMPETING:
                 return 'Competing in '.$this->name;
         }
