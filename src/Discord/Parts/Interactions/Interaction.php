@@ -140,14 +140,12 @@ class Interaction extends Part
             if (
                 ! in_array($this->attributes['channel']->type ?? null, [Channel::TYPE_PUBLIC_THREAD, CHANNEL::TYPE_PRIVATE_THREAD, CHANNEL::TYPE_ANNOUNCEMENT_THREAD])
                 && $channel = $channels->get('id', $channelId)
-            )
-            {
+            ) {
                 return $channel;
-            } else {
-                foreach ($channels as $parent) {
-                    if ($thread = $parent->threads->get('id', $channelId)) {
-                        return $thread;
-                    }
+            }
+            foreach ($channels as $parent) {
+                if ($thread = $parent->threads->get('id', $channelId)) {
+                    return $thread;
                 }
             }
         }

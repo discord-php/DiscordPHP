@@ -36,7 +36,6 @@ use Traversable;
 use function Discord\getSnowflakeTimestamp;
 use function React\Promise\all;
 use function React\Promise\reject;
-use function React\Promise\resolve;
 
 /**
  * Represents a Discord thread.
@@ -722,7 +721,7 @@ class Thread extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            return $this->messages->get('id', $response->id) ?: $this->messages->create($response, true); 
+            return $this->messages->get('id', $response->id) ?: $this->messages->create($response, true);
         });
     }
 
@@ -845,7 +844,7 @@ class Thread extends Part
 
         if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
             $attr += $this->makeOptionalAttributes([
-                'invitable' => $this->invitable
+                'invitable' => $this->invitable,
             ]);
         }
 

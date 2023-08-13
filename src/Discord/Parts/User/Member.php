@@ -547,8 +547,8 @@ class Member extends Part
     /**
      * Sets verification bypasses flag on a member.
      *
-     * @param bool $bypasses_verification Whether member is exempt from guild verification requirements.
-     * @param string|null $reason         Reason for Audit Log.
+     * @param bool        $bypasses_verification Whether member is exempt from guild verification requirements.
+     * @param string|null $reason                Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing `moderate_members` permission.
      *
@@ -576,7 +576,7 @@ class Member extends Part
             $flags &= ~self::FLAGS_BYPASSES_VERIFICATION;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['flags' => $flags ], $headers)
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['flags' => $flags], $headers)
             ->then(function ($response) {
                 $this->attributes['flags'] = $response->flags;
 
@@ -593,7 +593,7 @@ class Member extends Part
     {
         $user = $this->user;
 
-        return ($this->nick ?? $user->global_name ?? $user->username) . ($user->discriminator ? '#' . $user->discriminator : '');
+        return ($this->nick ?? $user->global_name ?? $user->username).($user->discriminator ? '#'.$user->discriminator : '');
     }
 
     /**

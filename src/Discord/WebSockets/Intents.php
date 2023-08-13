@@ -52,7 +52,7 @@ class Intents
      * Guild moderation events.
      * - GUILD_AUDIT_LOG_ENTRY_CREATE
      * - GUILD_BAN_ADD
-     * - GUILD_BAN_REMOVE
+     * - GUILD_BAN_REMOVE.
      */
     public const GUILD_MODERATION = (1 << 2);
 
