@@ -1194,7 +1194,7 @@ class Channel extends Part
                 $messagePart = $this->messages->create($response, true);
             }
 
-            return $messagePart; 
+            return $messagePart;
         });
     }
 
@@ -1365,7 +1365,7 @@ class Channel extends Part
             self::TYPE_PUBLIC_THREAD,
             self::TYPE_PRIVATE_THREAD,
             self::TYPE_GUILD_ANNOUNCEMENT,
-            self::TYPE_GUILD_STAGE_VOICE
+            self::TYPE_GUILD_STAGE_VOICE,
         ]);
     }
 

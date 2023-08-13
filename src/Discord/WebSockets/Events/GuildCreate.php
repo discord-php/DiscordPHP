@@ -106,8 +106,10 @@ class GuildCreate extends Event
         });
 
         if (
-            ($this->discord->options['retrieveBans'] === true
-                || (is_array($this->discord->options['retrieveBans'])
+            (
+                $this->discord->options['retrieveBans'] === true
+                || (
+                    is_array($this->discord->options['retrieveBans'])
                     && in_array($data->id, $this->discord->options['retrieveBans'])
                 )
             )

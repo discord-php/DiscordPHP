@@ -38,7 +38,7 @@ class Action extends Part
     public const TYPE_TIMEOUT = 3;
 
     /**
-     * Get the Metadata Attributes
+     * Get the Metadata Attributes.
      *
      * @return ?ActionMetadata
      */

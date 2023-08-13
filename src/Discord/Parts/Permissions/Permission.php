@@ -49,7 +49,7 @@ abstract class Permission extends Part
     /**
      * Array of permissions that only apply to text channels.
      * i.e. indicated T in documentation.
-     * 
+     *
      * The constant values here are the bit position, not the bitwise value
      *
      * @see ChannelPermission
