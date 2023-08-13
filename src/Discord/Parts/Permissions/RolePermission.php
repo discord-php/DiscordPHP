@@ -38,13 +38,13 @@ namespace Discord\Parts\Permissions;
  * @property bool $use_vad
  * @property bool $request_to_speak
  * @property bool $manage_events
- * @property bool $create_events
  * @property bool $manage_threads
  * @property bool $create_public_threads
  * @property bool $create_private_threads
  * @property bool $send_messages_in_threads
  * @property bool $use_embedded_activities
  * @property bool $use_soundboard
+ * @property bool $create_events
  * @property bool $use_external_sounds
  */
 class RolePermission extends Permission
