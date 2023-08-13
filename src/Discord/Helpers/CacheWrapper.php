@@ -476,19 +476,19 @@ class CacheWrapper
     }
 
     /**
-     * Flush deleted items from cache and weaken items. Items with Bot's ID are
+     * Prune deleted items from cache and weaken items. Items with Bot's ID are
      * exempt.
      *
-     * @return int Flushed items.
+     * @return int Pruned items.
      */
     public function sweep(): int
     {
-        $flushing = 0;
+        $pruning = 0;
         foreach ($this->items as $key => $item) {
             if (null === $item) {
                 // Item was removed from memory, delete from cache
                 $this->delete($key);
-                $flushing++;
+                $pruning++;
             } elseif ($item instanceof Part) {
                 // Skip ID related to Bot
                 if ($key != $this->discord->id) {
@@ -497,11 +497,11 @@ class CacheWrapper
                 }
             }
         }
-        if ($flushing) {
-            $this->discord->getLogger()->debug('Flushing repository cache', ['count' => $flushing, 'class' => $this->class]);
+        if ($pruning) {
+            $this->discord->getLogger()->debug('Pruning repository cache', ['count' => $pruning, 'class' => $this->class]);
         }
 
-        return $flushing;
+        return $pruning;
     }
 
     public function __get(string $name)
