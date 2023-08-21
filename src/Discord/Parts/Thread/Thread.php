@@ -45,7 +45,7 @@ use function React\Promise\reject;
  * @since 7.0.0
  *
  * @property      string        $id                    The ID of the thread.
- * @property      string        $type                  The type of thread.
+ * @property      int           $type                  The type of thread.
  * @property      string        $guild_id              The ID of the guild which the thread belongs to.
  * @property-read Guild|null    $guild                 The guild which the thread belongs to.
  * @property      string        $name                  The name of the thread.
