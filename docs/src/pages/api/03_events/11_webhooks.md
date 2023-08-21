@@ -13,10 +13,8 @@ $discord->on(Event::WEBHOOKS_UPDATE, function (object $guild, Discord $discord, 
     }
     // $guild and/or $channel was not in cache:
     else {
-        // {
-        //     "guild_id": "" // webhook guild ID
-        //     "channel_id": "", // webhook channel ID,
-        // }
+        // "guild->id": "" // webhook guild ID
+        // "channel->id": "", // webhook channel ID,
     }
 });
 ```
