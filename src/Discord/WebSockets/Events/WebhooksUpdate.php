@@ -41,7 +41,7 @@ class WebhooksUpdate extends Event
                     }
                 }
 
-                return [$guild, $channel];
+                return [$guild, $channel ?? (object) ['id' => $data->channel_id]];
             }
 
             return [(object) ['id' => $data->guild_id], (object) ['id' => $data->channel_id]];
