@@ -260,7 +260,7 @@ class Interaction extends Part
      */
     public function updateMessage(MessageBuilder $builder): ExtendedPromiseInterface
     {
-        if ($this->type != InteractionType::MESSAGE_COMPONENT) {
+        if (! in_array($this->type, [InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
             return reject(new \LogicException('You can only update messages that occur due to a message component interaction.'));
         }
 
