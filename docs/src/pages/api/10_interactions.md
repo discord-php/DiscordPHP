@@ -35,7 +35,7 @@ responding interaction with wrong type throws a `LogicException`
 | `acknowledge()`                                                                            | defer the interaction                                                       | `MESSAGE_COMPONENT`, `MODAL_SUBMIT`                        |
 | `respondWithMessage(MessageBuilder $builder, ?bool $ephemeral)`                            | responds to the interaction with a message. ephemeral is default false      | `APPLICATION_COMMAND`, `MESSAGE_COMPONENT`, `MODAL_SUBMIT` |
 | `autoCompleteResult(array $choices)`                                                       | responds a suggestion to options with auto complete                         | `APPLICATION_COMMAND_AUTOCOMPLETE`                         |
-| `showModal(string $title, string $custom_id, array $components, ?callable $submit = null)` | responds to the interaction with a popup modal                              | `MODAL_SUBMIT`                                             |
+| `showModal(string $title, string $custom_id, array $components, ?callable $submit = null)` | responds to the interaction with a popup modal                              | other than `PING` and `MODAL_SUBMIT`                       |
 
 ### Functions after interaction response
 
