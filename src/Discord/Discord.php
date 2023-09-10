@@ -106,7 +106,7 @@ class Discord
     /**
      * An array of loggers for voice clients.
      *
-     * @var array Loggers.
+     * @var ?LoggerInterface[] Loggers.
      */
     protected $voiceLoggers = [];
 
@@ -378,13 +378,6 @@ class Discord
         foreach ($options['disabledEvents'] as $event) {
             $this->handlers->removeHandler($event);
         }
-
-        $function = function () use (&$function) {
-            $this->emittedInit = true;
-            $this->removeListener('ready', $function);
-        };
-
-        $this->on('ready', $function);
 
         $this->http = new Http(
             'Bot '.$this->token,
@@ -1130,17 +1123,14 @@ class Discord
         if ($this->emittedInit) {
             return false;
         }
+        $this->emittedInit = true;
 
         $this->logger->info('client is ready');
         $this->emit('init', [$this]);
 
-        /* deprecated */
-        if ($this->listeners['ready']) {
-            if (count($this->listeners['ready'] ?? []) > 1 || count($this->onceListeners['ready'] ?? []) > 1) {
-                $this->logger->info('The \'ready\' event is deprecated and will be removed in a future version of DiscordPHP. Please use \'init\' instead.');
-            }
-
-            $this->emit('ready', [$this]);
+        if (count($this->listeners('ready'))) {
+            $this->logger->info("The 'ready' event is deprecated and will be removed in a future version of DiscordPHP. Please use 'init' instead.");
+            $this->emit('ready', [$this]); // deprecated
         }
 
         foreach ($this->unparsedPackets as $parser) {
