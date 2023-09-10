@@ -160,29 +160,57 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * Fills the parts attributes from an array.
      *
      * @param array $attributes An array of attributes to build the part.
+     *
+     * @see self::setAttribute()
      */
     public function fill(array $attributes): void
     {
         foreach ($this->fillable as $key) {
             if (array_key_exists($key, $attributes)) {
-                $this->setAttribute($key, $attributes[$key]);
+                // This is like setAttribute() but without in_array() checks on fillable
+                if ($str = $this->checkForSetMutator($key)) {
+                    $this->{$str}($attributes[$key]);
+                } else {
+                    $this->attributes[$key] = $attributes[$key];
+                }
             }
         }
     }
 
     /**
-     * Checks if there is a mutator present.
+     * Checks if there is a get mutator present.
      *
-     * @param string $key  The attribute name to check.
-     * @param string $type Either get or set.
+     * @param string $key The attribute name to check.
      *
-     * @return string|false Either a string if it is callable or false.
+     * @since 10.0.0 Replaces checkForMutator($key, 'get')
+     *
+     * @return string|false Either a string if it is a method or false.
      */
-    private function checkForMutator(string $key, string $type)
+    private function checkForGetMutator(string $key)
     {
-        $str = $type.static::studly($key).'Attribute';
+        $str = 'get' . self::studly($key) . 'Attribute';
 
-        if (is_callable([$this, $str])) {
+        if (method_exists($this, $str)) {
+            return $str;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if there is a set mutator present.
+     *
+     * @param string $key The attribute name to check.
+     *
+     * @since 10.0.0 Replaces checkForMutator($key, 'set')
+     *
+     * @return string|false Either a string if it is a method or false.
+     */
+    private function checkForSetMutator(string $key)
+    {
+        $str = 'set' . self::studly($key) . 'Attribute';
+
+        if (method_exists($this, $str)) {
             return $str;
         }
 
@@ -207,7 +235,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
             return $this->repositories_cache[$key];
         }
 
-        if ($str = $this->checkForMutator($key, 'get')) {
+        if ($str = $this->checkForGetMutator($key)) {
             return $this->{$str}();
         }
 
@@ -226,7 +254,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     private function setAttribute(string $key, $value): void
     {
-        if ($str = $this->checkForMutator($key, 'set')) {
+        if ($str = $this->checkForSetMutator($key)) {
             $this->{$str}($value);
 
             return;
@@ -480,17 +508,16 @@ abstract class Part implements ArrayAccess, JsonSerializable
     private static function studly(string $string): string
     {
         static $studlyCache = [];
-        $key = $string;
 
-        if (isset($studlyCache[$key])) {
-            return $studlyCache[$key];
+        if (isset($studlyCache[$string])) {
+            return $studlyCache[$string];
         }
 
         $words = explode(' ', str_replace(['-', '_'], ' ', $string));
 
-        $studlyWords = array_map(fn ($word) => ucfirst($word), $words);
+        $studlyWords = array_map('ucfirst', $words);
 
-        return $studlyCache[$key] = implode($studlyWords);
+        return $studlyCache[$string] = implode($studlyWords);
     }
 
     /**
