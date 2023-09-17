@@ -61,17 +61,15 @@ class Role extends Part
     ];
 
     /**
-     * Sets the permissions attribute.
+     * Gets the permissions attribute.
      *
-     * @param RolePermission|int $permission The permissions to set.
+     * @return RolePermission The role permission.
+     *
+     * @since 10.0.0 Replaced setPermissionsAttribute() to save up memory.
      */
-    protected function setPermissionsAttribute($permission): void
+    protected function getPermissionsAttribute(): Part
     {
-        if (! ($permission instanceof RolePermission)) {
-            $permission = $this->createOf(RolePermission::class, ['bitwise' => $permission]);
-        }
-
-        $this->attributes['permissions'] = $permission;
+        return $this->createOf(RolePermission::class, ['bitwise' => $this->attributes['permissions']]);
     }
 
     /**
@@ -138,10 +136,10 @@ class Role extends Part
     {
         return $this->makeOptionalAttributes([
             'name' => $this->name,
-            'permissions' => (string) $this->permissions,
+            'permissions' => (string) $this->getPermissionsAttribute(),
             'color' => $this->color,
             'hoist' => $this->hoist,
-            'icon' => $this->icon_hash,
+            'icon' => $this->getIconHashAttribute(),
             'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
         ]);
@@ -156,10 +154,10 @@ class Role extends Part
     {
         return $this->makeOptionalAttributes([
             'name' => $this->name,
-            'permissions' => (string) $this->permissions,
+            'permissions' => (string) $this->getPermissionsAttribute(),
             'color' => $this->color,
             'hoist' => $this->hoist,
-            'icon' => $this->icon_hash,
+            'icon' => $this->getIconHashAttribute(),
             'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
         ]);
@@ -183,16 +181,5 @@ class Role extends Part
     public function __toString(): string
     {
         return "<@&{$this->id}>";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRawAttributes(): array
-    {
-        $attributes = $this->attributes;
-        $attributes['permissions'] = (string) $attributes['permissions'];
-
-        return $attributes;
     }
 }
