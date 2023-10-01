@@ -1370,7 +1370,6 @@ class Discord
 
         $resolver
             ->setRequired('token')
-            ->setAllowedTypes('token', 'string')
             ->setDefined([
                 'token',
                 'shardId',
