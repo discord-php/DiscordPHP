@@ -29,7 +29,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @method Member|null pull(string|int $key, $default = null)
  * @method Member|null first()
  * @method Member|null last()
- * @method Member|null find()
+ * @method Member|null find(callable $callback)
  */
 class MemberRepository extends AbstractRepository
 {

@@ -27,7 +27,7 @@ use Discord\Repository\AbstractRepository;
  * @method Sticker|null pull(string|int $key, $default = null)
  * @method Sticker|null first()
  * @method Sticker|null last()
- * @method Sticker|null find()
+ * @method Sticker|null find(callable $callback)
  */
 class StickerRepository extends AbstractRepository
 {

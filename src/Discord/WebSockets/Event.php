@@ -151,7 +151,7 @@ abstract class Event
      *
      * @param object $data The data that was sent with the WebSocket.
      *
-     * @return Generator
+     * @return \Generator
      *
      * @since 10.0.0 Changed args from `Deferred &$deferred, $data` to `$data`, changed return from `void` to `Generator`.
      * @since 4.0.0

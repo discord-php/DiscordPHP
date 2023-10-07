@@ -12,7 +12,9 @@
 namespace Discord\Parts\Guild\AutoModeration;
 
 use Discord\Helpers\Collection;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
@@ -39,8 +41,8 @@ use Discord\Parts\User\User;
  * @property      object                $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `regex_patterns`, `presets`, `allow_list`, `mention_total_limit` and `mention_raid_protection_enabled`).
  * @property      Collection|Action[]   $actions          The actions which will execute when the rule is triggered.
  * @property      bool                  $enabled          Whether the rule is enabled.
- * @property      Collection|Roles[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
- * @property      Collection|Channels[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
+ * @property      Collection|?Role[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
+ * @property      Collection|?Channel[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
  */
 class Rule extends Part
 {
@@ -111,7 +113,7 @@ class Rule extends Part
     /**
      * Returns the exempt roles attribute.
      *
-     * @return Collection<?Role> A collection of roles exempt from the rule.
+     * @return Collection|?Role[] A collection of roles exempt from the rule.
      */
     protected function getExemptRolesAttribute(): Collection
     {
@@ -135,7 +137,7 @@ class Rule extends Part
     /**
      * Returns the exempt channels attribute.
      *
-     * @return Collection<?Channel> A collection of channels exempt from the rule.
+     * @return Collection|?Channel[] A collection of channels exempt from the rule.
      */
     protected function getExemptChannelsAttribute(): Collection
     {

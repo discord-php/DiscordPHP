@@ -908,7 +908,7 @@ class Message extends Part
      * @param int            $delay  Time to delay the delete by, in milliseconds.
      * @param TimerInterface &$timer Delay timer passed by reference.
      *
-     * @return ExtendedPromseInterface
+     * @return ExtendedPromiseInterface
      */
     public function delayedDelete(int $delay, &$timer = null): ExtendedPromiseInterface
     {

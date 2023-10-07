@@ -26,7 +26,7 @@ use Discord\Repository\AbstractRepository;
  * @method Webhook|null pull(string|int $key, $default = null)
  * @method Webhook|null first()
  * @method Webhook|null last()
- * @method Webhook|null find()
+ * @method Webhook|null find(callable $callback)
  */
 class WebhookRepository extends AbstractRepository
 {

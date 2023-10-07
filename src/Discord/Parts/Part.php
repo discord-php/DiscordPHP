@@ -188,7 +188,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     private function checkForGetMutator(string $key)
     {
-        $str = 'get' . self::studly($key) . 'Attribute';
+        $str = 'get'.self::studly($key).'Attribute';
 
         if (method_exists($this, $str)) {
             return $str;
@@ -208,7 +208,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     private function checkForSetMutator(string $key)
     {
-        $str = 'set' . self::studly($key) . 'Attribute';
+        $str = 'set'.self::studly($key).'Attribute';
 
         if (method_exists($this, $str)) {
             return $str;

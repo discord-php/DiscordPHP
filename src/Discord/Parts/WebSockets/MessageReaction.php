@@ -17,6 +17,7 @@ use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
@@ -31,16 +32,16 @@ use function React\Promise\resolve;
  *
  * @since 5.0.0
  *
- * @property      string|null    $user_id    ID of the user that performed the reaction.
- * @property      User|null      $user       User that performed the reaction.
- * @property      string         $channel_id ID of the channel that the reaction was performed in.
- * @property-read Channel|Thread $channel    Channel that the reaction was performed in.
- * @property      string         $message_id ID of the message that the reaction was placed on.
- * @property      Message|null   $message    Message that the reaction was placed on, null if not cached.
- * @property      string|null    $guild_id   ID of the guild that owns the channel.
- * @property-read Guild|null     $guild      Guild that owns the channel.
- * @property      Member|null    $member     Member object of the user that performed the reaction, null if not cached or DM channel.
- * @property      Emoji|null     $emoji      The emoji that was used as the reaction.
+ * @property      string|null         $user_id    ID of the user that performed the reaction.
+ * @property      User|null           $user       User that performed the reaction.
+ * @property      string              $channel_id ID of the channel that the reaction was performed in.
+ * @property-read Channel|Thread|null $channel    Channel that the reaction was performed in.
+ * @property      string              $message_id ID of the message that the reaction was placed on.
+ * @property      Message|null        $message    Message that the reaction was placed on, null if not cached.
+ * @property      string|null         $guild_id   ID of the guild that owns the channel.
+ * @property-read Guild|null          $guild      Guild that owns the channel.
+ * @property      Member|null         $member     Member object of the user that performed the reaction, null if not cached or DM channel.
+ * @property      Emoji|null          $emoji      The emoji that was used as the reaction.
  *
  * @property string $reaction_id ID of the reaction.
  */
@@ -133,9 +134,9 @@ class MessageReaction extends Part
     /**
      * Gets the channel attribute.
      *
-     * @return Channel|Thread
+     * @return Channel|Thread|null
      */
-    protected function getChannelAttribute(): Part
+    protected function getChannelAttribute(): ?Part
     {
         if ($guild = $this->guild) {
             $channels = $guild->channels;

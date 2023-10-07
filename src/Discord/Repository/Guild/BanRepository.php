@@ -31,7 +31,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method Ban|null pull(string|int $key, $default = null)
  * @method Ban|null first()
  * @method Ban|null last()
- * @method Ban|null find()
+ * @method Ban|null find(callable $callback)
  */
 class BanRepository extends AbstractRepository
 {
