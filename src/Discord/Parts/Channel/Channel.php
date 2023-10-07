@@ -1420,6 +1420,13 @@ class Channel extends Part
             'position' => $this->position,
         ]);
 
+        if (null === $this->type) {
+            // Type was not specified but we must not assume its default to GUILD_TEXT as that is determined by API
+            $this->discord->getLogger()->warning('Not specifying channel type, creating with all filled attributes');
+            $attr += $this->getRawAttributes(); // Send the remaining raw attributes
+            return $attr;
+        }
+
         switch ($this->type) {
             case self::TYPE_GUILD_TEXT:
                 $attr += $this->makeOptionalAttributes([
@@ -1478,12 +1485,6 @@ class Channel extends Part
                     'default_forum_layout' => $this->default_forum_layout,
                     'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user, // Canceled documentation #5606
                 ]);
-                break;
-
-            case null:
-                // Type was not specified but we must not assume its default to GUILD_TEXT as that is determined by API
-                $this->discord->getLogger()->warning('Not specifying channel type, creating with all filled attributes');
-                $attr += $this->getRawAttributes(); // Send the remaining raw attributes
                 break;
         }
 
