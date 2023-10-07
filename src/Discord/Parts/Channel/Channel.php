@@ -1424,6 +1424,7 @@ class Channel extends Part
             // Type was not specified but we must not assume its default to GUILD_TEXT as that is determined by API
             $this->discord->getLogger()->warning('Not specifying channel type, creating with all filled attributes');
             $attr += $this->getRawAttributes(); // Send the remaining raw attributes
+
             return $attr;
         }
 

@@ -90,7 +90,6 @@ class Reaction extends Part
      *
      * @param string $value name:id or the character of standard emoji
      *
-     * @return void
      *
      * @since 10.0.0
      */
