@@ -16,8 +16,10 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
+use stdClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function Discord\normalizePartId;
@@ -49,6 +51,7 @@ class Reaction extends Part
      * {@inheritDoc}
      */
     protected $fillable = [
+        'id', // internal
         'count',
         'me',
         'emoji',
@@ -81,6 +84,42 @@ class Reaction extends Part
     }
 
     /**
+     * Sets the emoji identifier.
+     *
+     * @internal Used for ReactionRepository::fetch()
+     *
+     * @param string $value name:id or the character of standard emoji
+     *
+     * @return void
+     *
+     * @since 10.0.0
+     */
+    protected function setIdAttribute(string $value): void
+    {
+        if (! isset($this->attributes['emoji'])) {
+            $this->attributes['emoji'] = new stdClass;
+        }
+
+        $colonDelimiter = explode(':', $value);
+        $delimitedCount = count($colonDelimiter);
+        $emojiId = $emojiAnimated = null;
+
+        if ($delimitedCount == 2) { // Custom emoji name:id
+            [$emojiName, $emojiId] = $colonDelimiter;
+        } elseif ($delimitedCount == 3) { // Custom animated emoji a:name:id
+            [$emojiAnimated, $emojiName, $emojiId] = $colonDelimiter;
+        } else { // Standard emoji (or just have abnormal colon count)
+            $emojiName = $value;
+        }
+
+        $this->attributes['emoji']->id = $emojiId;
+        $this->attributes['emoji']->name = $emojiName;
+        if ($emojiAnimated == 'a') {
+            $this->attributes['emoji']->animated = true;
+        }
+    }
+
+    /**
      * Gets the emoji identifier.
      *
      * @return string
@@ -101,7 +140,7 @@ class Reaction extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#get-reactions
      *
-     * @return ExtendedPromiseInterface<Collection|Users[]>
+     * @return ExtendedPromiseInterface<Collection|User[]>
      */
     public function getUsers(array $options = []): ExtendedPromiseInterface
     {
@@ -144,7 +183,7 @@ class Reaction extends Part
      *
      * @see Message::getUsers()
      *
-     * @return ExtendedPromiseInterface<Collection|Users[]>
+     * @return ExtendedPromiseInterface<Collection|User[]>
      */
     public function getAllUsers(): ExtendedPromiseInterface
     {

@@ -36,6 +36,7 @@ class ReactionRepository extends AbstractRepository
      * {@inheritDoc}
      */
     protected $endpoints = [
+        'get' => Endpoint::MESSAGE_REACTION_EMOJI,
         'delete' => Endpoint::MESSAGE_REACTION_EMOJI,
     ];
 
