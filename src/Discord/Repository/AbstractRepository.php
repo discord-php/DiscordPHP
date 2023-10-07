@@ -375,7 +375,8 @@ abstract class AbstractRepository extends Collection
                 continue;
             }
 
-            if ($resolved = nowait($this->cache->get($offset)) !== null) {
+            $resolved = nowait($this->cache->get($offset));
+            if ($resolved !== null) {
                 return $resolved;
             }
             break;
