@@ -307,13 +307,14 @@ function deferFind($array, callable $callback, $loop = null): Promise
     $loop->addPeriodicTimer(0.001, function ($timer) use ($loop, $deferred, $iterator, $callback, &$cancelled) {
         if ($cancelled) {
             $loop->cancelTimer($timer);
+            $deferred->reject(new \RuntimeException('deferFind() cancelled'));
 
             return;
         }
 
         if (! $iterator->valid()) {
             $loop->cancelTimer($timer);
-            $deferred->reject();
+            $deferred->resolve(null);
 
             return;
         }
