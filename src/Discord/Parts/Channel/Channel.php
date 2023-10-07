@@ -1416,7 +1416,7 @@ class Channel extends Part
         // Marked "Channel Type: All" in documentation
         $attr += $this->makeOptionalAttributes([
             'type' => $this->type,
-            'permission_overwrites' => $this->permission_overwrites,
+            'permission_overwrites' => $this->getPermissionOverwritesAttribute(),
             'position' => $this->position,
         ]);
 
@@ -1509,7 +1509,7 @@ class Channel extends Part
         $attr = [
             'name' => $this->name,
             'position' => $this->position,
-            'permission_overwrites' => $this->permission_overwrites,
+            'permission_overwrites' => $this->getPermissionOverwritesAttribute(),
         ];
 
         switch ($this->type) {
