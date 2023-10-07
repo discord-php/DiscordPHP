@@ -1160,8 +1160,6 @@ class Discord
 
             if (! in_array($activity['type'], [Activity::TYPE_GAME, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_CUSTOM, Activity::TYPE_COMPETING])) {
                 throw new \UnexpectedValueException("The given activity type ({$activity['type']}) is invalid.");
-
-                return;
             }
         }
 
@@ -1203,13 +1201,15 @@ class Discord
      * @param bool                 $mute    Whether you should be mute when you join the channel.
      * @param bool                 $deaf    Whether you should be deaf when you join the channel.
      * @param LoggerInterface|null $logger  Voice client logger. If null, uses same logger as Discord client.
-     * @param bool                 $check   Whether to check for system requirements.
      *
      * @throws \RuntimeException
      *
+     * @since 10.0.0 Removed argument $check that has no effect (it is always checked)
+     * @since 4.0.0
+     *
      * @return PromiseInterface
      */
-    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null, bool $check = true): ExtendedPromiseInterface
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1241,7 +1241,7 @@ class Discord
             $this->removeListener(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
         };
 
-        $voiceServerUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceServerUpdate, $deferred, $logger, $check) {
+        $voiceServerUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceServerUpdate, $deferred, $logger) {
             if ($vs->guild_id != $channel->guild_id) {
                 return; // This voice server update isn't for our guild.
             }
@@ -1274,7 +1274,7 @@ class Discord
                 unset($this->voiceClients[$channel->guild_id]);
             });
 
-            $vc->start($check);
+            $vc->start();
 
             $this->voiceLoggers[$channel->guild_id] = $logger;
             $this->removeListener(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
