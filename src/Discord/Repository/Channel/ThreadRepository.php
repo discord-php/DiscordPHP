@@ -30,7 +30,7 @@ use function React\Promise\resolve;
  * @method Thread|null pull(string|int $key, $default = null)
  * @method Thread|null first()
  * @method Thread|null last()
- * @method Thread|null find()
+ * @method Thread|null find(callable $callback)
  */
 class ThreadRepository extends AbstractRepository
 {

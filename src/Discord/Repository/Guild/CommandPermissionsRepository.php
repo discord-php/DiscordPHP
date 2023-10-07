@@ -30,7 +30,7 @@ use Discord\Repository\AbstractRepository;
  * @method CommandPermissions|null pull(string|int $key, $default = null)
  * @method CommandPermissions|null first()
  * @method CommandPermissions|null last()
- * @method CommandPermissions|null find()
+ * @method CommandPermissions|null find(callable $callback)
  */
 class CommandPermissionsRepository extends AbstractRepository
 {

@@ -28,7 +28,7 @@ class ChannelDelete extends Event
     {
         $channelPart = null;
 
-        /** @var ?Guild */
+        /** @var ?\Discord\Parts\Guild\Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var Channel */
             if ($channelPart = yield $guild->channels->cachePull($data->id)) {

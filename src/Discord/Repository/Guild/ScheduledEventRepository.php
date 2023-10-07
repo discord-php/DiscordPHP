@@ -30,7 +30,7 @@ use function React\Promise\resolve;
  * @method ScheduledEvent|null pull(string|int $key, $default = null)
  * @method ScheduledEvent|null first()
  * @method ScheduledEvent|null last()
- * @method ScheduledEvent|null find()
+ * @method ScheduledEvent|null find(callable $callback)
  */
 class ScheduledEventRepository extends AbstractRepository
 {

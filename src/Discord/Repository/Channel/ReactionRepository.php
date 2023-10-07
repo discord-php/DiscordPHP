@@ -28,7 +28,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @method Reaction|null pull(string|int $key, $default = null)
  * @method Reaction|null first()
  * @method Reaction|null last()
- * @method Reaction|null find()
+ * @method Reaction|null find(callable $callback)
  */
 class ReactionRepository extends AbstractRepository
 {

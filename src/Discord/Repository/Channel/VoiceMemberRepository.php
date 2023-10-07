@@ -26,7 +26,7 @@ use Discord\Repository\AbstractRepository;
  * @method VoiceStateUpdate|null pull(string|int $key, $default = null)
  * @method VoiceStateUpdate|null first()
  * @method VoiceStateUpdate|null last()
- * @method VoiceStateUpdate|null find()
+ * @method VoiceStateUpdate|null find(callable $callback)
  */
 class VoiceMemberRepository extends AbstractRepository
 {

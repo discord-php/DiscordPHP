@@ -28,7 +28,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @method GuildTemplate|null pull(string|int $key, $default = null)
  * @method GuildTemplate|null first()
  * @method GuildTemplate|null last()
- * @method GuildTemplate|null find()
+ * @method GuildTemplate|null find(callable $callback)
  */
 class GuildTemplateRepository extends AbstractRepository
 {

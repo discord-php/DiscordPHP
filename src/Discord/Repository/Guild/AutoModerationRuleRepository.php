@@ -27,7 +27,7 @@ use Discord\Repository\AbstractRepository;
  * @method Rule|null pull(string|int $key, $default = null)
  * @method Rule|null first()
  * @method Rule|null last()
- * @method Rule|null find()
+ * @method Rule|null find(callable $callback)
  */
 class AutoModerationRuleRepository extends AbstractRepository
 {

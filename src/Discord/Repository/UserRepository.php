@@ -25,7 +25,7 @@ use Discord\Parts\User\User;
  * @method User|null pull(string|int $key, $default = null)
  * @method User|null first()
  * @method User|null last()
- * @method User|null find()
+ * @method User|null find(callable $callback)
  */
 class UserRepository extends AbstractRepository
 {

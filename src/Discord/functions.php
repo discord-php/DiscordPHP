@@ -217,7 +217,7 @@ function imageToBase64(string $filepath): string
  *
  * @param string|float $snowflake
  *
- * @return float
+ * @return ?float
  *
  * @since 5.1.1
  */

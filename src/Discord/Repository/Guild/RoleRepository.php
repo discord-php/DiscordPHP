@@ -27,7 +27,7 @@ use Discord\Repository\AbstractRepository;
  * @method Role|null pull(string|int $key, $default = null)
  * @method Role|null first()
  * @method Role|null last()
- * @method Role|null find()
+ * @method Role|null find(callable $callback)
  */
 class RoleRepository extends AbstractRepository
 {
