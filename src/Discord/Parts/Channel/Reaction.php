@@ -16,6 +16,7 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -101,7 +102,7 @@ class Reaction extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#get-reactions
      *
-     * @return ExtendedPromiseInterface<Collection|Users[]>
+     * @return ExtendedPromiseInterface<Collection|User[]>
      */
     public function getUsers(array $options = []): ExtendedPromiseInterface
     {
@@ -144,7 +145,7 @@ class Reaction extends Part
      *
      * @see Message::getUsers()
      *
-     * @return ExtendedPromiseInterface<Collection|Users[]>
+     * @return ExtendedPromiseInterface<Collection|User[]>
      */
     public function getAllUsers(): ExtendedPromiseInterface
     {
