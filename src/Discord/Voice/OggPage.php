@@ -13,7 +13,7 @@ namespace Discord\Voice;
 
 use Discord\Helpers\Buffer;
 use Generator;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 /**
  * Represents a page in an Ogg container.
@@ -65,11 +65,11 @@ class OggPage
      * @param Buffer $buffer  Buffer to read the Ogg page from.
      * @param ?int   $timeout Time in milliseconds before a buffer read times out.
      *
-     * @return ExtendedPromiseInterface<OggPage> Promise containing the Ogg page.
+     * @return PromiseInterface<OggPage> Promise containing the Ogg page.
      *
      * @throws \UnexpectedValueException If the buffer is out of sync and an invalid header is read.
      */
-    public static function fromBuffer(Buffer $buffer, ?int $timeout = -1): ExtendedPromiseInterface
+    public static function fromBuffer(Buffer $buffer, ?int $timeout = -1): PromiseInterface
     {
         $header = null;
         $pageSegments = [];

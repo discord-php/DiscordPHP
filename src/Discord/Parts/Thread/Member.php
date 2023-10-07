@@ -17,7 +17,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member as GuildMember;
 use Discord\Parts\User\User;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 /**
  * Represents a member that belongs to a thread. Not the same as a user nor a
@@ -111,9 +111,9 @@ class Member extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#remove-thread-member
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function remove(): ExtendedPromiseInterface
+    public function remove(): PromiseInterface
     {
         return $this->http->delete(Endpoint::bind(Endpoint::THREAD_MEMBER, $this->id, $this->user_id));
     }
