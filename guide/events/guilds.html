@@ -338,7 +338,7 @@
 <div class="section" id="guild-stickers-update">
 <h2>Guild Stickers Update</h2>
 <p>Called with two Collections of <code>Sticker</code> objects when a guild’s stickers have been added/updated/deleted. <code>$oldStickers</code><em>may</em> be empty if it was not cached or there were previously no stickers.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_STICKERS_UPDATE, function (Collection $stickers, Discord $discord, Collecetion $oldStickers) {
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_STICKERS_UPDATE, function (Collection $stickers, Discord $discord, Collection $oldStickers) {
     // ...
 });
 </code></pre>
