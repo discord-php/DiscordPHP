@@ -32,11 +32,11 @@ class EntitlementCreate extends Event
         $this->discord->application->entitlements->set($data->id, $entitlementPart);
         $entitlementPart = $this->discord->application->entitlements->get('id', $data->id);
 
-        if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+        if (isset($data->guild_id) && $guild = $this->discord->guilds->get('id', $data->guild_id)) {
             $guild->entitlements->set($data->id, $entitlementPart);
         }
 
-        if (isset($data->user_id) && $user = yield $this->discord->users->cacheGet($data->user_id)) {
+        if (isset($data->user_id) && $user = $this->discord->users->get('id', $data->user_id)) {
             $user->entitlements->set($data->id, $entitlementPart);
         }
 
