@@ -64,18 +64,15 @@ class InteractionCreate extends Event
 
         if (isset($data->entitlements)) {
             foreach($data->entitlements as $entitlement) {
-                $targets = [$this->discord->application];
-                if (isset($entitlement->guild_id) && $guild = $this->discord->guilds->offsetGet($entitlement->guild_id)) {
-                    $targets[] = $guild;
-                } elseif (isset($entitlement->user_id) && $user = $this->discord->users->offsetGet($entitlement->user_id)) {
-                    $targets[] = $user;
-                }
-
-                foreach($targets as $target) {
-                    if ($entitlementPart = $target->entitlements->get('id', $entitlement->id)) {
-                        $entitlementPart->fill((array) $entitlement);
-                    } else {
-                        $target->entitlements->pushItem($target->entitlements->create($entitlement, true));
+                if ($entitlementPart = $this->discord->application->entitlements->get('id', $entitlement->id)) {
+                    $entitlementPart->fill((array) $entitlement);
+                } else {
+                    $this->discord->application->entitlements->pushItem$this->discord->application->entitlements->create($entitlement, true));
+                    $entitlementPart = $this->discord->application->entitlements->get('id', $entitlement->id);
+                    if (isset($entitlement->guild_id) && $guild = $this->discord->guilds->get('id', $entitlement->guild_id)) {
+                        $guild->entitlements->pushItem($entitlementPart);
+                    } elseif (isset($entitlement->user_id) && $user = $this->discord->users->get('id', $entitlement->user_id)) {
+                        $user->entitlements->pushItem($entitlementPart);
                     }
                 }
             }
