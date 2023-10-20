@@ -58,6 +58,7 @@ use function React\Promise\reject;
  * @property-read ChannelPermission|null $app_permissions Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
  * @property      string|null            $locale          The selected language of the invoking user.
  * @property      string|null            $guild_locale    The guild's preferred locale, if invoked in a guild.
+ * @property-read string|null            $entitlements    The user's entitlements.
  */
 class Interaction extends Part
 {
@@ -80,6 +81,7 @@ class Interaction extends Part
         'app_permissions',
         'locale',
         'guild_locale',
+        'entitlements',
     ];
 
     /**
@@ -400,6 +402,27 @@ class Interaction extends Part
         })()->then(function ($response) {
             return $this->factory->part(Message::class, (array) $response, true);
         });
+    }
+
+    /**
+     * Responds to the interaction with PREMIUM_REQUIRED.
+     *
+     * @link https://discord.com/developers/docs/monetization/app-subscriptions#gating-premium-interactions
+     *
+     * @throws \LogicException Interaction is not Application Command, Message Component, or Modal Submit.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function respondWithPremiumRequired(): ExtendedPromiseInterface
+    {
+        if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
+            return reject(new \LogicException('You can only acknowledge application command, message component, or modal submit interactions.'));
+        }
+
+        return $this->respond([
+            'type' => InteractionResponseType::PREMIUM_REQUIRED,
+            'data' => [],
+        ]);
     }
 
     /**

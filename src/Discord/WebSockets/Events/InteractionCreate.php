@@ -62,6 +62,25 @@ class InteractionCreate extends Event
             $this->cacheUser($data->user);
         }
 
+        if (isset($data->entitlements)) {
+            foreach($data->entitlements as $entitlement) {
+                $targets = [$this->discord->application];
+                if (isset($entitlement->guild_id) && $guild = $this->discord->guilds->offsetGet($entitlement->guild_id)) {
+                    $targets[] = $guild;
+                } elseif (isset($entitlement->user_id) && $user = $this->discord->users->offsetGet($entitlement->user_id)) {
+                    $targets[] = $user;
+                }
+
+                foreach($targets as $target) {
+                    if ($entitlementPart = $target->entitlements->get('id', $entitlement->id)) {
+                        $entitlementPart->fill((array) $entitlement);
+                    } else {
+                        $target->entitlements->pushItem($target->entitlements->create($entitlement, true));
+                    }
+                }
+            }
+        }
+
         if ($data->type == InteractionType::APPLICATION_COMMAND) {
             $command = $data->data;
             if (isset($this->discord->application_commands[$command->name])) {

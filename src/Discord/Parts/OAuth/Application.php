@@ -14,6 +14,7 @@ namespace Discord\Parts\OAuth;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\User;
+use Discord\Repository\Interaction\EntitlementsRepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
 
 /**
@@ -50,7 +51,8 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  *
  * @property string $invite_url The invite URL to invite the bot to a guild.
  *
- * @property GlobalCommandRepository $commands The application global commands.
+ * @property EntitlementsRepository  $entitlements The application entitlements.
+ * @property GlobalCommandRepository $commands     The application global commands.
  */
 class Application extends Part
 {
@@ -99,6 +101,7 @@ class Application extends Part
      */
     protected $repositories = [
         'commands' => GlobalCommandRepository::class,
+        'entitlements' => EntitlementsRepository::class,
     ];
 
     /**

@@ -39,6 +39,7 @@ use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
+use Discord\Repository\Interaction\EntitlementsRepository;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -145,6 +146,7 @@ use function React\Promise\resolve;
  * @property IntegrationRepository        $integrations
  * @property InviteRepository             $invites
  * @property GuildTemplateRepository      $templates
+ * @property EntitlementsRepository       $entitlements
  */
 class Guild extends Part
 {
@@ -297,6 +299,7 @@ class Guild extends Part
         'integrations' => IntegrationRepository::class,
         'invites' => InviteRepository::class,
         'templates' => GuildTemplateRepository::class,
+        'entitlements' => EntitlementsRepository::class,
     ];
 
     /**
