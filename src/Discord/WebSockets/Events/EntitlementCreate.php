@@ -30,6 +30,7 @@ class EntitlementCreate extends Event
         $entitlementPart = $this->factory->part(Entitlement::class, (array) $data, true);
 
         $this->discord->application->entitlements->set($data->id, $entitlementPart);
+        $entitlementPart = $this->discord->application->entitlements->get('id', $data->id);
 
         if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             $guild->entitlements->set($data->id, $entitlementPart);
