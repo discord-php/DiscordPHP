@@ -26,20 +26,7 @@ class EntitlementDelete extends Event
      */
     public function handle($data)
     {
-        $entitlementPart = null;
-
-        /** @var ?\Discord\Parts\Interaction\Entitlement */
-        if ($entitlementPart = yield $this->discord->application->entitlements->pull($data->id)) {
-            /** @var User */
-            if ($entitlementPart->user_id && $user = $this->discord->users->get('id', $entitlementPart->user_id)) {
-                $user->entitlements->unset($data->id);
-            }
-
-            /** @var Guild */
-            if ($entitlementPart->guild_id && $guild = $this->discord->guilds->get('id', $entitlementPart->guild_id)) {
-                $guild->entitlements->unset($data->id);
-            }
-
+        if ($entitlementPart = $this->discord->application->entitlements->pull($data->id)) {
             $entitlementPart->fill((array) $data);
             $entitlementPart->created = false;                
         }
