@@ -37,14 +37,6 @@ class EntitlementUpdate extends Event
             $oldEntitlement = clone $oldEntitlement;
 
             $entitlementPart->fill((array) $data);
-
-            if ($entitlementPart->guild_id && $part = $this->discord->guilds->get('id', $entitlementPart->guild_id)->entitlements->get('id', $data->id)) {
-                $part->fill((array) $data);
-            }
-
-            if ($entitlementPart->user_id && $part = $this->discord->users->get('id', $entitlementPart->user_id)->entitlements->get('id', $data->id)) {
-                $part->fill((array) $data);
-            }
         }
 
         return [$entitlementPart, $oldEntitlement];
