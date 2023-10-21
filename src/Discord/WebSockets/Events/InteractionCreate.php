@@ -67,12 +67,12 @@ class InteractionCreate extends Event
                 if ($entitlementPart = $this->discord->application->entitlements->get('id', $entitlement->id)) {
                     $entitlementPart->fill((array) $entitlement);
                 } else {
-                    $this->discord->application->entitlements->pushItem$this->discord->application->entitlements->create($entitlement, true));
+                    $this->discord->application->entitlements->set($entitlement->id, $this->discord->application->entitlements->create($entitlement, true));
                     $entitlementPart = $this->discord->application->entitlements->get('id', $entitlement->id);
                     if (isset($entitlement->guild_id) && $guild = $this->discord->guilds->get('id', $entitlement->guild_id)) {
-                        $guild->entitlements->pushItem($entitlementPart);
+                        $guild->entitlements->set($entitlement->id, $entitlementPart);
                     } elseif (isset($entitlement->user_id) && $user = $this->discord->users->get('id', $entitlement->user_id)) {
-                        $user->entitlements->pushItem($entitlementPart);
+                        $user->entitlements->set($entitlement->id, $entitlementPart);
                     }
                 }
             }
