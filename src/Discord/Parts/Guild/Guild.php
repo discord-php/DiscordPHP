@@ -442,18 +442,6 @@ class Guild extends Part
     }
 
     /**
-     * Returns the guilds entitlements.
-     *
-     * @link https://discord.com/developers/docs/monetization/entitlements#list-entitlements
-     *
-     * @return ExtendedPromiseInterface<Collection|Invite[]>
-     */
-    public function getEntitlements(array $options = []): ExtendedPromiseInterface
-    {
-        // TODO: Use the actual lising query
-        return $this->discord->application->entitlements->get('guild_id', $this->id);
-    }
-    /**
      * Unbans a member. Alias for `$guild->bans->unban($user)`.
      *
      * @see BanRepository::unban()
@@ -1676,5 +1664,17 @@ class Guild extends Part
     public function createdTimestamp()
     {
         return \Discord\getSnowflakeTimestamp($this->id);
+    }
+
+    /**
+     * Returns the guilds entitlements for this application.
+     *
+     * @link https://discord.com/developers/docs/monetization/entitlements#list-entitlements
+     *
+     * @return ExtendedPromiseInterface<Collection|Invite[]>
+     */
+    public function getMyApplicationEntitlement(): ExtendedPromiseInterface
+    {
+        return $this->discord->application->entitlements->get('guild_id', $this->id);
     }
 }
