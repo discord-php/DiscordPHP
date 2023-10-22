@@ -60,8 +60,6 @@ class Entitlement extends Part
         'consumed',
         'guild_id',
         'subscription_id',
-
-        // events
         'starts_at',
         'ends_at',
     ];
