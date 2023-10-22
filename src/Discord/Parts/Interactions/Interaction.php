@@ -58,7 +58,7 @@ use function React\Promise\reject;
  * @property-read ChannelPermission|null $app_permissions Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
  * @property      string|null            $locale          The selected language of the invoking user.
  * @property      string|null            $guild_locale    The guild's preferred locale, if invoked in a guild.
- * @property Entitlement|null            $entitlements    The user's entitlements.
+ * @property Entitlement|null            $entitlements    The user's and guild's entitlements for this application.
  */
 class Interaction extends Part
 {
