@@ -37,7 +37,7 @@ use Discord\WebSockets\Event;
  * @property Carbon|null $starts_at       Start date at which the entitlement is valid. Not present when using test entitlements.
  * @property Carbon|null $ends_at         Date at which the entitlement is no longer valid. Not present when using test entitlements.
  * @property string|null $guild_id        ID of the guild that is granted access to the entitlement's sku.
- * @property Guild|null  $guild           Guild that is granted access to the entitlement's sku.
+ * @property-read Guild|null $guild       Guild that is granted access to the entitlement's sku.
  * @property string|null $subscription_id ID of the subscription.
  */
 class Entitlement extends Part
