@@ -26,7 +26,7 @@ class EntitlementDelete extends Event
      */
     public function handle($data)
     {
-        if ($entitlementPart = $this->discord->application->entitlements->pull($data->id)) {
+        if ($entitlementPart = $this->discord->application->entitlements->cachePull($data->id)) {
             $entitlementPart->fill((array) $data);
             $entitlementPart->created = false;                
         }
