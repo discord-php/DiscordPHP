@@ -17,7 +17,6 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
-use Discord\Repository\Interaction\EntitlementsRepository;
 use React\Promise\ExtendedPromiseInterface;
 
 use function React\Promise\resolve;
@@ -50,8 +49,6 @@ use function React\Promise\resolve;
  * @property int|null     $public_flags           Public flags on the user.
  * @property int|null     $avatar_decoration      The user's avatar decoration URL.
  * @property int|null     $avatar_decoration_hash The user's avatar decoration hash.
- *
- * @property Entitlements $entitlements           The user's entitlements.
  *
  * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
@@ -100,13 +97,6 @@ class User extends Part
         'accent_color',
         'premium_type',
         'public_flags',
-    ];
-
-    /**
-     * {@inheritDoc}
-     */
-    protected $repositories = [
-        'entitlements' => EntitlementsRepository::class,
     ];
 
     /**
@@ -296,6 +286,18 @@ class User extends Part
     protected function getBannerHashAttribute(): ?string
     {
         return $this->attributes['banner'] ?? null;
+    }
+
+    /**
+     * Returns the users entitlements for this application.
+     *
+     * @link https://discord.com/developers/docs/monetization/entitlements#list-entitlements
+     *
+     * @return Collection[]|Entitlement[]
+     */
+    public function getMyApplicationEntitlement(): Collection
+    {
+        return $this->discord->application->entitlements->get('user_id', $this->id);
     }
 
     /**
