@@ -36,8 +36,8 @@ class EntitlementsRepository extends AbstractRepository
      */
     protected $endpoints = [
         'all' => Endpoint::APPLICATION_ENTITLEMENTS,
-        'create' => Endpoint::APPLICATION_TEST_ENTITLEMENTS,
-        'delete' => Endpoint::APPLICATION_TEST_ENTITLEMENT,
+        'create' => Endpoint::APPLICATION_ENTITLEMENTS,
+        'delete' => Endpoint::APPLICATION_ENTITLEMENT,
     ];
 
     /**
