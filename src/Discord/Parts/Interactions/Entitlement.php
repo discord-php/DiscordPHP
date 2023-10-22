@@ -44,7 +44,6 @@ class Entitlement extends Part
 {
     public const TYPE_APPLICATION_SUBSCRIPTION = 8;
 
-    public const GIFT_CODE_FLAG_UNDOCUMENTED = 0;
 
     /**
      * {@inheritDoc}
