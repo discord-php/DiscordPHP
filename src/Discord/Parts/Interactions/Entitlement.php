@@ -71,6 +71,10 @@ class Entitlement extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
         return $this->discord->guilds->get('id', $this->guild_id);
     }
 
