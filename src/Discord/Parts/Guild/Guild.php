@@ -39,7 +39,6 @@ use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
-use Discord\Repository\Interaction\EntitlementsRepository;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -146,7 +145,6 @@ use function React\Promise\resolve;
  * @property IntegrationRepository        $integrations
  * @property InviteRepository             $invites
  * @property GuildTemplateRepository      $templates
- * @property EntitlementsRepository       $entitlements
  */
 class Guild extends Part
 {
@@ -299,7 +297,6 @@ class Guild extends Part
         'integrations' => IntegrationRepository::class,
         'invites' => InviteRepository::class,
         'templates' => GuildTemplateRepository::class,
-        'entitlements' => EntitlementsRepository::class,
     ];
 
     /**
@@ -444,6 +441,18 @@ class Guild extends Part
         });
     }
 
+    /**
+     * Returns the guilds entitlements.
+     *
+     * @link https://discord.com/developers/docs/monetization/entitlements#list-entitlements
+     *
+     * @return ExtendedPromiseInterface<Collection|Invite[]>
+     */
+    public function getEntitlements(array $options = []): ExtendedPromiseInterface
+    {
+        // TODO: Use the actual lising query
+        return $this->discord->application->entitlements->get('guild_id', $this->id);
+    }
     /**
      * Unbans a member. Alias for `$guild->bans->unban($user)`.
      *
