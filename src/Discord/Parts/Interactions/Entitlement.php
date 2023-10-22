@@ -29,7 +29,7 @@ use Discord\WebSockets\Event;
  * @property string      $application_id  ID of the parent application.
  * @property string|null $user_id         ID of the user that is granted access to the entitlement's sku.
  * @property string|null $promotion_id    ID of the promotion that applies to the entitlement.
- * @property User|null   $user            User that is granted access to the entitlement's sku.
+ * @property-read User|null $user         User that is granted access to the entitlement's sku.
  * @property int         $type            Type of entitlement.
  * @property bool        $deleted         Entitlement was deleted.
  * @property int|null    $gift_code_flags Gift code flags that apply to this entitlement.
