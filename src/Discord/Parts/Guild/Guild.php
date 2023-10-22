@@ -1591,6 +1591,18 @@ class Guild extends Part
     }
 
     /**
+     * Returns the guilds entitlements for this application.
+     *
+     * @link https://discord.com/developers/docs/monetization/entitlements#list-entitlements
+     *
+     * @return Collection[]|Entitlement[]
+     */
+    public function getMyApplicationEntitlement(): Collection
+    {
+        return $this->discord->application->entitlements->get('guild_id', $this->id);
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-json-params
@@ -1664,17 +1676,5 @@ class Guild extends Part
     public function createdTimestamp()
     {
         return \Discord\getSnowflakeTimestamp($this->id);
-    }
-
-    /**
-     * Returns the guilds entitlements for this application.
-     *
-     * @link https://discord.com/developers/docs/monetization/entitlements#list-entitlements
-     *
-     * @return ExtendedPromiseInterface<Collection|Invite[]>
-     */
-    public function getMyApplicationEntitlement(): ExtendedPromiseInterface
-    {
-        return $this->discord->application->entitlements->get('guild_id', $this->id);
     }
 }
