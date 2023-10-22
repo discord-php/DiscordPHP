@@ -31,7 +31,7 @@ class EntitlementUpdate extends Event
         /** @var Entitlement */
         $entitlementPart = $this->factory->part(Entitlement::class, (array) $data, true);
 
-        if ($oldEntitlement = $this->discord->application->entitlements->get('id', $data->id)) {
+        if ($oldEntitlement = yield $this->discord->application->entitlements->cacheGet('id', $data->id)) {
             // Swap
             $entitlementPart = $oldEntitlement;
             $oldEntitlement = clone $oldEntitlement;
