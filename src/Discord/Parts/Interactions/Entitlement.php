@@ -85,6 +85,10 @@ class Entitlement extends Part
      */
     protected function getUserAttribute(): ?User
     {
+        if (! isset($this->attributes['user_id'])) {
+            return null;
+        }
+
         return $this->discord->users->get('id', $this->user_id);
     }
 
@@ -97,11 +101,11 @@ class Entitlement extends Part
      */
     protected function getStartsAtAttribute(): ?Carbon
     {
-        if ($this->starts_at === null) {
+        if (! isset($this->attributes['starts_at']) {
             return null;
         }
 
-        return new Carbon($this->starts_at);
+        return new Carbon($this->attributes['starts_at']);
     }
 
     /**
@@ -113,10 +117,10 @@ class Entitlement extends Part
      */
     protected function getEndsAtAttribute(): ?Carbon
     {
-        if ($this->ends_at === null) {
+        if (! isset($this->attributes['ends_at']) {
             return null;
         }
 
-        return new Carbon($this->ends_at);
+        return new Carbon($this->attributes['ends_at']);
     }
 }
