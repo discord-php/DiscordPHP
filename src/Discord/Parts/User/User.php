@@ -293,11 +293,13 @@ class User extends Part
      *
      * @link https://discord.com/developers/docs/monetization/entitlements#list-entitlements
      *
-     * @return Collection[]|Entitlement[]
+     * @return Collection
      */
     public function getMyApplicationEntitlement(): Collection
     {
-        return $this->discord->application->entitlements->get('user_id', $this->id);
+        return $this->discord->application->entitlements->filter(function ($entitlement) {
+            return $entitlement->user_id == $this->id;
+        });
     }
 
     /**
