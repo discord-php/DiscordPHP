@@ -20,6 +20,7 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Invite;
 use Discord\Parts\Channel\StageInstance;
+use Discord\PArts\Interactions\Entitlement;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -1595,11 +1596,13 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/monetization/entitlements#list-entitlements
      *
-     * @return Collection[]|Entitlement[]
+     * @return Collection
      */
     public function getMyApplicationEntitlement(): Collection
     {
-        return $this->discord->application->entitlements->get('guild_id', $this->id);
+        return $this->discord->application->entitlements->filter(function ($entitlement) {
+            return $entitlement->guild_id == $this->id;
+        });
     }
 
     /**
