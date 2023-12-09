@@ -67,9 +67,9 @@ Parameters
    $guild->createRole([
        'name' => 'New Role',
        // ...
-   ])->done(function (Role $role) {
+   ])->then(function (Role $role) {
        // ...
-   });
+   })->done();
 
 Transferring ownership of guild
 ===============================
@@ -90,9 +90,9 @@ reason string              Reason for Audit Log
 
 .. code:: php
 
-   $guild->transferOwnership($member)->done(...);
+   $guild->transferOwnership($member)->then(...)->done();
    // or
-   $guild->transferOwnership('member_id')->done(...);
+   $guild->transferOwnership('member_id')->then(...)->done();
 
 Unbanning a member with a User or user ID
 =========================================
@@ -112,9 +112,9 @@ user_id ``User`` or user ID The user to unban
 
 .. code:: php
 
-   $guild->unban($user)->done(...);
+   $guild->unban($user)->then(...)->done();
    // or
-   $guild->unban('user_id')->done(...);
+   $guild->unban('user_id')->then(...)->done();
 
 Querying the Guild audit log
 ============================
@@ -145,11 +145,11 @@ Parameters
        'action_type' => Entry::CHANNEL_CREATE,
        'before' => $anotherEntry,
        'limit' => 12,
-   ])->done(function (AuditLog $auditLog) {
+   ])->then(function (AuditLog $auditLog) {
        foreach ($auditLog->audit_log_entries as $entry) {
            // $entry->...
        }
-   });
+   })->done();
 
 Creating an Emoji
 =================
@@ -179,6 +179,6 @@ Parameters
    ],
    '/path/to/file.jpg',
    'audit-log reason'
-   )->done(function (Emoji $emoji) {
+   )->then(function (Emoji $emoji) {
        // ...
-   });
+   })->done();
