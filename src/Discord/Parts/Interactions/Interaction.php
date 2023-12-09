@@ -601,7 +601,7 @@ class Interaction extends Part
             ],
         ])->then(function ($response) use ($custom_id, $submit) {
             if ($submit) {
-                $this->discord->once(Event::INTERACTION_CREATE, function (Interaction $interaction) use ($custom_id, $submit) {
+                $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener) {
                     if ($interaction->type == InteractionType::MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
                         $components = Collection::for(RequestComponent::class, 'custom_id');
                         foreach ($interaction->data->components as $actionrow) {
@@ -612,8 +612,10 @@ class Interaction extends Part
                             }
                         }
                         $submit($interaction, $components);
+                        $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
                     }
-                });
+                };
+                $this->discord->on(Event::INTERACTION_CREATE, $listener);
             }
 
             return $response;
