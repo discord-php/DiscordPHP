@@ -824,11 +824,7 @@ class Thread extends Part
      */
     public function getBotPermissions(): ?RolePermission
     {
-        if (! $guild = $this->guild) {
-            return null;
-        }
-
-        return $guild->members->get('id', $this->discord->id)->getPermissions($this);
+        return $this->guild?->members->get('id', $this->discord->id)?->getPermissions($this);
     }
 
     /**

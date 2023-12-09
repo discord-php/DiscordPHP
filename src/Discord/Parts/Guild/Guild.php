@@ -1095,11 +1095,7 @@ class Guild extends Part
      */
     public function getBotPermissions(): ?RolePermission
     {
-        if (! $memberPart = $this->members->get('id', $this->discord->id)) {
-            return null;
-        }
-
-        return $memberPart->getPermissions();
+        return $this->members->get('id', $this->discord->id)?->getPermissions();
     }
 
     /**
