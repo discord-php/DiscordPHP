@@ -369,7 +369,9 @@ class Discord
         $this->logger->debug('Initializing DiscordPHP '.self::VERSION.' (DiscordPHP-Http: '.Http::VERSION.' & Gateway: v'.self::GATEWAY_VERSION.') on PHP '.PHP_VERSION);
 
         $this->cacheConfig = $options['cache'];
-        $this->logger->warning('Attached experimental CacheInterface: '.get_class($this->getCacheConfig()->interface));
+        if ($cacheConfig = $this->getCacheConfig()) {
+            $this->logger->warning('Attached experimental CacheInterface: '.get_class($cacheConfig->interface));
+        }
 
         $connector = new SocketConnector($options['socket_options'], $this->loop);
         $this->wsFactory = new Connector($this->loop, $connector);
@@ -1579,11 +1581,11 @@ class Discord
      *
      * @param string $name Repository class name.
      *
-     * @return CacheConfig
+     * @return ?CacheConfig
      */
     public function getCacheConfig($repository_class = AbstractRepository::class)
     {
-        if (! isset($this->cacheConfig[$repository_class])) {
+        if (! array_key_exists($repository_class, $this->cacheConfig)) {
             $repository_class = AbstractRepository::class;
         }
 

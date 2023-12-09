@@ -15,6 +15,7 @@ use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
 use Discord\Helpers\Collection;
+use Discord\Helpers\LegacyCacheWrapper;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
@@ -90,7 +91,11 @@ abstract class AbstractRepository extends Collection
         $this->http = $discord->getHttpClient();
         $this->factory = $discord->getFactory();
         $this->vars = $vars;
-        $this->cache = new CacheWrapper($discord, $discord->getCacheConfig(static::class), $this->items, $this->class, $this->vars);
+        if ($cacheConfig = $discord->getCacheConfig(static::class)) {
+            $this->cache = new CacheWrapper($discord, $cacheConfig, $this->items, $this->class, $this->vars);
+        } else {
+            $this->cache = new LegacyCacheWrapper($discord, $this->items, $this->class);
+        }
 
         parent::__construct([], $this->discrim, $this->class);
     }
@@ -124,7 +129,7 @@ abstract class AbstractRepository extends Collection
                 } elseif (! ($this->items[$offset] instanceof WeakReference)) {
                     $this->items[$offset] = WeakReference::create($value);
                 }
-                $this->cache->interface->delete($this->cache->getPrefix().$offset);
+                $this->cache->delete($offset);
             }
 
             return $this->cacheFreshen($response);
@@ -412,7 +417,7 @@ abstract class AbstractRepository extends Collection
             return;
         }
 
-        $this->cache->interface->set($this->cache->getPrefix().$offset, $this->cache->serializer($value), $this->cache->config->ttl);
+        $this->cache->set($offset, $value);
         $this->items[$offset] = $value;
     }
 
@@ -431,7 +436,7 @@ abstract class AbstractRepository extends Collection
         if ($item = $this->offsetGet($key)) {
             $default = $item;
             unset($this->items[$key]);
-            $this->cache->interface->delete($this->cache->getPrefix().$key);
+            $this->cache->delete($key);
         }
 
         return $default;
@@ -466,7 +471,7 @@ abstract class AbstractRepository extends Collection
         if (is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
             $this->items[$key] = $item;
-            $this->cache->interface->set($this->cache->getPrefix().$key, $this->cache->serializer($item), $this->cache->config->ttl);
+            $this->cache->set($key, $item);
         }
 
         return $this;

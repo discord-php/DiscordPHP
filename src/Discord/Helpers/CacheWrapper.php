@@ -29,8 +29,7 @@ use function React\Promise\resolve;
  *
  * @since 10.0.0
  *
- * @property-read \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $interface The actual ReactPHP PSR-16 CacheInterface.
- * @property-read CacheConfig                                                 $config    Cache configuration.
+ * @property-read CacheConfig $config Cache configuration.
  */
 class CacheWrapper
 {
@@ -506,8 +505,8 @@ class CacheWrapper
 
     public function __get(string $name)
     {
-        if (in_array($name, ['interface', 'config'])) {
-            return $this->$name;
+        if ($name === 'config') {
+            return $this->config;
         }
     }
 }
