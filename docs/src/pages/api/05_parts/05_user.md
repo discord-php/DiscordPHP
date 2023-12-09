@@ -32,9 +32,9 @@ User represents a user of Discord. The bot can "see" any users that to a guild t
 Gets the private direct message channel for the user. Returns a [Channel](#channel) in a promise.
 
 ```php
-$user->getPrivateChannel()->done(function (Channel $channel) {
+$user->getPrivateChannel()->then(function (Channel $channel) {
     // ...
-});
+})->done();
 ```
 
 ### Send user a message
@@ -50,9 +50,9 @@ Sends a private direct message to the user. Note that your bot account can be su
 | embed   | Embed  | embed to send in the message                  |
 
 ```php
-$user->sendMessage('Hello, world!', false, $embed)->done(function (Message $message) {
+$user->sendMessage('Hello, world!', false, $embed)->then(function (Message $message) {
     // ...
-});
+})->done();
 ```
 
 ### Get avatar URL

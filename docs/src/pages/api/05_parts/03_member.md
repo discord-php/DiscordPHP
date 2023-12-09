@@ -52,9 +52,9 @@ Bans the member from the guild. Returns a [Ban](#ban) part in a promise.
 | reason       | string | reason for the ban                                   |
 
 ```php
-$member->ban(5, 'bad person')->done(function (Ban $ban) {
+$member->ban(5, 'bad person')->then(function (Ban $ban) {
     // ...
-});
+})->done();
 ```
 
 ### Set the nickname of the member
@@ -68,9 +68,9 @@ Sets the nickname of the member. Requires the `MANAGE_NICKNAMES` permission or `
 | nick | string | nickname of the member, null to clear, default null |
 
 ```php
-$member->setNickname('newnick')->done(function () {
+$member->setNickname('newnick')->then(function () {
     // ...
-});
+})->done();
 ```
 
 ### Move member to channel
@@ -84,15 +84,15 @@ Moves the member to another voice channel. Member must already be in a voice cha
 | channel | [Channel](#channel) or string | the channel to move the member to |
 
 ```php
-$member->moveMember($channel)->done(function () {
+$member->moveMember($channel)->then(function () {
     // ...
-});
+})->done();
 
 // or
 
-$member->moveMember('123451231231')->done(function () {
+$member->moveMember('123451231231')->then(function () {
     // ...
-});
+})->done();
 ```
 
 ### Add member to role
@@ -106,15 +106,15 @@ Adds the member to a role. Takes a role or role ID and returns nothing in a prom
 | role | [Role](#role) or string | the role to add the member to |
 
 ```php
-$member->addRole($role)->done(function () {
+$member->addRole($role)->then(function () {
     // ...
-});
+})->done();
 
 // or
 
-$member->addRole('1231231231')->done(function () {
+$member->addRole('1231231231')->then(function () {
     // ...
-});
+})->done();
 ```
 
 ### Remove member from role
@@ -128,15 +128,15 @@ Removes the member from a role. Takes a role or role ID and returns nothing in a
 | role | [Role](#role) or string | the role to remove the member from |
 
 ```php
-$member->removeRole($role)->done(function () {
+$member->removeRole($role)->then(function () {
     // ...
-});
+})->done();
 
 // or
 
-$member->removeRole('1231231231')->done(function () {
+$member->removeRole('1231231231')->then(function () {
     // ...
-});
+})->done();
 ```
 
 ### Timeout member
@@ -150,14 +150,14 @@ Times out the member in the server. Takes a carbon or null to remove. Returns no
 | communication_disabled_until | `Carbon` or `null` | the time for timeout to lasts on |
 
 ```php
-$member->timeoutMember(new Carbon('6 hours'))->done(function () {
+$member->timeoutMember(new Carbon('6 hours'))->then(function () {
     // ...
-});
+})->done();
 
 // to remove
-$member->timeoutMember()->done(function () {
+$member->timeoutMember()->then(function () {
     // ...
-});
+})->done();
 ```
 
 ### Get permissions of member
