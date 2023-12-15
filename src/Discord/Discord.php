@@ -1395,7 +1395,7 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
-                'cache' => new ArrayCache(),
+                'cache' => [AbstractRepository::class => null], // use LegacyCacheWrapper
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
