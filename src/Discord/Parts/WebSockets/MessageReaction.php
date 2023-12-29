@@ -220,7 +220,7 @@ class MessageReaction extends Part
      */
     protected function getEmojiAttribute(): Emoji
     {
-        return $this->factory->part(Emoji::class, (array) $this->attributes['emoji'], true);
+        return $this->factory->part(Emoji::class, (array) ($this->attributes['emoji'] ?? []), true);
     }
 
     /**
@@ -261,7 +261,7 @@ class MessageReaction extends Part
                 break;
             case Message::REACT_DELETE_ID:
             default:
-                if (! $userid = $this->user_id ?? $this->user->id) {
+                if (!$userid = $this->user_id ?? $this->user->id) {
                     return reject(new \RuntimeException('This reaction has no user id'));
                 }
                 $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->message_id, $emoji, $userid);
