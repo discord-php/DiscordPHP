@@ -386,7 +386,7 @@ class Interaction extends Part
         }
 
         if ($ephemeral) {
-            $builder->_setFlags(Message::FLAG_EPHEMERAL);
+            $builder->setFlags(Message::FLAG_EPHEMERAL);
         }
 
         return (function () use ($builder): ExtendedPromiseInterface {
@@ -421,7 +421,7 @@ class Interaction extends Part
         }
 
         if ($ephemeral) {
-            $builder->_setFlags(Message::FLAG_EPHEMERAL);
+            $builder->setFlags(Message::FLAG_EPHEMERAL);
         }
 
         return $this->respond([
