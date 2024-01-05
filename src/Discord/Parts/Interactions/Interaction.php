@@ -266,10 +266,13 @@ class Interaction extends Part
             return reject(new \LogicException('You can only acknowledge application command, message component, or modal submit interactions.'));
         }
 
-        return $this->respond([
-            'type' => InteractionResponseType::DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-            'data' => $ephemeral ? ['flags' => 64] : [],
-        ]);
+        $payload['type'] = InteractionResponseType::DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE;
+
+        if ($ephemeral) {
+            $payload['data'] = ['flags' => 64];
+        }
+
+        return $this->respond($payload);
     }
 
     /**
