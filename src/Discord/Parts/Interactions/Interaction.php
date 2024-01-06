@@ -268,7 +268,7 @@ class Interaction extends Part
 
         return $this->respond([
             'type' => InteractionResponseType::DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-            'data' => $ephemeral ? ['flags' => 64] : [],
+            'data' => $ephemeral ? ['flags' => 64] : null,
         ]);
     }
 
