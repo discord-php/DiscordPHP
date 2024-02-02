@@ -414,10 +414,14 @@ class Interaction extends Part
      *
      * @return ExtendedPromiseInterface
      */
-    public function respondWithMessage(MessageBuilder $builder, bool $ephemeral = false): ExtendedPromiseInterface
+    public function respondWithMessage(string|MessageBuilder $builder, bool $ephemeral = false): ExtendedPromiseInterface
     {
         if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
             return reject(new \LogicException('You can only acknowledge application command, message component, or modal submit interactions.'));
+        }
+
+        if (is_string($builder)) {
+            $builder = MessageBuilder::new()->setContent($builder);
         }
 
         if ($ephemeral) {
