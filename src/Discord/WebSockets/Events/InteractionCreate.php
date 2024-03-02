@@ -11,7 +11,6 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\InteractionType;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Repository\Guild\MemberRepository;
@@ -62,12 +61,12 @@ class InteractionCreate extends Event
             $this->cacheUser($data->user);
         }
 
-        if ($data->type == InteractionType::APPLICATION_COMMAND) {
+        if ($data->type == Interaction::TYPE_APPLICATION_COMMAND) {
             $command = $data->data;
             if (isset($this->discord->application_commands[$command->name])) {
                 $this->discord->application_commands[$command->name]->execute($command->options ?? [], $interaction);
             }
-        } elseif ($data->type == InteractionType::APPLICATION_COMMAND_AUTOCOMPLETE) {
+        } elseif ($data->type == Interaction::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE) {
             $command = $data->data;
             if (isset($this->discord->application_commands[$command->name])) {
                 $checkCommand = function ($command, $options) use (&$checkCommand, $interaction) {
