@@ -1225,7 +1225,7 @@ class Guild extends Part
         $options = $resolver->resolve($options);
 
         $botperms = $this->getBotPermissions();
-        if ($botperms && ! $botperms->kick_members) {
+        if ($botperms && (! $botperms->kick_members || ! $botperms->manage_guild)) {
             return reject(new NoPermissionsException("You do not have permission to get prune count in the guild {$this->id}."));
         }
 
@@ -1283,7 +1283,7 @@ class Guild extends Part
         $options = $resolver->resolve($options);
 
         $botperms = $this->getBotPermissions();
-        if ($botperms && ! $botperms->kick_members) {
+        if ($botperms && (! $botperms->kick_members || ! $botperms->manage_guild)) {
             return reject(new NoPermissionsException("You do not have permission to prune members in the guild {$this->id}."));
         }
 
