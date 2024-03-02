@@ -500,7 +500,11 @@ class Discord
         $this->on(Event::GUILD_CREATE, $onGuildCreate);
 
         $onGuildDelete = function ($guild) use (&$unavailable, $guildLoad) {
-            if ($guild->unavailable) {
+            if (! isset($guild->unavailable)) {
+                // Rare Undocumented case, $guild->unavailable is missing but actually unavailable (perhaps kicked then unavailable/deleted)
+                $this->logger->debug('guild deleted', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
+                unset($unavailable[$guild->id]);
+            } elseif ($guild->unavailable) {
                 $this->logger->debug('guild unavailable', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
                 unset($unavailable[$guild->id]);
             }
