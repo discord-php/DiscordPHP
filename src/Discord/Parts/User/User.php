@@ -289,6 +289,20 @@ class User extends Part
     }
 
     /**
+     * Returns the users entitlements for this application.
+     *
+     * @link https://discord.com/developers/docs/monetization/entitlements#list-entitlements
+     *
+     * @return Collection
+     */
+    public function getMyApplicationEntitlement(): Collection
+    {
+        return $this->discord->application->entitlements->filter(function ($entitlement) {
+            return $entitlement->user_id == $this->id;
+        });
+    }
+
+    /**
      * Returns a timestamp for when a user's account was created.
      *
      * @return float

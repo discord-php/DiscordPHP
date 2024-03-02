@@ -113,6 +113,11 @@ abstract class Event
     public const MESSAGE_REACTION_REMOVE_ALL = 'MESSAGE_REACTION_REMOVE_ALL';
     public const MESSAGE_REACTION_REMOVE_EMOJI = 'MESSAGE_REACTION_REMOVE_EMOJI';
 
+    // Entitlements
+    public const ENTITLEMENT_CREATE = 'ENTITLEMENT_CREATE';
+    public const ENTITLEMENT_UPDATE = 'ENTITLEMENT_UPDATE';
+    public const ENTITLEMENT_DELETE = 'ENTITLEMENT_DELETE';
+
     /**
      * The Discord client instance.
      *

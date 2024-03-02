@@ -1587,6 +1587,20 @@ class Guild extends Part
     }
 
     /**
+     * Returns the guilds entitlements for this application.
+     *
+     * @link https://discord.com/developers/docs/monetization/entitlements#list-entitlements
+     *
+     * @return Collection
+     */
+    public function getMyApplicationEntitlement(): Collection
+    {
+        return $this->discord->application->entitlements->filter(function ($entitlement) {
+            return $entitlement->guild_id == $this->id;
+        });
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-json-params
