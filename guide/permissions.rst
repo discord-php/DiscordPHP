@@ -81,6 +81,7 @@ Voice Channel Permissions
 -  ``move_members``
 -  ``use_vad``
 -  ``manage_events``
+-  ``create_events``
 -  ``use_embedded_activities`` was ``start_embedded_activities``
 
 Stage Instance Channel Permissions
@@ -96,6 +97,7 @@ Stage Instance Channel Permissions
 -  ``move_members``
 -  ``request_to_speak``
 -  ``manage_events``
+-  ``create_events``
 
 Role Permissions
 ================

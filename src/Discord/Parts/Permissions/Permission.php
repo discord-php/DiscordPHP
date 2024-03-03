@@ -83,6 +83,7 @@ abstract class Permission extends Part
         'manage_events' => 33,
         'use_embedded_activities' => 39,
         'use_soundboard' => 42,
+        'create_events' => 44,
         'use_external_sounds' => 45,
     ];
 
@@ -101,6 +102,7 @@ abstract class Permission extends Part
         'move_members' => 24,
         'request_to_speak' => 32,
         'manage_events' => 33,
+        'create_events' => 44,
     ];
 
     /**

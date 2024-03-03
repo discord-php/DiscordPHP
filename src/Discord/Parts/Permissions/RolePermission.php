@@ -44,6 +44,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $send_messages_in_threads
  * @property bool $use_embedded_activities
  * @property bool $use_soundboard
+ * @property bool $create_events
  * @property bool $use_external_sounds
  */
 class RolePermission extends Permission
