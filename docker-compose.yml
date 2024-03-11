@@ -1,0 +1,8 @@
+services:
+  bot:
+    build: .
+    volumes:
+     - .:/root/discord-php
+volumes:
+  bot:
+    driver: local
