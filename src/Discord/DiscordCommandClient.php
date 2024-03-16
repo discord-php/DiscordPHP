@@ -14,6 +14,7 @@ namespace Discord;
 use Discord\CommandClient\Command;
 use Discord\Parts\Embed\Embed;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use React\Promise\PromiseInterface;
 
 /**
  * Provides an easy way to have triggerable message based commands.
@@ -96,7 +97,13 @@ class DiscordCommandClient extends Discord
                     $result = $command->handle($message, $args);
 
                     if (is_string($result)) {
-                        $message->reply($result);
+                        $result = $message->reply($result);
+                    }
+
+                    if ($result instanceof PromiseInterface) {
+                        $result->then(null, function (\Throwable $e) {
+                            $this->logger->warning($e->getTraceAsString());
+                        });
                     }
                 }
             });
