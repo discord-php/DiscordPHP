@@ -262,6 +262,11 @@ class Channel extends Part
         return $recipients;
     }
 
+
+
+
+
+
     /**
      * Returns the guild attribute.
      *
@@ -348,6 +353,25 @@ class Channel extends Part
         ], $this->created);
 
         return $this->setOverwrite($part, $overwrite, $reason);
+    }
+
+
+    /**
+     * Rename channel
+     *
+     * @param string $name
+     * @return ExtendedPromiseInterface
+     */
+    public function rename(string $name): ExtendedPromiseInterface
+    {
+        if ($this->name === $name) {
+            return reject(new InvalidOverwriteException('The name is already set in the channel.'));
+        }
+
+        $this->name = $name;
+        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL, $this->id),[
+            'name' => $this->name
+        ]);
     }
 
     /**
