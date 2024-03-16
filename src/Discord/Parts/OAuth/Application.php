@@ -31,6 +31,7 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property string[]      $rpc_origins                       An array of RPC origin URLs.
  * @property bool          $bot_public                        When false only app owner can join the app's bot to guilds.
  * @property bool          $bot_require_code_grant            When true the app's bot will only join upon completion of the full oauth2 code grant flow.
+ * @property User|null     $bot                               the partial user object for the bot user associated with the application.
  * @property string|null   $terms_of_service_url              The url of the app's terms of service.
  * @property string|null   $privacy_policy_url                The url of the app's privacy policy
  * @property User|null     $owner                             The owner of the OAuth application.
@@ -43,10 +44,12 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property string|null   $cover_image_hash                  The application's default rich presence invite cover image hash.
  * @property int           $flags                             The application's public flags.
  * @property int|null      $approximate_guild_count           The application's approximate count of the app's guild membership.
+ * @property string[]|null $redirect_uris                     Array of redirect URIs for the application.
+ * @property string|null   $interactions_endpoint_url         The interactions endpoint URL for the application.
+ * @property string|null   $role_connections_verification_url The application's role connection verification entry point, which when configured will render the app as a verification method in the guild role verification configuration.
  * @property string[]|null $tags                              Up to 5 tags describing the content and functionality of the application.
  * @property object|null   $install_params                    Settings for the application's default in-app authorization link, if enabled.
  * @property string|null   $custom_install_url                The application's default custom authorization link, if enabled.
- * @property string|null   $role_connections_verification_url The application's role connection verification entry point, which when configured will render the app as a verification method in the guild role verification configuration.
  *
  * @property string $invite_url The invite URL to invite the bot to a guild.
  *
@@ -58,28 +61,31 @@ class Application extends Part
      * {@inheritDoc}
      */
     protected $fillable = [
-        'bot_public',
-        'bot_require_code_grant',
-        'cover_image',
-        'description',
-        'guild_id',
-        'icon',
         'id',
         'name',
-        'owner',
-        'primary_sku_id',
-        'slug',
-        'team',
-        'verify_key',
+        'icon',
+        'description',
         'rpc_origins',
+        'bot_public',
+        'bot_require_code_grant',
+        'bot',
         'terms_of_service_url',
         'privacy_policy_url',
+        'owner',
+        'verify_key',
+        'team',
+        'guild_id',
+        'primary_sku_id',
+        'slug',
+        'cover_image',
         'flags',
+        'approximate_guild_count',
+        'redirect_uris',
+        'interactions_endpoint_url',
+        'role_connections_verification_url',
         'tags',
         'install_params',
         'custom_install_url',
-        'role_connections_verification_url',
-        'approximate_guild_count',
     ];
 
     public const APPLICATION_AUTO_MODERATION_RULE_CREATE_BADGE = (1 << 6);
