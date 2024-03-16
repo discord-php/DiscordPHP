@@ -771,10 +771,9 @@ class Discord
         /** @var Event */
         $handler = new $hData['class']($this);
 
-        $deferred = new Deferred();
-        $deferred->promise()->done(function ($d) use ($data, $hData) {
-            if (is_array($d) && count($d) == 2) {
-                list($new, $old) = $d;
+        $onResolve = function ($d) use ($data, $hData) {
+            if (is_array($d) && count($d) === 2) {
+                [$new, $old] = $d;
             } else {
                 $new = $d;
                 $old = null;
@@ -786,34 +785,36 @@ class Discord
                 $this->emit($alternative, [$d, $this]);
             }
 
-            if ($data->t == Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
+            if ($data->t === Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
                 $this->emit('mention', [$new, $this, $old]);
             }
-        }, function ($e) use ($data) {
+        };
+
+        $onReject = function ($e) use ($data) {
             if ($e instanceof \Error) {
                 throw $e;
-            } elseif ($e instanceof \Exception) {
+            }
+
+            if ($e instanceof \Exception) {
                 $this->logger->error('exception while trying to handle dispatch packet', ['packet' => $data->t, 'exception' => $e]);
             } else {
                 $this->logger->warning('rejection while trying to handle dispatch packet', ['packet' => $data->t, 'rejection' => $e]);
             }
-        });
+        };
 
         $parse = [
             Event::GUILD_CREATE,
             Event::GUILD_DELETE,
         ];
-
-        if (! $this->emittedInit && (! in_array($data->t, $parse))) {
-            $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
-                /** @var ExtendedPromiseInterface */
+        
+        if (! $this->emittedInit && ! in_array($data->t, $parse)) {
+            $this->unparsedPackets[] = function () use (&$handler, &$onResolve, &$onReject, &$data) {
                 $promise = coroutine([$handler, 'handle'], $data->d);
-                $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
+                $promise->done(&$onResolve, &$onReject);
             };
         } else {
-            /** @var ExtendedPromiseInterface */
             $promise = coroutine([$handler, 'handle'], $data->d);
-            $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
+            $promise->done($onResolve, $onReject);
         }
     }
 
