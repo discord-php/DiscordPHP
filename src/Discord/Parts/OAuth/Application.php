@@ -31,7 +31,7 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property string[]      $rpc_origins                       An array of RPC origin URLs.
  * @property bool          $bot_public                        When false only app owner can join the app's bot to guilds.
  * @property bool          $bot_require_code_grant            When true the app's bot will only join upon completion of the full oauth2 code grant flow.
- * @property User|null     $bot                               the partial user object for the bot user associated with the application.
+ * @property User|null     $bot                               The partial user object for the bot user associated with the application.
  * @property string|null   $terms_of_service_url              The url of the app's terms of service.
  * @property string|null   $privacy_policy_url                The url of the app's privacy policy
  * @property User|null     $owner                             The owner of the OAuth application.
@@ -49,6 +49,8 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property string|null   $role_connections_verification_url The application's role connection verification entry point, which when configured will render the app as a verification method in the guild role verification configuration.
  * @property string[]|null $tags                              Up to 5 tags describing the content and functionality of the application.
  * @property object|null   $install_params                    Settings for the application's default in-app authorization link, if enabled.
+ * @property int[]|null    $integration_types
+ * @property object[]|null $integration_types_config          Default scopes and permissions for each supported installation context. Value for each key is an integration type configuration object.
  * @property string|null   $custom_install_url                The application's default custom authorization link, if enabled.
  *
  * @property string $invite_url The invite URL to invite the bot to a guild.
@@ -65,27 +67,44 @@ class Application extends Part
         'name',
         'icon',
         'description',
-        'rpc_origins',
+        // 'type',
+        'bot',
+        // 'is_monetized',
+        'guild_id',
         'bot_public',
         'bot_require_code_grant',
-        'bot',
-        'terms_of_service_url',
-        'privacy_policy_url',
-        'owner',
         'verify_key',
-        'team',
-        'guild_id',
-        'primary_sku_id',
-        'slug',
-        'cover_image',
         'flags',
-        'approximate_guild_count',
+        // 'hook',
         'redirect_uris',
         'interactions_endpoint_url',
         'role_connections_verification_url',
-        'tags',
-        'install_params',
+        'owner',
+        'approximate_guild_count',
+        // 'interactions_event_types',
+        // 'interactions_version',
+        // 'explicit_content_filter',
+        // 'rpc_application_state',
+        // 'store_application_state',
+        // 'verification_state',
+        // 'integration_public',
+        // 'integration_require_code_grant',
+        // 'discoverability_state',
+        // 'discovery_eligibility_flags',
+        // 'monetization_state',
+        // 'monetization_eligibility_flags',
+        'team',
+        'integration_types',
+        'integration_types_config',
+        'cover_image',
+        'primary_sku_id',
+        'slug',
+        'rpc_origins',
+        'terms_of_service_url',
+        'privacy_policy_url',
         'custom_install_url',
+        'install_params',
+        'tags',
     ];
 
     public const APPLICATION_AUTO_MODERATION_RULE_CREATE_BADGE = (1 << 6);
@@ -99,6 +118,8 @@ class Application extends Part
     public const GATEWAY_MESSAGE_CONTENT_LIMITED = (1 << 19);
     public const APPLICATION_COMMAND_BADGE = (1 << 23);
     public const ACTIVE = (1 << 24);
+    public const INTEGRATION_TYPE_GUILD_INSTALL = 0;
+    public const INTEGRATION_TYPE_USER_INSTALL = 1;
 
     /**
      * {@inheritDoc}
@@ -137,6 +158,24 @@ class Application extends Part
     protected function getIconHashAttribute(): ?string
     {
         return $this->attributes['icon'];
+    }
+
+    /**
+     * Returns the bot user of the application.
+     *
+     * @return User|null The partial user object for the bot user associated with the application.
+     */
+    protected function getBotAttribute(): ?User
+    {
+        if (! isset($this->attributes['bot'])) {
+            return null;
+        }
+
+        if ($owner = $this->discord->users->get('id', $this->attributes['bot']->id)) {
+            return $owner;
+        }
+
+        return $this->factory->part(User::class, (array) $this->attributes['bot'], true);
     }
 
     /**
