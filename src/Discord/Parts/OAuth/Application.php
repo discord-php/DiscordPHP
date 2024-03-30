@@ -167,12 +167,12 @@ class Application extends Part
      */
     protected function getBotAttribute(): ?User
     {
-        if (! isset($this->attributes['bot'])) {
+        if (empty($this->attributes['bot'])) {
             return null;
         }
 
-        if ($owner = $this->discord->users->get('id', $this->attributes['bot']->id)) {
-            return $owner;
+        if ($bot = $this->discord->users->get('id', $this->attributes['bot']->id)) {
+            return $bot;
         }
 
         return $this->factory->part(User::class, (array) $this->attributes['bot'], true);
@@ -185,7 +185,7 @@ class Application extends Part
      */
     protected function getOwnerAttribute(): ?User
     {
-        if (! isset($this->attributes['owner'])) {
+        if (empty($this->attributes['owner'])) {
             return null;
         }
 
