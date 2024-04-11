@@ -304,7 +304,7 @@ class TextInput extends Component
     }
 
     /**
-     * Returns wether the text input is disabled.
+     * Returns whether the text input is disabled.
      *
      * @return bool|null
      */

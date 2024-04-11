@@ -124,7 +124,7 @@ class Op
     public const CLOSE_SESSION_TIMEOUT = 4009;
     /** Invalid shard. */
     public const CLOSE_INVALID_SHARD = 4010;
-    /** Sharding requred. */
+    /** Sharding required. */
     public const CLOSE_SHARDING_REQUIRED = 4011;
     /** Invalid API version. */
     public const CLOSE_INVALID_VERSION = 4012;

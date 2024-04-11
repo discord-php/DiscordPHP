@@ -249,7 +249,7 @@ class Channel extends Part
     /**
      * Gets the recipients attribute.
      *
-     * @return Collection A collection of recepients.
+     * @return Collection A collection of recipients.
      */
     protected function getRecipientsAttribute(): Collection
     {
@@ -909,7 +909,7 @@ class Channel extends Part
     /**
      * Gets the permission overwrites attribute.
      *
-     * @param ?array $overwrites
+     * @return ?array $overwrites
      */
     protected function getPermissionOverwritesAttribute(): ?array
     {
@@ -1372,7 +1372,7 @@ class Channel extends Part
     /**
      * Returns if channel type is voice based.
      *
-     * @return bool Wether the channel is possible for voice.
+     * @return bool Whether the channel is possible for voice.
      */
     public function isVoiceBased()
     {

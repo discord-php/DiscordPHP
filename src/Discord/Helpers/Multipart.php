@@ -21,7 +21,7 @@ namespace Discord\Helpers;
 class Multipart
 {
     /**
-     * The boundary seperating multipart sections.
+     * The boundary separating multipart sections.
      */
     private const BOUNDARY = '----DiscordPHPSendFileBoundary';
 
@@ -43,6 +43,7 @@ class Multipart
      * Multipart constructor.
      *
      * @param array $fields
+     * @param string $boundary Defaults to DiscordPHPSendFileBoundary
      */
     public function __construct(array $fields = [], string $boundary = self::BOUNDARY)
     {

@@ -159,7 +159,7 @@ class Invite extends Part
     /**
      * Returns the channel id attribute.
      *
-     * @return string The Channel ID that you have been invited to.
+     * @return ?string The Channel ID that you have been invited to.
      */
     protected function getChannelIdAttribute(): ?string
     {

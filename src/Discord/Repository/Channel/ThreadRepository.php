@@ -153,6 +153,8 @@ class ThreadRepository extends AbstractRepository
      * Handles a response from one of the thread pagination endpoints.
      *
      * @param object $response
+     *
+     * @return Collection<Thread>
      */
     private function handleThreadPaginationResponse(object $response)
     {

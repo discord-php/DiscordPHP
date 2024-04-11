@@ -46,9 +46,7 @@ class IntegrationUpdate extends Event
             $integrationPart = $this->factory->part(Integration::class, (array) $data, true);
         }
 
-        if (isset($guild)) {
-            $guild->integrations->set($data->id, $integrationPart);
-        }
+        $guild?->integrations->set($data->id, $integrationPart);
 
         if (isset($data->user)) {
             $this->cacheUser($data->user);

@@ -331,7 +331,7 @@ abstract class SelectMenu extends Component
     }
 
     /**
-     * Returns wether the select menu is disabled.
+     * Returns whether the select menu is disabled.
      *
      * @return bool|null
      */

@@ -29,7 +29,7 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     /**
      * The collection discriminator.
      *
-     * @var string
+     * @var ?string
      */
     protected $discrim;
 
@@ -50,8 +50,8 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     /**
      * Create a new collection.
      *
-     * @param mixed       $items
-     * @param string      $discrim
+     * @param array       $items
+     * @param ?string     $discrim
      * @param string|null $class
      */
     public function __construct(array $items = [], ?string $discrim = 'id', ?string $class = null)
@@ -64,9 +64,9 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     /**
      * Creates a collection from an array.
      *
-     * @param array  $items
-     * @param string $discrim
-     * @param string $class
+     * @param array       $items
+     * @param ?string     $discrim
+     * @param string|null $class
      *
      * @return static
      */
@@ -78,8 +78,8 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     /**
      * Creates a collection for a class.
      *
-     * @param string $class
-     * @param string $discrim
+     * @param string  $class
+     * @param ?string $discrim
      *
      * @return static
      */
@@ -405,7 +405,7 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     /**
      * Unsets an index from the collection.
      *
-     * @param mixed offset
+     * @param mixed $offset
      */
     public function offsetUnset($offset): void
     {

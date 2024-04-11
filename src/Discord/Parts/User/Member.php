@@ -112,7 +112,7 @@ class Member extends Part
     public function updateFromPresence(PresenceUpdate $presence): PresenceUpdate
     {
         $rawPresence = $presence->getRawAttributes();
-        $oldPresence = $this->factory->part(PresenceUpdate::class, (array) $this->attributes, true);
+        $oldPresence = $this->factory->part(PresenceUpdate::class, $this->attributes, true);
 
         $this->attributes = array_merge($this->attributes, $rawPresence);
 
@@ -321,7 +321,7 @@ class Member extends Part
 
         return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
             ->then(function () use ($role) {
-                if ($removeRole = array_search($role, $this->attributes['roles']) !== false) {
+                if (($removeRole = array_search($role, $this->attributes['roles'])) !== false) {
                     unset($this->attributes['roles'][$removeRole]);
                 }
             });
@@ -536,7 +536,7 @@ class Member extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null], $headers)
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => $communication_disabled_until?->toIso8601ZuluString()], $headers)
             ->then(function ($response) {
                 $this->attributes['communication_disabled_until'] = $response->communication_disabled_until;
 
@@ -600,7 +600,7 @@ class Member extends Part
      * Gets the game attribute.
      * Polyfill for the first activity.
      *
-     * @return Activity
+     * @return ?Activity
      */
     protected function getGameAttribute(): ?Activity
     {

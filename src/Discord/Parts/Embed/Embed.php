@@ -168,7 +168,7 @@ class Embed extends Part
     }
 
     /**
-     * Sest the color of this embed.
+     * Sets the color of this embed.
      *
      * @param mixed $color
      *
@@ -373,7 +373,7 @@ class Embed extends Part
         if ($iconurl instanceof Attachment) {
             $iconurl = 'attachment://'.$iconurl->filename;
         }
-        
+
         $this->ensureValidUrl($iconurl);
 
         $this->ensureValidUrl($url, ['http', 'https']);
@@ -412,14 +412,14 @@ class Embed extends Part
         if ($iconurl instanceof Attachment) {
             $iconurl = 'attachment://'.$iconurl->filename;
         }
-        
+
         $this->ensureValidUrl($iconurl);
 
         $this->footer = [
             'text' => $text,
             'icon_url' => $iconurl,
         ];
-        
+
         return $this;
     }
 
@@ -437,7 +437,7 @@ class Embed extends Part
         if ($url instanceof Attachment) {
             $url = 'attachment://'.$url->filename;
         }
-        
+
         $this->ensureValidUrl($url);
 
         $this->image = ['url' => $url];
@@ -463,7 +463,7 @@ class Embed extends Part
         $this->ensureValidUrl($url);
 
         $this->thumbnail = ['url' => $url];
-        
+
         return $this;
     }
 
@@ -501,9 +501,11 @@ class Embed extends Part
      * Ensures a url is valid for use in embeds.
      *
      * @param ?string $url
-     *
+     * @param array $allowed
      *
      * @throws \DomainException
+     *
+     * @return void
      */
     protected function ensureValidUrl(?string $url = null, array $allowed = ['http', 'https', 'attachment'])
     {

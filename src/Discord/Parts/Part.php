@@ -443,6 +443,8 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * To be used with fields marked "optional?" from the API.
      *
+     * @param array $attributes Names of optional attribute
+     *
      * @return array
      */
     protected function makeOptionalAttributes(array $attributes): array

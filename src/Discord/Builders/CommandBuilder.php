@@ -41,7 +41,7 @@ class CommandBuilder implements JsonSerializable
     protected string $name;
 
     /**
-     * Description of the command. should be emtpy if the type is not CHAT_INPUT.
+     * Description of the command. should be empty if the type is not CHAT_INPUT.
      *
      * @var string
      */

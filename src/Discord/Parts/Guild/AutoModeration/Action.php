@@ -58,10 +58,8 @@ class Action extends Part
      */
     public function getCreatableAttributes(): array
     {
-        $attr = [
+        return [
             'type' => $this->type,
         ] + $this->makeOptionalAttributes(['metadata']);
-
-        return $attr;
     }
 }

@@ -66,7 +66,7 @@ class Command
     /**
      * Help visibility.
      *
-     * @var bool wether visible in help or not.
+     * @var bool whether visible in help or not.
      */
     protected $showHelp;
 
@@ -138,7 +138,7 @@ class Command
      * Attempts to get a sub command.
      *
      * @param string $command The command to get.
-     * @param bool   $aliases WHether to search aliases as well.
+     * @param bool   $aliases Whether to search aliases as well.
      *
      * @return Command|null
      */
