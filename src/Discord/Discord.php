@@ -15,43 +15,41 @@ use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\CacheConfig;
+use Discord\Helpers\Deferred;
+use Discord\Helpers\RegisteredCommand;
+use Discord\Http\Drivers\React;
+use Discord\Http\Endpoint;
 use Discord\Http\Http;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
-use Discord\Repository\AbstractRepository;
-use Discord\Repository\GuildRepository;
-use Discord\Repository\PrivateChannelRepository;
-use Discord\Repository\UserRepository;
-use Discord\Parts\Channel\Channel;
 use Discord\Parts\User\Activity;
 use Discord\Parts\User\Client;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Repository\AbstractRepository;
+use Discord\Repository\GuildRepository;
+use Discord\Repository\PrivateChannelRepository;
+use Discord\Repository\UserRepository;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildCreate;
 use Discord\WebSockets\Handlers;
 use Discord\WebSockets\Intents;
 use Discord\WebSockets\Op;
+use Evenement\EventEmitterTrait;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
+use Psr\Log\LoggerInterface;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
-use Discord\Helpers\Deferred;
-use Discord\Helpers\RegisteredCommand;
-use Discord\Http\Drivers\React;
-use Discord\Http\Endpoint;
-use Evenement\EventEmitterTrait;
-use Monolog\Formatter\LineFormatter;
-use Psr\Log\LoggerInterface;
-use React\Cache\ArrayCache;
 use React\Promise\ExtendedPromiseInterface;
-use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -1068,7 +1066,7 @@ class Discord
         $this->heartbeatTimer = $this->loop->addPeriodicTimer($interval, [$this, 'heartbeat']);
         $this->heartbeat();
 
-        $this->logger->info('heartbeat timer initilized', ['interval' => $interval * 1000]);
+        $this->logger->info('heartbeat timer initialized', ['interval' => $interval * 1000]);
     }
 
     /**
@@ -1213,7 +1211,7 @@ class Discord
      * @since 10.0.0 Removed argument $check that has no effect (it is always checked)
      * @since 4.0.0
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null): ExtendedPromiseInterface
     {
@@ -1272,7 +1270,7 @@ class Discord
                 $deferred->resolve($vc);
             });
             $vc->once('error', function ($e) use ($deferred, $logger) {
-                $logger->error('error initilizing voice client', ['e' => $e->getMessage()]);
+                $logger->error('error initializing voice client', ['e' => $e->getMessage()]);
                 $deferred->reject($e);
             });
             $vc->once('close', function () use ($channel, $logger) {
@@ -1341,7 +1339,7 @@ class Discord
         if (null === $gateway) {
             $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
                 if ($response->shards > 1) {
-                    $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interrested in assisting us with sharding support development.');
+                    $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interested in assisting us with sharding support development.');
                 }
                 $buildParams($this->resume_gateway_url ?? $response->url, $response->session_start_limit);
             }, function ($e) use ($buildParams) {
@@ -1583,7 +1581,7 @@ class Discord
     /**
      * Gets the cache configuration.
      *
-     * @param string $name Repository class name.
+     * @param string $repository_class Repository class name.
      *
      * @return ?CacheConfig
      */
@@ -1656,7 +1654,7 @@ class Discord
     }
 
     /**
-     * Add listerner for incoming application command from interaction.
+     * Add listener for incoming application command from interaction.
      *
      * @param string|array  $name
      * @param callable      $callback
@@ -1694,7 +1692,7 @@ class Discord
      * Handles dynamic calls to the client.
      *
      * @param string $name   Function name.
-     * @param array  $params Function paramaters.
+     * @param array  $params Function parameters.
      *
      * @return mixed
      */

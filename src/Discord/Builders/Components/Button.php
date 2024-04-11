@@ -303,9 +303,9 @@ class Button extends Component
      *
      * The button listener will not persist when the bot restarts.
      *
-     * @param callable $callback Callback to call when the button is pressed. Will be called with the interaction object.
-     * @param Discord  $discord  Discord client.
-     * @param bool     $oneOff   Whether the listener should be removed after the button is pressed for the first time.
+     * @param ?callable $callback Callback to call when the button is pressed. Will be called with the interaction object.
+     * @param Discord   $discord  Discord client.
+     * @param bool      $oneOff   Whether the listener should be removed after the button is pressed for the first time.
      *
      * @throws \LogicException
      *

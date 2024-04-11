@@ -67,7 +67,6 @@ class BanRepository extends AbstractRepository
      */
     public function ban($user, array $options = [], ?string $reason = null): ExtendedPromiseInterface
     {
-        $content = [];
         $headers = [];
 
         if ($user instanceof Member) {

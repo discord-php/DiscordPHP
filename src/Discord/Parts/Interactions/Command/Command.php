@@ -78,7 +78,7 @@ class Command extends Part
     /**
      * Gets the options attribute.
      *
-     * @return Collection|Options[]|null A collection of options.
+     * @return Collection|Option[]|null A collection of options.
      */
     protected function getOptionsAttribute(): ?Collection
     {

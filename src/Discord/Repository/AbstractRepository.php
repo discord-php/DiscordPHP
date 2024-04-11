@@ -231,7 +231,7 @@ abstract class AbstractRepository extends Collection
     public function delete($part, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! isset($part)) {
-            return reject(new \Exception('You cannot delete a non-existant part.'));
+            return reject(new \Exception('You cannot delete a non-existent part.'));
         }
 
         if (! ($part instanceof Part)) {
@@ -239,7 +239,7 @@ abstract class AbstractRepository extends Collection
         }
 
         if (! $part->created) {
-            return reject(new \Exception('You cannot delete a non-existant part.'));
+            return reject(new \Exception('You cannot delete a non-existent part.'));
         }
 
         if (! isset($this->endpoints['delete'])) {
@@ -696,7 +696,7 @@ abstract class AbstractRepository extends Collection
      *
      * @deprecated 10.0.0 Use async `$repository->cache->delete()`
      *
-     * @param string|int offset
+     * @param string|int $offset
      */
     public function offsetUnset($offset): void
     {

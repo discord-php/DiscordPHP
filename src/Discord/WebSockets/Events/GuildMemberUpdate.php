@@ -46,9 +46,7 @@ class GuildMemberUpdate extends Event
             $memberPart = $this->factory->part(Member::class, (array) $data, true);
         }
 
-        if (isset($guild)) {
-            $guild->members->set($data->user->id, $memberPart);
-        }
+        $guild?->members->set($data->user->id, $memberPart);
 
         $this->cacheUser($data->user);
 

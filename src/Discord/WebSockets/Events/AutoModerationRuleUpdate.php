@@ -46,9 +46,7 @@ class AutoModerationRuleUpdate extends Event
             $rulePart = $this->factory->part(Rule::class, (array) $data, true);
         }
 
-        if (isset($guild)) {
-            $guild->auto_moderation_rules->set($data->id, $rulePart);
-        }
+        $guild?->auto_moderation_rules->set($data->id, $rulePart);
 
         return [$rulePart, $oldRule];
     }

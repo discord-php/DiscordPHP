@@ -62,9 +62,7 @@ class MessageDelete extends Event
             }
         }
 
-        if ($messagePart) {
-            $messagePart->reactions->cache->clear();
-        }
+        $messagePart?->reactions->cache->clear();
 
         return $messagePart ?? $data;
     }
