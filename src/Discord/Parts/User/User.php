@@ -19,6 +19,7 @@ use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
 use React\Promise\ExtendedPromiseInterface;
 
+use Stringable;
 use function React\Promise\resolve;
 
 /**
@@ -52,7 +53,7 @@ use function React\Promise\resolve;
  *
  * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class User extends Part implements \Stringable
+class User extends Part implements Stringable
 {
     public const FLAG_DISCORD_EMPLOYEE = (1 << 0);
     public const FLAG_DISCORD_PARTNER = (1 << 1);

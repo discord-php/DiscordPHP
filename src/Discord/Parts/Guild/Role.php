@@ -13,6 +13,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
+use Stringable;
 
 /**
  * A role defines permissions for the guild. Members can be added to the role.
@@ -38,7 +39,7 @@ use Discord\Parts\Permissions\RolePermission;
  * @property      string|null $guild_id The unique identifier of the guild that the role belongs to.
  * @property-read Guild|null  $guild    The guild that the role belongs to.
  */
-class Role extends Part implements \Stringable
+class Role extends Part implements Stringable
 {
     /**
      * {@inheritDoc}

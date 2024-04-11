@@ -14,6 +14,7 @@ namespace Discord\Parts\Guild;
 use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Stringable;
 
 /**
  * An emoji object represents a custom emoji.
@@ -34,7 +35,7 @@ use Discord\Parts\User\User;
  * @property      string|null $guild_id The identifier of the guild that owns the emoji.
  * @property-read Guild|null  $guild    The guild that owns the emoji.
  */
-class Emoji extends Part implements \Stringable
+class Emoji extends Part implements Stringable
 {
     /**
      * {@inheritDoc}

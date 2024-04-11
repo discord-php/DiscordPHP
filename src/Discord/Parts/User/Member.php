@@ -30,6 +30,7 @@ use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\PresenceUpdate;
 use React\Promise\ExtendedPromiseInterface;
 
+use Stringable;
 use function React\Promise\reject;
 
 /**
@@ -65,7 +66,7 @@ use function React\Promise\reject;
  *
  * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class Member extends Part implements \Stringable
+class Member extends Part implements Stringable
 {
     public const FLAGS_DID_REJOIN = (1 << 0);
     public const FLAGS_COMPLETED_ONBOARDING = (1 << 1);

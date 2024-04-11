@@ -39,6 +39,7 @@ use Discord\Repository\Channel\InviteRepository;
 use Discord\Repository\Channel\StageInstanceRepository;
 use Discord\Repository\Channel\ThreadRepository;
 use React\Promise\ExtendedPromiseInterface;
+use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 
@@ -99,7 +100,7 @@ use function React\Promise\resolve;
  *
  * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class Channel extends Part implements \Stringable
+class Channel extends Part implements Stringable
 {
     public const TYPE_GUILD_TEXT = 0;
     public const TYPE_DM = 1;

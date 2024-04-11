@@ -13,6 +13,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Stringable;
 
 /**
  * A sticker that can be sent in a Discord message.
@@ -35,7 +36,7 @@ use Discord\Parts\User\User;
  * @property      User|null   $user        The user that uploaded the guild sticker.
  * @property      int|null    $sort_value  The standard sticker's sort order within its pack.
  */
-class Sticker extends Part implements \Stringable
+class Sticker extends Part implements Stringable
 {
     public const TYPE_STANDARD = 1;
     public const TYPE_GUILD = 2;
