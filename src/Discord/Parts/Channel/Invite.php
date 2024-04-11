@@ -17,6 +17,7 @@ use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Stringable;
 
 /**
  * An invite to a Channel and Guild.
@@ -48,7 +49,7 @@ use Discord\Parts\User\User;
  *
  * @property-read string $invite_url Returns the invite URL.
  */
-class Invite extends Part implements \Stringable
+class Invite extends Part implements Stringable
 {
     /**
      * {@inheritDoc}

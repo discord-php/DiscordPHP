@@ -14,6 +14,7 @@ namespace Discord\Parts\User;
 use Carbon\Carbon;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
+use Stringable;
 
 /**
  * The Activity part describes activities the member is undertaking.
@@ -39,7 +40,7 @@ use Discord\Parts\Part;
  * @property int|null      $flags          Activity flags `OR`d together, describes what the payload includes.
  * @property object[]|null $buttons        The custom buttons shown in the Rich Presence (max 2).
  */
-class Activity extends Part implements \Stringable
+class Activity extends Part implements Stringable
 {
     /** Playing {name} */
     public const TYPE_GAME = 0;

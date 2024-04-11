@@ -30,6 +30,7 @@ use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Thread\MemberRepository;
 use Discord\WebSockets\Event;
 use React\Promise\ExtendedPromiseInterface;
+use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 
@@ -75,7 +76,7 @@ use function React\Promise\reject;
  *
  * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class Thread extends Part implements \Stringable
+class Thread extends Part implements Stringable
 {
     public const FLAG_PINNED = (1 << 1);
 

@@ -16,6 +16,7 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
+use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -39,7 +40,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property      object     $serialized_source_guild The guild snapshot this template contains.
  * @property      ?bool      $is_dirty                Whether the template has unsynced changes.
  */
-class GuildTemplate extends Part implements \Stringable
+class GuildTemplate extends Part implements Stringable
 {
     /**
      * {@inheritDoc}
