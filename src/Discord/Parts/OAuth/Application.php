@@ -131,8 +131,8 @@ class Application extends Part
     /**
      * Returns the application icon.
      *
-     * @param string|null $format The image format.
-     * @param int         $size   The size of the image.
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
      *
      * @return string|null The URL to the application icon or null.
      */
@@ -199,8 +199,8 @@ class Application extends Part
     /**
      * Returns the application cover image.
      *
-     * @param string|null $format The image format.
-     * @param int         $size   The size of the image.
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
      *
      * @return string|null The URL to the application cover image or null.
      */

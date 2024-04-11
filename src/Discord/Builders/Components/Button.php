@@ -256,7 +256,7 @@ class Button extends Component
     }
 
     /**
-     * Sets the URL of the button. Only valid for link buttons.tatic.
+     * Sets the URL of the button. Only valid for link buttons.
      *
      * @param string|null $url
      *
