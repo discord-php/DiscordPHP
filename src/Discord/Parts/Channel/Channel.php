@@ -99,7 +99,7 @@ use function React\Promise\resolve;
  *
  * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class Channel extends Part
+class Channel extends Part implements \Stringable
 {
     public const TYPE_GUILD_TEXT = 0;
     public const TYPE_DM = 1;

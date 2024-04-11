@@ -38,7 +38,7 @@ use Discord\Parts\Permissions\RolePermission;
  * @property      string|null $guild_id The unique identifier of the guild that the role belongs to.
  * @property-read Guild|null  $guild    The guild that the role belongs to.
  */
-class Role extends Part
+class Role extends Part implements \Stringable
 {
     /**
      * {@inheritDoc}

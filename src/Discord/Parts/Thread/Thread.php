@@ -75,7 +75,7 @@ use function React\Promise\reject;
  *
  * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class Thread extends Part
+class Thread extends Part implements \Stringable
 {
     public const FLAG_PINNED = (1 << 1);
 

@@ -65,7 +65,7 @@ use function React\Promise\reject;
  *
  * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class Member extends Part
+class Member extends Part implements \Stringable
 {
     public const FLAGS_DID_REJOIN = (1 << 0);
     public const FLAGS_COMPLETED_ONBOARDING = (1 << 1);

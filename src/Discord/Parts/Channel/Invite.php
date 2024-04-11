@@ -48,7 +48,7 @@ use Discord\Parts\User\User;
  *
  * @property-read string $invite_url Returns the invite URL.
  */
-class Invite extends Part
+class Invite extends Part implements \Stringable
 {
     /**
      * {@inheritDoc}
