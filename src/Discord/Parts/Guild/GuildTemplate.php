@@ -39,7 +39,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property      object     $serialized_source_guild The guild snapshot this template contains.
  * @property      ?bool      $is_dirty                Whether the template has unsynced changes.
  */
-class GuildTemplate extends Part
+class GuildTemplate extends Part implements \Stringable
 {
     /**
      * {@inheritDoc}

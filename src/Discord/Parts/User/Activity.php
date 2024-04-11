@@ -39,7 +39,7 @@ use Discord\Parts\Part;
  * @property int|null      $flags          Activity flags `OR`d together, describes what the payload includes.
  * @property object[]|null $buttons        The custom buttons shown in the Rich Presence (max 2).
  */
-class Activity extends Part
+class Activity extends Part implements \Stringable
 {
     /** Playing {name} */
     public const TYPE_GAME = 0;
@@ -135,21 +135,14 @@ class Activity extends Part
      */
     public function __toString(): string
     {
-        switch ($this->type) {
-            case self::TYPE_GAME:
-                return 'Playing '.$this->name;
-            case self::TYPE_STREAMING:
-                return 'Streaming '.$this->details;
-            case self::TYPE_LISTENING:
-                return 'Listening to '.$this->name;
-            case self::TYPE_WATCHING:
-                return 'Watching '.$this->name;
-            case self::TYPE_CUSTOM:
-                return "{$this->emoji} {$this->state}";
-            case self::TYPE_COMPETING:
-                return 'Competing in '.$this->name;
-        }
-
-        return $this->name;
+        return match ($this->type) {
+            self::TYPE_GAME => 'Playing ' . $this->name,
+            self::TYPE_STREAMING => 'Streaming ' . $this->details,
+            self::TYPE_LISTENING => 'Listening to ' . $this->name,
+            self::TYPE_WATCHING => 'Watching ' . $this->name,
+            self::TYPE_CUSTOM => "{$this->emoji} {$this->state}",
+            self::TYPE_COMPETING => 'Competing in ' . $this->name,
+            default => $this->name,
+        };
     }
 }

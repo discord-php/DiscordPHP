@@ -34,7 +34,7 @@ use Discord\Parts\User\User;
  * @property      string|null $guild_id The identifier of the guild that owns the emoji.
  * @property-read Guild|null  $guild    The guild that owns the emoji.
  */
-class Emoji extends Part
+class Emoji extends Part implements \Stringable
 {
     /**
      * {@inheritDoc}

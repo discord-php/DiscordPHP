@@ -18,7 +18,7 @@ namespace Discord\Helpers;
  *
  * @author David Cole <david.cole1340@gmail.com>
  */
-class Multipart
+class Multipart implements \Stringable
 {
     /**
      * The boundary separating multipart sections.

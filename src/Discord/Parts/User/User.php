@@ -52,7 +52,7 @@ use function React\Promise\resolve;
  *
  * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class User extends Part
+class User extends Part implements \Stringable
 {
     public const FLAG_DISCORD_EMPLOYEE = (1 << 0);
     public const FLAG_DISCORD_PARTNER = (1 << 1);
