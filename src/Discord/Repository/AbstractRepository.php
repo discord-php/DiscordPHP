@@ -277,7 +277,7 @@ abstract class AbstractRepository extends Collection
     public function fresh(Part $part, array $queryparams = []): ExtendedPromiseInterface
     {
         if (! $part->created) {
-            return reject(new \Exception('You cannot get a non-existant part.'));
+            return reject(new \Exception('You cannot get a non-existent part.'));
         }
 
         if (! isset($this->endpoints['get'])) {

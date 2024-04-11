@@ -235,7 +235,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Adds an embed to the builder.
      *
-     * @param Embed|array $embeds,...
+     * @param Embed|array ...$embeds
      *
      * @throws \OverflowException Builder exceeds 10 embeds.
      *
@@ -261,7 +261,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Sets the embeds for the message. Clears the existing embeds in the process.
      *
-     * @param Embed[]|array $embeds
+     * @param Embed[]|array ...$embeds
      *
      * @return $this
      */
@@ -508,7 +508,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Adds attachment(s) to the builder.
      *
-     * @param Attachment|string|int $attachments Attachment objects or IDs to add
+     * @param Attachment|string|int ...$attachments Attachment objects or IDs to add
      *
      * @return $this
      */

@@ -159,7 +159,7 @@ class Embed extends Part
     /**
      * Sets the fields attribute.
      *
-     * @param Field[] $fields
+     * @param Field[] ...$fields
      */
     protected function setFieldsAttribute($fields)
     {
@@ -304,7 +304,7 @@ class Embed extends Part
     /**
      * Adds a field to the embed.
      *
-     * @param Field|array $field
+     * @param Field|array $fields
      *
      * @throws \OverflowException Embed exceeds 25 fields.
      *

@@ -67,7 +67,7 @@ class Multipart implements \Stringable
      * ];
      * ```
      *
-     * @param array $field
+     * @param array ...$fields
      *
      * @return $this
      */
