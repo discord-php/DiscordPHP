@@ -54,7 +54,8 @@
         "ext-uv": "For a faster, and more performant loop. Preferred.",
         "ext-ev": "For a faster, and more performant loop.",
         "ext-event": "For a faster, and more performant loop.",
-        "ext-mbstring": "For accurate calculations of string length when handling non-english characters."
+        "ext-mbstring": "For accurate calculations of string length when handling non-english characters.",
+        "ext-fileinfo": "For function mime_content_type()."
     },
     "scripts": {
         "cs": ["./vendor/bin/php-cs-fixer fix"],
