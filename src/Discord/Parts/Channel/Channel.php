@@ -409,7 +409,7 @@ class Channel extends Part implements Stringable
      * @param int|null            $position The new channel position, not relative to category.
      * @param string|null         $reason   Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<self>
+     * @return ExtendedPromiseInterface<static>
      *
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
@@ -717,9 +717,7 @@ class Channel extends Part implements Stringable
             }
         }
 
-        return $this->getMessageHistory(['limit' => $value, 'cache' => false])->then(function ($messages) use ($reason) {
-            return $this->deleteMessages($messages, $reason);
-        });
+        return $this->getMessageHistory(['limit' => $value, 'cache' => false])->then(fn ($messages) => $this->deleteMessages($messages, $reason));
     }
 
     /**
@@ -965,7 +963,7 @@ class Channel extends Part implements Stringable
      * @link https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
      *
      * @param array          $options                          Thread params.
-     * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in a news channel channel. Ignored in forum channel.
+     * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in a news channel. Ignored in forum channel.
      * @param string         $options['name']                  The name of the thread.
      * @param int|null       $options['auto_archive_duration'] Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
      * @param bool|null      $options['invitable']             Whether non-moderators can add other non-moderators to a thread; only available when creating a private thread.
@@ -1356,7 +1354,7 @@ class Channel extends Part implements Stringable
      *
      * @return bool Whether the channel is possible for sending text.
      */
-    public function isTextBased()
+    public function isTextBased(): bool
     {
         return in_array($this->type, [
             self::TYPE_GUILD_TEXT,
@@ -1375,7 +1373,7 @@ class Channel extends Part implements Stringable
      *
      * @return bool Whether the channel is possible for voice.
      */
-    public function isVoiceBased()
+    public function isVoiceBased(): bool
     {
         return in_array($this->type, [self::TYPE_GUILD_VOICE, self::TYPE_GUILD_STAGE_VOICE]);
     }
@@ -1385,7 +1383,7 @@ class Channel extends Part implements Stringable
      *
      * @return bool Whether the channel type is possible for creating invite.
      */
-    public function canInvite()
+    public function canInvite(): bool
     {
         return in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_GUILD_VOICE, self::TYPE_GUILD_ANNOUNCEMENT, self::TYPE_GUILD_STAGE_VOICE, self::TYPE_GUILD_FORUM]);
     }
@@ -1418,7 +1416,7 @@ class Channel extends Part implements Stringable
         ]);
 
         if (null === $this->type) {
-            // Type was not specified but we must not assume its default to GUILD_TEXT as that is determined by API
+            // Type was not specified, but we must not assume its default to GUILD_TEXT as that is determined by API
             $this->discord->getLogger()->warning('Not specifying channel type, creating with all filled attributes');
             $attr += $this->getRawAttributes(); // Send the remaining raw attributes
 

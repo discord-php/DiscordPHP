@@ -149,7 +149,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @throws \RuntimeException The part is not fetchable.
      *
-     * @return ExtendedPromiseInterface<self>
+     * @return ExtendedPromiseInterface<static>
      */
     public function fetch(): ExtendedPromiseInterface
     {
@@ -466,7 +466,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @return Discord
      */
-    public function getDiscord()
+    public function getDiscord(): Discord
     {
         return $this->discord;
     }

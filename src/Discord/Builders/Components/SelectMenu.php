@@ -85,7 +85,7 @@ abstract class SelectMenu extends Component
     /**
      * Creates a new select menu.
      *
-     * @param string|null $custom_id The custom ID of the select menu. If not given, an UUID will be used
+     * @param string|null $custom_id The custom ID of the select menu. If not given, a UUID will be used
      */
     public function __construct(?string $custom_id)
     {

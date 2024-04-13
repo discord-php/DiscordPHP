@@ -70,9 +70,7 @@ class GuildTemplateRepository extends AbstractRepository
                     $guildTemplate->fill($guild_template);
                 }
 
-                return $this->cache->set($template_code, $guildTemplate)->then(function ($success) use ($guildTemplate) {
-                    return $guildTemplate;
-                });
+                return $this->cache->set($template_code, $guildTemplate)->then(fn ($success) => $guildTemplate);
             });
         });
     }

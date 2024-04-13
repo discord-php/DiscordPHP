@@ -85,7 +85,7 @@ class Webhook extends Part
      * @param MessageBuilder|array $data
      * @param array                $queryparams Query string params to add to the request.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<void|Message> Message returned if wait parameter is set true.
      */
     public function execute($data, array $queryparams = []): ExtendedPromiseInterface
     {
@@ -112,9 +112,7 @@ class Webhook extends Part
         }
 
         if (! empty($queryparams['wait'])) {
-            return $promise->then(function ($response) {
-                return $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true);
-            });
+            return $promise->then(fn ($response) => $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true));
         }
 
         return $promise;
@@ -129,7 +127,7 @@ class Webhook extends Part
      * @param MessageBuilder $builder     The new message.
      * @param array          $queryparams Query string params to add to the request.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Message>
      */
     public function updateMessage(string $message_id, MessageBuilder $builder, array $queryparams = []): ExtendedPromiseInterface
     {

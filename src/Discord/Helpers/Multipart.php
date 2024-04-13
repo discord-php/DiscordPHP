@@ -86,7 +86,7 @@ class Multipart implements Stringable
      *
      * @return array
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return [
             'Content-Type' => $this->getContentType(),
@@ -99,7 +99,7 @@ class Multipart implements Stringable
      *
      * @return string
      */
-    public function getContentType()
+    public function getContentType(): string
     {
         return 'multipart/form-data; boundary='.substr($this->boundary, 2);
     }

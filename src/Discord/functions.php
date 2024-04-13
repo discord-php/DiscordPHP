@@ -175,7 +175,7 @@ function studly(string $string): string
  *
  * @since 5.0.12
  */
-function poly_strlen($str)
+function poly_strlen($str): int
 {
     // If mbstring is installed, use it.
     if (function_exists('mb_strlen')) {
@@ -251,11 +251,13 @@ function getSnowflakeTimestamp(string $snowflake)
  *
  * @param string $id_field
  *
+ * @return \Closure
+ *
  * @since 6.0.0
  *
  * @internal
  */
-function normalizePartId($id_field = 'id')
+function normalizePartId($id_field = 'id'): \Closure
 {
     return static function (Options $options, $part) use ($id_field) {
         if ($part instanceof Part) {
@@ -271,7 +273,7 @@ function normalizePartId($id_field = 'id')
  * _Italics_, **Bold**, __Underline__, ~~Strikethrough~~, ||spoiler||
  * `Code`, ```Code block```, > Quotes, >>> Block quotes
  * #Channel @User
- * A backslash will be added before the each formatting symbol.
+ * A backslash will be added before each formatting symbol.
  *
  * @return string the escaped string unformatted as plain text
  *

@@ -530,7 +530,7 @@ abstract class AbstractRepository extends Collection
      *
      * @deprecated 10.0.0 Use async `$repository->cache->has()`
      *
-     * @param array ...$keys
+     * @param string|int ...$keys
      *
      * @return bool
      */

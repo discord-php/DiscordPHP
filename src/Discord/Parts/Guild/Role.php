@@ -90,7 +90,7 @@ class Role extends Part implements Stringable
      * @param int $green The green value in RGB.
      * @param int $blue  The blue value in RGB.
      */
-    public function setColor(int $red = 0, int $green = 0, int $blue = 0)
+    public function setColor(int $red = 0, int $green = 0, int $blue = 0): void
     {
         $this->color = ($red * 16 ** 4 + $green * 16 ** 2 + $blue);
     }
@@ -103,7 +103,7 @@ class Role extends Part implements Stringable
      *
      * @return string|null The URL to the role icon or null.
      */
-    public function getIconAttribute(string $format = 'png', int $size = 64)
+    public function getIconAttribute(string $format = 'png', int $size = 64): ?string
     {
         if (! isset($this->attributes['icon'])) {
             return null;

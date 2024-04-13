@@ -30,6 +30,8 @@ class MessageCreate extends Event
      */
     public function handle($data)
     {
+        $guild = null;
+
         /** @var Message */
         $messagePart = $this->factory->part(Message::class, (array) $data, true);
 
