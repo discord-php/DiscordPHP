@@ -1419,10 +1419,10 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-widget
      *
-     * @param array  $options An array of options.
-     *                        enabled => whether the widget is enabled
-     *                        channel_id => the widget channel id
-     * @param string $reason  Reason for Audit Log.
+     * @param array   $options An array of options.
+     *                         enabled => whether the widget is enabled
+     *                         channel_id => the widget channel id
+     * @param ?string $reason  Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
