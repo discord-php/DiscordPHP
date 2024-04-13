@@ -264,7 +264,7 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     /**
      * Checks if the array has multiple offsets.
      *
-     * @param array ...$keys
+     * @param string|int ...$keys
      *
      * @return bool
      */

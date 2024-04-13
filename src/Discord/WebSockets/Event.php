@@ -165,7 +165,7 @@ abstract class Event
      *
      * @since 7.0.0
      */
-    protected function cacheUser(object $userdata)
+    protected function cacheUser(object $userdata): void
     {
         $users = $this->discord->users;
         if ($user = $users->get('id', $userdata->id)) {
@@ -183,7 +183,7 @@ abstract class Event
      *
      * @since 10.0.0
      */
-    protected function cacheMember(MemberRepository $members, array $memberdata)
+    protected function cacheMember(MemberRepository $members, array $memberdata): void
     {
         if ($member = $members->get('id', $memberdata['user']->id)) {
             $member->fill($memberdata);

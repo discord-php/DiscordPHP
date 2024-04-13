@@ -137,7 +137,7 @@ class RegisteredCommand
      *
      * @param callable $callback
      */
-    public function setCallback(callable $callback)
+    public function setCallback(callable $callback): void
     {
         $this->callback = $callback;
     }
@@ -147,7 +147,7 @@ class RegisteredCommand
      *
      * @param callable $autocomplete_callback
      */
-    public function setAutoCompleteCallback(callable $autocomplete_callback)
+    public function setAutoCompleteCallback(callable $autocomplete_callback): void
     {
         $this->autocomplete_callback = $autocomplete_callback;
     }
@@ -213,7 +213,7 @@ class RegisteredCommand
      *
      * @return RegisteredCommand[]|null
      */
-    public function getSubCommands()
+    public function getSubCommands(): ?array
     {
         return $this->subCommands;
     }

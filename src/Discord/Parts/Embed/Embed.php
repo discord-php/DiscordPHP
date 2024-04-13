@@ -161,7 +161,7 @@ class Embed extends Part
      *
      * @param Field[] ...$fields
      */
-    protected function setFieldsAttribute($fields)
+    protected function setFieldsAttribute($fields): void
     {
         $this->attributes['fields'] = [];
         $this->addField(...$fields);
@@ -174,7 +174,7 @@ class Embed extends Part
      *
      * @throws \InvalidArgumentException
      */
-    protected function setColorAttribute($color)
+    protected function setColorAttribute($color): void
     {
         $this->attributes['color'] = $this->resolveColor($color);
     }
@@ -186,7 +186,7 @@ class Embed extends Part
      *
      * @throws \LengthException Embed text too long.
      */
-    protected function setDescriptionAttribute($description)
+    protected function setDescriptionAttribute($description): void
     {
         if (poly_strlen($description) === 0) {
             $this->attributes['description'] = null;
@@ -204,13 +204,13 @@ class Embed extends Part
     /**
      * Sets the type of the embed.
      *
-     * @deprecated 10.0.0 Type `rich` will be always used in API.
+     * @deprecated 10.0.0 Type `rich` will always be used in API.
      *
      * @param string $type
      *
      * @throws \InvalidArgumentException Invalid embed type.
      */
-    protected function setTypeAttribute($type)
+    protected function setTypeAttribute($type): void
     {
         if (! in_array($type, $this->getEmbedTypes())) {
             throw new \InvalidArgumentException('Given type "'.$type.'" is not a valid embed type.');
@@ -260,7 +260,7 @@ class Embed extends Part
     /**
      * Sets the type of the embed.
      *
-     * @deprecated 10.0.0 Type `rich` will be always used in API.
+     * @deprecated 10.0.0 Type `rich` will always be used in API.
      *
      * @param string $type
      *
@@ -338,7 +338,7 @@ class Embed extends Part
      *
      * @return $this
      */
-    public function addFieldValues(string $name, string $value, bool $inline = false)
+    public function addFieldValues(string $name, string $value, bool $inline = false): static
     {
         return $this->addField([
             'name' => $name,
@@ -498,19 +498,19 @@ class Embed extends Part
     }
 
     /**
-     * Ensures a url is valid for use in embeds.
+     * Ensures a URL is valid for use in embeds.
      *
      * @param ?string $url
-     * @param array $allowed
+     * @param array $allowed Allowed URL scheme
      *
      * @throws \DomainException
      *
      * @return void
      */
-    protected function ensureValidUrl(?string $url = null, array $allowed = ['http', 'https', 'attachment'])
+    protected function ensureValidUrl(?string $url = null, array $allowed = ['http', 'https', 'attachment']): void
     {
         if (null !== $url && ! in_array(parse_url($url, PHP_URL_SCHEME), $allowed)) {
-            throw new \DomainException('Url scheme only supports '.implode(', ', $allowed));
+            throw new \DomainException('URL scheme only supports '.implode(', ', $allowed));
         }
     }
 
@@ -549,7 +549,7 @@ class Embed extends Part
      *
      * @return int
      */
-    protected static function resolveColor($color)
+    protected static function resolveColor($color): int
     {
         if (is_int($color)) {
             return $color;
@@ -594,7 +594,7 @@ class Embed extends Part
      *
      * @return array
      */
-    private static function getEmbedTypes()
+    private static function getEmbedTypes(): array
     {
         return [
             self::TYPE_RICH,

@@ -450,7 +450,7 @@ class Discord
         $this->emit('trace', $data->d->_trace);
         $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
-        // Setup the user account
+        // Set up the user account
         $this->client->fill((array) $content->user);
         $this->client->created = true;
         $this->sessionId = $content->session_id;
@@ -732,7 +732,7 @@ class Discord
      *
      * @param \Throwable $e
      */
-    public function handleWsConnectionFailed(\Throwable $e)
+    public function handleWsConnectionFailed(\Throwable $e): void
     {
         $this->logger->error('failed to connect to websocket, retry in 5 seconds', ['e' => $e->getMessage()]);
 
@@ -1632,11 +1632,11 @@ class Discord
     }
 
     /**
-     * Gets a channel.
+     * Gets a cached channel.
      *
-     * @param string|int $channel_id Id of the channel.
+     * @param string|int $channel_id ID of the channel.
      *
-     * @return Channel|null
+     * @return Channel|null null if not found in the cache.
      */
     public function getChannel($channel_id): ?Channel
     {

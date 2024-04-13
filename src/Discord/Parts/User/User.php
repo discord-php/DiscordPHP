@@ -33,7 +33,7 @@ use function React\Promise\resolve;
  * @property string       $username               The username of the user.
  * @property string       $discriminator          The discriminator of the user.
  * @property string|null  $global_name            The user's display name, if it is set. For bots, this is the application name.
- * @property string       $displayname            The the display name of the client.
+ * @property string       $displayname            The display name of the client.
  * @property ?string      $avatar                 The avatar URL of the user.
  * @property string|null  $avatar_hash            The avatar hash of the user.
  * @property bool|null    $bot                    Whether the user is a bot.
@@ -139,9 +139,9 @@ class User extends Part implements Stringable
      */
     public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
     {
-        return $this->getPrivateChannel()->then(function (Channel $channel) use ($message, $tts, $embed, $allowed_mentions, $replyTo) {
-            return $channel->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
-        });
+        return $this
+            ->getPrivateChannel()
+            ->then(fn (Channel $channel) => $channel->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo));
     }
 
     /**
@@ -155,9 +155,7 @@ class User extends Part implements Stringable
      */
     public function broadcastTyping(): ExtendedPromiseInterface
     {
-        return $this->getPrivateChannel()->then(function (Channel $channel) {
-            return $channel->broadcastTyping();
-        });
+        return $this->getPrivateChannel()->then(fn (Channel $channel) => $channel->broadcastTyping());
     }
 
     /**
@@ -176,7 +174,7 @@ class User extends Part implements Stringable
      * @param string|null $format The image format.
      * @param int         $size   The size of the image.
      *
-     * @return string The URL to the clients avatar.
+     * @return string The URL to the client's avatar.
      */
     public function getAvatarAttribute(?string $format = null, int $size = 1024): string
     {
@@ -292,7 +290,7 @@ class User extends Part implements Stringable
     /**
      * Returns a timestamp for when a user's account was created.
      *
-     * @return float
+     * @return ?float
      */
     public function createdTimestamp()
     {

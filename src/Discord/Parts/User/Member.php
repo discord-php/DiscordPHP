@@ -185,7 +185,7 @@ class Member extends Part implements Stringable
      *
      * @throws NoPermissionsException Missing manage_nicknames permission.
      *
-     * @return ExtendedPromiseInterface<Member>
+     * @return ExtendedPromiseInterface<static>
      */
     public function setNickname(?string $nick = null, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -225,7 +225,7 @@ class Member extends Part implements Stringable
      * @param Channel|?string $channel The channel to move the member to.
      * @param string|null     $reason  Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Member>
+     * @return ExtendedPromiseInterface<static>
      */
     public function moveMember($channel, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -239,9 +239,7 @@ class Member extends Part implements Stringable
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['channel_id' => $channel], $headers)
-            ->then(function ($response) {
-                return $this;
-            });
+            ->then(fn ($response) => $this);
     }
 
     /**
@@ -338,7 +336,7 @@ class Member extends Part implements Stringable
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface<Member>
+     * @return ExtendedPromiseInterface<static>
      */
     public function setRoles(array $roles, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -377,11 +375,11 @@ class Member extends Part implements Stringable
      *
      * @see User::sendMessage()
      *
-     * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
-     * @param bool                  $tts              Whether the message is TTS.
-     * @param Embed|array|null      $embed            An embed object or array to send in the message.
-     * @param array|null            $allowed_mentions Allowed mentions object for the message.
-     * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
+     * @param MessageBuilder|string                 $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                                  $tts              Whether the message is TTS.
+     * @param \Discord\Parts\Embed\Embed|array|null $embed            An embed object or array to send in the message.
+     * @param array|null                            $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null                          $replyTo          Sends the message as a reply to the given message instance.
      *
      * @throws \RuntimeException
      *
@@ -430,14 +428,14 @@ class Member extends Part implements Stringable
         }
         $bitwise = $everyoneRole->permissions->bitwise;
 
+        // Prepare array for role ids
+        $roles = [];
+
         // If this member is the guild owner
         if ($guild->owner_id == $this->id) {
             // Add administrator permission
             $bitwise = BigInt::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']);
         } else {
-            // Prepare array for role ids
-            $roles = [];
-
             // Iterate all base roles
             /** @var Role */
             foreach ($this->roles as $id => $role) {
@@ -520,7 +518,7 @@ class Member extends Part implements Stringable
      *
      * @throws NoPermissionsException Missing moderate_members permission.
      *
-     * @return ExtendedPromiseInterface<Member>
+     * @return ExtendedPromiseInterface<static>
      */
     public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -553,7 +551,7 @@ class Member extends Part implements Stringable
      *
      * @throws NoPermissionsException Missing `moderate_members` permission.
      *
-     * @return ExtendedPromiseInterface<Member>
+     * @return ExtendedPromiseInterface<static>
      */
     public function setBypassesVerification(bool $bypasses_verification, ?string $reason = null): ExtendedPromiseInterface
     {

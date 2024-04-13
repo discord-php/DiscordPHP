@@ -54,7 +54,7 @@ class GuildRepository extends AbstractRepository
      *
      * @param Guild|string $guild
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<static>
      */
     public function leave($guild): ExtendedPromiseInterface
     {
@@ -62,10 +62,8 @@ class GuildRepository extends AbstractRepository
             $guild = $guild->id;
         }
 
-        return $this->http->delete(Endpoint::bind(Endpoint::USER_CURRENT_GUILD, $guild))->then(function () use ($guild) {
-            return $this->cache->delete($guild)->then(function ($success) {
-                return $this;
-            });
-        });
+        return $this->http
+            ->delete(Endpoint::bind(Endpoint::USER_CURRENT_GUILD, $guild))
+            ->then(fn () => $this->cache->delete($guild)->then(fn ($success) => $this));
     }
 }

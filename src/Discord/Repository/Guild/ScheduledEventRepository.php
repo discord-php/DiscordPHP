@@ -79,9 +79,7 @@ class ScheduledEventRepository extends AbstractRepository
             $part->fill(array_merge($this->vars, (array) $response));
             $part->created = true;
 
-            return $this->cache->set($id, $part)->then(function ($success) use ($part) {
-                return $part;
-            });
+            return $this->cache->set($id, $part)->then(fn ($success) => $part);
         });
     }
 }

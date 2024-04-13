@@ -222,7 +222,7 @@ abstract class Permission extends Part
      *
      * @param int|string $bitwise
      */
-    protected function setBitwiseAttribute($bitwise)
+    protected function setBitwiseAttribute($bitwise): void
     {
         if (PHP_INT_SIZE === 8 && is_string($bitwise)) { // x64
             $bitwise = (int) $bitwise;

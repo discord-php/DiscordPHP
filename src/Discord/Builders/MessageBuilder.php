@@ -596,6 +596,8 @@ class MessageBuilder implements JsonSerializable
      */
     public function toMultipart(bool $payload = true): Multipart
     {
+        $fields = [];
+
         if ($payload) {
             $fields = [
                 [

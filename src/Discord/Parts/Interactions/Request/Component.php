@@ -28,7 +28,7 @@ use Discord\Parts\Part;
  * @property int                         $type        Component type.
  * @property string|null                 $custom_id   Developer-defined identifier for the component; max 100 characters. (Buttons, Select Menus)
  * @property bool|null                   $disabled    Whether the component is disabled; defaults to `false`. (Buttons, Select Menus)
- * @property int|null                    $style       A of button style. (Buttons)
+ * @property int|null                    $style       A button style. (Buttons)
  * @property string|null                 $label       Text that appears on the button; max 80 characters. (Buttons)
  * @property Emoji|null                  $emoji       Name, id, and animated. (Buttons)
  * @property string|null                 $url         URL for link-style buttons. (Buttons)

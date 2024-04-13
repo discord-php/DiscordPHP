@@ -107,9 +107,7 @@ class BanRepository extends AbstractRepository
                 'guild_id' => $this->vars['guild_id'],
             ], true);
 
-            return $this->cache->set($ban->user_id, $ban)->then(function () use ($ban) {
-                return $ban;
-            });
+            return $this->cache->set($ban->user_id, $ban)->then(fn () => $ban);
         });
     }
 
@@ -130,9 +128,7 @@ class BanRepository extends AbstractRepository
         }
 
         if (is_scalar($ban)) {
-            return $this->cache->get($ban)->then(function ($ban) use ($reason) {
-                return $this->delete($ban, $reason);
-            });
+            return $this->cache->get($ban)->then(fn ($ban) => $this->delete($ban, $reason));
         }
 
         return $this->delete($ban, $reason);

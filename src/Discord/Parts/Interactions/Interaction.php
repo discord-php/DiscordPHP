@@ -357,9 +357,7 @@ class Interaction extends Part
             }
 
             return $this->http->patch(Endpoint::bind(Endpoint::ORIGINAL_INTERACTION_RESPONSE, $this->application_id, $this->token), $builder);
-        })()->then(function ($response) {
-            return $this->factory->part(Message::class, (array) $response, true);
-        });
+        })()->then(fn ($response) => $this->factory->part(Message::class, (array) $response, true));
     }
 
     /**
@@ -410,9 +408,7 @@ class Interaction extends Part
             }
 
             return $this->http->post(Endpoint::bind(Endpoint::CREATE_INTERACTION_FOLLOW_UP, $this->application_id, $this->token), $builder);
-        })()->then(function ($response) {
-            return $this->factory->part(Message::class, (array) $response, true);
-        });
+        })()->then(fn ($response) => $this->factory->part(Message::class, (array) $response, true));
     }
 
     /**
@@ -446,7 +442,7 @@ class Interaction extends Part
     /**
      * Responds to the interaction with a payload.
      *
-     * This is a seperate function so that it can be overloaded when responding
+     * This is a separate function so that it can be overloaded when responding
      * via webhook.
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response
@@ -493,7 +489,7 @@ class Interaction extends Part
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function updateFollowUpMessage(string $message_id, MessageBuilder $builder)
+    public function updateFollowUpMessage(string $message_id, MessageBuilder $builder): ExtendedPromiseInterface
     {
         if (! $this->responded) {
             return reject(new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.'));
@@ -507,9 +503,7 @@ class Interaction extends Part
             }
 
             return $this->http->patch(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id), $builder);
-        })()->then(function ($response) {
-            return $this->factory->part(Message::class, (array) $response, true);
-        });
+        })()->then(fn ($response) => $this->factory->part(Message::class, (array) $response, true));
     }
 
     /**

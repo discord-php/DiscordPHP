@@ -104,7 +104,7 @@ class Op
     public const CLOSE_ABNORMAL = 1006;
     /** Unknown error. */
     public const CLOSE_UNKNOWN_ERROR = 4000;
-    /** Unknown opcode was went. */
+    /** Unknown opcode was sent. */
     public const CLOSE_INVALID_OPCODE = 4001;
     /** Invalid message was sent. */
     public const CLOSE_INVALID_MESSAGE = 4002;

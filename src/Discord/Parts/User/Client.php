@@ -124,7 +124,7 @@ class Client extends Part
     }
 
     /**
-     * @return string The URL to the clients avatar.
+     * @return string The URL to the client's avatar.
      */
     protected function getAvatarAttribute(): string
     {

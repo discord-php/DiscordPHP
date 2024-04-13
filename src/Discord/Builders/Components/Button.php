@@ -96,7 +96,7 @@ class Button extends Component
      * Creates a new button.
      *
      * @param int         $style     Style of the button.
-     * @param string|null $custom_id custom ID of the button. If not given, an UUID will be used
+     * @param string|null $custom_id custom ID of the button. If not given, a UUID will be used
      *
      * @throws \InvalidArgumentException
      */

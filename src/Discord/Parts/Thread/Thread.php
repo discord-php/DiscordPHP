@@ -243,7 +243,7 @@ class Thread extends Part implements Stringable
      *
      * @param bool $value
      */
-    protected function setArchivedAttribute(bool $value)
+    protected function setArchivedAttribute(bool $value): void
     {
         $this->attributes['thread_metadata']->archived = $value;
     }
@@ -253,7 +253,7 @@ class Thread extends Part implements Stringable
      *
      * @param bool $value
      */
-    protected function setLockedAttribute(bool $value)
+    protected function setLockedAttribute(bool $value): void
     {
         $this->attributes['thread_metadata']->locked = $value;
     }
@@ -264,7 +264,7 @@ class Thread extends Part implements Stringable
      *
      * @param int $value
      */
-    protected function setAutoArchiveDurationAttribute(int $value)
+    protected function setAutoArchiveDurationAttribute(int $value): void
     {
         $this->attributes['thread_metadata']->auto_archive_duration = $value;
     }
@@ -370,7 +370,7 @@ class Thread extends Part implements Stringable
      * @param string      $name   New thread name.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Thread>
+     * @return ExtendedPromiseInterface<static>
      */
     public function rename(string $name, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -392,7 +392,7 @@ class Thread extends Part implements Stringable
      *
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Thread>
+     * @return ExtendedPromiseInterface<static>
      */
     public function archive(?string $reason = null): ExtendedPromiseInterface
     {
@@ -414,7 +414,7 @@ class Thread extends Part implements Stringable
      *
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Thread>
+     * @return ExtendedPromiseInterface<static>
      */
     public function unarchive(?string $reason = null): ExtendedPromiseInterface
     {
@@ -437,7 +437,7 @@ class Thread extends Part implements Stringable
      * @param int         $duration Duration in minutes.
      * @param string|null $reason   Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Thread>
+     * @return ExtendedPromiseInterface<static>
      */
     public function setAutoArchiveDuration(int $duration, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -721,9 +721,7 @@ class Thread extends Part implements Stringable
             }
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
-        })()->then(function ($response) {
-            return $this->messages->get('id', $response->id) ?: $this->messages->create($response, true);
-        });
+        })()->then(fn ($response) => $this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
     }
 
     /**

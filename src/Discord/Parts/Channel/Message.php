@@ -45,7 +45,7 @@ use function React\Promise\reject;
  * @since 2.0.0
  *
  * @property      string                      $id                     The unique identifier of the message.
- * @property      string                      $channel_id             The unique identifier of the channel that the message was went in.
+ * @property      string                      $channel_id             The unique identifier of the channel that the message was sent in.
  * @property-read Channel|Thread              $channel                The channel that the message was sent in.
  * @property      User|null                   $author                 The author of the message. Will be a webhook if sent from one.
  * @property-read string|null                 $user_id                The user id of the author.
@@ -612,7 +612,7 @@ class Message extends Part
      */
     protected function getReferencedMessageAttribute(): ?Message
     {
-        // try get the message from the relevant repository
+        // try to get the message from the relevant repository
         // otherwise, if message is present in payload, create it
         // otherwise, return null
         if ($reference = $this->attributes['message_reference'] ?? null) {
@@ -824,7 +824,7 @@ class Message extends Part
      *
      * @param string|MessageBuilder $message The reply message.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return ExtendedPromiseInterface<self>
      */
     public function reply($message): ExtendedPromiseInterface
     {
@@ -849,7 +849,7 @@ class Message extends Part
      *                                send_messages if this message author is the bot.
      *                                manage_messages if this message author is other user.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return ExtendedPromiseInterface<static>
      */
     public function crosspost(): ExtendedPromiseInterface
     {
@@ -887,7 +887,7 @@ class Message extends Part
      * @param int                   $delay   Delay after text will be sent in milliseconds.
      * @param TimerInterface        &$timer  Delay timer passed by reference.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return ExtendedPromiseInterface<self>
      */
     public function delayedReply($message, int $delay, &$timer = null): ExtendedPromiseInterface
     {
@@ -1005,7 +1005,7 @@ class Message extends Part
      *
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return ExtendedPromiseInterface<static>
      */
     public function edit(MessageBuilder $message): ExtendedPromiseInterface
     {
@@ -1111,7 +1111,7 @@ class Message extends Part
      *
      * @param Embed $embed
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return ExtendedPromiseInterface<static>
      */
     public function addEmbed(Embed $embed): ExtendedPromiseInterface
     {

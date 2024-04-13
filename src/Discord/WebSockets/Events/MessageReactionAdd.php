@@ -31,6 +31,8 @@ class MessageReactionAdd extends Event
      */
     public function handle($data)
     {
+        $guild = null;
+
         /** @var ?Guild */
         if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?Channel */

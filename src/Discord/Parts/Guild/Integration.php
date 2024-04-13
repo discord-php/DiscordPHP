@@ -17,7 +17,7 @@ use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
 /**
- * An Integration is a guild integrations for Twitch, Youtube, Bot and Apps.
+ * An Integration is a guild integrations for Twitch, YouTube, Bot and Apps.
  *
  * @link https://discord.com/developers/docs/resources/guild#integration-object
  *
@@ -28,7 +28,7 @@ use Discord\Parts\User\User;
  * @property      string           $type                Integration type (twitch, youtube, discord, or guild_subscription).
  * @property      bool             $enabled             Is this integration enabled?
  * @property      bool|null        $syncing             Is this integration syncing?
- * @property      string|null      $role_id             Id that this integration uses for "subscribers".
+ * @property      string|null      $role_id             ID that this integration uses for "subscribers".
  * @property-read Role|null        $role                Role that this integration uses for "subscribers".
  * @property      bool|null        $enable_emoticons    Whether emoticons should be synced for this integration (twitch only currently).
  * @property      int|null         $expire_behavior     The behavior of expiring subscribers.

@@ -32,6 +32,7 @@ class MessageUpdate extends Event
     {
         /** @var Message */
         $messagePart = $oldMessagePart = null;
+        $guild = null;
 
         /** @var ?Guild */
         if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

@@ -855,7 +855,7 @@ class Guild extends Part
     }
 
     /**
-     * Creates an Sticker for the guild.
+     * Creates a Sticker for the guild.
      *
      * @link https://discord.com/developers/docs/resources/sticker#create-guild-sticker
      *
@@ -987,7 +987,7 @@ class Guild extends Part
      *
      * @throws \RuntimeException Ownership not transferred correctly.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<static>
      */
     public function transferOwnership($member, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -1083,9 +1083,9 @@ class Guild extends Part
             $endpoint->addQuery($key, $value);
         }
 
-        return $this->http->get($endpoint)->then(function ($response) {
-            return $this->factory->part(AuditLog::class, (array) $response + ['guild_id' => $this->id], true);
-        });
+        return $this->http
+            ->get($endpoint)
+            ->then(fn ($response) => $this->factory->part(AuditLog::class, (array) $response + ['guild_id' => $this->id], true));
     }
 
     /**
@@ -1109,7 +1109,7 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface<self>
+     * @return ExtendedPromiseInterface<static>
      */
     public function updateRolePositions(array $roles): ExtendedPromiseInterface
     {
@@ -1235,9 +1235,7 @@ class Guild extends Part
             $endpoint->addQuery('include_roles', implode(',', $options['include_roles']));
         }
 
-        return $this->http->get($endpoint)->then(function ($response) {
-            return $response->pruned;
-        });
+        return $this->http->get($endpoint)->then(fn ($response) => $response->pruned);
     }
 
     /**
@@ -1292,9 +1290,9 @@ class Guild extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->post(Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id), $options, $headers)->then(function ($response) {
-            return $response->pruned;
-        });
+        return $this->http
+            ->post(Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id), $options, $headers)
+            ->then(fn ($response) => $response->pruned);
     }
 
     /**
@@ -1511,7 +1509,7 @@ class Guild extends Part
      * @param int         $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<self> This guild.
+     * @return ExtendedPromiseInterface<static> This guild.
      */
     public function updateMFALevel(int $level, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -1542,7 +1540,7 @@ class Guild extends Part
      *                                administrator for COMMUNITY or DISCOVERABLE.
      *                                manage_guild for INVITES_DISABLED or RAID_ALERTS_ENABLED.
      *
-     * @return ExtendedPromiseInterface<self> This guild.
+     * @return ExtendedPromiseInterface<static> This guild.
      */
     public function setFeatures(array $features, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -1655,7 +1653,7 @@ class Guild extends Part
     /**
      * Returns the timestamp of when the guild was created.
      *
-     * @return float
+     * @return ?float
      */
     public function createdTimestamp()
     {
