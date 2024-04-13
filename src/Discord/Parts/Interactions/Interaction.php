@@ -556,7 +556,7 @@ class Interaction extends Part
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
-     * @param array|Choice[] $choice Autocomplete choices (max of 25 choices)
+     * @param array|Choice[] $choices Autocomplete choices (max of 25 choices)
      *
      * @throws \LogicException Interaction is not Autocomplete.
      *
