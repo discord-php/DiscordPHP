@@ -100,9 +100,7 @@ class GuildCreate extends Event
         }
 
         $all = yield all($await)->then(function () use (&$guildPart) {
-            return $this->discord->guilds->cache->set($guildPart->id, $guildPart)->then(function ($success) use ($guildPart) {
-                return $guildPart;
-            });
+            return $this->discord->guilds->cache->set($guildPart->id, $guildPart)->then(fn ($success) => $guildPart);
         });
 
         if (
