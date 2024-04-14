@@ -97,7 +97,7 @@ class ScheduledEvent extends Part
      *
      * @throws \RangeException
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Collection<User>>
      */
     public function getUsers(array $options): ExtendedPromiseInterface
     {

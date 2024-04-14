@@ -294,7 +294,7 @@ class Channel extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
      *
-     * @return ExtendedPromiseInterface<Collection<Message>>
+     * @return ExtendedPromiseInterface<Collection|Message[]>
      */
     public function getPinnedMessages(): ExtendedPromiseInterface
     {
@@ -735,7 +735,7 @@ class Channel extends Part implements Stringable
      *                                Or also missing `connect` permission for text in voice.
      * @throws \RangeException
      *
-     * @return ExtendedPromiseInterface<Collection<Message>>
+     * @return ExtendedPromiseInterface<Collection|Message[]>
      *
      * @todo Make it in a trait along with Thread
      */
