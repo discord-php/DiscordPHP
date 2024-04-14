@@ -1211,7 +1211,7 @@ class Discord
      * @since 10.0.0 Removed argument $check that has no effect (it is always checked)
      * @since 4.0.0
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<VoiceClient>
      */
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null): ExtendedPromiseInterface
     {
@@ -1307,7 +1307,7 @@ class Discord
      *
      * @param string|null $gateway Gateway URL to set.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<array>
      */
     protected function setGateway(?string $gateway = null): ExtendedPromiseInterface
     {

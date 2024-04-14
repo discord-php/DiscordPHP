@@ -459,7 +459,7 @@ class Thread extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
      *
-     * @return ExtendedPromiseInterface<Collection<Message>>
+     * @return ExtendedPromiseInterface<Collection|Message[]>
      *
      * @todo Make it in a trait along with Channel
      */
@@ -543,7 +543,7 @@ class Thread extends Part implements Stringable
      * @param string|Message|null $options['after']  Get messages after this message ID.
      * @param int|null            $options['limit']  Max number of messages to return (1-100). Defaults to 50.
      *
-     * @return ExtendedPromiseInterface<Collection<Message>>
+     * @return ExtendedPromiseInterface<Collection|Message[]>
      *
      * @todo Make it in a trait along with Channel
      */

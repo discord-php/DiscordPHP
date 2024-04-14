@@ -87,7 +87,7 @@ class ThreadRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/channel#list-active-threads
      *
-     * @return ExtendedPromiseInterface<Collection<Thread>>
+     * @return ExtendedPromiseInterface<Collection|Thread[]>
      */
     public function active(): ExtendedPromiseInterface
     {
@@ -109,7 +109,7 @@ class ThreadRepository extends AbstractRepository
      *
      * @throws \InvalidArgumentException
      *
-     * @return ExtendedPromiseInterface<Collection<Thread>>
+     * @return ExtendedPromiseInterface<Collection|Thread[]>
      */
     public function archived(bool $private = false, bool $joined = false, ?int $limit = null, $before = null): ExtendedPromiseInterface
     {
@@ -150,7 +150,7 @@ class ThreadRepository extends AbstractRepository
      *
      * @param object $response
      *
-     * @return Collection<Thread>
+     * @return Collection|Thread[]
      */
     private function handleThreadPaginationResponse(object $response): Collection
     {

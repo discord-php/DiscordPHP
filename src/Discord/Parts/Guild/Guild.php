@@ -1396,7 +1396,7 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<object>
      */
     public function getWidgetSettings(): ExtendedPromiseInterface
     {
