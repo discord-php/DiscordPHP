@@ -1351,13 +1351,15 @@ class Discord
             $buildParams($gateway);
         }
 
-        $deferred->promise()->then(function ($gateway) {
+        return $deferred->promise()->then(function ($gateway) {
             $this->logger->info('gateway retrieved and set', $gateway);
+
+            return $gateway;
         }, function ($e) {
             $this->logger->error('error obtaining gateway', ['e' => $e->getMessage()]);
-        });
 
-        return $deferred->promise();
+            return $e;
+        });
     }
 
     /**
