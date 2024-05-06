@@ -16,7 +16,7 @@
     },
     "require": {
         "php": "^8.0",
-        "nesbot/carbon": "^2.38",
+        "nesbot/carbon": "^3.0",
         "ratchet/pawl": "^0.4.1",
         "react/datagram": "^1.8",
         "symfony/options-resolver": "^5.1.11 || ^6.0",
