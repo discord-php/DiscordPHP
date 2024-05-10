@@ -19,7 +19,7 @@ use Discord\Parts\Part;
  * The poll object has a lot of levels and nested structures. It was also designed to support future extensibility, so some fields may appear to be more complex than necessary.
  * This is the request object used when creating a poll across the different endpoints. It is similar but not exactly identical to the main poll object. The main difference is that the request has duration which eventually becomes expiry.
  *
- * @link https://discord.com/developers/docs/resources/poll#poll-object
+ * @link https://discord.com/developers/docs/resources/poll#poll-create-request-object-poll-create-request-object-structure
  *
  *
  *
