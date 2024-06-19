@@ -11,6 +11,7 @@
 
 namespace Discord\Builders;
 
+use Discord\Discord;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
 use JsonSerializable;
@@ -72,6 +73,17 @@ class CommandBuilder implements JsonSerializable
     public function getOptions(): ?array
     {
         return $this->options ?? null;
+    }
+
+    /**
+     * Converts the CommandBuilder object to a Command object.
+     *
+     * @param Discord
+     * @return Command
+     */
+    public function toCommand(Discord $discord): Command
+    {
+        return new Command($discord, $this->toArray(), false);
     }
 
     /**
