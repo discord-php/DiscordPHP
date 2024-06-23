@@ -85,6 +85,8 @@ abstract class Permission extends Part
         'use_soundboard' => 42,
         'create_events' => 44,
         'use_external_sounds' => 45,
+        'send_voice_messages' => 46,
+        'send_polls' => 49,
     ];
 
     /**

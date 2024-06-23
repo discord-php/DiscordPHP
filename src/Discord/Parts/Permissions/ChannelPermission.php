@@ -34,6 +34,8 @@ namespace Discord\Parts\Permissions;
  * @property bool $use_soundboard           Allows for using soundboard in a voice channel
  * @property bool $create_events            Allows for creating scheduled events
  * @property bool $use_external_sounds      Allows the usage of custom soundboard sounds from other servers
+ * @property bool $send_voice_messages      Allows sending voice messages
+ * @property bool $send_polls               Allows sending polls
  */
 class ChannelPermission extends Permission
 {
