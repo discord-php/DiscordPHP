@@ -249,14 +249,14 @@ class Member extends Part implements Stringable
      *
      * @param Role|string $role   The role to add to the member.
      * @param string|null $reason Reason for Audit Log.
-     * @param bool|null   $set    Whether to set the roles using PATCH instead of PUT and return the updated member part on resolved promise.
+     * @param bool|null   $patch    Whether to set the roles using PATCH instead of PUT and return the updated member part on resolved promise.
      *
      * @throws \RuntimeException
      * @throws NoPermissionsException Missing manage_roles permission.
      *
      * @return ExtendedPromiseInterface|ExtendedPromiseInterface<static>
      */
-    public function addRole($role, ?string $reason = null, ?bool $set = false): ExtendedPromiseInterface
+    public function addRole($role, ?string $reason = null, ?bool $patch = false): ExtendedPromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
@@ -280,7 +280,7 @@ class Member extends Part implements Stringable
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $set
+        return $patch
             ? $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['roles' => array_merge($this->attributes['roles'], [$role])], $headers)
                 ->then(function ($response) {
                     $this->attributes['roles'] = $response->roles;
@@ -302,13 +302,13 @@ class Member extends Part implements Stringable
      *
      * @param Role|string $role   The role to remove from the member.
      * @param string|null $reason Reason for Audit Log.
-     * @param bool|null   $set    Whether to set the roles using PATCH instead of DELETE and return the updated member part on resolved promise.
+     * @param bool|null   $patch    Whether to set the roles using PATCH instead of DELETE and return the updated member part on resolved promise.
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
      * @return ExtendedPromiseInterface|ExtendedPromiseInterface<static>
      */
-    public function removeRole($role, ?string $reason = null, ?bool $set = false): ExtendedPromiseInterface
+    public function removeRole($role, ?string $reason = null, ?bool $patch = false): ExtendedPromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
@@ -327,7 +327,7 @@ class Member extends Part implements Stringable
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $set
+        return $patch
             ? $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['roles' => array_diff($this->attributes['roles'], [$role])], $headers)
                 ->then(function ($response) {
                     $this->attributes['roles'] = $response->roles;
