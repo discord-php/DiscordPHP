@@ -281,7 +281,7 @@ class Member extends Part implements Stringable
         }
 
         return $patch
-            ? $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['roles' => array_merge($this->attributes['roles'], [$role])], $headers)
+            ? $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['roles' => array_unique(array_merge($this->attributes['roles'], [$role]))], $headers)
                 ->then(function ($response) {
                     $this->attributes['roles'] = $response->roles;
 
