@@ -249,7 +249,7 @@ class Member extends Part implements Stringable
      *
      * @param Role|string $role   The role to add to the member.
      * @param string|null $reason Reason for Audit Log.
-     * @param bool|null   $patch    Whether to set the roles using PATCH instead of PUT and return the updated member part on resolved promise.
+     * @param bool|null   $patch  Whether to set the roles using PATCH instead of PUT and return the updated member part on resolved promise.
      *
      * @throws \RuntimeException
      * @throws NoPermissionsException Missing manage_roles permission.
@@ -302,7 +302,7 @@ class Member extends Part implements Stringable
      *
      * @param Role|string $role   The role to remove from the member.
      * @param string|null $reason Reason for Audit Log.
-     * @param bool|null   $patch    Whether to set the roles using PATCH instead of DELETE and return the updated member part on resolved promise.
+     * @param bool|null   $patch  Whether to set the roles using PATCH instead of DELETE and return the updated member part on resolved promise.
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
