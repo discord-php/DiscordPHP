@@ -249,13 +249,14 @@ class Member extends Part implements Stringable
      *
      * @param Role|string $role   The role to add to the member.
      * @param string|null $reason Reason for Audit Log.
+     * @param bool|null   $set    Whether to set the roles using PATCH instead of PUT and return the updated member part on resolved promise.
      *
      * @throws \RuntimeException
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface|ExtendedPromiseInterface<static>
      */
-    public function addRole($role, ?string $reason = null): ExtendedPromiseInterface
+    public function addRole($role, ?string $reason = null, ?bool $set = false): ExtendedPromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
@@ -279,7 +280,14 @@ class Member extends Part implements Stringable
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
+        return $set
+            ? $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['roles' => array_merge($this->attributes['roles'], [$role])], $headers)
+                ->then(function ($response) {
+                    $this->attributes['roles'] = $response->roles;
+
+                    return $this;
+                })
+            : $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
             ->then(function () use ($role) {
                 if (! in_array($role, $this->attributes['roles'])) {
                     $this->attributes['roles'][] = $role;
@@ -294,12 +302,13 @@ class Member extends Part implements Stringable
      *
      * @param Role|string $role   The role to remove from the member.
      * @param string|null $reason Reason for Audit Log.
+     * @param bool|null   $set    Whether to set the roles using PATCH instead of DELETE and return the updated member part on resolved promise.
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface|ExtendedPromiseInterface<static>
      */
-    public function removeRole($role, ?string $reason = null): ExtendedPromiseInterface
+    public function removeRole($role, ?string $reason = null, ?bool $set = false): ExtendedPromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
@@ -318,12 +327,19 @@ class Member extends Part implements Stringable
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
-            ->then(function () use ($role) {
-                if (($removeRole = array_search($role, $this->attributes['roles'])) !== false) {
-                    unset($this->attributes['roles'][$removeRole]);
-                }
-            });
+        return $set
+            ? $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['roles' => array_diff($this->attributes['roles'], [$role])], $headers)
+                ->then(function ($response) {
+                    $this->attributes['roles'] = $response->roles;
+
+                    return $this;
+                })
+            : $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
+                ->then(function () use ($role) {
+                    if (($removeRole = array_search($role, $this->attributes['roles'])) !== false) {
+                        unset($this->attributes['roles'][$removeRole]);
+                    }
+                });
     }
 
     /**
