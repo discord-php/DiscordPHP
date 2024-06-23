@@ -288,11 +288,11 @@ class Member extends Part implements Stringable
                     return $this;
                 })
             : $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
-            ->then(function () use ($role) {
-                if (! in_array($role, $this->attributes['roles'])) {
-                    $this->attributes['roles'][] = $role;
-                }
-            });
+                ->then(function () use ($role) {
+                    if (! in_array($role, $this->attributes['roles'])) {
+                        $this->attributes['roles'][] = $role;
+                    }
+                });
     }
 
     /**
