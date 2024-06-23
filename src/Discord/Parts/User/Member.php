@@ -256,7 +256,7 @@ class Member extends Part implements Stringable
      *
      * @return ExtendedPromiseInterface|ExtendedPromiseInterface<static>
      */
-    public function addRole($role, ?string $reason = null, ?bool $patch = false): ExtendedPromiseInterface
+    public function addRole($role, ?string $reason = null, bool $patch = false): ExtendedPromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
@@ -308,7 +308,7 @@ class Member extends Part implements Stringable
      *
      * @return ExtendedPromiseInterface|ExtendedPromiseInterface<static>
      */
-    public function removeRole($role, ?string $reason = null, ?bool $patch = false): ExtendedPromiseInterface
+    public function removeRole($role, ?string $reason = null, bool $patch = false): ExtendedPromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
