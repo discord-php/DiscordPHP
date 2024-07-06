@@ -215,9 +215,11 @@ abstract class AbstractRepository extends Collection
                 case 'patch': // Update old part
                     $part->created = true;
                     $part->fill((array) $response);
+
                     return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
                 default: // Create new part
                     $newPart = $this->factory->create($this->class, (array) $response, true);
+
                     return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
             }
         });

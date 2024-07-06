@@ -447,9 +447,9 @@ class DiscordCommandClient extends Discord
                     if (is_string($reason) || $reason instanceof \Stringable) {
                         $this->getLogger()->error($reason);
                     } else {
-                        $this->getLogger()->warning('Unhandled internal rejected promise, $reason is not a Throwable, '  . gettype($reason) . ' given.');
+                        $this->getLogger()->warning('Unhandled internal rejected promise, $reason is not a Throwable, '.gettype($reason).' given.');
                     }
-                }
+                },
             ]);
 
         $options = $resolver->resolve($options);

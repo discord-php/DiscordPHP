@@ -10,6 +10,7 @@
  */
 
 namespace Discord\Helpers;
+
 use Stringable;
 
 /**
@@ -43,7 +44,7 @@ class Multipart implements Stringable
     /**
      * Multipart constructor.
      *
-     * @param array $fields
+     * @param array  $fields
      * @param string $boundary Defaults to DiscordPHPSendFileBoundary
      */
     public function __construct(array $fields = [], string $boundary = self::BOUNDARY)

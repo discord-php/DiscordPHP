@@ -87,20 +87,20 @@ class Interaction extends Part
      */
     protected $responded = false;
 
-    const TYPE_PING = 1;
-    const TYPE_APPLICATION_COMMAND = 2;
-    const TYPE_MESSAGE_COMPONENT = 3;
-    const TYPE_APPLICATION_COMMAND_AUTOCOMPLETE = 4;
-    const TYPE_MODAL_SUBMIT = 5;
+    public const TYPE_PING = 1;
+    public const TYPE_APPLICATION_COMMAND = 2;
+    public const TYPE_MESSAGE_COMPONENT = 3;
+    public const TYPE_APPLICATION_COMMAND_AUTOCOMPLETE = 4;
+    public const TYPE_MODAL_SUBMIT = 5;
 
-    const RESPONSE_TYPE_PONG = 1;
-    const RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE = 4;
-    const RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = 5;
-    const RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE = 6;
-    const RESPONSE_TYPE_UPDATE_MESSAGE = 7;
-    const RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8;
-    const RESPONSE_TYPE_MODAL = 9;
-    const RESPONSE_TYPE_PREMIUM_REQUIRED = 10;
+    public const RESPONSE_TYPE_PONG = 1;
+    public const RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE = 4;
+    public const RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = 5;
+    public const RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE = 6;
+    public const RESPONSE_TYPE_UPDATE_MESSAGE = 7;
+    public const RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8;
+    public const RESPONSE_TYPE_MODAL = 9;
+    public const RESPONSE_TYPE_PREMIUM_REQUIRED = 10;
 
     /**
      * Returns true if this interaction has been internally responded.
