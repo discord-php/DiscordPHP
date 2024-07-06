@@ -388,6 +388,50 @@ class Thread extends Part implements Stringable
     }
 
     /**
+     * Lock the thread.
+     *
+     * @param string|null $reason
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function lock(?string $reason = null): ExtendedPromiseInterface
+    {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::THREAD, $this->id), ['locked' => true], $headers)
+            ->then(function ($response) {
+                $this->locked = $response->thread_metadata->locked;
+
+                return $this;
+            });
+    }
+
+    /**
+     * Unlock the thread.
+     *
+     * @param string|null $reason
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function unlock(?string $reason = null): ExtendedPromiseInterface
+    {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::THREAD, $this->id), ['locked' => false], $headers)
+            ->then(function ($response) {
+                $this->locked = $response->thread_metadata->locked;
+
+                return $this;
+            });
+    }
+
+    /**
      * Archive the thread.
      *
      * @param string|null $reason Reason for Audit Log.
