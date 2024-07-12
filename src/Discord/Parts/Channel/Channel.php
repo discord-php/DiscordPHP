@@ -98,7 +98,7 @@ use function React\Promise\resolve;
  * @property InviteRepository        $invites         Invites in the channel.
  * @property StageInstanceRepository $stage_instances Stage instances in the channel.
  *
- * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
+ * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder|string $builder)
  */
 class Channel extends Part implements Stringable
 {
