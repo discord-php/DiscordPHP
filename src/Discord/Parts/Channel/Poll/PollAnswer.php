@@ -30,12 +30,12 @@ use Discord\Parts\User\User;
  *
  * @property      string         $user_id    The user ID that voted for the answer.
  * @property-read User           $user       The user that voted for the answer.
- * @property      string         $channel_id The channel ID that the message belongs in.
- * @property-read Channel|Thread $channel    The channel that the message belongs to.
- * @property      string         $message_id The message ID the reaction is for.
- * @property      Message|null   $message    The message the reaction is for.
- * @property      string|null    $guild_id   The guild ID of the guild that owns the channel the message belongs in.
- * @property-read Guild|null     $guild      The guild that owns the channel the message belongs in.
+ * @property      string         $channel_id The channel ID that the poll belongs to.
+ * @property-read Channel|Thread $channel    The channel that the poll belongs to.
+ * @property      string         $message_id The message ID that the poll belongs to.
+ * @property      Message|null   $message    The message the poll belongs to.
+ * @property      string|null    $guild_id   The guild ID of the guild that owns the channel the poll message is in.
+ * @property-read Guild|null     $guild      The guild that owns the channel the poll belongs in.
  */
 class PollAnswer extends Part
 {
