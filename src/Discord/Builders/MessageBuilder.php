@@ -19,6 +19,7 @@ use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Poll\Request\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
 use JsonSerializable;
@@ -61,6 +62,7 @@ class MessageBuilder implements JsonSerializable
      * @var string|null
      */
     private $avatar_url;
+
     /**
      * Whether the message is text-to-speech.
      *
@@ -74,6 +76,13 @@ class MessageBuilder implements JsonSerializable
      * @var array[]|null
      */
     private $embeds;
+
+    /**
+     * The poll for the message.
+     *
+     * @var Poll|null
+     */
+    private $poll;
 
     /**
      * Allowed mentions object for the message.
@@ -270,6 +279,16 @@ class MessageBuilder implements JsonSerializable
         $this->embeds = [];
 
         return $this->addEmbed(...$embeds);
+    }
+
+    /**
+     * Sets the poll for the message.
+     */
+    public function setPoll(Poll $poll): self
+    {
+        $this->poll = $poll;
+
+        return $this;
     }
 
     /**
@@ -659,6 +678,11 @@ class MessageBuilder implements JsonSerializable
             $empty = false;
         }
 
+        if (isset($this->poll)) {
+            $body['poll'] = $this->poll;
+            $empty = false;
+        }
+
         if (isset($this->allowed_mentions)) {
             $body['allowed_mentions'] = $this->allowed_mentions;
         }
@@ -688,7 +712,7 @@ class MessageBuilder implements JsonSerializable
         if (isset($this->flags)) {
             $body['flags'] = $this->flags;
         } elseif ($empty) {
-            throw new RequestFailedException('You cannot send an empty message. Set the content or add an embed or file.');
+            throw new RequestFailedException('You cannot send an empty message. Set the content or add an embed, file or poll.');
         }
 
         return $body;
