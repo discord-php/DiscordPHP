@@ -112,6 +112,8 @@ abstract class Event
     public const MESSAGE_REACTION_REMOVE = 'MESSAGE_REACTION_REMOVE';
     public const MESSAGE_REACTION_REMOVE_ALL = 'MESSAGE_REACTION_REMOVE_ALL';
     public const MESSAGE_REACTION_REMOVE_EMOJI = 'MESSAGE_REACTION_REMOVE_EMOJI';
+    public const MESSAGE_POLL_VOTE_ADD = 'MESSAGE_POLL_VOTE_ADD';
+    public const MESSAGE_POLL_VOTE_REMOVE = 'MESSAGE_POLL_VOTE_REMOVE';
 
     /**
      * The Discord client instance.

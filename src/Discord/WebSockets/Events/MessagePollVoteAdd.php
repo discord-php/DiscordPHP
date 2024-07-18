@@ -11,12 +11,13 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Poll\PollAnswer;
 use Discord\WebSockets\Event;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#message-poll-vote-add-message-poll-vote-add-fields
+ *
+ * @since 10.0.0
  */
 class MessagePollVoteAdd extends Event
 {
@@ -25,6 +26,6 @@ class MessagePollVoteAdd extends Event
      */
     public function handle($data)
     {
-        // TODO
+        return new PollAnswer($this->discord, (array) $data, true);
     }
 }

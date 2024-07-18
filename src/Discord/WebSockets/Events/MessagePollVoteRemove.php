@@ -11,12 +11,13 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Poll\PollAnswer;
 use Discord\WebSockets\Event;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#message-poll-vote-remove-message-poll-vote-remove-fields
+ *
+ * @since 10.0.0
  */
 class MessagePollVoteRemove extends Event
 {
@@ -25,6 +26,6 @@ class MessagePollVoteRemove extends Event
      */
     public function handle($data)
     {
-        // TODO
+        return new PollAnswer($this->discord, (array) $data, true);
     }
 }
