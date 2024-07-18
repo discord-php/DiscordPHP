@@ -9,32 +9,42 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Channel;
+namespace Discord\Parts\Channel\Poll;
 
 use Carbon\Carbon;
-//use Discord\Builders\PartBuilder;
 use Discord\Parts\Part;
 
- /**
- * Each of the answers available in the poll. The answer_id is a number that labels each answer. As an implementation detail, it currently starts at 1 for the first answer and goes up sequentially. We recommend against depending on this sequence. Currently, there is a maximum of 10 answers per poll.
+/**
+ * The current results of a poll.
  *
  * @link https://discord.com/developers/docs/resources/poll#poll-results-object
  *
+ * @since 10.0.0
  *
- *
- * @property boolean        $is_finalized  	  Whether the votes have been precisely counted
- * @property PollAnswerCount[]   $answer_counts    The counts for each answer
+ * @property boolean            $is_finalized   Whether the votes have been precisely counted
+ * @property PollAnswerCount[]  $answer_counts  The counts for each answer
  */
 class PollResults extends Part
 {
-
     /**
      * {@inheritdoc}
      */
     protected $fillable = [
-        'answer_id',
-        'poll_media'
+        'is_finalized',
+        'answer_counts',
     ];
 
-    // TODO
+    /**
+     * Returns the answer counts attribute.
+     *
+     * @return PollAnswerCount|null
+     */
+    protected function getAnswerCountsAttribute(): ?PollAnswerCount
+    {
+        if (! isset($this->attributes['answer_counts'])) {
+            return null;
+        }
+
+        return $this->factory->part(PollAnswerCount::class, (array) $this->attributes['answer_counts'], true);
+    }
 }

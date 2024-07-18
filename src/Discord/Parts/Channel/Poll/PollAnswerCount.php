@@ -9,18 +9,17 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Channel;
+namespace Discord\Parts\Channel\Poll;
 
 use Carbon\Carbon;
-//use Discord\Builders\PartBuilder;
 use Discord\Parts\Part;
 
- /**
- *
+/**
+ * The number of votes for an answer in a poll.
  *
  * @link https://discord.com/developers/docs/resources/poll#poll-results-object-poll-answer-count-object-structure
  *
- *
+ * @since 10.0.0
  *
  * @property int    $id         The answer_id
  * @property int    $count      The number of votes for this answer
@@ -28,15 +27,12 @@ use Discord\Parts\Part;
  */
 class PollAnswerCount extends Part
 {
-
     /**
      * {@inheritdoc}
      */
     protected $fillable = [
         'id',
         'count',
-        'me_voted'
+        'me_voted',
     ];
-
-    // TODO
 }
