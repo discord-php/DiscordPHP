@@ -159,6 +159,6 @@ class Poll extends Part
      */
     public function end(): ExtendedPromiseInterface
     {
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_POLL_END, $this->channel_id, $this->message_id));
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_POLL_EXPIRE, $this->channel_id, $this->message_id));
     }
 }
