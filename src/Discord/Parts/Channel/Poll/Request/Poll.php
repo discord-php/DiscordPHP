@@ -91,7 +91,7 @@ class Poll extends Part
     /**
      * Add an answer to the poll.
      */
-    public function addAnswer(PollAnswer|PollMedia|string $answer): self
+    public function addAnswer(PollAnswer|PollMedia|array|string $answer): self
     {
         if (count($this->answers) >= 10) {
             throw new \OutOfRangeException('Polls can only have up to 10 answers.');
@@ -103,11 +103,13 @@ class Poll extends Part
             return $this;
         }
 
+        $answer = is_string($answer)
+            ? ['text' => $answer]
+            : $answer;
+
         $answer = $answer instanceof PollMedia
             ? $answer
-            : new PollMedia($this->discord, [
-                'text' => $answer,
-            ]);
+            : new PollMedia($this->discord, $answer);
 
         if (poly_strlen($answer->text) > 55) {
             throw new \LengthException('Answer must be maximum 55 characters.');
