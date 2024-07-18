@@ -19,7 +19,7 @@ use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Message;
-use Discord\Parts\Channel\Poll\Request\Poll;
+use Discord\Parts\Channel\Poll\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
 use JsonSerializable;

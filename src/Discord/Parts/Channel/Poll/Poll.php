@@ -11,154 +11,159 @@
 
 namespace Discord\Parts\Channel\Poll;
 
-use Carbon\Carbon;
-use Discord\Helpers\Collection;
-use Discord\Http\Endpoint;
 use Discord\Parts\Part;
-use Discord\Parts\User\User;
-use React\Promise\ExtendedPromiseInterface;
+
+use function Discord\poly_strlen;
 
 /**
- * A message poll.
+ * A poll that can be attached to a message.
  *
- * @link https://discord.com/developers/docs/resources/poll#poll-object
+ * @link https://discord.com/developers/docs/resources/poll#poll-create-request-object-poll-create-request-object-structure
  *
  * @since 10.0.0
  *
- * @property PollMedia|string   $question           The question of the poll. Only text is supported.
- * @property PollAnswer[]       $answers            Each of the answers available in the poll.
- * @property Carbon|null        $expiry	            The time when the poll ends.
- * @property bool               $allow_multiselect  Whether a user can select multiple answers.
- * @property int                $layout_type        The layout type of the poll.
- * @property PollResults|null   $results            The results of the poll.
-
- * @property string             $channel_id         The ID of the channel the poll is in.
- * @property string             $message_id         The ID of the message the poll is in.
+ * @property PollMedia|string  $question            The question of the poll. Only text is supported.
+ * @property PollAnswer[]	   $answers             Each of the answers available in the poll, up to 10.
+ * @property int               $duration	        Number of hours the poll should be open for, up to 7 days.
+ * @property bool              $allow_multiselect	Whether a user can select multiple answers.
+ * @property int|null          $layout_type?	    The layout type of the poll. Defaults to... DEFAULT!
  */
 class Poll extends Part
 {
+    public const LAYOUT_DEFAULT = 1;
+
     /**
      * {@inheritdoc}
      */
     protected $fillable = [
         'question',
         'answers',
-        'expiry',
+        'duration',
         'allow_multiselect',
         'layout_type',
-        'results',
-        'channel_id',
-        'message_id',
     ];
 
     /**
-     * Returns the question attribute.
+     * Set the question attribute.
      *
-     * @return PollMedia|null
+     * @param PollMedia|string $question The question of the poll.
+     *
+     * @throws \LengthException
+     *
+     * @return $this
      */
-    protected function getQuestionAttribute(): ?PollMedia
+    public function setQuestion(PollMedia|string $question): self
     {
-        if (! isset($this->attributes['question'])) {
-            return null;
+        $question = $question instanceof PollMedia
+            ? $question
+            : new PollMedia($this->discord, [
+                'text' => $question,
+            ]);
+
+        if (poly_strlen($question->text) > 300) {
+            throw new \LengthException('Question must be maximum 300 characters.');
         }
 
-        return $this->factory->part(PollMedia::class, (array) $this->attributes['question'], true);
+        $this->attributes['question'] = $question;
+
+        return $this;
     }
 
     /**
-     * Returns the answers attribute.
+     * Set the answers attribute.
      *
-     * @return PollAnswer[]
+     * @param PollAnswer[] $answers Each of the answers available in the poll.
+     *
+     * @return $this
      */
-    protected function getAnswersAttribute(): array
+    public function setAnswers(array $answers): self
     {
-        if (! isset($this->attributes['answers'])) {
-            return [];
+        foreach ($answers as $answer) {
+            $this->addAnswer($answer);
         }
 
-        return array_map(function ($answer) {
-            return $this->factory->part(PollAnswer::class, (array) $answer, true);
-        }, $this->attributes['answers']);
+        return $this;
     }
 
     /**
-     * Return the expiry attribute.
-     *
-     * @return Carbon|null
-     *
-     * @throws \Exception
+     * Add an answer to the poll.
      */
-    protected function getExpiryAttribute(): ?Carbon
+    public function addAnswer(PollAnswer|PollMedia|array|string $answer): self
     {
-        if (! isset($this->attributes['expiry'])) {
-            return null;
+        if (count($this->answers) >= 10) {
+            throw new \OutOfRangeException('Polls can only have up to 10 answers.');
         }
 
-        return Carbon::parse($this->attributes['expiry']);
+        if ($answer instanceof PollAnswer) {
+            $this->attributes['answers'][] = $answer;
+
+            return $this;
+        }
+
+        $answer = is_string($answer)
+            ? ['text' => $answer]
+            : $answer;
+
+        $answer = $answer instanceof PollMedia
+            ? $answer
+            : new PollMedia($this->discord, $answer);
+
+        if (poly_strlen($answer->text) > 55) {
+            throw new \LengthException('Answer must be maximum 55 characters.');
+        }
+
+        $this->attributes['answers'][] = new PollAnswer($this->discord, [
+            'poll_media' => $answer,
+        ]);
+
+        return $this;
     }
 
     /**
-     * Returns the results attribute.
+     * Set the duration of the poll.
      *
-     * @return PollResults|null
+     * @param int $duration Number of hours the poll should be open for, up to 32 days. Defaults to 24
+     *
+     * @throws \OutOfRangeException
+     *
+     * @return $this
      */
-    protected function getResultsAttribute(): ?PollResults
+    public function setDuration(int $duration): self
     {
-        if (! isset($this->attributes['results'])) {
-            return null;
+        if ($duration < 1 || $duration > 32 * 24) {
+            throw new \OutOfRangeException('Duration must be between 1 and 32 days.');
         }
 
-        return $this->factory->part(PollResults::class, (array) $this->attributes['results'], true);
+        $this->attributes['duration'] = $duration;
+
+        return $this;
     }
 
     /**
-     * Returns the users that voted for the specified answer.
+     * Determine whether a user can select multiple answers.
      *
-     * @param int      $answerId The answer ID to get voters for.
-     * @param int      $limit    The maximum number of users to return.
-     * @param int|null $after    The user ID to get users after.
+     * @param bool $multiselect Whether a user can select multiple answers.
      *
-     * @link https://discord.com/developers/docs/resources/poll#get-answer-voters
-     *
-     * @return ExtendedPromiseInterface<Collection|User[]>
+     * @return $this
      */
-    public function getAnswerVoters(int $answerId, int $limit = 25, ?int $after = null): ExtendedPromiseInterface
+    public function setAllowMultiselect(bool $multiselect): self
     {
-        $endpoint = Endpoint::bind(Endpoint::CHANNEL_POLL_ANSWERS, $this->channel_id, $this->message_id, $answerId);
+        $this->attributes['allow_multiselect'] = $multiselect;
 
-        $endpoint->addQuery('limit', $limit);
-
-        if ($after) {
-            $endpoint->addQuery('after', $after);
-        }
-
-        return $this->http->get($endpoint)
-            ->then(function ($response) {
-                $users = Collection::for(User::class);
-
-                foreach ($response as $user) {
-                    if (! $part = $this->discord->users->get('id', $user->id)) {
-                        $part = $this->discord->users->create($user, true);
-
-                        $this->discord->users->pushItem($part);
-                    }
-
-                    $users->pushItem($part);
-                }
-
-                return $users;
-            });
+        return $this;
     }
 
     /**
-     * End the poll.
+     * Set the layout type of the poll.
      *
-     * @link https://discord.com/developers/docs/resources/poll#end-poll
+     * @param int $type The layout type of the poll.
      *
-     * @return ExtendedPromiseInterface
+     * @return $this
      */
-    public function end(): ExtendedPromiseInterface
+    protected function setLayoutType(int $type): self
     {
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_POLL_EXPIRE, $this->channel_id, $this->message_id));
+        $this->attributes['layout_type'] = $type;
+
+        return $this;
     }
 }

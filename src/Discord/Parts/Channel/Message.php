@@ -14,7 +14,7 @@ namespace Discord\Parts\Channel;
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
-use Discord\Parts\Channel\Poll\Poll;
+use Discord\Parts\Channel\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Role;
