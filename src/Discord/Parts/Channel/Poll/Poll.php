@@ -90,7 +90,7 @@ class Poll extends Part
      */
     public function addAnswer(PollAnswer|PollMedia|array|string $answer): self
     {
-        if (count($this->answers) >= 10) {
+        if (count($this->answers ?? []) >= 10) {
             throw new \OutOfRangeException('Polls can only have up to 10 answers.');
         }
 
