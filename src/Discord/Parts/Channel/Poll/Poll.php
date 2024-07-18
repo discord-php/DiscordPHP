@@ -85,6 +85,8 @@ class Poll extends Part
      * Return the expiry attribute.
      *
      * @return Carbon|null
+     *
+     * @throws \Exception
      */
     protected function getExpiryAttribute(): ?Carbon
     {

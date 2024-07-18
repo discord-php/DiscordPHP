@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Channel\Poll;
 
-use Carbon\Carbon;
 use Discord\Parts\Part;
 
 /**

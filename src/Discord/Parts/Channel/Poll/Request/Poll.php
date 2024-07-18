@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Channel\Poll\Request;
 
-use Carbon\Carbon;
 use Discord\Parts\Part;
 use Discord\Parts\Channel\Poll\PollAnswer;
 use Discord\Parts\Channel\Poll\PollMedia;
