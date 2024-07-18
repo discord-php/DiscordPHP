@@ -100,13 +100,19 @@ class Poll extends Part
             return $this;
         }
 
-        $answer = is_string($answer)
-            ? ['text' => $answer]
-            : $answer;
+        $text = is_string($answer)
+            ? $answer
+            : $answer['text'];
+
+        $emoji = $answer['emoji'] ?? null;
 
         $answer = $answer instanceof PollMedia
             ? $answer
-            : new PollMedia($this->discord, $answer);
+            : new PollMedia($this->discord);
+
+        $answer
+            ->setText($text)
+            ->setEmoji($emoji);
 
         if (poly_strlen($answer->text) > 55) {
             throw new \LengthException('Answer must be maximum 55 characters.');
