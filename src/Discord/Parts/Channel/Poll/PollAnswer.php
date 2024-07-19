@@ -11,12 +11,15 @@
 
 namespace Discord\Parts\Channel\Poll;
 
+use Discord\Helpers\Collection;
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Guild\Guild;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\User;
+use React\Promise\ExtendedPromiseInterface;
 
 /**
  * An answer to a poll.
@@ -121,5 +124,49 @@ class PollAnswer extends Part
         }
 
         return $this->discord->guilds->get('id', $this->guild_id);
+    }
+
+    /**
+     * Returns the users that voted for the specified answer.
+     *
+     * @param int       $limit  The maximum number of users to return.
+     * @param int|null  $after  The user ID to get users after.
+     *
+     * @link https://discord.com/developers/docs/resources/poll#get-answer-voters
+     *
+     * @throws \OutOfRangeException
+     *
+     * @return ExtendedPromiseInterface<Collection|User[]>
+     */
+    public function getVoters(int $limit = 25, ?int $after = null): ExtendedPromiseInterface
+    {
+        if ($limit < 1 || $limit > 100) {
+            throw new \OutOfRangeException('Limit must be between 1 and 100.');
+        }
+
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_POLL_ANSWERS, $this->channel_id, $this->message_id, $this->answer_id);
+
+        $endpoint->addQuery('limit', $limit);
+
+        if ($after) {
+            $endpoint->addQuery('after', $after);
+        }
+
+        return $this->http->get($endpoint)
+            ->then(function ($response) {
+                $users = Collection::for(User::class);
+
+                foreach ($response->users ?? [] as $user) {
+                    if (! $part = $this->discord->users->get('id', $user->id)) {
+                        $part = $this->discord->users->create($user, true);
+
+                        $this->discord->users->pushItem($part);
+                    }
+
+                    $users->pushItem($part);
+                }
+
+                return $users;
+            });
     }
 }

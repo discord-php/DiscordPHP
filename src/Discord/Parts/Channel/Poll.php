@@ -18,7 +18,6 @@ use Discord\Parts\Channel\Poll\PollAnswer;
 use Discord\Parts\Channel\Poll\PollMedia;
 use Discord\Parts\Channel\Poll\PollResults;
 use Discord\Parts\Part;
-use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
@@ -118,45 +117,6 @@ class Poll extends Part
         }
 
         return $this->factory->part(PollResults::class, (array) $this->attributes['results'], true);
-    }
-
-    /**
-     * Returns the users that voted for the specified answer.
-     *
-     * @param int      $answerId The answer ID to get voters for.
-     * @param int      $limit    The maximum number of users to return.
-     * @param int|null $after    The user ID to get users after.
-     *
-     * @link https://discord.com/developers/docs/resources/poll#get-answer-voters
-     *
-     * @return ExtendedPromiseInterface<Collection|User[]>
-     */
-    public function getAnswerVoters(int $answerId, int $limit = 25, ?int $after = null): ExtendedPromiseInterface
-    {
-        $endpoint = Endpoint::bind(Endpoint::CHANNEL_POLL_ANSWERS, $this->channel_id, $this->message_id, $answerId);
-
-        $endpoint->addQuery('limit', $limit);
-
-        if ($after) {
-            $endpoint->addQuery('after', $after);
-        }
-
-        return $this->http->get($endpoint)
-            ->then(function ($response) {
-                $users = Collection::for(User::class);
-
-                foreach ($response as $user) {
-                    if (! $part = $this->discord->users->get('id', $user->id)) {
-                        $part = $this->discord->users->create($user, true);
-
-                        $this->discord->users->pushItem($part);
-                    }
-
-                    $users->pushItem($part);
-                }
-
-                return $users;
-            });
     }
 
     /**
