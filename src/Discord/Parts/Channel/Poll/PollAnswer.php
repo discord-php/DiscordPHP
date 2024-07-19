@@ -127,7 +127,7 @@ class PollAnswer extends Part
     }
 
     /**
-     * Returns the users that voted for the specified answer.
+     * Returns the users that voted for the answer.
      *
      * @param int       $limit  The maximum number of users to return.
      * @param int|null  $after  The user ID to get users after.
