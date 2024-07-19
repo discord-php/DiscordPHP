@@ -28,15 +28,15 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @since 10.0.0
  *
- * @property PollMedia|string   $question           The question of the poll. Only text is supported.
- * @property PollAnswer[]       $answers            Each of the answers available in the poll.
- * @property Carbon|null        $expiry	            The time when the poll ends.
- * @property bool               $allow_multiselect  Whether a user can select multiple answers.
- * @property int                $layout_type        The layout type of the poll.
- * @property PollResults|null   $results            The results of the poll.
-
- * @property string             $channel_id         The ID of the channel the poll is in.
- * @property string             $message_id         The ID of the message the poll is in.
+ * @property PollMedia|string         $question            The question of the poll. Only text is supported.
+ * @property Collection|PollAnswer[]  $answers             Each of the answers available in the poll.
+ * @property Carbon|null              $expiry	           The time when the poll ends.
+ * @property bool                     $allow_multiselect   Whether a user can select multiple answers.
+ * @property int                      $layout_type         The layout type of the poll.
+ * @property PollResults|null         $results             The results of the poll.
+ *
+ * @property string                   $channel_id          The ID of the channel the poll is in.
+ * @property string                   $message_id          The ID of the message the poll is in.
  */
 class Poll extends Part
 {
@@ -71,17 +71,23 @@ class Poll extends Part
     /**
      * Returns the answers attribute.
      *
-     * @return PollAnswer[]
+     * @return Collection|PollAnswer[]
      */
-    protected function getAnswersAttribute(): array
+    protected function getAnswersAttribute(): Collection
     {
         if (! isset($this->attributes['answers'])) {
             return [];
         }
 
-        return array_map(function ($answer) {
-            return $this->factory->part(PollAnswer::class, (array) $answer, true);
-        }, $this->attributes['answers']);
+        $answers = Collection::for(PollAnswer::class);
+
+        foreach ($this->attributes['answers'] as $answer) {
+            $part = $this->factory->part(PollAnswer::class, (array) $answer, true);
+
+            $answers->pushItem($part);
+        }
+
+        return $answers;
     }
 
     /**
