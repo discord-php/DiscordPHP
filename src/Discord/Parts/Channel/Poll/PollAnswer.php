@@ -20,6 +20,9 @@ use Discord\Parts\Part;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use function Discord\normalizePartId;
 
 /**
  * An answer to a poll.
@@ -129,8 +132,9 @@ class PollAnswer extends Part
     /**
      * Returns the users that voted for the answer.
      *
-     * @param int       $limit  The maximum number of users to return.
-     * @param int|null  $after  The user ID to get users after.
+     * @param array       $options          An array of options. All fields are optional.
+     * @param string|null $options['after'] Get users after this user ID.
+     * @param int|null    $options['limit'] Max number of users to return (1-100).
      *
      * @link https://discord.com/developers/docs/resources/poll#get-answer-voters
      *
@@ -138,21 +142,25 @@ class PollAnswer extends Part
      *
      * @return ExtendedPromiseInterface<Collection|User[]>
      */
-    public function getVoters(int $limit = 25, ?int $after = null): ExtendedPromiseInterface
+    public function getVoters(array $options = []): ExtendedPromiseInterface
     {
-        if ($limit < 1 || $limit > 100) {
-            throw new \OutOfRangeException('Limit must be between 1 and 100.');
+        $query = Endpoint::bind(Endpoint::CHANNEL_POLL_ANSWERS, $this->channel_id, $this->message_id, $this->answer_id);
+
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined(['after', 'limit'])
+            ->setAllowedTypes('after', ['int', 'string', User::class])
+            ->setAllowedTypes('limit', 'int')
+            ->setNormalizer('after', normalizePartId())
+            ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100));
+
+        $options = $resolver->resolve($options);
+
+        foreach ($options as $key => $value) {
+            $query->addQuery($key, $value);
         }
 
-        $endpoint = Endpoint::bind(Endpoint::CHANNEL_POLL_ANSWERS, $this->channel_id, $this->message_id, $this->answer_id);
-
-        $endpoint->addQuery('limit', $limit);
-
-        if ($after) {
-            $endpoint->addQuery('after', $after);
-        }
-
-        return $this->http->get($endpoint)
+        return $this->http->get($query)
             ->then(function ($response) {
                 $users = Collection::for(User::class);
 
