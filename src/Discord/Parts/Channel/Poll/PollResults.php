@@ -36,14 +36,10 @@ class PollResults extends Part
     /**
      * Returns the answer counts attribute.
      *
-     * @return PollAnswerCount|null
+     * @return PollAnswerCount
      */
-    protected function getAnswerCountsAttribute(): ?PollAnswerCount
+    protected function getAnswerCountsAttribute(): PollAnswerCount
     {
-        if (! isset($this->attributes['answer_counts'])) {
-            return null;
-        }
-
         return $this->factory->part(PollAnswerCount::class, (array) $this->attributes['answer_counts'], true);
     }
 }

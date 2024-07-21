@@ -27,7 +27,7 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @since 10.0.0
  *
- * @property PollMedia|string         $question            The question of the poll. Only text is supported.
+ * @property ?PollMedia               $question            The question of the poll. Only text is supported.
  * @property Collection|PollAnswer[]  $answers             Each of the answers available in the poll.
  * @property Carbon|null              $expiry	           The time when the poll ends.
  * @property bool                     $allow_multiselect   Whether a user can select multiple answers.
@@ -56,14 +56,10 @@ class Poll extends Part
     /**
      * Returns the question attribute.
      *
-     * @return PollMedia|null
+     * @return PollMedia
      */
-    protected function getQuestionAttribute(): ?PollMedia
+    protected function getQuestionAttribute(): PollMedia
     {
-        if (! isset($this->attributes['question'])) {
-            return null;
-        }
-
         return $this->factory->part(PollMedia::class, (array) $this->attributes['question'], true);
     }
 
@@ -74,13 +70,9 @@ class Poll extends Part
      */
     protected function getAnswersAttribute(): Collection
     {
-        if (! isset($this->attributes['answers'])) {
-            return [];
-        }
-
         $answers = Collection::for(PollAnswer::class);
 
-        foreach ($this->attributes['answers'] as $answer) {
+        foreach ($this->attributes['answers'] ?? [] as $answer) {
             $part = $this->factory->part(PollAnswer::class, (array) $answer, true);
 
             $answers->pushItem($part);
