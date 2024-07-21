@@ -144,7 +144,7 @@ class PollAnswer extends Part
      */
     public function getVoters(array $options = []): ExtendedPromiseInterface
     {
-        $query = Endpoint::bind(Endpoint::CHANNEL_POLL_ANSWERS, $this->channel_id, $this->message_id, $this->answer_id);
+        $query = Endpoint::bind(Endpoint::MESSAGE_POLL_ANSWER, $this->channel_id, $this->message_id, $this->answer_id);
 
         $resolver = new OptionsResolver();
         $resolver
