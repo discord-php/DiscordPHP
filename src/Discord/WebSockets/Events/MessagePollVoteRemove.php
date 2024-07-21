@@ -13,6 +13,11 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Poll\PollAnswer;
 use Discord\WebSockets\Event;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Reaction;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\Thread\Thread;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#message-poll-vote-remove-message-poll-vote-remove-fields
@@ -26,6 +31,31 @@ class MessagePollVoteRemove extends Event
      */
     public function handle($data)
     {
-        return new PollAnswer($this->discord, (array) $data, true);
+        /** @var ?Guild */
+        if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                /** @var Channel */
+                foreach ($guild->channels as $channel) {
+                    /** @var ?Thread */
+                    if ($thread = yield $channel->threads->cacheGet($data->channel_id)) {
+                        $channel = $thread;
+                        break;
+                    }
+                }
+            }
+        } else {
+            /** @var ?Channel */
+            $channel = yield $this->discord->private_channels->cacheGet($data->channel_id);
+        }
+
+        $answer = new PollAnswer($this->discord, (array) $data, true);
+
+        /** @var ?Message */
+        if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
+            yield $message->poll->answers->cache->delete($answer->answer_id);
+        }
+
+        return $answer;
     }
 }
