@@ -53,6 +53,9 @@ class Poll extends Part
         // events
         'channel_id',
         'message_id',
+
+        // repositories
+        'answers',
     ];
 
     /**
@@ -61,6 +64,28 @@ class Poll extends Part
     protected $repositories = [
         'answers' => PollAnswerRepository::class,
     ];
+
+    /**
+     * Sets the answers attribute.
+     *
+     * @param array $answers
+     */
+    protected function setAnswersAttribute(array $answers): void
+    {
+        foreach ($answers as $answer) {
+            /** @var ?PollAnswer */
+            if ($part = $this->answers->offsetGet($answer->answer_id)) {
+                $part->fill($answer);
+            } else {
+                /** @var PollAnswer */
+                $part = $this->answers->create($answer);
+            }
+
+            $this->answers->pushItem($part);
+        }
+
+        $this->attributes['answers'] = $answers;
+    }
 
     /**
      * Returns the question attribute.
