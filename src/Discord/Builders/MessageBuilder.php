@@ -624,12 +624,12 @@ class MessageBuilder implements JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize(): ?array
     {
         $empty = true;
 
         if (! empty($this->files)) {
-            $body = [];
+            $body = null;
             $empty = false;
         }
 
