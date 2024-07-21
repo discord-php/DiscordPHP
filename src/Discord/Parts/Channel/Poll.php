@@ -18,6 +18,7 @@ use Discord\Parts\Channel\Poll\PollAnswer;
 use Discord\Parts\Channel\Poll\PollMedia;
 use Discord\Parts\Channel\Poll\PollResults;
 use Discord\Parts\Part;
+use Discord\Repository\Channel\PollAnswerRepository;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
@@ -27,15 +28,15 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @since 10.0.0
  *
- * @property ?PollMedia               $question            The question of the poll. Only text is supported.
- * @property Collection|PollAnswer[]  $answers             Each of the answers available in the poll.
- * @property Carbon|null              $expiry	           The time when the poll ends.
- * @property bool                     $allow_multiselect   Whether a user can select multiple answers.
- * @property int                      $layout_type         The layout type of the poll.
- * @property PollResults|null         $results             The results of the poll.
+ * @property PollMedia              $question            The question of the poll. Only text is supported.
+ * @property PollAnswerRepository   $answers             Each of the answers available in the poll.
+ * @property Carbon                 $expiry	             The time when the poll ends.
+ * @property bool                   $allow_multiselect   Whether a user can select multiple answers.
+ * @property int                    $layout_type         The layout type of the poll.
+ * @property PollResults|null       $results             The results of the poll.
  *
- * @property string                   $channel_id          The ID of the channel the poll is in.
- * @property string                   $message_id          The ID of the message the poll is in.
+ * @property string                 $channel_id          The ID of the channel the poll is in.
+ * @property string                 $message_id          The ID of the message the poll is in.
  */
 class Poll extends Part
 {
@@ -44,13 +45,21 @@ class Poll extends Part
      */
     protected $fillable = [
         'question',
-        'answers',
         'expiry',
         'allow_multiselect',
         'layout_type',
         'results',
+
+        // events
         'channel_id',
         'message_id',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $repositories = [
+        'answers' => PollAnswerRepository::class,
     ];
 
     /**
@@ -64,36 +73,14 @@ class Poll extends Part
     }
 
     /**
-     * Returns the answers attribute.
-     *
-     * @return Collection|PollAnswer[]
-     */
-    protected function getAnswersAttribute(): Collection
-    {
-        $answers = Collection::for(PollAnswer::class);
-
-        foreach ($this->attributes['answers'] ?? [] as $answer) {
-            $part = $this->factory->part(PollAnswer::class, (array) $answer, true);
-
-            $answers->pushItem($part);
-        }
-
-        return $answers;
-    }
-
-    /**
      * Return the expiry attribute.
      *
-     * @return Carbon|null
+     * @return Carbon
      *
      * @throws \Exception
      */
-    protected function getExpiryAttribute(): ?Carbon
+    protected function getExpiryAttribute(): Carbon
     {
-        if (! isset($this->attributes['expiry'])) {
-            return null;
-        }
-
         return Carbon::parse($this->attributes['expiry']);
     }
 
@@ -112,14 +99,17 @@ class Poll extends Part
     }
 
     /**
-     * End the poll.
+     * Expire the poll.
      *
      * @link https://discord.com/developers/docs/resources/poll#end-poll
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Message>
      */
-    public function end(): ExtendedPromiseInterface
+    public function expire(): ExtendedPromiseInterface
     {
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_POLL_EXPIRE, $this->channel_id, $this->message_id));
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_POLL_EXPIRE, $this->channel_id, $this->message_id))
+            ->then(function ($response) {
+                return $this->factory->create(Message::class, (array) $response, true);
+            });
     }
 }
