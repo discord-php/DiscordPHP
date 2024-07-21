@@ -100,6 +100,9 @@ class Thread extends Part implements Stringable
         'total_message_sent',
         'flags',
         'applied_tags',
+
+        // events
+        'newly_created',
     ];
 
     /**
