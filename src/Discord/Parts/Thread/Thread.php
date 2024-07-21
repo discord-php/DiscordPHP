@@ -71,7 +71,6 @@ use function React\Promise\reject;
  * @property      int|null      $flags                 Channel flags combined as a bitfield. PINNED can only be set for threads in forum channels.
  * @property      string[]|null $applied_tags          The IDs of the set of tags that have been applied to a thread in a forum channel, limited to 5.
  *
- *
  * @property MessageRepository $messages Repository of messages sent in the thread.
  * @property MemberRepository  $members  Repository of members in the thread.
  *
