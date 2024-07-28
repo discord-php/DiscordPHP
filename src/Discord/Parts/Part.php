@@ -240,7 +240,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
         }
 
         if (! isset($this->attributes[$key])) {
-            return;
+            return null;
         }
 
         return $this->attributes[$key];
