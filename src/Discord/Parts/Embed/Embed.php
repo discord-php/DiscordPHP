@@ -501,11 +501,9 @@ class Embed extends Part
      * Ensures a URL is valid for use in embeds.
      *
      * @param ?string $url
-     * @param array $allowed Allowed URL scheme
+     * @param array   $allowed Allowed URL scheme
      *
      * @throws \DomainException
-     *
-     * @return void
      */
     protected function ensureValidUrl(?string $url = null, array $allowed = ['http', 'https', 'attachment']): void
     {
