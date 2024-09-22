@@ -11,9 +11,9 @@
 
 namespace Discord\Repository;
 
+use Discord\Discord;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
-use Discord\Repository\AbstractRepository;
 
 /**
  * Contains emojis of an application.
@@ -21,7 +21,7 @@ use Discord\Repository\AbstractRepository;
  * @see Emoji
  * @see \Discord\Parts\User\Client
  *
- * @since 4.0.2
+ * @since 10.0.0
  *
  * @method Emoji|null get(string $discrim, $key)
  * @method Emoji|null pull(string|int $key, $default = null)
@@ -46,4 +46,14 @@ class EmojiRepository extends AbstractRepository
      * {@inheritDoc}
      */
     protected $class = Emoji::class;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct(Discord $discord, array $vars = [])
+    {
+        $vars['application_id'] = $discord->application->id;
+
+        parent::__construct($discord, $vars);
+    }
 }
