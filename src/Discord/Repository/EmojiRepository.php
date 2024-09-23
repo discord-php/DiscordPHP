@@ -14,6 +14,9 @@ namespace Discord\Repository;
 use Discord\Discord;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
+use React\Promise\ExtendedPromiseInterface;
+
+use function React\Promise\resolve;
 
 /**
  * Contains emojis of an application.
@@ -55,5 +58,16 @@ class EmojiRepository extends AbstractRepository
         $vars['application_id'] = $discord->application->id;
 
         parent::__construct($discord, $vars);
+    }
+
+    /**
+     * @param object $response
+     *
+     * @return ExtendedPromiseInterface<static>
+     */
+    protected function cacheFreshen($response): ExtendedPromiseInterface
+    {
+        foreach ($response as $values) parent::cacheFreshen($values);
+        return resolve($this);
     }
 }
