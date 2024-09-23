@@ -67,7 +67,16 @@ class EmojiRepository extends AbstractRepository
      */
     protected function cacheFreshen($response): ExtendedPromiseInterface
     {
-        foreach ($response as $values) parent::cacheFreshen($values);
-        return resolve($this);
+        foreach ($response as $value) foreach ($value as $value) {
+            $value = array_merge($this->vars, (array) $value);
+            $part = $this->factory->create($this->class, $value, true);
+            $items[$part->{$this->discrim}] = $part;
+        }
+
+        if (empty($items)) {
+            return resolve($this);
+        }
+
+        return $this->cache->setMultiple($items)->then(fn ($success) => $this);
     }
 }
