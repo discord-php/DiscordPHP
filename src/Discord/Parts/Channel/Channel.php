@@ -913,14 +913,14 @@ class Channel extends Part implements Stringable
      */
     protected function getPermissionOverwritesAttribute(): ?array
     {
-        $overwrites = null;
+        $overwrites = [];
 
         /** @var Overwrite */
         foreach ($this->overwrites as $overwrite) {
             $overwrites[] = $overwrite->getRawAttributes();
         }
 
-        return $overwrites ?? $this->attributes['permission_overwrites'] ?? null;
+        return ! empty($overwrites) ? $overwrites : ($this->attributes['permission_overwrites'] ?? null);
     }
 
     /**
