@@ -16,7 +16,7 @@ use Discord\Parts\Guild\Sound;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains sounds of a guild.
+ * Contains sounds of an application.
  *
  * @see Sound
  * @see \Discord\Parts\Guild\Guild
