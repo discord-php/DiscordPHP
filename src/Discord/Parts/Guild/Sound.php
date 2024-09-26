@@ -77,6 +77,20 @@ class Sound extends Part implements Stringable
     }
 
     /**
+     * Returns the URL of the sound.
+     *
+     * @return string|null
+     */
+    public function getURL(): ?string
+    {
+        if (! isset($this->sound_id)) {
+            return null;
+        }
+
+        return "https://cdn.discordapp.com/soundboard-sounds/{$this->sound_id}";
+    }
+
+    /**
      * Converts the sound to a string.
      *
      * @return string
