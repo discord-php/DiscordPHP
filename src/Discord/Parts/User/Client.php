@@ -18,6 +18,7 @@ use Discord\Parts\Part;
 use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
+use Discord\Repository\SoundRepository;
 use Discord\Repository\UserRepository;
 use React\Promise\ExtendedPromiseInterface;
 
@@ -44,6 +45,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @property EmojiRepository          $emojis
  * @property GuildRepository          $guilds
  * @property PrivateChannelRepository $private_channels
+ * @property SoundRepository          $sounds
  * @property UserRepository           $users
  */
 class Client extends Part
@@ -76,6 +78,7 @@ class Client extends Part
         'emojis' => EmojiRepository::class,
         'guilds' => GuildRepository::class,
         'private_channels' => PrivateChannelRepository::class,
+        'sounds' => SoundRepository::class,
         'users' => UserRepository::class,
     ];
 
