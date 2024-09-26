@@ -114,6 +114,7 @@ class Channel extends Part implements Stringable
     public const TYPE_GUILD_STAGE_VOICE = 13;
     public const TYPE_GUILD_DIRECTORY = 14;
     public const TYPE_GUILD_FORUM = 15;
+    public const TYPE_GUILD_MEDIA = 16;
 
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_TEXT` */
     public const TYPE_TEXT = self::TYPE_GUILD_TEXT;
