@@ -31,14 +31,6 @@ use function Discord\poly_strlen;
  */
 abstract class SelectMenu extends Component
 {
-    public const ALLOWED_TYPES = [
-        self::TYPE_STRING_SELECT,
-        self::TYPE_USER_SELECT,
-        self::TYPE_ROLE_SELECT,
-        self::TYPE_MENTIONABLE_SELECT,
-        self::TYPE_CHANNEL_SELECT,
-    ];
-
     /**
      * Type of select menu component (text: 3, user: 5, role: 6, mentionable: 7, channels: 8)
      *
@@ -153,7 +145,8 @@ abstract class SelectMenu extends Component
      */
     public function setType(int $type): self
     {
-        if (! in_array($type, self::ALLOWED_TYPES)) {
+        $allowed_types = [self::TYPE_STRING_SELECT, self::TYPE_USER_SELECT, self::TYPE_ROLE_SELECT, self::TYPE_MENTIONABLE_SELECT, self::TYPE_CHANNEL_SELECT];
+        if (! in_array($type, $allowed_types)) {
             throw new \InvalidArgumentException('Invalid select menu type.');
         }
 
@@ -241,6 +234,17 @@ abstract class SelectMenu extends Component
         }
 
         $this->placeholder = $placeholder;
+
+        return $this;
+    }
+
+    public function setDefaultValues(?array $default_values): self
+    {
+        $allowed_types = [self::TYPE_USER_SELECT, self::TYPE_ROLE_SELECT, self::TYPE_MENTIONABLE_SELECT, self::TYPE_CHANNEL_SELECT];
+        if (! in_array($this->type, $allowed_types)) {
+            throw new \InvalidArgumentException('Default values can only be set for user, role, mentionable, and channel selects.');
+        }
+        $this->default_values = $default_values;
 
         return $this;
     }
