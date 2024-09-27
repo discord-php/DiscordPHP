@@ -750,6 +750,14 @@ class MessageBuilder implements JsonSerializable
             $body['poll'] = $this->poll;
         }
 
+        if (isset($this->enforce_nonce)) {
+            $body['enforce_nonce'] = $this->enforce_nonce;
+        }
+
+        if (isset($this->poll)) {
+            $body['poll'] = $this->poll;
+        }
+
         return $body;
     }
 }
