@@ -98,7 +98,7 @@ use function React\Promise\resolve;
  * @property InviteRepository        $invites         Invites in the channel.
  * @property StageInstanceRepository $stage_instances Stage instances in the channel.
  *
- * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
+ * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder|string $builder)
  */
 class Channel extends Part implements Stringable
 {
@@ -114,6 +114,7 @@ class Channel extends Part implements Stringable
     public const TYPE_GUILD_STAGE_VOICE = 13;
     public const TYPE_GUILD_DIRECTORY = 14;
     public const TYPE_GUILD_FORUM = 15;
+    public const TYPE_GUILD_MEDIA = 16;
 
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_TEXT` */
     public const TYPE_TEXT = self::TYPE_GUILD_TEXT;
@@ -912,14 +913,14 @@ class Channel extends Part implements Stringable
      */
     protected function getPermissionOverwritesAttribute(): ?array
     {
-        $overwrites = null;
+        $overwrites = [];
 
         /** @var Overwrite */
         foreach ($this->overwrites as $overwrite) {
             $overwrites[] = $overwrite->getRawAttributes();
         }
 
-        return $overwrites ?? $this->attributes['permission_overwrites'] ?? null;
+        return ! empty($overwrites) ? $overwrites : ($this->attributes['permission_overwrites'] ?? null);
     }
 
     /**

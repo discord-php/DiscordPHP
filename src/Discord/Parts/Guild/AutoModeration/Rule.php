@@ -67,6 +67,7 @@ class Rule extends Part
     public const TRIGGER_TYPE_SPAM = 3;
     public const TRIGGER_TYPE_KEYWORD_PRESET = 4;
     public const TRIGGER_TYPE_MENTION_SPAM = 5;
+    public const TRIGGER_TYPE_PROFILE = 6;
 
     public const KEYWORD_PRESET_TYPE_PROFANITY = 1;
     public const KEYWORD_PRESET_TYPE_SEXUAL_CONTENT = 2;
@@ -180,7 +181,7 @@ class Rule extends Part
             'exempt_channels',
         ]);
 
-        if (in_array($this->trigger_type, [self::TRIGGER_TYPE_KEYWORD, self::TRIGGER_TYPE_KEYWORD_PRESET, self::TRIGGER_TYPE_MENTION_SPAM])) {
+        if (in_array($this->trigger_type, [self::TRIGGER_TYPE_KEYWORD, self::TRIGGER_TYPE_KEYWORD_PRESET, self::TRIGGER_TYPE_MENTION_SPAM, self::TRIGGER_TYPE_PROFILE])) {
             $attr['trigger_metadata'] = $this->trigger_metadata;
         }
 

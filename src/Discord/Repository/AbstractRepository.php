@@ -35,7 +35,7 @@ use function React\Promise\resolve;
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @property-read string       $discrim The discriminator.
+ * @property      string       $discrim The discriminator.
  * @property-read CacheWrapper $cache   The react/cache wrapper.
  */
 abstract class AbstractRepository extends Collection
@@ -466,6 +466,7 @@ abstract class AbstractRepository extends Collection
      * Pushes a single item to the repository.
      *
      * @deprecated 10.0.0 Use async `$repository->cache->set()`
+     * This method is deprecated for userland code but can still be used internally within the library.
      *
      * @param Part $item
      *
@@ -649,6 +650,7 @@ abstract class AbstractRepository extends Collection
      * If the repository has an offset.
      *
      * @deprecated 10.0.0 Use async `$repository->cache->has()`
+     * This method is deprecated for userland code but can still be used internally within the library.
      *
      * @param string|int $offset
      *
@@ -663,6 +665,7 @@ abstract class AbstractRepository extends Collection
      * Gets a part from the repository.
      *
      * @deprecated 10.0.0 Use async `$repository->cacheGet()` or sync `$repository->get()`
+     * This method is deprecated for userland code but can still be used internally within the library.
      *
      * @param string|int $offset
      *

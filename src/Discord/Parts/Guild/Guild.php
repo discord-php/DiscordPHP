@@ -35,6 +35,7 @@ use Discord\Parts\Permissions\RolePermission;
 use Discord\Repository\Guild\AutoModerationRuleRepository;
 use Discord\Repository\Guild\CommandPermissionsRepository;
 use Discord\Repository\Guild\GuildCommandRepository;
+use Discord\Repository\Guild\SoundRepository;
 use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
@@ -144,6 +145,7 @@ use function React\Promise\resolve;
  * @property CommandPermissionsRepository $command_permissions
  * @property IntegrationRepository        $integrations
  * @property InviteRepository             $invites
+ * @property SoundRepository              $sounds
  * @property GuildTemplateRepository      $templates
  */
 class Guild extends Part
@@ -296,6 +298,7 @@ class Guild extends Part
         'command_permissions' => CommandPermissionsRepository::class,
         'integrations' => IntegrationRepository::class,
         'invites' => InviteRepository::class,
+        'sounds' => SoundRepository::class,
         'templates' => GuildTemplateRepository::class,
     ];
 

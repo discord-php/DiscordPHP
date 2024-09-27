@@ -29,6 +29,7 @@ use Discord\Parts\User\Client;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
+use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
@@ -42,11 +43,12 @@ use Evenement\EventEmitterTrait;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
+use Monolog\Level;
 use Psr\Log\LoggerInterface;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
-use React\EventLoop\Factory as LoopFactory;
+use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use React\Promise\ExtendedPromiseInterface;
@@ -61,20 +63,21 @@ use function React\Promise\all;
  *
  * @version 10.0.0
  *
- * @property string                   $id               The unique identifier of the client.
- * @property string                   $username         The username of the client.
- * @property string                   $password         The password of the client (if they have provided it).
- * @property string                   $email            The email of the client.
- * @property bool                     $verified         Whether the client has verified their email.
- * @property string                   $avatar           The avatar URL of the client.
- * @property string                   $avatar_hash      The avatar hash of the client.
- * @property string                   $discriminator    The unique discriminator of the client.
- * @property bool                     $bot              Whether the client is a bot.
- * @property User                     $user             The user instance of the client.
- * @property Application              $application      The OAuth2 application of the bot.
- * @property GuildRepository          $guilds
- * @property PrivateChannelRepository $private_channels
- * @property UserRepository           $users
+ * @property string                     $id               The unique identifier of the client.
+ * @property string                     $username         The username of the client.
+ * @property string                     $password         The password of the client (if they have provided it).
+ * @property string                     $email            The email of the client.
+ * @property bool                       $verified         Whether the client has verified their email.
+ * @property string                     $avatar           The avatar URL of the client.
+ * @property string                     $avatar_hash      The avatar hash of the client.
+ * @property string                     $discriminator    The unique discriminator of the client.
+ * @property bool                       $bot              Whether the client is a bot.
+ * @property User                       $user             The user instance of the client.
+ * @property Application                $application      The OAuth2 application of the bot.
+ * @property GuildRepository            $guilds
+ * @property PrivateChannelRepository   $private_channels
+ * @property UserRepository             $users
+ * @property EmojiRepository            $emojis
  */
 class Discord
 {
@@ -322,7 +325,7 @@ class Discord
     /**
      * The cache configuration.
      *
-     * @var CacheConfig
+     * @var CacheConfig[]
      */
     protected $cacheConfig;
 
@@ -1426,10 +1429,10 @@ class Discord
 
         $options = $resolver->resolve($options);
 
-        $options['loop'] ??= LoopFactory::create();
+        $options['loop'] ??= Loop::get();
 
         if (null === $options['logger']) {
-            $streamHandler = new StreamHandler('php://stdout', Monolog::DEBUG);
+            $streamHandler = new StreamHandler('php://stdout', Level::Debug);
             $lineFormatter = new LineFormatter(null, null, true, true);
             $streamHandler->setFormatter($lineFormatter);
             $logger = new Monolog('DiscordPHP', [$streamHandler]);
