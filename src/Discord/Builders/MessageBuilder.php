@@ -19,6 +19,7 @@ use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Poll\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
 use JsonSerializable;
@@ -61,6 +62,7 @@ class MessageBuilder implements JsonSerializable
      * @var string|null
      */
     private $avatar_url;
+
     /**
      * Whether the message is text-to-speech.
      *
@@ -132,9 +134,9 @@ class MessageBuilder implements JsonSerializable
     private $enforce_nonce;
 
     /**
-     * A poll!
+     * The poll for the message.
      *
-     * @var mixed
+     * @var Poll|null
      */
     private $poll;
 
@@ -207,11 +209,11 @@ class MessageBuilder implements JsonSerializable
     /**
      * Sets the poll of the message.
      *
-     * @param mixed $poll Poll object.
+     * @param Poll|null $poll
      *
      * @return $this
      */
-    public function setPoll($poll): self
+    public function setPoll(Poll|null $poll): self
     {
         $this->poll = $poll;
 
@@ -703,6 +705,11 @@ class MessageBuilder implements JsonSerializable
             $empty = false;
         }
 
+        if (isset($this->poll)) {
+            $body['poll'] = $this->poll;
+            $empty = false;
+        }
+
         if (isset($this->allowed_mentions)) {
             $body['allowed_mentions'] = $this->allowed_mentions;
         }
@@ -732,7 +739,15 @@ class MessageBuilder implements JsonSerializable
         if (isset($this->flags)) {
             $body['flags'] = $this->flags;
         } elseif ($empty) {
-            throw new RequestFailedException('You cannot send an empty message. Set the content or add an embed or file.');
+            throw new RequestFailedException('You cannot send an empty message. Set the content or add an embed, file or poll.');
+        }
+
+        if (isset($this->enforce_nonce)) {
+            $body['enforce_nonce'] = $this->enforce_nonce;
+        }
+
+        if (isset($this->poll)) {
+            $body['poll'] = $this->poll;
         }
 
         if (isset($this->enforce_nonce)) {
