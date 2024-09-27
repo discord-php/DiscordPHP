@@ -78,13 +78,6 @@ class MessageBuilder implements JsonSerializable
     private $embeds;
 
     /**
-     * The poll for the message.
-     *
-     * @var Poll|null
-     */
-    private $poll;
-
-    /**
      * Allowed mentions object for the message.
      *
      * @var array|null
@@ -134,6 +127,20 @@ class MessageBuilder implements JsonSerializable
     private $flags;
 
     /**
+     * Whether to enforce the nonce.
+     *
+     * @var bool|null
+     */
+    private $enforce_nonce;
+
+    /**
+     * The poll for the message.
+     *
+     * @var Poll|null
+     */
+    private $poll;
+
+    /**
      * Creates a new message builder.
      *
      * @return static
@@ -179,6 +186,36 @@ class MessageBuilder implements JsonSerializable
         }
 
         $this->nonce = $nonce;
+
+        return $this;
+    }
+
+    /**
+     * If true and nonce is present, it will be checked for uniqueness in the past few minutes.
+     * If another message was created by the same author with the same nonce,
+     * that message will be returned and no new message will be created.
+     *
+     * @param bool $enforce_nonce
+     *
+     * @return $this
+     */
+    public function setEnforceNonce(bool $enforce_nonce = true): self
+    {
+        $this->enforce_nonce = $enforce_nonce;
+
+        return $this;
+    }
+
+    /**
+     * Sets the poll of the message.
+     *
+     * @param Poll|null $poll
+     *
+     * @return $this
+     */
+    public function setPoll(Poll|null $poll): self
+    {
+        $this->poll = $poll;
 
         return $this;
     }
@@ -279,16 +316,6 @@ class MessageBuilder implements JsonSerializable
         $this->embeds = [];
 
         return $this->addEmbed(...$embeds);
-    }
-
-    /**
-     * Sets the poll for the message.
-     */
-    public function setPoll(Poll $poll): self
-    {
-        $this->poll = $poll;
-
-        return $this;
     }
 
     /**
@@ -643,12 +670,12 @@ class MessageBuilder implements JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize(): ?array
     {
         $empty = true;
 
         if (! empty($this->files)) {
-            $body = [];
+            $body = null;
             $empty = false;
         }
 
@@ -713,6 +740,14 @@ class MessageBuilder implements JsonSerializable
             $body['flags'] = $this->flags;
         } elseif ($empty) {
             throw new RequestFailedException('You cannot send an empty message. Set the content or add an embed, file or poll.');
+        }
+
+        if (isset($this->enforce_nonce)) {
+            $body['enforce_nonce'] = $this->enforce_nonce;
+        }
+
+        if (isset($this->poll)) {
+            $body['poll'] = $this->poll;
         }
 
         return $body;
