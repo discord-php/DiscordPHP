@@ -86,8 +86,11 @@ class CommandBuilder implements JsonSerializable
     {
         $arrCommand = [
             'name' => $this->name,
-            'description' => $this->description,
         ];
+
+        if ($this->type === Command::CHAT_INPUT) {
+            $arrCommand['description'] = $this->description;
+        }
 
         $optionals = [
             'type',

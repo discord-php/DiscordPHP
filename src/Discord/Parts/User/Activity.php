@@ -137,12 +137,12 @@ class Activity extends Part implements Stringable
     public function __toString(): string
     {
         return match ($this->type) {
-            self::TYPE_GAME => 'Playing ' . $this->name,
-            self::TYPE_STREAMING => 'Streaming ' . $this->details,
-            self::TYPE_LISTENING => 'Listening to ' . $this->name,
-            self::TYPE_WATCHING => 'Watching ' . $this->name,
+            self::TYPE_GAME => 'Playing '.$this->name,
+            self::TYPE_STREAMING => 'Streaming '.$this->details,
+            self::TYPE_LISTENING => 'Listening to '.$this->name,
+            self::TYPE_WATCHING => 'Watching '.$this->name,
             self::TYPE_CUSTOM => "{$this->emoji} {$this->state}",
-            self::TYPE_COMPETING => 'Competing in ' . $this->name,
+            self::TYPE_COMPETING => 'Competing in '.$this->name,
             default => $this->name,
         };
     }

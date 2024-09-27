@@ -18,7 +18,7 @@ use React\Promise\PromiseInterface;
 use function React\Promise\resolve;
 
 /**
- * Legacy v7.x in memory cache behavior
+ * Legacy v7.x in memory cache behavior.
  *
  * @since 10.0.0
  * @internal
@@ -89,7 +89,7 @@ final class LegacyCacheWrapper extends CacheWrapper
      */
     public function delete($key)
     {
-        if (!array_key_exists($key, $this->items)) {
+        if (! array_key_exists($key, $this->items)) {
             return resolve(false);
         }
 
@@ -197,7 +197,7 @@ final class LegacyCacheWrapper extends CacheWrapper
         }
         $part = $this->discord->getFactory()->part($this->class, $value->attributes, $value->created);
         foreach ($value as $name => $var) {
-            if (!in_array($name, ['created', 'attributes'])) {
+            if (! in_array($name, ['created', 'attributes'])) {
                 $part->{$name} = $var;
             }
         }
