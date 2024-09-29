@@ -15,9 +15,11 @@ use Discord\Exceptions\FileNotFoundException;
 use Discord\Http\Endpoint;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
+use Discord\Repository\EntitlementRepository;
 use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
+use Discord\Repository\SKUsRepository;
 use Discord\Repository\SoundRepository;
 use Discord\Repository\UserRepository;
 use React\Promise\ExtendedPromiseInterface;
@@ -42,9 +44,11 @@ use React\Promise\ExtendedPromiseInterface;
  * @property User         $user          The user instance of the client.
  * @property Application  $application   The OAuth2 application of the bot.
  *
+ * @property EntitlementRepository    $entitlements
  * @property EmojiRepository          $emojis
  * @property GuildRepository          $guilds
  * @property PrivateChannelRepository $private_channels
+ * @property SKUsRepository           $skus
  * @property SoundRepository          $sounds
  * @property UserRepository           $users
  */
@@ -75,9 +79,11 @@ class Client extends Part
      * {@inheritDoc}
      */
     protected $repositories = [
+        'entitlements' => EntitlementRepository::class,
         'emojis' => EmojiRepository::class,
         'guilds' => GuildRepository::class,
         'private_channels' => PrivateChannelRepository::class,
+        'skus' => SKUsRepository::class,
         'sounds' => SoundRepository::class,
         'users' => UserRepository::class,
     ];

@@ -115,6 +115,15 @@ abstract class Event
     public const MESSAGE_POLL_VOTE_ADD = 'MESSAGE_POLL_VOTE_ADD';
     public const MESSAGE_POLL_VOTE_REMOVE = 'MESSAGE_POLL_VOTE_REMOVE';
 
+    // Entitlements and SKUs
+    public const ENTITLEMENT_CREATE = 'ENTITLEMENT_CREATE';
+    public const ENTITLEMENT_UPDATE = 'ENTITLEMENT_UPDATE';
+    public const ENTITLEMENT_DELETE = 'ENTITLEMENT_DELETE';
+
+    public const SUBSCRIPTION_CREATE = 'SUBSCRIPTION_CREATE';
+    public const SUBSCRIPTION_UPDATE = 'SUBSCRIPTION_UPDATE';
+    public const SUBSCRIPTION_DELETE = 'SUBSCRIPTION_DELETE';
+
     /**
      * The Discord client instance.
      *
