@@ -83,7 +83,6 @@ use function React\Promise\all;
  * @property PrivateChannelRepository   $private_channels
  * @property SKUsRepository             $skus
  * @property UserRepository             $users
- * @property EmojiRepository            $emojis
  */
 class Discord
 {
