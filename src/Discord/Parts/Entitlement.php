@@ -98,8 +98,8 @@ class Entitlement extends Part
     public function getRepositoryAttributes(): array
     {
         return [
-            'application_id' => $this->application_id,
             'entitlement_id' => $this->id,
+            'application_id' => $this->application_id,
         ];
     }
 
