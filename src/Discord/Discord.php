@@ -82,6 +82,7 @@ use function React\Promise\all;
  * @property GuildRepository            $guilds
  * @property PrivateChannelRepository   $private_channels
  * @property SKUsRepository             $skus
+ * @property SoundRepository            $sounds
  * @property UserRepository             $users
  */
 class Discord
