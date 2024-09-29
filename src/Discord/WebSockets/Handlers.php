@@ -117,6 +117,15 @@ class Handlers
         $this->addHandler(Event::AUTO_MODERATION_RULE_UPDATE, \Discord\WebSockets\Events\AutoModerationRuleUpdate::class);
         $this->addHandler(Event::AUTO_MODERATION_RULE_DELETE, \Discord\WebSockets\Events\AutoModerationRuleDelete::class);
         $this->addHandler(Event::AUTO_MODERATION_ACTION_EXECUTION, \Discord\WebSockets\Events\AutoModerationActionExecution::class);
+
+        // Entitlement Event Handlers
+        $this->addHandler(Event::ENTITLEMENT_CREATE, \Discord\WebSockets\Events\EntitlementCreate::class);
+        $this->addHandler(Event::ENTITLEMENT_UPDATE, \Discord\WebSockets\Events\EntitlementUpdate::class);
+        $this->addHandler(Event::ENTITLEMENT_DELETE, \Discord\WebSockets\Events\EntitlementDelete::class);
+
+        $this->addHandler(Event::SUBSCRIPTION_CREATE, \Discord\WebSockets\Events\SubscriptionCreate::class);
+        $this->addHandler(Event::SUBSCRIPTION_UPDATE, \Discord\WebSockets\Events\SubscriptionUpdate::class);
+        $this->addHandler(Event::SUBSCRIPTION_DELETE, \Discord\WebSockets\Events\SubscriptionDelete::class);
     }
 
     /**

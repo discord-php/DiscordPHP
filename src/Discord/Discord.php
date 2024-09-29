@@ -29,9 +29,11 @@ use Discord\Parts\User\Client;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
+use Discord\Repository\EntitlementRepository;
 use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
+use Discord\Repository\SKUsRepository;
 use Discord\Repository\UserRepository;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
@@ -74,8 +76,12 @@ use function React\Promise\all;
  * @property bool                       $bot              Whether the client is a bot.
  * @property User                       $user             The user instance of the client.
  * @property Application                $application      The OAuth2 application of the bot.
+
+ * @property EntitlementRepository      $entitlements
+ * @property EmojiRepository            $emojis
  * @property GuildRepository            $guilds
  * @property PrivateChannelRepository   $private_channels
+ * @property SKUsRepository             $skus
  * @property UserRepository             $users
  * @property EmojiRepository            $emojis
  */
