@@ -12,6 +12,7 @@
 namespace Discord\Parts\SKUs;
 
 use Discord\Parts\Part;
+use Discord\Repository\SKUs\SubscriptionRepository;
 
 /**
  * An SKU object represents a premium offering in the application that a user or guild can purchase.
@@ -20,12 +21,13 @@ use Discord\Parts\Part;
  *
  * @since 10.0.0
  *
- * @property string      $id              ID of the SKU.
- * @property int         $type            Type of SKU.
- * @property string      $application_id  ID of the parent application.
- * @property string      $name            Customer-facing name of the premium offering.
- * @property string      $slug            System-generated URL slug based on the SKU's name.
- * @property int         $flags           SKU flags combined as a bitfield.
+ * @property string                      $id              ID of the SKU.
+ * @property int                         $type            Type of SKU.
+ * @property string                      $application_id  ID of the parent application.
+ * @property string                      $name            Customer-facing name of the premium offering.
+ * @property string                      $slug            System-generated URL slug based on the SKU's name.
+ * @property int                         $flags           SKU flags combined as a bitfield.
+ * @property-read SubscriptionRepository $subscriptions Repository for the subscriptions that belong to this SKU.
  */
 class SKU extends Part
 {
@@ -48,6 +50,13 @@ class SKU extends Part
         'name',
         'slug',
         'flags',
+    ];
+
+    /**
+     * {@inheritDoc}
+     */
+    protected $repositories = [
+        'subscriptions' => SubscriptionRepository::class,
     ];
 
     /**
@@ -78,5 +87,15 @@ class SKU extends Part
     public function isUserSubscription(): bool
     {
         return ($this->flags & self::FLAG_USER_SUBSCRIPTION) === self::FLAG_USER_SUBSCRIPTION;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'sku_id' => $this->id,
+        ];
     }
 }

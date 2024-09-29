@@ -14,8 +14,6 @@ namespace Discord\Parts\SKUs;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Parts\Part;
-use Discord\Repository\EntitlementRepository;
-use Discord\Repository\SKUsRepository;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
@@ -57,6 +55,9 @@ class Subscription extends Part
         'status',
         'canceled_at',
         'country',
+
+        // @internal
+        'subscriptions',
     ];
 
     /**
@@ -153,5 +154,15 @@ class Subscription extends Part
     protected function getUserAttribute(): ExtendedPromiseInterface
     {
         return $this->discord->users->cacheGet($this->user_id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'subscription_id' => $this->id,
+        ];
     }
 }
