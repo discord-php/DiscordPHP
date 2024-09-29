@@ -34,8 +34,9 @@ use React\Promise\ExtendedPromiseInterface;
  * @property int                         $status                Current status of the subscription.
  * @property Carbon|null                 $canceled_at           When the subscription was canceled.
  * @property string|null                 $country               ISO3166-1 alpha-2 country code of the payment source used to purchase the subscription.
- * @property-read EntitlementRepository  $entitlements          Entitlements granted for this subscription.
- * @property-read SKUsRepository         $skus                  SKUs subscribed to.
+ * @property-read User                   $user                  User who is subscribed.
+ * @property-read Collection             $entitlements          Entitlements granted for this subscription.
+ * @property-read Collection             $skus                  SKUs subscribed to.
  */
 class Subscription extends Part
 {
@@ -142,5 +143,15 @@ class Subscription extends Part
     protected function getCanceledAtAttribute(): ?Carbon
     {
         return isset($this->attributes['canceled_at']) ? new Carbon($this->attributes['canceled_at']) : null;
+    }
+
+    /**
+     * Gets the user who is subscribed.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    protected function getUserAttribute(): ExtendedPromiseInterface
+    {
+        return $this->discord->users->cacheGet($this->user_id);
     }
 }
