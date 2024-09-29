@@ -96,6 +96,7 @@ class SKU extends Part
     {
         return [
             'sku_id' => $this->id,
+            'application_id' => $this->application_id,
         ];
     }
 }
