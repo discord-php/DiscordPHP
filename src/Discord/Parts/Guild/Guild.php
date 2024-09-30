@@ -23,6 +23,7 @@ use Discord\Parts\Channel\StageInstance;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Repository\EntitlementRepository;
 use Discord\Repository\Guild\BanRepository;
 use Discord\Repository\Guild\ChannelRepository;
 use Discord\Repository\Guild\EmojiRepository;
@@ -141,6 +142,7 @@ use function React\Promise\resolve;
  *
  * @property AutoModerationRuleRepository $auto_moderation_rules
  * @property BanRepository                $bans
+ * @property EntitlementRepository        $entitlements
  * @property GuildCommandRepository       $commands
  * @property CommandPermissionsRepository $command_permissions
  * @property IntegrationRepository        $integrations
@@ -286,6 +288,7 @@ class Guild extends Part
      */
     protected $repositories = [
         'roles' => RoleRepository::class,
+        'entitlements' => EntitlementRepository::class,
         'emojis' => EmojiRepository::class,
         'stickers' => StickerRepository::class,
         'members' => MemberRepository::class,
