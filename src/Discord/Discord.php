@@ -1103,6 +1103,23 @@ class Discord
     }
 
     /**
+     * Requests soundboard sounds for the specified guilds.
+     *
+     * @param array $guildIds Array of guild IDs.
+     */
+    public function requestSoundboardSounds(array $guildIds): void
+    {
+        $payload = [
+            'op' => Op::REQUEST_SOUNDBOARD_SOUNDS,
+            'd' => [
+                'guild_ids' => $guildIds
+            ],
+        ];
+
+        $this->send($payload);
+    }
+
+    /**
      * Sends a packet to the Discord gateway.
      *
      * @param array $data Packet data.
