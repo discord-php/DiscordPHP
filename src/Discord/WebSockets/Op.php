@@ -86,6 +86,9 @@ class Op
     /** A client has disconnected from the voice channel. */
     public const VOICE_CLIENT_DISCONNECT = 13;
 
+    /** Request soundboard sounds. */
+    public const REQUEST_SOUNDBOARD_SOUNDS = 31;
+
     /**
      * Gateway Close Event Codes.
      *
