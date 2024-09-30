@@ -117,6 +117,10 @@ class Handlers
         $this->addHandler(Event::AUTO_MODERATION_RULE_UPDATE, \Discord\WebSockets\Events\AutoModerationRuleUpdate::class);
         $this->addHandler(Event::AUTO_MODERATION_RULE_DELETE, \Discord\WebSockets\Events\AutoModerationRuleDelete::class);
         $this->addHandler(Event::AUTO_MODERATION_ACTION_EXECUTION, \Discord\WebSockets\Events\AutoModerationActionExecution::class);
+
+        $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_CREATE, \Discord\WebSockets\Events\GuildSoundboardSoundCreate::class);
+        $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_UPDATE, \Discord\WebSockets\Events\GuildSoundboardSoundUpdate::class);
+        $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_DELETE, \Discord\WebSockets\Events\GuildSoundboardSoundDelete::class);
     }
 
     /**

@@ -74,10 +74,12 @@ use function React\Promise\all;
  * @property bool                       $bot              Whether the client is a bot.
  * @property User                       $user             The user instance of the client.
  * @property Application                $application      The OAuth2 application of the bot.
+ * @property EmojiRepository            $emojis
  * @property GuildRepository            $guilds
  * @property PrivateChannelRepository   $private_channels
+ * @property SoundRepository            $sounds
  * @property UserRepository             $users
- * @property EmojiRepository            $emojis
+
  */
 class Discord
 {
