@@ -665,7 +665,7 @@ class Discord
             Op::OP_HEARTBEAT_ACK => 'handleHeartbeatAck',
         ];
 
-        if (isset($op[$data->op])) {
+        if (isset($data, $data->op, $op[$data->op])) {
             $this->{$op[$data->op]}($data);
         }
     }
