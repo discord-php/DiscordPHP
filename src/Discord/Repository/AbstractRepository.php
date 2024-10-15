@@ -213,11 +213,12 @@ abstract class AbstractRepository extends Collection
         return $this->http->{$method}($endpoint, $attributes, $headers)->then(function ($response) use ($method, $part) {
             switch ($method) {
                 case 'patch': // Update old part
-                    $part->created = true;
                     $part->fill((array) $response);
+                    $part->created = true;
                     return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
                 default: // Create new part
                     $newPart = $this->factory->create($this->class, (array) $response, true);
+                    $newPart->created = true;
                     return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
             }
         });
