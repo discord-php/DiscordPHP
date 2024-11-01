@@ -32,7 +32,7 @@ class GuildSoundboardSoundDelete extends Event
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?Sound */
-            $part = yield $guild->soundboard_sounds->cachePull($data->sound_id);
+            $part = yield $guild->sounds->cachePull($data->sound_id);
             if ($part instanceof Sound) {
                 $part->fill((array) $data);
                 $part->created = false;
