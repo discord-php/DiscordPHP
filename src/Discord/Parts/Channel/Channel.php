@@ -295,7 +295,7 @@ class Channel extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
      *
-     * @return PromiseInterface<Collection<Message>>
+     * @return PromiseInterface<Collection<Message[]>>
      */
     public function getPinnedMessages(): PromiseInterface
     {
