@@ -28,7 +28,7 @@ use Discord\Repository\AbstractRepository;
  * @method StageInstance|null pull(string|int $key, $default = null)
  * @method StageInstance|null first()
  * @method StageInstance|null last()
- * @method StageInstance|null find()
+ * @method StageInstance|null find(callable $callback)
  */
 class StageInstanceRepository extends AbstractRepository
 {

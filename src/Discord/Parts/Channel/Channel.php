@@ -39,6 +39,7 @@ use Discord\Repository\Channel\StageInstanceRepository;
 use Discord\Repository\Channel\ThreadRepository;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
+use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 
@@ -97,9 +98,9 @@ use function React\Promise\resolve;
  * @property InviteRepository        $invites         Invites in the channel.
  * @property StageInstanceRepository $stage_instances Stage instances in the channel.
  *
- * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
+ * @method PromiseInterface<Message> sendMessage(MessageBuilder|string $builder)
  */
-class Channel extends Part
+class Channel extends Part implements Stringable
 {
     public const TYPE_GUILD_TEXT = 0;
     public const TYPE_DM = 1;
@@ -113,6 +114,7 @@ class Channel extends Part
     public const TYPE_GUILD_STAGE_VOICE = 13;
     public const TYPE_GUILD_DIRECTORY = 14;
     public const TYPE_GUILD_FORUM = 15;
+    public const TYPE_GUILD_MEDIA = 16;
 
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_TEXT` */
     public const TYPE_TEXT = self::TYPE_GUILD_TEXT;
@@ -249,7 +251,7 @@ class Channel extends Part
     /**
      * Gets the recipients attribute.
      *
-     * @return Collection A collection of recepients.
+     * @return Collection A collection of recipients.
      */
     protected function getRecipientsAttribute(): Collection
     {
@@ -716,9 +718,7 @@ class Channel extends Part
             }
         }
 
-        return $this->getMessageHistory(['limit' => $value, 'cache' => false])->then(function ($messages) use ($reason) {
-            return $this->deleteMessages($messages, $reason);
-        });
+        return $this->getMessageHistory(['limit' => $value, 'cache' => false])->then(fn ($messages) => $this->deleteMessages($messages, $reason));
     }
 
     /**
@@ -737,6 +737,7 @@ class Channel extends Part
      * @throws \RangeException
      *
      * @return PromiseInterface<Collection<Message>>
+     * @todo Make it in a trait along with Thread
      */
     public function getMessageHistory(array $options = []): Promise
     {
@@ -907,18 +908,18 @@ class Channel extends Part
     /**
      * Gets the permission overwrites attribute.
      *
-     * @param ?array $overwrites
+     * @return ?array $overwrites
      */
     protected function getPermissionOverwritesAttribute(): ?array
     {
-        $overwrites = null;
+        $overwrites = [];
 
         /** @var Overwrite */
         foreach ($this->overwrites as $overwrite) {
             $overwrites[] = $overwrite->getRawAttributes();
         }
 
-        return $overwrites ?? $this->attributes['permission_overwrites'] ?? null;
+        return ! empty($overwrites) ? $overwrites : ($this->attributes['permission_overwrites'] ?? null);
     }
 
     /**
@@ -962,7 +963,7 @@ class Channel extends Part
      * @link https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
      *
      * @param array          $options                          Thread params.
-     * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in a news channel channel. Ignored in forum channel.
+     * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in a news channel. Ignored in forum channel.
      * @param string         $options['name']                  The name of the thread.
      * @param int|null       $options['auto_archive_duration'] Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
      * @param bool|null      $options['invitable']             Whether non-moderators can add other non-moderators to a thread; only available when creating a private thread.
@@ -1192,7 +1193,7 @@ class Channel extends Part
                 $messagePart = $this->messages->create($response, true);
             }
 
-            return $messagePart; 
+            return $messagePart;
         });
     }
 
@@ -1353,7 +1354,7 @@ class Channel extends Part
      *
      * @return bool Whether the channel is possible for sending text.
      */
-    public function isTextBased()
+    public function isTextBased(): bool
     {
         return in_array($this->type, [
             self::TYPE_GUILD_TEXT,
@@ -1363,16 +1364,16 @@ class Channel extends Part
             self::TYPE_PUBLIC_THREAD,
             self::TYPE_PRIVATE_THREAD,
             self::TYPE_GUILD_ANNOUNCEMENT,
-            self::TYPE_GUILD_STAGE_VOICE
+            self::TYPE_GUILD_STAGE_VOICE,
         ]);
     }
 
     /**
      * Returns if channel type is voice based.
      *
-     * @return bool Wether the channel is possible for voice.
+     * @return bool Whether the channel is possible for voice.
      */
-    public function isVoiceBased()
+    public function isVoiceBased(): bool
     {
         return in_array($this->type, [self::TYPE_GUILD_VOICE, self::TYPE_GUILD_STAGE_VOICE]);
     }
@@ -1382,7 +1383,7 @@ class Channel extends Part
      *
      * @return bool Whether the channel type is possible for creating invite.
      */
-    public function canInvite()
+    public function canInvite(): bool
     {
         return in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_GUILD_VOICE, self::TYPE_GUILD_ANNOUNCEMENT, self::TYPE_GUILD_STAGE_VOICE, self::TYPE_GUILD_FORUM]);
     }
@@ -1394,11 +1395,7 @@ class Channel extends Part
      */
     public function getBotPermissions(): ?RolePermission
     {
-        if (! $guild = $this->guild) {
-            return null;
-        }
-
-        return $guild->members->get('id', $this->discord->id)->getPermissions($this);
+        return $this->guild?->members->get('id', $this->discord->id)?->getPermissions($this);
     }
 
     /**
@@ -1414,9 +1411,17 @@ class Channel extends Part
         // Marked "Channel Type: All" in documentation
         $attr += $this->makeOptionalAttributes([
             'type' => $this->type,
-            'permission_overwrites' => $this->permission_overwrites,
+            'permission_overwrites' => $this->getPermissionOverwritesAttribute(),
             'position' => $this->position,
         ]);
+
+        if (null === $this->type) {
+            // Type was not specified, but we must not assume its default to GUILD_TEXT as that is determined by API
+            $this->discord->getLogger()->warning('Not specifying channel type, creating with all filled attributes');
+            $attr += $this->getRawAttributes(); // Send the remaining raw attributes
+
+            return $attr;
+        }
 
         switch ($this->type) {
             case self::TYPE_GUILD_TEXT:
@@ -1477,12 +1482,6 @@ class Channel extends Part
                     'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user, // Canceled documentation #5606
                 ]);
                 break;
-
-            case null:
-                // Type was not specified but we must not assume its default to GUILD_TEXT as that is determined by API
-                $this->discord->getLogger()->warning('Not specifying channel type, creating with all filled attributes');
-                $attr += $this->getRawAttributes(); // Send the remaining raw attributes
-                break;
         }
 
         return $attr;
@@ -1506,7 +1505,7 @@ class Channel extends Part
         $attr = [
             'name' => $this->name,
             'position' => $this->position,
-            'permission_overwrites' => $this->permission_overwrites,
+            'permission_overwrites' => $this->getPermissionOverwritesAttribute(),
         ];
 
         switch ($this->type) {

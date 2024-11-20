@@ -27,7 +27,7 @@ use Discord\Repository\AbstractRepository;
  * @method Command|null pull(string|int $key, $default = null)
  * @method Command|null first()
  * @method Command|null last()
- * @method Command|null find()
+ * @method Command|null find(callable $callback)
  */
 class GlobalCommandRepository extends AbstractRepository
 {

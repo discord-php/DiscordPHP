@@ -30,7 +30,7 @@ use function React\Promise\resolve;
  * @method Thread|null pull(string|int $key, $default = null)
  * @method Thread|null first()
  * @method Thread|null last()
- * @method Thread|null find()
+ * @method Thread|null find(callable $callback)
  */
 class ThreadRepository extends AbstractRepository
 {
@@ -72,7 +72,7 @@ class ThreadRepository extends AbstractRepository
             foreach ($items as $thread) {
                 foreach ($members as $member) {
                     if ($member->id == $thread->id) {
-                        $thread->members->cache->set($member->id, $thread->members->create($member, true));
+                        $thread->members->cache->set($member->id, $thread->members->create((array) $member + ['guild_id' => $thread->guild_id], true));
                         break;
                     }
                 }
@@ -87,14 +87,12 @@ class ThreadRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/channel#list-active-threads
      *
-     * @return PromiseInterface<Collection<Thread>>
+     * @return PromiseInterface<Collection<Thread[]>>
      */
     public function active(): PromiseInterface
     {
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_THREADS_ACTIVE, $this->vars['guild_id']))
-            ->then(function ($response) {
-                return $this->handleThreadPaginationResponse($response);
-            });
+            ->then(fn ($response) => $this->handleThreadPaginationResponse($response));
     }
 
     /**
@@ -111,7 +109,7 @@ class ThreadRepository extends AbstractRepository
      *
      * @throws \InvalidArgumentException
      *
-     * @return PromiseInterface<Collection<Thread>>
+     * @return PromiseInterface<Collection<Thread[]>>
      */
     public function archived(bool $private = false, bool $joined = false, ?int $limit = null, $before = null): PromiseInterface
     {
@@ -144,17 +142,17 @@ class ThreadRepository extends AbstractRepository
         }
 
         return $this->http->get(Endpoint::bind($endpoint, $this->vars['channel_id']))
-            ->then(function ($response) {
-                return $this->handleThreadPaginationResponse($response);
-            });
+            ->then(fn ($response) => $this->handleThreadPaginationResponse($response));
     }
 
     /**
      * Handles a response from one of the thread pagination endpoints.
      *
      * @param object $response
+     *
+     * @return Collection|Thread[]
      */
-    private function handleThreadPaginationResponse(object $response)
+    private function handleThreadPaginationResponse(object $response): Collection
     {
         $collection = Collection::for(Thread::class);
 

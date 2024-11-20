@@ -28,7 +28,7 @@ use React\Promise\PromiseInterface;
  * @method GuildTemplate|null pull(string|int $key, $default = null)
  * @method GuildTemplate|null first()
  * @method GuildTemplate|null last()
- * @method GuildTemplate|null find()
+ * @method GuildTemplate|null find(callable $callback)
  */
 class GuildTemplateRepository extends AbstractRepository
 {
@@ -56,9 +56,11 @@ class GuildTemplateRepository extends AbstractRepository
     /**
      * Syncs the template to the guild's current state. Requires the MANAGE_GUILD permission.
      *
+     * @link https://discord.com/developers/docs/resources/guild-template#sync-guild-template
+     *
      * @param string $template_code The guild template code.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<GuildTemplate>
      */
     public function sync(string $template_code): PromiseInterface
     {
@@ -70,9 +72,7 @@ class GuildTemplateRepository extends AbstractRepository
                     $guildTemplate->fill($guild_template);
                 }
 
-                return $this->cache->set($template_code, $guildTemplate)->then(function ($success) use ($guildTemplate) {
-                    return $guildTemplate;
-                });
+                return $this->cache->set($template_code, $guildTemplate)->then(fn ($success) => $guildTemplate);
             });
         });
     }

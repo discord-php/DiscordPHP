@@ -96,7 +96,7 @@ class Button extends Component
      * Creates a new button.
      *
      * @param int         $style     Style of the button.
-     * @param string|null $custom_id custom ID of the button. If not given, an UUID will be used
+     * @param string|null $custom_id custom ID of the button. If not given, a UUID will be used
      *
      * @throws \InvalidArgumentException
      */
@@ -256,7 +256,7 @@ class Button extends Component
     }
 
     /**
-     * Sets the URL of the button. Only valid for link buttons.tatic.
+     * Sets the URL of the button. Only valid for link buttons.
      *
      * @param string|null $url
      *
@@ -303,9 +303,9 @@ class Button extends Component
      *
      * The button listener will not persist when the bot restarts.
      *
-     * @param callable $callback Callback to call when the button is pressed. Will be called with the interaction object.
-     * @param Discord  $discord  Discord client.
-     * @param bool     $oneOff   Whether the listener should be removed after the button is pressed for the first time.
+     * @param ?callable $callback Callback to call when the button is pressed. Will be called with the interaction object.
+     * @param Discord   $discord  Discord client.
+     * @param bool      $oneOff   Whether the listener should be removed after the button is pressed for the first time.
      *
      * @throws \LogicException
      *

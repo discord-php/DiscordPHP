@@ -16,8 +16,6 @@ use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
-use Discord\InteractionResponseType;
-use Discord\InteractionType;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
@@ -26,6 +24,7 @@ use Discord\Parts\Interactions\Request\Component as RequestComponent;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
+use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
@@ -88,6 +87,21 @@ class Interaction extends Part
      */
     protected $responded = false;
 
+    const TYPE_PING = 1;
+    const TYPE_APPLICATION_COMMAND = 2;
+    const TYPE_MESSAGE_COMPONENT = 3;
+    const TYPE_APPLICATION_COMMAND_AUTOCOMPLETE = 4;
+    const TYPE_MODAL_SUBMIT = 5;
+
+    const RESPONSE_TYPE_PONG = 1;
+    const RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE = 4;
+    const RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = 5;
+    const RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE = 6;
+    const RESPONSE_TYPE_UPDATE_MESSAGE = 7;
+    const RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8;
+    const RESPONSE_TYPE_MODAL = 9;
+    const RESPONSE_TYPE_PREMIUM_REQUIRED = 10;
+
     /**
      * Returns true if this interaction has been internally responded.
      *
@@ -140,14 +154,12 @@ class Interaction extends Part
             if (
                 ! in_array($this->attributes['channel']->type ?? null, [Channel::TYPE_PUBLIC_THREAD, CHANNEL::TYPE_PRIVATE_THREAD, CHANNEL::TYPE_ANNOUNCEMENT_THREAD])
                 && $channel = $channels->get('id', $channelId)
-            )
-            {
+            ) {
                 return $channel;
-            } else {
-                foreach ($channels as $parent) {
-                    if ($thread = $parent->threads->get('id', $channelId)) {
-                        return $thread;
-                    }
+            }
+            foreach ($channels as $parent) {
+                if ($thread = $parent->threads->get('id', $channelId)) {
+                    return $thread;
                 }
             }
         }
@@ -236,16 +248,16 @@ class Interaction extends Part
      */
     public function acknowledge(): PromiseInterface
     {
-        if ($this->type == InteractionType::APPLICATION_COMMAND) {
+        if ($this->type == self::TYPE_APPLICATION_COMMAND) {
             return $this->acknowledgeWithResponse();
         }
 
-        if (! in_array($this->type, [InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
+        if (! in_array($this->type, [self::TYPE_MESSAGE_COMPONENT, self::TYPE_MODAL_SUBMIT])) {
             return reject(new \LogicException('You can only acknowledge message component or modal submit interactions.'));
         }
 
         return $this->respond([
-            'type' => InteractionResponseType::DEFERRED_UPDATE_MESSAGE,
+            'type' => self::RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE,
         ]);
     }
 
@@ -263,13 +275,13 @@ class Interaction extends Part
      */
     public function acknowledgeWithResponse(bool $ephemeral = false): PromiseInterface
     {
-        if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
+        if (! in_array($this->type, [self::TYPE_APPLICATION_COMMAND, self::TYPE_MESSAGE_COMPONENT, self::TYPE_MODAL_SUBMIT])) {
             return reject(new \LogicException('You can only acknowledge application command, message component, or modal submit interactions.'));
         }
 
         return $this->respond([
-            'type' => InteractionResponseType::DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-            'data' => $ephemeral ? ['flags' => 64] : [],
+            'type' => self::RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+            'data' => $ephemeral ? ['flags' => 64] : null,
         ]);
     }
 
@@ -287,12 +299,12 @@ class Interaction extends Part
      */
     public function updateMessage(MessageBuilder $builder): PromiseInterface
     {
-        if (! in_array($this->type, [InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
+        if (! in_array($this->type, [self::TYPE_MESSAGE_COMPONENT, self::TYPE_MODAL_SUBMIT])) {
             return reject(new \LogicException('You can only update messages that occur due to a message component interaction.'));
         }
 
         return $this->respond([
-            'type' => InteractionResponseType::UPDATE_MESSAGE,
+            'type' => self::RESPONSE_TYPE_UPDATE_MESSAGE,
             'data' => $builder,
         ], $builder->requiresMultipart() ? $builder->toMultipart(false) : null);
     }
@@ -345,9 +357,7 @@ class Interaction extends Part
             }
 
             return $this->http->patch(Endpoint::bind(Endpoint::ORIGINAL_INTERACTION_RESPONSE, $this->application_id, $this->token), $builder);
-        })()->then(function ($response) {
-            return $this->factory->part(Message::class, (array) $response, true);
-        });
+        })()->then(fn ($response) => $this->factory->part(Message::class, (array) $response, true));
     }
 
     /**
@@ -382,12 +392,12 @@ class Interaction extends Part
      */
     public function sendFollowUpMessage(MessageBuilder $builder, bool $ephemeral = false): PromiseInterface
     {
-        if (! $this->responded && $this->type != InteractionType::MESSAGE_COMPONENT) {
+        if (! $this->responded && $this->type != self::TYPE_MESSAGE_COMPONENT) {
             return reject(new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.'));
         }
 
         if ($ephemeral) {
-            $builder->_setFlags(Message::FLAG_EPHEMERAL);
+            $builder->setFlags(Message::FLAG_EPHEMERAL);
         }
 
         return (function () use ($builder): PromiseInterface {
@@ -398,9 +408,7 @@ class Interaction extends Part
             }
 
             return $this->http->post(Endpoint::bind(Endpoint::CREATE_INTERACTION_FOLLOW_UP, $this->application_id, $this->token), $builder);
-        })()->then(function ($response) {
-            return $this->factory->part(Message::class, (array) $response, true);
-        });
+        })()->then(fn ($response) => $this->factory->part(Message::class, (array) $response, true));
     }
 
     /**
@@ -417,16 +425,16 @@ class Interaction extends Part
      */
     public function respondWithMessage(MessageBuilder $builder, bool $ephemeral = false): PromiseInterface
     {
-        if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
+        if (! in_array($this->type, [self::TYPE_APPLICATION_COMMAND, self::TYPE_MESSAGE_COMPONENT, self::TYPE_MODAL_SUBMIT])) {
             return reject(new \LogicException('You can only acknowledge application command, message component, or modal submit interactions.'));
         }
 
         if ($ephemeral) {
-            $builder->_setFlags(Message::FLAG_EPHEMERAL);
+            $builder->setFlags(Message::FLAG_EPHEMERAL);
         }
 
         return $this->respond([
-            'type' => InteractionResponseType::CHANNEL_MESSAGE_WITH_SOURCE,
+            'type' => self::RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE,
             'data' => $builder,
         ], $builder->requiresMultipart() ? $builder->toMultipart(false) : null);
     }
@@ -434,7 +442,7 @@ class Interaction extends Part
     /**
      * Responds to the interaction with a payload.
      *
-     * This is a seperate function so that it can be overloaded when responding
+     * This is a separate function so that it can be overloaded when responding
      * via webhook.
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response
@@ -481,7 +489,7 @@ class Interaction extends Part
      *
      * @return PromiseInterface<Message>
      */
-    public function updateFollowUpMessage(string $message_id, MessageBuilder $builder)
+    public function updateFollowUpMessage(string $message_id, MessageBuilder $builder): ExtendedPromiseInterface
     {
         if (! $this->responded) {
             return reject(new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.'));
@@ -495,9 +503,7 @@ class Interaction extends Part
             }
 
             return $this->http->patch(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id), $builder);
-        })()->then(function ($response) {
-            return $this->factory->part(Message::class, (array) $response, true);
-        });
+        })()->then(fn ($response) => $this->factory->part(Message::class, (array) $response, true));
     }
 
     /**
@@ -550,7 +556,7 @@ class Interaction extends Part
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
-     * @param array|Choice[] $choice Autocomplete choices (max of 25 choices)
+     * @param array|Choice[] $choices Autocomplete choices (max of 25 choices)
      *
      * @throws \LogicException Interaction is not Autocomplete.
      *
@@ -558,12 +564,12 @@ class Interaction extends Part
      */
     public function autoCompleteResult(array $choices): PromiseInterface
     {
-        if ($this->type != InteractionType::APPLICATION_COMMAND_AUTOCOMPLETE) {
+        if ($this->type != self::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE) {
             return reject(new \LogicException('You can only respond command option results with auto complete interactions.'));
         }
 
         return $this->respond([
-            'type' => InteractionResponseType::APPLICATION_COMMAND_AUTOCOMPLETE_RESULT,
+            'type' => self::RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT,
             'data' => ['choices' => $choices],
         ]);
     }
@@ -585,7 +591,7 @@ class Interaction extends Part
      */
     public function showModal(string $title, string $custom_id, array $components, ?callable $submit = null): PromiseInterface
     {
-        if (in_array($this->type, [InteractionType::PING, InteractionType::MODAL_SUBMIT])) {
+        if (in_array($this->type, [self::TYPE_PING, self::TYPE_MODAL_SUBMIT])) {
             return reject(new \LogicException('You cannot pop up a modal from a ping or modal submit interaction.'));
         }
 
@@ -594,7 +600,7 @@ class Interaction extends Part
         }
 
         return $this->respond([
-            'type' => InteractionResponseType::MODAL,
+            'type' => self::RESPONSE_TYPE_MODAL,
             'data' => [
                 'title' => $title,
                 'custom_id' => $custom_id,
@@ -602,8 +608,8 @@ class Interaction extends Part
             ],
         ])->then(function ($response) use ($custom_id, $submit) {
             if ($submit) {
-                $this->discord->once(Event::INTERACTION_CREATE, function (Interaction $interaction) use ($custom_id, $submit) {
-                    if ($interaction->type == InteractionType::MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
+                $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener) {
+                    if ($interaction->type == self::TYPE_MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
                         $components = Collection::for(RequestComponent::class, 'custom_id');
                         foreach ($interaction->data->components as $actionrow) {
                             if ($actionrow->type == Component::TYPE_ACTION_ROW) {
@@ -613,8 +619,10 @@ class Interaction extends Part
                             }
                         }
                         $submit($interaction, $components);
+                        $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
                     }
-                });
+                };
+                $this->discord->on(Event::INTERACTION_CREATE, $listener);
             }
 
             return $response;

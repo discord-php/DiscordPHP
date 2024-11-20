@@ -36,9 +36,10 @@ class Action extends Part
     public const TYPE_BLOCK_MESSAGE = 1;
     public const TYPE_SEND_ALERT_MESSAGE = 2;
     public const TYPE_TIMEOUT = 3;
+    public const TYPE_BLOCK_MEMBER_INTERACTION = 4;
 
     /**
-     * Get the Metadata Attributes
+     * Get the Metadata Attributes.
      *
      * @return ?ActionMetadata
      */
@@ -58,10 +59,8 @@ class Action extends Part
      */
     public function getCreatableAttributes(): array
     {
-        $attr = [
+        return [
             'type' => $this->type,
         ] + $this->makeOptionalAttributes(['metadata']);
-
-        return $attr;
     }
 }

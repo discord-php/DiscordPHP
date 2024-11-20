@@ -12,7 +12,9 @@
 namespace Discord\Parts\Guild\AutoModeration;
 
 use Discord\Helpers\Collection;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
@@ -39,8 +41,8 @@ use Discord\Parts\User\User;
  * @property      object                $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `regex_patterns`, `presets`, `allow_list`, `mention_total_limit` and `mention_raid_protection_enabled`).
  * @property      Collection|Action[]   $actions          The actions which will execute when the rule is triggered.
  * @property      bool                  $enabled          Whether the rule is enabled.
- * @property      Collection|Roles[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
- * @property      Collection|Channels[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
+ * @property      Collection|?Role[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
+ * @property      Collection|?Channel[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
  */
 class Rule extends Part
 {
@@ -65,6 +67,7 @@ class Rule extends Part
     public const TRIGGER_TYPE_SPAM = 3;
     public const TRIGGER_TYPE_KEYWORD_PRESET = 4;
     public const TRIGGER_TYPE_MENTION_SPAM = 5;
+    public const TRIGGER_TYPE_PROFILE = 6;
 
     public const KEYWORD_PRESET_TYPE_PROFANITY = 1;
     public const KEYWORD_PRESET_TYPE_SEXUAL_CONTENT = 2;
@@ -111,7 +114,7 @@ class Rule extends Part
     /**
      * Returns the exempt roles attribute.
      *
-     * @return Collection<?Role> A collection of roles exempt from the rule.
+     * @return Collection|?Role[] A collection of roles exempt from the rule.
      */
     protected function getExemptRolesAttribute(): Collection
     {
@@ -135,7 +138,7 @@ class Rule extends Part
     /**
      * Returns the exempt channels attribute.
      *
-     * @return Collection<?Channel> A collection of channels exempt from the rule.
+     * @return Collection|?Channel[] A collection of channels exempt from the rule.
      */
     protected function getExemptChannelsAttribute(): Collection
     {
@@ -178,7 +181,7 @@ class Rule extends Part
             'exempt_channels',
         ]);
 
-        if (in_array($this->trigger_type, [self::TRIGGER_TYPE_KEYWORD, self::TRIGGER_TYPE_KEYWORD_PRESET, self::TRIGGER_TYPE_MENTION_SPAM])) {
+        if (in_array($this->trigger_type, [self::TRIGGER_TYPE_KEYWORD, self::TRIGGER_TYPE_KEYWORD_PRESET, self::TRIGGER_TYPE_MENTION_SPAM, self::TRIGGER_TYPE_PROFILE])) {
             $attr['trigger_metadata'] = $this->trigger_metadata;
         }
 

@@ -27,7 +27,7 @@ use Discord\Repository\AbstractRepository;
  * @method Emoji|null pull(string|int $key, $default = null)
  * @method Emoji|null first()
  * @method Emoji|null last()
- * @method Emoji|null find()
+ * @method Emoji|null find(callable $callback)
  */
 class EmojiRepository extends AbstractRepository
 {

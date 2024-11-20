@@ -63,12 +63,12 @@ final class EmbedMessageTest extends DiscordTestCase
                     $this->assertEquals('Footer Value', $embed->footer->text);
 
                     $this->assertEquals(2, $embed->fields->count());
-                    $this->assertNotFalse(isset($embed->fields['Field 1']));
-                    $this->assertNotFalse(isset($embed->fields['Field 2']));
+                    $this->assertNotNull($embed->fields->get('name', 'Field 1'));
+                    $this->assertNotNull($embed->fields->get('name', 'Field 2'));
 
                     $this->assertNotEquals(
-                        (string) $embed->fields['Field 1'],
-                        (string) $embed->fields['Field 2']
+                        (string) $embed->fields->get('name', 'Field 1'),
+                        (string) $embed->fields->get('name', 'Field 2')
                     );
                 })
                 ->done($resolve, $resolve);

@@ -86,6 +86,9 @@ class Op
     /** A client has disconnected from the voice channel. */
     public const VOICE_CLIENT_DISCONNECT = 13;
 
+    /** Request soundboard sounds. */
+    public const REQUEST_SOUNDBOARD_SOUNDS = 31;
+
     /**
      * Gateway Close Event Codes.
      *
@@ -104,7 +107,7 @@ class Op
     public const CLOSE_ABNORMAL = 1006;
     /** Unknown error. */
     public const CLOSE_UNKNOWN_ERROR = 4000;
-    /** Unknown opcode was went. */
+    /** Unknown opcode was sent. */
     public const CLOSE_INVALID_OPCODE = 4001;
     /** Invalid message was sent. */
     public const CLOSE_INVALID_MESSAGE = 4002;
@@ -124,7 +127,7 @@ class Op
     public const CLOSE_SESSION_TIMEOUT = 4009;
     /** Invalid shard. */
     public const CLOSE_INVALID_SHARD = 4010;
-    /** Sharding requred. */
+    /** Sharding required. */
     public const CLOSE_SHARDING_REQUIRED = 4011;
     /** Invalid API version. */
     public const CLOSE_INVALID_VERSION = 4012;

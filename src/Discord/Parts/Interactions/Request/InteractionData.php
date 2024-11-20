@@ -28,7 +28,7 @@ use Discord\Parts\Part;
  * @property Resolved|null               $resolved       Resolved users, members, roles and channels that are relevant.
  * @property Collection|Option[]|null    $options        Parameters and values from the user.
  * @property string|null                 $guild_id       ID of the guild internally passed from Interaction or ID of the guild the command belongs to.
- * @property string|null                 $target_id      Id the of user or message targetted by a user or message command.
+ * @property string|null                 $target_id      ID the of user or message targeted by a user or message command.
  * @property string|null                 $custom_id      Custom ID the component was created for. (Only for Message Component & Modal)
  * @property int|null                    $component_type Type of the component. (Only for Message Component)
  * @property string[]|null               $values         Values selected in a select menu. (Only for Message Component)

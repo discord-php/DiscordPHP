@@ -113,7 +113,7 @@ Called with two Collections of ``Sticker`` objects when a guild’s stickers hav
 
 .. code:: php
 
-   $discord->on(Event::GUILD_STICKERS_UPDATE, function (Collection $stickers, Discord $discord, Collecetion $oldStickers) {
+   $discord->on(Event::GUILD_STICKERS_UPDATE, function (Collection $stickers, Discord $discord, Collection $oldStickers) {
        // ...
    });
 

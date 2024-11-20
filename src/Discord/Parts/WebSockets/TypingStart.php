@@ -13,6 +13,7 @@ namespace Discord\Parts\WebSockets;
 
 use Carbon\Carbon;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\Member;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;

@@ -27,7 +27,7 @@ use Discord\Repository\AbstractRepository;
  * @method Overwrite|null pull(string|int $key, $default = null)
  * @method Overwrite|null first()
  * @method Overwrite|null last()
- * @method Overwrite|null find()
+ * @method Overwrite|null find(callable $callback)
  */
 class OverwriteRepository extends AbstractRepository
 {

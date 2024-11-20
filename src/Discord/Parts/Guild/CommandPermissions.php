@@ -57,7 +57,7 @@ class CommandPermissions extends Part
      *
      * @return Collection|Permission[] A collection of permissions.
      */
-    protected function getPermissionsAttribute()
+    protected function getPermissionsAttribute(): Collection
     {
         $permissions = Collection::for(Permission::class);
 

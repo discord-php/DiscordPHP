@@ -22,11 +22,11 @@ use Discord\Parts\User\User;
  *
  * @link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object
  *
- * @property      ?string      $target_id   Id of the affected entity (webhook, user, role, etc.).
+ * @property      ?string      $target_id   ID of the affected entity (webhook, user, role, etc.).
  * @property      Collection   $changes     Changes made to the target_id.
  * @property      ?string      $user_id     The user who made the changes.
  * @property-read User|null    $user
- * @property      string       $id          Id of the entry.
+ * @property      string       $id          ID of the entry.
  * @property      int          $action_type Type of action that occurred.
  * @property      Options|null $options     Additional info for certain action types.
  * @property      string|null  $reason      The reason for the change (0-512 characters).
@@ -88,6 +88,8 @@ class Entry extends Part
     public const AUTO_MODERATION_BLOCK_MESSAGE = 143;
     public const AUTO_MODERATION_FLAG_TO_CHANNEL = 144;
     public const AUTO_MODERATION_USER_COMMUNICATION_DISABLED = 145;
+    public const CREATOR_MONETIZATION_REQUEST_CREATED = 150;
+    public const CREATOR_MONETIZATION_TERMS_ACCEPTED = 151;
 
     // AUDIT LOG ENTRY TYPES
 

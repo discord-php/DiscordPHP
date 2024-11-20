@@ -80,9 +80,9 @@ reason       string reason for the ban
 
 .. code:: php
 
-   $member->ban(5, 'bad person')->done(function (Ban $ban) {
+   $member->ban(5, 'bad person')->then(function (Ban $ban) {
        // ...
-   });
+   })->done();
 
 Set the nickname of the member
 ==============================
@@ -102,9 +102,9 @@ nick string nickname of the member, null to clear, default null
 
 .. code:: php
 
-   $member->setNickname('newnick')->done(function () {
+   $member->setNickname('newnick')->then(function () {
        // ...
-   });
+   })->done();
 
 Move member to channel
 ======================
@@ -124,15 +124,15 @@ Parameters
 
 .. code:: php
 
-   $member->moveMember($channel)->done(function () {
+   $member->moveMember($channel)->then(function () {
        // ...
-   });
+   })->done();
 
    // or
 
-   $member->moveMember('123451231231')->done(function () {
+   $member->moveMember('123451231231')->then(function () {
        // ...
-   });
+   })->done();
 
 Add member to role
 ==================
@@ -152,15 +152,15 @@ role `Role <#role>`_ or string the role to add the member to
 
 .. code:: php
 
-   $member->addRole($role)->done(function () {
+   $member->addRole($role)->then(function () {
        // ...
-   });
+   })->done();
 
    // or
 
-   $member->addRole('1231231231')->done(function () {
+   $member->addRole('1231231231')->then(function () {
        // ...
-   });
+   })->done();
 
 Remove member from role
 =======================
@@ -180,15 +180,15 @@ role `Role <#role>`_ or string the role to remove the member from
 
 .. code:: php
 
-   $member->removeRole($role)->done(function () {
+   $member->removeRole($role)->then(function () {
        // ...
-   });
+   })->done();
 
    // or
 
-   $member->removeRole('1231231231')->done(function () {
+   $member->removeRole('1231231231')->then(function () {
        // ...
-   });
+   })->done();
 
 Timeout member
 ==============
@@ -208,14 +208,14 @@ Parameters
 
 .. code:: php
 
-   $member->timeoutMember(new Carbon('6 hours'))->done(function () {
+   $member->timeoutMember(new Carbon('6 hours'))->then(function () {
        // ...
-   });
+   })->done();
 
    // to remove
-   $member->timeoutMember()->done(function () {
+   $member->timeoutMember()->then(function () {
        // ...
-   });
+   })->done();
 
 Get permissions of member
 =========================
@@ -237,15 +237,15 @@ Parameters
 
 .. code:: php
 
-   $member->getPermissions($channel)->done(function (RolePermission $permission) {
+   $member->getPermissions($channel)->then(function (RolePermission $permission) {
        // ...
-   });
+   })->done();
 
    // or
 
-   $member->getPermissions()->done(function (RolePermission $permission) {
+   $member->getPermissions()->then(function (RolePermission $permission) {
        // ...
-   });
+   })->done();
 
 Get guild specific avatar URL
 =============================

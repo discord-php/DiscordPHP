@@ -31,6 +31,7 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property string[]      $rpc_origins                       An array of RPC origin URLs.
  * @property bool          $bot_public                        When false only app owner can join the app's bot to guilds.
  * @property bool          $bot_require_code_grant            When true the app's bot will only join upon completion of the full oauth2 code grant flow.
+ * @property User|null     $bot                               The partial user object for the bot user associated with the application.
  * @property string|null   $terms_of_service_url              The url of the app's terms of service.
  * @property string|null   $privacy_policy_url                The url of the app's privacy policy
  * @property User|null     $owner                             The owner of the OAuth application.
@@ -43,10 +44,15 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property string|null   $cover_image_hash                  The application's default rich presence invite cover image hash.
  * @property int           $flags                             The application's public flags.
  * @property int|null      $approximate_guild_count           The application's approximate count of the app's guild membership.
+ * @property int|null      $approximate_user_install_count    The approximate count of users that have installed the app.
+ * @property string[]|null $redirect_uris                     Array of redirect URIs for the application.
+ * @property string|null   $interactions_endpoint_url         The interactions endpoint URL for the application.
+ * @property string|null   $role_connections_verification_url The application's role connection verification entry point, which when configured will render the app as a verification method in the guild role verification configuration.
  * @property string[]|null $tags                              Up to 5 tags describing the content and functionality of the application.
  * @property object|null   $install_params                    Settings for the application's default in-app authorization link, if enabled.
+ * @property int[]|null    $integration_types
+ * @property object[]|null $integration_types_config          Default scopes and permissions for each supported installation context. Value for each key is an integration type configuration object.
  * @property string|null   $custom_install_url                The application's default custom authorization link, if enabled.
- * @property string|null   $role_connections_verification_url The application's role connection verification entry point, which when configured will render the app as a verification method in the guild role verification configuration.
  *
  * @property string $invite_url The invite URL to invite the bot to a guild.
  *
@@ -58,28 +64,49 @@ class Application extends Part
      * {@inheritDoc}
      */
     protected $fillable = [
-        'bot_public',
-        'bot_require_code_grant',
-        'cover_image',
-        'description',
-        'guild_id',
-        'icon',
         'id',
         'name',
+        'icon',
+        'description',
+        // 'type',
+        'bot',
+        // 'is_monetized',
+        'guild_id',
+        'bot_public',
+        'bot_require_code_grant',
+        'verify_key',
+        'flags',
+        // 'hook',
+        'redirect_uris',
+        'interactions_endpoint_url',
+        'role_connections_verification_url',
         'owner',
+        'approximate_guild_count',
+        'approximate_user_install_count',
+        // 'interactions_event_types',
+        // 'interactions_version',
+        // 'explicit_content_filter',
+        // 'rpc_application_state',
+        // 'store_application_state',
+        // 'verification_state',
+        // 'integration_public',
+        // 'integration_require_code_grant',
+        // 'discoverability_state',
+        // 'discovery_eligibility_flags',
+        // 'monetization_state',
+        // 'monetization_eligibility_flags',
+        'team',
+        'integration_types',
+        'integration_types_config',
+        'cover_image',
         'primary_sku_id',
         'slug',
-        'team',
-        'verify_key',
         'rpc_origins',
         'terms_of_service_url',
         'privacy_policy_url',
-        'flags',
-        'tags',
-        'install_params',
         'custom_install_url',
-        'role_connections_verification_url',
-        'approximate_guild_count',
+        'install_params',
+        'tags',
     ];
 
     public const APPLICATION_AUTO_MODERATION_RULE_CREATE_BADGE = (1 << 6);
@@ -93,6 +120,8 @@ class Application extends Part
     public const GATEWAY_MESSAGE_CONTENT_LIMITED = (1 << 19);
     public const APPLICATION_COMMAND_BADGE = (1 << 23);
     public const ACTIVE = (1 << 24);
+    public const INTEGRATION_TYPE_GUILD_INSTALL = 0;
+    public const INTEGRATION_TYPE_USER_INSTALL = 1;
 
     /**
      * {@inheritDoc}
@@ -104,8 +133,8 @@ class Application extends Part
     /**
      * Returns the application icon.
      *
-     * @param string|null $format The image format.
-     * @param int         $size   The size of the image.
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
      *
      * @return string|null The URL to the application icon or null.
      */
@@ -134,13 +163,31 @@ class Application extends Part
     }
 
     /**
+     * Returns the bot user of the application.
+     *
+     * @return User|null The partial user object for the bot user associated with the application.
+     */
+    protected function getBotAttribute(): ?User
+    {
+        if (empty($this->attributes['bot'])) {
+            return null;
+        }
+
+        if ($bot = $this->discord->users->get('id', $this->attributes['bot']->id)) {
+            return $bot;
+        }
+
+        return $this->factory->part(User::class, (array) $this->attributes['bot'], true);
+    }
+
+    /**
      * Returns the owner of the application.
      *
      * @return User|null Owner of the application.
      */
     protected function getOwnerAttribute(): ?User
     {
-        if (! isset($this->attributes['owner'])) {
+        if (empty($this->attributes['owner'])) {
             return null;
         }
 
@@ -154,8 +201,8 @@ class Application extends Part
     /**
      * Returns the application cover image.
      *
-     * @param string|null $format The image format.
-     * @param int         $size   The size of the image.
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
      *
      * @return string|null The URL to the application cover image or null.
      */

@@ -21,9 +21,9 @@ All repositories extend the `AbstractRepository` class, and share a set of core 
 Clears the repository and fills it with new data from Discord. It takes no parameters and returns the repository in a promise.
 
 ```php
-$discord->guilds->freshen()->done(function (GuildRepository $guilds) {
+$discord->guilds->freshen()->then(function (GuildRepository $guilds) {
     // ...
-});
+})->done();
 ```
 
 #### Creating a part
@@ -39,7 +39,7 @@ $guild = $discord->guilds->create([
     'name' => 'My new guild name',
 ]);
 // to save
-$discord->guilds->save($guild)->done(...);
+$discord->guilds->save($guild)->then(...)->done();
 ```
 
 #### Saving a part
@@ -51,9 +51,9 @@ Creates or updates a repository part in the Discord servers. Takes a part and re
 | part | Part | The part to create or update |
 
 ```php
-$discord->guilds->save($guild)->done(function (Guild $guild) {
+$discord->guilds->save($guild)->then(function (Guild $guild) {
     // ...
-});
+})->done();
 ```
 
 #### Deleting a part
@@ -65,9 +65,9 @@ Deletes a repository part from the Discord servers. Takes a part and returns the
 | part | Part | The part to delete |
 
 ```php
-$discord->guilds->delete($guild)->done(function (Guild $guild) {
+$discord->guilds->delete($guild)->then(function (Guild $guild) {
     // ...
-});
+})->done();
 ```
 
 #### Fetch a part
@@ -80,11 +80,11 @@ Fetches/freshens a part from the repository. If the part is present in the cache
 | fresh | bool   | Forces the method to skip checking the cache. Default is false |
 
 ```php
-$discord->guilds->fetch('guild_id')->done(function (Guild $guild) {
+$discord->guilds->fetch('guild_id')->then(function (Guild $guild) {
     // ...
-});
+})->done();
 // or, if you don't want to check the cache
-$discord->guilds->fetch('guild_id', true)->done(function (Guild $guild) {
+$discord->guilds->fetch('guild_id', true)->then(function (Guild $guild) {
     // ...
-});
+})->done();
 ```

@@ -1,0 +1,4 @@
+contact_links:
+  - name: Question and Answers
+    url: https://github.com/discord-php/DiscordPHP/discussions/categories/q-a
+    about: If you have question about how to use this Library and have not find any solution in documentation or wiki, please do not make issues, instead go find or create one in Discussions section.

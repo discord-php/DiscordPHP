@@ -56,7 +56,7 @@ The following functions are used to respond an interaction after being created `
 +----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------+------------------------------------------------------------------+
 | ``autoCompleteResult(array $choices)``                                                       | responds a suggestion to options with auto complete                         | ``APPLICATION_COMMAND_AUTOCOMPLETE``                             |
 +----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------+------------------------------------------------------------------+
-| ``showModal(string $title, string $custom_id, array $components, ?callable $submit = null)`` | responds to the interaction with a popup modal                              | ``MODAL_SUBMIT``                                                 |
+| ``showModal(string $title, string $custom_id, array $components, ?callable $submit = null)`` | responds to the interaction with a popup modal                              | other than ``PING`` and ``MODAL_SUBMIT``                         |
 +----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------+------------------------------------------------------------------+
 
 Functions after interaction response

@@ -378,8 +378,6 @@ class VoiceClient extends EventEmitter
     /**
      * Starts the voice client.
      *
-     * @param bool $check
-     *
      * @return void|bool
      */
     public function start()
@@ -520,6 +518,7 @@ class VoiceClient extends EventEmitter
 
                     $this->logger->debug('received heartbeat ack', ['response_time' => $diff]);
                     $this->emit('ws-ping', [$diff]);
+                    $this->emit('ws-heartbeat-ack', [$data->d]);
                     break;
                 case Op::VOICE_DESCRIPTION: // ready
                     $this->ready = true;
@@ -545,16 +544,13 @@ class VoiceClient extends EventEmitter
                     $this->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this]);
                     $this->speakingStatus[$data->d->ssrc] = $data->d;
                     break;
-                case Op::VOICE_HEARTBEAT_ACK:
-                    $this->emit('ws-heartbeat-ack', [$data]);
-                    break;
                 case Op::VOICE_HELLO:
                     $this->heartbeat_interval = $data->d->heartbeat_interval;
 
                     $sendHeartbeat = function () {
                         $this->send([
                             'op' => Op::VOICE_HEARTBEAT,
-                            'd' => microtime(true),
+                            'd' => (int) microtime(true),
                         ]);
                         $this->logger->debug('sending heartbeat');
                         $this->emit('ws-heartbeat', []);

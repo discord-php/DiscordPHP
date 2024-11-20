@@ -30,6 +30,7 @@ use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\PresenceUpdate;
 use React\Promise\PromiseInterface;
 
+use Stringable;
 use function React\Promise\reject;
 
 /**
@@ -65,7 +66,7 @@ use function React\Promise\reject;
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class Member extends Part
+class Member extends Part implements Stringable
 {
     public const FLAGS_DID_REJOIN = (1 << 0);
     public const FLAGS_COMPLETED_ONBOARDING = (1 << 1);
@@ -112,7 +113,7 @@ class Member extends Part
     public function updateFromPresence(PresenceUpdate $presence): PresenceUpdate
     {
         $rawPresence = $presence->getRawAttributes();
-        $oldPresence = $this->factory->part(PresenceUpdate::class, (array) $this->attributes, true);
+        $oldPresence = $this->factory->part(PresenceUpdate::class, $this->attributes, true);
 
         $this->attributes = array_merge($this->attributes, $rawPresence);
 
@@ -184,7 +185,7 @@ class Member extends Part
      *
      * @throws NoPermissionsException Missing manage_nicknames permission.
      *
-     * @return PromiseInterface<Member>
+     * @return PromiseInterface<self>
      */
     public function setNickname(?string $nick = null, ?string $reason = null): PromiseInterface
     {
@@ -224,7 +225,7 @@ class Member extends Part
      * @param Channel|?string $channel The channel to move the member to.
      * @param string|null     $reason  Reason for Audit Log.
      *
-     * @return PromiseInterface<Member>
+     * @return PromiseInterface<self>
      */
     public function moveMember($channel, ?string $reason = null): PromiseInterface
     {
@@ -238,9 +239,7 @@ class Member extends Part
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['channel_id' => $channel], $headers)
-            ->then(function ($response) {
-                return $this;
-            });
+            ->then(fn ($response) => $this);
     }
 
     /**
@@ -321,7 +320,7 @@ class Member extends Part
 
         return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
             ->then(function () use ($role) {
-                if ($removeRole = array_search($role, $this->attributes['roles']) !== false) {
+                if (($removeRole = array_search($role, $this->attributes['roles'])) !== false) {
                     unset($this->attributes['roles'][$removeRole]);
                 }
             });
@@ -337,7 +336,7 @@ class Member extends Part
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return PromiseInterface<Member>
+     * @return PromiseInterface<self>
      */
     public function setRoles(array $roles, ?string $reason = null): PromiseInterface
     {
@@ -376,11 +375,11 @@ class Member extends Part
      *
      * @see User::sendMessage()
      *
-     * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
-     * @param bool                  $tts              Whether the message is TTS.
-     * @param Embed|array|null      $embed            An embed object or array to send in the message.
-     * @param array|null            $allowed_mentions Allowed mentions object for the message.
-     * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
+     * @param MessageBuilder|string                 $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                                  $tts              Whether the message is TTS.
+     * @param \Discord\Parts\Embed\Embed|array|null $embed            An embed object or array to send in the message.
+     * @param array|null                            $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null                          $replyTo          Sends the message as a reply to the given message instance.
      *
      * @throws \RuntimeException
      *
@@ -429,14 +428,14 @@ class Member extends Part
         }
         $bitwise = $everyoneRole->permissions->bitwise;
 
+        // Prepare array for role ids
+        $roles = [];
+
         // If this member is the guild owner
         if ($guild->owner_id == $this->id) {
             // Add administrator permission
             $bitwise = BigInt::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']);
         } else {
-            // Prepare array for role ids
-            $roles = [];
-
             // Iterate all base roles
             /** @var Role */
             foreach ($this->roles as $id => $role) {
@@ -519,7 +518,7 @@ class Member extends Part
      *
      * @throws NoPermissionsException Missing moderate_members permission.
      *
-     * @return PromiseInterface<Member>
+     * @return PromiseInterface<self>
      */
     public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): PromiseInterface
     {
@@ -536,7 +535,7 @@ class Member extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null], $headers)
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => $communication_disabled_until?->toIso8601ZuluString()], $headers)
             ->then(function ($response) {
                 $this->attributes['communication_disabled_until'] = $response->communication_disabled_until;
 
@@ -547,12 +546,12 @@ class Member extends Part
     /**
      * Sets verification bypasses flag on a member.
      *
-     * @param bool $bypasses_verification Whether member is exempt from guild verification requirements.
-     * @param string|null $reason         Reason for Audit Log.
+     * @param bool        $bypasses_verification Whether member is exempt from guild verification requirements.
+     * @param string|null $reason                Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing `moderate_members` permission.
      *
-     * @return PromiseInterface<Member>
+     * @return PromiseInterface<self>
      */
     public function setBypassesVerification(bool $bypasses_verification, ?string $reason = null): PromiseInterface
     {
@@ -576,7 +575,7 @@ class Member extends Part
             $flags &= ~self::FLAGS_BYPASSES_VERIFICATION;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['flags' => $flags ], $headers)
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['flags' => $flags], $headers)
             ->then(function ($response) {
                 $this->attributes['flags'] = $response->flags;
 
@@ -593,14 +592,14 @@ class Member extends Part
     {
         $user = $this->user;
 
-        return ($this->nick ?? $user->global_name ?? $user->username) . ($user->discriminator ? '#' . $user->discriminator : '');
+        return ($this->nick ?? $user->global_name ?? $user->username).($user->discriminator ? '#'.$user->discriminator : '');
     }
 
     /**
      * Gets the game attribute.
      * Polyfill for the first activity.
      *
-     * @return Activity
+     * @return ?Activity
      */
     protected function getGameAttribute(): ?Activity
     {

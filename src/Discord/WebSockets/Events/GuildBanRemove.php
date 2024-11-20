@@ -28,7 +28,7 @@ class GuildBanRemove extends Event
     {
         $banPart = null;
 
-        /** @var ?Guild */
+        /** @var ?\Discord\Parts\Guild\Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?Ban */
             if ($banPart = yield $guild->bans->cachePull($data->user->id)) {

@@ -52,7 +52,7 @@ class Intents
      * Guild moderation events.
      * - GUILD_AUDIT_LOG_ENTRY_CREATE
      * - GUILD_BAN_ADD
-     * - GUILD_BAN_REMOVE
+     * - GUILD_BAN_REMOVE.
      */
     public const GUILD_MODERATION = (1 << 2);
 
@@ -194,6 +194,22 @@ class Intents
      * - AUTO_MODERATION_ACTION_EXECUTION
      */
     public const AUTO_MODERATION_EXECUTION = (1 << 21);
+
+    /**
+     * Guild message poll events.
+     *
+     * - MESSAGE_POLL_VOTE_ADD
+     * - MESSAGE_POLL_VOTE_REMOVE
+     */
+    public const GUILD_MESSAGE_POLLS = (1 << 24);
+
+    /**
+     * Direct message poll events.
+     *
+     *  - MESSAGE_POLL_VOTE_ADD
+     *  - MESSAGE_POLL_VOTE_REMOVE
+     */
+    public const DIRECT_MESSAGE_POLLS = (1 << 25);
 
     /**
      * Returns an array of valid intents.

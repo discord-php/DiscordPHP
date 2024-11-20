@@ -47,9 +47,7 @@ class GuildRoleUpdate extends Event
             $rolePart = $this->factory->part(Role::class, $role, true);
         }
 
-        if (isset($guild)) {
-            $guild->roles->set($data->role->id, $rolePart);
-        }
+        $guild?->roles->set($data->role->id, $rolePart);
 
         return [$rolePart, $oldRole];
     }

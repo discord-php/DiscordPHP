@@ -99,7 +99,7 @@ class Resolved extends Part
                 $memberPart = $guild->members->get('id', $snowflake);
             }
 
-            if (! $memberPart) {
+            if (! isset($memberPart)) {
                 $member->user = $this->attributes['users']->$snowflake;
                 $memberPart = $this->factory->part(Member::class, (array) $member + ['guild_id' => $this->guild_id], true);
             }
@@ -128,7 +128,7 @@ class Resolved extends Part
                 $rolePart = $guild->roles->get('id', $snowflake);
             }
 
-            if (! $rolePart) {
+            if (! isset($rolePart)) {
                 $rolePart = $this->factory->part(Role::class, (array) $role + ['guild_id' => $this->guild_id], true);
             }
 
@@ -158,7 +158,7 @@ class Resolved extends Part
                 $channelPart = $guild->channels->get('id', $snowflake);
             }
 
-            if (! $channelPart) {
+            if (! isset($channelPart)) {
                 if (in_array($channel->type, [Channel::TYPE_ANNOUNCEMENT_THREAD, Channel::TYPE_PRIVATE_THREAD, Channel::TYPE_PUBLIC_THREAD])) {
                     $channelPart = $this->factory->part(Thread::class, (array) $channel + ['guild_id' => $this->guild_id], true);
                 } else {

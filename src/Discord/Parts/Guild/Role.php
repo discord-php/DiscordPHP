@@ -13,6 +13,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
+use Stringable;
 
 /**
  * A role defines permissions for the guild. Members can be added to the role.
@@ -38,7 +39,7 @@ use Discord\Parts\Permissions\RolePermission;
  * @property      string|null $guild_id The unique identifier of the guild that the role belongs to.
  * @property-read Guild|null  $guild    The guild that the role belongs to.
  */
-class Role extends Part
+class Role extends Part implements Stringable
 {
     /**
      * {@inheritDoc}
@@ -61,17 +62,15 @@ class Role extends Part
     ];
 
     /**
-     * Sets the permissions attribute.
+     * Gets the permissions attribute.
      *
-     * @param RolePermission|int $permission The permissions to set.
+     * @return RolePermission The role permission.
+     *
+     * @since 10.0.0 Replaced setPermissionsAttribute() to save up memory.
      */
-    protected function setPermissionsAttribute($permission): void
+    protected function getPermissionsAttribute(): Part
     {
-        if (! ($permission instanceof RolePermission)) {
-            $permission = $this->createOf(RolePermission::class, ['bitwise' => $permission]);
-        }
-
-        $this->attributes['permissions'] = $permission;
+        return $this->createOf(RolePermission::class, ['bitwise' => $this->attributes['permissions']]);
     }
 
     /**
@@ -91,7 +90,7 @@ class Role extends Part
      * @param int $green The green value in RGB.
      * @param int $blue  The blue value in RGB.
      */
-    public function setColor(int $red = 0, int $green = 0, int $blue = 0)
+    public function setColor(int $red = 0, int $green = 0, int $blue = 0): void
     {
         $this->color = ($red * 16 ** 4 + $green * 16 ** 2 + $blue);
     }
@@ -104,7 +103,7 @@ class Role extends Part
      *
      * @return string|null The URL to the role icon or null.
      */
-    public function getIconAttribute(string $format = 'png', int $size = 64)
+    public function getIconAttribute(string $format = 'png', int $size = 64): ?string
     {
         if (! isset($this->attributes['icon'])) {
             return null;
@@ -138,10 +137,10 @@ class Role extends Part
     {
         return $this->makeOptionalAttributes([
             'name' => $this->name,
-            'permissions' => (string) $this->permissions,
+            'permissions' => (string) $this->getPermissionsAttribute(),
             'color' => $this->color,
             'hoist' => $this->hoist,
-            'icon' => $this->icon_hash,
+            'icon' => $this->getIconHashAttribute(),
             'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
         ]);
@@ -156,10 +155,10 @@ class Role extends Part
     {
         return $this->makeOptionalAttributes([
             'name' => $this->name,
-            'permissions' => (string) $this->permissions,
+            'permissions' => (string) $this->getPermissionsAttribute(),
             'color' => $this->color,
             'hoist' => $this->hoist,
-            'icon' => $this->icon_hash,
+            'icon' => $this->getIconHashAttribute(),
             'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
         ]);
@@ -183,16 +182,5 @@ class Role extends Part
     public function __toString(): string
     {
         return "<@&{$this->id}>";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRawAttributes(): array
-    {
-        $attributes = $this->attributes;
-        $attributes['permissions'] = (string) $attributes['permissions'];
-
-        return $attributes;
     }
 }

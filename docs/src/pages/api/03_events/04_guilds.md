@@ -113,7 +113,7 @@ $discord->on(Event::GUILD_EMOJIS_UPDATE, function (Collection $emojis, Discord $
 Called with two Collections of `Sticker` objects when a guild's stickers have been added/updated/deleted. `$oldStickers` _may_ be empty if it was not cached or there were previously no stickers.
 
 ```php
-$discord->on(Event::GUILD_STICKERS_UPDATE, function (Collection $stickers, Discord $discord, Collecetion $oldStickers) {
+$discord->on(Event::GUILD_STICKERS_UPDATE, function (Collection $stickers, Discord $discord, Collection $oldStickers) {
     // ...
 });
 ```

@@ -159,22 +159,22 @@ class Embed extends Part
     /**
      * Sets the fields attribute.
      *
-     * @param Field[] $fields
+     * @param Field[] ...$fields
      */
-    protected function setFieldsAttribute($fields)
+    protected function setFieldsAttribute($fields): void
     {
         $this->attributes['fields'] = [];
         $this->addField(...$fields);
     }
 
     /**
-     * Sest the color of this embed.
+     * Sets the color of this embed.
      *
      * @param mixed $color
      *
      * @throws \InvalidArgumentException
      */
-    protected function setColorAttribute($color)
+    protected function setColorAttribute($color): void
     {
         $this->attributes['color'] = $this->resolveColor($color);
     }
@@ -186,7 +186,7 @@ class Embed extends Part
      *
      * @throws \LengthException Embed text too long.
      */
-    protected function setDescriptionAttribute($description)
+    protected function setDescriptionAttribute($description): void
     {
         if (poly_strlen($description) === 0) {
             $this->attributes['description'] = null;
@@ -204,13 +204,13 @@ class Embed extends Part
     /**
      * Sets the type of the embed.
      *
-     * @deprecated 10.0.0 Type `rich` will be always used in API.
+     * @deprecated 10.0.0 Type `rich` will always be used in API.
      *
      * @param string $type
      *
      * @throws \InvalidArgumentException Invalid embed type.
      */
-    protected function setTypeAttribute($type)
+    protected function setTypeAttribute($type): void
     {
         if (! in_array($type, $this->getEmbedTypes())) {
             throw new \InvalidArgumentException('Given type "'.$type.'" is not a valid embed type.');
@@ -260,7 +260,7 @@ class Embed extends Part
     /**
      * Sets the type of the embed.
      *
-     * @deprecated 10.0.0 Type `rich` will be always used in API.
+     * @deprecated 10.0.0 Type `rich` will always be used in API.
      *
      * @param string $type
      *
@@ -304,7 +304,7 @@ class Embed extends Part
     /**
      * Adds a field to the embed.
      *
-     * @param Field|array $field
+     * @param Field|array $fields
      *
      * @throws \OverflowException Embed exceeds 25 fields.
      *
@@ -338,7 +338,7 @@ class Embed extends Part
      *
      * @return $this
      */
-    public function addFieldValues(string $name, string $value, bool $inline = false)
+    public function addFieldValues(string $name, string $value, bool $inline = false): static
     {
         return $this->addField([
             'name' => $name,
@@ -373,7 +373,7 @@ class Embed extends Part
         if ($iconurl instanceof Attachment) {
             $iconurl = 'attachment://'.$iconurl->filename;
         }
-        
+
         $this->ensureValidUrl($iconurl);
 
         $this->ensureValidUrl($url, ['http', 'https']);
@@ -390,9 +390,9 @@ class Embed extends Part
     /**
      * Set the footer of this embed.
      *
-     * @param string                 $text     Maximum length is 2048 characters.
-     * @param string|Attachment|null $iconurl  The URL to the icon, only http(s) and attachments URLs are allowed.
-     * 
+     * @param string                 $text    Maximum length is 2048 characters.
+     * @param string|Attachment|null $iconurl The URL to the icon, only http(s) and attachments URLs are allowed.
+     *
      * @throws \LengthException          Embed text too long.
      * @throws \InvalidArgumentException Invalid scheme provided.
      *
@@ -412,14 +412,13 @@ class Embed extends Part
         if ($iconurl instanceof Attachment) {
             $iconurl = 'attachment://'.$iconurl->filename;
         }
-        
+
         $this->ensureValidUrl($iconurl);
 
         $this->footer = [
             'text' => $text,
             'icon_url' => $iconurl,
         ];
-        
 
         return $this;
     }
@@ -430,7 +429,7 @@ class Embed extends Part
      * @param string|Attachment|null $url The URL to the image, only http(s) and attachments URLs are allowed.
      *
      * @throws \InvalidArgumentException Invalid scheme provided.
-     * 
+     *
      * @return $this
      */
     public function setImage($url): self
@@ -438,7 +437,7 @@ class Embed extends Part
         if ($url instanceof Attachment) {
             $url = 'attachment://'.$url->filename;
         }
-        
+
         $this->ensureValidUrl($url);
 
         $this->image = ['url' => $url];
@@ -452,7 +451,7 @@ class Embed extends Part
      * @param string|Attachment|null $url The URL to the thumbnail, only http(s) and attachments URLs are allowed.
      *
      * @throws \InvalidArgumentException Invalid scheme provided.
-     * 
+     *
      * @return $this
      */
     public function setThumbnail($url): self
@@ -464,7 +463,7 @@ class Embed extends Part
         $this->ensureValidUrl($url);
 
         $this->thumbnail = ['url' => $url];
-        
+
         return $this;
     }
 
@@ -499,18 +498,19 @@ class Embed extends Part
     }
 
     /**
-     * Ensures a url is valid for use in embeds.
+     * Ensures a URL is valid for use in embeds.
      *
      * @param ?string $url
-     *
-     * @return void
+     * @param array $allowed Allowed URL scheme
      *
      * @throws \DomainException
+     *
+     * @return void
      */
-    function ensureValidUrl(?string $url = null, array $allowed = ['http', 'https', 'attachment'])
+    protected function ensureValidUrl(?string $url = null, array $allowed = ['http', 'https', 'attachment']): void
     {
         if (null !== $url && ! in_array(parse_url($url, PHP_URL_SCHEME), $allowed)) {
-            throw new \DomainException('Url scheme only supports '.implode(', ', $allowed));
+            throw new \DomainException('URL scheme only supports '.implode(', ', $allowed));
         }
     }
 
@@ -549,7 +549,7 @@ class Embed extends Part
      *
      * @return int
      */
-    protected static function resolveColor($color)
+    protected static function resolveColor($color): int
     {
         if (is_int($color)) {
             return $color;
@@ -594,7 +594,7 @@ class Embed extends Part
      *
      * @return array
      */
-    private static function getEmbedTypes()
+    private static function getEmbedTypes(): array
     {
         return [
             self::TYPE_RICH,

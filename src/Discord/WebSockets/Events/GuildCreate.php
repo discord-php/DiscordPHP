@@ -100,14 +100,14 @@ class GuildCreate extends Event
         }
 
         $all = yield all($await)->then(function () use (&$guildPart) {
-            return $this->discord->guilds->cache->set($guildPart->id, $guildPart)->then(function ($success) use ($guildPart) {
-                return $guildPart;
-            });
+            return $this->discord->guilds->cache->set($guildPart->id, $guildPart)->then(fn ($success) => $guildPart);
         });
 
         if (
-            ($this->discord->options['retrieveBans'] === true
-                || (is_array($this->discord->options['retrieveBans'])
+            (
+                $this->discord->options['retrieveBans'] === true
+                || (
+                    is_array($this->discord->options['retrieveBans'])
                     && in_array($data->id, $this->discord->options['retrieveBans'])
                 )
             )

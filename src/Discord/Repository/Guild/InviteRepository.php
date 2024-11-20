@@ -27,7 +27,7 @@ use Discord\Repository\AbstractRepository;
  * @method Invite|null pull(string|int $key, $default = null)
  * @method Invite|null first()
  * @method Invite|null last()
- * @method Invite|null find()
+ * @method Invite|null find(callable $callback)
  */
 class InviteRepository extends AbstractRepository
 {

@@ -30,7 +30,7 @@ use function React\Promise\resolve;
  * @method ScheduledEvent|null pull(string|int $key, $default = null)
  * @method ScheduledEvent|null first()
  * @method ScheduledEvent|null last()
- * @method ScheduledEvent|null find()
+ * @method ScheduledEvent|null find(callable $callback)
  */
 class ScheduledEventRepository extends AbstractRepository
 {
@@ -79,9 +79,7 @@ class ScheduledEventRepository extends AbstractRepository
             $part->fill(array_merge($this->vars, (array) $response));
             $part->created = true;
 
-            return $this->cache->set($id, $part)->then(function ($success) use ($part) {
-                return $part;
-            });
+            return $this->cache->set($id, $part)->then(fn ($success) => $part);
         });
     }
 }

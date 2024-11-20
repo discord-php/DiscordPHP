@@ -28,7 +28,7 @@ use Discord\Repository\AbstractRepository;
  * @method Message|null pull(string|int $key, $default = null)
  * @method Message|null first()
  * @method Message|null last()
- * @method Message|null find()
+ * @method Message|null find(callable $callback)
  */
 class MessageRepository extends AbstractRepository
 {

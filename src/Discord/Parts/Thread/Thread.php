@@ -30,13 +30,13 @@ use Discord\Repository\Thread\MemberRepository;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
+use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 
 use function Discord\getSnowflakeTimestamp;
 use function React\Promise\all;
 use function React\Promise\reject;
-use function React\Promise\resolve;
 
 /**
  * Represents a Discord thread.
@@ -46,7 +46,7 @@ use function React\Promise\resolve;
  * @since 7.0.0
  *
  * @property      string        $id                    The ID of the thread.
- * @property      string        $type                  The type of thread.
+ * @property      int           $type                  The type of thread.
  * @property      string        $guild_id              The ID of the guild which the thread belongs to.
  * @property-read Guild|null    $guild                 The guild which the thread belongs to.
  * @property      string        $name                  The name of the thread.
@@ -76,7 +76,7 @@ use function React\Promise\resolve;
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class Thread extends Part
+class Thread extends Part implements Stringable
 {
     public const FLAG_PINNED = (1 << 1);
 
@@ -100,6 +100,9 @@ class Thread extends Part
         'total_message_sent',
         'flags',
         'applied_tags',
+
+        // events
+        'newly_created',
     ];
 
     /**
@@ -126,6 +129,7 @@ class Thread extends Part
             $memberPart = $this->members->create((array) $this->attributes['member'] + [
                 'id' => $this->id,
                 'user_id' => $this->discord->id,
+                'guild_id' => $this->guild_id,
             ], $this->created);
             $memberPart->created = &$this->created;
             $this->members->pushItem($memberPart);
@@ -242,7 +246,7 @@ class Thread extends Part
      *
      * @param bool $value
      */
-    protected function setArchivedAttribute(bool $value)
+    protected function setArchivedAttribute(bool $value): void
     {
         $this->attributes['thread_metadata']->archived = $value;
     }
@@ -252,7 +256,7 @@ class Thread extends Part
      *
      * @param bool $value
      */
-    protected function setLockedAttribute(bool $value)
+    protected function setLockedAttribute(bool $value): void
     {
         $this->attributes['thread_metadata']->locked = $value;
     }
@@ -263,7 +267,7 @@ class Thread extends Part
      *
      * @param int $value
      */
-    protected function setAutoArchiveDurationAttribute(int $value)
+    protected function setAutoArchiveDurationAttribute(int $value): void
     {
         $this->attributes['thread_metadata']->auto_archive_duration = $value;
     }
@@ -369,7 +373,7 @@ class Thread extends Part
      * @param string      $name   New thread name.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return PromiseInterface<Thread>
+     * @return PromiseInterface<self>
      */
     public function rename(string $name, ?string $reason = null): PromiseInterface
     {
@@ -391,7 +395,7 @@ class Thread extends Part
      *
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return PromiseInterface<Thread>
+     * @return PromiseInterface<self>
      */
     public function archive(?string $reason = null): PromiseInterface
     {
@@ -413,7 +417,7 @@ class Thread extends Part
      *
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return PromiseInterface<Thread>
+     * @return PromiseInterface<self>
      */
     public function unarchive(?string $reason = null): PromiseInterface
     {
@@ -436,7 +440,7 @@ class Thread extends Part
      * @param int         $duration Duration in minutes.
      * @param string|null $reason   Reason for Audit Log.
      *
-     * @return PromiseInterface<Thread>
+     * @return PromiseInterface<self>
      */
     public function setAutoArchiveDuration(int $duration, ?string $reason = null): PromiseInterface
     {
@@ -458,7 +462,7 @@ class Thread extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
      *
-     * @return PromiseInterface<Collection<Message>>
+     * @return PromiseInterface<Collection<Message[]>>
      *
      * @todo Make it in a trait along with Channel
      */
@@ -542,7 +546,7 @@ class Thread extends Part
      * @param string|Message|null $options['after']  Get messages after this message ID.
      * @param int|null            $options['limit']  Max number of messages to return (1-100). Defaults to 50.
      *
-     * @return PromiseInterface<Collection<Message>>
+     * @return PromiseInterface<Collection<Message[]>
      *
      * @todo Make it in a trait along with Channel
      */
@@ -720,9 +724,7 @@ class Thread extends Part
             }
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
-        })()->then(function ($response) {
-            return $this->messages->get('id', $response->id) ?: $this->messages->create($response, true); 
-        });
+        })()->then(fn ($response) => $this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
     }
 
     /**
@@ -824,11 +826,7 @@ class Thread extends Part
      */
     public function getBotPermissions(): ?RolePermission
     {
-        if (! $guild = $this->guild) {
-            return null;
-        }
-
-        return $guild->members->get('id', $this->discord->id)->getPermissions($this);
+        return $this->guild?->members->get('id', $this->discord->id)?->getPermissions($this);
     }
 
     /**
@@ -844,7 +842,7 @@ class Thread extends Part
 
         if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
             $attr += $this->makeOptionalAttributes([
-                'invitable' => $this->invitable
+                'invitable' => $this->invitable,
             ]);
         }
 

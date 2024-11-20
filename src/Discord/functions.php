@@ -37,7 +37,7 @@ const COLORTABLE = [
     'lightsalmon' => 0xffa07a, 'crimson' => 0xdc143c, 'red' => 0xff0000, 'firebrick' => 0xb22222,
     'darkred' => 0x8b0000, 'pink' => 0xffc0cb, 'lightpink' => 0xffb6c1, 'hotpink' => 0xff69b4,
     'deeppink' => 0xff1493, 'mediumvioletred' => 0xc71585, 'palevioletred' => 0xdb7093,
-    'lightsalmon' => 0xffa07a, 'coral' => 0xff7f50, 'tomato' => 0xff6347, 'orangered' => 0xff4500,
+    'coral' => 0xff7f50, 'tomato' => 0xff6347, 'orangered' => 0xff4500,
     'darkorange' => 0xff8c00, 'orange' => 0xffa500, 'gold' => 0xffd700, 'yellow' => 0xffff00,
     'lightyellow' => 0xffffe0, 'lemonchiffon' => 0xfffacd, 'lightgoldenrodyellow' => 0xfafad2,
     'papayawhip' => 0xffefd5, 'moccasin' => 0xffe4b5, 'peachpuff' => 0xffdab9, 'palegoldenrod' => 0xeee8aa,
@@ -57,7 +57,7 @@ const COLORTABLE = [
     'darkturquoise' => 0x00ced1, 'cadetblue' => 0x5f9ea0, 'steelblue' => 0x4682b4, 'lightsteelblue' => 0xb0c4de,
     'powderblue' => 0xb0e0e6, 'lightblue' => 0xadd8e6, 'skyblue' => 0x87ceeb, 'lightskyblue' => 0x87cefa,
     'deepskyblue' => 0x00bfff, 'dodgerblue' => 0x1e90ff, 'cornflowerblue' => 0x6495ed,
-    'mediumslateblue' => 0x7b68ee, 'royalblue' => 0x4169e1, 'blue' => 0x0000ff, 'mediumblue' => 0x0000cd,
+    'royalblue' => 0x4169e1, 'blue' => 0x0000ff, 'mediumblue' => 0x0000cd,
     'darkblue' => 0x00008b, 'navy' => 0x000080, 'midnightblue' => 0x191970, 'cornsilk' => 0xfff8dc,
     'blanchedalmond' => 0xffebcd, 'bisque' => 0xffe4c4, 'navajowhite' => 0xffdead, 'wheat' => 0xf5deb3,
     'burlywood' => 0xdeb887, 'tan' => 0xd2b48c, 'rosybrown' => 0xbc8f8f, 'sandybrown' => 0xf4a460,
@@ -175,7 +175,7 @@ function studly(string $string): string
  *
  * @since 5.0.12
  */
-function poly_strlen($str)
+function poly_strlen($str): int
 {
     // If mbstring is installed, use it.
     if (function_exists('mb_strlen')) {
@@ -217,7 +217,7 @@ function imageToBase64(string $filepath): string
  *
  * @param string|float $snowflake
  *
- * @return float
+ * @return ?float
  *
  * @since 5.1.1
  */
@@ -251,11 +251,13 @@ function getSnowflakeTimestamp(string $snowflake)
  *
  * @param string $id_field
  *
+ * @return \Closure
+ *
  * @since 6.0.0
  *
  * @internal
  */
-function normalizePartId($id_field = 'id')
+function normalizePartId($id_field = 'id'): \Closure
 {
     return static function (Options $options, $part) use ($id_field) {
         if ($part instanceof Part) {
@@ -271,7 +273,7 @@ function normalizePartId($id_field = 'id')
  * _Italics_, **Bold**, __Underline__, ~~Strikethrough~~, ||spoiler||
  * `Code`, ```Code block```, > Quotes, >>> Block quotes
  * #Channel @User
- * A backslash will be added before the each formatting symbol.
+ * A backslash will be added before each formatting symbol.
  *
  * @return string the escaped string unformatted as plain text
  *
@@ -307,13 +309,14 @@ function deferFind($array, callable $callback, $loop = null): Promise
     $loop->addPeriodicTimer(0.001, function ($timer) use ($loop, $deferred, $iterator, $callback, &$cancelled) {
         if ($cancelled) {
             $loop->cancelTimer($timer);
+            $deferred->reject(new \RuntimeException('deferFind() cancelled'));
 
             return;
         }
 
         if (! $iterator->valid()) {
             $loop->cancelTimer($timer);
-            $deferred->reject(new \Exception('Loop done.');
+            $deferred->resolve(null);
 
             return;
         }
@@ -356,7 +359,7 @@ function nowait(PromiseInterface $promiseInterface)
 }
 
 /**
- * File namespaces that were changed in new versions are aliased
+ * File namespaces that were changed in new versions are aliased.
  */
 class_alias(\Discord\Repository\Channel\StageInstanceRepository::class, '\Discord\Repository\Guild\StageInstanceRepository'); // @since 10.0.0
 class_alias(\Discord\Parts\Guild\CommandPermissions::class, '\Discord\Parts\Interactions\Command\Overwrite'); // @since 10.0.0

@@ -41,9 +41,9 @@ Shortcut for `$guild->roles->save($role);`. Takes an array of parameters for a r
 $guild->createRole([
     'name' => 'New Role',
     // ...
-])->done(function (Role $role) {
+])->then(function (Role $role) {
     // ...
-});
+})->done();
 ```
 
 ### Transferring ownership of guild
@@ -58,9 +58,9 @@ Transfers the ownership of the guild to another member. The bot must own the gui
 | reason | string              | Reason for Audit Log        |
 
 ```php
-$guild->transferOwnership($member)->done(...);
+$guild->transferOwnership($member)->then(...)->done();
 // or
-$guild->transferOwnership('member_id')->done(...);
+$guild->transferOwnership('member_id')->then(...)->done();
 ```
 
 ### Unbanning a member with a User or user ID
@@ -74,9 +74,9 @@ Unbans a member when passed a `User` object or a user ID. If you have the ban ob
 | user_id | `User` or user ID | The user to unban |
 
 ```php
-$guild->unban($user)->done(...);
+$guild->unban($user)->then(...)->done();
 // or
-$guild->unban('user_id')->done(...);
+$guild->unban('user_id')->then(...)->done();
 ```
 
 ### Querying the Guild audit log
@@ -98,11 +98,11 @@ $guild->getAuditLog([
     'action_type' => Entry::CHANNEL_CREATE,
     'before' => $anotherEntry,
     'limit' => 12,
-])->done(function (AuditLog $auditLog) {
+])->then(function (AuditLog $auditLog) {
     foreach ($auditLog->audit_log_entries as $entry) {
         // $entry->...
     }
-});
+})->done();
 ```
 
 ### Creating an Emoji
@@ -125,7 +125,7 @@ $guild->createEmoji([
 ],
 '/path/to/file.jpg',
 'audit-log reason'
-)->done(function (Emoji $emoji) {
+)->then(function (Emoji $emoji) {
     // ...
-});
+})->done();
 ```

@@ -25,7 +25,7 @@ use Discord\Http\Endpoint;
  * @method Channel|null pull(string|int $key, $default = null)
  * @method Channel|null first()
  * @method Channel|null last()
- * @method Channel|null find()
+ * @method Channel|null find(callable $callback)
  */
 class PrivateChannelRepository extends AbstractRepository
 {

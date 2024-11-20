@@ -95,7 +95,7 @@ class PresenceUpdate extends Part
      *
      * @return Collection|Activity[]
      */
-    protected function getActivitiesAttribute()
+    protected function getActivitiesAttribute(): Collection
     {
         $collection = Collection::for(Activity::class, null);
 

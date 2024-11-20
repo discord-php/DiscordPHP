@@ -27,7 +27,7 @@ use Discord\Repository\AbstractRepository;
  * @method Role|null pull(string|int $key, $default = null)
  * @method Role|null first()
  * @method Role|null last()
- * @method Role|null find()
+ * @method Role|null find(callable $callback)
  */
 class RoleRepository extends AbstractRepository
 {
@@ -36,6 +36,7 @@ class RoleRepository extends AbstractRepository
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_ROLES,
+        'get' => Endpoint::GUILD_ROLE,
         'create' => Endpoint::GUILD_ROLES,
         'update' => Endpoint::GUILD_ROLE,
         'delete' => Endpoint::GUILD_ROLE,

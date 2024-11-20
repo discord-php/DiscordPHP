@@ -27,7 +27,7 @@ use Discord\Repository\AbstractRepository;
  * @method Channel|null pull(string|int $key, $default = null)
  * @method Channel|null first()
  * @method Channel|null last()
- * @method Channel|null find()
+ * @method Channel|null find(callable $callback)
  */
 class ChannelRepository extends AbstractRepository
 {

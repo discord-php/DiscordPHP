@@ -14,6 +14,7 @@ namespace Discord\Parts\Channel;
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
+use Discord\Parts\Channel\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Role;
@@ -45,7 +46,7 @@ use function React\Promise\reject;
  * @since 2.0.0
  *
  * @property      string                      $id                     The unique identifier of the message.
- * @property      string                      $channel_id             The unique identifier of the channel that the message was went in.
+ * @property      string                      $channel_id             The unique identifier of the channel that the message was sent in.
  * @property-read Channel|Thread              $channel                The channel that the message was sent in.
  * @property      User|null                   $author                 The author of the message. Will be a webhook if sent from one.
  * @property-read string|null                 $user_id                The user id of the author.
@@ -76,6 +77,7 @@ use function React\Promise\reject;
  * @property      Collection|Sticker[]|null   $sticker_items          Stickers attached to the message.
  * @property      int|null                    $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
  * @property      object|null                 $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
+ * @property      Poll|null                   $poll                   The poll attached to the message.
  *
  * @property-read bool $crossposted                            Message has been crossposted.
  * @property-read bool $is_crosspost                           Message is a crosspost from another channel.
@@ -212,6 +214,7 @@ class Message extends Part
         'sticker_items',
         'position',
         'role_subscription_data',
+        'poll',
 
         // @internal
         'guild_id',
@@ -612,7 +615,7 @@ class Message extends Part
      */
     protected function getReferencedMessageAttribute(): ?Message
     {
-        // try get the message from the relevant repository
+        // try to get the message from the relevant repository
         // otherwise, if message is present in payload, create it
         // otherwise, return null
         if ($reference = $this->attributes['message_reference'] ?? null) {
@@ -713,6 +716,20 @@ class Message extends Part
         }
 
         return $sticker_items;
+    }
+
+    /**
+     * Returns the poll attribute.
+     *
+     * @return Poll|null
+     */
+    protected function getPollAttribute(): ?Poll
+    {
+        if (! isset($this->attributes['poll'])) {
+            return null;
+        }
+
+        return $this->factory->part(Poll::class, (array) $this->attributes['poll'] + ['channel_id' => $this->channel_id, 'message_id' => $this->id], true);
     }
 
     /**
@@ -908,7 +925,7 @@ class Message extends Part
      * @param int            $delay  Time to delay the delete by, in milliseconds.
      * @param TimerInterface &$timer Delay timer passed by reference.
      *
-     * @return ExtendedPromseInterface
+     * @return ExtendedPromiseInterface
      */
     public function delayedDelete(int $delay, &$timer = null): PromiseInterface
     {

@@ -15,31 +15,40 @@ use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\CacheConfig;
+use Discord\Helpers\Deferred;
+use Discord\Helpers\RegisteredCommand;
+use Discord\Http\Drivers\React;
+use Discord\Http\Endpoint;
 use Discord\Http\Http;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
-use Discord\Repository\AbstractRepository;
-use Discord\Repository\GuildRepository;
-use Discord\Repository\PrivateChannelRepository;
-use Discord\Repository\UserRepository;
-use Discord\Parts\Channel\Channel;
 use Discord\Parts\User\Activity;
 use Discord\Parts\User\Client;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Repository\AbstractRepository;
+use Discord\Repository\EmojiRepository;
+use Discord\Repository\GuildRepository;
+use Discord\Repository\PrivateChannelRepository;
+use Discord\Repository\UserRepository;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildCreate;
 use Discord\WebSockets\Handlers;
 use Discord\WebSockets\Intents;
 use Discord\WebSockets\Op;
+use Evenement\EventEmitterTrait;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
+use Monolog\Level;
+use Psr\Log\LoggerInterface;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
-use React\EventLoop\Factory as LoopFactory;
+use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Discord\Helpers\RegisteredCommand;
@@ -62,20 +71,23 @@ use function React\Promise\all;
  *
  * @version 10.0.0
  *
- * @property string                   $id               The unique identifier of the client.
- * @property string                   $username         The username of the client.
- * @property string                   $password         The password of the client (if they have provided it).
- * @property string                   $email            The email of the client.
- * @property bool                     $verified         Whether the client has verified their email.
- * @property string                   $avatar           The avatar URL of the client.
- * @property string                   $avatar_hash      The avatar hash of the client.
- * @property string                   $discriminator    The unique discriminator of the client.
- * @property bool                     $bot              Whether the client is a bot.
- * @property User                     $user             The user instance of the client.
- * @property Application              $application      The OAuth2 application of the bot.
- * @property GuildRepository          $guilds
- * @property PrivateChannelRepository $private_channels
- * @property UserRepository           $users
+ * @property string                     $id               The unique identifier of the client.
+ * @property string                     $username         The username of the client.
+ * @property string                     $password         The password of the client (if they have provided it).
+ * @property string                     $email            The email of the client.
+ * @property bool                       $verified         Whether the client has verified their email.
+ * @property string                     $avatar           The avatar URL of the client.
+ * @property string                     $avatar_hash      The avatar hash of the client.
+ * @property string                     $discriminator    The unique discriminator of the client.
+ * @property bool                       $bot              Whether the client is a bot.
+ * @property User                       $user             The user instance of the client.
+ * @property Application                $application      The OAuth2 application of the bot.
+ * @property EmojiRepository            $emojis
+ * @property GuildRepository            $guilds
+ * @property PrivateChannelRepository   $private_channels
+ * @property SoundRepository            $sounds
+ * @property UserRepository             $users
+
  */
 class Discord
 {
@@ -105,7 +117,7 @@ class Discord
     /**
      * An array of loggers for voice clients.
      *
-     * @var array Loggers.
+     * @var ?LoggerInterface[] Loggers.
      */
     protected $voiceLoggers = [];
 
@@ -323,7 +335,7 @@ class Discord
     /**
      * The cache configuration.
      *
-     * @var CacheConfig
+     * @var CacheConfig[]
      */
     protected $cacheConfig;
 
@@ -368,7 +380,9 @@ class Discord
         $this->logger->debug('Initializing DiscordPHP '.self::VERSION.' (DiscordPHP-Http: '.Http::VERSION.' & Gateway: v'.self::GATEWAY_VERSION.') on PHP '.PHP_VERSION);
 
         $this->cacheConfig = $options['cache'];
-        $this->logger->warning('Attached experimental CacheInterface: '.get_class($this->getCacheConfig()->interface));
+        if ($cacheConfig = $this->getCacheConfig()) {
+            $this->logger->warning('Attached experimental CacheInterface: '.get_class($cacheConfig->interface));
+        }
 
         $connector = new SocketConnector($options['socket_options'], $this->loop);
         $this->wsFactory = new Connector($this->loop, $connector);
@@ -377,13 +391,6 @@ class Discord
         foreach ($options['disabledEvents'] as $event) {
             $this->handlers->removeHandler($event);
         }
-
-        $function = function () use (&$function) {
-            $this->emittedInit = true;
-            $this->removeListener('ready', $function);
-        };
-
-        $this->on('ready', $function);
 
         $this->http = new Http(
             'Bot '.$this->token,
@@ -456,7 +463,7 @@ class Discord
         $this->emit('trace', $data->d->_trace);
         $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
-        // Setup the user account
+        // Set up the user account
         $this->client->fill((array) $content->user);
         $this->client->created = true;
         $this->sessionId = $content->session_id;
@@ -504,7 +511,11 @@ class Discord
         $this->on(Event::GUILD_CREATE, $onGuildCreate);
 
         $onGuildDelete = function ($guild) use (&$unavailable, $guildLoad) {
-            if ($guild->unavailable) {
+            if (! isset($guild->unavailable)) {
+                // Rare Undocumented case, $guild->unavailable is missing but actually unavailable (perhaps kicked then unavailable/deleted)
+                $this->logger->debug('guild deleted', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
+                unset($unavailable[$guild->id]);
+            } elseif ($guild->unavailable) {
                 $this->logger->debug('guild unavailable', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
                 unset($unavailable[$guild->id]);
             }
@@ -662,7 +673,7 @@ class Discord
             Op::OP_HEARTBEAT_ACK => 'handleHeartbeatAck',
         ];
 
-        if (isset($op[$data->op])) {
+        if (isset($data, $data->op, $op[$data->op])) {
             $this->{$op[$data->op]}($data);
         }
     }
@@ -734,7 +745,7 @@ class Discord
      *
      * @param \Throwable $e
      */
-    public function handleWsConnectionFailed(\Throwable $e)
+    public function handleWsConnectionFailed(\Throwable $e): void
     {
         $this->logger->error('failed to connect to websocket, retry in 5 seconds', ['e' => $e->getMessage()]);
 
@@ -1068,7 +1079,7 @@ class Discord
         $this->heartbeatTimer = $this->loop->addPeriodicTimer($interval, [$this, 'heartbeat']);
         $this->heartbeat();
 
-        $this->logger->info('heartbeat timer initilized', ['interval' => $interval * 1000]);
+        $this->logger->info('heartbeat timer initialized', ['interval' => $interval * 1000]);
     }
 
     /**
@@ -1094,6 +1105,23 @@ class Discord
             $promise = ($this->wsFactory)($this->gateway);
             $promise->then([$this, 'handleWsConnection'], [$this, 'handleWsConnectionFailed']);
         });
+    }
+
+    /**
+     * Requests soundboard sounds for the specified guilds.
+     *
+     * @param array $guildIds Array of guild IDs.
+     */
+    public function requestSoundboardSounds(array $guildIds): void
+    {
+        $payload = [
+            'op' => Op::REQUEST_SOUNDBOARD_SOUNDS,
+            'd' => [
+                'guild_ids' => $guildIds
+            ],
+        ];
+
+        $this->send($payload);
     }
 
     /**
@@ -1126,17 +1154,14 @@ class Discord
         if ($this->emittedInit) {
             return false;
         }
+        $this->emittedInit = true;
 
         $this->logger->info('client is ready');
         $this->emit('init', [$this]);
 
-        /* deprecated */
-        if ($this->listeners['ready']) {
-            if (count($this->listeners['ready'] ?? []) > 1 || count($this->onceListeners["ready"] ?? []) > 1) {
-                $this->logger->info('The \'ready\' event is deprecated and will be removed in a future version of DiscordPHP. Please use \'init\' instead.');
-            }
-
-            $this->emit('ready', [$this]);
+        if (count($this->listeners('ready'))) {
+            $this->logger->info("The 'ready' event is deprecated and will be removed in a future version of DiscordPHP. Please use 'init' instead.");
+            $this->emit('ready', [$this]); // deprecated
         }
 
         foreach ($this->unparsedPackets as $parser) {
@@ -1164,10 +1189,8 @@ class Discord
         if (null !== $activity) {
             $activity = $activity->getRawAttributes();
 
-            if (! in_array($activity['type'], [Activity::TYPE_GAME, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_COMPETING])) {
+            if (! in_array($activity['type'], [Activity::TYPE_GAME, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_CUSTOM, Activity::TYPE_COMPETING])) {
                 throw new \UnexpectedValueException("The given activity type ({$activity['type']}) is invalid.");
-
-                return;
             }
         }
 
@@ -1209,11 +1232,13 @@ class Discord
      * @param bool                 $mute    Whether you should be mute when you join the channel.
      * @param bool                 $deaf    Whether you should be deaf when you join the channel.
      * @param LoggerInterface|null $logger  Voice client logger. If null, uses same logger as Discord client.
-     * @param bool                 $check   Whether to check for system requirements.
      *
      * @throws \RuntimeException
      *
-     * @return PromiseInterface
+     * @since 10.0.0 Removed argument $check that has no effect (it is always checked)
+     * @since 4.0.0
+     *
+     * @return ExtendedPromiseInterface<VoiceClient>
      */
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null, bool $check = true): PromiseInterface
     {
@@ -1247,7 +1272,7 @@ class Discord
             $this->removeListener(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
         };
 
-        $voiceServerUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceServerUpdate, $deferred, $logger, $check) {
+        $voiceServerUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceServerUpdate, $deferred, $logger) {
             if ($vs->guild_id != $channel->guild_id) {
                 return; // This voice server update isn't for our guild.
             }
@@ -1272,7 +1297,7 @@ class Discord
                 $deferred->resolve($vc);
             });
             $vc->once('error', function ($e) use ($deferred, $logger) {
-                $logger->error('error initilizing voice client', ['e' => $e->getMessage()]);
+                $logger->error('error initializing voice client', ['e' => $e->getMessage()]);
                 $deferred->reject($e);
             });
             $vc->once('close', function () use ($channel, $logger) {
@@ -1280,7 +1305,7 @@ class Discord
                 unset($this->voiceClients[$channel->guild_id]);
             });
 
-            $vc->start($check);
+            $vc->start();
 
             $this->voiceLoggers[$channel->guild_id] = $logger;
             $this->removeListener(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
@@ -1341,7 +1366,7 @@ class Discord
         if (null === $gateway) {
             $this->http->get(Endpoint::GATEWAY_BOT)->then(function ($response) use ($buildParams) {
                 if ($response->shards > 1) {
-                    $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interrested in assisting us with sharding support development.');
+                    $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interested in assisting us with sharding support development.');
                 }
                 $buildParams($this->resume_gateway_url ?? $response->url, $response->session_start_limit);
             }, function ($e) use ($buildParams) {
@@ -1353,13 +1378,15 @@ class Discord
             $buildParams($gateway);
         }
 
-        $deferred->promise()->then(function ($gateway) {
+        return $deferred->promise()->then(function ($gateway) {
             $this->logger->info('gateway retrieved and set', $gateway);
+
+            return $gateway;
         }, function ($e) {
             $this->logger->error('error obtaining gateway', ['e' => $e->getMessage()]);
-        });
 
-        return $deferred->promise();
+            return $e;
+        });
     }
 
     /**
@@ -1376,7 +1403,6 @@ class Discord
 
         $resolver
             ->setRequired('token')
-            ->setAllowedTypes('token', 'string')
             ->setDefined([
                 'token',
                 'shardId',
@@ -1400,7 +1426,7 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
-                'cache' => new ArrayCache(),
+                'cache' => [AbstractRepository::class => null], // use LegacyCacheWrapper
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1427,10 +1453,10 @@ class Discord
 
         $options = $resolver->resolve($options);
 
-        $options['loop'] ??= LoopFactory::create();
+        $options['loop'] ??= Loop::get();
 
         if (null === $options['logger']) {
-            $streamHandler = new StreamHandler('php://stdout', Monolog::DEBUG);
+            $streamHandler = new StreamHandler('php://stdout', Level::Debug);
             $lineFormatter = new LineFormatter(null, null, true, true);
             $streamHandler->setFormatter($lineFormatter);
             $logger = new Monolog('DiscordPHP', [$streamHandler]);
@@ -1584,13 +1610,13 @@ class Discord
     /**
      * Gets the cache configuration.
      *
-     * @param string $name Repository class name.
+     * @param string $repository_class Repository class name.
      *
-     * @return CacheConfig
+     * @return ?CacheConfig
      */
     public function getCacheConfig($repository_class = AbstractRepository::class)
     {
-        if (! isset($this->cacheConfig[$repository_class])) {
+        if (! array_key_exists($repository_class, $this->cacheConfig)) {
             $repository_class = AbstractRepository::class;
         }
 
@@ -1635,11 +1661,11 @@ class Discord
     }
 
     /**
-     * Gets a channel.
+     * Gets a cached channel.
      *
-     * @param string|int $channel_id Id of the channel.
+     * @param string|int $channel_id ID of the channel.
      *
-     * @return Channel|null
+     * @return Channel|null null if not found in the cache.
      */
     public function getChannel($channel_id): ?Channel
     {
@@ -1657,7 +1683,7 @@ class Discord
     }
 
     /**
-     * Add listerner for incoming application command from interaction.
+     * Add listener for incoming application command from interaction.
      *
      * @param string|array  $name
      * @param callable      $callback
@@ -1695,7 +1721,7 @@ class Discord
      * Handles dynamic calls to the client.
      *
      * @param string $name   Function name.
-     * @param array  $params Function paramaters.
+     * @param array  $params Function parameters.
      *
      * @return mixed
      */

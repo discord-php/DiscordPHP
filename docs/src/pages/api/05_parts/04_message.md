@@ -62,9 +62,9 @@ Sends a "reply" to the message. Returns the new message in a promise.
 | text | string | text to send in the message |
 
 ```php
-$message->reply('hello!')->done(function (Message $message) {
+$message->reply('hello!')->then(function (Message $message) {
     // ...
-});
+})->done();
 ```
 
 ### Crosspost a message
@@ -72,9 +72,9 @@ $message->reply('hello!')->done(function (Message $message) {
 Crossposts a message to any channels that are following the channel the message was sent in. Returns the crossposted message in a promise.
 
 ```php
-$message->crosspost()->done(function (Message $message) {
+$message->crosspost()->then(function (Message $message) {
     // ...
-});
+})->done();
 ```
 
 ### Reply to a message after a delay
@@ -90,9 +90,9 @@ Similar to replying to a message, also takes a `delay` parameter in which the re
 
 ```php
 // <@message_author_id>, hello! after 1.5 seconds
-$message->delayedReply('hello!', 1500)->done(function (Message $message) {
+$message->delayedReply('hello!', 1500)->then(function (Message $message) {
     // ...
-});
+})->done();
 ```
 
 ### React to a message
@@ -106,21 +106,21 @@ Adds a reaction to a message. Takes an [Emoji](#emoji) object, a custom emoji st
 | emoticon | [Emoji](#emoji) or string | the emoji to react with |
 
 ```php
-$message->react($emoji)->done(function () {
+$message->react($emoji)->then(function () {
     // ...
-});
+})->done();
 
 // or
 
-$message->react(':michael:251127796439449631')->done(function () {
+$message->react(':michael:251127796439449631')->then(function () {
     // ...
-});
+})->done();
 
 // or
 
-$message->react('😀')->done(function () {
+$message->react('😀')->then(function () {
     // ...
-});
+})->done();
 ```
 
 ### Delete reaction(s) from a message
@@ -138,33 +138,33 @@ Deletes reaction(s) from a message. Has four methods of operation, described bel
 #### Delete all reactions
 
 ```php
-$message->deleteReaction(Message::REACT_DELETE_ALL)->done(function () {
+$message->deleteReaction(Message::REACT_DELETE_ALL)->then(function () {
     // ...
-});
+})->done();
 ```
 
 #### Delete reaction by current user
 
 ```php
-$message->deleteReaction(Message::REACT_DELETE_ME, $emoji)->done(function () {
+$message->deleteReaction(Message::REACT_DELETE_ME, $emoji)->then(function () {
     // ...
-});
+})->done();
 ```
 
 #### Delete reaction by another user
 
 ```php
-$message->deleteReaction(Message::REACT_DELETE_ID, $emoji, 'member_id')->done(function () {
+$message->deleteReaction(Message::REACT_DELETE_ID, $emoji, 'member_id')->then(function () {
     // ...
-});
+})->done();
 ```
 
 #### Delete all reactions of one emoji
 
 ```php
-$message->deleteReaction(Message::REACT_DELETE_EMOJI, $emoji)->done(function () {
+$message->deleteReaction(Message::REACT_DELETE_EMOJI, $emoji)->then(function () {
     // ...
-});
+})->done();
 ```
 
 ### Delete the message
@@ -172,9 +172,9 @@ $message->deleteReaction(Message::REACT_DELETE_EMOJI, $emoji)->done(function () 
 Deletes the message. Returns nothing in a promise.
 
 ```php
-$message->delete()->done(function () {
+$message->delete()->then(function () {
     // ...
-});
+})->done();
 ```
 
 ### Edit the message
@@ -183,9 +183,9 @@ Updates the message. Takes a message builder. Returns the updated message in a p
 
 ```php
 $message->edit(MessageBuilder::new()
-    ->setContent('new content'))->done(function (Message $message) {
+    ->setContent('new content'))->then(function (Message $message) {
         // ...
-    });
+    })->done();
 ```
 
 Note fields not set in the builder will not be updated, and will retain their previous value.
@@ -211,11 +211,11 @@ $message->createReactionCollector(function (MessageReaction $reaction) {
     // will resolve after 1.5 seconds or 2 reactions
     'time' => 1500,
     'limit' => 2,
-])->done(function (Collection $reactions) {
+])->then(function (Collection $reactions) {
     foreach ($reactions as $reaction) {
         // ...
     }
-});
+})->done();
 ```
 
 ### Add embed to message
@@ -229,7 +229,7 @@ Adds an embed to a message. Takes an embed object. Will overwrite the old embed 
 | embed | [Embed](#embed) | the embed to add |
 
 ```php
-$message->addEmbed($embed)->done(function (Message $message) {
+$message->addEmbed($embed)->then(function (Message $message) {
     // ...
-});
+})->done();
 ```

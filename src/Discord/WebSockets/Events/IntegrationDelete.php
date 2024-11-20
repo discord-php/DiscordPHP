@@ -28,7 +28,7 @@ class IntegrationDelete extends Event
     {
         $oldIntegration = null;
 
-        /** @var ?Guild */
+        /** @var ?\Discord\Parts\Guild\Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?Integration */
             if ($oldIntegration = yield $guild->integrations->cachePull($data->id)) {

@@ -78,7 +78,12 @@ abstract class Event
     public const AUTO_MODERATION_RULE_DELETE = 'AUTO_MODERATION_RULE_DELETE';
     public const AUTO_MODERATION_ACTION_EXECUTION = 'AUTO_MODERATION_ACTION_EXECUTION';
 
-    public const GUILD_AUDIT_LOG_ENTRY_CREATE ='GUILD_AUDIT_LOG_ENTRY_CREATE';
+    public const GUILD_AUDIT_LOG_ENTRY_CREATE = 'GUILD_AUDIT_LOG_ENTRY_CREATE';
+
+    public const GUILD_SOUNDBOARD_SOUND_CREATE = 'GUILD_SOUNDBOARD_SOUND_CREATE';
+    public const GUILD_SOUNDBOARD_SOUND_UPDATE = 'GUILD_SOUNDBOARD_SOUND_UPDATE';
+    public const GUILD_SOUNDBOARD_SOUND_DELETE = 'GUILD_SOUNDBOARD_SOUND_DELETE';
+    public const SOUNDBOARD_SOUNDS = 'SOUNDBOARD_SOUNDS';
 
     // Channel
     public const CHANNEL_CREATE = 'CHANNEL_CREATE';
@@ -112,6 +117,8 @@ abstract class Event
     public const MESSAGE_REACTION_REMOVE = 'MESSAGE_REACTION_REMOVE';
     public const MESSAGE_REACTION_REMOVE_ALL = 'MESSAGE_REACTION_REMOVE_ALL';
     public const MESSAGE_REACTION_REMOVE_EMOJI = 'MESSAGE_REACTION_REMOVE_EMOJI';
+    public const MESSAGE_POLL_VOTE_ADD = 'MESSAGE_POLL_VOTE_ADD';
+    public const MESSAGE_POLL_VOTE_REMOVE = 'MESSAGE_POLL_VOTE_REMOVE';
 
     /**
      * The Discord client instance.
@@ -151,7 +158,7 @@ abstract class Event
      *
      * @param object $data The data that was sent with the WebSocket.
      *
-     * @return Generator
+     * @return \Generator
      *
      * @since 10.0.0 Changed args from `Deferred &$deferred, $data` to `$data`, changed return from `void` to `Generator`.
      * @since 4.0.0
@@ -165,7 +172,7 @@ abstract class Event
      *
      * @since 7.0.0
      */
-    protected function cacheUser(object $userdata)
+    protected function cacheUser(object $userdata): void
     {
         $users = $this->discord->users;
         if ($user = $users->get('id', $userdata->id)) {
@@ -183,7 +190,7 @@ abstract class Event
      *
      * @since 10.0.0
      */
-    protected function cacheMember(MemberRepository $members, array $memberdata)
+    protected function cacheMember(MemberRepository $members, array $memberdata): void
     {
         if ($member = $members->get('id', $memberdata['user']->id)) {
             $member->fill($memberdata);

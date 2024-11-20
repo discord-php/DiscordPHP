@@ -30,14 +30,14 @@ use ReflectionClass;
  *
  * @since 5.1.0
  *
- * @property Collection|Command[]             $application_commands   List of application commands referenced in the audit log.
- * @property Collection|Entry[]               $audit_log_entries      List of audit log entries.
- * @property Collection|Rule[]                $auto_moderation_rules  List of auto moderation rules referenced in the audit log.
- * @property Collection|GuildScheduledEvent[] $guild_scheduled_events List of guild scheduled events referenced in the audit log.
- * @property Collection|Integration[]         $integrations           List of partial integration objects.
- * @property Collection|Threads[]             $threads                List of threads referenced in the audit log.
- * @property Collection|User[]                $users                  List of users referenced in the audit log.
- * @property Collection|Webhook[]             $webhooks               List of webhooks referenced in the audit log.
+ * @property Collection|Command[]        $application_commands   List of application commands referenced in the audit log.
+ * @property Collection|Entry[]          $audit_log_entries      List of audit log entries.
+ * @property Collection|Rule[]           $auto_moderation_rules  List of auto moderation rules referenced in the audit log.
+ * @property Collection|ScheduledEvent[] $guild_scheduled_events List of guild scheduled events referenced in the audit log.
+ * @property Collection|Integration[]    $integrations           List of partial integration objects.
+ * @property Collection|Thread[]         $threads                List of threads referenced in the audit log.
+ * @property Collection|User[]           $users                  List of users referenced in the audit log.
+ * @property Collection|Webhook[]        $webhooks               List of webhooks referenced in the audit log.
  *
  * @property      string     $guild_id
  * @property-read Guild|null $guild

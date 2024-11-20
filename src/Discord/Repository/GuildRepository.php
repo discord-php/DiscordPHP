@@ -26,7 +26,7 @@ use React\Promise\PromiseInterface;
  * @method Guild|null pull(string|int $key, $default = null)
  * @method Guild|null first()
  * @method Guild|null last()
- * @method Guild|null find()
+ * @method Guild|null find(callable $callback)
  */
 class GuildRepository extends AbstractRepository
 {
@@ -54,7 +54,7 @@ class GuildRepository extends AbstractRepository
      *
      * @param Guild|string $guild
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<self>
      */
     public function leave($guild): PromiseInterface
     {
@@ -62,10 +62,8 @@ class GuildRepository extends AbstractRepository
             $guild = $guild->id;
         }
 
-        return $this->http->delete(Endpoint::bind(Endpoint::USER_CURRENT_GUILD, $guild))->then(function () use ($guild) {
-            return $this->cache->delete($guild)->then(function ($success) {
-                return $this;
-            });
-        });
+        return $this->http
+            ->delete(Endpoint::bind(Endpoint::USER_CURRENT_GUILD, $guild))
+            ->then(fn () => $this->cache->delete($guild)->then(fn ($success) => $this));
     }
 }

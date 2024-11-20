@@ -176,7 +176,7 @@ final class FunctionsTest extends TestCase
             $expected,
             (normalizePartId())(
                 new OptionsResolver(),
-            $part
+                $part
             )
         );
     }

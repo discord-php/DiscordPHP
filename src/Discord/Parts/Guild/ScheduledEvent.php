@@ -93,9 +93,11 @@ class ScheduledEvent extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users
      *
+     * @param array $options
+     *
      * @throws \RangeException
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<Collection<User>>
      */
     public function getUsers(array $options): PromiseInterface
     {

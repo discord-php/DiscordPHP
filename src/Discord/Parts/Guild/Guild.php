@@ -35,6 +35,7 @@ use Discord\Parts\Permissions\RolePermission;
 use Discord\Repository\Guild\AutoModerationRuleRepository;
 use Discord\Repository\Guild\CommandPermissionsRepository;
 use Discord\Repository\Guild\GuildCommandRepository;
+use Discord\Repository\Guild\SoundRepository;
 use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
@@ -144,6 +145,7 @@ use function React\Promise\resolve;
  * @property CommandPermissionsRepository $command_permissions
  * @property IntegrationRepository        $integrations
  * @property InviteRepository             $invites
+ * @property SoundRepository              $sounds
  * @property GuildTemplateRepository      $templates
  */
 class Guild extends Part
@@ -296,6 +298,7 @@ class Guild extends Part
         'command_permissions' => CommandPermissionsRepository::class,
         'integrations' => IntegrationRepository::class,
         'invites' => InviteRepository::class,
+        'sounds' => SoundRepository::class,
         'templates' => GuildTemplateRepository::class,
     ];
 
@@ -565,7 +568,7 @@ class Guild extends Part
      *
      * @deprecated 10.0.0 Use `$channel->stage_instances`
      *
-     * @return Collection[]|StageInstance[]
+     * @return Collection|StageInstance[]
      */
     protected function getStageInstancesAttribute(): Collection
     {
@@ -855,7 +858,7 @@ class Guild extends Part
     }
 
     /**
-     * Creates an Sticker for the guild.
+     * Creates a Sticker for the guild.
      *
      * @link https://discord.com/developers/docs/resources/sticker#create-guild-sticker
      *
@@ -987,7 +990,7 @@ class Guild extends Part
      *
      * @throws \RuntimeException Ownership not transferred correctly.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<self>
      */
     public function transferOwnership($member, ?string $reason = null): PromiseInterface
     {
@@ -1083,9 +1086,9 @@ class Guild extends Part
             $endpoint->addQuery($key, $value);
         }
 
-        return $this->http->get($endpoint)->then(function ($response) {
-            return $this->factory->part(AuditLog::class, (array) $response + ['guild_id' => $this->id], true);
-        });
+        return $this->http
+            ->get($endpoint)
+            ->then(fn ($response) => $this->factory->part(AuditLog::class, (array) $response + ['guild_id' => $this->id], true));
     }
 
     /**
@@ -1095,11 +1098,7 @@ class Guild extends Part
      */
     public function getBotPermissions(): ?RolePermission
     {
-        if (! $memberPart = $this->members->get('id', $this->discord->id)) {
-            return null;
-        }
-
-        return $memberPart->getPermissions();
+        return $this->members->get('id', $this->discord->id)?->getPermissions();
     }
 
     /**
@@ -1229,7 +1228,7 @@ class Guild extends Part
         $options = $resolver->resolve($options);
 
         $botperms = $this->getBotPermissions();
-        if ($botperms && ! $botperms->kick_members) {
+        if ($botperms && ! ($botperms->kick_members && $botperms->manage_guild)) {
             return reject(new NoPermissionsException("You do not have permission to get prune count in the guild {$this->id}."));
         }
 
@@ -1239,9 +1238,7 @@ class Guild extends Part
             $endpoint->addQuery('include_roles', implode(',', $options['include_roles']));
         }
 
-        return $this->http->get($endpoint)->then(function ($response) {
-            return $response->pruned;
-        });
+        return $this->http->get($endpoint)->then(fn ($response) => $response->pruned);
     }
 
     /**
@@ -1287,7 +1284,7 @@ class Guild extends Part
         $options = $resolver->resolve($options);
 
         $botperms = $this->getBotPermissions();
-        if ($botperms && ! $botperms->kick_members) {
+        if ($botperms && ! ($botperms->kick_members && $botperms->manage_guild)) {
             return reject(new NoPermissionsException("You do not have permission to prune members in the guild {$this->id}."));
         }
 
@@ -1296,9 +1293,9 @@ class Guild extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->post(Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id), $options, $headers)->then(function ($response) {
-            return $response->pruned;
-        });
+        return $this->http
+            ->post(Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id), $options, $headers)
+            ->then(fn ($response) => $response->pruned);
     }
 
     /**
@@ -1402,7 +1399,7 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<object>
      */
     public function getWidgetSettings(): PromiseInterface
     {
@@ -1425,10 +1422,10 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-widget
      *
-     * @param array  $options An array of options.
-     *                        enabled => whether the widget is enabled
-     *                        channel_id => the widget channel id
-     * @param string $reason  Reason for Audit Log.
+     * @param array   $options An array of options.
+     *                         enabled => whether the widget is enabled
+     *                         channel_id => the widget channel id
+     * @param ?string $reason  Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
@@ -1659,7 +1656,7 @@ class Guild extends Part
     /**
      * Returns the timestamp of when the guild was created.
      *
-     * @return float
+     * @return ?float
      */
     public function createdTimestamp()
     {

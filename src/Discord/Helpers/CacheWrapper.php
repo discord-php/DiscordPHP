@@ -29,8 +29,7 @@ use function React\Promise\resolve;
  *
  * @since 10.0.0
  *
- * @property-read \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $interface The actual ReactPHP PSR-16 CacheInterface.
- * @property-read CacheConfig                                                 $config    Cache configuration.
+ * @property-read CacheConfig $config Cache configuration.
  */
 class CacheWrapper
 {
@@ -476,19 +475,19 @@ class CacheWrapper
     }
 
     /**
-     * Flush deleted items from cache and weaken items. Items with Bot's ID are
+     * Prune deleted items from cache and weaken items. Items with Bot's ID are
      * exempt.
      *
-     * @return int Flushed items.
+     * @return int Pruned items.
      */
     public function sweep(): int
     {
-        $flushing = 0;
+        $pruning = 0;
         foreach ($this->items as $key => $item) {
             if (null === $item) {
                 // Item was removed from memory, delete from cache
                 $this->delete($key);
-                $flushing++;
+                $pruning++;
             } elseif ($item instanceof Part) {
                 // Skip ID related to Bot
                 if ($key != $this->discord->id) {
@@ -497,17 +496,17 @@ class CacheWrapper
                 }
             }
         }
-        if ($flushing) {
-            $this->discord->getLogger()->debug('Flushing repository cache', ['count' => $flushing, 'class' => $this->class]);
+        if ($pruning) {
+            $this->discord->getLogger()->debug('Pruning repository cache', ['count' => $pruning, 'class' => $this->class]);
         }
 
-        return $flushing;
+        return $pruning;
     }
 
     public function __get(string $name)
     {
-        if (in_array($name, ['interface', 'config'])) {
-            return $this->$name;
+        if ($name === 'config') {
+            return $this->config;
         }
     }
 }

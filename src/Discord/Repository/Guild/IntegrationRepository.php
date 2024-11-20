@@ -27,7 +27,7 @@ use Discord\Repository\AbstractRepository;
  * @method Integration|null pull(string|int $key, $default = null)
  * @method Integration|null first()
  * @method Integration|null last()
- * @method Integration|null find()
+ * @method Integration|null find(callable $callback)
  */
 class IntegrationRepository extends AbstractRepository
 {

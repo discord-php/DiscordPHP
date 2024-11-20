@@ -14,6 +14,7 @@ namespace Discord\Parts\User;
 use Carbon\Carbon;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
+use Stringable;
 
 /**
  * The Activity part describes activities the member is undertaking.
@@ -30,7 +31,7 @@ use Discord\Parts\Part;
  * @property object|null   $timestamps     Unix timestamps for start and/or end of the game.
  * @property string|null   $application_id Application id for the game.
  * @property ?string|null  $details        What the player is currently doing.
- * @property ?string|null  $state          The user's current party status.
+ * @property ?string|null  $state          The user's current party status, or text used for a custom status.
  * @property Emoji|null    $emoji          The emoji used for a custom status.
  * @property object|null   $party          Information for the current party of the player.
  * @property object|null   $assets         Images for the presence and their hover texts.
@@ -39,7 +40,7 @@ use Discord\Parts\Part;
  * @property int|null      $flags          Activity flags `OR`d together, describes what the payload includes.
  * @property object[]|null $buttons        The custom buttons shown in the Rich Presence (max 2).
  */
-class Activity extends Part
+class Activity extends Part implements Stringable
 {
     /** Playing {name} */
     public const TYPE_GAME = 0;
@@ -135,21 +136,14 @@ class Activity extends Part
      */
     public function __toString(): string
     {
-        switch ($this->type) {
-            case self::TYPE_GAME:
-                return 'Playing '.$this->name;
-            case self::TYPE_STREAMING:
-                return 'Streaming '.$this->details;
-            case self::TYPE_LISTENING:
-                return 'Listening to '.$this->name;
-            case self::TYPE_WATCHING:
-                return 'Watching '.$this->name;
-            case self::TYPE_CUSTOM:
-                return "{$this->emoji} {$this->name}";
-            case self::TYPE_COMPETING:
-                return 'Competing in '.$this->name;
-        }
-
-        return $this->name;
+        return match ($this->type) {
+            self::TYPE_GAME => 'Playing ' . $this->name,
+            self::TYPE_STREAMING => 'Streaming ' . $this->details,
+            self::TYPE_LISTENING => 'Listening to ' . $this->name,
+            self::TYPE_WATCHING => 'Watching ' . $this->name,
+            self::TYPE_CUSTOM => "{$this->emoji} {$this->state}",
+            self::TYPE_COMPETING => 'Competing in ' . $this->name,
+            default => $this->name,
+        };
     }
 }

@@ -15,6 +15,7 @@ use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
 use Discord\Helpers\Collection;
+use Discord\Helpers\LegacyCacheWrapper;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
@@ -34,7 +35,7 @@ use function React\Promise\resolve;
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @property-read string       $discrim The discriminator.
+ * @property      string       $discrim The discriminator.
  * @property-read CacheWrapper $cache   The react/cache wrapper.
  */
 abstract class AbstractRepository extends Collection
@@ -90,7 +91,11 @@ abstract class AbstractRepository extends Collection
         $this->http = $discord->getHttpClient();
         $this->factory = $discord->getFactory();
         $this->vars = $vars;
-        $this->cache = new CacheWrapper($discord, $discord->getCacheConfig(static::class), $this->items, $this->class, $this->vars);
+        if ($cacheConfig = $discord->getCacheConfig(static::class)) {
+            $this->cache = new CacheWrapper($discord, $cacheConfig, $this->items, $this->class, $this->vars);
+        } else {
+            $this->cache = new LegacyCacheWrapper($discord, $this->items, $this->class);
+        }
 
         parent::__construct([], $this->discrim, $this->class);
     }
@@ -124,7 +129,7 @@ abstract class AbstractRepository extends Collection
                 } elseif (! ($this->items[$offset] instanceof WeakReference)) {
                     $this->items[$offset] = WeakReference::create($value);
                 }
-                $this->cache->interface->delete($this->cache->getPrefix().$offset);
+                $this->cache->delete($offset);
             }
 
             return $this->cacheFreshen($response);
@@ -205,11 +210,17 @@ abstract class AbstractRepository extends Collection
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->{$method}($endpoint, $attributes, $headers)->then(function ($response) use ($part) {
-            $part->created = true;
-            $part->fill((array) $response);
-
-            return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
+        return $this->http->{$method}($endpoint, $attributes, $headers)->then(function ($response) use ($method, $part) {
+            switch ($method) {
+                case 'patch': // Update old part
+                    $part->fill((array) $response);
+                    $part->created = true;
+                    return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
+                default: // Create new part
+                    $newPart = $this->factory->create($this->class, (array) $response, true);
+                    $newPart->created = true;
+                    return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
+            }
         });
     }
 
@@ -226,7 +237,7 @@ abstract class AbstractRepository extends Collection
     public function delete($part, ?string $reason = null): PromiseInterface
     {
         if (! isset($part)) {
-            return reject(new \Exception('You cannot delete a non-existant part.'));
+            return reject(new \Exception('You cannot delete a non-existent part.'));
         }
 
         if (! ($part instanceof Part)) {
@@ -234,7 +245,7 @@ abstract class AbstractRepository extends Collection
         }
 
         if (! $part->created) {
-            return reject(new \Exception('You cannot delete a non-existant part.'));
+            return reject(new \Exception('You cannot delete a non-existent part.'));
         }
 
         if (! isset($this->endpoints['delete'])) {
@@ -272,7 +283,7 @@ abstract class AbstractRepository extends Collection
     public function fresh(Part $part, array $queryparams = []): PromiseInterface
     {
         if (! $part->created) {
-            return reject(new \Exception('You cannot get a non-existant part.'));
+            return reject(new \Exception('You cannot get a non-existent part.'));
         }
 
         if (! isset($this->endpoints['get'])) {
@@ -375,7 +386,8 @@ abstract class AbstractRepository extends Collection
                 continue;
             }
 
-            if ($resolved = nowait($this->cache->get($offset)) !== null) {
+            $resolved = nowait($this->cache->get($offset));
+            if ($resolved !== null) {
                 return $resolved;
             }
             break;
@@ -411,7 +423,7 @@ abstract class AbstractRepository extends Collection
             return;
         }
 
-        $this->cache->interface->set($this->cache->getPrefix().$offset, $this->cache->serializer($value), $this->cache->config->ttl);
+        $this->cache->set($offset, $value);
         $this->items[$offset] = $value;
     }
 
@@ -430,7 +442,7 @@ abstract class AbstractRepository extends Collection
         if ($item = $this->offsetGet($key)) {
             $default = $item;
             unset($this->items[$key]);
-            $this->cache->interface->delete($this->cache->getPrefix().$key);
+            $this->cache->delete($key);
         }
 
         return $default;
@@ -455,6 +467,7 @@ abstract class AbstractRepository extends Collection
      * Pushes a single item to the repository.
      *
      * @deprecated 10.0.0 Use async `$repository->cache->set()`
+     * This method is deprecated for userland code but can still be used internally within the library.
      *
      * @param Part $item
      *
@@ -465,7 +478,7 @@ abstract class AbstractRepository extends Collection
         if (is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
             $this->items[$key] = $item;
-            $this->cache->interface->set($this->cache->getPrefix().$key, $this->cache->serializer($item), $this->cache->config->ttl);
+            $this->cache->set($key, $item);
         }
 
         return $this;
@@ -524,7 +537,7 @@ abstract class AbstractRepository extends Collection
      *
      * @deprecated 10.0.0 Use async `$repository->cache->has()`
      *
-     * @param array ...$keys
+     * @param string|int ...$keys
      *
      * @return bool
      */
@@ -601,7 +614,7 @@ abstract class AbstractRepository extends Collection
      */
     public function clear(): void
     {
-        // Set items null but keep the keys to be removed on flush
+        // Set items null but keep the keys to be removed on prune
         $this->items = array_fill_keys(array_keys($this->items), null);
     }
 
@@ -638,6 +651,7 @@ abstract class AbstractRepository extends Collection
      * If the repository has an offset.
      *
      * @deprecated 10.0.0 Use async `$repository->cache->has()`
+     * This method is deprecated for userland code but can still be used internally within the library.
      *
      * @param string|int $offset
      *
@@ -652,6 +666,7 @@ abstract class AbstractRepository extends Collection
      * Gets a part from the repository.
      *
      * @deprecated 10.0.0 Use async `$repository->cacheGet()` or sync `$repository->get()`
+     * This method is deprecated for userland code but can still be used internally within the library.
      *
      * @param string|int $offset
      *
@@ -690,7 +705,7 @@ abstract class AbstractRepository extends Collection
      *
      * @deprecated 10.0.0 Use async `$repository->cache->delete()`
      *
-     * @param string|int offset
+     * @param string|int $offset
      */
     public function offsetUnset($offset): void
     {
