@@ -546,11 +546,11 @@ class Thread extends Part implements Stringable
      * @param string|Message|null $options['after']  Get messages after this message ID.
      * @param int|null            $options['limit']  Max number of messages to return (1-100). Defaults to 50.
      *
-     * @return PromiseInterface<Collection<Message[]>
+     * @return PromiseInterface<Collection<Message[]>>
      *
      * @todo Make it in a trait along with Channel
      */
-    public function getMessageHistory(array $options = []): Promise
+    public function getMessageHistory(array $options = []): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver
