@@ -739,7 +739,7 @@ class Channel extends Part implements Stringable
      * @return PromiseInterface<Collection<Message>>
      * @todo Make it in a trait along with Thread
      */
-    public function getMessageHistory(array $options = []): Promise
+    public function getMessageHistory(array $options = []): PromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->read_message_history) {
