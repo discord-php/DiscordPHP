@@ -1267,7 +1267,7 @@ class Channel extends Part implements Stringable
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of messages allowed or false.
      *
-     * @return PromiseInterface<Collection<Message>>
+     * @return PromiseInterface<Collection<Message[]>>
      */
     public function createMessageCollector(callable $filter, array $options = []): PromiseInterface
     {
