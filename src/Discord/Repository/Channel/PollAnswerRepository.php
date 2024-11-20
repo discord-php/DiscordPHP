@@ -14,7 +14,6 @@ namespace Discord\Repository\Channel;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Poll\PollAnswer;
 use Discord\Repository\AbstractRepository;
-use React\Promise\PromiseInterface;
 
 /**
  * Contains poll answers on a poll in a message.
