@@ -736,7 +736,7 @@ class Channel extends Part implements Stringable
      *                                Or also missing `connect` permission for text in voice.
      * @throws \RangeException
      *
-     * @return PromiseInterface<Collection<Message>>
+     * @return PromiseInterface<Collection<Message[]>>
      * @todo Make it in a trait along with Thread
      */
     public function getMessageHistory(array $options = []): PromiseInterface
