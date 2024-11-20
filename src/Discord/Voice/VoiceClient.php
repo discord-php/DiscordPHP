@@ -302,7 +302,7 @@ class VoiceClient extends EventEmitter
      * @var bool Whether the voice client is reconnecting.
      */
     protected $reconnecting = false;
-    
+
     /**
      * Is the voice client being closed by user?
      *
@@ -818,10 +818,10 @@ class VoiceClient extends EventEmitter
         $ogg = null;
 
         $loops = 0;
-        
+
         $readOpus = function () use ($deferred, &$ogg, &$readOpus, &$loops) {
             $this->readOpusTimer = null;
-            
+
             $loops += 1;
 
             // If the client is paused, delay by frame size and check again.
@@ -836,7 +836,7 @@ class VoiceClient extends EventEmitter
                 // EOF for Ogg stream.
                 if (null === $packet) {
                     $this->reset();
-                    $deferred->resolve(true);
+                    $deferred->resolve(null);
 
                     return;
                 }
@@ -861,7 +861,7 @@ class VoiceClient extends EventEmitter
                 $this->readOpusTimer = $this->loop->addTimer($delay, $readOpus);
             }, function ($e) use ($deferred) {
                 $this->reset();
-                $deferred->resolve(true);
+                $deferred->resolve(null);
             });
         };
 
@@ -963,7 +963,7 @@ class VoiceClient extends EventEmitter
                 $this->readOpusTimer = $this->loop->addTimer(($this->frameSize - 1) / 1000, $readOpus);
             }, function () use ($deferred) {
                 $this->reset();
-                $deferred->resolve(true);
+                $deferred->resolve(null);
             });
         };
 

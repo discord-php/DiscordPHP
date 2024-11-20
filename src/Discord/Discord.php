@@ -497,7 +497,7 @@ class Discord
                 unset($unavailable[$guild->id]);
             }
             if (count($unavailable) < 1) {
-                $guildLoad->resolve(true);
+                $guildLoad->resolve(null);
             }
         };
         $this->on(Event::GUILD_CREATE, $onGuildCreate);
@@ -512,7 +512,7 @@ class Discord
                 unset($unavailable[$guild->id]);
             }
             if (count($unavailable) < 1) {
-                $guildLoad->resolve(true);
+                $guildLoad->resolve(null);
             }
         };
         $this->on(Event::GUILD_DELETE, $onGuildDelete);
