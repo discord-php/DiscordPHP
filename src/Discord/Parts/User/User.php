@@ -17,7 +17,7 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 use Stringable;
 use function React\Promise\resolve;
@@ -51,7 +51,7 @@ use function React\Promise\resolve;
  * @property int|null     $avatar_decoration      The user's avatar decoration URL.
  * @property int|null     $avatar_decoration_hash The user's avatar decoration hash.
  *
- * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
+ * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
 class User extends Part implements Stringable
 {
@@ -105,9 +105,9 @@ class User extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/user#create-dm
      *
-     * @return ExtendedPromiseInterface<Channel>
+     * @return PromiseInterface<Channel>
      */
-    public function getPrivateChannel(): ExtendedPromiseInterface
+    public function getPrivateChannel(): PromiseInterface
     {
         if ($channel = $this->discord->private_channels->get('recipient_id', $this->id)) {
             return resolve($channel);
@@ -135,9 +135,9 @@ class User extends Part implements Stringable
      * @param array|null                            $allowed_mentions Allowed mentions object for the message.
      * @param Message|null                          $replyTo          Sends the message as a reply to the given message instance.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
+    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): PromiseInterface
     {
         return $this
             ->getPrivateChannel()
@@ -151,9 +151,9 @@ class User extends Part implements Stringable
      *
      * @throws \RuntimeException
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function broadcastTyping(): ExtendedPromiseInterface
+    public function broadcastTyping(): PromiseInterface
     {
         return $this->getPrivateChannel()->then(fn (Channel $channel) => $channel->broadcastTyping());
     }

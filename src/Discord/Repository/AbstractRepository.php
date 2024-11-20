@@ -19,7 +19,7 @@ use Discord\Helpers\LegacyCacheWrapper;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 use Traversable;
 use WeakReference;
 
@@ -105,11 +105,11 @@ abstract class AbstractRepository extends Collection
      *
      * @param array $queryparams Query string params to add to the request (no validation)
      *
-     * @return ExtendedPromiseInterface<static>
+     * @return PromiseInterface<static>
      *
      * @throws \Exception
      */
-    public function freshen(array $queryparams = []): ExtendedPromiseInterface
+    public function freshen(array $queryparams = []): PromiseInterface
     {
         if (! isset($this->endpoints['all'])) {
             return reject(new \Exception('You cannot freshen this repository.'));
@@ -139,9 +139,9 @@ abstract class AbstractRepository extends Collection
     /**
      * @param object $response
      *
-     * @return ExtendedPromiseInterface<static>
+     * @return PromiseInterface<static>
      */
-    protected function cacheFreshen($response): ExtendedPromiseInterface
+    protected function cacheFreshen($response): PromiseInterface
     {
         foreach ($response as $value) {
             $value = array_merge($this->vars, (array) $value);
@@ -179,11 +179,11 @@ abstract class AbstractRepository extends Collection
      * @param Part        $part   The part to save.
      * @param string|null $reason Reason for Audit Log (if supported).
      *
-     * @return ExtendedPromiseInterface<Part>
+     * @return PromiseInterface<Part>
      *
      * @throws \Exception
      */
-    public function save(Part $part, ?string $reason = null): ExtendedPromiseInterface
+    public function save(Part $part, ?string $reason = null): PromiseInterface
     {
         if ($part->created) {
             if (! isset($this->endpoints['update'])) {
@@ -230,11 +230,11 @@ abstract class AbstractRepository extends Collection
      * @param Part|string $part   The part to delete.
      * @param string|null $reason Reason for Audit Log (if supported).
      *
-     * @return ExtendedPromiseInterface<Part>
+     * @return PromiseInterface<Part>
      *
      * @throws \Exception
      */
-    public function delete($part, ?string $reason = null): ExtendedPromiseInterface
+    public function delete($part, ?string $reason = null): PromiseInterface
     {
         if (! isset($part)) {
             return reject(new \Exception('You cannot delete a non-existent part.'));
@@ -276,11 +276,11 @@ abstract class AbstractRepository extends Collection
      * @param Part  $part        The part to get fresh values.
      * @param array $queryparams Query string params to add to the request (no validation)
      *
-     * @return ExtendedPromiseInterface<Part>
+     * @return PromiseInterface<Part>
      *
      * @throws \Exception
      */
-    public function fresh(Part $part, array $queryparams = []): ExtendedPromiseInterface
+    public function fresh(Part $part, array $queryparams = []): PromiseInterface
     {
         if (! $part->created) {
             return reject(new \Exception('You cannot get a non-existent part.'));
@@ -312,9 +312,9 @@ abstract class AbstractRepository extends Collection
      *
      * @throws \Exception
      *
-     * @return ExtendedPromiseInterface<Part>
+     * @return PromiseInterface<Part>
      */
-    public function fetch(string $id, bool $fresh = false): ExtendedPromiseInterface
+    public function fetch(string $id, bool $fresh = false): PromiseInterface
     {
         if (! $fresh) {
             if (isset($this->items[$id])) {
@@ -403,9 +403,9 @@ abstract class AbstractRepository extends Collection
      *
      * @param string|int $offset
      *
-     * @return ExtendedPromiseInterface<?Part>
+     * @return PromiseInterface<?Part>
      */
-    public function cacheGet($offset): ExtendedPromiseInterface
+    public function cacheGet($offset): PromiseInterface
     {
         return resolve($this->offsetGet($offset) ?? $this->cache->get($offset));
     }
@@ -456,9 +456,9 @@ abstract class AbstractRepository extends Collection
      * @param string|int $key
      * @param ?Part      $default
      *
-     * @return ExtendedPromiseInterface<?Part>
+     * @return PromiseInterface<?Part>
      */
-    public function cachePull($key, $default = null): ExtendedPromiseInterface
+    public function cachePull($key, $default = null): PromiseInterface
     {
         return $this->cacheGet($key)->then(fn ($item) => ($item === null) ? $default : $this->cache->delete($key)->then(fn ($success) => $item));
     }

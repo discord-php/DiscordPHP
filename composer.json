@@ -23,7 +23,6 @@
         "trafficcophp/bytebuffer": "^0.3",
         "monolog/monolog": "^2.1.1 || ^3.0",
         "react/event-loop": "^1.2",
-        "react/promise": "^2.2",
         "ext-json": "*",
         "ext-zlib": "*",
         "discord-php/http": "^10.1.7",
@@ -38,7 +37,7 @@
         "friendsofphp/php-cs-fixer": "^3",
         "phpunit/phpunit": "^9.4.4",
         "davidcole1340/reactsh": "dev-master",
-        "wyrihaximus/react-cache-redis": "^3.0 || >=4.0 <4.4",
+        "wyrihaximus/react-cache-redis": "^4.5",
         "symfony/cache": "^5.4"
     },
     "autoload": {

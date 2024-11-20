@@ -12,7 +12,6 @@
 namespace Discord;
 
 use ArrayIterator;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Role;
@@ -21,6 +20,7 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
+use React\Promise\Deferred;
 use React\Promise\Promise;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\Options;
@@ -296,7 +296,7 @@ function escapeMarkdown(string $text): string
  * @since 10.0.0 Handle `$canceller` internally, use `cancel()` from the returned promise.
  * @since 7.1.0
  */
-function deferFind($array, callable $callback, $loop = null): Promise
+function deferFind($array, callable $callback, $loop = null): PromiseInterface
 {
     $cancelled = false;
     $deferred = new Deferred(function () use (&$cancelled) {
