@@ -158,9 +158,9 @@ class Member extends Part implements Stringable
      * @throws \RuntimeException      Member has no `$guild`.
      * @throws NoPermissionsException Missing `kick_members` permission.
      *
-     * @return ExtendedPromiseInterface<self>
+     * @return PromiseInterface<self>
      */
-    public function kick(?string $reason = null): ExtendedPromiseInterface
+    public function kick(?string $reason = null): PromiseInterface
     {
         return $this->discord->guilds->cacheGet($this->guild_id)->then(function (?Guild $guild) use ($reason) {
             if (null === $guild) {

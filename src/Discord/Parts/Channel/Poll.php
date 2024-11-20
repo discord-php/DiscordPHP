@@ -19,7 +19,7 @@ use Discord\Parts\Channel\Poll\PollMedia;
 use Discord\Parts\Channel\Poll\PollResults;
 use Discord\Parts\Part;
 use Discord\Repository\Channel\PollAnswerRepository;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 /**
  * A message poll.
@@ -128,9 +128,9 @@ class Poll extends Part
      *
      * @link https://discord.com/developers/docs/resources/poll#end-poll
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function expire(): ExtendedPromiseInterface
+    public function expire(): PromiseInterface
     {
         return $this->http->post(Endpoint::bind(Endpoint::MESSAGE_POLL_EXPIRE, $this->channel_id, $this->message_id))
             ->then(function ($response) {

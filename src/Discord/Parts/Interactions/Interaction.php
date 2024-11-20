@@ -489,7 +489,7 @@ class Interaction extends Part
      *
      * @return PromiseInterface<Message>
      */
-    public function updateFollowUpMessage(string $message_id, MessageBuilder $builder): ExtendedPromiseInterface
+    public function updateFollowUpMessage(string $message_id, MessageBuilder $builder): PromiseInterface
     {
         if (! $this->responded) {
             return reject(new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.'));

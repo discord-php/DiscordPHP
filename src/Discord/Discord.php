@@ -1230,7 +1230,7 @@ class Discord
      * @since 10.0.0 Removed argument $check that has no effect (it is always checked)
      * @since 4.0.0
      *
-     * @return ExtendedPromiseInterface<VoiceClient>
+     * @return PromiseInterface<VoiceClient>
      */
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null, bool $check = true): PromiseInterface
     {
