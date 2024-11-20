@@ -139,9 +139,9 @@ trait CollectionTrait
      *
      * @param array $items
      *
-     * @return static
+     * @return self
      */
-    public function fill(array $items): static
+    public function fill(array $items): self
     {
         foreach ($items as $item) {
             $this->pushItem($item);
@@ -155,9 +155,9 @@ trait CollectionTrait
      *
      * @param mixed ...$items
      *
-     * @return static
+     * @return self
      */
-    public function push(...$items): static
+    public function push(...$items): self
     {
         foreach ($items as $item) {
             $this->pushItem($item);
@@ -171,9 +171,9 @@ trait CollectionTrait
      *
      * @param mixed $item
      *
-     * @return static
+     * @return self
      */
-    public function pushItem($item): static
+    public function pushItem($item): self
     {
         if (null === $this->discrim) {
             $this->items[] = $item;
@@ -334,9 +334,9 @@ trait CollectionTrait
      *
      * @param Collection $collection
      *
-     * @return static
+     * @return self
      */
-    public function merge(Collection $collection): static
+    public function merge(Collection $collection): self
     {
         $this->items = array_merge($this->items, $collection->toArray());
 
