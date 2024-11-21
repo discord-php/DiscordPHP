@@ -1174,7 +1174,7 @@ class Discord
      *
      * @throws \UnexpectedValueException
      */
-    public function updatePresence(Activity $activity = null, bool $idle = false, string $status = 'online', bool $afk = false): void
+    public function updatePresence(?Activity $activity = null, bool $idle = false, string $status = 'online', bool $afk = false): void
     {
         $idle = $idle ? time() * 1000 : null;
 
@@ -1685,7 +1685,7 @@ class Discord
      *
      * @return RegisteredCommand
      */
-    public function listenCommand($name, callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
+    public function listenCommand($name, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {
         if (is_array($name) && count($name) == 1) {
             $name = array_shift($name);
