@@ -68,7 +68,7 @@ class MemberRepository extends AbstractRepository
      *
      * @param array $queryparams Query string params to add to the request, leave null to paginate all members (Warning: Be careful to use this on very large guild)
      */
-    public function freshen(array $queryparams = null): PromiseInterface
+    public function freshen(?array $queryparams = null): PromiseInterface
     {
         if (isset($queryparams)) {
             return parent::freshen($queryparams);

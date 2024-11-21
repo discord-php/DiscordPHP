@@ -982,7 +982,7 @@ class Channel extends Part implements Stringable
      *
      * @since 10.0.0 Arguments for `$name`, `$private` and `$auto_archive_duration` are now inside `$options`
      */
-    public function startThread(array|string $options, string|null|bool $reason = null, int $_auto_archive_duration = 1440, ?string $_reason = null): PromiseInterface
+    public function startThread(array|string $options, string|bool|null $reason = null, int $_auto_archive_duration = 1440, ?string $_reason = null): PromiseInterface
     {
         // Old v7 signature
         if (is_string($options)) {

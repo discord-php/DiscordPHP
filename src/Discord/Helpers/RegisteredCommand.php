@@ -168,14 +168,14 @@ class RegisteredCommand
      * Adds a sub-command to the command.
      *
      * @param string|array  $name
-     * @param callable      $callback
+     * @param callable|null $callback
      * @param callable|null $autocomplete_callback
      *
      * @throws \LogicException
      *
      * @return static
      */
-    public function addSubCommand($name, callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
+    public function addSubCommand($name, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {
         if (is_array($name) && count($name) == 1) {
             $name = array_shift($name);
