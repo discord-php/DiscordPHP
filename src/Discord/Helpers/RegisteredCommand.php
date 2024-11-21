@@ -66,12 +66,12 @@ class RegisteredCommand
      * RegisteredCommand represents a command that has been registered with the
      * Discord servers and has a handler to handle when the command is triggered.
      *
-     * @param Discord   $discord
-     * @param string    $name
-     * @param callable  $callback
-     * @param ?callable $autocomplete_callback Callback returning list of auto complete suggestions
+     * @param Discord       $discord
+     * @param string        $name
+     * @param callable|null $callback
+     * @param callable|null $autocomplete_callback Callback returning list of auto complete suggestions
      */
-    public function __construct(Discord $discord, string $name, callable $callback = null, ?callable $autocomplete_callback = null)
+    public function __construct(Discord $discord, string $name, ?callable $callback = null, ?callable $autocomplete_callback = null)
     {
         $this->discord = $discord;
         $this->name = $name;
