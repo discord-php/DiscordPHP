@@ -559,6 +559,39 @@ class VoiceClient extends EventEmitter
                     $sendHeartbeat();
                     $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, $sendHeartbeat);
                     break;
+                case Op::VOICE_DAVE_PREPARE_TRANSITION:
+                    $this->handleDavePrepareTransition($data);
+                    break;
+                case Op::VOICE_DAVE_EXECUTE_TRANSITION:
+                    $this->handleDaveExecuteTransition($data);
+                    break;
+                case Op::VOICE_DAVE_TRANSITION_READY:
+                    $this->handleDaveTransitionReady($data);
+                    break;
+                case Op::VOICE_DAVE_PREPARE_EPOCH:
+                    $this->handleDavePrepareEpoch($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_EXTERNAL_SENDER:
+                    $this->handleDaveMlsExternalSender($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_KEY_PACKAGE:
+                    $this->handleDaveMlsKeyPackage($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_PROPOSALS:
+                    $this->handleDaveMlsProposals($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_COMMIT_WELCOME:
+                    $this->handleDaveMlsCommitWelcome($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION:
+                    $this->handleDaveMlsAnnounceCommitTransition($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_WELCOME:
+                    $this->handleDaveMlsWelcome($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME:
+                    $this->handleDaveMlsInvalidCommitWelcome($data);
+                    break;
             }
         });
 
@@ -1468,6 +1501,115 @@ class VoiceClient extends EventEmitter
         $buff->write($vp->getData(), 2);
 
         $decoder->stdin->write((string) $buff);
+    }
+
+    private function handleDavePrepareTransition($data)
+    {
+        $this->logger->debug('DAVE Prepare Transition', ['data' => $data]);
+        // Prepare local state necessary to perform the transition
+        $this->send([
+            'op' => Op::VOICE_DAVE_TRANSITION_READY,
+            'd' => [
+                'transition_id' => $data->d->transition_id,
+            ],
+        ]);
+    }
+
+    private function handleDaveExecuteTransition($data)
+    {
+        $this->logger->debug('DAVE Execute Transition', ['data' => $data]);
+        // Execute the transition
+        // Update local state to reflect the new protocol context
+    }
+
+    private function handleDaveTransitionReady($data)
+    {
+        $this->logger->debug('DAVE Transition Ready', ['data' => $data]);
+        // Handle transition ready state
+    }
+
+    private function handleDavePrepareEpoch($data)
+    {
+        $this->logger->debug('DAVE Prepare Epoch', ['data' => $data]);
+        // Prepare local MLS group with parameters appropriate for the DAVE protocol version
+        $this->send([
+            'op' => Op::VOICE_DAVE_MLS_KEY_PACKAGE,
+            'd' => [
+                'epoch_id' => $data->d->epoch_id,
+                'key_package' => $this->generateKeyPackage(),
+            ],
+        ]);
+    }
+
+    private function handleDaveMlsExternalSender($data)
+    {
+        $this->logger->debug('DAVE MLS External Sender', ['data' => $data]);
+        // Handle external sender public key and credential
+    }
+
+    private function handleDaveMlsKeyPackage($data)
+    {
+        $this->logger->debug('DAVE MLS Key Package', ['data' => $data]);
+        // Handle MLS key package
+    }
+
+    private function handleDaveMlsProposals($data)
+    {
+        $this->logger->debug('DAVE MLS Proposals', ['data' => $data]);
+        // Handle MLS proposals
+        $this->send([
+            'op' => Op::VOICE_DAVE_MLS_COMMIT_WELCOME,
+            'd' => [
+                'commit' => $this->generateCommit(),
+                'welcome' => $this->generateWelcome(),
+            ],
+        ]);
+    }
+
+    private function handleDaveMlsCommitWelcome($data)
+    {
+        $this->logger->debug('DAVE MLS Commit Welcome', ['data' => $data]);
+        // Handle MLS commit and welcome messages
+    }
+
+    private function handleDaveMlsAnnounceCommitTransition($data)
+    {
+        // Handle MLS announce commit transition
+        $this->logger->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
+    }
+
+    private function handleDaveMlsWelcome($data)
+    {
+        // Handle MLS welcome message
+        $this->logger->debug('DAVE MLS Welcome', ['data' => $data]);
+    }
+
+    private function handleDaveMlsInvalidCommitWelcome($data)
+    {
+        $this->logger->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
+        // Handle invalid commit or welcome message
+        // Reset local group state and generate a new key package
+        $this->send([
+            'op' => Op::VOICE_DAVE_MLS_KEY_PACKAGE,
+            'd' => [
+                'key_package' => $this->generateKeyPackage(),
+            ],
+        ]);
+    }
+
+    private function generateKeyPackage()
+    {
+        // Generate and return a new MLS key package
+    }
+
+    private function generateCommit()
+    {
+        // Generate and return an MLS commit message
+    }
+
+    private function generateWelcome()
+    {
+        // Generate and return an MLS welcome message
     }
 
     /**
