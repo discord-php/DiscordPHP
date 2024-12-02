@@ -331,9 +331,9 @@ class MessageBuilder implements JsonSerializable
     /**
      * Returns all the embeds in the builder.
      *
-     * @return Embed[]
+     * @return array[]|null
      */
-    public function getEmbeds(): array
+    public function getEmbeds(): ?array
     {
         return $this->embeds;
     }
