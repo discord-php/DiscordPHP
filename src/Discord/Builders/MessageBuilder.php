@@ -329,7 +329,7 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
-     * Returns the embeds of the builder.
+     * Returns all the embeds in the builder.
      *
      * @return Embed[]
      */
