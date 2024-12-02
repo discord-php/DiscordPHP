@@ -221,6 +221,16 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
+     * Returns the poll of the message.
+     *
+     * @return Poll|null
+     */
+    public function getPoll(): ?Poll
+    {
+        return $this->poll;
+    }
+
+    /**
      * Override the default username of the webhook. Only used for executing webhook.
      *
      * @param string $username New webhook username.
@@ -316,6 +326,16 @@ class MessageBuilder implements JsonSerializable
         $this->embeds = [];
 
         return $this->addEmbed(...$embeds);
+    }
+
+    /**
+     * Returns the embeds of the builder.
+     *
+     * @return Embed[]
+     */
+    public function getEmbeds(): array
+    {
+        return $this->embeds;
     }
 
     /**
@@ -740,14 +760,6 @@ class MessageBuilder implements JsonSerializable
             $body['flags'] = $this->flags;
         } elseif ($empty) {
             throw new RequestFailedException('You cannot send an empty message. Set the content or add an embed, file or poll.');
-        }
-
-        if (isset($this->enforce_nonce)) {
-            $body['enforce_nonce'] = $this->enforce_nonce;
-        }
-
-        if (isset($this->poll)) {
-            $body['poll'] = $this->poll;
         }
 
         if (isset($this->enforce_nonce)) {
