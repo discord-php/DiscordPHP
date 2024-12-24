@@ -332,11 +332,11 @@ trait CollectionTrait
     /**
      * Merges another collection into this collection.
      *
-     * @param Collection $collection
+     * @param $collection
      *
      * @return self
      */
-    public function merge(Collection $collection): self
+    public function merge($collection): self
     {
         $this->items = array_merge($this->items, $collection->toArray());
 
