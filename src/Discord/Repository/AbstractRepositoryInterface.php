@@ -50,7 +50,7 @@ interface AbstractRepositoryInterface extends CollectionInterface
     public function &getIterator(): Traversable;
     public function __get(string $key);
 
-    // Methods imported from CollectionTrait
+    /* Methods imported from CollectionTrait
     public function fill(array $items): static;
     public function push(...$items): static;
     public function isset($offset): bool;
@@ -61,4 +61,5 @@ interface AbstractRepositoryInterface extends CollectionInterface
     public function unserialize(string $serialized): void;
     public function __unserialize(array $data): void;
     public function __debugInfo(): array;
+    */
 }
