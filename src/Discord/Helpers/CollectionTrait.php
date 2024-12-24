@@ -14,27 +14,6 @@ namespace Discord\Helpers;
 trait CollectionTrait
 {
     /**
-     * The collection discriminator.
-     *
-     * @var ?string
-     */
-    protected $discrim;
-
-    /**
-     * The items contained in the collection.
-     *
-     * @var array
-     */
-    protected $items;
-
-    /**
-     * Class type allowed into the collection.
-     *
-     * @var string
-     */
-    protected $class;
-
-    /**
      * Create a new static.
      *
      * @param array       $items

@@ -39,5 +39,26 @@ use function React\Promise\resolve;
  */
 abstract class AbstractRepository implements CollectionInterface
 {
+    /**
+     * The collection discriminator.
+     *
+     * @var string Discriminator.
+     */
+    protected $discrim = 'id';
+
+    /**
+     * The items contained in the collection.
+     *
+     * @var array
+     */
+    protected $items = [];
+
+    /**
+     * Class type allowed into the collection.
+     *
+     * @var string
+     */
+    protected $class;
+
     use AbstractRepositoryTrait;
 }

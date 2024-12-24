@@ -65,26 +65,6 @@ trait AbstractRepositoryTrait
         jsonSerialize as __Collection__jsonSerialize;
         getIterator as __Collection__getIterator;
     }
-    /**
-     * The collection discriminator.
-     *
-     * @var string Discriminator.
-     */
-    protected $discrim = 'id';
-
-    /**
-     * The items contained in the collection.
-     *
-     * @var array
-     */
-    protected $items = [];
-
-    /**
-     * Class type allowed into the collection.
-     *
-     * @var string
-     */
-    protected $class;
 
     /**
      * The HTTP client.
