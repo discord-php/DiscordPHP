@@ -13,7 +13,7 @@ namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -305,7 +305,7 @@ class Guild extends Part
     /**
      * An array of valid regions.
      *
-     * @var Collection|null
+     * @var CollectionInterface|null
      */
     protected $regions;
 
@@ -423,7 +423,7 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
-     * @return PromiseInterface<Collection|Invite[]>
+     * @return PromiseInterface<CollectionInterface|Invite[]>
      */
     public function getInvites(): PromiseInterface
     {
@@ -433,7 +433,7 @@ class Guild extends Part
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_INVITES, $this->id))->then(function ($response) {
-            $invites = Collection::for(Invite::class, 'code');
+            $invites = ($this->discord->getCollectionClass())::for(Invite::class, 'code');
 
             foreach ($response as $invite) {
                 $invite = $this->factory->part(Invite::class, (array) $invite, true);
@@ -568,11 +568,11 @@ class Guild extends Part
      *
      * @deprecated 10.0.0 Use `$channel->stage_instances`
      *
-     * @return Collection|StageInstance[]
+     * @return CollectionInterfaceInterface|StageInstance[]
      */
-    protected function getStageInstancesAttribute(): Collection
+    protected function getStageInstancesAttribute(): CollectionInterface
     {
-        $stage_instances = Collection::for(StageInstance::class);
+        $stage_instances = ($this->discord->getCollectionClass())::for(StageInstance::class);
 
         if ($channels = $this->channels) {
             /** @var Channel */
@@ -753,7 +753,7 @@ class Guild extends Part
         }
 
         return $this->http->get('voice/regions')->then(function ($regions) {
-            $regions = new Collection($regions);
+            $regions = new ($this->discord->getCollectionClass())($regions);
 
             $this->regions = $regions;
 
@@ -1155,7 +1155,7 @@ class Guild extends Part
      * @param string|null $options['query'] Query string to match username(s) and nickname(s) against
      * @param int|null    $options['limit'] How many entries are returned (default 1, minimum 1, maximum 1000)
      *
-     * @return PromiseInterface<Collection|Member[]>
+     * @return PromiseInterface<CollectionInterface|Member[]>
      */
     public function searchMembers(array $options): PromiseInterface
     {
@@ -1176,7 +1176,7 @@ class Guild extends Part
         $endpoint->addQuery('limit', $options['limit']);
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $members = Collection::for(Member::class);
+            $members = ($this->discord->getCollectionClass())::for(Member::class);
 
             foreach ($responses as $response) {
                 if (! $member = $this->members->get('id', $response->user->id)) {

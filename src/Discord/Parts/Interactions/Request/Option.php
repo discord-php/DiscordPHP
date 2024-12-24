@@ -11,7 +11,7 @@
 
 namespace Discord\Parts\Interactions\Request;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Interactions\Command\Option as CommandOption;
 use Discord\Parts\Part;
 
@@ -25,7 +25,7 @@ use Discord\Parts\Part;
  * @property string                     $name    Name of the parameter.
  * @property int                        $type    Type of the option.
  * @property string|int|float|bool|null $value   Value of the option resulting from user input.
- * @property Collection|Option[]|null   $options Present if this option is a group or subcommand.
+ * @property CollectionInterface|Option[]|null   $options Present if this option is a group or subcommand.
  * @property bool|null                  $focused `true` if this option is the currently focused option for autocomplete.
  */
 class Option extends Part
@@ -44,15 +44,15 @@ class Option extends Part
     /**
      * Gets the options of the interaction.
      *
-     * @return Collection|Option[]|null $options
+     * @return CollectionInterfaceInterface|Option[]|null $options
      */
-    protected function getOptionsAttribute(): ?Collection
+    protected function getOptionsAttribute(): ?CollectionInterface
     {
         if (! isset($this->attributes['options']) && ! in_array($this->type, [CommandOption::SUB_COMMAND, CommandOption::SUB_COMMAND_GROUP])) {
             return null;
         }
 
-        $options = Collection::for(Option::class, 'name');
+        $options = ($this->discord->getCollectionClass())::for(Option::class, 'name');
 
         foreach ($this->attributes['options'] ?? [] as $option) {
             $options->pushItem($this->createOf(Option::class, $option));

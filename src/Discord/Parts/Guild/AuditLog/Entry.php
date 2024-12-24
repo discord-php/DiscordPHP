@@ -11,7 +11,7 @@
 
 namespace Discord\Parts\Guild\AuditLog;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
@@ -121,11 +121,11 @@ class Entry extends Part
      *
      * @link https://discord.com/developers/docs/resources/audit-log#audit-log-change-object
      *
-     * @return Collection
+     * @return CollectionInterface
      */
-    protected function getChangesAttribute(): Collection
+    protected function getChangesAttribute(): CollectionInterface
     {
-        return new Collection($this->attributes['changes'] ?? [], 'key', null);
+        return new ($this->discord->getCollectionClass())($this->attributes['changes'] ?? [], 'key', null);
     }
 
     /**

@@ -12,7 +12,7 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
@@ -97,7 +97,7 @@ class ScheduledEvent extends Part
      *
      * @throws \RangeException
      *
-     * @return PromiseInterface<Collection<User>>
+     * @return PromiseInterface<CollectionInterface<User>>
      */
     public function getUsers(array $options): PromiseInterface
     {
@@ -126,7 +126,7 @@ class ScheduledEvent extends Part
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $users = new Collection();
+            $users = new ($this->discord->getCollectionClass())();
 
             $guild = $this->guild;
 

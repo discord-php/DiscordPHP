@@ -14,7 +14,7 @@ namespace Discord\Parts\Channel;
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Exceptions\InvalidOverwriteException;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
@@ -70,7 +70,7 @@ use function React\Promise\resolve;
  * @property      int|null            $bitrate                            The bitrate of the channel. Only for voice channels.
  * @property      int|null            $user_limit                         The user limit of the channel. Max 99 for voice channels and 10000 for stage channels (0 refers to no limit).
  * @property      int|null            $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message (slow mode).
- * @property      Collection|User[]   $recipients                         A collection of all the recipients in the channel. Only for DM or group channels.
+ * @property      CollectionInterface|User[]   $recipients                A collection of all the recipients in the channel. Only for DM or group channels.
  * @property-read User|null           $recipient                          The first recipient of the channel. Only for DM or group channels.
  * @property-read string|null         $recipient_id                       The ID of the recipient of the channel, if it is a DM channel.
  * @property      ?string|null        $icon                               Icon hash.
@@ -84,7 +84,7 @@ use function React\Promise\resolve;
  * @property      int|null            $default_auto_archive_duration      Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
  * @property      string|null         $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on an application command interaction.
  * @property      int|null            $flags                              Channel flags combined as a bitfield.
- * @property      Collection|Tag[]    $available_tags                     Set of tags that can be used in a forum channel, limited to 20.
+ * @property      CollectionInterface|Tag[]    $available_tags            Set of tags that can be used in a forum channel, limited to 20.
  * @property      ?Reaction|null      $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.
  * @property      int|null            $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a forum channel. this field is copied to the thread at creation time and does not live update.
  * @property      ?int|null           $default_sort_order                 The default sort order type used to order posts in forum channels.
@@ -251,11 +251,11 @@ class Channel extends Part implements Stringable
     /**
      * Gets the recipients attribute.
      *
-     * @return Collection A collection of recipients.
+     * @return CollectionInterface A collection of recipients.
      */
-    protected function getRecipientsAttribute(): Collection
+    protected function getRecipientsAttribute(): CollectionInterface
     {
-        $recipients = Collection::for(User::class);
+        $recipients = ($this->discord->getCollectionClass())::for(User::class);
 
         foreach ($this->attributes['recipients'] ?? [] as $recipient) {
             $recipients->pushItem($this->discord->users->get('id', $recipient->id) ?: $this->factory->part(User::class, (array) $recipient, true));
@@ -295,13 +295,13 @@ class Channel extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
      *
-     * @return PromiseInterface<Collection<Message[]>>
+     * @return PromiseInterface<CollectionInterface<Message[]>>
      */
     public function getPinnedMessages(): PromiseInterface
     {
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_PINS, $this->id))
         ->then(function ($responses) {
-            $messages = Collection::for(Message::class);
+            $messages = ($this->discord->getCollectionClass())::for(Message::class);
 
             foreach ($responses as $response) {
                 $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
@@ -736,7 +736,7 @@ class Channel extends Part implements Stringable
      *                                Or also missing `connect` permission for text in voice.
      * @throws \RangeException
      *
-     * @return PromiseInterface<Collection<Message[]>>
+     * @return PromiseInterface<CollectionInterface<Message[]>>
      * @todo Make it in a trait along with Thread
      */
     public function getMessageHistory(array $options = []): PromiseInterface
@@ -781,7 +781,7 @@ class Channel extends Part implements Stringable
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $messages = Collection::for(Message::class);
+            $messages = ($this->discord->getCollectionClass())::for(Message::class);
 
             foreach ($responses as $response) {
                 $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
@@ -925,13 +925,13 @@ class Channel extends Part implements Stringable
     /**
      * Gets the available tags attribute.
      *
-     * @return Collection|Tag[] Available forum tags.
+     * @return CollectionInterface|Tag[] Available forum tags.
      *
      * @since 7.4.0
      */
-    protected function getAvailableTagsAttribute(): Collection
+    protected function getAvailableTagsAttribute(): CollectionInterface
     {
-        $available_tags = Collection::for(Tag::class);
+        $available_tags = ($this->discord->getCollectionClass())::for(Tag::class);
 
         foreach ($this->attributes['available_tags'] ?? [] as $available_tag) {
             $available_tags->pushItem($this->createOf(Tag::class, $available_tag));
@@ -1267,12 +1267,13 @@ class Channel extends Part implements Stringable
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of messages allowed or false.
      *
-     * @return PromiseInterface<Collection<Message[]>>
+     * @return PromiseInterface<CollectionInterface<Message[]>>
      */
     public function createMessageCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
-        $messages = new Collection([], null, null);
+        /** @var CollectionInterface $messages An instance of the collection class implementing CollectionInterface.*/
+        $messages = new ($this->discord->getCollectionClass())([], null, null);
         $timer = null;
 
         $options = array_merge([

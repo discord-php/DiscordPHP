@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 use Discord\Builders\MessageBuilder;
 use Discord\Discord;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Invite;

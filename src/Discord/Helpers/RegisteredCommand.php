@@ -90,7 +90,7 @@ class RegisteredCommand
      */
     public function execute(array $options, Interaction $interaction): bool
     {
-        $params = Collection::for(Option::class, 'name');
+        $params = ($this->discord->getCollectionClass())::for(Option::class, 'name');
 
         foreach ($options as $option) {
             if (isset($this->subCommands[$option->name])) {

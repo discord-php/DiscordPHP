@@ -13,7 +13,7 @@ namespace Discord\Parts\Thread;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -462,7 +462,7 @@ class Thread extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
      *
-     * @return PromiseInterface<Collection<Message[]>>
+     * @return PromiseInterface<CollectionInterface<Message[]>>
      *
      * @todo Make it in a trait along with Channel
      */
@@ -470,7 +470,7 @@ class Thread extends Part implements Stringable
     {
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_PINS, $this->id))
             ->then(function ($responses) {
-                $messages = Collection::for(Message::class);
+                $messages = ($this->discord->getCollectionClass())::for(Message::class);
 
                 foreach ($responses as $response) {
                     $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
@@ -546,7 +546,7 @@ class Thread extends Part implements Stringable
      * @param string|Message|null $options['after']  Get messages after this message ID.
      * @param int|null            $options['limit']  Max number of messages to return (1-100). Defaults to 50.
      *
-     * @return PromiseInterface<Collection<Message[]>>
+     * @return PromiseInterface<CollectionInterface<Message[]>>
      *
      * @todo Make it in a trait along with Channel
      */
@@ -586,7 +586,7 @@ class Thread extends Part implements Stringable
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $messages = Collection::for(Message::class);
+            $messages = ($this->discord->getCollectionClass())::for(Message::class);
 
             foreach ($responses as $response) {
                 if (! $message = $this->messages->get('id', $response->id)) {
@@ -770,14 +770,14 @@ class Thread extends Part implements Stringable
      * @param int      $options ['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options ['limit'] The amount of messages allowed or false.
      *
-     * @return PromiseInterface<Collection<Message[]>>
+     * @return PromiseInterface<CollectionInterface<Message[]>>
      *
      * @todo Make it in a trait along with Channel
      */
     public function createMessageCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
-        $messages = new Collection([], null, null);
+        $messages = new ($this->discord->getCollectionClass())([], null, null);
         $timer = null;
 
         $options = array_merge([

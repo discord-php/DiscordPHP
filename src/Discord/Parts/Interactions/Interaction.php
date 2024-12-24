@@ -13,7 +13,7 @@ namespace Discord\Parts\Interactions;
 
 use Discord\Builders\Components\Component;
 use Discord\Builders\MessageBuilder;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
@@ -610,7 +610,7 @@ class Interaction extends Part
             if ($submit) {
                 $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener) {
                     if ($interaction->type == self::TYPE_MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
-                        $components = Collection::for(RequestComponent::class, 'custom_id');
+                        $components = ($this->discord->getCollectionClass())::for(RequestComponent::class, 'custom_id');
                         foreach ($interaction->data->components as $actionrow) {
                             if ($actionrow->type == Component::TYPE_ACTION_ROW) {
                                 foreach ($actionrow->components as $component) {

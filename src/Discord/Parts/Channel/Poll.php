@@ -12,7 +12,7 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Poll\PollAnswer;
 use Discord\Parts\Channel\Poll\PollMedia;

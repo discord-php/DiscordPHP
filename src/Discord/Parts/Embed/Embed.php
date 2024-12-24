@@ -12,7 +12,7 @@
 namespace Discord\Parts\Embed;
 
 use Carbon\Carbon;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
 use function Discord\poly_strlen;
@@ -36,7 +36,7 @@ use function Discord\poly_strlen;
  * @property-read Video|null         $video       The video of the embed.
  * @property-read object|null        $provider    The provider of the embed.
  * @property      Author|null        $author      The author of the embed.
- * @property      Collection|Field[] $fields      A collection of embed fields.
+ * @property      CollectionInterface|Field[] $fields      A collection of embed fields.
  */
 class Embed extends Part
 {
@@ -135,11 +135,11 @@ class Embed extends Part
     /**
      * Gets the fields attribute.
      *
-     * @return Collection|Field[]
+     * @return CollectionInterfaceInterface|Field[]
      */
-    protected function getFieldsAttribute(): Collection
+    protected function getFieldsAttribute(): CollectionInterface
     {
-        $fields = Collection::for(Field::class, null);
+        $fields = ($this->discord->getCollectionClass())::for(Field::class, null);
 
         if (! array_key_exists('fields', $this->attributes)) {
             return $fields;

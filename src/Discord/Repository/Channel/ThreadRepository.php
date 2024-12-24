@@ -11,7 +11,7 @@
 
 namespace Discord\Repository\Channel;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;
@@ -87,7 +87,7 @@ class ThreadRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/channel#list-active-threads
      *
-     * @return PromiseInterface<Collection<Thread[]>>
+     * @return PromiseInterface<CollectionInterface<Thread[]>>
      */
     public function active(): PromiseInterface
     {
@@ -109,7 +109,7 @@ class ThreadRepository extends AbstractRepository
      *
      * @throws \InvalidArgumentException
      *
-     * @return PromiseInterface<Collection<Thread[]>>
+     * @return PromiseInterface<CollectionInterface<Thread[]>>
      */
     public function archived(bool $private = false, bool $joined = false, ?int $limit = null, $before = null): PromiseInterface
     {
@@ -150,11 +150,11 @@ class ThreadRepository extends AbstractRepository
      *
      * @param object $response
      *
-     * @return Collection|Thread[]
+     * @return CollectionInterfaceInterface|Thread[]
      */
-    private function handleThreadPaginationResponse(object $response): Collection
+    private function handleThreadPaginationResponse(object $response): CollectionInterface
     {
-        $collection = Collection::for(Thread::class);
+        $collection = ($this->discord->getCollectionClass())::for(Thread::class);
 
         foreach ($response->threads as $thread) {
             /** @var Thread */

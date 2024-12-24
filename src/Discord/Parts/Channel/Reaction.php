@@ -11,7 +11,7 @@
 
 namespace Discord\Parts\Channel;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
@@ -139,7 +139,7 @@ class Reaction extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#get-reactions
      *
-     * @return PromiseInterface<Collection|User[]>
+     * @return PromiseInterface<CollectionInterface|User[]>
      */
     public function getUsers(array $options = []): PromiseInterface
     {
@@ -161,7 +161,7 @@ class Reaction extends Part
 
         return $this->http->get($query)
         ->then(function ($response) {
-            $users = Collection::for(User::class);
+            $users = ($this->discord->getCollectionClass())::for(User::class);
 
             foreach ((array) $response as $user) {
                 if (! $part = $this->discord->users->get('id', $user->id)) {
@@ -182,11 +182,11 @@ class Reaction extends Part
      *
      * @see Message::getUsers()
      *
-     * @return PromiseInterface<Collection|User[]>
+     * @return PromiseInterface<CollectionInterface|User[]>
      */
     public function getAllUsers(): PromiseInterface
     {
-        $response = Collection::for(User::class);
+        $response = ($this->discord->getCollectionClass())::for(User::class);
         $getUsers = function ($after = null) use (&$getUsers, $response) {
             $options = ['limit' => 100];
             if ($after != null) {

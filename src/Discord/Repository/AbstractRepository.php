@@ -14,7 +14,8 @@ namespace Discord\Repository;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\CollectionTrait;
 use Discord\Helpers\LegacyCacheWrapper;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
@@ -38,8 +39,9 @@ use function React\Promise\resolve;
  * @property      string       $discrim The discriminator.
  * @property-read CacheWrapper $cache   The react/cache wrapper.
  */
-abstract class AbstractRepository extends Collection
+abstract class AbstractRepository implements CollectionInterface
 {
+    use CollectionTrait;
     /**
      * The discriminator.
      *
@@ -553,16 +555,16 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Runs a filter callback over the repository and returns a new collection
+     * Runs a filter callback over the repository and returns a new ($this->discord->getCollectionClass())
      * based on the response of the callback.
      *
      * @param callable $callback
      *
-     * @return Collection
+     * @return CollectionInterface
      */
-    public function filter(callable $callback): Collection
+    public function filter(callable $callback): CollectionInterface
     {
-        $collection = new Collection([], $this->discrim, $this->class);
+        $collection = new ($this->discord->getCollectionClass())([], $this->discrim, $this->class);
 
         foreach ($this->items as $offset => $item) {
             if ($item instanceof WeakReference) {
