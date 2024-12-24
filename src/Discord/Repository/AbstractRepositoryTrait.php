@@ -135,7 +135,7 @@ trait AbstractRepositoryTrait
      * @param Discord $discord
      * @param array   $vars    An array of variables used for the endpoint.
      */
-    public function __construct(Discord $discord, array $vars = [])
+    public function __construct(protected Discord $discord, array $vars = [])
     {
         $this->http = $discord->getHttpClient();
         $this->factory = $discord->getFactory();
@@ -609,7 +609,7 @@ trait AbstractRepositoryTrait
      */
     public function filter(callable $callback): CollectionInterface
     {
-        $collection = new Collection([], $this->discrim, $this->class);
+        $collection = new ($this->discord->getCollectionClass())([], $this->discrim, $this->class);
 
         foreach ($this->items as $offset => $item) {
             if ($item instanceof WeakReference) {
@@ -791,10 +791,25 @@ trait AbstractRepositoryTrait
         }
     }
 
-    public function __call($name, $arguments)
+    /**
+     * This method checks if a method with the name "__Collection__{$name}" exists
+     * within the class. If it does, it calls that method with the provided arguments.
+     * If the method does not exist, it throws a BadMethodCallException.
+     *
+     * Previously, this class utilized `parent::method` to call methods from the parent class.
+     * This was changed to use the `__Collection__method` naming convention to avoid conflicts
+     *
+     * @param string $name The name of the method being called.
+     * @param array $arguments The arguments passed to the method.
+     *
+     * @return mixed The result of the called method.
+     *
+     * @throws \BadMethodCallException If the method does not exist.
+     */
+    public function __call($name, $arguments): mixed
     {
-        if (method_exists(CollectionTrait::class, $name)) {
-            return (new CollectionTrait)->$name(...$arguments);
+        if (method_exists($this, "__Collection__{$name}")) {
+            return $this->{"__Collection__{$name}"}(...$arguments);
         }
 
         throw new \BadMethodCallException("Method {$name} does not exist.");
