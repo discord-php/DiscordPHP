@@ -782,7 +782,6 @@ trait AbstractRepositoryTrait
             return $this->{"__Collection__{$name}"}(...$arguments);
         }
 
-        $name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
         throw new \BadMethodCallException("Method $name does not exist.");
     }
 }
