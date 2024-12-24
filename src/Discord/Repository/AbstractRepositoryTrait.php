@@ -676,7 +676,7 @@ trait AbstractRepositoryTrait
      */
     public function offsetExists($offset): bool
     {
-        return $this->__CollectionoffsetExists($offset);
+        return $this->__Collection__offsetExists($offset);
     }
 
     /**
@@ -691,7 +691,7 @@ trait AbstractRepositoryTrait
      */
     public function offsetGet($offset)
     {
-        $item = $this->__CollectionoffsetGet($offset);
+        $item = $this->__Collection__offsetGet($offset);
 
         if ($item instanceof WeakReference) {
             $item = $item->get();
@@ -714,7 +714,7 @@ trait AbstractRepositoryTrait
      */
     public function offsetSet($offset, $value): void
     {
-        $this->__CollectionoffsetSet($offset, $value);
+        $this->__Collection__offsetSet($offset, $value);
     }
 
     /**
@@ -726,7 +726,7 @@ trait AbstractRepositoryTrait
      */
     public function offsetUnset($offset): void
     {
-        $this->__CollectionoffsetUnset($offset);
+        $this->__Collection__offsetUnset($offset);
     }
 
     /**
