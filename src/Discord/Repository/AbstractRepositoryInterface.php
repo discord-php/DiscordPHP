@@ -51,11 +51,11 @@ interface AbstractRepositoryInterface extends CollectionInterface
     public function __get(string $key);
 
     /* Methods imported from CollectionTrait
-    public function fill(array $items): static;
-    public function push(...$items): static;
+    public function fill(array $items);
+    public function push(...$items);
     public function isset($offset): bool;
-    public function map(callable $callback): static;
-    public function merge($collection): static;
+    public function map(callable $callback);
+    public function merge($collection);
     public function serialize(): string;
     public function __serialize(): array;
     public function unserialize(string $serialized): void;
