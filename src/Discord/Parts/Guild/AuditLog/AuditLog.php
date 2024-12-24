@@ -74,7 +74,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of application commands found in the audit log.
      *
-     * @return CollectionInterfaceInterface|Command[]
+     * @return CollectionInterface|Command[]
      */
     protected function getApplicationCommandsAttribute(): CollectionInterface
     {
@@ -90,7 +90,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of audit log entries.
      *
-     * @return CollectionInterfaceInterface|Entry[]
+     * @return CollectionInterface|Entry[]
      */
     protected function getAuditLogEntriesAttribute(): CollectionInterface
     {
@@ -106,7 +106,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of auto moderation rules found in the audit log.
      *
-     * @return CollectionInterfaceInterface|Rule[]
+     * @return CollectionInterface|Rule[]
      */
     protected function getAutoModerationRulesAttribute(): CollectionInterface
     {
@@ -122,7 +122,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of guild scheduled events found in the audit log.
      *
-     * @return CollectionInterfaceInterface|ScheduledEvent[]
+     * @return CollectionInterface|ScheduledEvent[]
      */
     protected function getGuildScheduledEventsAttribute(): CollectionInterface
     {
@@ -140,7 +140,7 @@ class AuditLog extends Part
      *
      * @link https://discord.com/developers/docs/resources/audit-log#audit-log-object-example-partial-integration-object
      *
-     * @return CollectionInterfaceInterface|Integration[]
+     * @return CollectionInterface|Integration[]
      */
     protected function getIntegrationsAttribute(): CollectionInterface
     {
@@ -156,7 +156,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of threads found in the audit log.
      *
-     * @return CollectionInterfaceInterface|Thread[]
+     * @return CollectionInterface|Thread[]
      */
     protected function getThreadsAttribute(): CollectionInterface
     {
@@ -172,7 +172,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of users found in the audit log.
      *
-     * @return CollectionInterfaceInterface|User[]
+     * @return CollectionInterface|User[]
      */
     protected function getUsersAttribute(): CollectionInterface
     {
@@ -188,7 +188,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of webhooks found in the audit log.
      *
-     * @return CollectionInterfaceInterface|Webhook[]
+     * @return CollectionInterface|Webhook[]
      */
     protected function getWebhooksAttribute(): CollectionInterface
     {
@@ -208,7 +208,7 @@ class AuditLog extends Part
      *
      * @throws \InvalidArgumentException
      *
-     * @return CollectionInterfaceInterface|Entry[]
+     * @return CollectionInterface|Entry[]
      */
     public function searchByType(int $action_type): CollectionInterface
     {

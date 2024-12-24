@@ -62,7 +62,7 @@ class Resolved extends Part
     /**
      * Returns a collection of resolved users.
      *
-     * @return CollectionInterfaceInterface|User[]|null Map of Snowflakes to user objects
+     * @return CollectionInterface|User[]|null Map of Snowflakes to user objects
      */
     protected function getUsersAttribute(): ?CollectionInterface
     {
@@ -84,7 +84,7 @@ class Resolved extends Part
      *
      * Partial Member objects are missing user, deaf and mute fields
      *
-     * @return CollectionInterfaceInterface|Member[]|null Map of Snowflakes to partial member objects
+     * @return CollectionInterface|Member[]|null Map of Snowflakes to partial member objects
      */
     protected function getMembersAttribute(): ?CollectionInterface
     {
@@ -113,7 +113,7 @@ class Resolved extends Part
     /**
      * Returns a collection of resolved roles.
      *
-     * @return CollectionInterfaceInterface|Role[]|null Map of Snowflakes to role objects
+     * @return CollectionInterface|Role[]|null Map of Snowflakes to role objects
      */
     protected function getRolesAttribute(): ?CollectionInterface
     {
@@ -143,7 +143,7 @@ class Resolved extends Part
      *
      * Partial Channel objects only have id, name, type and permissions fields. Threads will also have thread_metadata and parent_id fields.
      *
-     * @return CollectionInterfaceInterface|Channel[]|Thread[]|null Map of Snowflakes to partial channel objects
+     * @return CollectionInterface|Channel[]|Thread[]|null Map of Snowflakes to partial channel objects
      */
     protected function getChannelsAttribute(): ?CollectionInterface
     {
@@ -175,7 +175,7 @@ class Resolved extends Part
     /**
      * Returns a collection of resolved messages.
      *
-     * @return CollectionInterfaceInterface|Message[]|null Map of Snowflakes to partial messages objects
+     * @return CollectionInterface|Message[]|null Map of Snowflakes to partial messages objects
      */
     protected function getMessagesAttribute(): ?CollectionInterface
     {
@@ -201,7 +201,7 @@ class Resolved extends Part
     /**
      * Returns a collection of resolved attachments.
      *
-     * @return CollectionInterfaceInterface|Attachment[]|null Map of Snowflakes to attachments objects
+     * @return CollectionInterface|Attachment[]|null Map of Snowflakes to attachments objects
      */
     protected function getAttachmentsAttribute(): ?CollectionInterface
     {

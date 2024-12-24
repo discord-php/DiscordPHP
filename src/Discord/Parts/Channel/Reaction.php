@@ -193,7 +193,7 @@ class Reaction extends Part
                 $options['after'] = $after;
             }
 
-            return $this->getUsers($options)->then(function (Collection $users) use ($response, &$getUsers) {
+            return $this->getUsers($options)->then(function (CollectionInterface $users) use ($response, &$getUsers) {
                 $last = null;
                 foreach ($users as $user) {
                     $response->pushItem($user);

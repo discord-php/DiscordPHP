@@ -37,7 +37,7 @@ class WelcomeScreen extends Part
     /**
      * Returns the Welcome Channels of the Welcome Screen.
      *
-     * @return CollectionInterfaceInterface|WelcomeChannel[] The channels of welcome screen.
+     * @return CollectionInterface|WelcomeChannel[] The channels of welcome screen.
      */
     protected function getWelcomeChannelsAttribute(): CollectionInterface
     {

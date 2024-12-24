@@ -58,7 +58,7 @@ class InteractionData extends Part
     /**
      * Gets the options of the interaction.
      *
-     * @return CollectionInterfaceInterface|Option[]|null $options
+     * @return CollectionInterface|Option[]|null $options
      */
     protected function getOptionsAttribute(): ?CollectionInterface
     {
@@ -78,7 +78,7 @@ class InteractionData extends Part
     /**
      * Gets the components of the interaction.
      *
-     * @return CollectionInterfaceInterface|Component[]|null $components
+     * @return CollectionInterface|Component[]|null $components
      */
     protected function getComponentsAttribute(): ?CollectionInterface
     {

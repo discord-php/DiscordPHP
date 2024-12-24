@@ -93,7 +93,7 @@ class PresenceUpdate extends Part
     /**
      * Gets the activities attribute.
      *
-     * @return CollectionInterfaceInterface|Activity[]
+     * @return CollectionInterface|Activity[]
      */
     protected function getActivitiesAttribute(): CollectionInterface
     {
@@ -163,7 +163,7 @@ class PresenceUpdate extends Part
     /**
      * Returns the users roles.
      *
-     * @return CollectionInterfaceInterface|Role[]
+     * @return CollectionInterface|Role[]
      */
     protected function getRolesAttribute(): CollectionInterface
     {

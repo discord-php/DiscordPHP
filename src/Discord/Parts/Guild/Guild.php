@@ -568,7 +568,7 @@ class Guild extends Part
      *
      * @deprecated 10.0.0 Use `$channel->stage_instances`
      *
-     * @return CollectionInterfaceInterface|StageInstance[]
+     * @return CollectionInterface|StageInstance[]
      */
     protected function getStageInstancesAttribute(): CollectionInterface
     {
@@ -744,7 +744,7 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/voice#list-voice-regions
      *
-     * @return PromiseInterface<Collection>
+     * @return PromiseInterface<CollectionInterface>
      */
     public function getVoiceRegions(): PromiseInterface
     {

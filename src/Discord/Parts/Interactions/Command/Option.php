@@ -75,7 +75,7 @@ class Option extends Part
     /**
      * Gets the choices attribute.
      *
-     * @return CollectionInterfaceInterface|Choice[]|null A collection of choices.
+     * @return CollectionInterface|Choice[]|null A collection of choices.
      */
     protected function getChoicesAttribute(): ?CollectionInterface
     {
@@ -95,7 +95,7 @@ class Option extends Part
     /**
      * Gets the options attribute.
      *
-     * @return CollectionInterfaceInterface|Option[] A collection of options.
+     * @return CollectionInterface|Option[] A collection of options.
      */
     protected function getOptionsAttribute(): CollectionInterface
     {

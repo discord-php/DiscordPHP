@@ -41,7 +41,7 @@ final class DiscordTest extends TestCase
                 }
 
                 return $success;
-            })->done($resolve, $resolve);
+            })->then($resolve, $resolve);
         }, 10);
     }
 }
