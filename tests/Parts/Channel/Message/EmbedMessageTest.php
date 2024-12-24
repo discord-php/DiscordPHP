@@ -71,7 +71,7 @@ final class EmbedMessageTest extends DiscordTestCase
                         (string) $embed->fields->get('name', 'Field 2')
                     );
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         }, 10);
     }
 }

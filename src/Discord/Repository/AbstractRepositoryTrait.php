@@ -14,7 +14,7 @@ namespace Discord\Repository;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\CollectionTrait;
 use Discord\Helpers\LegacyCacheWrapper;
 use Discord\Http\Endpoint;
@@ -576,12 +576,10 @@ trait AbstractRepositoryTrait
      * @param callable $callback
      *
      * @return CollectionInterface
-     *
-     * @todo This method will be typed to return a CollectionInterface in v11
      */
     public function filter(callable $callback)
     {
-        $collection = new Collection([], $this->discrim, $this->class);
+        $collection = new ($this->discord->getCollectionClass())([], $this->discrim, $this->class);
 
         foreach ($this->items as $offset => $item) {
             if ($item instanceof WeakReference) {

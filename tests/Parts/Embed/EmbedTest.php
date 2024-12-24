@@ -44,7 +44,7 @@ final class EmbedTest extends DiscordTestCase
                     $this->assertEquals($url, $embed->url);
                     $this->assertEquals(Embed::TYPE_VIDEO, $embed->type);
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         }, 10);
     }
 
@@ -66,7 +66,7 @@ final class EmbedTest extends DiscordTestCase
                     $this->assertEquals(Embed::TYPE_IMAGE, $embed->type);
                     $this->assertInstanceOf(Image::class, $embed->thumbnail);
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         }, 10);
     }
 }
