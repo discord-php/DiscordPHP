@@ -15,6 +15,8 @@ use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\CacheConfig;
+use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
@@ -332,6 +334,13 @@ class Discord
     protected $cacheConfig;
 
     /**
+     * The collection class.
+     *
+     * @var string
+     */
+    protected $collectionClass;
+
+    /**
      * The Client class.
      *
      * @var Client Discord client.
@@ -374,6 +383,10 @@ class Discord
         $this->cacheConfig = $options['cache'];
         if ($cacheConfig = $this->getCacheConfig()) {
             $this->logger->warning('Attached experimental CacheInterface: '.get_class($cacheConfig->interface));
+        }
+        $this->collectionClass = $options['collection'];
+        if ($this->collectionClass !== Collection::class) {
+            $this->logger->warning("Attached experimental CollectionClass: {$this->collectionClass}");
         }
 
         $connector = new SocketConnector($options['socket_options'], $this->loop);
@@ -1409,6 +1422,7 @@ class Discord
                 'socket_options',
                 'dnsConfig',
                 'cache',
+                'collection',
             ])
             ->setDefaults([
                 'logger' => null,
@@ -1419,6 +1433,7 @@ class Discord
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
                 'cache' => [AbstractRepository::class => null], // use LegacyCacheWrapper
+                'collection' => [Collection::class => null],
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1431,17 +1446,9 @@ class Discord
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
             ->setAllowedTypes('cache', ['array', CacheConfig::class, \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
-            ->setNormalizer('cache', function ($options, $value) {
-                if (! is_array($value)) {
-                    if (! ($value instanceof CacheConfig)) {
-                        $value = new CacheConfig($value);
-                    }
-
-                    return [AbstractRepository::class => $value];
-                }
-
-                return $value;
-            });
+            ->setNormalizer('cache', fn($options, $value) => is_array($value) ? $value : [AbstractRepository::class => $value instanceof CacheConfig ? $value : new CacheConfig($value)])
+            ->setAllowedTypes('collection', ['string', 'null'])
+            ->setAllowedValues('collection', fn($value) => $value === null || (class_exists($value) && isset(class_implements($value)[CollectionInterface::class])));
 
         $options = $resolver->resolve($options);
 
@@ -1613,6 +1620,18 @@ class Discord
         }
 
         return $this->cacheConfig[$repository_class];
+    }
+
+    /**
+     * Gets the collection configuration.
+     *
+     * @param string $collection_class Collection class name.
+     *
+     * @return string The class name of the collection, which implements CollectionInterface
+     */
+    public function getCollectionClass()
+    {
+        return $this->collectionClass;
     }
 
     /**
