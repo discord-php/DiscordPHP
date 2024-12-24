@@ -354,6 +354,18 @@ trait CollectionTrait
     }
 
     /**
+     * @since 11.0.0
+     *
+     * Get the keys of the items.
+     *
+     * @return int[]|string[]
+     */
+    public function keys(): array
+    {
+        return array_keys($this->items);
+    }
+
+    /**
      * If the collection has an offset.
      *
      * @param mixed $offset

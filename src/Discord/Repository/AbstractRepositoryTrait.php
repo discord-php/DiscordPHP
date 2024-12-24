@@ -14,7 +14,6 @@ namespace Discord\Repository;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
-use Discord\Helpers\Collection;
 use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\CollectionTrait;
 use Discord\Helpers\LegacyCacheWrapper;
@@ -47,17 +46,9 @@ trait AbstractRepositoryTrait
 
         // 'Parent' methods
         __construct as __Collection____construct;
-        freshen as __Collection__freshen;
-        create as __Collection__create;
-        save as __Collection__save;
-        delete as __Collection__delete;
-        fresh as __Collection__fresh;
-        fetch as __Collection__fetch;
         get as __Collection__get;
-        cacheGet as __Collection__cacheGet;
         set as __Collection__set;
         pull as __Collection__pull;
-        cachePull as __Collection__cachePull;
         pushItem as __Collection__pushItem;
         first as __Collection__first;
         last as __Collection__last;
@@ -73,7 +64,6 @@ trait AbstractRepositoryTrait
         offsetUnset as __Collection__offsetUnset;
         jsonSerialize as __Collection__jsonSerialize;
         getIterator as __Collection__getIterator;
-        __get as __Collection____get;
     }
     /**
      * The collection discriminator.
