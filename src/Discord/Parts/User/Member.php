@@ -609,7 +609,7 @@ class Member extends Part implements Stringable
     /**
      * Gets the activities attribute.
      *
-     * @return CollectionInterfaceInterface|Activity[]
+     * @return CollectionInterface|Activity[]
      */
     protected function getActivitiesAttribute(): CollectionInterface
     {
@@ -685,7 +685,7 @@ class Member extends Part implements Stringable
     /**
      * Returns the roles attribute.
      *
-     * @return CollectionInterfaceInterface<?Role> A collection of roles the member is in. null role only contains ID in the collection.
+     * @return CollectionInterface<?Role> A collection of roles the member is in. null role only contains ID in the collection.
      */
     protected function getRolesAttribute(): CollectionInterface
     {

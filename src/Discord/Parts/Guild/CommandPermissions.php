@@ -55,7 +55,7 @@ class CommandPermissions extends Part
     /**
      * Gets the permissions attribute.
      *
-     * @return CollectionInterfaceInterface|Permission[] A collection of permissions.
+     * @return CollectionInterface|Permission[] A collection of permissions.
      */
     protected function getPermissionsAttribute(): CollectionInterface
     {

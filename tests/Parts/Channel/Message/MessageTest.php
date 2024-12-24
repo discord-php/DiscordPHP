@@ -29,7 +29,7 @@ final class MessageTest extends DiscordTestCase
                     $this->assertInstanceOf(Channel::class, $message->mention_channels->first());
                     $this->assertEquals($this->channel()->id, $message->mention_channels->first()->id);
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -46,7 +46,7 @@ final class MessageTest extends DiscordTestCase
                 ->then(function ($message) {
                     $this->assertInstanceOf(Message::class, $message);
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         }, 10, function () {
             $this->markTestIncomplete('Crosspost has likely hit ratelimit.');
         });

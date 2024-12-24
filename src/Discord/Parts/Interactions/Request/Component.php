@@ -69,7 +69,7 @@ class Component extends Part
     /**
      * Gets the sub-components of the component.
      *
-     * @return CollectionInterfaceInterface|Component[]|null $components
+     * @return CollectionInterface|Component[]|null $components
      */
     protected function getComponentsAttribute(): ?CollectionInterface
     {

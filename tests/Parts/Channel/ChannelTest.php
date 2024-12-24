@@ -36,14 +36,14 @@ final class ChannelTest extends DiscordTestCase
                         ->then(function () {
                             return $this->channel()->getPinnedMessages();
                         })
-                        ->then(function (Collection $messages) use ($message) {
+                        ->then(function (CollectionInterface $messages) use ($message) {
                             $this->assertGreaterThan(0, $messages->count());
                             $this->assertContains($message->id, $messages->map(function ($message) {
                                 return $message->id;
                             }));
                         });
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -64,13 +64,13 @@ final class ChannelTest extends DiscordTestCase
                         ->then(function () {
                             return $this->channel()->getPinnedMessages();
                         })
-                        ->then(function (Collection $messages) use ($message) {
+                        ->then(function (CollectionInterface $messages) use ($message) {
                             $this->assertNotContains($message->id, $messages->map(function ($message) {
                                 return $message->id;
                             }));
                         });
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -87,7 +87,7 @@ final class ChannelTest extends DiscordTestCase
                             $this->assertEquals($getMessage->id, $message->id);
                         });
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -99,7 +99,7 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->createInvite()
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -111,7 +111,7 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->deleteMessages([])
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -126,7 +126,7 @@ final class ChannelTest extends DiscordTestCase
                 ->then(function (Message $message) {
                     return $this->channel()->deleteMessages([$message]);
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -144,7 +144,7 @@ final class ChannelTest extends DiscordTestCase
                             return $this->channel()->deleteMessages([$m1, $m2]);
                         });
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -156,7 +156,7 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->limitDelete(5)
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -168,7 +168,7 @@ final class ChannelTest extends DiscordTestCase
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->getMessageHistory([])
                 ->then(function ($messages) {
-                    $this->assertInstanceOf(Collection::class, $messages);
+                    $this->assertInstanceOf(CollectionInterface::class, $messages);
 
                     if ($messages->count() < 1) {
                         $this->markTestSkipped('no messages were present when gettign message history - could not check if collection contained message objects.');
@@ -180,7 +180,7 @@ final class ChannelTest extends DiscordTestCase
                         $this->assertInstanceOf(Message::class, $message);
                     }
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -191,8 +191,8 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->invites->freshen()
-                ->then(function (Collection $invites) {
-                    $this->assertInstanceOf(Collection::class, $invites);
+                ->then(function (CollectionInterface $invites) {
+                    $this->assertInstanceOf(CollectionInterface::class, $invites);
 
                     if ($invites->count() < 1) {
                         $this->markTestSkipped('no invites were present when getting invites - could not check if collection contained invite objects.');
@@ -204,7 +204,7 @@ final class ChannelTest extends DiscordTestCase
                         $this->assertInstanceOf(Invite::class, $invite);
                     }
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -222,7 +222,7 @@ final class ChannelTest extends DiscordTestCase
                             $this->assertEquals($message->id, $updatedMessage->id);
                         });
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -238,7 +238,7 @@ final class ChannelTest extends DiscordTestCase
                 ->then(function (Message $message) {
                     $this->assertEquals(1, count($message->attachments));
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -250,7 +250,7 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->broadcastTyping()
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 

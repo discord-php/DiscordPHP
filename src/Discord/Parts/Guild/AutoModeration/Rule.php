@@ -98,7 +98,7 @@ class Rule extends Part
     /**
      * Returns the actions attribute.
      *
-     * @return CollectionInterfaceInterface|Action[] A collection of actions.
+     * @return CollectionInterface|Action[] A collection of actions.
      */
     protected function getActionsAttribute(): CollectionInterface
     {
@@ -114,7 +114,7 @@ class Rule extends Part
     /**
      * Returns the exempt roles attribute.
      *
-     * @return CollectionInterfaceInterface|?Role[] A collection of roles exempt from the rule.
+     * @return CollectionInterface|?Role[] A collection of roles exempt from the rule.
      */
     protected function getExemptRolesAttribute(): CollectionInterface
     {
@@ -138,7 +138,7 @@ class Rule extends Part
     /**
      * Returns the exempt channels attribute.
      *
-     * @return CollectionInterfaceInterface|?Channel[] A collection of channels exempt from the rule.
+     * @return CollectionInterface|?Channel[] A collection of channels exempt from the rule.
      */
     protected function getExemptChannelsAttribute(): CollectionInterface
     {
