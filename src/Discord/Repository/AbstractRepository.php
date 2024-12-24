@@ -11,20 +11,7 @@
 
 namespace Discord\Repository;
 
-use Discord\Helpers\CacheWrapper;
 use Discord\Helpers\CollectionInterface;
-use Discord\Helpers\CollectionTrait;
-use Discord\Helpers\LegacyCacheWrapper;
-use Discord\Http\Endpoint;
-use Discord\Http\Http;
-use Discord\Parts\Part;
-use React\Promise\PromiseInterface;
-use Traversable;
-use WeakReference;
-
-use function Discord\nowait;
-use function React\Promise\reject;
-use function React\Promise\resolve;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.

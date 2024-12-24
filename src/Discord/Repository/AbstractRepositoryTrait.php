@@ -577,7 +577,7 @@ trait AbstractRepositoryTrait
      *
      * @return CollectionInterface
      */
-    public function filter(callable $callback): CollectionInterface
+    public function filter(callable $callback)
     {
         $collection = new ($this->discord->getCollectionClass())([], $this->discrim, $this->class);
 
