@@ -24,6 +24,8 @@ use Traversable;
 use WeakReference;
 
 use function Discord\nowait;
+
+use function React\Async\await;
 use function React\Promise\reject;
 use function React\Promise\resolve;
 
@@ -659,7 +661,7 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetExists($offset): bool
     {
-        return parent::offsetExists($offset);
+        return await($this->cache->has($offset));
     }
 
     /**
