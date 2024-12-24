@@ -42,7 +42,6 @@ use Evenement\EventEmitterTrait;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
-use Monolog\Level;
 use Psr\Log\LoggerInterface;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
@@ -1448,7 +1447,7 @@ class Discord
         $options['loop'] ??= Loop::get();
 
         if (null === $options['logger']) {
-            $streamHandler = new StreamHandler('php://stdout', Level::Debug);
+            $streamHandler = new StreamHandler('php://stdout', Monolog::DEBUG);
             $lineFormatter = new LineFormatter(null, null, true, true);
             $streamHandler->setFormatter($lineFormatter);
             $logger = new Monolog('DiscordPHP', [$streamHandler]);
