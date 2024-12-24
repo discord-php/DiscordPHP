@@ -11,7 +11,7 @@
 
 namespace Discord\Parts\Interactions\Command;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Part;
 
 use function Discord\poly_strlen;
@@ -29,8 +29,8 @@ use function Discord\poly_strlen;
  * @property string                   $description               1-100 character description.
  * @property ?string[]|null           $description_localizations Localization dictionary for the description field. Values follow the same restrictions as description.
  * @property bool|null                $required                  If the parameter is required or optional--default false.
- * @property Collection|Choice[]|null $choices                   Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
- * @property Collection|Option[]      $options                   Sub-options if applicable.
+ * @property CollectionInterface|Choice[]|null $choices                   Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
+ * @property CollectionInterface|Option[]      $options                   Sub-options if applicable.
  * @property array|null               $channel_types             If the option is a channel type, the channels shown will be restricted to these types.
  * @property int|float|null           $min_value                 If the option is an INTEGER or NUMBER type, the minimum value permitted.
  * @property int|float|null           $max_value                 If the option is an INTEGER or NUMBER type, the maximum value permitted.
@@ -75,15 +75,15 @@ class Option extends Part
     /**
      * Gets the choices attribute.
      *
-     * @return Collection|Choice[]|null A collection of choices.
+     * @return CollectionInterfaceInterface|Choice[]|null A collection of choices.
      */
-    protected function getChoicesAttribute(): ?Collection
+    protected function getChoicesAttribute(): ?CollectionInterface
     {
         if (! isset($this->attributes['choices']) && ! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
             return null;
         }
 
-        $choices = Collection::for(Choice::class, null);
+        $choices = ($this->discord->getCollectionClass())::for(Choice::class, null);
 
         foreach ($this->attributes['choices'] ?? [] as $choice) {
             $choices->pushItem($this->createOf(Choice::class, $choice));
@@ -95,11 +95,11 @@ class Option extends Part
     /**
      * Gets the options attribute.
      *
-     * @return Collection|Option[] A collection of options.
+     * @return CollectionInterfaceInterface|Option[] A collection of options.
      */
-    protected function getOptionsAttribute(): Collection
+    protected function getOptionsAttribute(): CollectionInterface
     {
-        $options = Collection::for(Option::class, null);
+        $options = ($this->discord->getCollectionClass())::for(Option::class, null);
 
         foreach ($this->attributes['options'] ?? [] as $option) {
             $options->pushItem($this->createOf(Option::class, $option));

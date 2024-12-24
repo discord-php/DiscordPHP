@@ -11,7 +11,7 @@
 
 namespace Discord\Parts\Interactions\Command;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Stringable;
@@ -79,15 +79,15 @@ class Command extends Part implements Stringable
     /**
      * Gets the options attribute.
      *
-     * @return Collection|Option[]|null A collection of options.
+     * @return CollectionInterfaceInterface|Option[]|null A collection of options.
      */
-    protected function getOptionsAttribute(): ?Collection
+    protected function getOptionsAttribute(): ?CollectionInterface
     {
         if (! isset($this->attributes['options']) && (isset($this->type) && $this->type != self::CHAT_INPUT)) {
             return null;
         }
 
-        $options = Collection::for(Option::class, null);
+        $options = ($this->discord->getCollectionClass())::for(Option::class, null);
 
         foreach ($this->attributes['options'] ?? [] as $option) {
             $options->pushItem($this->createOf(Option::class, $option));

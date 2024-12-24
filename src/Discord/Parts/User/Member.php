@@ -14,7 +14,7 @@ namespace Discord\Parts\User;
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\BigInt;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -46,7 +46,7 @@ use function React\Promise\reject;
  * @property-read string              $displayname                  The nickname or display name with optional discriminator of the member.
  * @property      ?string|null        $avatar                       The avatar URL of the member or null if member has no guild avatar.
  * @property      ?string|null        $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
- * @property      Collection|Role[]   $roles                        A collection of Roles that the member has.
+ * @property      CollectionInterface|Role[]   $roles                        A collection of Roles that the member has.
  * @property      Carbon|null         $joined_at                    A timestamp of when the member joined the guild.
  * @property      Carbon|null         $premium_since                When the user started boosting the server.
  * @property      bool                $deaf                         Whether the member is deaf.
@@ -61,7 +61,7 @@ use function React\Promise\reject;
  * @property      string                $id            The unique identifier of the member.
  * @property      string                $status        The status of the member.
  * @property-read Activity              $game          The game the member is playing.
- * @property      Collection|Activity[] $activities    User's current activities.
+ * @property      CollectionInterface|Activity[] $activities    User's current activities.
  * @property      object                $client_status Current client status.
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
@@ -609,11 +609,11 @@ class Member extends Part implements Stringable
     /**
      * Gets the activities attribute.
      *
-     * @return Collection|Activity[]
+     * @return CollectionInterfaceInterface|Activity[]
      */
-    protected function getActivitiesAttribute(): Collection
+    protected function getActivitiesAttribute(): CollectionInterface
     {
-        $activities = Collection::for(Activity::class, null);
+        $activities = ($this->discord->getCollectionClass())::for(Activity::class, null);
 
         foreach ($this->attributes['activities'] ?? [] as $activity) {
             $activities->pushItem($this->createOf(Activity::class, $activity));
@@ -685,11 +685,11 @@ class Member extends Part implements Stringable
     /**
      * Returns the roles attribute.
      *
-     * @return Collection<?Role> A collection of roles the member is in. null role only contains ID in the collection.
+     * @return CollectionInterfaceInterface<?Role> A collection of roles the member is in. null role only contains ID in the collection.
      */
-    protected function getRolesAttribute(): Collection
+    protected function getRolesAttribute(): CollectionInterface
     {
-        $roles = new Collection();
+        $roles = new ($this->discord->getCollectionClass())();
 
         if (empty($this->attributes['roles'])) {
             return $roles;
