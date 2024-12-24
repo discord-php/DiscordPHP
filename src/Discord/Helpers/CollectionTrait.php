@@ -251,9 +251,11 @@ trait CollectionTrait
      *
      * @param callable $callback
      *
-     * @return static
+     * @return CollectionInterface
+     *
+     * @todo This method will be typed to return a CollectionInterface in v11
      */
-    public function filter(callable $callback): static
+    public function filter(callable $callback)
     {
         $collection = new static([], $this->discrim, $this->class);
 
