@@ -14,7 +14,7 @@ namespace Discord\Repository\Guild;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Sound;
 use Discord\Repository\AbstractRepository;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 use function React\Promise\resolve;
 
@@ -60,9 +60,9 @@ class SoundRepository extends AbstractRepository
     /**
      * @param object $response
      *
-     * @return ExtendedPromiseInterface<static>
+     * @return PromiseInterface<static>
      */
-    protected function cacheFreshen($response): ExtendedPromiseInterface
+    protected function cacheFreshen($response): PromiseInterface
     {
         foreach ($response as $value) foreach ($value as $value) {
             $value = array_merge($this->vars, (array) $value);

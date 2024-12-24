@@ -19,7 +19,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\User;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function Discord\normalizePartId;
@@ -140,9 +140,9 @@ class PollAnswer extends Part
      *
      * @throws \OutOfRangeException
      *
-     * @return ExtendedPromiseInterface<Collection|User[]>
+     * @return PromiseInterface<Collection|User[]>
      */
-    public function getVoters(array $options = []): ExtendedPromiseInterface
+    public function getVoters(array $options = []): PromiseInterface
     {
         $query = Endpoint::bind(Endpoint::MESSAGE_POLL_ANSWER, $this->channel_id, $this->message_id, $this->answer_id);
 

@@ -18,7 +18,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\WebhookMessageRepository;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -85,9 +85,9 @@ class Webhook extends Part
      * @param MessageBuilder|array $data
      * @param array                $queryparams Query string params to add to the request.
      *
-     * @return ExtendedPromiseInterface<void|Message> Message returned if wait parameter is set true.
+     * @return PromiseInterface<void|Message> Message returned if wait parameter is set true.
      */
-    public function execute($data, array $queryparams = []): ExtendedPromiseInterface
+    public function execute($data, array $queryparams = []): PromiseInterface
     {
         $endpoint = Endpoint::bind(Endpoint::WEBHOOK_EXECUTE, $this->id, $this->token);
 
@@ -127,9 +127,9 @@ class Webhook extends Part
      * @param MessageBuilder $builder     The new message.
      * @param array          $queryparams Query string params to add to the request.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function updateMessage(string $message_id, MessageBuilder $builder, array $queryparams = []): ExtendedPromiseInterface
+    public function updateMessage(string $message_id, MessageBuilder $builder, array $queryparams = []): PromiseInterface
     {
         $endpoint = Endpoint::bind(Endpoint::WEBHOOK_MESSAGE, $this->id, $this->token, $message_id);
 
