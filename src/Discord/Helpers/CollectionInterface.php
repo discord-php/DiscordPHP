@@ -22,19 +22,19 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function get(string $discrim, $key);
     public function set($offset, $value);
     public function pull($key, $default = null);
-    public function fill(array $items): static;
-    public function push(...$items): static;
-    public function pushItem($item): static;
+    public function fill(array $items);
+    public function push(...$items);
+    public function pushItem($item);
     public function count(): int;
     public function first();
     public function last();
     public function isset($offset): bool;
     public function has(...$keys): bool;
-    public function filter(callable $callback): static;
+    public function filter(callable $callback);
     public function find(callable $callback);
     public function clear(): void;
-    public function map(callable $callback): static;
-    public function merge($collection): static;
+    public function map(callable $callback);
+    public function merge($collection);
     public function toArray();
     public function offsetExists($offset): bool;
     #[\ReturnTypeWillChange]

@@ -14,27 +14,6 @@ namespace Discord\Helpers;
 trait CollectionTrait
 {
     /**
-     * The collection discriminator.
-     *
-     * @var ?string
-     */
-    protected $discrim;
-
-    /**
-     * The items contained in the collection.
-     *
-     * @var array
-     */
-    protected $items;
-
-    /**
-     * Class type allowed into the collection.
-     *
-     * @var string
-     */
-    protected $class;
-
-    /**
      * Create a new static.
      *
      * @param array       $items
@@ -351,6 +330,18 @@ trait CollectionTrait
     public function toArray()
     {
         return $this->items;
+    }
+
+    /**
+     * @since 11.0.0
+     *
+     * Get the keys of the items.
+     *
+     * @return int[]|string[]
+     */
+    public function keys(): array
+    {
+        return array_keys($this->items);
     }
 
     /**

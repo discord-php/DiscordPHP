@@ -19,5 +19,26 @@ namespace Discord\Helpers;
  */
 class Collection implements CollectionInterface
 {
+    /**
+     * The collection discriminator.
+     *
+     * @var ?string
+     */
+    protected $discrim;
+
+    /**
+     * The items contained in the collection.
+     *
+     * @var array
+     */
+    protected $items;
+
+    /**
+     * Class type allowed into the collection.
+     *
+     * @var string
+     */
+    protected $class;
+
     use CollectionTrait;
 }
