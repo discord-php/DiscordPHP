@@ -489,7 +489,7 @@ trait AbstractRepositoryTrait
      *
      * @param Part $item
      *
-     * @return $this
+     * @return self
      */
     public function pushItem($item): self
     {
