@@ -15,6 +15,7 @@ use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\CollectionTrait;
 use Discord\Helpers\LegacyCacheWrapper;
 use Discord\Http\Endpoint;

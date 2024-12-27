@@ -24,7 +24,7 @@ use Discord\Helpers\Collection;
  * @property      string       $discrim The discriminator.
  * @property-read CacheWrapper $cache   The react/cache wrapper.
  */
-abstract class AbstractRepository extends Collection
+abstract class AbstractRepository extends Collection implements AbstractRepositoryInterface
 {
     /**
      * The collection discriminator.
