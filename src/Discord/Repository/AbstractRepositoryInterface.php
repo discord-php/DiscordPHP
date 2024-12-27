@@ -31,7 +31,7 @@ interface AbstractRepositoryInterface extends CollectionInterface
     public function set($offset, $value);
     public function pull($key, $default = null);
     public function cachePull($key, $default = null): PromiseInterface;
-    public function pushItem($item): self;
+    public function pushItem($item);
     public function first();
     public function last();
     public function has(...$keys): bool;
