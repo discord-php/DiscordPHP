@@ -571,6 +571,76 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Deafens a member on a voice channel.
+     *
+     * @param Member|string $member The member to deafen. (either a Member part or the member ID)
+     * @param string|null   $reason Reason for Audit Log.
+     *
+     * @throws \RuntimeException
+     * @throws NoPermissionsException Missing deafen_members permission.
+     *
+     * @return PromiseInterface
+     */
+    public function deafenMember($member, ?string $reason = null): PromiseInterface
+    {
+        if (! $this->isVoiceBased()) {
+            return reject(new \RuntimeException('You cannot deafen a member in a text channel.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->deafen_members) {
+                return reject(new NoPermissionsException("You do not have permission to deafen members in the channel {$this->id}."));
+            }
+        }
+
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['deaf' => true], $headers);
+    }
+
+    /**
+     * Undeafens a member on a voice channel.
+     *
+     * @param Member|string $member The member to undeafen. (either a Member part or the member ID)
+     * @param string|null   $reason Reason for Audit Log.
+     *
+     * @throws \RuntimeException
+     * @throws NoPermissionsException Missing deafen_members permission.
+     *
+     * @return PromiseInterface
+     */
+    public function undeafenMember($member, ?string $reason = null): PromiseInterface
+    {
+        if (! $this->isVoiceBased()) {
+            return reject(new \RuntimeException('You cannot deafen a member in a text channel.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->deafen_members) {
+                return reject(new NoPermissionsException("You do not have permission to deafen members in the channel {$this->id}."));
+            }
+        }
+
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['deaf' => false], $headers);
+    }
+
+    /**
      * Creates an invite for the channel.
      *
      * @link https://discord.com/developers/docs/resources/channel#create-channel-invite
