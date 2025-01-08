@@ -14,6 +14,7 @@ namespace Discord\Repository;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
+use Discord\Helpers\Collection;
 use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\CollectionTrait;
 use Discord\Helpers\LegacyCacheWrapper;
@@ -488,7 +489,7 @@ trait AbstractRepositoryTrait
      *
      * @param Part $item
      *
-     * @return $this
+     * @return self
      */
     public function pushItem($item): self
     {

@@ -22,9 +22,9 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function get(string $discrim, $key);
     public function set($offset, $value);
     public function pull($key, $default = null);
-    public function fill(array $items);
-    public function push(...$items);
-    public function pushItem($item);
+    public function fill(array $items): self;
+    public function push(...$items): self;
+    public function pushItem($item): self;
     public function count(): int;
     public function first();
     public function last();
@@ -34,7 +34,7 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function find(callable $callback);
     public function clear(): void;
     public function map(callable $callback);
-    public function merge($collection);
+    public function merge($collection): self;
     public function toArray();
     public function offsetExists($offset): bool;
     #[\ReturnTypeWillChange]

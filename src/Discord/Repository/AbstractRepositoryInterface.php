@@ -11,9 +11,8 @@
 
 namespace Discord\Repository;
 
-use Discord\Helpers\CollectionInterface;
 use Discord\Discord;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Part;
 use React\Promise\PromiseInterface;
 use Traversable;
@@ -36,7 +35,7 @@ interface AbstractRepositoryInterface extends CollectionInterface
     public function first();
     public function last();
     public function has(...$keys): bool;
-    public function filter(callable $callback): Collection;
+    public function filter(callable $callback);
     public function find(callable $callback);
     public function clear(): void;
     public function toArray(): array;
