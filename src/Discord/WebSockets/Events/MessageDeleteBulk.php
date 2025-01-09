@@ -11,7 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\WebSockets\Event;
 
 /**
@@ -26,7 +26,7 @@ class MessageDeleteBulk extends Event
      */
     public function handle($data)
     {
-        $resolved = new Collection();
+        $resolved = new ($this->discord->getCollectionClass())();
 
         foreach ($data->ids as $id) {
             $event = new MessageDelete($this->discord);

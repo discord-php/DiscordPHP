@@ -13,7 +13,7 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Channel\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
@@ -45,39 +45,39 @@ use function React\Promise\reject;
  *
  * @since 2.0.0
  *
- * @property      string                      $id                     The unique identifier of the message.
- * @property      string                      $channel_id             The unique identifier of the channel that the message was sent in.
- * @property-read Channel|Thread              $channel                The channel that the message was sent in.
- * @property      User|null                   $author                 The author of the message. Will be a webhook if sent from one.
- * @property-read string|null                 $user_id                The user id of the author.
- * @property      string                      $content                The content of the message if it is a normal message.
- * @property      Carbon                      $timestamp              A timestamp of when the message was sent.
- * @property      Carbon|null                 $edited_timestamp       A timestamp of when the message was edited, or null.
- * @property      bool                        $tts                    Whether the message was sent as a text-to-speech message.
- * @property      bool                        $mention_everyone       Whether the message contained an @everyone mention.
- * @property      Collection|User[]           $mentions               A collection of the users mentioned in the message.
- * @property      Collection|Role[]           $mention_roles          A collection of roles that were mentioned in the message.
- * @property      Collection|Channel[]        $mention_channels       Collection of mentioned channels.
- * @property      Collection|Attachment[]     $attachments            Collection of attachment objects.
- * @property      Collection|Embed[]          $embeds                 A collection of embed objects.
- * @property      ReactionRepository          $reactions              Collection of reactions on the message.
- * @property      string|null                 $nonce                  A randomly generated string that provides verification for the client. Not required.
- * @property      bool                        $pinned                 Whether the message is pinned to the channel.
- * @property      string|null                 $webhook_id             ID of the webhook that made the message, if any.
- * @property      int                         $type                   The type of message.
- * @property      object|null                 $activity               Current message activity. Requires rich presence.
- * @property      object|null                 $application            Application of message. Requires rich presence.
- * @property      string|null                 $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
- * @property      object|null                 $message_reference      Message that is referenced by this message.
- * @property      int|null                    $flags                  Message flags.
- * @property      Message|null                $referenced_message     The message that is referenced in a reply.
- * @property      MessageInteraction|null     $interaction            Sent if the message is a response to an Interaction.
- * @property      Thread|null                 $thread                 The thread that was started from this message, includes thread member object.
- * @property      Collection|Component[]|null $components             Sent if the message contains components like buttons, action rows, or other interactive components.
- * @property      Collection|Sticker[]|null   $sticker_items          Stickers attached to the message.
- * @property      int|null                    $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
- * @property      object|null                 $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
- * @property      Poll|null                   $poll                   The poll attached to the message.
+ * @property      string                                $id                     The unique identifier of the message.
+ * @property      string                                $channel_id             The unique identifier of the channel that the message was sent in.
+ * @property-read Channel|Thread                        $channel                The channel that the message was sent in.
+ * @property      User|null                             $author                 The author of the message. Will be a webhook if sent from one.
+ * @property-read string|null                           $user_id                The user id of the author.
+ * @property      string                                $content                The content of the message if it is a normal message.
+ * @property      Carbon                                $timestamp              A timestamp of when the message was sent.
+ * @property      Carbon|null                           $edited_timestamp       A timestamp of when the message was edited, or null.
+ * @property      bool                                  $tts                    Whether the message was sent as a text-to-speech message.
+ * @property      bool                                  $mention_everyone       Whether the message contained an @everyone mention.
+ * @property      CollectionInterface|User[]            $mentions               A collection of the users mentioned in the message.
+ * @property      CollectionInterface|Role[]            $mention_roles          A collection of roles that were mentioned in the message.
+ * @property      CollectionInterface|Channel[]         $mention_channels       Collection of mentioned channels.
+ * @property      CollectionInterface|Attachment[]      $attachments            Collection of attachment objects.
+ * @property      CollectionInterface|Embed[]           $embeds                 A collection of embed objects.
+ * @property      ReactionRepository                    $reactions              Collection of reactions on the message.
+ * @property      string|null                           $nonce                  A randomly generated string that provides verification for the client. Not required.
+ * @property      bool                                  $pinned                 Whether the message is pinned to the channel.
+ * @property      string|null                           $webhook_id             ID of the webhook that made the message, if any.
+ * @property      int                                   $type                   The type of message.
+ * @property      object|null                           $activity               Current message activity. Requires rich presence.
+ * @property      object|null                           $application            Application of message. Requires rich presence.
+ * @property      string|null                           $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
+ * @property      object|null                           $message_reference      Message that is referenced by this message.
+ * @property      int|null                              $flags                  Message flags.
+ * @property      Message|null                          $referenced_message     The message that is referenced in a reply.
+ * @property      MessageInteraction|null               $interaction            Sent if the message is a response to an Interaction.
+ * @property      Thread|null                           $thread                 The thread that was started from this message, includes thread member object.
+ * @property      CollectionInterface|Component[]|null  $components             Sent if the message contains components like buttons, action rows, or other interactive components.
+ * @property      CollectionInterface|Sticker[]|null    $sticker_items          Stickers attached to the message.
+ * @property      int|null                              $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
+ * @property      object|null                           $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
+ * @property      Poll|null                             $poll                   The poll attached to the message.
  *
  * @property-read bool $crossposted                            Message has been crossposted.
  * @property-read bool $is_crosspost                           Message is a crosspost from another channel.
@@ -334,11 +334,11 @@ class Message extends Part
     /**
      * Gets the mention_channels attribute.
      *
-     * @return Collection|Channel[]
+     * @return CollectionInterface|Channel[]
      */
-    protected function getMentionChannelsAttribute(): Collection
+    protected function getMentionChannelsAttribute(): CollectionInterface
     {
-        $collection = Collection::for(Channel::class);
+        $collection = ($this->discord->getCollectionClass())::for(Channel::class);
 
         if (preg_match_all('/<#([0-9]*)>/', $this->content, $matches)) {
             foreach ($matches[1] as $channelId) {
@@ -358,11 +358,11 @@ class Message extends Part
     /**
      * Returns any attached files.
      *
-     * @return Collection|Attachment[] Attachment objects.
+     * @return CollectionInterface|Attachment[] Attachment objects.
      */
-    protected function getAttachmentsAttribute(): Collection
+    protected function getAttachmentsAttribute(): CollectionInterface
     {
-        $attachments = Collection::for(Attachment::class);
+        $attachments = ($this->discord->getCollectionClass())::for(Attachment::class);
 
         foreach ($this->attributes['attachments'] ?? [] as $attachment) {
             $attachments->pushItem($this->createOf(Attachment::class, $attachment));
@@ -490,11 +490,12 @@ class Message extends Part
     /**
      * Returns the mention_roles attribute.
      *
-     * @return Collection<?Role> The roles that were mentioned. null role only contains the ID in the collection.
+     * @return CollectionInterface<?Role> The roles that were mentioned. null role only contains the ID in the collection.
      */
-    protected function getMentionRolesAttribute(): Collection
+    protected function getMentionRolesAttribute(): CollectionInterface
     {
-        $roles = new Collection();
+        /** @var CollectionInterface $roles An instance of the collection class implementing CollectionInterface.*/
+        $roles = new ($this->discord->getCollectionClass())();
 
         if (empty($this->attributes['mention_roles'])) {
             return $roles;
@@ -514,11 +515,11 @@ class Message extends Part
     /**
      * Returns the mention attribute.
      *
-     * @return Collection|User[] The users that were mentioned.
+     * @return CollectionInterface|User[] The users that were mentioned.
      */
-    protected function getMentionsAttribute(): Collection
+    protected function getMentionsAttribute(): CollectionInterface
     {
-        $users = Collection::for(User::class);
+        $users = ($this->discord->getCollectionClass())::for(User::class);
 
         foreach ($this->attributes['mentions'] ?? [] as $mention) {
             $users->pushItem($this->discord->users->get('id', $mention->id) ?: $this->factory->part(User::class, (array) $mention, true));
@@ -581,11 +582,12 @@ class Message extends Part
     /**
      * Returns the embed attribute.
      *
-     * @return Collection<Embed> A collection of embeds.
+     * @return CollectionInterface<Embed> A collection of embeds.
      */
-    protected function getEmbedsAttribute(): Collection
+    protected function getEmbedsAttribute(): CollectionInterface
     {
-        $embeds = new Collection([], null);
+        /** @var CollectionInterface $embeds An instance of the collection class implementing CollectionInterface.*/
+        $embeds = new ($this->discord->getCollectionClass())([], null);
 
         foreach ($this->attributes['embeds'] ?? [] as $embed) {
             $embeds->pushItem($this->createOf(Embed::class, $embed));
@@ -681,15 +683,15 @@ class Message extends Part
     /**
      * Returns the components attribute.
      *
-     * @return Collection|Component[]|null
+     * @return CollectionInterface|Component[]|null
      */
-    protected function getComponentsAttribute(): ?Collection
+    protected function getComponentsAttribute(): ?CollectionInterface
     {
         if (! isset($this->attributes['components'])) {
             return null;
         }
 
-        $components = Collection::for(Component::class, null);
+        $components = ($this->discord->getCollectionClass())::for(Component::class, null);
 
         foreach ($this->attributes['components'] as $component) {
             $components->pushItem($this->createOf(Component::class, $component));
@@ -701,15 +703,15 @@ class Message extends Part
     /**
      * Returns the sticker_items attribute.
      *
-     * @return Collection|Sticker[]|null Partial stickers.
+     * @return CollectionInterface|Sticker[]|null Partial stickers.
      */
-    protected function getStickerItemsAttribute(): ?Collection
+    protected function getStickerItemsAttribute(): ?CollectionInterface
     {
         if (! isset($this->attributes['sticker_items']) && ! in_array($this->type, [self::TYPE_DEFAULT, self::TYPE_REPLY])) {
             return null;
         }
 
-        $sticker_items = Collection::for(Sticker::class);
+        $sticker_items = ($this->discord->getCollectionClass())::for(Sticker::class);
 
         foreach ($this->attributes['sticker_items'] ?? [] as $sticker) {
             $sticker_items->pushItem($this->factory->part(Sticker::class, (array) $sticker, true));
@@ -1077,12 +1079,13 @@ class Message extends Part
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
-     * @return PromiseInterface<Collection<MessageReaction>>
+     * @return PromiseInterface<CollectionInterface<MessageReaction>>
      */
     public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
-        $reactions = new Collection([], null, null);
+        /** @var CollectionInterface $reactions An instance of the collection class implementing CollectionInterface.*/
+        $reactions = new ($this->discord->getCollectionClass())([], null, null);
         $timer = null;
 
         $options = array_merge([
