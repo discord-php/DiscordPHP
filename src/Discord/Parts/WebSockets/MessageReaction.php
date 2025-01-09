@@ -74,7 +74,7 @@ class MessageReaction extends Part
      */
     public function fetch(): PromiseInterface
     {
-        $promise = resolve();
+        $promise = resolve(null);
 
         if ($this->member === null) {
             $promise = $promise

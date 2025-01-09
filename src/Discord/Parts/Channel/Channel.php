@@ -392,7 +392,7 @@ class Channel extends Part implements Stringable
         if (! $this->created) {
             $this->attributes['permission_overwrites'][] = $payload;
 
-            return resolve();
+            return resolve(null);
         }
 
         $headers = [];
