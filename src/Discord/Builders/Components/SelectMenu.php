@@ -360,7 +360,6 @@ abstract class SelectMenu extends Component
 
                     $response = $callback($interaction, $options);
                 }
-
                 $ack = fn() => $interaction->isResponded() ?: $interaction->acknowledge();
 
                 if ($response instanceof PromiseInterface) {
