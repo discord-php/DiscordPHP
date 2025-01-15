@@ -335,13 +335,7 @@ class Button extends Component
         $this->listener = function (Interaction $interaction) use ($callback, $oneOff) {
             if ($interaction->data->component_type == Component::TYPE_BUTTON && $interaction->data->custom_id == $this->custom_id) {
                 $response = $callback($interaction);
-                $ack = function () use ($interaction) {
-                    // attempt to acknowledge interaction if it has not already been responded to.
-                    try {
-                        $interaction->acknowledge();
-                    } catch (\Exception $e) {
-                    }
-                };
+                $ack = fn() => $interaction->isResponded() ?: $interaction->acknowledge();
 
                 if ($response instanceof PromiseInterface) {
                     $response->then($ack);
