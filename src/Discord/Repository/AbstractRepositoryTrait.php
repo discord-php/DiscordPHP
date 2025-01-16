@@ -37,6 +37,8 @@ trait AbstractRepositoryTrait
         fill as fill;
         push as push;
         isset as isset;
+        slice as slice;
+        sort as sort;
         map as map;
         merge as merge;
         serialize as serialize;
@@ -649,7 +651,7 @@ trait AbstractRepositoryTrait
      */
     public function slice(int $offset, ?int $length, bool $preserve_keys = false)
     {
-        return $this->__Collection__slice($offset, $length, $preserve_keys);
+        return $this->slice($offset, $length, $preserve_keys);
     }
 
     /**
@@ -661,7 +663,7 @@ trait AbstractRepositoryTrait
      */
     public function sort(callable|int|null $callback)
     {
-        return $this->__Collection__sort($callback);
+        return $this->sort($callback);
     }
 
     /**
@@ -673,7 +675,7 @@ trait AbstractRepositoryTrait
      */
     public function map(callable $callback)
     {
-        return $this->__Collection__map($callback);
+        return $this->map($callback);
     }
 
     /**
