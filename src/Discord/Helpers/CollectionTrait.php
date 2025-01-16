@@ -302,9 +302,9 @@ trait CollectionTrait
      * @param null|int $length
      * @param bool $preserve_keys
      *
-     * @return static
+     * @return CollectionInterface
      */
-    public function slice(int $offset, ?int $length, bool $preserve_keys = false): static
+    public function slice(int $offset, ?int $length, bool $preserve_keys = false)
     {
         $items = $this->items;
 
@@ -318,9 +318,9 @@ trait CollectionTrait
      *
      * @param callable|int|null $callback
      *
-     * @return static
+     * @return CollectionInterface
      */
-    public function sort(callable|int|null $callback): static
+    public function sort(callable|int|null $callback)
     {
         $items = $this->items;
 
@@ -336,9 +336,9 @@ trait CollectionTrait
      *
      * @param callable $callback
      *
-     * @return static
+     * @return CollectionInterface
      */
-    public function map(callable $callback): static
+    public function map(callable $callback)
     {
         $keys = array_keys($this->items);
         $values = array_map($callback, array_values($this->items));
