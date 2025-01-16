@@ -296,6 +296,24 @@ trait CollectionTrait
     }
 
     /**
+     * Slices the collection.
+     *
+     * @param int $offset
+     * @param null|int $length
+     * @param bool $preserve_keys
+     *
+     * @return static
+     */
+    public function slice(int $offset, ?int $length, bool $preserve_keys = false): static
+    {
+        $items = $this->items;
+
+        $items = array_slice($items, $offset, $length, $preserve_keys);
+
+        return new static($items, $this->discrim, $this->class);
+    }
+
+    /**
      * Sort through each item with a callback.
      *
      * @param callable|int|null $callback
