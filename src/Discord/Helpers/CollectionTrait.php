@@ -310,7 +310,7 @@ trait CollectionTrait
 
         $items = array_slice($items, $offset, $length, $preserve_keys);
 
-        return new static($items, $this->discrim, $this->class);
+        return new Collection($items, $this->discrim, $this->class);
     }
 
     /**
@@ -328,7 +328,7 @@ trait CollectionTrait
             ? uasort($items, $callback)
             : asort($items, $callback ?? SORT_REGULAR);
 
-        return new static($items, $this->discrim, $this->class);
+        return new Collection($items, $this->discrim, $this->class);
     }
 
     /**
@@ -343,7 +343,7 @@ trait CollectionTrait
         $keys = array_keys($this->items);
         $values = array_map($callback, array_values($this->items));
 
-        return new static(array_combine($keys, $values), $this->discrim, $this->class);
+        return new Collection(array_combine($keys, $values), $this->discrim, $this->class);
     }
 
     /**
