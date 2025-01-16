@@ -43,7 +43,7 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function offsetGet($offset);
     public function offsetSet($offset, $value): void;
     public function offsetUnset($offset): void;
-    public function serialize(): string;
+    public function serialize(int $flags, int $depth): string;
     public function __serialize(): array;
     public function unserialize(string $serialized): void;
     public function __unserialize(array $data): void;
