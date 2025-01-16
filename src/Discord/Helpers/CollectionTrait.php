@@ -296,6 +296,24 @@ trait CollectionTrait
     }
 
     /**
+     * Sort through each item with a callback.
+     *
+     * @param callable|int|null $callback
+     *
+     * @return static
+     */
+    public function sort(callable|int|null $callback): static
+    {
+        $items = $this->items;
+
+        $callback && is_callable($callback)
+            ? uasort($items, $callback)
+            : asort($items, $callback ?? SORT_REGULAR);
+
+        return new static($items, $this->discrim, $this->class);
+    }
+
+    /**
      * Runs a callback over the collection and creates a new static.
      *
      * @param callable $callback
