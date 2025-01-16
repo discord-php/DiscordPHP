@@ -33,7 +33,7 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function filter(callable $callback);
     public function find(callable $callback);
     public function clear(): void;
-    public function sort(callable $callback): static;
+    public function sort(callable|int|null $callback): static;
     public function map(callable $callback);
     public function merge($collection): self;
     public function toArray();
