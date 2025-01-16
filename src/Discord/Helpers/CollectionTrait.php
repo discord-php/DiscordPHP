@@ -295,6 +295,11 @@ trait CollectionTrait
         $this->items = [];
     }
 
+    public function uasort(callable $callback): true
+    {
+        return uasort($this->items, $callback);
+    }
+
     /**
      * Runs a callback over the collection and creates a new static.
      *
