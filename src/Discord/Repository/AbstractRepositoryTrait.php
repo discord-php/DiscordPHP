@@ -641,44 +641,6 @@ trait AbstractRepositoryTrait
     }
 
     /**
-     * Slices the collection.
-     *
-     * @param int $offset
-     * @param null|int $length
-     * @param bool $preserve_keys
-     *
-     * @return CollectionInterface
-     */
-    public function slice(int $offset, ?int $length, bool $preserve_keys = false)
-    {
-        return $this->slice($offset, $length, $preserve_keys);
-    }
-
-    /**
-     * Sort through each item with a callback.
-     *
-     * @param callable|int|null $callback
-     *
-     * @return CollectionInterface
-     */
-    public function sort(callable|int|null $callback)
-    {
-        return $this->sort($callback);
-    }
-
-    /**
-     * Runs a callback over the collection and creates a new static.
-     *
-     * @param callable $callback
-     *
-     * @return CollectionInterface
-     */
-    public function map(callable $callback)
-    {
-        return $this->map($callback);
-    }
-
-    /**
      * Converts the weak caches to array.
      *
      * @return array
