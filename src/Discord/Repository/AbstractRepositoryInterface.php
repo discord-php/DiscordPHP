@@ -53,6 +53,8 @@ interface AbstractRepositoryInterface extends CollectionInterface
     public function fill(array $items);
     public function push(...$items);
     public function isset($offset): bool;
+    public function slice(int $offset, ?int $length, bool $preserve_keys = false);
+    public function sort(callable|int|null $callback);
     public function map(callable $callback);
     public function merge($collection);
     public function serialize(): string;
