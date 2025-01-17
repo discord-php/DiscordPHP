@@ -429,6 +429,18 @@ trait CollectionTrait
     }
 
     /**
+     * Returns unique items.
+     *
+     * @param int   $flags
+     *
+     * @return CollectionInterface
+     */
+    public function unique(int $flags = SORT_STRING)
+    {
+        return new Collection(array_unique($this->items, $flags), $this->discrim, $this->class);
+    }
+
+    /**
      * Merges another collection into this collection.
      *
      * @param $collection
@@ -522,6 +534,9 @@ trait CollectionTrait
 
     /**
      * Returns the string representation of the collection.
+     *
+     * @param int  $flags
+     * @param ?int $depth
      *
      * @return string
      */
