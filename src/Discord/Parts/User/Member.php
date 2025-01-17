@@ -619,7 +619,7 @@ class Member extends Part implements Stringable
      *
      * @return Collection|Activity[]
      */
-    protected function getActivitiesAttribute(): Collection
+    protected function getActivitiesAttribute(): CollectionInterface
     {
         $activities = Collection::for(Activity::class, null);
 
@@ -695,7 +695,7 @@ class Member extends Part implements Stringable
      *
      * @return Collection<?Role> A collection of roles the member is in. null role only contains ID in the collection.
      */
-    protected function getRolesAttribute(): Collection
+    protected function getRolesAttribute(): CollectionInterface
     {
         $roles = new Collection();
 

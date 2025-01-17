@@ -100,7 +100,7 @@ class Rule extends Part
      *
      * @return Collection|Action[] A collection of actions.
      */
-    protected function getActionsAttribute(): Collection
+    protected function getActionsAttribute(): CollectionInterface
     {
         $actions = Collection::for(Action::class, null);
 
@@ -116,7 +116,7 @@ class Rule extends Part
      *
      * @return Collection|?Role[] A collection of roles exempt from the rule.
      */
-    protected function getExemptRolesAttribute(): Collection
+    protected function getExemptRolesAttribute(): CollectionInterface
     {
         $roles = new Collection();
 
@@ -140,7 +140,7 @@ class Rule extends Part
      *
      * @return Collection|?Channel[] A collection of channels exempt from the rule.
      */
-    protected function getExemptChannelsAttribute(): Collection
+    protected function getExemptChannelsAttribute(): CollectionInterface
     {
         $channels = new Collection();
 

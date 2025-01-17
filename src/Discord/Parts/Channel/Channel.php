@@ -253,7 +253,7 @@ class Channel extends Part implements Stringable
      *
      * @return Collection A collection of recipients.
      */
-    protected function getRecipientsAttribute(): Collection
+    protected function getRecipientsAttribute(): CollectionInterface
     {
         $recipients = Collection::for(User::class);
 
@@ -999,7 +999,7 @@ class Channel extends Part implements Stringable
      *
      * @since 7.4.0
      */
-    protected function getAvailableTagsAttribute(): Collection
+    protected function getAvailableTagsAttribute(): CollectionInterface
     {
         $available_tags = Collection::for(Tag::class);
 

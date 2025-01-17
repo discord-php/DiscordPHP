@@ -336,7 +336,7 @@ class Message extends Part
      *
      * @return Collection|Channel[]
      */
-    protected function getMentionChannelsAttribute(): Collection
+    protected function getMentionChannelsAttribute(): CollectionInterface
     {
         $collection = Collection::for(Channel::class);
 
@@ -360,7 +360,7 @@ class Message extends Part
      *
      * @return Collection|Attachment[] Attachment objects.
      */
-    protected function getAttachmentsAttribute(): Collection
+    protected function getAttachmentsAttribute(): CollectionInterface
     {
         $attachments = Collection::for(Attachment::class);
 
@@ -492,7 +492,7 @@ class Message extends Part
      *
      * @return Collection<?Role> The roles that were mentioned. null role only contains the ID in the collection.
      */
-    protected function getMentionRolesAttribute(): Collection
+    protected function getMentionRolesAttribute(): CollectionInterface
     {
         $roles = new Collection();
 
@@ -516,7 +516,7 @@ class Message extends Part
      *
      * @return Collection|User[] The users that were mentioned.
      */
-    protected function getMentionsAttribute(): Collection
+    protected function getMentionsAttribute(): CollectionInterface
     {
         $users = Collection::for(User::class);
 
@@ -583,7 +583,7 @@ class Message extends Part
      *
      * @return Collection<Embed> A collection of embeds.
      */
-    protected function getEmbedsAttribute(): Collection
+    protected function getEmbedsAttribute(): CollectionInterface
     {
         $embeds = new Collection([], null);
 
