@@ -474,7 +474,7 @@ class Channel extends Part implements Stringable
      * @throws \RuntimeException
      * @throws NoPermissionsException Missing move_members permission.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<Member>
      */
     public function moveMember($member, ?string $reason = null): PromiseInterface
     {
@@ -506,10 +506,10 @@ class Channel extends Part implements Stringable
      * @param Member|string $member The member to mute. (either a Member part or the member ID)
      * @param string|null   $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException      Channel is not voice-based.
      * @throws NoPermissionsException Missing mute_members permission.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<Member>
      */
     public function muteMember($member, ?string $reason = null): PromiseInterface
     {
@@ -541,10 +541,10 @@ class Channel extends Part implements Stringable
      * @param Member|string $member The member to unmute. (either a Member part or the member ID)
      * @param string|null   $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException      Channel is not voice-based.
      * @throws NoPermissionsException Missing mute_members permission.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<Member>
      */
     public function unmuteMember($member, ?string $reason = null): PromiseInterface
     {
@@ -568,6 +568,76 @@ class Channel extends Part implements Stringable
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['mute' => false], $headers);
+    }
+
+    /**
+     * Deafens a member in the voice channel.
+     *
+     * @param Member|string $member The member to deafen. (either a Member part or the member ID)
+     * @param string|null   $reason Reason for Audit Log.
+     *
+     * @throws \RuntimeException      Channel is not voice-based.
+     * @throws NoPermissionsException Missing deafen_members permission.
+     *
+     * @return PromiseInterface<Member>
+     */
+    public function deafenMember($member, ?string $reason = null): PromiseInterface
+    {
+        if (! $this->isVoiceBased()) {
+            return reject(new \RuntimeException('You cannot deafen a member in a text channel.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->deafen_members) {
+                return reject(new NoPermissionsException("You do not have permission to deafen members in the channel {$this->id}."));
+            }
+        }
+
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['deaf' => true], $headers);
+    }
+
+    /**
+     * Undeafens a member in the voice channel.
+     *
+     * @param Member|string $member The member to undeafen. (either a Member part or the member ID)
+     * @param string|null   $reason Reason for Audit Log.
+     *
+     * @throws \RuntimeException      Channel is not voice-based.
+     * @throws NoPermissionsException Missing deafen_members permission.
+     *
+     * @return PromiseInterface<Member>
+     */
+    public function undeafenMember($member, ?string $reason = null): PromiseInterface
+    {
+        if (! $this->isVoiceBased()) {
+            return reject(new \RuntimeException('You cannot deafen a member in a text channel.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->deafen_members) {
+                return reject(new NoPermissionsException("You do not have permission to deafen members in the channel {$this->id}."));
+            }
+        }
+
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['deaf' => false], $headers);
     }
 
     /**
