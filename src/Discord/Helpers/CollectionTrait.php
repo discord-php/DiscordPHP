@@ -467,7 +467,11 @@ trait CollectionTrait
      */
     public function merge($collection): self
     {
-        $this->items = array_merge($this->items, $collection->toArray());
+        $items = $collection instanceof CollectionInterface
+            ? $collection->toArray()
+            : $collection;
+
+        $this->items = array_merge($this->items, $items);
 
         return $this;
     }
