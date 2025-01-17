@@ -433,7 +433,7 @@ trait CollectionTrait
      *
      * @return string
      */
-    public function serialize(int $flags, int $depth): string
+    public function serialize(int $flags = 0, ?int $depth = 512): string
     {
         return json_encode($this->items, $flags, $depth);
     }
