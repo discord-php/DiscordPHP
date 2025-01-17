@@ -474,7 +474,7 @@ class Channel extends Part implements Stringable
      * @throws \RuntimeException
      * @throws NoPermissionsException Missing move_members permission.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<Member>
      */
     public function moveMember($member, ?string $reason = null): PromiseInterface
     {
@@ -506,10 +506,10 @@ class Channel extends Part implements Stringable
      * @param Member|string $member The member to mute. (either a Member part or the member ID)
      * @param string|null   $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException      Channel is not voice-based.
      * @throws NoPermissionsException Missing mute_members permission.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<Member>
      */
     public function muteMember($member, ?string $reason = null): PromiseInterface
     {
@@ -541,10 +541,10 @@ class Channel extends Part implements Stringable
      * @param Member|string $member The member to unmute. (either a Member part or the member ID)
      * @param string|null   $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException      Channel is not voice-based.
      * @throws NoPermissionsException Missing mute_members permission.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<Member>
      */
     public function unmuteMember($member, ?string $reason = null): PromiseInterface
     {
@@ -571,15 +571,15 @@ class Channel extends Part implements Stringable
     }
 
     /**
-     * Deafens a member on a voice channel.
+     * Deafens a member in the voice channel.
      *
      * @param Member|string $member The member to deafen. (either a Member part or the member ID)
      * @param string|null   $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException      Channel is not voice-based.
      * @throws NoPermissionsException Missing deafen_members permission.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<Member>
      */
     public function deafenMember($member, ?string $reason = null): PromiseInterface
     {
@@ -606,15 +606,15 @@ class Channel extends Part implements Stringable
     }
 
     /**
-     * Undeafens a member on a voice channel.
+     * Undeafens a member in the voice channel.
      *
      * @param Member|string $member The member to undeafen. (either a Member part or the member ID)
      * @param string|null   $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException      Channel is not voice-based.
      * @throws NoPermissionsException Missing deafen_members permission.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<Member>
      */
     public function undeafenMember($member, ?string $reason = null): PromiseInterface
     {
