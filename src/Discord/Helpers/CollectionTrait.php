@@ -146,6 +146,7 @@ trait CollectionTrait
         if (! is_array($items)) {
             throw new \InvalidArgumentException('The fill method only accepts arrays or CollectionInterface instances.');
         }
+
         foreach ($items as $item) {
             $this->pushItem($item);
         }
@@ -606,10 +607,17 @@ trait CollectionTrait
     /**
      * Unserializes the collection.
      *
-     * @param array $data
+     * @param CollectionInterface|array $data
      */
-    public function __unserialize(array $data): void
+    public function __unserialize($data): void
     {
+        if ($data instanceof CollectionInterface) {
+            $data = $data->toArray();
+        }
+        if (! is_array($data)) {
+            throw new \InvalidArgumentException('The __unserialize method only accepts arrays or CollectionInterface instances.');
+        }
+
         $this->items = $data;
     }
 

@@ -55,7 +55,7 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function serialize(int $flags = 0, ?int $depth = 512): string;
     public function __serialize(): array;
     public function unserialize(string $serialized): void;
-    public function __unserialize(array $data): void;
+    public function __unserialize($data): void;
     public function jsonSerialize(): array;
     public function getIterator(): Traversable;
     public function __debugInfo(): array;
