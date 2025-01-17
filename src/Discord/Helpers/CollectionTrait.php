@@ -332,6 +332,23 @@ trait CollectionTrait
     }
 
     /**
+     * Applies the given callback function to each item in the collection.
+     *
+     * @param callable $callback
+     * @param mixed    $arg
+     *
+     * @return CollectionInterface
+     */
+    public function walk(callable $callback, mixed $arg)
+    {
+        $items = $this->items;
+
+        array_walk($items, $callback, $arg);
+
+        return new Collection($items, $this->discrim, $this->class);
+    }
+
+    /**
      * Reduces the collection to a single value using a callback function.
      *
      * @param callable $callback
