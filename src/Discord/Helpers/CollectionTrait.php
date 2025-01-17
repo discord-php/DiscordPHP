@@ -332,13 +332,13 @@ trait CollectionTrait
     }
 
     /**
-     * Computes the difference between the current collection and the given array.
+     * Gets the difference between the items.
      *
      * If a callback is provided and is callable, it uses `array_udiff_assoc` to compute the difference.
      * Otherwise, it uses `array_diff`.
      *
      * @param CollectionInterface|array $array
-     * @param ?callable         $callback
+     * @param ?callable                 $callback
      *
      * @return CollectionInterface
      */
@@ -358,17 +358,23 @@ trait CollectionTrait
     /**
      * Gets the intersection of the items.
      *
+     * If a callback is provided and is callable, it uses `array_uintersect_assoc` to compute the intersection.
+     * Otherwise, it uses `array_intersect`.
+     *
      * @param CollectionInterface|array $array
+     * @param ?callable                 $callback
      *
      * @return CollectionInterface
      */
-    public function intersect($items)
+    public function intersect($items, ?callable $callback)
     {
         $items = $items instanceof CollectionInterface
             ? $items->toArray()
             : $items;
 
-        $diff = array_intersect($this->items, $items);
+        $diff = $callback && is_callable($callback)
+            ? array_uintersect_assoc($this->items, $items, $callback)
+            : array_intersect($this->items, $items);
 
         return new Collection($diff, $this->discrim, $this->class);
     }
