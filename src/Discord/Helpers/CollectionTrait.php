@@ -134,12 +134,18 @@ trait CollectionTrait
     /**
      * Fills an array of items into the collection.
      *
-     * @param array $items
+     * @param CollectionInterface|array $items
      *
      * @return self
      */
-    public function fill(array $items): self
+    public function fill($items): self
     {
+        if ($items instanceof CollectionInterface) {
+            $items = $items->toArray();
+        }
+        if (! is_array($items)) {
+            throw new \InvalidArgumentException('The fill method only accepts arrays or CollectionInterface instances.');
+        }
         foreach ($items as $item) {
             $this->pushItem($item);
         }
