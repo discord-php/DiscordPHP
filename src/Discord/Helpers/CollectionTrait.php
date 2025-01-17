@@ -342,19 +342,35 @@ trait CollectionTrait
      *
      * @return CollectionInterface
      */
-    public function diff($array, ?callable $callback)
+    public function diff($items, ?callable $callback)
     {
-        $array = $array instanceof CollectionInterface
-            ? $array->toArray()
-            : $array;
+        $items = $items instanceof CollectionInterface
+            ? $items->toArray()
+            : $items;
 
-        $items = $this->items;
+        $diff = $callback && is_callable($callback)
+            ? array_udiff_assoc($this->items, $items, $callback)
+            : array_diff($this->items, $items);
 
-        $callback && is_callable($callback)
-            ? array_udiff_assoc($items, $array, $callback)
-            : array_diff($items, $array);
+        return new Collection($diff, $this->discrim, $this->class);
+    }
 
-        return new Collection($items, $this->discrim, $this->class);
+    /**
+     * Gets the intersection of the items.
+     *
+     * @param CollectionInterface|array $array
+     *
+     * @return CollectionInterface
+     */
+    public function intersect($items)
+    {
+        $items = $items instanceof CollectionInterface
+            ? $items->toArray()
+            : $items;
+
+        $diff = array_intersect($this->items, $items);
+
+        return new Collection($diff, $this->discrim, $this->class);
     }
 
     /**
