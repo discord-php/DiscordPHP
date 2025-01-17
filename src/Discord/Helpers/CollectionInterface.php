@@ -41,6 +41,7 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function map(callable $callback);
     public function merge($collection): self;
     public function toArray();
+    public function collect();
     public function keys(): array;
     public function values(): array;
     public function diff(): array;

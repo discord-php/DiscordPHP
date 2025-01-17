@@ -483,6 +483,16 @@ trait CollectionTrait
     }
 
     /**
+     * Converts the items into a new collection.
+     *
+     * @return CollectionInterface
+     */
+    public function collect()
+    {
+        return new Collection($this->items, $this->discrim, $this->class);
+    }
+
+    /**
      * @since 11.0.0
      *
      * Get the keys of the items.
