@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 use Discord\Builders\MessageBuilder;
 use Discord\Discord;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Invite;
@@ -36,7 +36,7 @@ final class ChannelTest extends DiscordTestCase
                         ->then(function () {
                             return $this->channel()->getPinnedMessages();
                         })
-                        ->then(function (Collection $messages) use ($message) {
+                        ->then(function (CollectionInterface $messages) use ($message) {
                             $this->assertGreaterThan(0, $messages->count());
                             $this->assertContains($message->id, $messages->map(function ($message) {
                                 return $message->id;
@@ -64,7 +64,7 @@ final class ChannelTest extends DiscordTestCase
                         ->then(function () {
                             return $this->channel()->getPinnedMessages();
                         })
-                        ->then(function (Collection $messages) use ($message) {
+                        ->then(function (CollectionInterface $messages) use ($message) {
                             $this->assertNotContains($message->id, $messages->map(function ($message) {
                                 return $message->id;
                             }));
@@ -168,7 +168,7 @@ final class ChannelTest extends DiscordTestCase
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->getMessageHistory([])
                 ->then(function ($messages) {
-                    $this->assertInstanceOf(Collection::class, $messages);
+                    $this->assertInstanceOf(CollectionInterface::class, $messages);
 
                     if ($messages->count() < 1) {
                         $this->markTestSkipped('no messages were present when gettign message history - could not check if collection contained message objects.');
@@ -191,8 +191,8 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->invites->freshen()
-                ->then(function (Collection $invites) {
-                    $this->assertInstanceOf(Collection::class, $invites);
+                ->then(function (CollectionInterface $invites) {
+                    $this->assertInstanceOf(CollectionInterface::class, $invites);
 
                     if ($invites->count() < 1) {
                         $this->markTestSkipped('no invites were present when getting invites - could not check if collection contained invite objects.');

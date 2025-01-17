@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 use Carbon\Carbon;
 use Discord\Discord;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
@@ -119,19 +119,19 @@ final class EmptyMessageTest extends DiscordTestCase
      */
     public function testCollectionsEmpty(Message $message)
     {
-        $this->assertInstanceOf(Collection::class, $message->mentions);
+        $this->assertInstanceOf(CollectionInterface::class, $message->mentions);
         $this->assertEquals(0, $message->mentions->count());
 
-        $this->assertInstanceOf(Collection::class, $message->mention_roles);
+        $this->assertInstanceOf(CollectionInterface::class, $message->mention_roles);
         $this->assertEquals(0, $message->mention_roles->count());
 
-        $this->assertInstanceOf(Collection::class, $message->reactions);
+        $this->assertInstanceOf(CollectionInterface::class, $message->reactions);
         $this->assertEquals(0, $message->reactions->count());
 
-        $this->assertInstanceOf(Collection::class, $message->mention_channels);
+        $this->assertInstanceOf(CollectionInterface::class, $message->mention_channels);
         $this->assertEquals(0, $message->mention_channels->count());
 
-        $this->assertInstanceOf(Collection::class, $message->embeds);
+        $this->assertInstanceOf(CollectionInterface::class, $message->embeds);
         $this->assertEquals(0, $message->embeds->count());
     }
 

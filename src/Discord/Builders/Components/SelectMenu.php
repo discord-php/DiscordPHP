@@ -12,7 +12,7 @@
 namespace Discord\Builders\Components;
 
 use Discord\Discord;
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
 use React\Promise\PromiseInterface;
@@ -350,7 +350,7 @@ abstract class SelectMenu extends Component
                 if (empty($this->options)) {
                     $response = $callback($interaction);
                 } else {
-                    $options = Collection::for(Option::class, null);
+                    $options = ($this->discord->getCollectionClass())::for(Option::class, null);
 
                     foreach ($this->options as $option) {
                         if (in_array($option->getValue(), $interaction->data->values)) {

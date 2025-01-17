@@ -11,7 +11,7 @@
 
 namespace Discord\Parts\Channel\Poll;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
@@ -140,7 +140,7 @@ class PollAnswer extends Part
      *
      * @throws \OutOfRangeException
      *
-     * @return PromiseInterface<Collection|User[]>
+     * @return PromiseInterface<CollectionInterface|User[]>
      */
     public function getVoters(array $options = []): PromiseInterface
     {
@@ -162,7 +162,7 @@ class PollAnswer extends Part
 
         return $this->http->get($query)
             ->then(function ($response) {
-                $users = Collection::for(User::class);
+                $users = ($this->discord->getCollectionClass())::for(User::class);
 
                 foreach ($response->users ?? [] as $user) {
                     if (! $part = $this->discord->users->get('id', $user->id)) {

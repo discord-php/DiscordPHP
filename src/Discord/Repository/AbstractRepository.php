@@ -11,7 +11,7 @@
 
 namespace Discord\Repository;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.

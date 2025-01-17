@@ -11,7 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
@@ -28,8 +28,8 @@ class GuildEmojisUpdate extends Event
      */
     public function handle($data)
     {
-        $oldEmojis = Collection::for(Emoji::class);
-        $emojiParts = Collection::for(Emoji::class);
+        $oldEmojis = ($this->discord->getCollectionClass())::for(Emoji::class);
+        $emojiParts = ($this->discord->getCollectionClass())::for(Emoji::class);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
