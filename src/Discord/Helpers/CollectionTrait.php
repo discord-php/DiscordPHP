@@ -332,6 +332,23 @@ trait CollectionTrait
     }
 
     /**
+     * Reduces the collection to a single value using a callback function.
+     *
+     * @param callable $callback
+     * @param ?mixed   $initial
+     *
+     * @return CollectionInterface
+     */
+    public function reduce(callable $callback, $initial = null)
+    {
+        $items = $this->items;
+
+        $items = array_reduce($items, $callback, $initial);
+
+        return new Collection($items, $this->discrim, $this->class);
+    }
+
+    /**
      * Runs a callback over the collection and creates a new static.
      *
      * @param callable $callback

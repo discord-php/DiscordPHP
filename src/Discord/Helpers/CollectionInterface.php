@@ -35,6 +35,7 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function clear(): void;
     public function slice(int $offset, ?int $length, bool $preserve_keys = false);
     public function sort(callable|int|null $callback);
+    public function reduce(callable $callback, $initial = null);
     public function map(callable $callback);
     public function merge($collection): self;
     public function toArray();
