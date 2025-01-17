@@ -383,6 +383,16 @@ trait CollectionTrait
     }
 
     /**
+     * Get the values of the items.
+     *
+     * @return array
+     */
+    public function values(): array
+    {
+        return array_values($this->items);
+    }
+
+    /**
      * If the collection has an offset.
      *
      * @param mixed $offset

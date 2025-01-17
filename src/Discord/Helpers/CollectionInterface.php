@@ -38,6 +38,8 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function map(callable $callback);
     public function merge($collection): self;
     public function toArray();
+    public function keys(): array;
+    public function values(): array;
     public function offsetExists($offset): bool;
     #[\ReturnTypeWillChange]
     public function offsetGet($offset);
