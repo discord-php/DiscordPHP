@@ -46,7 +46,7 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function values(): array;
     public function diff($items, ?callable $callback);
     public function intersect($items, ?callable $callback);
-    public function unique(int $flags = SORT_STRING)
+    public function unique(int $flags = SORT_STRING);
     public function offsetExists($offset): bool;
     #[\ReturnTypeWillChange]
     public function offsetGet($offset);
