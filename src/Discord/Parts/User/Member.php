@@ -219,42 +219,6 @@ class Member extends Part implements Stringable
             });
     }
 
-    public function setDeaf(bool $deaf, ?string $reason = null): PromiseInterface
-    {
-        if ($guild = $this->guild) {
-            if ($botperms = $guild->getBotPermissions()) {
-                if (! $botperms->deafen_members) {
-                    return reject(new NoPermissionsException("You do not have permission to deafen members in the guild {$guild->id}."));
-                }
-            }
-        }
-
-        $headers = [];
-        if (isset($reason)) {
-            $headers['X-Audit-Log-Reason'] = $reason;
-        }
-
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['deaf' => $deaf], $headers);
-    }
-
-    public function setMute(bool $mute, ?string $reason = null): PromiseInterface
-    {
-        if ($guild = $this->guild) {
-            if ($botperms = $guild->getBotPermissions()) {
-                if (! $botperms->mute_members) {
-                    return reject(new NoPermissionsException("You do not have permission to mute members in the guild {$guild->id}."));
-                }
-            }
-        }
-
-        $headers = [];
-        if (isset($reason)) {
-            $headers['X-Audit-Log-Reason'] = $reason;
-        }
-
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['mute' => $mute], $headers);
-    }
-
     /**
      * Moves the member to another voice channel.
      *
