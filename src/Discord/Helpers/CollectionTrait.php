@@ -18,7 +18,7 @@ trait CollectionTrait
      *
      * @param array       $items
      * @param ?string     $discrim
-     * @param string|null $class
+     * @param ?string     $class
      */
     public function __construct(array $items = [], ?string $discrim = 'id', ?string $class = null)
     {
@@ -32,7 +32,7 @@ trait CollectionTrait
      *
      * @param array       $items
      * @param ?string     $discrim
-     * @param string|null $class
+     * @param ?string     $class
      *
      * @return static
      */
@@ -298,8 +298,8 @@ trait CollectionTrait
     /**
      * Slices the collection.
      *
-     * @param int $offset
-     * @param null|int $length
+     * @param int  $offset
+     * @param ?int $length
      * @param bool $preserve_keys
      *
      * @return CollectionInterface
@@ -327,6 +327,32 @@ trait CollectionTrait
         $callback && is_callable($callback)
             ? uasort($items, $callback)
             : asort($items, $callback ?? SORT_REGULAR);
+
+        return new Collection($items, $this->discrim, $this->class);
+    }
+
+    /**
+     * Computes the difference between the current collection and the given array.
+     *
+     * If a callback is provided and is callable, it uses `array_udiff_assoc` to compute the difference.
+     * Otherwise, it uses `array_diff`.
+     *
+     * @param CollectionInterface|array $array
+     * @param ?callable         $callback
+     *
+     * @return CollectionInterface
+     */
+    public function diff($array, ?callable $callback)
+    {
+        $array = $array instanceof CollectionInterface
+            ? $array->toArray()
+            : $array;
+
+        $items = $this->items;
+
+        $callback && is_callable($callback)
+            ? array_udiff_assoc($items, $array, $callback)
+            : array_diff($items, $array);
 
         return new Collection($items, $this->discrim, $this->class);
     }

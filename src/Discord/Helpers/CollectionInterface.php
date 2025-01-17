@@ -42,6 +42,7 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function toArray();
     public function keys(): array;
     public function values(): array;
+    public function diff(): array;
     public function offsetExists($offset): bool;
     #[\ReturnTypeWillChange]
     public function offsetGet($offset);
