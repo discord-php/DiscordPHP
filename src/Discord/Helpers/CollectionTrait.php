@@ -114,6 +114,24 @@ trait CollectionTrait
     }
 
     /**
+     * Shifts an item from the collection.
+     *
+     * @return mixed
+     */
+    public function shift()
+    {
+        if (empty($this->items)) {
+            return null;
+        }
+
+        reset($this->items);
+        $key = key($this->items);
+        $value = array_shift($this->items);
+
+        return [$key => $value];
+    }
+
+    /**
      * Fills an array of items into the collection.
      *
      * @param array $items
