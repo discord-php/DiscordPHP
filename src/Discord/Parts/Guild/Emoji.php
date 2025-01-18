@@ -12,6 +12,7 @@
 namespace Discord\Parts\Guild;
 
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use Stringable;

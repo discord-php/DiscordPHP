@@ -12,6 +12,7 @@
 namespace Discord\Parts\Interactions\Command;
 
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Part;
 
 use function Discord\poly_strlen;

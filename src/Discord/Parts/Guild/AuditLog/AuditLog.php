@@ -12,6 +12,7 @@
 namespace Discord\Parts\Guild\AuditLog;
 
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Channel\Webhook;
 use Discord\Parts\Guild\AutoModeration\Rule;
 use Discord\Parts\Guild\Guild;

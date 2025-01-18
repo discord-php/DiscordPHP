@@ -12,6 +12,7 @@
 namespace Discord\Repository\Channel;
 
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;

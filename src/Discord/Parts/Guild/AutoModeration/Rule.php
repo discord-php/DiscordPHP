@@ -12,6 +12,7 @@
 namespace Discord\Parts\Guild\AutoModeration;
 
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
