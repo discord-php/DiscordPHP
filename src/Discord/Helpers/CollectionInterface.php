@@ -34,7 +34,7 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function filter(callable $callback);
     public function find(callable $callback);
     public function clear(): void;
-    public function slice(int $offset, ?int $length, bool $preserve_keys = false);
+    public function slice(int $offset, ?int $length = null, bool $preserve_keys = false);
     public function sort(callable|int|null $callback);
     public function walk(callable $callback, mixed $arg);
     public function reduce(callable $callback, $initial = null);
@@ -44,8 +44,8 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function collect();
     public function keys(): array;
     public function values(): array;
-    public function diff($items, ?callable $callback);
-    public function intersect($items, ?callable $callback);
+    public function diff($items, ?callable $callback = null);
+    public function intersect($items, ?callable $callback = null);
     public function unique(int $flags = SORT_STRING);
     public function offsetExists($offset): bool;
     #[\ReturnTypeWillChange]

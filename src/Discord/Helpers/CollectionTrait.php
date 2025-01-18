@@ -329,7 +329,7 @@ trait CollectionTrait
      *
      * @return CollectionInterface
      */
-    public function slice(int $offset, ?int $length, bool $preserve_keys = false)
+    public function slice(int $offset, ?int $length = null, bool $preserve_keys = false)
     {
         $items = $this->items;
 
@@ -367,7 +367,7 @@ trait CollectionTrait
      *
      * @return CollectionInterface
      */
-    public function diff($items, ?callable $callback)
+    public function diff($items, ?callable $callback = null)
     {
         $items = $items instanceof CollectionInterface
             ? $items->toArray()
@@ -391,7 +391,7 @@ trait CollectionTrait
      *
      * @return CollectionInterface
      */
-    public function intersect($items, ?callable $callback)
+    public function intersect($items, ?callable $callback = null)
     {
         $items = $items instanceof CollectionInterface
             ? $items->toArray()
