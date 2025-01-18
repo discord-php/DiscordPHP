@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Channel\Poll;
 
+use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 
 /**
@@ -36,10 +37,16 @@ class PollResults extends Part
     /**
      * Returns the answer counts attribute.
      *
-     * @return PollAnswerCount
+     * @return PollAnswerCount[]
      */
-    protected function getAnswerCountsAttribute(): PollAnswerCount
+    protected function getAnswerCountsAttribute(): array
     {
-        return $this->factory->part(PollAnswerCount::class, (array) $this->attributes['answer_counts'], true);
+        $answerCounts = new Collection();
+
+        foreach ($this->attributes['answer_counts'] as $answerCount) {
+            $answerCounts->push($this->factory->create(PollAnswerCount::class, $answerCount, true));
+        }
+
+        return $answerCounts->toArray();
     }
 }
