@@ -13,6 +13,7 @@ namespace Discord\Parts\Embed;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
 use function Discord\poly_strlen;
