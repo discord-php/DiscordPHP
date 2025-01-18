@@ -41,6 +41,15 @@ trait AbstractRepositoryTrait
         sort as sort;
         map as map;
         merge as merge;
+        shift as shift;
+        slice as slice;
+        diff as diff;
+        intersect as intersect;
+        walk as walk;
+        reduce as reduce;
+        unique as unique;
+        values as values;
+        collect as collect;
         serialize as serialize;
         __serialize as __serialize;
         unserialize as unserialize;
