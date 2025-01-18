@@ -11,6 +11,8 @@
 
 namespace Discord\Parts\Channel\Poll;
 
+use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Part;
 
 /**
@@ -20,8 +22,8 @@ use Discord\Parts\Part;
  *
  * @since 10.0.0
  *
- * @property boolean            $is_finalized   Whether the votes have been precisely counted
- * @property PollAnswerCount[]  $answer_counts  The counts for each answer
+ * @property boolean                                $is_finalized   Whether the votes have been precisely counted
+ * @property CollectionInterface|PollAnswerCount[]  $answer_counts  The counts for each answer
  */
 class PollResults extends Part
 {
@@ -36,10 +38,16 @@ class PollResults extends Part
     /**
      * Returns the answer counts attribute.
      *
-     * @return PollAnswerCount
+     * @return CollectionInterface<PollAnswerCount> A collection of poll answer counts.
      */
-    protected function getAnswerCountsAttribute(): PollAnswerCount
+    protected function getAnswerCountsAttribute(): CollectionInterface
     {
-        return $this->factory->part(PollAnswerCount::class, (array) $this->attributes['answer_counts'], true);
+        $answerCounts = Collection::for(PollAnswerCount::class);
+
+        foreach ($this->attributes['answer_counts'] as $answerCount) {
+            $answerCounts->pushItem($this->factory->create(PollAnswerCount::class, $answerCount, true));
+        }
+
+        return $answerCounts;
     }
 }
