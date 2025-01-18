@@ -97,7 +97,7 @@ class Option extends Part
      *
      * @return Collection|Option[] A collection of options.
      */
-    protected function getOptionsAttribute(): Collection
+    protected function getOptionsAttribute(): CollectionInterface
     {
         $options = Collection::for(Option::class, null);
 

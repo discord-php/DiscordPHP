@@ -137,7 +137,7 @@ class Embed extends Part
      *
      * @return Collection|Field[]
      */
-    protected function getFieldsAttribute(): Collection
+    protected function getFieldsAttribute(): CollectionInterface
     {
         $fields = Collection::for(Field::class, null);
 

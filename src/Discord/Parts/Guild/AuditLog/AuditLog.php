@@ -76,7 +76,7 @@ class AuditLog extends Part
      *
      * @return Collection|Command[]
      */
-    protected function getApplicationCommandsAttribute(): Collection
+    protected function getApplicationCommandsAttribute(): CollectionInterface
     {
         $collection = Collection::for(Command::class);
 
@@ -92,7 +92,7 @@ class AuditLog extends Part
      *
      * @return Collection|Entry[]
      */
-    protected function getAuditLogEntriesAttribute(): Collection
+    protected function getAuditLogEntriesAttribute(): CollectionInterface
     {
         $collection = Collection::for(Entry::class);
 
@@ -108,7 +108,7 @@ class AuditLog extends Part
      *
      * @return Collection|Rule[]
      */
-    protected function getAutoModerationRulesAttribute(): Collection
+    protected function getAutoModerationRulesAttribute(): CollectionInterface
     {
         $collection = Collection::for(Rule::class);
 
@@ -124,7 +124,7 @@ class AuditLog extends Part
      *
      * @return Collection|ScheduledEvent[]
      */
-    protected function getGuildScheduledEventsAttribute(): Collection
+    protected function getGuildScheduledEventsAttribute(): CollectionInterface
     {
         $collection = Collection::for(ScheduledEvent::class);
 
@@ -142,7 +142,7 @@ class AuditLog extends Part
      *
      * @return Collection|Integration[]
      */
-    protected function getIntegrationsAttribute(): Collection
+    protected function getIntegrationsAttribute(): CollectionInterface
     {
         $collection = Collection::for(Integration::class);
 
@@ -158,7 +158,7 @@ class AuditLog extends Part
      *
      * @return Collection|Thread[]
      */
-    protected function getThreadsAttribute(): Collection
+    protected function getThreadsAttribute(): CollectionInterface
     {
         $collection = Collection::for(Thread::class);
 
@@ -174,7 +174,7 @@ class AuditLog extends Part
      *
      * @return Collection|User[]
      */
-    protected function getUsersAttribute(): Collection
+    protected function getUsersAttribute(): CollectionInterface
     {
         $collection = Collection::for(User::class);
 
@@ -190,7 +190,7 @@ class AuditLog extends Part
      *
      * @return Collection|Webhook[]
      */
-    protected function getWebhooksAttribute(): Collection
+    protected function getWebhooksAttribute(): CollectionInterface
     {
         $collection = Collection::for(Webhook::class);
 
@@ -210,7 +210,7 @@ class AuditLog extends Part
      *
      * @return Collection|Entry[]
      */
-    public function searchByType(int $action_type): Collection
+    public function searchByType(int $action_type): CollectionInterface
     {
         $types = array_values((new ReflectionClass(Entry::class))->getConstants());
 

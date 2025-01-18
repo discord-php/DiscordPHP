@@ -14,6 +14,7 @@ namespace Discord\Parts\Guild;
 use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -335,12 +336,22 @@ class Guild extends Part
     /**
      * Sets the roles attribute.
      *
-     * @param ?array $roles
+     * @param CollectionInterface|array|null $roles
      */
-    protected function setRolesAttribute(?array $roles): void
+    protected function setRolesAttribute($roles): void
     {
+        if ($roles instanceof CollectionInterface) {
+            $roles = $roles->toArray();
+        }
+        if ($roles === null) {
+            $roles = [];
+        }
+        if (! is_array($roles)) {
+            throw new \InvalidArgumentException('Roles must be an array or CollectionInterface.');
+        }
+
         $rolesDiscrim = $this->roles->discrim;
-        foreach ($roles ?? [] as $role) {
+        foreach ($roles as $role) {
             $role = (array) $role;
             /** @var ?Role */
             if ($rolePart = $this->roles->offsetGet($role[$rolesDiscrim])) {
@@ -570,7 +581,7 @@ class Guild extends Part
      *
      * @return Collection|StageInstance[]
      */
-    protected function getStageInstancesAttribute(): Collection
+    protected function getStageInstancesAttribute(): CollectionInterface
     {
         $stage_instances = Collection::for(StageInstance::class);
 
@@ -1106,16 +1117,23 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-positions
      *
-     * @param array $roles Associative array where the LHS key is the position,
-     *                     and the RHS value is a `Role` object or a string ID,
-     *                     e.g. `[1 => 'role_id_1', 3 => 'role_id_3']`.
+     * @param CollectionInterface|array $roles  Associative array where the LHS key is the position,
+     *                                              and the RHS value is a `Role` object or a string ID,
+     *                                              e.g. `[1 => 'role_id_1', 3 => 'role_id_3']`.
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
      * @return PromiseInterface<self>
      */
-    public function updateRolePositions(array $roles): PromiseInterface
+    public function updateRolePositions($roles): PromiseInterface
     {
+        if ($roles instanceof CollectionInterface) {
+            $roles = $roles->toArray();
+        }
+        if (! is_array($roles)) {
+            return reject(new \InvalidArgumentException('Roles must be an array of Role instances or Role IDs.'));
+        }
+
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_roles) {
             return reject(new NoPermissionsException("You do not have permission to update role positions in the guild {$this->id}."));

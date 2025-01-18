@@ -69,7 +69,7 @@ class Emoji extends Part implements Stringable
      *
      * @return Collection<?Role> A collection of roles for the emoji.
      */
-    protected function getRolesAttribute(): Collection
+    protected function getRolesAttribute(): CollectionInterface
     {
         $roles = new Collection();
 

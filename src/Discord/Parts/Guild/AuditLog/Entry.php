@@ -123,7 +123,7 @@ class Entry extends Part
      *
      * @return Collection
      */
-    protected function getChangesAttribute(): Collection
+    protected function getChangesAttribute(): CollectionInterface
     {
         return new Collection($this->attributes['changes'] ?? [], 'key', null);
     }

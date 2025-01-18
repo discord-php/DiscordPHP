@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -331,15 +332,22 @@ class Member extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-member
      *
-     * @param Role[]|string[] $roles  The roles to set to the member.
-     * @param string|null     $reason Reason for Audit Log.
+     * @param CollectionInterface|Role[]|string[] $roles  The roles to set to the member.
+     * @param string|null                         $reason Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
      * @return PromiseInterface<self>
      */
-    public function setRoles(array $roles, ?string $reason = null): PromiseInterface
+    public function setRoles($roles, ?string $reason = null): PromiseInterface
     {
+        if ($roles instanceof CollectionInterface) {
+            $roles = $roles->toArray();
+        }
+        if (! is_array($roles)) {
+            return reject(new \InvalidArgumentException('Roles must be an array of Role instances or Role IDs.'));
+        }
+
         foreach ($roles as $i => $role) {
             if ($role instanceof Role) {
                 $roles[$i] = $role->id;
@@ -611,7 +619,7 @@ class Member extends Part implements Stringable
      *
      * @return Collection|Activity[]
      */
-    protected function getActivitiesAttribute(): Collection
+    protected function getActivitiesAttribute(): CollectionInterface
     {
         $activities = Collection::for(Activity::class, null);
 
@@ -687,7 +695,7 @@ class Member extends Part implements Stringable
      *
      * @return Collection<?Role> A collection of roles the member is in. null role only contains ID in the collection.
      */
-    protected function getRolesAttribute(): Collection
+    protected function getRolesAttribute(): CollectionInterface
     {
         $roles = new Collection();
 

@@ -22,7 +22,8 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function get(string $discrim, $key);
     public function set($offset, $value);
     public function pull($key, $default = null);
-    public function fill(array $items): self;
+    public function shift();
+    public function fill($items): self;
     public function push(...$items): self;
     public function pushItem($item): self;
     public function count(): int;
@@ -35,9 +36,17 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function clear(): void;
     public function slice(int $offset, ?int $length, bool $preserve_keys = false);
     public function sort(callable|int|null $callback);
+    public function walk(callable $callback, mixed $arg);
+    public function reduce(callable $callback, $initial = null);
     public function map(callable $callback);
     public function merge($collection): self;
     public function toArray();
+    public function collect();
+    public function keys(): array;
+    public function values(): array;
+    public function diff($items, ?callable $callback);
+    public function intersect($items, ?callable $callback);
+    public function unique(int $flags = SORT_STRING);
     public function offsetExists($offset): bool;
     #[\ReturnTypeWillChange]
     public function offsetGet($offset);
@@ -46,7 +55,7 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function serialize(int $flags = 0, ?int $depth = 512): string;
     public function __serialize(): array;
     public function unserialize(string $serialized): void;
-    public function __unserialize(array $data): void;
+    public function __unserialize($data): void;
     public function jsonSerialize(): array;
     public function getIterator(): Traversable;
     public function __debugInfo(): array;

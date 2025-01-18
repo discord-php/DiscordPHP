@@ -670,6 +670,16 @@ trait AbstractRepositoryTrait
     }
 
     /**
+     * Get the values of the items.
+     *
+     * @return array
+     */
+    public function values(): array
+    {
+        return array_values($this->items);
+    }
+
+    /**
      * If the repository has an offset.
      *
      * @deprecated 10.0.0 Use async `$repository->cache->has()`

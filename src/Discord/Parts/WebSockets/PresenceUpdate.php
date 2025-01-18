@@ -95,7 +95,7 @@ class PresenceUpdate extends Part
      *
      * @return Collection|Activity[]
      */
-    protected function getActivitiesAttribute(): Collection
+    protected function getActivitiesAttribute(): CollectionInterface
     {
         $collection = Collection::for(Activity::class, null);
 
@@ -165,7 +165,7 @@ class PresenceUpdate extends Part
      *
      * @return Collection|Role[]
      */
-    protected function getRolesAttribute(): Collection
+    protected function getRolesAttribute(): CollectionInterface
     {
         if ($member = $this->member) {
             return $member->roles;

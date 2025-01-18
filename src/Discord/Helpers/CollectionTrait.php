@@ -18,7 +18,7 @@ trait CollectionTrait
      *
      * @param array       $items
      * @param ?string     $discrim
-     * @param string|null $class
+     * @param ?string     $class
      */
     public function __construct(array $items = [], ?string $discrim = 'id', ?string $class = null)
     {
@@ -32,7 +32,7 @@ trait CollectionTrait
      *
      * @param array       $items
      * @param ?string     $discrim
-     * @param string|null $class
+     * @param ?string     $class
      *
      * @return static
      */
@@ -114,14 +114,39 @@ trait CollectionTrait
     }
 
     /**
+     * Shifts an item from the collection.
+     *
+     * @return mixed
+     */
+    public function shift()
+    {
+        if (empty($this->items)) {
+            return null;
+        }
+
+        reset($this->items);
+        $key = key($this->items);
+        $value = array_shift($this->items);
+
+        return [$key => $value];
+    }
+
+    /**
      * Fills an array of items into the collection.
      *
-     * @param array $items
+     * @param CollectionInterface|array $items
      *
      * @return self
      */
-    public function fill(array $items): self
+    public function fill($items): self
     {
+        if ($items instanceof CollectionInterface) {
+            $items = $items->toArray();
+        }
+        if (! is_array($items)) {
+            throw new \InvalidArgumentException('The fill method only accepts arrays or CollectionInterface instances.');
+        }
+
         foreach ($items as $item) {
             $this->pushItem($item);
         }
@@ -298,8 +323,8 @@ trait CollectionTrait
     /**
      * Slices the collection.
      *
-     * @param int $offset
-     * @param null|int $length
+     * @param int  $offset
+     * @param ?int $length
      * @param bool $preserve_keys
      *
      * @return CollectionInterface
@@ -332,6 +357,88 @@ trait CollectionTrait
     }
 
     /**
+     * Gets the difference between the items.
+     *
+     * If a callback is provided and is callable, it uses `array_udiff_assoc` to compute the difference.
+     * Otherwise, it uses `array_diff`.
+     *
+     * @param CollectionInterface|array $array
+     * @param ?callable                 $callback
+     *
+     * @return CollectionInterface
+     */
+    public function diff($items, ?callable $callback)
+    {
+        $items = $items instanceof CollectionInterface
+            ? $items->toArray()
+            : $items;
+
+        $diff = $callback && is_callable($callback)
+            ? array_udiff_assoc($this->items, $items, $callback)
+            : array_diff($this->items, $items);
+
+        return new Collection($diff, $this->discrim, $this->class);
+    }
+
+    /**
+     * Gets the intersection of the items.
+     *
+     * If a callback is provided and is callable, it uses `array_uintersect_assoc` to compute the intersection.
+     * Otherwise, it uses `array_intersect`.
+     *
+     * @param CollectionInterface|array $array
+     * @param ?callable                 $callback
+     *
+     * @return CollectionInterface
+     */
+    public function intersect($items, ?callable $callback)
+    {
+        $items = $items instanceof CollectionInterface
+            ? $items->toArray()
+            : $items;
+
+        $diff = $callback && is_callable($callback)
+            ? array_uintersect_assoc($this->items, $items, $callback)
+            : array_intersect($this->items, $items);
+
+        return new Collection($diff, $this->discrim, $this->class);
+    }
+
+    /**
+     * Applies the given callback function to each item in the collection.
+     *
+     * @param callable $callback
+     * @param mixed    $arg
+     *
+     * @return CollectionInterface
+     */
+    public function walk(callable $callback, mixed $arg)
+    {
+        $items = $this->items;
+
+        array_walk($items, $callback, $arg);
+
+        return new Collection($items, $this->discrim, $this->class);
+    }
+
+    /**
+     * Reduces the collection to a single value using a callback function.
+     *
+     * @param callable $callback
+     * @param ?mixed   $initial
+     *
+     * @return CollectionInterface
+     */
+    public function reduce(callable $callback, $initial = null)
+    {
+        $items = $this->items;
+
+        $items = array_reduce($items, $callback, $initial);
+
+        return new Collection($items, $this->discrim, $this->class);
+    }
+
+    /**
      * Runs a callback over the collection and creates a new static.
      *
      * @param callable $callback
@@ -347,6 +454,18 @@ trait CollectionTrait
     }
 
     /**
+     * Returns unique items.
+     *
+     * @param int   $flags
+     *
+     * @return CollectionInterface
+     */
+    public function unique(int $flags = SORT_STRING)
+    {
+        return new Collection(array_unique($this->items, $flags), $this->discrim, $this->class);
+    }
+
+    /**
      * Merges another collection into this collection.
      *
      * @param $collection
@@ -355,7 +474,11 @@ trait CollectionTrait
      */
     public function merge($collection): self
     {
-        $this->items = array_merge($this->items, $collection->toArray());
+        $items = $collection instanceof CollectionInterface
+            ? $collection->toArray()
+            : $collection;
+
+        $this->items = array_merge($this->items, $items);
 
         return $this;
     }
@@ -371,6 +494,16 @@ trait CollectionTrait
     }
 
     /**
+     * Converts the items into a new collection.
+     *
+     * @return CollectionInterface
+     */
+    public function collect()
+    {
+        return new Collection($this->items, $this->discrim, $this->class);
+    }
+
+    /**
      * @since 11.0.0
      *
      * Get the keys of the items.
@@ -380,6 +513,16 @@ trait CollectionTrait
     public function keys(): array
     {
         return array_keys($this->items);
+    }
+
+    /**
+     * Get the values of the items.
+     *
+     * @return array
+     */
+    public function values(): array
+    {
+        return array_values($this->items);
     }
 
     /**
@@ -431,6 +574,9 @@ trait CollectionTrait
     /**
      * Returns the string representation of the collection.
      *
+     * @param int  $flags
+     * @param ?int $depth
+     *
      * @return string
      */
     public function serialize(int $flags = 0, ?int $depth = 512): string
@@ -461,10 +607,17 @@ trait CollectionTrait
     /**
      * Unserializes the collection.
      *
-     * @param array $data
+     * @param CollectionInterface|array $data
      */
-    public function __unserialize(array $data): void
+    public function __unserialize($data): void
     {
+        if ($data instanceof CollectionInterface) {
+            $data = $data->toArray();
+        }
+        if (! is_array($data)) {
+            throw new \InvalidArgumentException('The __unserialize method only accepts arrays or CollectionInterface instances.');
+        }
+
         $this->items = $data;
     }
 
