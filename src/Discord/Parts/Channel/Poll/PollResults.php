@@ -22,7 +22,7 @@ use Discord\Parts\Part;
  *
  * @since 10.0.0
  *
- * @property boolean            $is_finalized   Whether the votes have been precisely counted
+ * @property boolean                       $is_finalized   Whether the votes have been precisely counted
  * @property Collection|PollAnswerCount[]  $answer_counts  The counts for each answer
  */
 class PollResults extends Part
