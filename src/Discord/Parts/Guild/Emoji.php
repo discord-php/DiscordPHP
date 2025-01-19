@@ -26,7 +26,7 @@ use Stringable;
  *
  * @property ?string           $id             The identifier for the emoji.
  * @property string            $name           The name of the emoji.
- * @property Collection|Role[] $roles          The roles that are allowed to use the emoji.
+ * @property CollectionInterface|Role[] $roles          The roles that are allowed to use the emoji.
  * @property User|null         $user           User that created this emoji.
  * @property bool|null         $require_colons Whether the emoji requires colons to be triggered.
  * @property bool|null         $managed        Whether this emoji is managed by a role.
@@ -68,7 +68,7 @@ class Emoji extends Part implements Stringable
     /**
      * Returns the roles attribute.
      *
-     * @return Collection<?Role> A collection of roles for the emoji.
+     * @return CollectionInterface<?Role> A collection of roles for the emoji.
      */
     protected function getRolesAttribute(): CollectionInterface
     {

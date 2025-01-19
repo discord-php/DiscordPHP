@@ -306,7 +306,7 @@ class Guild extends Part
     /**
      * An array of valid regions.
      *
-     * @var Collection|null
+     * @var CollectionInterface|null
      */
     protected $regions;
 
@@ -579,7 +579,7 @@ class Guild extends Part
      *
      * @deprecated 10.0.0 Use `$channel->stage_instances`
      *
-     * @return Collection|StageInstance[]
+     * @return CollectionInterface|StageInstance[]
      */
     protected function getStageInstancesAttribute(): CollectionInterface
     {

@@ -255,14 +255,14 @@ class VoiceClient extends EventEmitter
     /**
      * Collection of the status of people speaking.
      *
-     * @var Collection Status of people speaking.
+     * @var CollectionInterface Status of people speaking.
      */
     protected $speakingStatus;
 
     /**
      * Collection of voice decoders.
      *
-     * @var Collection Voice decoders.
+     * @var CollectionInterface Voice decoders.
      */
     protected $voiceDecoders;
 

@@ -33,7 +33,7 @@ use Discord\Parts\User\User;
  * @property      string                $guild_id       The unique identifier of the guild that the presence update affects.
  * @property-read Guild|null            $guild          The guild that the presence update affects.
  * @property      string                $status         The updated status of the user.
- * @property      Collection|Activity[] $activities     The activities of the user.
+ * @property      CollectionInterface|Activity[] $activities     The activities of the user.
  * @property-read Activity              $game           The updated game of the user.
  * @property      object                $client_status  Status of the client.
  * @property      string|null           $desktop_status Status of the user on their desktop client. Null if they are not active on desktop.
@@ -41,7 +41,7 @@ use Discord\Parts\User\User;
  * @property      string|null           $web_status     Status of the user on their web client. Null if they are not active on web.
  *
  * @property-read Member            $member The member that the presence update affects.
- * @property-read Collection|Role[] $roles  Roles that the user has in the guild.
+ * @property-read CollectionInterface|Role[] $roles  Roles that the user has in the guild.
  */
 class PresenceUpdate extends Part
 {
@@ -94,7 +94,7 @@ class PresenceUpdate extends Part
     /**
      * Gets the activities attribute.
      *
-     * @return Collection|Activity[]
+     * @return CollectionInterface|Activity[]
      */
     protected function getActivitiesAttribute(): CollectionInterface
     {
@@ -164,7 +164,7 @@ class PresenceUpdate extends Part
     /**
      * Returns the users roles.
      *
-     * @return Collection|Role[]
+     * @return CollectionInterface|Role[]
      */
     protected function getRolesAttribute(): CollectionInterface
     {
