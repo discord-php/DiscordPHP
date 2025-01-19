@@ -271,6 +271,19 @@ trait CollectionTrait
     }
 
     /**
+     * Searches for a given value within the collection and returns the corresponding key if successful.
+     *
+     * @param mixed $needle
+     * @param bool  $strict [optional]
+     *
+     * @return string|int|false
+     */
+    public function search(mixed $needle, bool $strict = false): string|int|false
+    {
+        return array_search($needle, $this->items, $strict);
+    }
+
+    /**
      * Runs a filter callback over the collection and returns a new static
      * based on the response of the callback.
      *
@@ -310,6 +323,22 @@ trait CollectionTrait
         }
 
         return null;
+    }
+
+    /**
+     * Splices the collection, removing a portion of the items and replacing them with the given replacement.
+     *
+     * @param int   $offset
+     * @param ?int  $length
+     * @param mixed $replacement
+     *
+     * @return self
+     */
+    public function splice(int $offset, ?int $length, mixed $replacement = []): self
+    {
+        array_splice($this->items, $offset, $length, $replacement);
+
+        return $this;
     }
 
     /**

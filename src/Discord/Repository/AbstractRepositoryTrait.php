@@ -37,6 +37,8 @@ trait AbstractRepositoryTrait
         fill as fill;
         push as push;
         isset as isset;
+        search as search;
+        splice as splice;
         slice as slice;
         sort as sort;
         map as map;

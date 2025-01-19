@@ -31,8 +31,10 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function last();
     public function isset($offset): bool;
     public function has(...$keys): bool;
+    public function search(mixed $needle, bool $strict = false): string|int|false;
     public function filter(callable $callback);
     public function find(callable $callback);
+    public function splice(int $offset, ?int $length, mixed $replacement = []);
     public function clear(): void;
     public function slice(int $offset, ?int $length = null, bool $preserve_keys = false);
     public function sort(callable|int|null $callback);
