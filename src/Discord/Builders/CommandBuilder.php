@@ -67,9 +67,9 @@ class CommandBuilder implements JsonSerializable
     /**
      * Returns all the options in the command.
      *
-     * @return Option[]|null
+     * @return CollectionInterface<Option>|Option[]|null
      */
-    public function getOptions(): ?array
+    public function getOptions()
     {
         return $this->options ?? null;
     }
