@@ -261,7 +261,7 @@ trait CommandAttributes
 
         $this->options ??= Collection::for(Option::class, 'name');
 
-        $this->options[] = $option;
+        $this->options->push($option);
 
         return $this;
     }
