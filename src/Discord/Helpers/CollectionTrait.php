@@ -587,6 +587,15 @@ trait CollectionTrait
      */
     public function offsetSet($offset, $value): void
     {
+        // Attempt to use the value's discrim property as the key if offset is null
+        if (is_null($offset)) {
+            if (is_object($value) && isset($value->{$this->discrim})) {
+                $offset = $value->{$this->discrim};
+            } elseif (is_array($value) && isset($value[$this->discrim])) {
+                $offset = $value[$this->discrim];
+            }
+        }
+
         $this->items[$offset] = $value;
     }
 
