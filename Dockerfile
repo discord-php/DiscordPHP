@@ -1,8 +1,8 @@
-FROM php:8.0-cli-alpine
+FROM php:8.1-cli-alpine
 
 RUN apk add --update linux-headers \
   && apk --no-cache add pcre ${PHPIZE_DEPS} \ 
-  && pecl install xdebug-3.3.1 \
+  && pecl install xdebug-3.3.2 \
   && docker-php-ext-enable xdebug \
   && apk del pcre ${PHPIZE_DEPS}
 
