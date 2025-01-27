@@ -19,6 +19,7 @@ use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Poll\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
 use JsonSerializable;
@@ -61,6 +62,7 @@ class MessageBuilder implements JsonSerializable
      * @var string|null
      */
     private $avatar_url;
+
     /**
      * Whether the message is text-to-speech.
      *
@@ -125,6 +127,20 @@ class MessageBuilder implements JsonSerializable
     private $flags;
 
     /**
+     * Whether to enforce the nonce.
+     *
+     * @var bool|null
+     */
+    private $enforce_nonce;
+
+    /**
+     * The poll for the message.
+     *
+     * @var Poll|null
+     */
+    private $poll;
+
+    /**
      * Creates a new message builder.
      *
      * @return static
@@ -172,6 +188,46 @@ class MessageBuilder implements JsonSerializable
         $this->nonce = $nonce;
 
         return $this;
+    }
+
+    /**
+     * If true and nonce is present, it will be checked for uniqueness in the past few minutes.
+     * If another message was created by the same author with the same nonce,
+     * that message will be returned and no new message will be created.
+     *
+     * @param bool $enforce_nonce
+     *
+     * @return $this
+     */
+    public function setEnforceNonce(bool $enforce_nonce = true): self
+    {
+        $this->enforce_nonce = $enforce_nonce;
+
+        return $this;
+    }
+
+    /**
+     * Sets the poll of the message.
+     *
+     * @param Poll|null $poll
+     *
+     * @return $this
+     */
+    public function setPoll(Poll|null $poll): self
+    {
+        $this->poll = $poll;
+
+        return $this;
+    }
+
+    /**
+     * Returns the poll of the message.
+     *
+     * @return Poll|null
+     */
+    public function getPoll(): ?Poll
+    {
+        return $this->poll;
     }
 
     /**
@@ -235,7 +291,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Adds an embed to the builder.
      *
-     * @param Embed|array $embeds,...
+     * @param Embed|array ...$embeds
      *
      * @throws \OverflowException Builder exceeds 10 embeds.
      *
@@ -261,7 +317,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Sets the embeds for the message. Clears the existing embeds in the process.
      *
-     * @param Embed[]|array $embeds
+     * @param Embed[]|array ...$embeds
      *
      * @return $this
      */
@@ -270,6 +326,16 @@ class MessageBuilder implements JsonSerializable
         $this->embeds = [];
 
         return $this->addEmbed(...$embeds);
+    }
+
+    /**
+     * Returns all the embeds in the builder.
+     *
+     * @return array[]|null
+     */
+    public function getEmbeds(): ?array
+    {
+        return $this->embeds;
     }
 
     /**
@@ -508,7 +574,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Adds attachment(s) to the builder.
      *
-     * @param Attachment|string|int $attachment Attachment objects or IDs to add
+     * @param Attachment|string|int ...$attachments Attachment objects or IDs to add
      *
      * @return $this
      */
@@ -596,6 +662,8 @@ class MessageBuilder implements JsonSerializable
      */
     public function toMultipart(bool $payload = true): Multipart
     {
+        $fields = [];
+
         if ($payload) {
             $fields = [
                 [
@@ -622,12 +690,12 @@ class MessageBuilder implements JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize(): ?array
     {
         $empty = true;
 
         if (! empty($this->files)) {
-            $body = [];
+            $body = null;
             $empty = false;
         }
 
@@ -654,6 +722,11 @@ class MessageBuilder implements JsonSerializable
 
         if (isset($this->embeds)) {
             $body['embeds'] = $this->embeds;
+            $empty = false;
+        }
+
+        if (isset($this->poll)) {
+            $body['poll'] = $this->poll;
             $empty = false;
         }
 
@@ -686,7 +759,15 @@ class MessageBuilder implements JsonSerializable
         if (isset($this->flags)) {
             $body['flags'] = $this->flags;
         } elseif ($empty) {
-            throw new RequestFailedException('You cannot send an empty message. Set the content or add an embed or file.');
+            throw new RequestFailedException('You cannot send an empty message. Set the content or add an embed, file or poll.');
+        }
+
+        if (isset($this->enforce_nonce)) {
+            $body['enforce_nonce'] = $this->enforce_nonce;
+        }
+
+        if (isset($this->poll)) {
+            $body['poll'] = $this->poll;
         }
 
         return $body;

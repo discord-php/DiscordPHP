@@ -14,6 +14,8 @@ namespace Discord\Parts\Channel;
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
+use Discord\Parts\Channel\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Role;
@@ -22,7 +24,6 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
@@ -32,7 +33,8 @@ use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
 use Discord\Repository\Channel\ReactionRepository;
 use React\EventLoop\TimerInterface;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function React\Promise\reject;
@@ -45,7 +47,7 @@ use function React\Promise\reject;
  * @since 2.0.0
  *
  * @property      string                      $id                     The unique identifier of the message.
- * @property      string                      $channel_id             The unique identifier of the channel that the message was went in.
+ * @property      string                      $channel_id             The unique identifier of the channel that the message was sent in.
  * @property-read Channel|Thread              $channel                The channel that the message was sent in.
  * @property      User|null                   $author                 The author of the message. Will be a webhook if sent from one.
  * @property-read string|null                 $user_id                The user id of the author.
@@ -54,11 +56,11 @@ use function React\Promise\reject;
  * @property      Carbon|null                 $edited_timestamp       A timestamp of when the message was edited, or null.
  * @property      bool                        $tts                    Whether the message was sent as a text-to-speech message.
  * @property      bool                        $mention_everyone       Whether the message contained an @everyone mention.
- * @property      Collection|User[]           $mentions               A collection of the users mentioned in the message.
- * @property      Collection|Role[]           $mention_roles          A collection of roles that were mentioned in the message.
- * @property      Collection|Channel[]        $mention_channels       Collection of mentioned channels.
- * @property      Collection|Attachment[]     $attachments            Collection of attachment objects.
- * @property      Collection|Embed[]          $embeds                 A collection of embed objects.
+ * @property      CollectionInterface|User[]           $mentions               A collection of the users mentioned in the message.
+ * @property      CollectionInterface|Role[]           $mention_roles          A collection of roles that were mentioned in the message.
+ * @property      CollectionInterface|Channel[]        $mention_channels       Collection of mentioned channels.
+ * @property      CollectionInterface|Attachment[]     $attachments            Collection of attachment objects.
+ * @property      CollectionInterface|Embed[]          $embeds                 A collection of embed objects.
  * @property      ReactionRepository          $reactions              Collection of reactions on the message.
  * @property      string|null                 $nonce                  A randomly generated string that provides verification for the client. Not required.
  * @property      bool                        $pinned                 Whether the message is pinned to the channel.
@@ -72,10 +74,11 @@ use function React\Promise\reject;
  * @property      Message|null                $referenced_message     The message that is referenced in a reply.
  * @property      MessageInteraction|null     $interaction            Sent if the message is a response to an Interaction.
  * @property      Thread|null                 $thread                 The thread that was started from this message, includes thread member object.
- * @property      Collection|Component[]|null $components             Sent if the message contains components like buttons, action rows, or other interactive components.
- * @property      Collection|Sticker[]|null   $sticker_items          Stickers attached to the message.
+ * @property      CollectionInterface|Component[]|null $components             Sent if the message contains components like buttons, action rows, or other interactive components.
+ * @property      CollectionInterface|Sticker[]|null   $sticker_items          Stickers attached to the message.
  * @property      int|null                    $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
  * @property      object|null                 $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
+ * @property      Poll|null                   $poll                   The poll attached to the message.
  *
  * @property-read bool $crossposted                            Message has been crossposted.
  * @property-read bool $is_crosspost                           Message is a crosspost from another channel.
@@ -212,6 +215,7 @@ class Message extends Part
         'sticker_items',
         'position',
         'role_subscription_data',
+        'poll',
 
         // @internal
         'guild_id',
@@ -331,9 +335,9 @@ class Message extends Part
     /**
      * Gets the mention_channels attribute.
      *
-     * @return Collection|Channel[]
+     * @return CollectionInterface|Channel[]
      */
-    protected function getMentionChannelsAttribute(): Collection
+    protected function getMentionChannelsAttribute(): CollectionInterface
     {
         $collection = Collection::for(Channel::class);
 
@@ -355,9 +359,9 @@ class Message extends Part
     /**
      * Returns any attached files.
      *
-     * @return Collection|Attachment[] Attachment objects.
+     * @return CollectionInterface|Attachment[] Attachment objects.
      */
-    protected function getAttachmentsAttribute(): Collection
+    protected function getAttachmentsAttribute(): CollectionInterface
     {
         $attachments = Collection::for(Attachment::class);
 
@@ -487,9 +491,9 @@ class Message extends Part
     /**
      * Returns the mention_roles attribute.
      *
-     * @return Collection<?Role> The roles that were mentioned. null role only contains the ID in the collection.
+     * @return CollectionInterface<?Role> The roles that were mentioned. null role only contains the ID in the collection.
      */
-    protected function getMentionRolesAttribute(): Collection
+    protected function getMentionRolesAttribute(): CollectionInterface
     {
         $roles = new Collection();
 
@@ -511,9 +515,9 @@ class Message extends Part
     /**
      * Returns the mention attribute.
      *
-     * @return Collection|User[] The users that were mentioned.
+     * @return CollectionInterface|User[] The users that were mentioned.
      */
-    protected function getMentionsAttribute(): Collection
+    protected function getMentionsAttribute(): CollectionInterface
     {
         $users = Collection::for(User::class);
 
@@ -578,9 +582,9 @@ class Message extends Part
     /**
      * Returns the embed attribute.
      *
-     * @return Collection<Embed> A collection of embeds.
+     * @return CollectionInterface<Embed> A collection of embeds.
      */
-    protected function getEmbedsAttribute(): Collection
+    protected function getEmbedsAttribute(): CollectionInterface
     {
         $embeds = new Collection([], null);
 
@@ -612,7 +616,7 @@ class Message extends Part
      */
     protected function getReferencedMessageAttribute(): ?Message
     {
-        // try get the message from the relevant repository
+        // try to get the message from the relevant repository
         // otherwise, if message is present in payload, create it
         // otherwise, return null
         if ($reference = $this->attributes['message_reference'] ?? null) {
@@ -678,7 +682,7 @@ class Message extends Part
     /**
      * Returns the components attribute.
      *
-     * @return Collection|Component[]|null
+     * @return CollectionInterface|Component[]|null
      */
     protected function getComponentsAttribute(): ?Collection
     {
@@ -698,7 +702,7 @@ class Message extends Part
     /**
      * Returns the sticker_items attribute.
      *
-     * @return Collection|Sticker[]|null Partial stickers.
+     * @return CollectionInterface|Sticker[]|null Partial stickers.
      */
     protected function getStickerItemsAttribute(): ?Collection
     {
@@ -713,6 +717,20 @@ class Message extends Part
         }
 
         return $sticker_items;
+    }
+
+    /**
+     * Returns the poll attribute.
+     *
+     * @return Poll|null
+     */
+    protected function getPollAttribute(): ?Poll
+    {
+        if (! isset($this->attributes['poll'])) {
+            return null;
+        }
+
+        return $this->factory->part(Poll::class, (array) $this->attributes['poll'] + ['channel_id' => $this->channel_id, 'message_id' => $this->id], true);
     }
 
     /**
@@ -743,11 +761,11 @@ class Message extends Part
      * @throws \RuntimeException      Channel type is not guild text or news.
      * @throws NoPermissionsException Missing create_public_threads permission to create or manage_threads permission to set rate_limit_per_user.
      *
-     * @return ExtendedPromiseInterface<Thread>
+     * @return PromiseInterface<Thread>
      *
      * @since 10.0.0 Arguments for `$name` and `$auto_archive_duration` are now inside `$options`
      */
-    public function startThread(array|string $options, string|null|int $reason = null, ?string $_reason = null): ExtendedPromiseInterface
+    public function startThread(array|string $options, string|null|int $reason = null, ?string $_reason = null): PromiseInterface
     {
         // Old v7 signature
         if (is_string($options)) {
@@ -824,9 +842,9 @@ class Message extends Part
      *
      * @param string|MessageBuilder $message The reply message.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function reply($message): ExtendedPromiseInterface
+    public function reply($message): PromiseInterface
     {
         $channel = $this->channel;
 
@@ -849,9 +867,9 @@ class Message extends Part
      *                                send_messages if this message author is the bot.
      *                                manage_messages if this message author is other user.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function crosspost(): ExtendedPromiseInterface
+    public function crosspost(): PromiseInterface
     {
         if ($this->crossposted) {
             return reject(new \RuntimeException('This message has already been crossposted.'));
@@ -887,14 +905,14 @@ class Message extends Part
      * @param int                   $delay   Delay after text will be sent in milliseconds.
      * @param TimerInterface        &$timer  Delay timer passed by reference.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function delayedReply($message, int $delay, &$timer = null): ExtendedPromiseInterface
+    public function delayedReply($message, int $delay, &$timer = null): PromiseInterface
     {
         $deferred = new Deferred();
 
         $timer = $this->discord->getLoop()->addTimer($delay / 1000, function () use ($message, $deferred) {
-            $this->reply($message)->done([$deferred, 'resolve'], [$deferred, 'reject']);
+            $this->reply($message)->then([$deferred, 'resolve'], [$deferred, 'reject']);
         });
 
         return $deferred->promise();
@@ -908,14 +926,14 @@ class Message extends Part
      * @param int            $delay  Time to delay the delete by, in milliseconds.
      * @param TimerInterface &$timer Delay timer passed by reference.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function delayedDelete(int $delay, &$timer = null): ExtendedPromiseInterface
+    public function delayedDelete(int $delay, &$timer = null): PromiseInterface
     {
         $deferred = new Deferred();
 
         $timer = $this->discord->getLoop()->addTimer($delay / 1000, function () use ($deferred) {
-            $this->delete()->done([$deferred, 'resolve'], [$deferred, 'reject']);
+            $this->delete()->then([$deferred, 'resolve'], [$deferred, 'reject']);
         });
 
         return $deferred->promise();
@@ -930,9 +948,9 @@ class Message extends Part
      *
      * @throws NoPermissionsException Missing read_message_history permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function react($emoticon): ExtendedPromiseInterface
+    public function react($emoticon): PromiseInterface
     {
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
@@ -961,9 +979,9 @@ class Message extends Part
      * @throws \UnexpectedValueException Invalid reaction `$type`.
      * @throws NoPermissionsException    Missing manage_messages permission when deleting others reaction.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function deleteReaction(int $type, $emoticon = null, ?string $id = null): ExtendedPromiseInterface
+    public function deleteReaction(int $type, $emoticon = null, ?string $id = null): PromiseInterface
     {
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
@@ -1005,9 +1023,9 @@ class Message extends Part
      *
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function edit(MessageBuilder $message): ExtendedPromiseInterface
+    public function edit(MessageBuilder $message): PromiseInterface
     {
         return $this->_edit($message)->then(function ($response) {
             $this->fill((array) $response);
@@ -1016,7 +1034,7 @@ class Message extends Part
         });
     }
 
-    private function _edit(MessageBuilder $message): ExtendedPromiseInterface
+    private function _edit(MessageBuilder $message): PromiseInterface
     {
         if ($message->requiresMultipart()) {
             $multipart = $message->toMultipart();
@@ -1032,12 +1050,12 @@ class Message extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#delete-message
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      *
      * @throws \RuntimeException      This type of message cannot be deleted.
      * @throws NoPermissionsException Missing manage_messages permission when deleting others message.
      */
-    public function delete(): ExtendedPromiseInterface
+    public function delete(): PromiseInterface
     {
         if (! $this->isDeletable()) {
             return reject(new \RuntimeException("Cannot delete this type of message: {$this->type}", 50021));
@@ -1060,9 +1078,9 @@ class Message extends Part
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
-     * @return ExtendedPromiseInterface<Collection<MessageReaction>>
+     * @return PromiseInterface<Collection<MessageReaction>>
      */
-    public function createReactionCollector(callable $filter, array $options = []): ExtendedPromiseInterface
+    public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
         $reactions = new Collection([], null, null);
@@ -1111,9 +1129,9 @@ class Message extends Part
      *
      * @param Embed $embed
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function addEmbed(Embed $embed): ExtendedPromiseInterface
+    public function addEmbed(Embed $embed): PromiseInterface
     {
         return $this->edit(MessageBuilder::new()
             ->addEmbed($embed));

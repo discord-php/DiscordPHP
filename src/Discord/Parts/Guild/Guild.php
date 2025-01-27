@@ -14,6 +14,7 @@ namespace Discord\Parts\Guild;
 use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -35,11 +36,12 @@ use Discord\Parts\Permissions\RolePermission;
 use Discord\Repository\Guild\AutoModerationRuleRepository;
 use Discord\Repository\Guild\CommandPermissionsRepository;
 use Discord\Repository\Guild\GuildCommandRepository;
+use Discord\Repository\Guild\SoundRepository;
 use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -144,6 +146,7 @@ use function React\Promise\resolve;
  * @property CommandPermissionsRepository $command_permissions
  * @property IntegrationRepository        $integrations
  * @property InviteRepository             $invites
+ * @property SoundRepository              $sounds
  * @property GuildTemplateRepository      $templates
  */
 class Guild extends Part
@@ -296,13 +299,14 @@ class Guild extends Part
         'command_permissions' => CommandPermissionsRepository::class,
         'integrations' => IntegrationRepository::class,
         'invites' => InviteRepository::class,
+        'sounds' => SoundRepository::class,
         'templates' => GuildTemplateRepository::class,
     ];
 
     /**
      * An array of valid regions.
      *
-     * @var Collection|null
+     * @var CollectionInterface|null
      */
     protected $regions;
 
@@ -332,12 +336,22 @@ class Guild extends Part
     /**
      * Sets the roles attribute.
      *
-     * @param ?array $roles
+     * @param CollectionInterface|array|null $roles
      */
-    protected function setRolesAttribute(?array $roles): void
+    protected function setRolesAttribute($roles): void
     {
+        if ($roles instanceof CollectionInterface) {
+            $roles = $roles->toArray();
+        }
+        if ($roles === null) {
+            $roles = [];
+        }
+        if (! is_array($roles)) {
+            throw new \InvalidArgumentException('Roles must be an array or CollectionInterface.');
+        }
+
         $rolesDiscrim = $this->roles->discrim;
-        foreach ($roles ?? [] as $role) {
+        foreach ($roles as $role) {
             $role = (array) $role;
             /** @var ?Role */
             if ($rolePart = $this->roles->offsetGet($role[$rolesDiscrim])) {
@@ -420,9 +434,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
-     * @return ExtendedPromiseInterface<Collection|Invite[]>
+     * @return PromiseInterface<Collection|Invite[]>
      */
-    public function getInvites(): ExtendedPromiseInterface
+    public function getInvites(): PromiseInterface
     {
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_guild) {
@@ -450,9 +464,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing ban_members permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function unban($user): ExtendedPromiseInterface
+    public function unban($user): PromiseInterface
     {
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->ban_members) {
@@ -565,9 +579,9 @@ class Guild extends Part
      *
      * @deprecated 10.0.0 Use `$channel->stage_instances`
      *
-     * @return Collection|StageInstance[]
+     * @return CollectionInterface|StageInstance[]
      */
-    protected function getStageInstancesAttribute(): Collection
+    protected function getStageInstancesAttribute(): CollectionInterface
     {
         $stage_instances = Collection::for(StageInstance::class);
 
@@ -741,9 +755,9 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/voice#list-voice-regions
      *
-     * @return ExtendedPromiseInterface<Collection>
+     * @return PromiseInterface<Collection>
      */
-    public function getVoiceRegions(): ExtendedPromiseInterface
+    public function getVoiceRegions(): PromiseInterface
     {
         if (null !== $this->regions) {
             return resolve($this->regions);
@@ -768,9 +782,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface<Role>
+     * @return PromiseInterface<Role>
      */
-    public function createRole(array $data = [], ?string $reason = null): ExtendedPromiseInterface
+    public function createRole(array $data = [], ?string $reason = null): PromiseInterface
     {
         $botperms = $this->getBotPermissions();
 
@@ -796,9 +810,9 @@ class Guild extends Part
      * @throws NoPermissionsException Missing manage_guild_expressions permission.
      * @throws FileNotFoundException  File does not exist.
      *
-     * @return ExtendedPromiseInterface<Emoji>
+     * @return PromiseInterface<Emoji>
      */
-    public function createEmoji(array $options, ?string $filepath = null, ?string $reason = null): ExtendedPromiseInterface
+    public function createEmoji(array $options, ?string $filepath = null, ?string $reason = null): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver
@@ -855,7 +869,7 @@ class Guild extends Part
     }
 
     /**
-     * Creates an Sticker for the guild.
+     * Creates a Sticker for the guild.
      *
      * @link https://discord.com/developers/docs/resources/sticker#create-guild-sticker
      *
@@ -872,9 +886,9 @@ class Guild extends Part
      * @throws \DomainException       File format is not PNG, APNG, or Lottie JSON.
      * @throws \RuntimeException      Guild is not verified or partnered to upload Lottie stickers.
      *
-     * @return ExtendedPromiseInterface<Sticker>
+     * @return PromiseInterface<Sticker>
      */
-    public function createSticker(array $options, string $filepath, ?string $reason = null): ExtendedPromiseInterface
+    public function createSticker(array $options, string $filepath, ?string $reason = null): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver
@@ -972,9 +986,9 @@ class Guild extends Part
     /**
      * Leaves the guild.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function leave(): ExtendedPromiseInterface
+    public function leave(): PromiseInterface
     {
         return $this->discord->guilds->leave($this->id);
     }
@@ -987,9 +1001,9 @@ class Guild extends Part
      *
      * @throws \RuntimeException Ownership not transferred correctly.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface<self>
      */
-    public function transferOwnership($member, ?string $reason = null): ExtendedPromiseInterface
+    public function transferOwnership($member, ?string $reason = null): PromiseInterface
     {
         if ($member instanceof Member) {
             $member = $member->id;
@@ -1014,11 +1028,11 @@ class Guild extends Part
      *
      * @deprecated 10.0.0 Use `Channel::$rtc_region`.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      *
      * @see Guild::REGION_DEFAULT The default region.
      */
-    public function validateRegion(): ExtendedPromiseInterface
+    public function validateRegion(): PromiseInterface
     {
         return $this->getVoiceRegions()->then(function () {
             $regions = $this->regions->map(function ($region) {
@@ -1047,9 +1061,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing view_audit_log permission.
      *
-     * @return ExtendedPromiseInterface<AuditLog>
+     * @return PromiseInterface<AuditLog>
      */
-    public function getAuditLog(array $options = []): ExtendedPromiseInterface
+    public function getAuditLog(array $options = []): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1083,9 +1097,9 @@ class Guild extends Part
             $endpoint->addQuery($key, $value);
         }
 
-        return $this->http->get($endpoint)->then(function ($response) {
-            return $this->factory->part(AuditLog::class, (array) $response + ['guild_id' => $this->id], true);
-        });
+        return $this->http
+            ->get($endpoint)
+            ->then(fn ($response) => $this->factory->part(AuditLog::class, (array) $response + ['guild_id' => $this->id], true));
     }
 
     /**
@@ -1103,16 +1117,23 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-positions
      *
-     * @param array $roles Associative array where the LHS key is the position,
-     *                     and the RHS value is a `Role` object or a string ID,
-     *                     e.g. `[1 => 'role_id_1', 3 => 'role_id_3']`.
+     * @param CollectionInterface|array $roles  Associative array where the LHS key is the position,
+     *                                              and the RHS value is a `Role` object or a string ID,
+     *                                              e.g. `[1 => 'role_id_1', 3 => 'role_id_3']`.
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface<self>
+     * @return PromiseInterface<self>
      */
-    public function updateRolePositions(array $roles): ExtendedPromiseInterface
+    public function updateRolePositions($roles): PromiseInterface
     {
+        if ($roles instanceof CollectionInterface) {
+            $roles = $roles->toArray();
+        }
+        if (! is_array($roles)) {
+            return reject(new \InvalidArgumentException('Roles must be an array of Role instances or Role IDs.'));
+        }
+
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_roles) {
             return reject(new NoPermissionsException("You do not have permission to update role positions in the guild {$this->id}."));
@@ -1152,9 +1173,9 @@ class Guild extends Part
      * @param string|null $options['query'] Query string to match username(s) and nickname(s) against
      * @param int|null    $options['limit'] How many entries are returned (default 1, minimum 1, maximum 1000)
      *
-     * @return ExtendedPromiseInterface<Collection|Member[]>
+     * @return PromiseInterface<Collection|Member[]>
      */
-    public function searchMembers(array $options): ExtendedPromiseInterface
+    public function searchMembers(array $options): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1199,9 +1220,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing kick_members permission.
      *
-     * @return ExtendedPromiseInterface<int> The number of members that would be removed.
+     * @return PromiseInterface<int> The number of members that would be removed.
      */
-    public function getPruneCount(array $options = []): ExtendedPromiseInterface
+    public function getPruneCount(array $options = []): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1225,7 +1246,7 @@ class Guild extends Part
         $options = $resolver->resolve($options);
 
         $botperms = $this->getBotPermissions();
-        if ($botperms && ! $botperms->kick_members) {
+        if ($botperms && ! ($botperms->kick_members && $botperms->manage_guild)) {
             return reject(new NoPermissionsException("You do not have permission to get prune count in the guild {$this->id}."));
         }
 
@@ -1235,9 +1256,7 @@ class Guild extends Part
             $endpoint->addQuery('include_roles', implode(',', $options['include_roles']));
         }
 
-        return $this->http->get($endpoint)->then(function ($response) {
-            return $response->pruned;
-        });
+        return $this->http->get($endpoint)->then(fn ($response) => $response->pruned);
     }
 
     /**
@@ -1255,9 +1274,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing kick_members permission.
      *
-     * @return ExtendedPromiseInterface<?int> The number of members that were removed in the prune operation.
+     * @return PromiseInterface<?int> The number of members that were removed in the prune operation.
      */
-    public function beginPrune(array $options = [], ?string $reason = null): ExtendedPromiseInterface
+    public function beginPrune(array $options = [], ?string $reason = null): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1283,7 +1302,7 @@ class Guild extends Part
         $options = $resolver->resolve($options);
 
         $botperms = $this->getBotPermissions();
-        if ($botperms && ! $botperms->kick_members) {
+        if ($botperms && ! ($botperms->kick_members && $botperms->manage_guild)) {
             return reject(new NoPermissionsException("You do not have permission to prune members in the guild {$this->id}."));
         }
 
@@ -1292,9 +1311,9 @@ class Guild extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->post(Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id), $options, $headers)->then(function ($response) {
-            return $response->pruned;
-        });
+        return $this->http
+            ->post(Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id), $options, $headers)
+            ->then(fn ($response) => $response->pruned);
     }
 
     /**
@@ -1306,9 +1325,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission when the welcome screen is not enabled.
      *
-     * @return ExtendedPromiseInterface<WelcomeScreen>
+     * @return PromiseInterface<WelcomeScreen>
      */
-    public function getWelcomeScreen(bool $fresh = false): ExtendedPromiseInterface
+    public function getWelcomeScreen(bool $fresh = false): PromiseInterface
     {
         if (! $this->feature_welcome_screen_enabled) {
             $botperms = $this->getBotPermissions();
@@ -1354,9 +1373,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
-     * @return ExtendedPromiseInterface<WelcomeScreen> The updated Welcome Screen.
+     * @return PromiseInterface<WelcomeScreen> The updated Welcome Screen.
      */
-    public function updateWelcomeScreen(array $options): ExtendedPromiseInterface
+    public function updateWelcomeScreen(array $options): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1398,9 +1417,9 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface<object>
      */
-    public function getWidgetSettings(): ExtendedPromiseInterface
+    public function getWidgetSettings(): PromiseInterface
     {
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_guild) {
@@ -1421,16 +1440,16 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-widget
      *
-     * @param array  $options An array of options.
-     *                        enabled => whether the widget is enabled
-     *                        channel_id => the widget channel id
-     * @param string $reason  Reason for Audit Log.
+     * @param array   $options An array of options.
+     *                         enabled => whether the widget is enabled
+     *                         channel_id => the widget channel id
+     * @param ?string $reason  Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
-     * @return ExtendedPromiseInterface The updated guild widget object.
+     * @return PromiseInterface The updated guild widget object.
      */
-    public function updateWidgetSettings(array $options, ?string $reason = null): ExtendedPromiseInterface
+    public function updateWidgetSettings(array $options, ?string $reason = null): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1465,9 +1484,9 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-widget
      *
-     * @return ExtendedPromiseInterface<Widget>
+     * @return PromiseInterface<Widget>
      */
-    public function getWidget(): ExtendedPromiseInterface
+    public function getWidget(): PromiseInterface
     {
         return (new Widget($this->discord, ['id' => $this->id]))->fetch();
     }
@@ -1480,9 +1499,9 @@ class Guild extends Part
      * @throws \RuntimeException      No possible channels to create Invite on.
      * @throws NoPermissionsException
      *
-     * @return ExtendedPromiseInterface<Invite>
+     * @return PromiseInterface<Invite>
      */
-    public function createInvite(...$args): ExtendedPromiseInterface
+    public function createInvite(...$args): PromiseInterface
     {
         $channel = $this->channels->find(function (Channel $channel) {
             if ($channel->canInvite()) {
@@ -1511,9 +1530,9 @@ class Guild extends Part
      * @param int         $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<self> This guild.
+     * @return PromiseInterface<self> This guild.
      */
-    public function updateMFALevel(int $level, ?string $reason = null): ExtendedPromiseInterface
+    public function updateMFALevel(int $level, ?string $reason = null): PromiseInterface
     {
         $headers = [];
         if (isset($reason)) {
@@ -1542,9 +1561,9 @@ class Guild extends Part
      *                                administrator for COMMUNITY or DISCOVERABLE.
      *                                manage_guild for INVITES_DISABLED or RAID_ALERTS_ENABLED.
      *
-     * @return ExtendedPromiseInterface<self> This guild.
+     * @return PromiseInterface<self> This guild.
      */
-    public function setFeatures(array $features, ?string $reason = null): ExtendedPromiseInterface
+    public function setFeatures(array $features, ?string $reason = null): PromiseInterface
     {
         if ($botperms = $this->getBotPermissions()) {
             if ((isset($features['COMMUNITY']) || isset($features['DISCOVERABLE'])) && ! $botperms->administrator) {
@@ -1655,7 +1674,7 @@ class Guild extends Part
     /**
      * Returns the timestamp of when the guild was created.
      *
-     * @return float
+     * @return ?float
      */
     public function createdTimestamp()
     {

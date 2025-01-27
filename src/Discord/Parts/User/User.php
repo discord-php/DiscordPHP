@@ -17,8 +17,9 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
+use Stringable;
 use function React\Promise\resolve;
 
 /**
@@ -32,7 +33,7 @@ use function React\Promise\resolve;
  * @property string       $username               The username of the user.
  * @property string       $discriminator          The discriminator of the user.
  * @property string|null  $global_name            The user's display name, if it is set. For bots, this is the application name.
- * @property string       $displayname            The the display name of the client.
+ * @property string       $displayname            The display name of the client.
  * @property ?string      $avatar                 The avatar URL of the user.
  * @property string|null  $avatar_hash            The avatar hash of the user.
  * @property bool|null    $bot                    Whether the user is a bot.
@@ -50,9 +51,9 @@ use function React\Promise\resolve;
  * @property int|null     $avatar_decoration      The user's avatar decoration URL.
  * @property int|null     $avatar_decoration_hash The user's avatar decoration hash.
  *
- * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
+ * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class User extends Part
+class User extends Part implements Stringable
 {
     public const FLAG_DISCORD_EMPLOYEE = (1 << 0);
     public const FLAG_DISCORD_PARTNER = (1 << 1);
@@ -69,7 +70,7 @@ class User extends Part
     public const FLAG_VERIFIED_BOT_DEVELOPER = (1 << 17);
     public const FLAG_DISCORD_CERTIFIED_MODERATOR = (1 << 18);
     public const BOT_HTTP_INTERACTIONS = (1 << 19);
-    public const FLAG_ACTIVE_DEVELOPER = (1 < 22);
+    public const FLAG_ACTIVE_DEVELOPER = (1 << 22);
 
     public const PREMIUM_NONE = 0;
     public const PREMIUM_NITRO_CLASSIC = 1;
@@ -104,9 +105,9 @@ class User extends Part
      *
      * @link https://discord.com/developers/docs/resources/user#create-dm
      *
-     * @return ExtendedPromiseInterface<Channel>
+     * @return PromiseInterface<Channel>
      */
-    public function getPrivateChannel(): ExtendedPromiseInterface
+    public function getPrivateChannel(): PromiseInterface
     {
         if ($channel = $this->discord->private_channels->get('recipient_id', $this->id)) {
             return resolve($channel);
@@ -134,13 +135,13 @@ class User extends Part
      * @param array|null                            $allowed_mentions Allowed mentions object for the message.
      * @param Message|null                          $replyTo          Sends the message as a reply to the given message instance.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
+    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): PromiseInterface
     {
-        return $this->getPrivateChannel()->then(function (Channel $channel) use ($message, $tts, $embed, $allowed_mentions, $replyTo) {
-            return $channel->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
-        });
+        return $this
+            ->getPrivateChannel()
+            ->then(fn (Channel $channel) => $channel->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo));
     }
 
     /**
@@ -150,13 +151,11 @@ class User extends Part
      *
      * @throws \RuntimeException
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function broadcastTyping(): ExtendedPromiseInterface
+    public function broadcastTyping(): PromiseInterface
     {
-        return $this->getPrivateChannel()->then(function (Channel $channel) {
-            return $channel->broadcastTyping();
-        });
+        return $this->getPrivateChannel()->then(fn (Channel $channel) => $channel->broadcastTyping());
     }
 
     /**
@@ -175,12 +174,12 @@ class User extends Part
      * @param string|null $format The image format.
      * @param int         $size   The size of the image.
      *
-     * @return string The URL to the clients avatar.
+     * @return string The URL to the client's avatar.
      */
     public function getAvatarAttribute(?string $format = null, int $size = 1024): string
     {
         if (empty($this->attributes['avatar'])) {
-            $avatarDiscrim = (int) (($this->discriminator) ? $this->discriminator % 5 : BigInt::shiftRight($this->id, 22) % 6);
+            $avatarDiscrim = (($this->discriminator) ? $this->discriminator % 5 : BigInt::shiftRight($this->id, 22) % 6);
 
             return "https://cdn.discordapp.com/embed/avatars/{$avatarDiscrim}.png?size={$size}";
         }
@@ -291,7 +290,7 @@ class User extends Part
     /**
      * Returns a timestamp for when a user's account was created.
      *
-     * @return float
+     * @return ?float
      */
     public function createdTimestamp()
     {

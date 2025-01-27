@@ -86,7 +86,7 @@ class TextInput extends Component
      *
      * @param string      $label     The label of the text input.
      * @param int         $style     The style of the text input.
-     * @param string|null $custom_id The custom ID of the text input. If not given, an UUID will be used
+     * @param string|null $custom_id The custom ID of the text input. If not given, a UUID will be used
      */
     public function __construct(string $label, int $style, ?string $custom_id = null)
     {
@@ -304,7 +304,7 @@ class TextInput extends Component
     }
 
     /**
-     * Returns wether the text input is disabled.
+     * Returns whether the text input is disabled.
      *
      * @return bool|null
      */

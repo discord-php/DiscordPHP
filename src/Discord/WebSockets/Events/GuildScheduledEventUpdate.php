@@ -46,9 +46,7 @@ class GuildScheduledEventUpdate extends Event
             $scheduledEventPart = $this->factory->part(ScheduledEvent::class, (array) $data, true);
         }
 
-        if (isset($guild)) {
-            $guild->guild_scheduled_events->set($data->id, $scheduledEventPart);
-        }
+        $guild?->guild_scheduled_events->set($data->id, $scheduledEventPart);
 
         if (isset($data->creator)) {
             $this->cacheUser($data->creator);

@@ -96,7 +96,7 @@ class Button extends Component
      * Creates a new button.
      *
      * @param int         $style     Style of the button.
-     * @param string|null $custom_id custom ID of the button. If not given, an UUID will be used
+     * @param string|null $custom_id custom ID of the button. If not given, a UUID will be used
      *
      * @throws \InvalidArgumentException
      */
@@ -256,7 +256,7 @@ class Button extends Component
     }
 
     /**
-     * Sets the URL of the button. Only valid for link buttons.tatic.
+     * Sets the URL of the button. Only valid for link buttons.
      *
      * @param string|null $url
      *
@@ -303,9 +303,9 @@ class Button extends Component
      *
      * The button listener will not persist when the bot restarts.
      *
-     * @param callable $callback Callback to call when the button is pressed. Will be called with the interaction object.
-     * @param Discord  $discord  Discord client.
-     * @param bool     $oneOff   Whether the listener should be removed after the button is pressed for the first time.
+     * @param ?callable $callback Callback to call when the button is pressed. Will be called with the interaction object.
+     * @param Discord   $discord  Discord client.
+     * @param bool      $oneOff   Whether the listener should be removed after the button is pressed for the first time.
      *
      * @throws \LogicException
      *
@@ -335,13 +335,7 @@ class Button extends Component
         $this->listener = function (Interaction $interaction) use ($callback, $oneOff) {
             if ($interaction->data->component_type == Component::TYPE_BUTTON && $interaction->data->custom_id == $this->custom_id) {
                 $response = $callback($interaction);
-                $ack = function () use ($interaction) {
-                    // attempt to acknowledge interaction if it has not already been responded to.
-                    try {
-                        $interaction->acknowledge();
-                    } catch (\Exception $e) {
-                    }
-                };
+                $ack = static fn() => $interaction->isResponded() ?: $interaction->acknowledge();
 
                 if ($response instanceof PromiseInterface) {
                     $response->then($ack);

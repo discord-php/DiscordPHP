@@ -14,7 +14,6 @@ namespace Discord\Parts\Thread;
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
-use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -29,7 +28,9 @@ use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Thread\MemberRepository;
 use Discord\WebSockets\Event;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
+use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 
@@ -73,9 +74,9 @@ use function React\Promise\reject;
  * @property MessageRepository $messages Repository of messages sent in the thread.
  * @property MemberRepository  $members  Repository of members in the thread.
  *
- * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
+ * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class Thread extends Part
+class Thread extends Part implements Stringable
 {
     public const FLAG_PINNED = (1 << 1);
 
@@ -99,6 +100,9 @@ class Thread extends Part
         'total_message_sent',
         'flags',
         'applied_tags',
+
+        // events
+        'newly_created',
     ];
 
     /**
@@ -242,7 +246,7 @@ class Thread extends Part
      *
      * @param bool $value
      */
-    protected function setArchivedAttribute(bool $value)
+    protected function setArchivedAttribute(bool $value): void
     {
         $this->attributes['thread_metadata']->archived = $value;
     }
@@ -252,7 +256,7 @@ class Thread extends Part
      *
      * @param bool $value
      */
-    protected function setLockedAttribute(bool $value)
+    protected function setLockedAttribute(bool $value): void
     {
         $this->attributes['thread_metadata']->locked = $value;
     }
@@ -263,7 +267,7 @@ class Thread extends Part
      *
      * @param int $value
      */
-    protected function setAutoArchiveDurationAttribute(int $value)
+    protected function setAutoArchiveDurationAttribute(int $value): void
     {
         $this->attributes['thread_metadata']->auto_archive_duration = $value;
     }
@@ -306,9 +310,9 @@ class Thread extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#join-thread
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function join(): ExtendedPromiseInterface
+    public function join(): PromiseInterface
     {
         return $this->http->put(Endpoint::bind(Endpoint::THREAD_MEMBER_ME, $this->id));
     }
@@ -320,9 +324,9 @@ class Thread extends Part
      *
      * @param User|Member|string $user User to add. Can be one of the user objects or a user ID.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function addMember($user): ExtendedPromiseInterface
+    public function addMember($user): PromiseInterface
     {
         if ($user instanceof User || $user instanceof Member) {
             $user = $user->id;
@@ -336,9 +340,9 @@ class Thread extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#leave-thread
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function leave(): ExtendedPromiseInterface
+    public function leave(): PromiseInterface
     {
         return $this->http->delete(Endpoint::bind(Endpoint::THREAD_MEMBER_ME, $this->id));
     }
@@ -350,9 +354,9 @@ class Thread extends Part
      *
      * @param User|Member|ThreadMember|string $user User to remove. Can be one of the user objects or a user ID.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function removeMember($user): ExtendedPromiseInterface
+    public function removeMember($user): PromiseInterface
     {
         if ($user instanceof User || $user instanceof Member) {
             $user = $user->id;
@@ -369,9 +373,9 @@ class Thread extends Part
      * @param string      $name   New thread name.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Thread>
+     * @return PromiseInterface<self>
      */
-    public function rename(string $name, ?string $reason = null): ExtendedPromiseInterface
+    public function rename(string $name, ?string $reason = null): PromiseInterface
     {
         $headers = [];
         if (isset($reason)) {
@@ -391,9 +395,9 @@ class Thread extends Part
      *
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Thread>
+     * @return PromiseInterface<self>
      */
-    public function archive(?string $reason = null): ExtendedPromiseInterface
+    public function archive(?string $reason = null): PromiseInterface
     {
         $headers = [];
         if (isset($reason)) {
@@ -413,9 +417,9 @@ class Thread extends Part
      *
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Thread>
+     * @return PromiseInterface<self>
      */
-    public function unarchive(?string $reason = null): ExtendedPromiseInterface
+    public function unarchive(?string $reason = null): PromiseInterface
     {
         $headers = [];
         if (isset($reason)) {
@@ -436,9 +440,9 @@ class Thread extends Part
      * @param int         $duration Duration in minutes.
      * @param string|null $reason   Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Thread>
+     * @return PromiseInterface<self>
      */
-    public function setAutoArchiveDuration(int $duration, ?string $reason = null): ExtendedPromiseInterface
+    public function setAutoArchiveDuration(int $duration, ?string $reason = null): PromiseInterface
     {
         $headers = [];
         if (isset($reason)) {
@@ -458,11 +462,11 @@ class Thread extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
      *
-     * @return ExtendedPromiseInterface<Collection<Message>>
+     * @return PromiseInterface<Collection<Message[]>>
      *
      * @todo Make it in a trait along with Channel
      */
-    public function getPinnedMessages(): ExtendedPromiseInterface
+    public function getPinnedMessages(): PromiseInterface
     {
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_PINS, $this->id))
             ->then(function ($responses) {
@@ -484,11 +488,11 @@ class Thread extends Part
      * @param array|Traversable $messages An array of messages to delete.
      * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      *
      * @todo Make it in a trait along with Channel
      */
-    public function deleteMessages($messages, ?string $reason = null): ExtendedPromiseInterface
+    public function deleteMessages($messages, ?string $reason = null): PromiseInterface
     {
         if (! is_array($messages) && ! ($messages instanceof Traversable)) {
             return reject(new \InvalidArgumentException('$messages must be an array or implement Traversable.'));
@@ -542,11 +546,11 @@ class Thread extends Part
      * @param string|Message|null $options['after']  Get messages after this message ID.
      * @param int|null            $options['limit']  Max number of messages to return (1-100). Defaults to 50.
      *
-     * @return ExtendedPromiseInterface<Collection<Message>>
+     * @return PromiseInterface<Collection<Message[]>>
      *
      * @todo Make it in a trait along with Channel
      */
-    public function getMessageHistory(array $options = []): ExtendedPromiseInterface
+    public function getMessageHistory(array $options = []): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver
@@ -607,11 +611,11 @@ class Thread extends Part
      *
      * @throws \RuntimeException
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      *
      * @todo Make it in a trait along with Channel
      */
-    public function pinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
+    public function pinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
         if ($message->pinned) {
             return reject(new \RuntimeException('This message is already pinned.'));
@@ -643,11 +647,11 @@ class Thread extends Part
      *
      * @throws \RuntimeException
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      *
      * @todo Make it in a trait along with Channel
      */
-    public function unpinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
+    public function unpinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
         if (! $message->pinned) {
             return reject(new \RuntimeException('This message is not pinned.'));
@@ -684,11 +688,11 @@ class Thread extends Part
      * @param array|null            $allowed_mentions Allowed mentions object for the message.
      * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      *
      * @todo Make it in a trait along with Channel
      */
-    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
+    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): PromiseInterface
     {
         // Backwards compatible support for old `sendMessage` function signature.
         if (! ($message instanceof MessageBuilder)) {
@@ -720,9 +724,7 @@ class Thread extends Part
             }
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
-        })()->then(function ($response) {
-            return $this->messages->get('id', $response->id) ?: $this->messages->create($response, true);
-        });
+        })()->then(fn ($response) => $this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
     }
 
     /**
@@ -734,11 +736,11 @@ class Thread extends Part
      *
      * @param Embed $embed Embed to send.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      *
      * @todo Make it in a trait along with Channel
      */
-    public function sendEmbed(Embed $embed): ExtendedPromiseInterface
+    public function sendEmbed(Embed $embed): PromiseInterface
     {
         return $this->sendMessage(MessageBuilder::new()
             ->addEmbed($embed));
@@ -753,9 +755,9 @@ class Thread extends Part
      *
      * @throws \RuntimeException
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function broadcastTyping(): ExtendedPromiseInterface
+    public function broadcastTyping(): PromiseInterface
     {
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_TYPING, $this->id));
     }
@@ -768,11 +770,11 @@ class Thread extends Part
      * @param int      $options ['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options ['limit'] The amount of messages allowed or false.
      *
-     * @return ExtendedPromiseInterface<Collection<Message>>
+     * @return PromiseInterface<Collection<Message[]>>
      *
      * @todo Make it in a trait along with Channel
      */
-    public function createMessageCollector(callable $filter, array $options = []): ExtendedPromiseInterface
+    public function createMessageCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
         $messages = new Collection([], null, null);

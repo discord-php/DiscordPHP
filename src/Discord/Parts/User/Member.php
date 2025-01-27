@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -28,8 +29,9 @@ use Discord\Parts\Permissions\Permission;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\PresenceUpdate;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
+use Stringable;
 use function React\Promise\reject;
 
 /**
@@ -45,7 +47,7 @@ use function React\Promise\reject;
  * @property-read string              $displayname                  The nickname or display name with optional discriminator of the member.
  * @property      ?string|null        $avatar                       The avatar URL of the member or null if member has no guild avatar.
  * @property      ?string|null        $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
- * @property      Collection|Role[]   $roles                        A collection of Roles that the member has.
+ * @property      CollectionInterface|Role[]   $roles                        A collection of Roles that the member has.
  * @property      Carbon|null         $joined_at                    A timestamp of when the member joined the guild.
  * @property      Carbon|null         $premium_since                When the user started boosting the server.
  * @property      bool                $deaf                         Whether the member is deaf.
@@ -60,12 +62,12 @@ use function React\Promise\reject;
  * @property      string                $id            The unique identifier of the member.
  * @property      string                $status        The status of the member.
  * @property-read Activity              $game          The game the member is playing.
- * @property      Collection|Activity[] $activities    User's current activities.
+ * @property      CollectionInterface|Activity[] $activities    User's current activities.
  * @property      object                $client_status Current client status.
  *
- * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
+ * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
-class Member extends Part
+class Member extends Part implements Stringable
 {
     public const FLAGS_DID_REJOIN = (1 << 0);
     public const FLAGS_COMPLETED_ONBOARDING = (1 << 1);
@@ -112,7 +114,7 @@ class Member extends Part
     public function updateFromPresence(PresenceUpdate $presence): PresenceUpdate
     {
         $rawPresence = $presence->getRawAttributes();
-        $oldPresence = $this->factory->part(PresenceUpdate::class, (array) $this->attributes, true);
+        $oldPresence = $this->factory->part(PresenceUpdate::class, $this->attributes, true);
 
         $this->attributes = array_merge($this->attributes, $rawPresence);
 
@@ -130,9 +132,9 @@ class Member extends Part
      * @throws \RuntimeException      Member has no `$guild`.
      * @throws NoPermissionsException Missing `ban_members` permission.
      *
-     * @return ExtendedPromiseInterface<Ban>
+     * @return PromiseInterface<Ban>
      */
-    public function ban(?int $daysToDeleteMessages = null, ?string $reason = null): ExtendedPromiseInterface
+    public function ban(?int $daysToDeleteMessages = null, ?string $reason = null): PromiseInterface
     {
         return $this->discord->guilds->cacheGet($this->guild_id)->then(function (?Guild $guild) use ($daysToDeleteMessages, $reason) {
             if (null === $guild) {
@@ -157,9 +159,9 @@ class Member extends Part
      * @throws \RuntimeException      Member has no `$guild`.
      * @throws NoPermissionsException Missing `kick_members` permission.
      *
-     * @return ExtendedPromiseInterface<self>
+     * @return PromiseInterface<self>
      */
-    public function kick(?string $reason = null): ExtendedPromiseInterface
+    public function kick(?string $reason = null): PromiseInterface
     {
         return $this->discord->guilds->cacheGet($this->guild_id)->then(function (?Guild $guild) use ($reason) {
             if (null === $guild) {
@@ -184,9 +186,9 @@ class Member extends Part
      *
      * @throws NoPermissionsException Missing manage_nicknames permission.
      *
-     * @return ExtendedPromiseInterface<Member>
+     * @return PromiseInterface<self>
      */
-    public function setNickname(?string $nick = null, ?string $reason = null): ExtendedPromiseInterface
+    public function setNickname(?string $nick = null, ?string $reason = null): PromiseInterface
     {
         $payload = [
             'nick' => $nick ?? '',
@@ -224,9 +226,9 @@ class Member extends Part
      * @param Channel|?string $channel The channel to move the member to.
      * @param string|null     $reason  Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Member>
+     * @return PromiseInterface<self>
      */
-    public function moveMember($channel, ?string $reason = null): ExtendedPromiseInterface
+    public function moveMember($channel, ?string $reason = null): PromiseInterface
     {
         if ($channel instanceof Channel) {
             $channel = $channel->id;
@@ -238,9 +240,7 @@ class Member extends Part
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['channel_id' => $channel], $headers)
-            ->then(function ($response) {
-                return $this;
-            });
+            ->then(fn ($response) => $this);
     }
 
     /**
@@ -254,9 +254,9 @@ class Member extends Part
      * @throws \RuntimeException
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function addRole($role, ?string $reason = null): ExtendedPromiseInterface
+    public function addRole($role, ?string $reason = null): PromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
@@ -298,9 +298,9 @@ class Member extends Part
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function removeRole($role, ?string $reason = null): ExtendedPromiseInterface
+    public function removeRole($role, ?string $reason = null): PromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
@@ -321,7 +321,7 @@ class Member extends Part
 
         return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
             ->then(function () use ($role) {
-                if ($removeRole = array_search($role, $this->attributes['roles']) !== false) {
+                if (($removeRole = array_search($role, $this->attributes['roles'])) !== false) {
                     unset($this->attributes['roles'][$removeRole]);
                 }
             });
@@ -332,15 +332,22 @@ class Member extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-member
      *
-     * @param Role[]|string[] $roles  The roles to set to the member.
-     * @param string|null     $reason Reason for Audit Log.
+     * @param CollectionInterface|Role[]|string[] $roles  The roles to set to the member.
+     * @param string|null                         $reason Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface<Member>
+     * @return PromiseInterface<self>
      */
-    public function setRoles(array $roles, ?string $reason = null): ExtendedPromiseInterface
+    public function setRoles($roles, ?string $reason = null): PromiseInterface
     {
+        if ($roles instanceof CollectionInterface) {
+            $roles = $roles->toArray();
+        }
+        if (! is_array($roles)) {
+            return reject(new \InvalidArgumentException('Roles must be an array of Role instances or Role IDs.'));
+        }
+
         foreach ($roles as $i => $role) {
             if ($role instanceof Role) {
                 $roles[$i] = $role->id;
@@ -376,17 +383,17 @@ class Member extends Part
      *
      * @see User::sendMessage()
      *
-     * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
-     * @param bool                  $tts              Whether the message is TTS.
-     * @param Embed|array|null      $embed            An embed object or array to send in the message.
-     * @param array|null            $allowed_mentions Allowed mentions object for the message.
-     * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
+     * @param MessageBuilder|string                 $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                                  $tts              Whether the message is TTS.
+     * @param \Discord\Parts\Embed\Embed|array|null $embed            An embed object or array to send in the message.
+     * @param array|null                            $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null                          $replyTo          Sends the message as a reply to the given message instance.
      *
      * @throws \RuntimeException
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
+    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): PromiseInterface
     {
         if ($user = $this->user) {
             return $user->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
@@ -429,14 +436,14 @@ class Member extends Part
         }
         $bitwise = $everyoneRole->permissions->bitwise;
 
+        // Prepare array for role ids
+        $roles = [];
+
         // If this member is the guild owner
         if ($guild->owner_id == $this->id) {
             // Add administrator permission
             $bitwise = BigInt::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']);
         } else {
-            // Prepare array for role ids
-            $roles = [];
-
             // Iterate all base roles
             /** @var Role */
             foreach ($this->roles as $id => $role) {
@@ -519,9 +526,9 @@ class Member extends Part
      *
      * @throws NoPermissionsException Missing moderate_members permission.
      *
-     * @return ExtendedPromiseInterface<Member>
+     * @return PromiseInterface<self>
      */
-    public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): ExtendedPromiseInterface
+    public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): PromiseInterface
     {
         if ($guild = $this->guild) {
             if ($botperms = $guild->getBotPermissions()) {
@@ -536,7 +543,7 @@ class Member extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null], $headers)
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => $communication_disabled_until?->toIso8601ZuluString()], $headers)
             ->then(function ($response) {
                 $this->attributes['communication_disabled_until'] = $response->communication_disabled_until;
 
@@ -552,9 +559,9 @@ class Member extends Part
      *
      * @throws NoPermissionsException Missing `moderate_members` permission.
      *
-     * @return ExtendedPromiseInterface<Member>
+     * @return PromiseInterface<self>
      */
-    public function setBypassesVerification(bool $bypasses_verification, ?string $reason = null): ExtendedPromiseInterface
+    public function setBypassesVerification(bool $bypasses_verification, ?string $reason = null): PromiseInterface
     {
         if ($guild = $this->guild) {
             if ($botperms = $guild->getBotPermissions()) {
@@ -600,7 +607,7 @@ class Member extends Part
      * Gets the game attribute.
      * Polyfill for the first activity.
      *
-     * @return Activity
+     * @return ?Activity
      */
     protected function getGameAttribute(): ?Activity
     {
@@ -610,9 +617,9 @@ class Member extends Part
     /**
      * Gets the activities attribute.
      *
-     * @return Collection|Activity[]
+     * @return CollectionInterface|Activity[]
      */
-    protected function getActivitiesAttribute(): Collection
+    protected function getActivitiesAttribute(): CollectionInterface
     {
         $activities = Collection::for(Activity::class, null);
 
@@ -686,9 +693,9 @@ class Member extends Part
     /**
      * Returns the roles attribute.
      *
-     * @return Collection<?Role> A collection of roles the member is in. null role only contains ID in the collection.
+     * @return CollectionInterface<?Role> A collection of roles the member is in. null role only contains ID in the collection.
      */
-    protected function getRolesAttribute(): Collection
+    protected function getRolesAttribute(): CollectionInterface
     {
         $roles = new Collection();
 

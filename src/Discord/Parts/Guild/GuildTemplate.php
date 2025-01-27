@@ -15,7 +15,8 @@ use Carbon\Carbon;
 use Discord\Http\Endpoint;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
+use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -39,7 +40,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property      object     $serialized_source_guild The guild snapshot this template contains.
  * @property      ?bool      $is_dirty                Whether the template has unsynced changes.
  */
-class GuildTemplate extends Part
+class GuildTemplate extends Part implements Stringable
 {
     /**
      * {@inheritDoc}
@@ -130,9 +131,9 @@ class GuildTemplate extends Part
      * @param string      $options['name'] The name of the guild (2-100 characters).
      * @param string|null $options['icon'] The base64 128x128 image for the guild icon.
      *
-     * @return ExtendedPromiseInterface<Guild>
+     * @return PromiseInterface<Guild>
      */
-    public function createGuild($options = []): ExtendedPromiseInterface
+    public function createGuild($options = []): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver
