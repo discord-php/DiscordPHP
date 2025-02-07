@@ -22,7 +22,6 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function get(string $discrim, $key);
     public function set($offset, $value);
     public function pull($key, $default = null);
-    public function shift();
     public function fill($items): self;
     public function push(...$items): self;
     public function pushItem($item): self;
@@ -31,24 +30,12 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function last();
     public function isset($offset): bool;
     public function has(...$keys): bool;
-    public function search(mixed $needle, bool $strict = false): string|int|false;
     public function filter(callable $callback);
     public function find(callable $callback);
-    public function splice(int $offset, ?int $length, mixed $replacement = []);
     public function clear(): void;
-    public function slice(int $offset, ?int $length = null, bool $preserve_keys = false);
-    public function sort(callable|int|null $callback);
-    public function walk(callable $callback, mixed $arg);
-    public function reduce(callable $callback, $initial = null);
     public function map(callable $callback);
     public function merge($collection): self;
     public function toArray();
-    public function collect();
-    public function keys(): array;
-    public function values(): array;
-    public function diff($items, ?callable $callback = null);
-    public function intersect($items, ?callable $callback = null);
-    public function unique(int $flags = SORT_STRING);
     public function offsetExists($offset): bool;
     #[\ReturnTypeWillChange]
     public function offsetGet($offset);
