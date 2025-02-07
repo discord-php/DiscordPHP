@@ -26,7 +26,7 @@
         "ext-json": "*",
         "ext-zlib": "*",
         "discord-php/http": "^10.1.7",
-        "discord-php-helpers/collection": "^1.0.0",
+        "discord-php-helpers/collection": "^1.0.0 || ^2.0.0",
         "react/child-process": "^0.6.3",
         "discord/interactions": "^2.2",
         "react/async": "^4.0 || ^3.0",
