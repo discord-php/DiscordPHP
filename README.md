@@ -25,7 +25,7 @@ Before you start using this Library, you **need** to know how PHP works, you nee
 
 ### Requirements
 
-- [PHP 8.0](https://php.net) or higher (latest version recommended)
+- [PHP 8.2](https://php.net) or higher (latest version recommended)
 	- x86 (32-bit) PHP requires [`ext-gmp`](https://www.php.net/manual/en/book.gmp.php) enabled.
 - [`ext-json`](https://www.php.net/manual/en/book.json.php)
 - [`ext-zlib`](https://www.php.net/manual/en/book.zlib.php)
