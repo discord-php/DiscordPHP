@@ -60,6 +60,9 @@
     "scripts": {
         "cs": ["./vendor/bin/php-cs-fixer fix"],
         "unit": ["./vendor/bin/phpunit --testdox"],
-        "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage --testdox"]
+        "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage --testdox"],
+        "php8.2": ["docker-compose run sh82"],
+        "php8.3": ["docker-compose run sh83"],
+        "php8.4": ["docker-compose run sh84"]
     }
 }
