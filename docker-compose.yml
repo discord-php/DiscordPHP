@@ -1,8 +1,22 @@
 services:
-  bot:
-    build: .
+  sh82:
+    build: ./docker/php/8.2
     volumes:
      - .:/root/discord-php
+    command: sh
+
+  sh83:
+    build: ./docker/php/8.3
+    volumes:
+     - .:/root/discord-php
+    command: sh
+
+  sh84:
+    build: ./docker/php/8.4
+    volumes:
+     - .:/root/discord-php
+    command: sh
+
 volumes:
   bot:
     driver: local
