@@ -1,10 +1,10 @@
 FROM php:8.2-cli-alpine
 
-RUN apk add --update "linux-headers" \
-  && apk --no-cache add "pcre" ${PHPIZE_DEPS} \
+RUN apk add --update linux-headers \
+  && apk --no-cache add pcre ${PHPIZE_DEPS} \
   && pecl install xdebug \
   && docker-php-ext-enable xdebug \
-  && apk del "pcre" ${PHPIZE_DEPS}
+  && apk del pcre ${PHPIZE_DEPS}
 
 # Use the default production configuration
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
