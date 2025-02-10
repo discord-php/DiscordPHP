@@ -285,12 +285,14 @@ function deferFind($array, callable $callback, $loop = null): PromiseInterface
         if ($cancelled) {
             $loop->cancelTimer($timer);
             $deferred->reject(new \RuntimeException('deferFind() cancelled'));
+
             return;
         }
 
         if (! $iterator->valid()) {
             $loop->cancelTimer($timer);
             $deferred->resolve(null);
+
             return;
         }
 
@@ -298,6 +300,7 @@ function deferFind($array, callable $callback, $loop = null): PromiseInterface
         if ($callback($current)) {
             $loop->cancelTimer($timer);
             $deferred->resolve($current);
+
             return;
         }
 
