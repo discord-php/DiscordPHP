@@ -423,10 +423,14 @@ class Interaction extends Part
      *
      * @return PromiseInterface
      */
-    public function respondWithMessage(MessageBuilder $builder, bool $ephemeral = false): PromiseInterface
+    public function respondWithMessage(MessageBuilder|string $builder, bool $ephemeral = false): PromiseInterface
     {
         if (! in_array($this->type, [self::TYPE_APPLICATION_COMMAND, self::TYPE_MESSAGE_COMPONENT, self::TYPE_MODAL_SUBMIT])) {
             return reject(new \LogicException('You can only acknowledge application command, message component, or modal submit interactions.'));
+        }
+
+        if (is_string($builder)) {
+            $builder = MessageBuilder::new()->setContent($builder);
         }
 
         if ($ephemeral) {
