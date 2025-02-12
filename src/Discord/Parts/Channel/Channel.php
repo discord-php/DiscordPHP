@@ -262,11 +262,6 @@ class Channel extends Part
         return $recipients;
     }
 
-
-
-
-
-
     /**
      * Returns the guild attribute.
      *
