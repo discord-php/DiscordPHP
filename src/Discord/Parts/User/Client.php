@@ -15,10 +15,12 @@ use Discord\Exceptions\FileNotFoundException;
 use Discord\Http\Endpoint;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
+use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
+use Discord\Repository\SoundRepository;
 use Discord\Repository\UserRepository;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
@@ -40,8 +42,10 @@ use React\Promise\ExtendedPromiseInterface;
  * @property User         $user          The user instance of the client.
  * @property Application  $application   The OAuth2 application of the bot.
  *
+ * @property EmojiRepository          $emojis
  * @property GuildRepository          $guilds
  * @property PrivateChannelRepository $private_channels
+ * @property SoundRepository          $sounds
  * @property UserRepository           $users
  */
 class Client extends Part
@@ -71,8 +75,10 @@ class Client extends Part
      * {@inheritDoc}
      */
     protected $repositories = [
+        'emojis' => EmojiRepository::class,
         'guilds' => GuildRepository::class,
         'private_channels' => PrivateChannelRepository::class,
+        'sounds' => SoundRepository::class,
         'users' => UserRepository::class,
     ];
 
@@ -83,7 +89,7 @@ class Client extends Part
     {
         $this->application = $this->factory->part(Application::class, [], true);
 
-        $this->http->get(Endpoint::APPLICATION_CURRENT)->done(function ($response) {
+        $this->http->get(Endpoint::APPLICATION_CURRENT)->then(function ($response) {
             $this->application->fill((array) $response);
             $this->created = true;
         });
@@ -124,7 +130,7 @@ class Client extends Part
     }
 
     /**
-     * @return string The URL to the clients avatar.
+     * @return string The URL to the client's avatar.
      */
     protected function getAvatarAttribute(): string
     {
@@ -142,9 +148,9 @@ class Client extends Part
     /**
      * Saves the client instance.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function save(): ExtendedPromiseInterface
+    public function save(): PromiseInterface
     {
         return $this->http->patch(Endpoint::USER_CURRENT, $this->getUpdatableAttributes());
     }

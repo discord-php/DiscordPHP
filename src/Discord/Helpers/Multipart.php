@@ -10,6 +10,7 @@
  */
 
 namespace Discord\Helpers;
+use Stringable;
 
 /**
  * Builds a multipart request.
@@ -18,10 +19,10 @@ namespace Discord\Helpers;
  *
  * @author David Cole <david.cole1340@gmail.com>
  */
-class Multipart
+class Multipart implements Stringable
 {
     /**
-     * The boundary seperating multipart sections.
+     * The boundary separating multipart sections.
      */
     private const BOUNDARY = '----DiscordPHPSendFileBoundary';
 
@@ -43,6 +44,7 @@ class Multipart
      * Multipart constructor.
      *
      * @param array $fields
+     * @param string $boundary Defaults to DiscordPHPSendFileBoundary
      */
     public function __construct(array $fields = [], string $boundary = self::BOUNDARY)
     {
@@ -66,7 +68,7 @@ class Multipart
      * ];
      * ```
      *
-     * @param array $field
+     * @param array ...$fields
      *
      * @return $this
      */
@@ -84,7 +86,7 @@ class Multipart
      *
      * @return array
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return [
             'Content-Type' => $this->getContentType(),
@@ -97,7 +99,7 @@ class Multipart
      *
      * @return string
      */
-    public function getContentType()
+    public function getContentType(): string
     {
         return 'multipart/form-data; boundary='.substr($this->boundary, 2);
     }

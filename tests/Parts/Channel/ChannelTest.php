@@ -43,7 +43,7 @@ final class ChannelTest extends DiscordTestCase
                             }));
                         });
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -70,7 +70,7 @@ final class ChannelTest extends DiscordTestCase
                             }));
                         });
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -87,7 +87,7 @@ final class ChannelTest extends DiscordTestCase
                             $this->assertEquals($getMessage->id, $message->id);
                         });
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -99,7 +99,7 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->createInvite()
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -111,7 +111,7 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->deleteMessages([])
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -126,7 +126,7 @@ final class ChannelTest extends DiscordTestCase
                 ->then(function (Message $message) {
                     return $this->channel()->deleteMessages([$message]);
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -144,7 +144,7 @@ final class ChannelTest extends DiscordTestCase
                             return $this->channel()->deleteMessages([$m1, $m2]);
                         });
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -156,7 +156,7 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->limitDelete(5)
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -180,7 +180,7 @@ final class ChannelTest extends DiscordTestCase
                         $this->assertInstanceOf(Message::class, $message);
                     }
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -204,7 +204,7 @@ final class ChannelTest extends DiscordTestCase
                         $this->assertInstanceOf(Invite::class, $invite);
                     }
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -222,7 +222,7 @@ final class ChannelTest extends DiscordTestCase
                             $this->assertEquals($message->id, $updatedMessage->id);
                         });
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -238,7 +238,7 @@ final class ChannelTest extends DiscordTestCase
                 ->then(function (Message $message) {
                     $this->assertEquals(1, count($message->attachments));
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -250,7 +250,7 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->broadcastTyping()
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 

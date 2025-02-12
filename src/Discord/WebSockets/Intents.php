@@ -196,6 +196,22 @@ class Intents
     public const AUTO_MODERATION_EXECUTION = (1 << 21);
 
     /**
+     * Guild message poll events.
+     *
+     * - MESSAGE_POLL_VOTE_ADD
+     * - MESSAGE_POLL_VOTE_REMOVE
+     */
+    public const GUILD_MESSAGE_POLLS = (1 << 24);
+
+    /**
+     * Direct message poll events.
+     *
+     *  - MESSAGE_POLL_VOTE_ADD
+     *  - MESSAGE_POLL_VOTE_REMOVE
+     */
+    public const DIRECT_MESSAGE_POLLS = (1 << 25);
+
+    /**
      * Returns an array of valid intents.
      *
      * @return array

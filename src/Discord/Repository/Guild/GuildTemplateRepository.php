@@ -14,7 +14,7 @@ namespace Discord\Repository\Guild;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\GuildTemplate;
 use Discord\Repository\AbstractRepository;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 /**
  * Contains guild templates of a guild.
@@ -56,11 +56,13 @@ class GuildTemplateRepository extends AbstractRepository
     /**
      * Syncs the template to the guild's current state. Requires the MANAGE_GUILD permission.
      *
+     * @link https://discord.com/developers/docs/resources/guild-template#sync-guild-template
+     *
      * @param string $template_code The guild template code.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface<GuildTemplate>
      */
-    public function sync(string $template_code): ExtendedPromiseInterface
+    public function sync(string $template_code): PromiseInterface
     {
         return $this->http->put(Endpoint::bind(Endpoint::GUILD_TEMPLATE, $this->vars['guild_id'], $template_code))->then(function ($guild_template) use ($template_code) {
             return $this->cache->get($template_code)->then(function ($guildTemplate) use ($guild_template, $template_code) {
@@ -70,9 +72,7 @@ class GuildTemplateRepository extends AbstractRepository
                     $guildTemplate->fill($guild_template);
                 }
 
-                return $this->cache->set($template_code, $guildTemplate)->then(function ($success) use ($guildTemplate) {
-                    return $guildTemplate;
-                });
+                return $this->cache->set($template_code, $guildTemplate)->then(fn ($success) => $guildTemplate);
             });
         });
     }

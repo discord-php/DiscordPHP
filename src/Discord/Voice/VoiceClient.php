@@ -26,10 +26,10 @@ use React\Datagram\Factory as DatagramFactory;
 use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DNSFactory;
 use React\EventLoop\LoopInterface;
-use Discord\Helpers\Deferred;
 use Psr\Log\LoggerInterface;
 use React\ChildProcess\Process;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 use React\Stream\ReadableResourceStream as Stream;
 use React\EventLoop\TimerInterface;
 use React\Stream\ReadableResourceStream;
@@ -255,14 +255,14 @@ class VoiceClient extends EventEmitter
     /**
      * Collection of the status of people speaking.
      *
-     * @var Collection Status of people speaking.
+     * @var CollectionInterface Status of people speaking.
      */
     protected $speakingStatus;
 
     /**
      * Collection of voice decoders.
      *
-     * @var Collection Voice decoders.
+     * @var CollectionInterface Voice decoders.
      */
     protected $voiceDecoders;
 
@@ -302,7 +302,7 @@ class VoiceClient extends EventEmitter
      * @var bool Whether the voice client is reconnecting.
      */
     protected $reconnecting = false;
-    
+
     /**
      * Is the voice client being closed by user?
      *
@@ -398,13 +398,10 @@ class VoiceClient extends EventEmitter
     public function initSockets(): void
     {
         $wsfac = new WsFactory($this->loop);
-        /** @var ExtendedPromiseInterface */
+        /** @var PromiseInterface */
         $promise = $wsfac("wss://{$this->endpoint}?v={$this->version}");
 
-        $promise->done(
-            [$this, 'handleWebSocketConnection'],
-            [$this, 'handleWebSocketError']
-        );
+        $promise->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
     }
 
     /**
@@ -439,10 +436,10 @@ class VoiceClient extends EventEmitter
                 $buffer[1] = "\x01";
                 $buffer[3] = "\x46";
                 $buffer->writeUInt32BE($this->ssrc, 4);
-                /** @var ExtendedPromiseInterface */
+                /** @var PromiseInterface */
                 $promise = $udpfac->createClient("{$data->d->ip}:{$this->udpPort}");
 
-                $promise->done(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
+                $promise->then(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
                     $this->logger->debug('connected to voice UDP');
                     $this->client = $client;
 
@@ -553,7 +550,7 @@ class VoiceClient extends EventEmitter
                     $sendHeartbeat = function () {
                         $this->send([
                             'op' => Op::VOICE_HEARTBEAT,
-                            'd' => microtime(true),
+                            'd' => (int) microtime(true),
                         ]);
                         $this->logger->debug('sending heartbeat');
                         $this->emit('ws-heartbeat', []);
@@ -561,6 +558,39 @@ class VoiceClient extends EventEmitter
 
                     $sendHeartbeat();
                     $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, $sendHeartbeat);
+                    break;
+                case Op::VOICE_DAVE_PREPARE_TRANSITION:
+                    $this->handleDavePrepareTransition($data);
+                    break;
+                case Op::VOICE_DAVE_EXECUTE_TRANSITION:
+                    $this->handleDaveExecuteTransition($data);
+                    break;
+                case Op::VOICE_DAVE_TRANSITION_READY:
+                    $this->handleDaveTransitionReady($data);
+                    break;
+                case Op::VOICE_DAVE_PREPARE_EPOCH:
+                    $this->handleDavePrepareEpoch($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_EXTERNAL_SENDER:
+                    $this->handleDaveMlsExternalSender($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_KEY_PACKAGE:
+                    $this->handleDaveMlsKeyPackage($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_PROPOSALS:
+                    $this->handleDaveMlsProposals($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_COMMIT_WELCOME:
+                    $this->handleDaveMlsCommitWelcome($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION:
+                    $this->handleDaveMlsAnnounceCommitTransition($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_WELCOME:
+                    $this->handleDaveMlsWelcome($data);
+                    break;
+                case Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME:
+                    $this->handleDaveMlsInvalidCommitWelcome($data);
                     break;
             }
         });
@@ -685,9 +715,9 @@ class VoiceClient extends EventEmitter
      * @throws FileNotFoundException
      * @throws \RuntimeException
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function playFile(string $file, int $channels = 2): ExtendedPromiseInterface
+    public function playFile(string $file, int $channels = 2): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -725,9 +755,9 @@ class VoiceClient extends EventEmitter
      * @throws \RuntimeException
      * @throws \InvalidArgumentException Thrown when the stream passed to playRawStream is not a valid resource.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function playRawStream($stream, int $channels = 2, int $audioRate = 48000): ExtendedPromiseInterface
+    public function playRawStream($stream, int $channels = 2, int $audioRate = 48000): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -743,13 +773,13 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if (! is_resource($stream) && ! $stream instanceof Stream) {
+        if ($stream === false && ! $stream instanceof Stream) {
             $deferred->reject(new \InvalidArgumentException('The stream passed to playRawStream was not an instance of resource or ReactPHP Stream.'));
 
             return $deferred->promise();
         }
 
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             $stream = new Stream($stream, $this->loop);
         }
 
@@ -772,9 +802,9 @@ class VoiceClient extends EventEmitter
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function playOggStream($stream): ExtendedPromiseInterface
+    public function playOggStream($stream): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -802,7 +832,7 @@ class VoiceClient extends EventEmitter
             $stream = $stream->stdout;
         }
 
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             $stream = new ReadableResourceStream($stream, $this->loop);
         }
 
@@ -821,10 +851,10 @@ class VoiceClient extends EventEmitter
         $ogg = null;
 
         $loops = 0;
-        
+
         $readOpus = function () use ($deferred, &$ogg, &$readOpus, &$loops) {
             $this->readOpusTimer = null;
-            
+
             $loops += 1;
 
             // If the client is paused, delay by frame size and check again.
@@ -839,7 +869,7 @@ class VoiceClient extends EventEmitter
                 // EOF for Ogg stream.
                 if (null === $packet) {
                     $this->reset();
-                    $deferred->resolve();
+                    $deferred->resolve(null);
 
                     return;
                 }
@@ -864,7 +894,7 @@ class VoiceClient extends EventEmitter
                 $this->readOpusTimer = $this->loop->addTimer($delay, $readOpus);
             }, function ($e) use ($deferred) {
                 $this->reset();
-                $deferred->resolve();
+                $deferred->resolve(null);
             });
         };
 
@@ -884,13 +914,13 @@ class VoiceClient extends EventEmitter
      *
      * @param resource|Process|Stream $stream The DCA stream to be sent.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      * @throws \Exception
      *
      * @deprecated 10.0.0 DCA is now deprecated in DiscordPHP, switch to using
      *                    `playOggStream` with raw Ogg Opus.
      */
-    public function playDCAStream($stream): ExtendedPromiseInterface
+    public function playDCAStream($stream): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -918,7 +948,7 @@ class VoiceClient extends EventEmitter
             $stream = $stream->stdout;
         }
 
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             $stream = new ReadableResourceStream($stream, $this->loop);
         }
 
@@ -966,7 +996,7 @@ class VoiceClient extends EventEmitter
                 $this->readOpusTimer = $this->loop->addTimer(($this->frameSize - 1) / 1000, $readOpus);
             }, function () use ($deferred) {
                 $this->reset();
-                $deferred->resolve();
+                $deferred->resolve(null);
             });
         };
 
@@ -1471,6 +1501,115 @@ class VoiceClient extends EventEmitter
         $buff->write($vp->getData(), 2);
 
         $decoder->stdin->write((string) $buff);
+    }
+
+    private function handleDavePrepareTransition($data)
+    {
+        $this->logger->debug('DAVE Prepare Transition', ['data' => $data]);
+        // Prepare local state necessary to perform the transition
+        $this->send([
+            'op' => Op::VOICE_DAVE_TRANSITION_READY,
+            'd' => [
+                'transition_id' => $data->d->transition_id,
+            ],
+        ]);
+    }
+
+    private function handleDaveExecuteTransition($data)
+    {
+        $this->logger->debug('DAVE Execute Transition', ['data' => $data]);
+        // Execute the transition
+        // Update local state to reflect the new protocol context
+    }
+
+    private function handleDaveTransitionReady($data)
+    {
+        $this->logger->debug('DAVE Transition Ready', ['data' => $data]);
+        // Handle transition ready state
+    }
+
+    private function handleDavePrepareEpoch($data)
+    {
+        $this->logger->debug('DAVE Prepare Epoch', ['data' => $data]);
+        // Prepare local MLS group with parameters appropriate for the DAVE protocol version
+        $this->send([
+            'op' => Op::VOICE_DAVE_MLS_KEY_PACKAGE,
+            'd' => [
+                'epoch_id' => $data->d->epoch_id,
+                'key_package' => $this->generateKeyPackage(),
+            ],
+        ]);
+    }
+
+    private function handleDaveMlsExternalSender($data)
+    {
+        $this->logger->debug('DAVE MLS External Sender', ['data' => $data]);
+        // Handle external sender public key and credential
+    }
+
+    private function handleDaveMlsKeyPackage($data)
+    {
+        $this->logger->debug('DAVE MLS Key Package', ['data' => $data]);
+        // Handle MLS key package
+    }
+
+    private function handleDaveMlsProposals($data)
+    {
+        $this->logger->debug('DAVE MLS Proposals', ['data' => $data]);
+        // Handle MLS proposals
+        $this->send([
+            'op' => Op::VOICE_DAVE_MLS_COMMIT_WELCOME,
+            'd' => [
+                'commit' => $this->generateCommit(),
+                'welcome' => $this->generateWelcome(),
+            ],
+        ]);
+    }
+
+    private function handleDaveMlsCommitWelcome($data)
+    {
+        $this->logger->debug('DAVE MLS Commit Welcome', ['data' => $data]);
+        // Handle MLS commit and welcome messages
+    }
+
+    private function handleDaveMlsAnnounceCommitTransition($data)
+    {
+        // Handle MLS announce commit transition
+        $this->logger->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
+    }
+
+    private function handleDaveMlsWelcome($data)
+    {
+        // Handle MLS welcome message
+        $this->logger->debug('DAVE MLS Welcome', ['data' => $data]);
+    }
+
+    private function handleDaveMlsInvalidCommitWelcome($data)
+    {
+        $this->logger->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
+        // Handle invalid commit or welcome message
+        // Reset local group state and generate a new key package
+        $this->send([
+            'op' => Op::VOICE_DAVE_MLS_KEY_PACKAGE,
+            'd' => [
+                'key_package' => $this->generateKeyPackage(),
+            ],
+        ]);
+    }
+
+    private function generateKeyPackage()
+    {
+        // Generate and return a new MLS key package
+    }
+
+    private function generateCommit()
+    {
+        // Generate and return an MLS commit message
+    }
+
+    private function generateWelcome()
+    {
+        // Generate and return an MLS welcome message
     }
 
     /**

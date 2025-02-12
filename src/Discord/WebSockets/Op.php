@@ -54,6 +54,9 @@ class Op
     public const OP_HELLO = 10;
     /** Used to acknowledge heartbeats. */
     public const OP_HEARTBEAT_ACK = 11;
+    /** Request soundboard sounds. */
+    public const REQUEST_SOUNDBOARD_SOUNDS = 31;
+
 
     /**
      * Voice Opcodes.
@@ -83,8 +86,32 @@ class Op
     public const VOICE_HELLO = 8;
     /** Acknowledge a successful session resume. */
     public const VOICE_RESUMED = 9;
+    /** One or more clients have connected to the voice channel */
+    public const VOICE_CLIENT_CONNECT = 11;
     /** A client has disconnected from the voice channel. */
     public const VOICE_CLIENT_DISCONNECT = 13;
+    /** A downgrade from the DAVE protocol is upcoming. */
+    public const VOICE_DAVE_PREPARE_TRANSITION = 21;
+    /** Execute a previously announced protocol transition. */
+    public const VOICE_DAVE_EXECUTE_TRANSITION = 22;
+    /** Acknowledge readiness previously announced transition. */
+    public const VOICE_DAVE_TRANSITION_READY = 23;
+    /** A DAVE protocol version or group change is upcoming. */
+    public const VOICE_DAVE_PREPARE_EPOCH = 24;
+    /** Credential and public key for MLS external sender. */
+    public const VOICE_DAVE_MLS_EXTERNAL_SENDER = 25;
+    /** MLS Key Package for pending group member. */
+    public const VOICE_DAVE_MLS_KEY_PACKAGE = 26;
+    /** MLS Proposals to be appended or revoked. */
+    public const VOICE_DAVE_MLS_PROPOSALS = 27;
+    /** MLS Commit with optional MLS Welcome messages. */
+    public const VOICE_DAVE_MLS_COMMIT_WELCOME = 28;
+    /** MLS Commit to be processed for upcoming transition. */
+    public const VOICE_DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION = 29;
+    /** MLS Welcome to group for upcoming transition. */
+    public const VOICE_DAVE_MLS_WELCOME = 30;
+    /** Flag invalid commit or welcome, request re-add */
+    public const VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME = 31;
 
     /**
      * Gateway Close Event Codes.
@@ -104,7 +131,7 @@ class Op
     public const CLOSE_ABNORMAL = 1006;
     /** Unknown error. */
     public const CLOSE_UNKNOWN_ERROR = 4000;
-    /** Unknown opcode was went. */
+    /** Unknown opcode was sent. */
     public const CLOSE_INVALID_OPCODE = 4001;
     /** Invalid message was sent. */
     public const CLOSE_INVALID_MESSAGE = 4002;
@@ -124,7 +151,7 @@ class Op
     public const CLOSE_SESSION_TIMEOUT = 4009;
     /** Invalid shard. */
     public const CLOSE_INVALID_SHARD = 4010;
-    /** Sharding requred. */
+    /** Sharding required. */
     public const CLOSE_SHARDING_REQUIRED = 4011;
     /** Invalid API version. */
     public const CLOSE_INVALID_VERSION = 4012;

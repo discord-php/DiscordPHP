@@ -96,7 +96,9 @@ class DiscordCommandClient extends Discord
                     $result = $command->handle($message, $args);
 
                     if (is_string($result)) {
-                        $message->reply($result);
+                        $message
+                            ->reply($result)
+                            ->then(null, $this->commandClientOptions['internalRejectedPromiseHandler']);
                     }
                 }
             });
@@ -156,7 +158,9 @@ class DiscordCommandClient extends Discord
                         }
                     }
 
-                    $message->channel->sendEmbed($embed);
+                    $message->channel
+                        ->sendEmbed($embed)
+                        ->then(null, $this->commandClientOptions['internalRejectedPromiseHandler']);
 
                     return;
                 }
@@ -200,7 +204,9 @@ class DiscordCommandClient extends Discord
 
                 $embed->setDescription(substr($this->commandClientOptions['description'].$commandsDescription, 0, 2048));
 
-                $message->channel->sendEmbed($embed);
+                $message->channel
+                    ->sendEmbed($embed)
+                    ->then(null, $this->commandClientOptions['internalRejectedPromiseHandler']);
             }, [
                 'description' => 'Provides a list of commands available.',
                 'usage' => '[command]',
@@ -423,7 +429,9 @@ class DiscordCommandClient extends Discord
                 'defaultHelpCommand',
                 'discordOptions',
                 'caseInsensitiveCommands',
+                'internalRejectedPromiseHandler',
             ])
+            ->setAllowedTypes('internalRejectedPromiseHandler', ['null', 'callable'])
             ->setDefaults([
                 'prefix' => '@mention ',
                 'prefixes' => [],
@@ -432,6 +440,13 @@ class DiscordCommandClient extends Discord
                 'defaultHelpCommand' => true,
                 'discordOptions' => [],
                 'caseInsensitiveCommands' => false,
+                'internalRejectedPromiseHandler' => function ($reason): void {
+                    if (is_string($reason) || $reason instanceof \Stringable) {
+                        $this->getLogger()->error($reason);
+                    } else {
+                        $this->getLogger()->warning('Unhandled internal rejected promise, $reason is not a Throwable, '  . gettype($reason) . ' given.');
+                    }
+                }
             ]);
 
         $options = $resolver->resolve($options);

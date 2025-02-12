@@ -26,8 +26,6 @@ class UserUpdate extends Event
      */
     public function handle($data)
     {
-        $oldUser = null;
-
         /** @var User */
         if ($oldUser = yield $this->discord->users->cacheGet($data->id)) {
             $userPart = clone $oldUser;

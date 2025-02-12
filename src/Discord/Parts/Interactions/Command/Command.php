@@ -14,6 +14,7 @@ namespace Discord\Parts\Interactions\Command;
 use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Stringable;
 
 /**
  * Represents a command registered on the Discord servers.
@@ -28,7 +29,7 @@ use Discord\Parts\Part;
  * @property-read Guild|null  $guild          The guild that the command belongs to. Null if global.
  * @property      string      $version        Autoincrementing version identifier updated during substantial record changes.
  */
-class Command extends Part
+class Command extends Part implements Stringable
 {
     use \Discord\Builders\CommandAttributes;
 
@@ -78,7 +79,7 @@ class Command extends Part
     /**
      * Gets the options attribute.
      *
-     * @return Collection|Options[]|null A collection of options.
+     * @return CollectionInterface|Option[]|null A collection of options.
      */
     protected function getOptionsAttribute(): ?Collection
     {

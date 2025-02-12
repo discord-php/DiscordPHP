@@ -83,7 +83,10 @@ abstract class Permission extends Part
         'manage_events' => 33,
         'use_embedded_activities' => 39,
         'use_soundboard' => 42,
+        'create_events' => 44,
         'use_external_sounds' => 45,
+        'send_voice_messages' => 46,
+        'send_polls' => 49,
     ];
 
     /**
@@ -101,6 +104,7 @@ abstract class Permission extends Part
         'move_members' => 24,
         'request_to_speak' => 32,
         'manage_events' => 33,
+        'create_events' => 44,
     ];
 
     /**
@@ -220,7 +224,7 @@ abstract class Permission extends Part
      *
      * @param int|string $bitwise
      */
-    protected function setBitwiseAttribute($bitwise)
+    protected function setBitwiseAttribute($bitwise): void
     {
         if (PHP_INT_SIZE === 8 && is_string($bitwise)) { // x64
             $bitwise = (int) $bitwise;

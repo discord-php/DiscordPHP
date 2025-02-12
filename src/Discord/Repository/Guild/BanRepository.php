@@ -16,7 +16,7 @@ use Discord\Parts\Guild\Ban;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -63,11 +63,10 @@ class BanRepository extends AbstractRepository
      * @param array              $options Array of Ban options 'delete_message_seconds' or 'delete_message_days' (deprecated).
      * @param string|null        $reason  Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Ban>
+     * @return PromiseInterface<Ban>
      */
-    public function ban($user, array $options = [], ?string $reason = null): ExtendedPromiseInterface
+    public function ban($user, array $options = [], ?string $reason = null): PromiseInterface
     {
-        $content = [];
         $headers = [];
 
         if ($user instanceof Member) {
@@ -108,9 +107,7 @@ class BanRepository extends AbstractRepository
                 'guild_id' => $this->vars['guild_id'],
             ], true);
 
-            return $this->cache->set($ban->user_id, $ban)->then(function () use ($ban) {
-                return $ban;
-            });
+            return $this->cache->set($ban->user_id, $ban)->then(fn () => $ban);
         });
     }
 
@@ -122,18 +119,16 @@ class BanRepository extends AbstractRepository
      * @param User|Ban|string $ban    User or Ban Part, or User ID
      * @param string|null     $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function unban($ban, ?string $reason = null): ExtendedPromiseInterface
+    public function unban($ban, ?string $reason = null): PromiseInterface
     {
         if ($ban instanceof User || $ban instanceof Member) {
             $ban = $ban->id;
         }
 
         if (is_scalar($ban)) {
-            return $this->cache->get($ban)->then(function ($ban) use ($reason) {
-                return $this->delete($ban, $reason);
-            });
+            return $this->cache->get($ban)->then(fn ($ban) => $this->delete($ban, $reason));
         }
 
         return $this->delete($ban, $reason);

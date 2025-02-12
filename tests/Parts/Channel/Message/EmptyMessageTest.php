@@ -37,7 +37,7 @@ final class EmptyMessageTest extends DiscordTestCase
 
                     return $message;
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -56,7 +56,7 @@ final class EmptyMessageTest extends DiscordTestCase
 
                     return $new_message;
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -79,7 +79,7 @@ final class EmptyMessageTest extends DiscordTestCase
                         return $message;
                     });
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -174,7 +174,7 @@ final class EmptyMessageTest extends DiscordTestCase
 
                     $this->assertGreaterThanOrEqual($delay / 1000, $diff);
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         }, 10);
     }
 
@@ -189,7 +189,7 @@ final class EmptyMessageTest extends DiscordTestCase
                 ->then(function (Message $message) {
                     return $message->react('😀');
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -222,7 +222,7 @@ final class EmptyMessageTest extends DiscordTestCase
                     $this->assertEquals('Field value', $field->value);
                     $this->assertEquals(true, $field->inline);
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -237,7 +237,7 @@ final class EmptyMessageTest extends DiscordTestCase
                 ->then(function (Message $message) {
                     $this->assertFalse($message->created);
                 })
-                ->done($resolve, $resolve);
+                ->then($resolve, $resolve);
         });
     }
 
@@ -252,7 +252,7 @@ final class EmptyMessageTest extends DiscordTestCase
                 ->then(function (Message $message) {
                     return $message->delete();
                 })
-                ->done($resolve);
+                ->then($resolve);
         });
     }
 }
