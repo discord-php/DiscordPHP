@@ -14,7 +14,7 @@ namespace Discord\Helpers;
 trait CollectionTrait
 {
     /**
-     * Create a new static.
+     * Create a new Collection.
      *
      * @param array       $items
      * @param ?string     $discrim
@@ -34,11 +34,11 @@ trait CollectionTrait
      * @param ?string     $discrim
      * @param ?string     $class
      *
-     * @return static
+     * @return CollectionInterface
      */
     public static function from(array $items = [], ?string $discrim = 'id', ?string $class = null)
     {
-        return new static($items, $discrim, $class);
+        return new Collection($items, $discrim, $class);
     }
 
     /**
@@ -47,11 +47,11 @@ trait CollectionTrait
      * @param string  $class
      * @param ?string $discrim
      *
-     * @return static
+     * @return CollectionInterface
      */
     public static function for(string $class, ?string $discrim = 'id')
     {
-        return new static([], $discrim, $class);
+        return new Collection([], $discrim, $class);
     }
 
     /**
@@ -140,9 +140,9 @@ trait CollectionTrait
      */
     public function fill($items): self
     {
-        if ($items instanceof CollectionInterface) {
-            $items = $items->toArray();
-        }
+        $items = $items instanceof CollectionInterface
+            ? $items->toArray()
+            : $items;
         if (! is_array($items)) {
             throw new \InvalidArgumentException('The fill method only accepts arrays or CollectionInterface instances.');
         }
@@ -284,7 +284,7 @@ trait CollectionTrait
     }
 
     /**
-     * Runs a filter callback over the collection and returns a new static
+     * Runs a filter callback over the collection and returns a new Collection
      * based on the response of the callback.
      *
      * @param callable $callback
@@ -295,7 +295,7 @@ trait CollectionTrait
      */
     public function filter(callable $callback)
     {
-        $collection = new static([], $this->discrim, $this->class);
+        $collection = new Collection([], $this->discrim, $this->class);
 
         foreach ($this->items as $item) {
             if ($callback($item)) {
@@ -323,6 +323,57 @@ trait CollectionTrait
         }
 
         return null;
+    }
+
+    /**
+     * Finds the key of the first item that matches the callback.
+     *
+     * @param callable $callback
+     *
+     * @return mixed
+     */
+    public function find_key(callable $callback)
+    {
+        foreach ($this->items as $key => $item) {
+            if ($callback($item)) {
+                return $key;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Checks if any item matches the callback.
+     *
+     * @param callable $callback
+     *
+     * @return bool
+     */
+    public function any(callable $callback): bool
+    {
+        foreach ($this->items as $item) {
+            if ($callback($item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if all items match the callback.
+     *
+     * @param callable $callback
+     *
+     * @return bool
+     */
+    public function all(callable $callback): bool
+    {
+        foreach ($this->items as $item) {
+            if (! $callback($item)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -468,7 +519,7 @@ trait CollectionTrait
     }
 
     /**
-     * Runs a callback over the collection and creates a new static.
+     * Runs a callback over the collection and creates a new Collection.
      *
      * @param callable $callback
      *
