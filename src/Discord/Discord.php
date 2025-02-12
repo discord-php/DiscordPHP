@@ -15,7 +15,6 @@ use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\CacheConfig;
-use Discord\Helpers\Deferred;
 use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
@@ -29,6 +28,7 @@ use Discord\Parts\User\Client;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
+use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
@@ -46,10 +46,11 @@ use Psr\Log\LoggerInterface;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
-use React\EventLoop\Factory as LoopFactory;
+use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -61,20 +62,23 @@ use function React\Promise\all;
  *
  * @version 10.0.0
  *
- * @property string                   $id               The unique identifier of the client.
- * @property string                   $username         The username of the client.
- * @property string                   $password         The password of the client (if they have provided it).
- * @property string                   $email            The email of the client.
- * @property bool                     $verified         Whether the client has verified their email.
- * @property string                   $avatar           The avatar URL of the client.
- * @property string                   $avatar_hash      The avatar hash of the client.
- * @property string                   $discriminator    The unique discriminator of the client.
- * @property bool                     $bot              Whether the client is a bot.
- * @property User                     $user             The user instance of the client.
- * @property Application              $application      The OAuth2 application of the bot.
- * @property GuildRepository          $guilds
- * @property PrivateChannelRepository $private_channels
- * @property UserRepository           $users
+ * @property string                     $id               The unique identifier of the client.
+ * @property string                     $username         The username of the client.
+ * @property string                     $password         The password of the client (if they have provided it).
+ * @property string                     $email            The email of the client.
+ * @property bool                       $verified         Whether the client has verified their email.
+ * @property string                     $avatar           The avatar URL of the client.
+ * @property string                     $avatar_hash      The avatar hash of the client.
+ * @property string                     $discriminator    The unique discriminator of the client.
+ * @property bool                       $bot              Whether the client is a bot.
+ * @property User                       $user             The user instance of the client.
+ * @property Application                $application      The OAuth2 application of the bot.
+ * @property EmojiRepository            $emojis
+ * @property GuildRepository            $guilds
+ * @property PrivateChannelRepository   $private_channels
+ * @property SoundRepository            $sounds
+ * @property UserRepository             $users
+
  */
 class Discord
 {
@@ -322,7 +326,7 @@ class Discord
     /**
      * The cache configuration.
      *
-     * @var CacheConfig
+     * @var CacheConfig[]
      */
     protected $cacheConfig;
 
@@ -463,10 +467,10 @@ class Discord
         $unavailable = [];
 
         foreach ($content->guilds as $guild) {
-            /** @var ExtendedPromiseInterface */
+            /** @var PromiseInterface */
             $promise = coroutine([$event, 'handle'], $guild);
 
-            $promise->done(function ($d) use (&$unavailable) {
+            $promise->then(function ($d) use (&$unavailable) {
                 if (! empty($d->unavailable)) {
                     $unavailable[$d->id] = $d->unavailable;
                 }
@@ -492,7 +496,7 @@ class Discord
                 unset($unavailable[$guild->id]);
             }
             if (count($unavailable) < 1) {
-                $guildLoad->resolve();
+                $guildLoad->resolve(null);
             }
         };
         $this->on(Event::GUILD_CREATE, $onGuildCreate);
@@ -507,18 +511,18 @@ class Discord
                 unset($unavailable[$guild->id]);
             }
             if (count($unavailable) < 1) {
-                $guildLoad->resolve();
+                $guildLoad->resolve(null);
             }
         };
         $this->on(Event::GUILD_DELETE, $onGuildDelete);
 
-        $guildLoad->promise()->always(function () use ($onGuildCreate, $onGuildDelete) {
+        $guildLoad->promise()->finally(function () use ($onGuildCreate, $onGuildDelete) {
             $this->removeListener(Event::GUILD_CREATE, $onGuildCreate);
             $this->removeListener(Event::GUILD_DELETE, $onGuildDelete);
             $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
 
             $this->setupChunking();
-        })->done();
+        });
     }
 
     /**
@@ -660,7 +664,7 @@ class Discord
             Op::OP_HEARTBEAT_ACK => 'handleHeartbeatAck',
         ];
 
-        if (isset($op[$data->op])) {
+        if (isset($data, $data->op, $op[$data->op])) {
             $this->{$op[$data->op]}($data);
         }
     }
@@ -770,7 +774,7 @@ class Discord
         $handler = new $hData['class']($this);
 
         $deferred = new Deferred();
-        $deferred->promise()->done(function ($d) use ($data, $hData) {
+        $deferred->promise()->then(function ($d) use ($data, $hData) {
             if (is_array($d) && count($d) == 2) {
                 list($new, $old) = $d;
             } else {
@@ -804,14 +808,14 @@ class Discord
 
         if (! $this->emittedInit && (! in_array($data->t, $parse))) {
             $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
-                /** @var ExtendedPromiseInterface */
+                /** @var PromiseInterface */
                 $promise = coroutine([$handler, 'handle'], $data->d);
-                $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
+                $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
             };
         } else {
-            /** @var ExtendedPromiseInterface */
+            /** @var PromiseInterface */
             $promise = coroutine([$handler, 'handle'], $data->d);
-            $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
+            $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
         }
     }
 
@@ -1074,7 +1078,7 @@ class Discord
      */
     protected function connectWs(): void
     {
-        $this->setGateway()->done(function ($gateway) {
+        $this->setGateway()->then(function ($gateway) {
             if (isset($gateway['session']) && $session = $gateway['session']) {
                 if ($session['remaining'] < 2) {
                     $this->logger->error('exceeded number of reconnects allowed, waiting before attempting reconnect', $session);
@@ -1088,13 +1092,27 @@ class Discord
 
             $this->logger->info('starting connection to websocket', ['gateway' => $this->gateway]);
 
-            /** @var ExtendedPromiseInterface */
+            /** @var PromiseInterface */
             $promise = ($this->wsFactory)($this->gateway);
-            $promise->done(
-                [$this, 'handleWsConnection'],
-                [$this, 'handleWsConnectionFailed']
-            );
+            $promise->then([$this, 'handleWsConnection'], [$this, 'handleWsConnectionFailed']);
         });
+    }
+
+    /**
+     * Requests soundboard sounds for the specified guilds.
+     *
+     * @param array $guildIds Array of guild IDs.
+     */
+    public function requestSoundboardSounds(array $guildIds): void
+    {
+        $payload = [
+            'op' => Op::REQUEST_SOUNDBOARD_SOUNDS,
+            'd' => [
+                'guild_ids' => $guildIds
+            ],
+        ];
+
+        $this->send($payload);
     }
 
     /**
@@ -1155,7 +1173,7 @@ class Discord
      *
      * @throws \UnexpectedValueException
      */
-    public function updatePresence(Activity $activity = null, bool $idle = false, string $status = 'online', bool $afk = false): void
+    public function updatePresence(?Activity $activity = null, bool $idle = false, string $status = 'online', bool $afk = false): void
     {
         $idle = $idle ? time() * 1000 : null;
 
@@ -1211,9 +1229,9 @@ class Discord
      * @since 10.0.0 Removed argument $check that has no effect (it is always checked)
      * @since 4.0.0
      *
-     * @return ExtendedPromiseInterface<VoiceClient>
+     * @return PromiseInterface<VoiceClient>
      */
-    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null): ExtendedPromiseInterface
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1307,9 +1325,9 @@ class Discord
      *
      * @param string|null $gateway Gateway URL to set.
      *
-     * @return ExtendedPromiseInterface<array>
+     * @return PromiseInterface
      */
-    protected function setGateway(?string $gateway = null): ExtendedPromiseInterface
+    protected function setGateway(?string $gateway = null): PromiseInterface
     {
         $deferred = new Deferred();
         $defaultSession = [
@@ -1337,7 +1355,7 @@ class Discord
         };
 
         if (null === $gateway) {
-            $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
+            $this->http->get(Endpoint::GATEWAY_BOT)->then(function ($response) use ($buildParams) {
                 if ($response->shards > 1) {
                     $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interested in assisting us with sharding support development.');
                 }
@@ -1426,7 +1444,7 @@ class Discord
 
         $options = $resolver->resolve($options);
 
-        $options['loop'] ??= LoopFactory::create();
+        $options['loop'] ??= Loop::get();
 
         if (null === $options['logger']) {
             $streamHandler = new StreamHandler('php://stdout', Monolog::DEBUG);
@@ -1659,14 +1677,14 @@ class Discord
      * Add listener for incoming application command from interaction.
      *
      * @param string|array  $name
-     * @param callable      $callback
+     * @param callable|null $callback
      * @param callable|null $autocomplete_callback
      *
      * @throws \LogicException
      *
      * @return RegisteredCommand
      */
-    public function listenCommand($name, callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
+    public function listenCommand($name, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {
         if (is_array($name) && count($name) == 1) {
             $name = array_shift($name);

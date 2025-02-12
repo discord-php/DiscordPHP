@@ -79,7 +79,7 @@ class Command extends Part implements Stringable
     /**
      * Gets the options attribute.
      *
-     * @return Collection|Option[]|null A collection of options.
+     * @return CollectionInterface|Option[]|null A collection of options.
      */
     protected function getOptionsAttribute(): ?Collection
     {

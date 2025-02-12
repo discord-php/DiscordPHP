@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -28,7 +29,7 @@ use Discord\Parts\Permissions\Permission;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\PresenceUpdate;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 use Stringable;
 use function React\Promise\reject;
@@ -46,7 +47,7 @@ use function React\Promise\reject;
  * @property-read string              $displayname                  The nickname or display name with optional discriminator of the member.
  * @property      ?string|null        $avatar                       The avatar URL of the member or null if member has no guild avatar.
  * @property      ?string|null        $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
- * @property      Collection|Role[]   $roles                        A collection of Roles that the member has.
+ * @property      CollectionInterface|Role[]   $roles                        A collection of Roles that the member has.
  * @property      Carbon|null         $joined_at                    A timestamp of when the member joined the guild.
  * @property      Carbon|null         $premium_since                When the user started boosting the server.
  * @property      bool                $deaf                         Whether the member is deaf.
@@ -61,10 +62,10 @@ use function React\Promise\reject;
  * @property      string                $id            The unique identifier of the member.
  * @property      string                $status        The status of the member.
  * @property-read Activity              $game          The game the member is playing.
- * @property      Collection|Activity[] $activities    User's current activities.
+ * @property      CollectionInterface|Activity[] $activities    User's current activities.
  * @property      object                $client_status Current client status.
  *
- * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
+ * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
 class Member extends Part implements Stringable
 {
@@ -131,9 +132,9 @@ class Member extends Part implements Stringable
      * @throws \RuntimeException      Member has no `$guild`.
      * @throws NoPermissionsException Missing `ban_members` permission.
      *
-     * @return ExtendedPromiseInterface<Ban>
+     * @return PromiseInterface<Ban>
      */
-    public function ban(?int $daysToDeleteMessages = null, ?string $reason = null): ExtendedPromiseInterface
+    public function ban(?int $daysToDeleteMessages = null, ?string $reason = null): PromiseInterface
     {
         return $this->discord->guilds->cacheGet($this->guild_id)->then(function (?Guild $guild) use ($daysToDeleteMessages, $reason) {
             if (null === $guild) {
@@ -158,9 +159,9 @@ class Member extends Part implements Stringable
      * @throws \RuntimeException      Member has no `$guild`.
      * @throws NoPermissionsException Missing `kick_members` permission.
      *
-     * @return ExtendedPromiseInterface<self>
+     * @return PromiseInterface<self>
      */
-    public function kick(?string $reason = null): ExtendedPromiseInterface
+    public function kick(?string $reason = null): PromiseInterface
     {
         return $this->discord->guilds->cacheGet($this->guild_id)->then(function (?Guild $guild) use ($reason) {
             if (null === $guild) {
@@ -185,9 +186,9 @@ class Member extends Part implements Stringable
      *
      * @throws NoPermissionsException Missing manage_nicknames permission.
      *
-     * @return ExtendedPromiseInterface<static>
+     * @return PromiseInterface<self>
      */
-    public function setNickname(?string $nick = null, ?string $reason = null): ExtendedPromiseInterface
+    public function setNickname(?string $nick = null, ?string $reason = null): PromiseInterface
     {
         $payload = [
             'nick' => $nick ?? '',
@@ -225,9 +226,9 @@ class Member extends Part implements Stringable
      * @param Channel|?string $channel The channel to move the member to.
      * @param string|null     $reason  Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<static>
+     * @return PromiseInterface<self>
      */
-    public function moveMember($channel, ?string $reason = null): ExtendedPromiseInterface
+    public function moveMember($channel, ?string $reason = null): PromiseInterface
     {
         if ($channel instanceof Channel) {
             $channel = $channel->id;
@@ -253,9 +254,9 @@ class Member extends Part implements Stringable
      * @throws \RuntimeException
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function addRole($role, ?string $reason = null): ExtendedPromiseInterface
+    public function addRole($role, ?string $reason = null): PromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
@@ -297,9 +298,9 @@ class Member extends Part implements Stringable
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function removeRole($role, ?string $reason = null): ExtendedPromiseInterface
+    public function removeRole($role, ?string $reason = null): PromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
@@ -331,15 +332,22 @@ class Member extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-member
      *
-     * @param Role[]|string[] $roles  The roles to set to the member.
-     * @param string|null     $reason Reason for Audit Log.
+     * @param CollectionInterface|Role[]|string[] $roles  The roles to set to the member.
+     * @param string|null                         $reason Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface<static>
+     * @return PromiseInterface<self>
      */
-    public function setRoles(array $roles, ?string $reason = null): ExtendedPromiseInterface
+    public function setRoles($roles, ?string $reason = null): PromiseInterface
     {
+        if ($roles instanceof CollectionInterface) {
+            $roles = $roles->toArray();
+        }
+        if (! is_array($roles)) {
+            return reject(new \InvalidArgumentException('Roles must be an array of Role instances or Role IDs.'));
+        }
+
         foreach ($roles as $i => $role) {
             if ($role instanceof Role) {
                 $roles[$i] = $role->id;
@@ -383,9 +391,9 @@ class Member extends Part implements Stringable
      *
      * @throws \RuntimeException
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
+    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): PromiseInterface
     {
         if ($user = $this->user) {
             return $user->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
@@ -518,9 +526,9 @@ class Member extends Part implements Stringable
      *
      * @throws NoPermissionsException Missing moderate_members permission.
      *
-     * @return ExtendedPromiseInterface<static>
+     * @return PromiseInterface<self>
      */
-    public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): ExtendedPromiseInterface
+    public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): PromiseInterface
     {
         if ($guild = $this->guild) {
             if ($botperms = $guild->getBotPermissions()) {
@@ -551,9 +559,9 @@ class Member extends Part implements Stringable
      *
      * @throws NoPermissionsException Missing `moderate_members` permission.
      *
-     * @return ExtendedPromiseInterface<static>
+     * @return PromiseInterface<self>
      */
-    public function setBypassesVerification(bool $bypasses_verification, ?string $reason = null): ExtendedPromiseInterface
+    public function setBypassesVerification(bool $bypasses_verification, ?string $reason = null): PromiseInterface
     {
         if ($guild = $this->guild) {
             if ($botperms = $guild->getBotPermissions()) {
@@ -609,9 +617,9 @@ class Member extends Part implements Stringable
     /**
      * Gets the activities attribute.
      *
-     * @return Collection|Activity[]
+     * @return CollectionInterface|Activity[]
      */
-    protected function getActivitiesAttribute(): Collection
+    protected function getActivitiesAttribute(): CollectionInterface
     {
         $activities = Collection::for(Activity::class, null);
 
@@ -685,9 +693,9 @@ class Member extends Part implements Stringable
     /**
      * Returns the roles attribute.
      *
-     * @return Collection<?Role> A collection of roles the member is in. null role only contains ID in the collection.
+     * @return CollectionInterface<?Role> A collection of roles the member is in. null role only contains ID in the collection.
      */
-    protected function getRolesAttribute(): Collection
+    protected function getRolesAttribute(): CollectionInterface
     {
         $roles = new Collection();
 

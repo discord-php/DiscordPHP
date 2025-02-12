@@ -17,7 +17,7 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function React\Promise\reject;
@@ -97,9 +97,9 @@ class ScheduledEvent extends Part
      *
      * @throws \RangeException
      *
-     * @return ExtendedPromiseInterface<Collection<User>>
+     * @return PromiseInterface<Collection<User>>
      */
-    public function getUsers(array $options): ExtendedPromiseInterface
+    public function getUsers(array $options): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults(['limit' => 100, 'with_member' => false]);

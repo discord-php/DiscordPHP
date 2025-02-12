@@ -98,8 +98,7 @@ class DiscordCommandClient extends Discord
                     if (is_string($result)) {
                         $message
                             ->reply($result)
-                            ->then(null, $this->commandClientOptions['internalRejectedPromiseHandler'])
-                            ->done();
+                            ->then(null, $this->commandClientOptions['internalRejectedPromiseHandler']);
                     }
                 }
             });
@@ -161,8 +160,7 @@ class DiscordCommandClient extends Discord
 
                     $message->channel
                         ->sendEmbed($embed)
-                        ->then(null, $this->commandClientOptions['internalRejectedPromiseHandler'])
-                        ->done();
+                        ->then(null, $this->commandClientOptions['internalRejectedPromiseHandler']);
 
                     return;
                 }
@@ -208,8 +206,7 @@ class DiscordCommandClient extends Discord
 
                 $message->channel
                     ->sendEmbed($embed)
-                    ->then(null, $this->commandClientOptions['internalRejectedPromiseHandler'])
-                    ->done();
+                    ->then(null, $this->commandClientOptions['internalRejectedPromiseHandler']);
             }, [
                 'description' => 'Provides a list of commands available.',
                 'usage' => '[command]',

@@ -32,6 +32,13 @@ use function Discord\poly_strlen;
 abstract class SelectMenu extends Component
 {
     /**
+     * Type of select menu component (text: 3, user: 5, role: 6, mentionable: 7, channels: 8)
+     *
+     * @var integer
+     */
+    protected $type;
+
+    /**
      * Custom ID to identify the select menu.
      *
      * @var string
@@ -39,11 +46,33 @@ abstract class SelectMenu extends Component
     protected $custom_id;
 
     /**
+     * Specified choices in a select menu (only required and available for string selects (type 3); max 25
+     *
+     * @var array|null
+     */
+    protected $options;
+
+    /**
+     * List of channel types to include in the channel select component (type 8)
+     *
+     * @var array|null
+     */
+    protected $channel_types;
+
+    /**
      * Placeholder string to display if nothing is selected. Maximum 150 characters.
      *
      * @var string|null
      */
     protected $placeholder;
+
+    /**
+     * List of default values for auto-populated select menu components;
+     * number of default values must be in the range defined by min_values and max_values
+     *
+     * @var array|null
+     */
+    protected $default_values;
 
     /**
      * Minimum number of options that must be selected.
@@ -105,11 +134,33 @@ abstract class SelectMenu extends Component
     }
 
     /**
+     * Sets the type for the select menu.
+     * (text: 3, user: 5, role: 6, mentionable: 7, channels: 8)
+     *
+     * @param int $type
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return string
+     */
+    public function setType(int $type): self
+    {
+        $allowed_types = [self::TYPE_STRING_SELECT, self::TYPE_USER_SELECT, self::TYPE_ROLE_SELECT, self::TYPE_MENTIONABLE_SELECT, self::TYPE_CHANNEL_SELECT];
+        if (! in_array($type, $allowed_types)) {
+            throw new \InvalidArgumentException('Invalid select menu type.');
+        }
+
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
      * Sets the custom ID for the select menu.
      *
      * @param string $custom_id
      *
-     * @throws \LengthException
+     * @throws \LengthException If the custom ID is longer than 100 characters.
      *
      * @return $this
      */
@@ -120,6 +171,49 @@ abstract class SelectMenu extends Component
         }
 
         $this->custom_id = $custom_id;
+
+        return $this;
+    }
+
+    /**
+     * Specified choices in a select menu (only required and available for string selects (type 3); max 25
+     *
+     * @param array $options
+     *
+     * @throws \InvalidArgumentException If the select menu type is not `TYPE_STRING_SELECT`.
+     *
+     * @return $this
+     */
+    public function setOptions(array $options): self
+    {
+        if ($this->type != self::TYPE_STRING_SELECT) {
+            throw new \InvalidArgumentException('Options can only be set for string selects.');
+        }
+
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * Sets the channel types for the select menu.
+     *
+     * This method is only applicable if the select menu type is `TYPE_CHANNEL_SELECT`.
+     * If the select menu type is not `TYPE_CHANNEL_SELECT`, an `InvalidArgumentException` will be thrown.
+     *
+     * @param array $channel_types
+     *
+     * @throws \InvalidArgumentException If the select menu type is not `TYPE_CHANNEL_SELECT`.
+     *
+     * @return $this
+     */
+    public function setChannelTypes(array $channel_types): self
+    {
+        if ($this->type != self::TYPE_CHANNEL_SELECT) {
+            throw new \InvalidArgumentException('Channel types can only be set for channel selects.');
+        }
+
+        $this->channel_types = $channel_types;
 
         return $this;
     }
@@ -140,6 +234,17 @@ abstract class SelectMenu extends Component
         }
 
         $this->placeholder = $placeholder;
+
+        return $this;
+    }
+
+    public function setDefaultValues(?array $default_values): self
+    {
+        $allowed_types = [self::TYPE_USER_SELECT, self::TYPE_ROLE_SELECT, self::TYPE_MENTIONABLE_SELECT, self::TYPE_CHANNEL_SELECT];
+        if (! in_array($this->type, $allowed_types)) {
+            throw new \InvalidArgumentException('Default values can only be set for user, role, mentionable, and channel selects.');
+        }
+        $this->default_values = $default_values;
 
         return $this;
     }
@@ -255,13 +360,7 @@ abstract class SelectMenu extends Component
 
                     $response = $callback($interaction, $options);
                 }
-                $ack = function () use ($interaction) {
-                    // attempt to acknowledge interaction if it has not already been responded to.
-                    try {
-                        $interaction->acknowledge();
-                    } catch (\Exception $e) {
-                    }
-                };
+                $ack = static fn() => $interaction->isResponded() ?: $interaction->acknowledge();
 
                 if ($response instanceof PromiseInterface) {
                     $response->then($ack);
@@ -291,6 +390,16 @@ abstract class SelectMenu extends Component
     }
 
     /**
+     * Returns the type of the select menu.
+     *
+     * @return int
+     */
+    public function getType(): int
+    {
+        return $this->type;
+    }
+
+    /**
      * Returns the Custom ID of the select menu.
      *
      * @return string
@@ -301,6 +410,26 @@ abstract class SelectMenu extends Component
     }
 
     /**
+     * Returns the options of the select menu.
+     *
+     * @return array|null
+     */
+    public function getOptions(): ?array
+    {
+        return $this->options;
+    }
+
+    /**
+     * Returns the channel types of the select menu.
+     *
+     * @return array|null
+     */
+    public function getChannelTypes(): ?array
+    {
+        return $this->channel_types;
+    }
+
+    /**
      * Returns the placeholder string of the select menu.
      *
      * @return string|null
@@ -308,6 +437,16 @@ abstract class SelectMenu extends Component
     public function getPlaceholder(): ?string
     {
         return $this->placeholder;
+    }
+
+    /**
+     * Returns the default values of the select menu.
+     *
+     * @return array|null
+     */
+    public function getDefaultValues(): ?array
+    {
+        return $this->default_values;
     }
 
     /**

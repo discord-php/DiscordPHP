@@ -14,7 +14,7 @@ namespace Discord\Parts\Guild;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 /**
  * A Widget of a Guild.
@@ -86,7 +86,7 @@ class Widget extends Part
     /**
      * {@inheritDoc}
      */
-    public function fetch(): ExtendedPromiseInterface
+    public function fetch(): PromiseInterface
     {
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_WIDGET, $this->id))
             ->then(function ($response) {

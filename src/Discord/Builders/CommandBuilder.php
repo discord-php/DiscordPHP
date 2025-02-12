@@ -43,9 +43,9 @@ class CommandBuilder implements JsonSerializable
     /**
      * Description of the command. should be empty if the type is not CHAT_INPUT.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $description;
+    protected ?string $description = null;
 
     /**
      * The default permission of the command. If true the command is enabled when the app is added to the guild.
@@ -67,9 +67,9 @@ class CommandBuilder implements JsonSerializable
     /**
      * Returns all the options in the command.
      *
-     * @return Option[]|null
+     * @return CollectionInterface<Option>|Option[]|null
      */
-    public function getOptions(): ?array
+    public function getOptions()
     {
         return $this->options ?? null;
     }
@@ -99,6 +99,8 @@ class CommandBuilder implements JsonSerializable
             'default_member_permissions',
             'default_permission',
             'dm_permission',
+            'guild_id',
+            'nsfw',
         ];
 
         foreach ($optionals as $optional) {

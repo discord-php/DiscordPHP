@@ -11,6 +11,8 @@
 
 namespace Discord\Builders;
 
+use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
 
@@ -24,16 +26,17 @@ use function Discord\poly_strlen;
  *
  * @since 7.1.0
  *
- * @property int                                       $type                       The type of the command, defaults 1 if not set.
- * @property string                                    $name                       1-32 character name of the command.
- * @property ?string[]|null                            $name_localizations         Localization dictionary for the name field. Values follow the same restrictions as name.
- * @property string                                    $description                1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
- * @property ?string[]|null                            $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
- * @property \Discord\Helpers\Collection|Option[]|null $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
- * @property ?string                                   $default_member_permissions Set of permissions represented as a bit set.
- * @property bool|null                                 $dm_permission              Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
- * @property ?bool                                     $default_permission         Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
- * @property bool|null                                 $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
+ * @property int                               $type                       The type of the command, defaults 1 if not set.
+ * @property string                            $name                       1-32 character name of the command.
+ * @property ?string[]|null                    $name_localizations         Localization dictionary for the name field. Values follow the same restrictions as name.
+ * @property ?string                           $description                1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
+ * @property ?string[]|null                    $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
+ * @property CollectionInterface|Option[]|null $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
+ * @property ?string                           $default_member_permissions Set of permissions represented as a bit set.
+ * @property bool|null                         $dm_permission              Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
+ * @property ?bool                             $default_permission         Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
+ * @property ?int                              $guild_id                   The optional guild ID this command is for. If not set, the command is global.
+ * @property bool|null                         $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
  */
 trait CommandAttributes
 {
@@ -209,6 +212,20 @@ trait CommandAttributes
     }
 
     /**
+     * Sets the guild ID of the command.
+     *
+     * @param int $guildId Guild ID of the command.
+     *
+     * @return $this
+     */
+    public function setGuildId(int $guildId): self
+    {
+        $this->guild_id = $guildId;
+
+        return $this;
+    }
+
+    /**
      * Sets the age restriction of the command.
      *
      * @param bool $restricted Age restriction of the command.
@@ -242,9 +259,9 @@ trait CommandAttributes
             throw new \OverflowException('Command can only have a maximum of 25 options.');
         }
 
-        $this->options ??= [];
+        $this->options ??= Collection::for(Option::class, 'name');
 
-        $this->options[] = $option;
+        $this->options->push($option);
 
         return $this;
     }
@@ -264,8 +281,8 @@ trait CommandAttributes
             throw new \DomainException('Only CHAT_INPUT Command type can have option.');
         }
 
-        if (isset($this->options) && ($idx = array_search($option, $this->options)) !== false) {
-            array_splice($this->options, $idx, 1);
+        if (isset($this->options) && ($idx = $this->options->search($option)) !== false) {
+            $this->options->splice($idx, 1);
         }
 
         return $this;
@@ -278,7 +295,7 @@ trait CommandAttributes
      */
     public function clearOptions(): self
     {
-        $this->options = [];
+        $this->options = Collection::for(Option::class, 'name');
 
         return $this;
     }

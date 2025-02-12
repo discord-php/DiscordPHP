@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Exceptions\InvalidOverwriteException;
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
@@ -27,7 +28,6 @@ use Discord\Repository\Channel\OverwriteRepository;
 use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -38,7 +38,8 @@ use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\InviteRepository;
 use Discord\Repository\Channel\StageInstanceRepository;
 use Discord\Repository\Channel\ThreadRepository;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
@@ -70,7 +71,7 @@ use function React\Promise\resolve;
  * @property      int|null            $bitrate                            The bitrate of the channel. Only for voice channels.
  * @property      int|null            $user_limit                         The user limit of the channel. Max 99 for voice channels and 10000 for stage channels (0 refers to no limit).
  * @property      int|null            $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message (slow mode).
- * @property      Collection|User[]   $recipients                         A collection of all the recipients in the channel. Only for DM or group channels.
+ * @property      CollectionInterface|User[]   $recipients                A collection of all the recipients in the channel. Only for DM or group channels.
  * @property-read User|null           $recipient                          The first recipient of the channel. Only for DM or group channels.
  * @property-read string|null         $recipient_id                       The ID of the recipient of the channel, if it is a DM channel.
  * @property      ?string|null        $icon                               Icon hash.
@@ -84,7 +85,7 @@ use function React\Promise\resolve;
  * @property      int|null            $default_auto_archive_duration      Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
  * @property      string|null         $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on an application command interaction.
  * @property      int|null            $flags                              Channel flags combined as a bitfield.
- * @property      Collection|Tag[]    $available_tags                     Set of tags that can be used in a forum channel, limited to 20.
+ * @property      CollectionInterface|Tag[]    $available_tags                     Set of tags that can be used in a forum channel, limited to 20.
  * @property      ?Reaction|null      $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.
  * @property      int|null            $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a forum channel. this field is copied to the thread at creation time and does not live update.
  * @property      ?int|null           $default_sort_order                 The default sort order type used to order posts in forum channels.
@@ -98,7 +99,7 @@ use function React\Promise\resolve;
  * @property InviteRepository        $invites         Invites in the channel.
  * @property StageInstanceRepository $stage_instances Stage instances in the channel.
  *
- * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
+ * @method PromiseInterface<Message> sendMessage(MessageBuilder|string $builder)
  */
 class Channel extends Part implements Stringable
 {
@@ -114,6 +115,7 @@ class Channel extends Part implements Stringable
     public const TYPE_GUILD_STAGE_VOICE = 13;
     public const TYPE_GUILD_DIRECTORY = 14;
     public const TYPE_GUILD_FORUM = 15;
+    public const TYPE_GUILD_MEDIA = 16;
 
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_TEXT` */
     public const TYPE_TEXT = self::TYPE_GUILD_TEXT;
@@ -250,9 +252,9 @@ class Channel extends Part implements Stringable
     /**
      * Gets the recipients attribute.
      *
-     * @return Collection A collection of recipients.
+     * @return CollectionInterface A collection of recipients.
      */
-    protected function getRecipientsAttribute(): Collection
+    protected function getRecipientsAttribute(): CollectionInterface
     {
         $recipients = Collection::for(User::class);
 
@@ -294,9 +296,9 @@ class Channel extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
      *
-     * @return ExtendedPromiseInterface<Collection|Message[]>
+     * @return PromiseInterface<Collection<Message[]>>
      */
-    public function getPinnedMessages(): ExtendedPromiseInterface
+    public function getPinnedMessages(): PromiseInterface
     {
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_PINS, $this->id))
         ->then(function ($responses) {
@@ -322,9 +324,9 @@ class Channel extends Part implements Stringable
      *
      * @throws InvalidOverwriteException
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function setPermissions(Part $part, array $allow = [], array $deny = [], ?string $reason = null): ExtendedPromiseInterface
+    public function setPermissions(Part $part, array $allow = [], array $deny = [], ?string $reason = null): PromiseInterface
     {
         if ($part instanceof Member) {
             $type = Overwrite::TYPE_MEMBER;
@@ -363,9 +365,9 @@ class Channel extends Part implements Stringable
      * @throws NoPermissionsException    Missing manage_roles permission.
      * @throws InvalidOverwriteException Overwrite type is not member or role.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function setOverwrite(Part $part, Overwrite $overwrite, ?string $reason = null): ExtendedPromiseInterface
+    public function setOverwrite(Part $part, Overwrite $overwrite, ?string $reason = null): PromiseInterface
     {
         if ($this->guild_id && $botperms = $this->getBotPermissions()) {
             if (! $botperms->manage_roles) {
@@ -391,7 +393,7 @@ class Channel extends Part implements Stringable
         if (! $this->created) {
             $this->attributes['permission_overwrites'][] = $payload;
 
-            return resolve();
+            return resolve(null);
         }
 
         $headers = [];
@@ -409,13 +411,13 @@ class Channel extends Part implements Stringable
      * @param int|null            $position The new channel position, not relative to category.
      * @param string|null         $reason   Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<static>
+     * @return PromiseInterface<self>
      *
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      * @throws NoPermissionsException    Missing manage_channels permission in either channel.
      */
-    public function setCategory($category, ?int $position = null, ?string $reason = null): ExtendedPromiseInterface
+    public function setCategory($category, ?int $position = null, ?string $reason = null): PromiseInterface
     {
         if (! in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_GUILD_VOICE, self::TYPE_GUILD_ANNOUNCEMENT, self::TYPE_GUILD_FORUM])) {
             return reject(new \RuntimeException('You can only move Text, Voice, Announcement or Forum channel type.'));
@@ -473,9 +475,9 @@ class Channel extends Part implements Stringable
      * @throws \RuntimeException
      * @throws NoPermissionsException Missing move_members permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface<Member>
      */
-    public function moveMember($member, ?string $reason = null): ExtendedPromiseInterface
+    public function moveMember($member, ?string $reason = null): PromiseInterface
     {
         if (! $this->isVoiceBased()) {
             return reject(new \RuntimeException('You cannot move a member in a text channel.'));
@@ -505,12 +507,12 @@ class Channel extends Part implements Stringable
      * @param Member|string $member The member to mute. (either a Member part or the member ID)
      * @param string|null   $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException      Channel is not voice-based.
      * @throws NoPermissionsException Missing mute_members permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface<Member>
      */
-    public function muteMember($member, ?string $reason = null): ExtendedPromiseInterface
+    public function muteMember($member, ?string $reason = null): PromiseInterface
     {
         if (! $this->isVoiceBased()) {
             return reject(new \RuntimeException('You cannot mute a member in a text channel.'));
@@ -540,12 +542,12 @@ class Channel extends Part implements Stringable
      * @param Member|string $member The member to unmute. (either a Member part or the member ID)
      * @param string|null   $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException      Channel is not voice-based.
      * @throws NoPermissionsException Missing mute_members permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface<Member>
      */
-    public function unmuteMember($member, ?string $reason = null): ExtendedPromiseInterface
+    public function unmuteMember($member, ?string $reason = null): PromiseInterface
     {
         if (! $this->isVoiceBased()) {
             return reject(new \RuntimeException('You cannot unmute a member in a text channel.'));
@@ -570,6 +572,76 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Deafens a member in the voice channel.
+     *
+     * @param Member|string $member The member to deafen. (either a Member part or the member ID)
+     * @param string|null   $reason Reason for Audit Log.
+     *
+     * @throws \RuntimeException      Channel is not voice-based.
+     * @throws NoPermissionsException Missing deafen_members permission.
+     *
+     * @return PromiseInterface<Member>
+     */
+    public function deafenMember($member, ?string $reason = null): PromiseInterface
+    {
+        if (! $this->isVoiceBased()) {
+            return reject(new \RuntimeException('You cannot deafen a member in a text channel.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->deafen_members) {
+                return reject(new NoPermissionsException("You do not have permission to deafen members in the channel {$this->id}."));
+            }
+        }
+
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['deaf' => true], $headers);
+    }
+
+    /**
+     * Undeafens a member in the voice channel.
+     *
+     * @param Member|string $member The member to undeafen. (either a Member part or the member ID)
+     * @param string|null   $reason Reason for Audit Log.
+     *
+     * @throws \RuntimeException      Channel is not voice-based.
+     * @throws NoPermissionsException Missing deafen_members permission.
+     *
+     * @return PromiseInterface<Member>
+     */
+    public function undeafenMember($member, ?string $reason = null): PromiseInterface
+    {
+        if (! $this->isVoiceBased()) {
+            return reject(new \RuntimeException('You cannot deafen a member in a text channel.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->deafen_members) {
+                return reject(new NoPermissionsException("You do not have permission to deafen members in the channel {$this->id}."));
+            }
+        }
+
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['deaf' => false], $headers);
+    }
+
+    /**
      * Creates an invite for the channel.
      *
      * @link https://discord.com/developers/docs/resources/channel#create-channel-invite
@@ -586,9 +658,9 @@ class Channel extends Part implements Stringable
      *
      * @throws NoPermissionsException Missing create_instant_invite permission.
      *
-     * @return ExtendedPromiseInterface<Invite>
+     * @return PromiseInterface<Invite>
      */
-    public function createInvite($options = [], ?string $reason = null): ExtendedPromiseInterface
+    public function createInvite($options = [], ?string $reason = null): PromiseInterface
     {
         if (! $this->canInvite()) {
             return reject(new \RuntimeException('You cannot create invite in this type of channel.'));
@@ -652,9 +724,9 @@ class Channel extends Part implements Stringable
      * @throws \InvalidArgumentException
      * @throws NoPermissionsException    Missing manage_messages permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function deleteMessages($messages, ?string $reason = null): ExtendedPromiseInterface
+    public function deleteMessages($messages, ?string $reason = null): PromiseInterface
     {
         if (! is_array($messages) && ! ($messages instanceof Traversable)) {
             return reject(new \InvalidArgumentException('$messages must be an array or implement Traversable.'));
@@ -707,9 +779,9 @@ class Channel extends Part implements Stringable
      *
      * @throws NoPermissionsException Missing manage_messages permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function limitDelete(int $value, ?string $reason = null): ExtendedPromiseInterface
+    public function limitDelete(int $value, ?string $reason = null): PromiseInterface
     {
         if ($botperms = $this->getBotPermissions()) {
             if (! $botperms->manage_messages) {
@@ -735,11 +807,10 @@ class Channel extends Part implements Stringable
      *                                Or also missing `connect` permission for text in voice.
      * @throws \RangeException
      *
-     * @return ExtendedPromiseInterface<Collection|Message[]>
-     *
+     * @return PromiseInterface<Collection<Message[]>>
      * @todo Make it in a trait along with Thread
      */
-    public function getMessageHistory(array $options = []): ExtendedPromiseInterface
+    public function getMessageHistory(array $options = []): PromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->read_message_history) {
@@ -802,9 +873,9 @@ class Channel extends Part implements Stringable
      * @throws NoPermissionsException Missing manage_messages permission.
      * @throws \RuntimeException
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function pinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
+    public function pinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->manage_messages) {
@@ -843,9 +914,9 @@ class Channel extends Part implements Stringable
      * @throws NoPermissionsException Missing manage_messages permission.
      * @throws \RuntimeException
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function unpinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
+    public function unpinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->manage_messages) {
@@ -912,24 +983,24 @@ class Channel extends Part implements Stringable
      */
     protected function getPermissionOverwritesAttribute(): ?array
     {
-        $overwrites = null;
+        $overwrites = [];
 
         /** @var Overwrite */
         foreach ($this->overwrites as $overwrite) {
             $overwrites[] = $overwrite->getRawAttributes();
         }
 
-        return $overwrites ?? $this->attributes['permission_overwrites'] ?? null;
+        return ! empty($overwrites) ? $overwrites : ($this->attributes['permission_overwrites'] ?? null);
     }
 
     /**
      * Gets the available tags attribute.
      *
-     * @return Collection|Tag[] Available forum tags.
+     * @return CollectionInterface|Tag[] Available forum tags.
      *
      * @since 7.4.0
      */
-    protected function getAvailableTagsAttribute(): Collection
+    protected function getAvailableTagsAttribute(): CollectionInterface
     {
         $available_tags = Collection::for(Tag::class);
 
@@ -978,11 +1049,11 @@ class Channel extends Part implements Stringable
      *                                create_public_threads when creating a public thread.
      *                                send_messages when creating a forum post.
      *
-     * @return ExtendedPromiseInterface<Thread>
+     * @return PromiseInterface<Thread>
      *
      * @since 10.0.0 Arguments for `$name`, `$private` and `$auto_archive_duration` are now inside `$options`
      */
-    public function startThread(array|string $options, string|null|bool $reason = null, int $_auto_archive_duration = 1440, ?string $_reason = null): ExtendedPromiseInterface
+    public function startThread(array|string $options, string|bool|null $reason = null, int $_auto_archive_duration = 1440, ?string $_reason = null): PromiseInterface
     {
         // Old v7 signature
         if (is_string($options)) {
@@ -1136,9 +1207,9 @@ class Channel extends Part implements Stringable
      * @throws \RuntimeException
      * @throws NoPermissionsException Missing various permissions depending on the message body.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
+    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): PromiseInterface
     {
         // Backwards compatible support for old `sendMessage` function signature.
         if (! ($message instanceof MessageBuilder)) {
@@ -1206,9 +1277,9 @@ class Channel extends Part implements Stringable
      *
      * @param Embed $embed Embed to send.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function sendEmbed(Embed $embed): ExtendedPromiseInterface
+    public function sendEmbed(Embed $embed): PromiseInterface
     {
         return $this->sendMessage(MessageBuilder::new()
             ->addEmbed($embed));
@@ -1226,9 +1297,9 @@ class Channel extends Part implements Stringable
      * @param string|null $content  Message content to send with the file.
      * @param bool        $tts      Whether to send the message with TTS.
      *
-     * @return ExtendedPromiseInterface<Message>
+     * @return PromiseInterface<Message>
      */
-    public function sendFile(string $filepath, ?string $filename = null, ?string $content = null, bool $tts = false): ExtendedPromiseInterface
+    public function sendFile(string $filepath, ?string $filename = null, ?string $content = null, bool $tts = false): PromiseInterface
     {
         $builder = MessageBuilder::new()
             ->setTts($tts)
@@ -1248,9 +1319,9 @@ class Channel extends Part implements Stringable
      *
      * @throws \RuntimeException
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function broadcastTyping(): ExtendedPromiseInterface
+    public function broadcastTyping(): PromiseInterface
     {
         if (! $this->isTextBased()) {
             return reject(new \RuntimeException('You cannot broadcast typing to a voice channel.'));
@@ -1267,9 +1338,9 @@ class Channel extends Part implements Stringable
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of messages allowed or false.
      *
-     * @return ExtendedPromiseInterface<Collection<Message>>
+     * @return PromiseInterface<Collection<Message[]>>
      */
-    public function createMessageCollector(callable $filter, array $options = []): ExtendedPromiseInterface
+    public function createMessageCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
         $messages = new Collection([], null, null);

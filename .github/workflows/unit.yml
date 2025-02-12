@@ -16,6 +16,8 @@ jobs:
     strategy:
       matrix:
         php:
+          - '8.4'
+          - '8.3'
           - '8.2'
           - '8.1'
           - '8.0'
@@ -38,4 +40,3 @@ jobs:
         run: phpunit
       - name: Run PHPLint
         run: phplint
-

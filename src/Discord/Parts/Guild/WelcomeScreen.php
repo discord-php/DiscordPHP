@@ -12,6 +12,7 @@
 namespace Discord\Parts\Guild;
 
 use Discord\Helpers\Collection;
+use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Part;
 
 /**
@@ -22,7 +23,7 @@ use Discord\Parts\Part;
  * @since 7.0.0
  *
  * @property ?string                     $description      The server description shown in the welcome screen.
- * @property Collection|WelcomeChannel[] $welcome_channels The channels shown in the welcome screen, up to 5.
+ * @property CollectionInterface|WelcomeChannel[] $welcome_channels The channels shown in the welcome screen, up to 5.
  */
 class WelcomeScreen extends Part
 {
@@ -37,9 +38,9 @@ class WelcomeScreen extends Part
     /**
      * Returns the Welcome Channels of the Welcome Screen.
      *
-     * @return Collection|WelcomeChannel[] The channels of welcome screen.
+     * @return CollectionInterface|WelcomeChannel[] The channels of welcome screen.
      */
-    protected function getWelcomeChannelsAttribute(): Collection
+    protected function getWelcomeChannelsAttribute(): CollectionInterface
     {
         $collection = Collection::for(WelcomeChannel::class, null);
 

@@ -12,7 +12,6 @@
 namespace Discord;
 
 use ArrayIterator;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Role;
@@ -21,6 +20,7 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
+use React\Promise\Deferred;
 use React\Promise\Promise;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\Options;
@@ -82,17 +82,14 @@ const COLORTABLE = [
  *
  * @since 4.0.0
  */
-function mentioned($part, Message $message): bool
+function mentioned(Part|string $part, Message $message): bool
 {
-    if ($part instanceof User || $part instanceof Member) {
-        return $message->mentions->has($part->id);
-    } elseif ($part instanceof Role) {
-        return $message->mention_roles->has($part->id);
-    } elseif ($part instanceof Channel) {
-        return strpos($message->content, "<#{$part->id}>") !== false;
-    }
-
-    return strpos($message->content, $part) !== false;
+    return match (true) {
+        $part instanceof User, $part instanceof Member => $message->mentions->has($part->id),
+        $part instanceof Role => $message->mention_roles->has($part->id),
+        $part instanceof Channel => str_contains($message->content, "<#{$part->id}>"),
+        default => str_contains($message->content, $part),
+    };
 }
 
 /**
@@ -104,17 +101,15 @@ function mentioned($part, Message $message): bool
  *
  * @since 5.0.12
  */
-function getColor($color = 0): int
+function getColor(int|string $color = 0): int
 {
-    if (is_integer($color)) {
+    if (is_int($color)) {
         return $color;
     }
 
     if (preg_match('/^([a-z]+)$/ui', $color, $match)) {
         $colorName = strtolower($match[1]);
-        if (isset(COLORTABLE[$colorName])) {
-            return COLORTABLE[$colorName];
-        }
+        return COLORTABLE[$colorName] ?? 0;
     }
 
     if (preg_match('/^(#|0x|)([0-9a-f]{6})$/ui', $color, $match)) {
@@ -136,13 +131,7 @@ function getColor($color = 0): int
  */
 function contains(string $string, array $matches): bool
 {
-    foreach ($matches as $match) {
-        if (strpos($string, $match) !== false) {
-            return true;
-        }
-    }
-
-    return false;
+    return array_reduce($matches, fn($carry, $match) => $carry || str_contains($string, $match), false);
 }
 
 /**
@@ -156,14 +145,7 @@ function contains(string $string, array $matches): bool
  */
 function studly(string $string): string
 {
-    $ret = '';
-    preg_match_all('/([a-z0-9]+)/ui', $string, $matches);
-
-    foreach ($matches[0] as $match) {
-        $ret .= ucfirst(strtolower($match));
-    }
-
-    return $ret;
+    return implode('', array_map('ucfirst', array_map('strtolower', preg_split('/[^a-z0-9]+/i', $string))));
 }
 
 /**
@@ -175,14 +157,11 @@ function studly(string $string): string
  *
  * @since 5.0.12
  */
-function poly_strlen($str): int
+function poly_strlen(string $str): int
 {
-    // If mbstring is installed, use it.
-    if (function_exists('mb_strlen')) {
-        return mb_strlen($str);
-    }
-
-    return strlen($str);
+    return function_exists('mb_strlen')
+        ? mb_strlen($str)
+        : strlen($str);
 }
 
 /**
@@ -224,7 +203,7 @@ function imageToBase64(string $filepath): string
 function getSnowflakeTimestamp(string $snowflake)
 {
     if (\PHP_INT_SIZE === 4) { //x86
-        $binary = \str_pad(\base_convert($snowflake, 10, 2), 64, 0, \STR_PAD_LEFT);
+        $binary = \str_pad(\base_convert($snowflake, 10, 2), 64, '0', \STR_PAD_LEFT);
         $time = \base_convert(\substr($binary, 0, 42), 2, 10);
         $timestamp = (float) ((((int) \substr($time, 0, -3)) + 1420070400).'.'.\substr($time, -3));
         $workerID = (int) \base_convert(\substr($binary, 42, 5), 2, 10);
@@ -257,15 +236,11 @@ function getSnowflakeTimestamp(string $snowflake)
  *
  * @internal
  */
-function normalizePartId($id_field = 'id'): \Closure
+function normalizePartId(string $id_field = 'id'): \Closure
 {
-    return static function (Options $options, $part) use ($id_field) {
-        if ($part instanceof Part) {
-            return $part->{$id_field};
-        }
-
-        return $part;
-    };
+    return static fn(Options $options, $part) => $part instanceof Part
+        ? $part->{$id_field}
+        : $part;
 }
 
 /**
@@ -296,7 +271,7 @@ function escapeMarkdown(string $text): string
  * @since 10.0.0 Handle `$canceller` internally, use `cancel()` from the returned promise.
  * @since 7.1.0
  */
-function deferFind($array, callable $callback, $loop = null): Promise
+function deferFind($array, callable $callback, $loop = null): PromiseInterface
 {
     $cancelled = false;
     $deferred = new Deferred(function () use (&$cancelled) {

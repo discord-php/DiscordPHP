@@ -44,6 +44,7 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property string|null   $cover_image_hash                  The application's default rich presence invite cover image hash.
  * @property int           $flags                             The application's public flags.
  * @property int|null      $approximate_guild_count           The application's approximate count of the app's guild membership.
+ * @property int|null      $approximate_user_install_count    The approximate count of users that have installed the app.
  * @property string[]|null $redirect_uris                     Array of redirect URIs for the application.
  * @property string|null   $interactions_endpoint_url         The interactions endpoint URL for the application.
  * @property string|null   $role_connections_verification_url The application's role connection verification entry point, which when configured will render the app as a verification method in the guild role verification configuration.
@@ -81,6 +82,7 @@ class Application extends Part
         'role_connections_verification_url',
         'owner',
         'approximate_guild_count',
+        'approximate_user_install_count',
         // 'interactions_event_types',
         // 'interactions_version',
         // 'explicit_content_filter',
