@@ -11,9 +11,8 @@
 
 namespace Discord\Builders;
 
-use Discord\Builders\Components\ActionRow;
+use Discord\Builders\Components;
 use Discord\Builders\Components\Component;
-use Discord\Builders\Components\SelectMenu;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
@@ -380,25 +379,26 @@ class MessageBuilder implements JsonSerializable
      */
     public function addComponent(Component $component): self
     {
-        // If it's a v2 component, set the v2 flag.
-        if (
-            $component instanceof Section ||
-            $component instanceof TextDisplay ||
-            $component instanceof Thumbnail ||
-            $component instanceof MediaGallery ||
-            $component instanceof File ||
-            $component instanceof Separator ||
-            $component instanceof Container
-        ) {
-            $this->flags = ($this->flags ?? 0) | self::FLAG_V2_COMPONENTS;
+        $v2 = [
+            Components\Section::class,
+            Components\TextDisplay::class,
+            Components\Thumbnail::class,
+            Components\MediaGallery::class,
+            Components\File::class,
+            Components\Separator::class,
+            Components\Container::class,
+        ];
+
+        if (in_array($component::class, $v2)) {
+            $this->flags = ($this->flags ?? 0) | Message::FLAG_V2_COMPONENTS;
 
             if (isset($this->components) && count($this->components) >= 10) {
                 throw new \OverflowException('You can only add 10 components to a v2 message');
             }
-        } elseif (! ($component instanceof ActionRow || $component instanceof SelectMenu)) {
+        } elseif (! ($component instanceof Components\ActionRow || $component instanceof Components\SelectMenu)) {
             throw new \InvalidArgumentException('You can only add action rows and select menus as components to v1 messages. Put your other components inside an action row.');
         } elseif (isset($this->components) && count($this->components) >= 5) {
-            throw new \OverflowException('You can only add 5 components to a v1 message');
+            throw new \OverflowException('You can only add 5 components to a message');
         }
 
         $this->components[] = $component;
@@ -643,6 +643,16 @@ class MessageBuilder implements JsonSerializable
         $this->flags = $flags;
 
         return $this;
+    }
+
+    /**
+     * Get the current flags of the message.
+     *
+     * @return int
+     */
+    public function getFlags(): int
+    {
+        return $this->flags;
     }
 
     /**

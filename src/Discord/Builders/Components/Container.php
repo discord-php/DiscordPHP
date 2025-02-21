@@ -65,15 +65,15 @@ class Container extends Component
     public function addComponent(Component $component): self
     {
         $allowed = [
-            Component::TYPE_ACTION_ROW,
-            Component::TYPE_TEXT_DISPLAY,
-            Component::TYPE_SECTION,
-            Component::TYPE_MEDIA_GALLERY,
-            Component::TYPE_SEPARATOR,
-            Component::TYPE_FILE,
+            ActionRow::class,
+            TextDisplay::class,
+            Section::class,
+            MediaGallery::class,
+            Separator::class,
+            File::class,
         ];
 
-        if (! in_array($component->getType(), $allowed)) {
+        if (! in_array($component::class, $allowed)) {
             throw new \InvalidArgumentException('Container can only contain components of type: Action Row, Text Display, Section, Media Gallery, Separator, or File.');
         }
 
