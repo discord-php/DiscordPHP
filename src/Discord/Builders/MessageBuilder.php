@@ -373,19 +373,32 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Component $component Component to add.
      *
-     * @throws \InvalidArgumentException Component is not a type of `ActionRow` or `SelectMenu`
-     * @throws \OverflowException        Builder exceeds 5 components.
+     * @throws \InvalidArgumentException Component is not a valid type.
+     * @throws \OverflowException        Builder exceeds component limits.
      *
      * @return $this
      */
     public function addComponent(Component $component): self
     {
-        if (! ($component instanceof ActionRow || $component instanceof SelectMenu)) {
-            throw new \InvalidArgumentException('You can only add action rows and select menus as components to messages. Put your other components inside an action row.');
-        }
+        // If it's a v2 component, set the v2 flag.
+        if (
+            $component instanceof Section ||
+            $component instanceof TextDisplay ||
+            $component instanceof Thumbnail ||
+            $component instanceof MediaGallery ||
+            $component instanceof File ||
+            $component instanceof Separator ||
+            $component instanceof Container
+        ) {
+            $this->flags = ($this->flags ?? 0) | self::FLAG_V2_COMPONENTS;
 
-        if (isset($this->components) && count($this->components) >= 5) {
-            throw new \OverflowException('You can only add 5 components to a message');
+            if (isset($this->components) && count($this->components) >= 10) {
+                throw new \OverflowException('You can only add 10 components to a v2 message');
+            }
+        } elseif (! ($component instanceof ActionRow || $component instanceof SelectMenu)) {
+            throw new \InvalidArgumentException('You can only add action rows and select menus as components to v1 messages. Put your other components inside an action row.');
+        } elseif (isset($this->components) && count($this->components) >= 5) {
+            throw new \OverflowException('You can only add 5 components to a v1 message');
         }
 
         $this->components[] = $component;
