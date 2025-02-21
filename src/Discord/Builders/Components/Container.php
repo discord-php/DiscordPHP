@@ -64,19 +64,6 @@ class Container extends Component
      */
     public function addComponent(Component $component): self
     {
-        $allowed = [
-            ActionRow::class,
-            TextDisplay::class,
-            Section::class,
-            MediaGallery::class,
-            Separator::class,
-            File::class,
-        ];
-
-        if (! in_array($component::class, $allowed)) {
-            throw new \InvalidArgumentException('Container can only contain components of type: Action Row, Text Display, Section, Media Gallery, Separator, or File.');
-        }
-
         if (count($this->components) >= 10) {
             throw new \OverflowException('You can only have 10 components per container.');
         }
