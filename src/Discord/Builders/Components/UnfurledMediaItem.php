@@ -11,6 +11,7 @@
 
 namespace Discord\Builders\Components;
 
+use Discord\Parts\Channel\Attachment;
 use JsonSerializable;
 
 /**
@@ -91,12 +92,16 @@ class UnfurledMediaItem implements JsonSerializable
     /**
      * Creates a new unfurled media item from an attachment.
      *
-     * @param string $filename Name of the attachment file.
+     * @param string|Attachment $filename Name of the attachment file, or null.
      *
      * @return self
      */
-    public static function fromAttachment(string $filename): self
+    public static function fromAttachment(string|Attachment $filename): self
     {
+        if ($filename instanceof Attachment) {
+            $filename = $filename->filename;
+        }
+
         return self::new("attachment://{$filename}");
     }
 

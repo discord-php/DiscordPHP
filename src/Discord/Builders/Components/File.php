@@ -11,6 +11,8 @@
 
 namespace Discord\Builders\Components;
 
+use Discord\Parts\Channel\Attachment;
+
 /**
  * File components allow you to send a file. You can also spoiler it.
  *
@@ -37,14 +39,17 @@ class File extends Component
     /**
      * Creates a new file component.
      *
-     * @param string $filename The filename to reference.
+     * @param string|Attachment|null $filename The filename or attachment to reference.
      *
      * @return self
      */
-    public static function new(string $filename): self
+    public static function new(string|Attachment|null $filename = null): self
     {
         $component = new self();
-        $component->setFile($filename);
+
+        if ($filename !== null) {
+            $component->setFile($filename);
+        }
 
         return $component;
     }
@@ -52,12 +57,16 @@ class File extends Component
     /**
      * Sets the file to be displayed.
      *
-     * @param string $filename The filename to reference.
+     * @param string|Attachment $filename The filename or attachment to reference.
      *
      * @return $this
      */
-    public function setFile(string $filename): self
+    public function setFile(string|Attachment $filename): self
     {
+        if ($filename instanceof Attachment) {
+            $filename = $filename->filename;
+        }
+
         $this->file = ['url' => "attachment://{$filename}"];
 
         return $this;
