@@ -181,6 +181,7 @@ class Message extends Part
     public const FLAG_LOADING = (1 << 7);
     public const FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD = (1 << 8);
     public const FLAG_SUPPRESS_NOTIFICATIONS = (1 << 12);
+    public const FLAG_V2_COMPONENTS = (1 << 15);
 
     /**
      * {@inheritDoc}
