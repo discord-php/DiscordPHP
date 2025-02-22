@@ -18,7 +18,7 @@ namespace Discord\Builders\Components;
  *
  * @since 10.4.0
  */
-class MediaGallery extends Component
+class MediaGallery extends Component implements Contracts\ComponentV2
 {
     /**
      * Array of media gallery items.

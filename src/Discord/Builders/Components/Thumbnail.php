@@ -18,7 +18,7 @@ namespace Discord\Builders\Components;
  *
  * @since 10.4.0
  */
-class Thumbnail extends Component
+class Thumbnail extends Component implements Contracts\ComponentV2
 {
     /**
      * Media item for the thumbnail.

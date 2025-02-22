@@ -18,7 +18,7 @@ namespace Discord\Builders\Components;
  *
  * @since 10.4.0
  */
-class TextDisplay extends Component
+class TextDisplay extends Component implements Contracts\ComponentV2
 {
     /**
      * Content of the text display.

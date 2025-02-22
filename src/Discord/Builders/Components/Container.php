@@ -19,7 +19,7 @@ namespace Discord\Builders\Components;
  *
  * @since 10.4.0
  */
-class Container extends Component
+class Container extends Component implements Contracts\ComponentV2
 {
     /**
      * Array of components.

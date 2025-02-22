@@ -20,7 +20,7 @@ use Discord\Parts\Channel\Attachment;
  *
  * @since 10.4.0
  */
-class File extends Component
+class File extends Component implements Contracts\ComponentV2
 {
     /**
      * The file to be displayed.

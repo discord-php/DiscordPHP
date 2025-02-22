@@ -13,6 +13,7 @@ namespace Discord\Builders;
 
 use Discord\Builders\Components;
 use Discord\Builders\Components\Component;
+use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
@@ -379,17 +380,7 @@ class MessageBuilder implements JsonSerializable
      */
     public function addComponent(Component $component): self
     {
-        $v2 = [
-            Components\Section::class,
-            Components\TextDisplay::class,
-            Components\Thumbnail::class,
-            Components\MediaGallery::class,
-            Components\File::class,
-            Components\Separator::class,
-            Components\Container::class,
-        ];
-
-        if (in_array($component::class, $v2)) {
+        if ($component instanceof ComponentV2) {
             if (! ($this->flags & Message::FLAG_V2_COMPONENTS)) {
                 $this->flags |= Message::FLAG_V2_COMPONENTS;
             }

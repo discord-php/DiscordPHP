@@ -19,7 +19,7 @@ namespace Discord\Builders\Components;
  *
  * @since 10.4.0
  */
-class Separator extends Component
+class Separator extends Component implements Contracts\ComponentV2
 {
     /**
      * Spacing size constants.
