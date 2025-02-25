@@ -641,11 +641,11 @@ class MessageBuilder implements JsonSerializable
     /**
      * Get the current flags of the message.
      *
-     * @return int
+     * @return ?int
      */
-    public function getFlags(): int
+    public function getFlags(): ?int
     {
-        return $this->flags;
+        return $this->flags ?? null;
     }
 
     /**
