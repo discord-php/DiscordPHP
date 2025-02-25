@@ -386,14 +386,23 @@ class MessageBuilder implements JsonSerializable
             if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
                 $this->flags |= Message::FLAG_IS_V2_COMPONENTS;
             }
-
-            if (isset($this->components) && count($this->components) >= 10) {
-                throw new \OverflowException('You can only add 10 components to a v2 message');
+        }
+        
+        if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+            if (isset($this->components)) {
+                if (count($this->components) >= 5) {
+                    throw new \OverflowException('You can only add 5 components to a v1 message');
+                }
             }
-        } elseif (! ($component instanceof ActionRow || $component instanceof SelectMenu)) {
-            throw new \InvalidArgumentException('You can only add action rows and select menus as components to v1 messages. Put your other components inside an action row.');
-        } elseif (isset($this->components) && count($this->components) >= 5) {
-            throw new \OverflowException('You can only add 5 components to a v1 message');
+            if (! ($component instanceof ActionRow || $component instanceof SelectMenu)) {
+                throw new \InvalidArgumentException('You can only add action rows and select menus as components to v1 messages. Put your other components inside an action row.');
+            }
+        } else {
+            if (isset($this->components)) {
+                if (count($this->components) >= 10) {
+                    throw new \OverflowException('You can only add 10 components to a v2 message');
+                }
+            }
         }
 
         $this->components[] = $component;
