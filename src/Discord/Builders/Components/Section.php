@@ -105,7 +105,7 @@ class Section extends Component implements Contracts\ComponentV2
      *
      * @return Thumbnail|Button|null
      */
-    public function getAccessory(): Thumbnail|Button|null
+    public function getAccessory(): Component
     {
         return $this->accessory;
     }
