@@ -85,25 +85,6 @@ class Separator extends Component implements Contracts\ComponentV2
         return $this;
     }
 
-    /**
-     * Set the spacing size to small.
-     *
-     * @return $this
-     */
-    public function setSpacingSmall(): self
-    {
-        return $this->setSpacing(self::SPACING_SMALL);
-    }
-
-    /**
-     * Set the spacing size to large.
-     *
-     * @return $this
-     */
-    public function setSpacingLarge(): self
-    {
-        return $this->setSpacing(self::SPACING_LARGE);
-    }
 
     /**
      * Returns whether the separator is a divider.
