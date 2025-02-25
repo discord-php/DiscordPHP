@@ -718,8 +718,10 @@ class MessageBuilder implements JsonSerializable
         }
 
         if (isset($this->content)) {
-            $body['content'] = $this->content;
-            $empty = false;
+            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+                $body['content'] = $this->content;
+                $empty = false;
+            }
         }
 
         if (isset($this->username)) {
@@ -739,8 +741,10 @@ class MessageBuilder implements JsonSerializable
         }
 
         if (isset($this->embeds)) {
-            $body['embeds'] = $this->embeds;
-            $empty = false;
+            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+                $body['embeds'] = $this->embeds;
+                $empty = false;
+            }
         }
 
         if (isset($this->poll)) {
