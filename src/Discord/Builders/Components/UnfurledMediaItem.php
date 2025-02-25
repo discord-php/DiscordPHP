@@ -211,7 +211,6 @@ class UnfurledMediaItem implements JsonSerializable
                 'width' => $this->width ?? null,
                 'height' => $this->height ?? null,
                 'content_type' => $this->content_type ?? null,
-                'loading_state' => $this->loading_state ?? null,
             ], fn ($value) => $value !== null);
 
             return array_merge($data, $resolved);
