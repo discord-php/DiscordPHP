@@ -80,8 +80,11 @@ class Section extends Component implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function setAccessory(Thumbnail|Button $component): self
+    public function setAccessory(Component $component): self
     {
+        if (! ($component instanceof Thumbnail || $component instanceof Button)) {
+            throw new \InvalidArgumentException('Accessory may only contain Thumbnail or Button component.');
+        }
         $this->accessory = $component;
 
         return $this;
