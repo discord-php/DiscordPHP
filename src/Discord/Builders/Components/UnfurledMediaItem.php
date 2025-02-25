@@ -92,11 +92,11 @@ class UnfurledMediaItem implements JsonSerializable
     /**
      * Creates a new unfurled media item from an attachment.
      *
-     * @param string|Attachment $filename Name of the attachment file, or null.
+     * @param Attachment|string $filename Name of the attachment file, or null.
      *
      * @return self
      */
-    public static function fromAttachment(string|Attachment $filename): self
+    public static function fromAttachment(Attachment|string $filename): self
     {
         if ($filename instanceof Attachment) {
             $filename = $filename->filename;
