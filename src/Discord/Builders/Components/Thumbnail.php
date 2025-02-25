@@ -59,13 +59,17 @@ class Thumbnail extends Component implements Contracts\ComponentV2
     /**
      * Sets the media item for the thumbnail.
      *
-     * @param string $url URL of the media item.
+     * @param UnfurledMediaItem|string $url URL of the media item.
      *
      * @return $this
      */
-    public function setMedia(string $url): self
+    public function setMedia(UnfurledMediaItem|string $media): self
     {
-        $this->media = ['url' => $url];
+        if (is_string($media)) {
+            $media = UnfurledMediaItem::new($media);
+        }
+
+        $this->media = $media;
 
         return $this;
     }
