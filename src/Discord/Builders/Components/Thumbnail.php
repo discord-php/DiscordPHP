@@ -23,7 +23,7 @@ class Thumbnail extends Component implements Contracts\ComponentV2
     /**
      * Media item for the thumbnail.
      *
-     * @var array
+     * @var UnfurledMediaItem
      */
     private $media;
 
@@ -111,9 +111,9 @@ class Thumbnail extends Component implements Contracts\ComponentV2
     /**
      * Returns the media item for the thumbnail.
      *
-     * @return array
+     * @return UnfurledMediaItem
      */
-    public function getMedia(): array
+    public function getMedia(): UnfurledMediaItem
     {
         return $this->media;
     }
