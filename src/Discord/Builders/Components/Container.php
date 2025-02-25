@@ -11,6 +11,13 @@
 
 namespace Discord\Builders\Components;
 
+use Discord\Builders\Components\ActionRow;
+use Discord\Builders\Components\Section;
+use Discord\Builders\Components\TextDisplay;
+use Discord\Builders\Components\MediaGallery;
+use Discord\Builders\Components\File;
+use Discord\Builders\Components\Separator;
+
 /**
  * Containers are a new way to group components together.
  * You can also specify an accent color (similar to embeds) and spoiler it.
@@ -55,7 +62,7 @@ class Container extends Component implements Contracts\ComponentV2
     /**
      * Adds a component to the container.
      *
-     * @param Component $component Component to add.
+     * @param ActionRow|Section|TextDisplay|MediaGallery|File|Separator $component Component to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Container exceeds 10 components.
@@ -66,6 +73,10 @@ class Container extends Component implements Contracts\ComponentV2
     {
         if (count($this->components) >= 10) {
             throw new \OverflowException('You can only have 10 components per container.');
+        }
+
+        if (! ( $component instanceof ActionRow || $component instanceof Section || $component instanceof TextDisplay || $component instanceof MediaGallery || $component instanceof File || $component instanceof Separator )) {
+            throw new \InvalidArgumentException('Invalid component type.');
         }
 
         $this->components[] = $component;
