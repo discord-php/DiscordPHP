@@ -383,8 +383,8 @@ class MessageBuilder implements JsonSerializable
     public function addComponent(Component $component): self
     {
         if ($component instanceof ComponentV2) {
-            if (! ($this->flags & Message::FLAG_V2_COMPONENTS)) {
-                $this->flags |= Message::FLAG_V2_COMPONENTS;
+            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+                $this->flags |= Message::FLAG_IS_V2_COMPONENTS;
             }
 
             if (isset($this->components) && count($this->components) >= 10) {
