@@ -47,8 +47,9 @@ class Section extends Component implements Contracts\ComponentV2
     /**
      * Adds a text display component to the section.
      * Text displays can only be used within sections.
+     *  Use setAccessory() instead for Thumbnail or Button.
      *
-     * @param Component $component Text display component to add.
+     * @param TextDisplay $component Text display component to add.
      *
      * @throws \InvalidArgumentException Component is not a TextDisplay.
      * @throws \OverflowException Section exceeds 3 text components.
@@ -58,7 +59,7 @@ class Section extends Component implements Contracts\ComponentV2
     public function addComponent(Component $component): self
     {
         if (! ($component instanceof TextDisplay)) {
-            throw new \InvalidArgumentException('Section can only contain TextDisplay components. Use setAccessory() for Thumbnail or Button.');
+            throw new \InvalidArgumentException('Section can only contain TextDisplay components.');
         }
 
         if (count($this->components) >= 3) {
