@@ -773,13 +773,13 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if ($stream === false && ! $stream instanceof Stream) {
+        if (! is_resource($stream) && ! $stream instanceof Stream) {
             $deferred->reject(new \InvalidArgumentException('The stream passed to playRawStream was not an instance of resource or ReactPHP Stream.'));
 
             return $deferred->promise();
         }
 
-        if ($stream !== false) {
+        if (is_resource($stream)) {
             $stream = new Stream($stream, $this->loop);
         }
 
@@ -832,7 +832,7 @@ class VoiceClient extends EventEmitter
             $stream = $stream->stdout;
         }
 
-        if ($stream !== false) {
+        if (is_resource($stream)) {
             $stream = new ReadableResourceStream($stream, $this->loop);
         }
 
@@ -948,7 +948,7 @@ class VoiceClient extends EventEmitter
             $stream = $stream->stdout;
         }
 
-        if ($stream !== false) {
+        if (is_resource($stream)) {
             $stream = new ReadableResourceStream($stream, $this->loop);
         }
 
