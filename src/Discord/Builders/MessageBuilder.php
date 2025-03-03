@@ -92,6 +92,13 @@ class MessageBuilder implements JsonSerializable
     private $replyTo;
 
     /**
+     * Message to forward with this message.
+     *
+     * @var Message|null
+     */
+    private $forward;
+
+    /**
      * Components to send with this message.
      *
      * @var Component[]|null
@@ -364,6 +371,20 @@ class MessageBuilder implements JsonSerializable
     public function setReplyTo(?Message $message = null): self
     {
         $this->replyTo = $message;
+
+        return $this;
+    }
+
+    /**
+     * Sets this message as a forward of another message. Only used for sending message.
+     *
+     * @param Message|null $message
+     *
+     * @return $this
+     */
+    public function setForward(?Message $message = null): self
+    {
+        $this->forward = $message;
 
         return $this;
     }
@@ -739,6 +760,16 @@ class MessageBuilder implements JsonSerializable
                 'message_id' => $this->replyTo->id,
                 'channel_id' => $this->replyTo->channel_id,
             ];
+        }
+
+        if ($this->forward) {
+            $body['message_reference'] = [
+                'type' => Message::REFERENCE_FORWARD,
+                'message_id' => $this->forward->id,
+                'channel_id' => $this->forward->channel_id,
+            ];
+
+            $empty = false;
         }
 
         if (isset($this->components)) {

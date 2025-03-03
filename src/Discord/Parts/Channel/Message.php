@@ -171,6 +171,9 @@ class Message extends Part
     public const REACT_DELETE_ID = 2;
     public const REACT_DELETE_EMOJI = 3;
 
+    public const REFERENCE_DEFAULT = 0;
+    public const REFERENCE_FORWARD = 1;
+
     public const FLAG_CROSSPOSTED = (1 << 0);
     public const FLAG_IS_CROSSPOST = (1 << 1);
     public const FLAG_SUPPRESS_EMBED = (1 << 2);
@@ -181,6 +184,8 @@ class Message extends Part
     public const FLAG_LOADING = (1 << 7);
     public const FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD = (1 << 8);
     public const FLAG_SUPPRESS_NOTIFICATIONS = (1 << 12);
+    public const FLAG_IS_VOICE_MESSAGE = (1 << 13);
+    public const FLAG_HAS_SNAPSHOT = (1 << 14);
 
     /**
      * {@inheritDoc}
@@ -207,6 +212,7 @@ class Message extends Part
         'application',
         'application_id',
         'message_reference',
+        'message_snapshot',
         'flags',
         'referenced_message',
         'interaction',
