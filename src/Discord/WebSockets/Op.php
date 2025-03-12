@@ -59,7 +59,6 @@ class Op
     /** Request soundboard sounds. */
     public const REQUEST_SOUNDBOARD_SOUNDS = 31;
 
-
     /**
      * Voice Opcodes.
      *
@@ -89,9 +88,14 @@ class Op
     /** Acknowledge a successful session resume. */
     public const VOICE_RESUMED = 9;
     /** One or more clients have connected to the voice channel */
-    public const VOICE_CLIENT_CONNECT = 11;
+    public const VOICE_CLIENTS_CONNECTED = 11;
     /** A client has disconnected from the voice channel. */
     public const VOICE_CLIENT_DISCONNECT = 13;
+    /** Was not documented within the op codes and statuses*/
+    public const VOICE_CLIENT_UNKNOWN_15 = 15;
+    public const VOICE_CLIENT_UNKNOWN_18 = 18;
+    /** NOT DOCUMENTED - Assumed to be the platform type in which the user is. */
+    public const VOICE_CLIENT_PLATFORM = 20;
     /** A downgrade from the DAVE protocol is upcoming. */
     public const VOICE_DAVE_PREPARE_TRANSITION = 21;
     /** Execute a previously announced protocol transition. */
