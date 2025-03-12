@@ -80,7 +80,6 @@ class ReceiveStream extends EventEmitter implements DuplexStreamInterface
      */
     public function writePCM(string $pcm): void
     {
-        echo 'called pcm';
         if ($this->isClosed) {
             return;
         }
@@ -103,8 +102,6 @@ class ReceiveStream extends EventEmitter implements DuplexStreamInterface
      */
     public function writeOpus(string $opus): void
     {
-        echo 'called opus';
-
         if ($this->isClosed) {
             return;
         }

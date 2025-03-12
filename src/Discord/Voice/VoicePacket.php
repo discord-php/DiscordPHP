@@ -171,7 +171,6 @@ class VoicePacket
 
         if (! $byteHeader) {
             $this->log->warning('Failed to unpack voice packet Header.', ['message' => $message]);
-            echo 'Failed to unpack voice packet Header.' . PHP_EOL;
             return $this;
         }
 
