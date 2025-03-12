@@ -1509,18 +1509,15 @@ class VoiceClient extends EventEmitter
         }
 
         if (null === $decoder) {
-            echo 'Creating decoder for ' . $voicePacket->getSSRC() . PHP_EOL;
             // make a decoder
             if (! isset($this->receiveStreams[$ss->ssrc])) {
                 $this->receiveStreams[$ss->ssrc] = new ReceiveStream();
 
                 $this->receiveStreams[$ss->ssrc]->on('pcm', function ($d) {
-                    echo 'PCM: ' . $d . PHP_EOL;
                     $this->emit('channel-pcm', [$d, $this]);
                 });
 
                 $this->receiveStreams[$ss->ssrc]->on('opus', function ($d) {
-                    echo 'OPUS: ' . $d . PHP_EOL;
                     $this->emit('channel-opus', [$d, $this]);
                 });
             }
