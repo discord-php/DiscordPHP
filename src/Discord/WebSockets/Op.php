@@ -86,7 +86,7 @@ class Op
     /** Acknowledge a successful session resume. */
     public const VOICE_RESUMED = 9;
     /** One or more clients have connected to the voice channel */
-    public const VOICE_CLIENTS_CONNECTED = 11;
+    public const VOICE_CLIENTS_CONNECT = 11;
     /** A client has disconnected from the voice channel. */
     public const VOICE_CLIENT_DISCONNECT = 13;
     /** Was not documented within the op codes and statuses*/

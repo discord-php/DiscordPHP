@@ -481,7 +481,7 @@ class VoiceClient extends EventEmitter
                     $sendHeartbeat();
                     $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeatInterval / 1000, $sendHeartbeat);
                     break;
-                case Op::VOICE_CLIENTS_CONNECTED:
+                case Op::VOICE_CLIENTS_CONNECT:
                     # "d" contains an array with ['user_ids' => array<string>]
                     $this->clientsConnected = $data->d->user_ids;
                     break;
