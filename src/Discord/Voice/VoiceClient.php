@@ -28,6 +28,7 @@ use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use React\Promise\PromiseInterface;
 use Ratchet\RFC6455\Messaging\Message;
+use Discord\Helpers\CollectionInterface;
 use React\Stream\ReadableResourceStream;
 use Discord\Helpers\Buffer as RealBuffer;
 use React\Stream\ReadableStreamInterface;
@@ -39,7 +40,6 @@ use React\Datagram\Factory as DatagramFactory;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\LibSodiumNotFoundException;
 use React\Stream\ReadableResourceStream as Stream;
-
 use Discord\Exceptions\Voice\ClientNotReadyException;
 use Discord\Exceptions\Voice\AudioAlreadyPlayingException;
 
@@ -340,16 +340,6 @@ class VoiceClient extends EventEmitter
     public array $tempFiles;
 
     /**
-     * Constructs the Voice Client instance.
-     *
-     * @param WebSocket       $websocket The main WebSocket client.
-     * @param LoopInterface   $loop      The ReactPHP event loop.
-     * @param Channel         $channel   The channel we are connecting to.
-     * @param LoggerInterface $logger    The logger.
-     * @param array           $data      More information related to the voice client.
-     */
-
-    /**
      * Constructs the Voice client instance
      *
      * @param \Ratchet\Client\WebSocket $mainWebsocket
@@ -420,10 +410,9 @@ class VoiceClient extends EventEmitter
 
         $this->voiceWebsocket = $ws;
 
-        $firstPack = true;
         $ip = $port = '';
 
-        $ws->on('message', function (Message $message) use (&$ws, &$discoverUdp, $udpfac, &$firstPack, &$ip, &$port): void {
+        $ws->on('message', function (Message $message) use ($udpfac, &$ip, &$port): void {
             $data = json_decode($message->getPayload());
             $this->emit('ws-message', [$message, $this]);
 
@@ -454,7 +443,7 @@ class VoiceClient extends EventEmitter
                     }
 
                     if (! $this->deaf && $this->secretKey) {
-                        $this->client->on('message', fn (string $message, string $address, Socket $client) => $this->handleAudioData(new VoicePacket($message, key: $this->secretKey, log: $this->logger)));
+                        $this->client->on('message', fn (string $message) => $this->handleAudioData(new VoicePacket($message, key: $this->secretKey, log: $this->logger)));
                     }
 
                     break;
@@ -545,9 +534,7 @@ class VoiceClient extends EventEmitter
                         $this->logger->debug('connected to voice UDP');
                         $this->client = $client;
 
-                        $this->loop->addTimer(0.1, function () use ($buffer) {
-                            $this->client->send((string) $buffer);
-                        });
+                        $this->loop->addTimer(0.1, fn () => $this->client->send($buffer->__toString()));
 
                         $this->udpHeartbeat = $this->loop->addPeriodicTimer($this->heartbeatInterval / 1000, function (): void {
                             $buffer = new Buffer(9);
@@ -561,12 +548,9 @@ class VoiceClient extends EventEmitter
                             $this->logger->debug('sent UDP heartbeat');
                         });
 
-                        $client->on('error', function ($e): void {
-                            $this->emit('udp-error', [$e]);
-                        });
+                        $client->on('error', fn ($e): void => $this->emit('udp-error', [$e]));
 
-                        $decodeUDP = function ($message) use (&$decodeUDP, $client, &$ip, &$port): void {
-
+                        $decodeUDP = function ($message) use (&$ip, &$port): void {
                             /**
                              * Unpacks the message into an array.
                              *
@@ -582,10 +566,6 @@ class VoiceClient extends EventEmitter
                              */
                             $unpackedMessageArray = \unpack("C2Type/nLength/ISSRC/A64Address/nPort", $message);
 
-                            # Commented out since it's not being used as of yet
-                            # $typeRequest = $unpackedMessageArray['Type1'];
-                            # $typeResponse = $unpackedMessageArray['Type2'];
-                            # $length = $unpackedMessageArray['Length'];
                             $this->ssrc = $unpackedMessageArray['SSRC'];
                             $ip = $unpackedMessageArray['Address'];
                             $port = $unpackedMessageArray['Port'];
@@ -610,7 +590,6 @@ class VoiceClient extends EventEmitter
                         $this->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
                         $this->emit('error', [$e]);
                     });
-
                     break;
                 }
                 default:
@@ -1575,10 +1554,10 @@ class VoiceClient extends EventEmitter
     private function monitorProcessExit(Process $process, $ss, callable $createDecoder): void
     {
         // Store the process ID
-        $pid = $process->getPid();
+        // $pid = $process->getPid();
 
         // Check every second if the process is still running
-        $timer = $this->loop->addPeriodicTimer(1.0, function () use ($process, $ss, &$createDecoder, &$timer, $pid) {
+        $timer = $this->loop->addPeriodicTimer(1.0, function () use ($process, $ss, &$createDecoder, &$timer) {
             // Check if the process is still running
             if (!$process->isRunning()) {
                 // Get the exit code
