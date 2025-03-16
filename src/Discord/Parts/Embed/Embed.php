@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -16,6 +18,7 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
+
 use function Discord\poly_strlen;
 
 /**

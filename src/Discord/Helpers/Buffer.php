@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -51,7 +53,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      * @var LoopInterface
      */
     private $loop;
-    
+
     public function __construct(LoopInterface $loop = null)
     {
         $this->loop = $loop;
@@ -136,11 +138,11 @@ class Buffer extends EventEmitter implements WritableStreamInterface
         return $deferred->promise()->then(function ($d) use ($format) {
             if ($format !== null) {
                 $unpacked = unpack($format, $d);
-                
+
                 if ($unpacked === false) {
                     throw new \RuntimeException('Error unpacking buffer.');
                 }
-                
+
                 return reset($unpacked);
             }
 

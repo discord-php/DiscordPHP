@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -19,6 +21,7 @@ namespace Discord\Helpers;
  */
 class Collection implements CollectionInterface
 {
+    use CollectionTrait;
     /**
      * The collection discriminator.
      *
@@ -39,6 +42,4 @@ class Collection implements CollectionInterface
      * @var string
      */
     protected $class;
-
-    use CollectionTrait;
 }
