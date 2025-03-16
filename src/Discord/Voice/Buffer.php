@@ -13,6 +13,7 @@ namespace Discord\Voice;
 
 use ArrayAccess;
 use TrafficCophp\ByteBuffer\Buffer as BaseBuffer;
+use TrafficCophp\ByteBuffer\FormatPackEnum;
 
 /**
  * A Byte Buffer similar to Buffer in NodeJS.
@@ -27,9 +28,9 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int $value  The value that will be written.
      * @param int $offset The offset that the value will be written.
      */
-    public function writeUInt32BE(int $value, int $offset): void
+    public function writeUInt32BE(int $value, int $offset): self
     {
-        $this->insert('I', $value, $offset, 3);
+        return $this->insert(FormatPackEnum::I, $value, $offset, 3);
     }
 
     /**
@@ -38,9 +39,9 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int $value  The value that will be written.
      * @param int $offset The offset that the value will be written.
      */
-    public function writeUInt64LE(int $value, int $offset): void
+    public function writeUInt64LE(int $value, int $offset): self
     {
-        $this->insert('P', $value, $offset, 8);
+        return $this->insert(FormatPackEnum::P, $value, $offset, 8);
     }
 
     /**
@@ -49,9 +50,20 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int $value  The value that will be written.
      * @param int $offset The offset that the value will be written.
      */
-    public function writeInt(int $value, int $offset): void
+    public function writeInt(int $value, int $offset): self
     {
-        $this->insert('N', $value, $offset, 4);
+        return $this->insert(FormatPackEnum::N, $value, $offset, 4);
+    }
+
+    /**
+     * Writes a unsigned integer.
+     *
+     * @param int $value  The value that will be written.
+     * @param int $offset The offset that the value will be written.
+     */
+    public function writeUInt(int $value, int $offset): self
+    {
+        return $this->insert(FormatPackEnum::I, $value, $offset, 4);
     }
 
     /**
@@ -63,7 +75,19 @@ class Buffer extends BaseBuffer implements ArrayAccess
      */
     public function readInt(int $offset): int
     {
-        return $this->extract('N', $offset, 4);
+        return $this->extract(FormatPackEnum::N, $offset, 4);
+    }
+
+    /**
+     * Reads a signed integer.
+     *
+     * @param int $offset The offset to read from.
+     *
+     * @return int The data read.
+     */
+    public function readUInt(int $offset): int
+    {
+        return $this->extract(FormatPackEnum::I, $offset, 4);
     }
 
     /**
@@ -72,9 +96,9 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int $value  The value that will be written.
      * @param int $offset The offset that the value will be written.
      */
-    public function writeShort(int $value, int $offset): void
+    public function writeShort(int $value, int $offset): self
     {
-        $this->insert('n', $value, $offset, 2);
+        return $this->insert(FormatPackEnum::n, $value, $offset, 2);
     }
 
     /**
@@ -86,7 +110,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      */
     public function readShort(int $offset): int
     {
-        return $this->extract('n', $offset, 4);
+        return $this->extract(FormatPackEnum::n, $offset, 4);
     }
 
     /**
@@ -98,7 +122,17 @@ class Buffer extends BaseBuffer implements ArrayAccess
      */
     public function readUIntLE(int $offset): int
     {
-        return $this->extract('I', $offset, 3);
+        return $this->extract(FormatPackEnum::I, $offset, 3);
+    }
+
+    public function readChar(int $offset): string
+    {
+        return $this->extract(FormatPackEnum::c, $offset, 1);
+    }
+
+    public function readUChar(int $offset): string
+    {
+        return $this->extract(FormatPackEnum::C, $offset, 1);
     }
 
     /**
@@ -107,9 +141,9 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param string $value  The value that will be written.
      * @param int    $offset The offset that the value will be written.
      */
-    public function writeChar(string $value, int $offset): void
+    public function writeChar(string $value, int $offset): self
     {
-        $this->insert('c', $value, $offset, $this->lengthMap->getLengthFor('c'));
+        return $this->insert(FormatPackEnum::c, $value, $offset, FormatPackEnum::c->getLength());
     }
 
     /**
@@ -146,7 +180,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
     #[\ReturnTypeWillChange]
     public function offsetGet($key)
     {
-        return $this->buffer[$key];
+        return $this->buffer[$key] ?? null;
     }
 
     /**
