@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -92,7 +94,7 @@ class VoicePacket
      */
     protected function initBufferNoEncryption(string $data): void
     {
-        $data = (binary) $data;
+        $data = (string) $data;
         $header = $this->buildHeader();
 
         $buffer = new Buffer(strlen((string) $header) + strlen($data));
@@ -110,7 +112,7 @@ class VoicePacket
      */
     protected function initBufferEncryption(string $data, string $key): void
     {
-        $data = (binary) $data;
+        $data = (string) $data;
         $header = $this->buildHeader();
         $nonce = new Buffer(24);
         $nonce->write((string) $header, 0);

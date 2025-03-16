@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -18,8 +20,8 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
 use React\Promise\PromiseInterface;
-
 use Stringable;
+
 use function React\Promise\resolve;
 
 /**

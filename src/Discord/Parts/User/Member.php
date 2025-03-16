@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -30,8 +32,8 @@ use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\PresenceUpdate;
 use React\Promise\PromiseInterface;
-
 use Stringable;
+
 use function React\Promise\reject;
 
 /**
