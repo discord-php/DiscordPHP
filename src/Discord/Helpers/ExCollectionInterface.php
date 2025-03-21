@@ -13,6 +13,10 @@ namespace Discord\Helpers;
 
 interface ExCollectionInterface extends CollectionInterface
 {
+    public static function from(array $items = [], ?string $discrim = 'id', ?string $class = null);
+    public static function for(string $class, ?string $discrim = 'id');
+    public function shift();
+    public function search(mixed $needle, bool $strict = false): string|int|false;
     public function find_key(callable $callback);
     public function any(callable $callback): bool;
     public function all(callable $callback): bool;
