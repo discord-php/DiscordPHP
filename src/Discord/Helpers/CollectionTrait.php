@@ -407,7 +407,7 @@ trait CollectionTrait
      * @param ?int $length
      * @param bool $preserve_keys
      *
-     * @return ExCollectionInterface
+     * @return CollectionInterface
      */
     public function slice(int $offset, ?int $length = null, bool $preserve_keys = false)
     {
@@ -423,7 +423,7 @@ trait CollectionTrait
      *
      * @param callable|int|null $callback
      *
-     * @return ExCollectionInterface
+     * @return CollectionInterface
      */
     public function sort(callable|int|null $callback)
     {
@@ -445,7 +445,7 @@ trait CollectionTrait
      * @param CollectionInterface|array $array
      * @param ?callable                 $callback
      *
-     * @return ExCollectionInterface
+     * @return CollectionInterface
      */
     public function diff($items, ?callable $callback = null)
     {
@@ -469,7 +469,7 @@ trait CollectionTrait
      * @param CollectionInterface|array $array
      * @param ?callable                 $callback
      *
-     * @return ExCollectionInterface
+     * @return CollectionInterface
      */
     public function intersect($items, ?callable $callback = null)
     {
@@ -490,7 +490,7 @@ trait CollectionTrait
      * @param callable $callback
      * @param mixed    $arg
      *
-     * @return ExCollectionInterface
+     * @return CollectionInterface
      */
     public function walk(callable $callback, mixed $arg)
     {
@@ -507,7 +507,7 @@ trait CollectionTrait
      * @param callable $callback
      * @param ?mixed   $initial
      *
-     * @return ExCollectionInterface
+     * @return CollectionInterface
      */
     public function reduce(callable $callback, $initial = null)
     {
@@ -538,7 +538,7 @@ trait CollectionTrait
      *
      * @param int   $flags
      *
-     * @return ExCollectionInterface
+     * @return CollectionInterface
      */
     public function unique(int $flags = SORT_STRING)
     {
