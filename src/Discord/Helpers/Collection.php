@@ -17,7 +17,7 @@ namespace Discord\Helpers;
  * @since 5.0.0 No longer extends Laravel's BaseCollection
  * @since 4.0.0
  */
-class Collection implements CollectionInterface
+class Collection implements ExCollectionInterface
 {
     /**
      * The collection discriminator.
