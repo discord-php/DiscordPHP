@@ -501,6 +501,10 @@ abstract class SelectMenu extends Component
             $content['placeholder'] = $this->placeholder;
         }
 
+        if (isset($this->default_values)) {
+            $content['default_values'] = $this->default_values;
+        }
+
         if (isset($this->min_values)) {
             if (isset($this->options) && $this->min_values > count($this->options)) {
                 throw new \OutOfBoundsException('There are less options than the minimum number of options to be selected.');
