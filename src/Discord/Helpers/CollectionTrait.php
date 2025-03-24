@@ -34,7 +34,7 @@ trait CollectionTrait
      * @param ?string     $discrim
      * @param ?string     $class
      *
-     * @return CollectionInterface
+     * @return ExCollectionInterface
      */
     public static function from(array $items = [], ?string $discrim = 'id', ?string $class = null)
     {
@@ -47,7 +47,7 @@ trait CollectionTrait
      * @param string  $class
      * @param ?string $discrim
      *
-     * @return CollectionInterface
+     * @return ExCollectionInterface
      */
     public static function for(string $class, ?string $discrim = 'id')
     {
@@ -289,7 +289,7 @@ trait CollectionTrait
      *
      * @param callable $callback
      *
-     * @return CollectionInterface
+     * @return ExCollectionInterface
      *
      * @todo This method will be typed to return a CollectionInterface in v11
      */
@@ -523,7 +523,7 @@ trait CollectionTrait
      *
      * @param callable $callback
      *
-     * @return CollectionInterface
+     * @return ExCollectionInterface
      */
     public function map(callable $callback)
     {
@@ -538,7 +538,7 @@ trait CollectionTrait
      *
      * @param int   $flags
      *
-     * @return CollectionInterface
+     * @return ExCollectionInterface
      */
     public function unique(int $flags = SORT_STRING)
     {
@@ -575,7 +575,7 @@ trait CollectionTrait
     /**
      * Converts the items into a new collection.
      *
-     * @return CollectionInterface
+     * @return ExCollectionInterface
      */
     public function collect()
     {

@@ -589,9 +589,9 @@ trait AbstractRepositoryTrait
      *
      * @param callable $callback
      *
-     * @return CollectionInterface
+     * @return ExCollectionInterface
      *
-     * @todo This method will be typed to return a CollectionInterface in v11
+     * @todo This method will be typed to return an ExCollectionInterface in v11
      */
     public function filter(callable $callback)
     {
