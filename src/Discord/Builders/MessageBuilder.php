@@ -11,8 +11,10 @@
 
 namespace Discord\Builders;
 
+use Discord\Builders\Components;
 use Discord\Builders\Components\ActionRow;
 use Discord\Builders\Components\Component;
+use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\SelectMenu;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
@@ -394,19 +396,34 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Component $component Component to add.
      *
-     * @throws \InvalidArgumentException Component is not a type of `ActionRow` or `SelectMenu`
-     * @throws \OverflowException        Builder exceeds 5 components.
+     * @throws \InvalidArgumentException Component is not a valid type.
+     * @throws \OverflowException        Builder exceeds component limits.
      *
      * @return $this
      */
     public function addComponent(Component $component): self
     {
-        if (! ($component instanceof ActionRow || $component instanceof SelectMenu)) {
-            throw new \InvalidArgumentException('You can only add action rows and select menus as components to messages. Put your other components inside an action row.');
+        if ($component instanceof ComponentV2) {
+            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+                $this->flags |= Message::FLAG_IS_V2_COMPONENTS;
+            }
         }
-
-        if (isset($this->components) && count($this->components) >= 5) {
-            throw new \OverflowException('You can only add 5 components to a message');
+        
+        if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+            if (isset($this->components)) {
+                if (count($this->components) >= 5) {
+                    throw new \OverflowException('You can only add 5 components to a v1 message');
+                }
+            }
+            if (! ($component instanceof ActionRow || $component instanceof SelectMenu)) {
+                throw new \InvalidArgumentException('You can only add action rows and select menus as components to v1 messages. Put your other components inside an action row.');
+            }
+        } else {
+            if (isset($this->components)) {
+                if (count($this->components) >= 10) {
+                    throw new \OverflowException('You can only add 10 components to a v2 message');
+                }
+            }
         }
 
         $this->components[] = $component;
@@ -654,6 +671,16 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
+     * Get the current flags of the message.
+     *
+     * @return int
+     */
+    public function getFlags(): int
+    {
+        return $this->flags ?? 0;
+    }
+
+    /**
      * @deprecated 10.0.0 Use MessageBuilder::setFlags()
      */
     public function _setFlags(int $flags): self
@@ -721,8 +748,10 @@ class MessageBuilder implements JsonSerializable
         }
 
         if (isset($this->content)) {
-            $body['content'] = $this->content;
-            $empty = false;
+            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+                $body['content'] = $this->content;
+                $empty = false;
+            }
         }
 
         if (isset($this->username)) {
@@ -742,8 +771,10 @@ class MessageBuilder implements JsonSerializable
         }
 
         if (isset($this->embeds)) {
-            $body['embeds'] = $this->embeds;
-            $empty = false;
+            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+                $body['embeds'] = $this->embeds;
+                $empty = false;
+            }
         }
 
         if (isset($this->poll)) {
