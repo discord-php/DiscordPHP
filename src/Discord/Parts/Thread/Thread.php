@@ -262,6 +262,19 @@ class Thread extends Part implements Stringable
     }
 
     /**
+     * Whether members without `MANAGE_THREADS` can invite other members without `MANAGE_THREADS`
+     * Always `null` in public threads
+     *
+     * @param bool $value
+     */
+    protected function setInvitableAttribute(bool $value): void
+    {
+        if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
+            $this->attributes['thread_metadata']->invitable = $value;
+        }
+    }
+
+    /**
      * Set the number of minutes of inactivity required for the thread to auto
      * archive.
      *
