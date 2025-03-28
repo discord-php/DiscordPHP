@@ -262,7 +262,7 @@ class Thread extends Part implements Stringable
     }
 
     /**
-     * Whether members without `MANAGE_THREADS` can invite other members without `MANAGE_THREADS`
+     * Sets whether members without `MANAGE_THREADS` can invite other members without `MANAGE_THREADS`
      * Always `null` in public threads
      *
      * @param bool $value
