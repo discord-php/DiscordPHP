@@ -40,22 +40,23 @@ use function React\Promise\reject;
  *
  * @since 7.0.0
  *
- * @property      string                 $id              ID of the interaction.
- * @property      string                 $application_id  ID of the application the interaction is for.
- * @property      int                    $type            Type of interaction.
- * @property      InteractionData|null   $data            Data associated with the interaction.
- * @property      string|null            $guild_id        ID of the guild the interaction was sent from.
- * @property-read Guild|null             $guild           Guild the interaction was sent from.
- * @property      string|null            $channel_id      ID of the channel the interaction was sent from.
- * @property-read Channel|null           $channel         Channel the interaction was sent from.
- * @property      Member|null            $member          Member who invoked the interaction.
- * @property      User|null              $user            User who invoked the interaction.
- * @property      string                 $token           Continuation token for responding to the interaction.
- * @property-read int                    $version         Version of interaction.
- * @property      Message|null           $message         Message that triggered the interactions, when triggered from message components.
- * @property-read ChannelPermission|null $app_permissions Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
- * @property      string|null            $locale          The selected language of the invoking user.
- * @property      string|null            $guild_locale    The guild's preferred locale, if invoked in a guild.
+ * @property      string                 $id                   ID of the interaction.
+ * @property      string                 $application_id       ID of the application the interaction is for.
+ * @property      int                    $type                 Type of interaction.
+ * @property      InteractionData|null   $data                 Data associated with the interaction.
+ * @property      string|null            $guild_id             ID of the guild the interaction was sent from.
+ * @property-read Guild|null             $guild                Guild the interaction was sent from.
+ * @property      string|null            $channel_id           ID of the channel the interaction was sent from.
+ * @property-read Channel|null           $channel              Channel the interaction was sent from.
+ * @property      Member|null            $member               Member who invoked the interaction.
+ * @property      User|null              $user                 User who invoked the interaction.
+ * @property      string                 $token                Continuation token for responding to the interaction.
+ * @property-read int                    $version              Version of interaction.
+ * @property      Message|null           $message              Message that triggered the interactions, when triggered from message components.
+ * @property-read ChannelPermission|null $app_permissions      Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
+ * @property      string|null            $locale               The selected language of the invoking user.
+ * @property      string|null            $guild_locale         The guild's preferred locale, if invoked in a guild.
+ * @property      int                    $attachment_size_limit Attachment size limit in bytes
  */
 class Interaction extends Part
 {
