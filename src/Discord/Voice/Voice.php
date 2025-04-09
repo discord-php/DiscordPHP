@@ -2,16 +2,16 @@
 
 namespace Discord\Voice;
 
-use Discord\Discord;
-use Discord\WebSockets\Op;
-use React\Promise\Deferred;
-use Psr\Log\LoggerInterface;
-use Discord\WebSockets\Event;
-use Ratchet\Client\WebSocket;
-use Discord\Voice\VoiceClient;
 use Evenement\EventEmitterTrait;
+use Discord\Discord;
 use Discord\Parts\Channel\Channel;
+use Discord\Voice\VoiceClient;
+use Discord\WebSockets\Event;
+use Discord\WebSockets\Op;
+use Psr\Log\LoggerInterface;
+use Ratchet\Client\WebSocket;
 use React\EventLoop\LoopInterface;
+use React\Promise\Deferred;
 
 final class Voice
 {
