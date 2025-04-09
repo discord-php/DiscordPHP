@@ -269,9 +269,10 @@ class Thread extends Part implements Stringable
      */
     protected function setInvitableAttribute(bool $value): void
     {
-        if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
-            $this->attributes['thread_metadata']->invitable = $value;
+        if ($this->type == Channel::TYPE_PUBLIC_THREAD) {
+            return;
         }
+        $this->attributes['thread_metadata']->invitable = $value;
     }
 
     /**
