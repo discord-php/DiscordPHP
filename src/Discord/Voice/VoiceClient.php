@@ -547,7 +547,10 @@ class VoiceClient extends EventEmitter
                             $this->logger->debug('sent UDP heartbeat');
                         });
 
-                        $client->on('error', fn ($e): void => $this->emit('udp-error', [$e]));
+                        $client->on('error', function ($e): void
+                        {
+                            $this->emit('udp-error', [$e]);
+                        });
 
                         $decodeUDP = function ($message) use (&$ip, &$port): void {
                             /**
@@ -839,7 +842,7 @@ class VoiceClient extends EventEmitter
         }
 
         if (is_resource($stream)) {
-            $stream = new ReadableResourceStream($stream, $this->loop);
+            $stream = new Stream($stream, $this->loop);
         }
 
         if (! ($stream instanceof ReadableStreamInterface)) {
@@ -955,7 +958,7 @@ class VoiceClient extends EventEmitter
         }
 
         if (is_resource($stream)) {
-            $stream = new ReadableResourceStream($stream, $this->loop);
+            $stream = new Stream($stream, $this->loop);
         }
 
         if (! ($stream instanceof ReadableStreamInterface)) {
