@@ -18,6 +18,7 @@ use React\Stream\WritableStreamInterface;
 /**
  * Handles recieving audio from Discord.
  *
+ * @deprecated The class was renamed, kept for backwards compatibility.
  * @since 3.2.0
  */
 class RecieveStream extends EventEmitter implements DuplexStreamInterface
@@ -121,7 +122,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
      */
     public function isReadable()
     {
-        return $this->isPaused;
+        return !$this->isPaused && !$this->isClosed;
     }
 
     /**
@@ -129,7 +130,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
      */
     public function isWritable()
     {
-        return $this->isPaused;
+        return $this->isReadable();
     }
 
     /**
