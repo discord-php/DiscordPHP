@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -360,7 +362,7 @@ abstract class SelectMenu extends Component
 
                     $response = $callback($interaction, $options);
                 }
-                $ack = static fn() => $interaction->isResponded() ?: $interaction->acknowledge();
+                $ack = static fn () => $interaction->isResponded() ?: $interaction->acknowledge();
 
                 if ($response instanceof PromiseInterface) {
                     $response->then($ack);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -131,7 +133,7 @@ function getColor(int|string $color = 0): int
  */
 function contains(string $string, array $matches): bool
 {
-    return array_reduce($matches, fn($carry, $match) => $carry || str_contains($string, $match), false);
+    return array_reduce($matches, fn ($carry, $match) => $carry || str_contains($string, $match), false);
 }
 
 /**
@@ -238,7 +240,7 @@ function getSnowflakeTimestamp(string $snowflake)
  */
 function normalizePartId(string $id_field = 'id'): \Closure
 {
-    return static fn(Options $options, $part) => $part instanceof Part
+    return static fn (Options $options, $part) => $part instanceof Part
         ? $part->{$id_field}
         : $part;
 }
