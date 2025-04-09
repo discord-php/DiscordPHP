@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -306,7 +307,7 @@ class Guild extends Part
     /**
      * An array of valid regions.
      *
-     * @var CollectionInterface|null
+     * @var ExCollectionInterface|null
      */
     protected $regions;
 
@@ -336,7 +337,7 @@ class Guild extends Part
     /**
      * Sets the roles attribute.
      *
-     * @param CollectionInterface|array|null $roles
+     * @param ExCollectionInterface|array|null $roles
      */
     protected function setRolesAttribute($roles): void
     {
@@ -579,9 +580,9 @@ class Guild extends Part
      *
      * @deprecated 10.0.0 Use `$channel->stage_instances`
      *
-     * @return CollectionInterface|StageInstance[]
+     * @return ExCollectionInterface|StageInstance[]
      */
-    protected function getStageInstancesAttribute(): CollectionInterface
+    protected function getStageInstancesAttribute(): ExCollectionInterface
     {
         $stage_instances = Collection::for(StageInstance::class);
 
@@ -1117,7 +1118,7 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-positions
      *
-     * @param CollectionInterface|array $roles  Associative array where the LHS key is the position,
+     * @param ExCollectionInterface|array $roles  Associative array where the LHS key is the position,
      *                                              and the RHS value is a `Role` object or a string ID,
      *                                              e.g. `[1 => 'role_id_1', 3 => 'role_id_3']`.
      *

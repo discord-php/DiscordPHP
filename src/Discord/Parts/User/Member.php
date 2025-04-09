@@ -16,6 +16,7 @@ use Discord\Builders\MessageBuilder;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\Collection;
 use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -47,7 +48,7 @@ use function React\Promise\reject;
  * @property-read string              $displayname                  The nickname or display name with optional discriminator of the member.
  * @property      ?string|null        $avatar                       The avatar URL of the member or null if member has no guild avatar.
  * @property      ?string|null        $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
- * @property      CollectionInterface|Role[]   $roles                        A collection of Roles that the member has.
+ * @property      ExCollectionInterface|Role[]   $roles                        A collection of Roles that the member has.
  * @property      Carbon|null         $joined_at                    A timestamp of when the member joined the guild.
  * @property      Carbon|null         $premium_since                When the user started boosting the server.
  * @property      bool                $deaf                         Whether the member is deaf.
@@ -62,7 +63,7 @@ use function React\Promise\reject;
  * @property      string                $id            The unique identifier of the member.
  * @property      string                $status        The status of the member.
  * @property-read Activity              $game          The game the member is playing.
- * @property      CollectionInterface|Activity[] $activities    User's current activities.
+ * @property      ExCollectionInterface|Activity[] $activities    User's current activities.
  * @property      object                $client_status Current client status.
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
@@ -332,7 +333,7 @@ class Member extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-member
      *
-     * @param CollectionInterface|Role[]|string[] $roles  The roles to set to the member.
+     * @param ExCollectionInterface|Role[]|string[] $roles  The roles to set to the member.
      * @param string|null                         $reason Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing manage_roles permission.
@@ -617,9 +618,9 @@ class Member extends Part implements Stringable
     /**
      * Gets the activities attribute.
      *
-     * @return CollectionInterface|Activity[]
+     * @return ExCollectionInterface|Activity[]
      */
-    protected function getActivitiesAttribute(): CollectionInterface
+    protected function getActivitiesAttribute(): ExCollectionInterface
     {
         $activities = Collection::for(Activity::class, null);
 
@@ -693,9 +694,9 @@ class Member extends Part implements Stringable
     /**
      * Returns the roles attribute.
      *
-     * @return CollectionInterface<?Role> A collection of roles the member is in. null role only contains ID in the collection.
+     * @return ExCollectionInterface<?Role> A collection of roles the member is in. null role only contains ID in the collection.
      */
-    protected function getRolesAttribute(): CollectionInterface
+    protected function getRolesAttribute(): ExCollectionInterface
     {
         $roles = new Collection();
 

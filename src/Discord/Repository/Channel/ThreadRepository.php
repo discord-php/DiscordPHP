@@ -12,7 +12,7 @@
 namespace Discord\Repository\Channel;
 
 use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;
@@ -151,9 +151,9 @@ class ThreadRepository extends AbstractRepository
      *
      * @param object $response
      *
-     * @return CollectionInterface|Thread[]
+     * @return ExCollectionInterface|Thread[]
      */
-    private function handleThreadPaginationResponse(object $response): CollectionInterface
+    private function handleThreadPaginationResponse(object $response): ExCollectionInterface
     {
         $collection = Collection::for(Thread::class);
 

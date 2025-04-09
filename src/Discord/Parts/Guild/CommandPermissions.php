@@ -13,7 +13,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Helpers\BigInt;
 use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Permission;
 use Discord\Parts\Part;
 
@@ -29,7 +29,7 @@ use Discord\Parts\Part;
  * @property      string                  $application_id The id of the application the command belongs to.
  * @property      string                  $guild_id       The id of the guild.
  * @property-read Guild|null              $guild
- * @property      CollectionInterface|Permission[] $permissions    The permissions for the command in the guild.
+ * @property      ExCollectionInterface|Permission[] $permissions    The permissions for the command in the guild.
  */
 class CommandPermissions extends Part
 {
@@ -56,9 +56,9 @@ class CommandPermissions extends Part
     /**
      * Gets the permissions attribute.
      *
-     * @return CollectionInterface|Permission[] A collection of permissions.
+     * @return ExCollectionInterface|Permission[] A collection of permissions.
      */
-    protected function getPermissionsAttribute(): CollectionInterface
+    protected function getPermissionsAttribute(): ExCollectionInterface
     {
         $permissions = Collection::for(Permission::class);
 
