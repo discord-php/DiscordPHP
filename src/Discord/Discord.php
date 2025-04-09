@@ -1076,7 +1076,7 @@ class Discord
     /**
      * Initializes the connection with the Discord gateway.
      */
-    protected function connectWs(): void
+    public function connectWs(): void
     {
         $this->setGateway()->then(function ($gateway) {
             if (isset($gateway['session']) && $session = $gateway['session']) {
