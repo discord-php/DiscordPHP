@@ -13,6 +13,7 @@ namespace Discord\Parts\Interactions;
 
 use Discord\Builders\Components\Component;
 use Discord\Builders\MessageBuilder;
+use Discord\Exceptions\AttachmentSizeException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
@@ -310,7 +311,7 @@ class Interaction extends Part
         }
 
         if ($this->hasAttachmentsExceedingLimit($builder)) {
-            return reject(new \RuntimeException('One or more attachments exceed the attachment size limit.'));
+            return reject(New AttachmentSizeException());
         }
 
         return $this->respond([
@@ -360,7 +361,7 @@ class Interaction extends Part
         }
 
         if ($this->hasAttachmentsExceedingLimit($builder)) {
-            return reject(new \RuntimeException('One or more attachments exceed the attachment size limit.'));
+            return reject(New AttachmentSizeException());
         }
 
         return (function () use ($builder): PromiseInterface {
@@ -411,7 +412,7 @@ class Interaction extends Part
         }
 
         if ($this->hasAttachmentsExceedingLimit($builder)) {
-            return reject(new \RuntimeException('One or more attachments exceed the attachment size limit.'));
+            return reject(New AttachmentSizeException());
         }
 
         if ($ephemeral) {
@@ -452,7 +453,7 @@ class Interaction extends Part
         }
 
         if ($this->hasAttachmentsExceedingLimit($builder)) {
-            return reject(new \RuntimeException('One or more attachments exceed the attachment size limit.'));
+            return reject(New AttachmentSizeException());
         }
 
         if ($ephemeral) {
@@ -522,7 +523,7 @@ class Interaction extends Part
         }
 
         if ($this->hasAttachmentsExceedingLimit($builder)) {
-            return reject(new \RuntimeException('One or more attachments exceed the attachment size limit.'));
+            return reject(New AttachmentSizeException());
         }
 
         return (function () use ($message_id, $builder): PromiseInterface {
