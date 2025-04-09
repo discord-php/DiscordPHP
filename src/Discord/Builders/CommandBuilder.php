@@ -58,7 +58,7 @@ class CommandBuilder implements JsonSerializable
     /**
      * The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
      *
-     * @var ExCollectionInterface|Option[]|null
+     * @var ExCollectionInterface<Option|Option[]|null
      */
     protected $options = null;
 
@@ -75,7 +75,7 @@ class CommandBuilder implements JsonSerializable
     /**
      * Returns all the options in the command.
      *
-     * @return CollectionInterface<Option>|Option[]|null
+     * @return ExCollectionInterface<Option>|Option[]|null
      */
     public function getOptions()
     {
