@@ -134,7 +134,7 @@ trait CollectionTrait
     /**
      * Fills an array of items into the collection.
      *
-     * @param CollectionInterface|array $items
+     * @param ExCollectionInterface|array $items
      *
      * @return self
      */
@@ -442,7 +442,7 @@ trait CollectionTrait
      * If a callback is provided and is callable, it uses `array_udiff_assoc` to compute the difference.
      * Otherwise, it uses `array_diff`.
      *
-     * @param CollectionInterface|array $array
+     * @param ExCollectionInterface|array $array
      * @param ?callable                 $callback
      *
      * @return ExCollectionInterface
@@ -466,7 +466,7 @@ trait CollectionTrait
      * If a callback is provided and is callable, it uses `array_uintersect_assoc` to compute the intersection.
      * Otherwise, it uses `array_intersect`.
      *
-     * @param CollectionInterface|array $array
+     * @param ExCollectionInterface|array $array
      * @param ?callable                 $callback
      *
      * @return ExCollectionInterface
@@ -695,7 +695,7 @@ trait CollectionTrait
     /**
      * Unserializes the collection.
      *
-     * @param CollectionInterface|array $data
+     * @param ExCollectionInterface|array $data
      */
     public function __unserialize($data): void
     {

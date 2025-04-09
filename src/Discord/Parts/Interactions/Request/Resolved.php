@@ -28,12 +28,12 @@ use Discord\Parts\User\User;
  *
  * @since 7.0.0
  *
- * @property CollectionInterface|User[]|null             $users       The ids and User objects.
- * @property CollectionInterface|Member[]|null           $members     The ids and partial Member objects.
- * @property CollectionInterface|Role[]|null             $roles       The ids and Role objects.
- * @property CollectionInterface|Channel[]|Thread[]|null $channels    The ids and partial Channel objects.
- * @property CollectionInterface|Message[]|null          $messages    The ids and partial Message objects.
- * @property CollectionInterface|Attachment[]|null       $attachments The ids and partial Attachment objects.
+ * @property ExCollectionInterface|User[]|null             $users       The ids and User objects.
+ * @property ExCollectionInterface|Member[]|null           $members     The ids and partial Member objects.
+ * @property ExCollectionInterface|Role[]|null             $roles       The ids and Role objects.
+ * @property ExCollectionInterface|Channel[]|Thread[]|null $channels    The ids and partial Channel objects.
+ * @property ExCollectionInterface|Message[]|null          $messages    The ids and partial Message objects.
+ * @property ExCollectionInterface|Attachment[]|null       $attachments The ids and partial Attachment objects.
  *
  * @property string|null $guild_id ID of the guild internally passed from Interaction.
  */
@@ -62,7 +62,7 @@ class Resolved extends Part
     /**
      * Returns a collection of resolved users.
      *
-     * @return CollectionInterface|User[]|null Map of Snowflakes to user objects
+     * @return ExCollectionInterface|User[]|null Map of Snowflakes to user objects
      */
     protected function getUsersAttribute(): ?Collection
     {
@@ -84,7 +84,7 @@ class Resolved extends Part
      *
      * Partial Member objects are missing user, deaf and mute fields
      *
-     * @return CollectionInterface|Member[]|null Map of Snowflakes to partial member objects
+     * @return ExCollectionInterface|Member[]|null Map of Snowflakes to partial member objects
      */
     protected function getMembersAttribute(): ?Collection
     {
@@ -113,7 +113,7 @@ class Resolved extends Part
     /**
      * Returns a collection of resolved roles.
      *
-     * @return CollectionInterface|Role[]|null Map of Snowflakes to role objects
+     * @return ExCollectionInterface|Role[]|null Map of Snowflakes to role objects
      */
     protected function getRolesAttribute(): ?Collection
     {
@@ -143,7 +143,7 @@ class Resolved extends Part
      *
      * Partial Channel objects only have id, name, type and permissions fields. Threads will also have thread_metadata and parent_id fields.
      *
-     * @return CollectionInterface|Channel[]|Thread[]|null Map of Snowflakes to partial channel objects
+     * @return ExCollectionInterface|Channel[]|Thread[]|null Map of Snowflakes to partial channel objects
      */
     protected function getChannelsAttribute(): ?Collection
     {
@@ -175,7 +175,7 @@ class Resolved extends Part
     /**
      * Returns a collection of resolved messages.
      *
-     * @return CollectionInterface|Message[]|null Map of Snowflakes to partial messages objects
+     * @return ExCollectionInterface|Message[]|null Map of Snowflakes to partial messages objects
      */
     protected function getMessagesAttribute(): ?Collection
     {
@@ -201,7 +201,7 @@ class Resolved extends Part
     /**
      * Returns a collection of resolved attachments.
      *
-     * @return CollectionInterface|Attachment[]|null Map of Snowflakes to attachments objects
+     * @return ExCollectionInterface|Attachment[]|null Map of Snowflakes to attachments objects
      */
     protected function getAttachmentsAttribute(): ?Collection
     {
