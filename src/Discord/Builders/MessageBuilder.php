@@ -621,7 +621,7 @@ class MessageBuilder implements JsonSerializable
      */
     public function getAttachments(): array
     {
-        return $this->attachments;
+        return $this->attachments ?? [];
     }
 
     /**
