@@ -114,6 +114,24 @@ trait PartTrait
     }
 
     /**
+     * Checks if a 'get' method exists for the given key.
+     *
+     * @param string $key The property name to check.
+     *
+     * @return string|false Either a string if it is a method or false.
+     */
+    private function checkForGetMethod(string $key): string|false
+    {
+        $str = 'get'.self::studly($key);
+
+        if (method_exists($this, $str)) {
+            return $str;
+        }
+
+        return false;
+    }
+
+    /**
      * Checks if there is a set mutator present.
      *
      * @param string $key The attribute name to check.
@@ -125,6 +143,24 @@ trait PartTrait
     private function checkForSetMutator(string $key)
     {
         $str = 'set'.self::studly($key).'Attribute';
+
+        if (method_exists($this, $str)) {
+            return $str;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if a 'set' method exists for the given key.
+     *
+     * @param string $key The property name to check.
+     *
+     * @return string|false Either a string if it is a method or false.
+     */
+    private function checkForSetMethod(string $key): string|false
+    {
+        $str = 'set'.self::studly($key);
 
         if (method_exists($this, $str)) {
             return $str;
@@ -163,6 +199,21 @@ trait PartTrait
     }
 
     /**
+     * Gets a property on the part.
+     *
+     * @param string $key The name of the property.
+     *
+     * @return mixed Either the attribute if it exists or void.
+     * @throws \Exception
+     */
+    private function getProperty(string $key)
+    {
+        if ($str = $this->checkForGetMethod($key)) {
+            return $this->{$str}();
+        }
+    }
+
+    /**
      * Sets an attribute on the part.
      *
      * @param string $key   The key to the attribute.
@@ -178,6 +229,30 @@ trait PartTrait
 
         if (in_array($key, $this->fillable)) {
             $this->attributes[$key] = $value;
+        }
+    }
+
+     /**
+     * Sets an attribute or property on the party.
+     *
+     * @param string $key   The name to the attribute or property.
+     * @param mixed  $value The value of the attribute or property.
+     */
+    private function setAttributeOrProperty(string $key, $value): void
+    {
+        if ($str = $this->checkForSetMutator($key)) {
+            $this->{$str}($value);
+
+            return;
+        }
+
+        if (in_array($key, $this->fillable)) {
+            $this->attributes[$key] = $value;
+            return;
+        }
+
+        if ($str = $this->checkForSetMethod($key)) {
+            $this->{$str}($value);
         }
     }
 
@@ -476,7 +551,7 @@ trait PartTrait
      */
     public function __get(string $key)
     {
-        return $this->getAttribute($key);
+        return $this->getAttribute($key) ?? $this->getProperty($key);
     }
 
     /**
@@ -489,6 +564,6 @@ trait PartTrait
      */
     public function __set(string $key, $value): void
     {
-        $this->setAttribute($key, $value);
+        $this->setAttributeOrProperty($key, $value);
     }
 }
