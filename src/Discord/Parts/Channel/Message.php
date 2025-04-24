@@ -186,6 +186,7 @@ class Message extends Part
     public const FLAG_SUPPRESS_NOTIFICATIONS = (1 << 12);
     public const FLAG_IS_VOICE_MESSAGE = (1 << 13);
     public const FLAG_HAS_SNAPSHOT = (1 << 14);
+    public const FLAG_IS_V2_COMPONENTS = (1 << 15);
 
     /**
      * {@inheritDoc}
