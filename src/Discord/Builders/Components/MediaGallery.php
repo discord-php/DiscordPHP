@@ -16,7 +16,7 @@ namespace Discord\Builders\Components;
  *
  * @link https://discord.com/developers/docs/interactions/message-components#media-gallery
  *
- * @since 10.4.0
+ * @since 10.5.0
  */
 class MediaGallery extends Component implements Contracts\ComponentV2
 {

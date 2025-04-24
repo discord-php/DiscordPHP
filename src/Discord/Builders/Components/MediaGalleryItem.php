@@ -18,7 +18,7 @@ use JsonSerializable;
  *
  * @link https://discord.com/developers/docs/interactions/message-components#media-gallery-object-media-gallery-item-structure
  *
- * @since 10.4.0
+ * @since 10.5.0
  */
 class MediaGalleryItem implements JsonSerializable
 {

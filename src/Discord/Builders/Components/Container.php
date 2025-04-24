@@ -24,7 +24,7 @@ use Discord\Builders\Components\Separator;
  *
  * @link https://discord.com/developers/docs/interactions/message-components#container
  *
- * @since 10.4.0
+ * @since 10.5.0
  */
 class Container extends Component implements Contracts\ComponentV2
 {

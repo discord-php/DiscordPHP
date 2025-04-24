@@ -16,7 +16,7 @@ namespace Discord\Builders\Components;
  *
  * @link https://discord.com/developers/docs/interactions/message-components#section
  *
- * @since 10.4.0
+ * @since 10.5.0
  */
 class Section extends Component implements Contracts\ComponentV2
 {

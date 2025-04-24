@@ -17,7 +17,7 @@ namespace Discord\Builders\Components;
  *
  * @link https://discord.com/developers/docs/interactions/message-components#separator
  *
- * @since 10.4.0
+ * @since 10.5.0
  */
 class Separator extends Component implements Contracts\ComponentV2
 {
