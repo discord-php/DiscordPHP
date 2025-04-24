@@ -307,7 +307,7 @@ certain keyword, a rule can trigger and block the message before it is sent.</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>CollectionInterface|?Role[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).</p>
+                                                 <section class="phpdocumentor-description"><p>ExCollectionInterface|?Role[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).</p>
 </section>
 
                                     </dd>
@@ -316,7 +316,7 @@ certain keyword, a rule can trigger and block the message before it is sent.</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>CollectionInterface|?Channel[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).</p>
+                                                 <section class="phpdocumentor-description"><p>ExCollectionInterface|?Channel[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).</p>
 </section>
 
                                     </dd>
@@ -410,7 +410,7 @@ certain keyword, a rule can trigger and block the message before it is sent.</p>
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_actions">$actions</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Helpers-CollectionInterface.html"><abbr title="\Discord\Helpers\CollectionInterface">CollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;            </span>
+                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -726,7 +726,7 @@ JSON. Used for JsonSerializable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getActionsAttribute">getActionsAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Helpers-CollectionInterface.html"><abbr title="\Discord\Helpers\CollectionInterface">CollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;    </span>
+                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;    </span>
 </dt>
 <dd>Returns the actions attribute.</dd>
 
@@ -740,14 +740,14 @@ JSON. Used for JsonSerializable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getExemptChannelsAttribute">getExemptChannelsAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Helpers-CollectionInterface.html"><abbr title="\Discord\Helpers\CollectionInterface">CollectionInterface</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>    </span>
 </dt>
 <dd>Returns the exempt channels attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getExemptRolesAttribute">getExemptRolesAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Helpers-CollectionInterface.html"><abbr title="\Discord\Helpers\CollectionInterface">CollectionInterface</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>    </span>
 </dt>
 <dd>Returns the exempt roles attribute.</dd>
 
@@ -1124,7 +1124,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-CollectionInterface.html"><abbr title="\Discord\Helpers\CollectionInterface">CollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$actions</span>
     </code>
 
@@ -3324,7 +3324,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getActionsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-CollectionInterface.html"><abbr title="\Discord\Helpers\CollectionInterface">CollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getActionsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3337,7 +3337,7 @@ JSON. Used for JsonSerializable.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-CollectionInterface.html"><abbr title="\Discord\Helpers\CollectionInterface">CollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>A collection of actions.</p>
 </section>
@@ -3410,7 +3410,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getExemptChannelsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-CollectionInterface.html"><abbr title="\Discord\Helpers\CollectionInterface">CollectionInterface</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getExemptChannelsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3429,7 +3429,7 @@ JSON. Used for JsonSerializable.</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>CollectionInterface|?Channel[] A collection of channels exempt from the rule.</p>
+                                                 <section class="phpdocumentor-description"><p>ExCollectionInterface|?Channel[] A collection of channels exempt from the rule.</p>
 </section>
 
                                     </dd>
@@ -3439,7 +3439,7 @@ JSON. Used for JsonSerializable.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-CollectionInterface.html"><abbr title="\Discord\Helpers\CollectionInterface">CollectionInterface</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a></span>
             </section>
 
 </article>
@@ -3465,7 +3465,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getExemptRolesAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-CollectionInterface.html"><abbr title="\Discord\Helpers\CollectionInterface">CollectionInterface</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getExemptRolesAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3484,7 +3484,7 @@ JSON. Used for JsonSerializable.</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>CollectionInterface|?Role[] A collection of roles exempt from the rule.</p>
+                                                 <section class="phpdocumentor-description"><p>ExCollectionInterface|?Role[] A collection of roles exempt from the rule.</p>
 </section>
 
                                     </dd>
@@ -3494,7 +3494,7 @@ JSON. Used for JsonSerializable.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-CollectionInterface.html"><abbr title="\Discord\Helpers\CollectionInterface">CollectionInterface</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a></span>
             </section>
 
 </article>

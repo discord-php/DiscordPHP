@@ -116,6 +116,11 @@ Search.appendIndex(
             "summary": "The\u0020default\u0020permission\u0020of\u0020the\u0020command.\u0020If\u0020true\u0020the\u0020command\u0020is\u0020enabled\u0020when\u0020the\u0020app\u0020is\u0020added\u0020to\u0020the\u0020guild.",
             "url": "classes/Discord-Builders-CommandBuilder.html#property_default_permission"
         },                {
+            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024options",
+            "name": "options",
+            "summary": "The\u0020parameters\u0020for\u0020the\u0020command,\u0020max\u002025.\u0020Only\u0020for\u0020Slash\u0020command\u0020\u0028CHAT_INPUT\u0029.",
+            "url": "classes/Discord-Builders-CommandBuilder.html#property_options"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\ActionRow",
             "name": "ActionRow",
             "summary": "An\u0020Action\u0020Row\u0020is\u0020a\u0020non\u002Dinteractive\u0020container\u0020component\u0020for\u0020other\u0020types\u0020of\ncomponents.",
@@ -386,10 +391,265 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_CHANNEL_SELECT"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_SECTION",
+            "name": "TYPE_SECTION",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_SECTION"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_TEXT_DISPLAY",
+            "name": "TYPE_TEXT_DISPLAY",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_TEXT_DISPLAY"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_THUMBNAIL",
+            "name": "TYPE_THUMBNAIL",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_THUMBNAIL"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_MEDIA_GALLERY",
+            "name": "TYPE_MEDIA_GALLERY",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_MEDIA_GALLERY"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_FILE",
+            "name": "TYPE_FILE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_FILE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_SEPARATOR",
+            "name": "TYPE_SEPARATOR",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_SEPARATOR"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_CONTENT_INVENTORY_ENTRY",
+            "name": "TYPE_CONTENT_INVENTORY_ENTRY",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_CONTENT_INVENTORY_ENTRY"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_CONTAINER",
+            "name": "TYPE_CONTAINER",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_CONTAINER"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_SELECT_MENU",
             "name": "TYPE_SELECT_MENU",
             "summary": "",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_SELECT_MENU"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container",
+            "name": "Container",
+            "summary": "Containers\u0020are\u0020a\u0020new\u0020way\u0020to\u0020group\u0020components\u0020together.",
+            "url": "classes/Discord-Builders-Components-Container.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020container.",
+            "url": "classes/Discord-Builders-Components-Container.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AaddComponent\u0028\u0029",
+            "name": "addComponent",
+            "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020container.",
+            "url": "classes/Discord-Builders-Components-Container.html#method_addComponent"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AaddComponents\u0028\u0029",
+            "name": "addComponents",
+            "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020container.",
+            "url": "classes/Discord-Builders-Components-Container.html#method_addComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AsetComponents\u0028\u0029",
+            "name": "setComponents",
+            "summary": "Sets\u0020the\u0020components\u0020for\u0020the\u0020container.",
+            "url": "classes/Discord-Builders-Components-Container.html#method_setComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AsetAccentColor\u0028\u0029",
+            "name": "setAccentColor",
+            "summary": "Sets\u0020the\u0020accent\u0020color\u0020for\u0020the\u0020container.",
+            "url": "classes/Discord-Builders-Components-Container.html#method_setAccentColor"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AsetSpoiler\u0028\u0029",
+            "name": "setSpoiler",
+            "summary": "Sets\u0020whether\u0020the\u0020container\u0020is\u0020a\u0020spoiler.",
+            "url": "classes/Discord-Builders-Components-Container.html#method_setSpoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AgetComponents\u0028\u0029",
+            "name": "getComponents",
+            "summary": "Returns\u0020all\u0020the\u0020components\u0020in\u0020the\u0020container.",
+            "url": "classes/Discord-Builders-Components-Container.html#method_getComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AgetAccentColor\u0028\u0029",
+            "name": "getAccentColor",
+            "summary": "Returns\u0020the\u0020accent\u0020color\u0020for\u0020the\u0020container.",
+            "url": "classes/Discord-Builders-Components-Container.html#method_getAccentColor"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AisSpoiler\u0028\u0029",
+            "name": "isSpoiler",
+            "summary": "Returns\u0020whether\u0020the\u0020container\u0020is\u0020a\u0020spoiler.",
+            "url": "classes/Discord-Builders-Components-Container.html#method_isSpoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Builders-Components-Container.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003A\u0024components",
+            "name": "components",
+            "summary": "Array\u0020of\u0020components.",
+            "url": "classes/Discord-Builders-Components-Container.html#property_components"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003A\u0024accent_color",
+            "name": "accent_color",
+            "summary": "Accent\u0020color\u0020for\u0020the\u0020container.",
+            "url": "classes/Discord-Builders-Components-Container.html#property_accent_color"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003A\u0024spoiler",
+            "name": "spoiler",
+            "summary": "Whether\u0020the\u0020container\u0020is\u0020a\u0020spoiler.",
+            "url": "classes/Discord-Builders-Components-Container.html#property_spoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Contracts\\ComponentV2",
+            "name": "ComponentV2",
+            "summary": "This\u0020interface\u0020is\u0020a\u0020contract\u0020for\u0020V2\u0020components.",
+            "url": "classes/Discord-Builders-Components-Contracts-ComponentV2.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\File",
+            "name": "File",
+            "summary": "File\u0020components\u0020allow\u0020you\u0020to\u0020send\u0020a\u0020file.\u0020You\u0020can\u0020also\u0020spoiler\u0020it.",
+            "url": "classes/Discord-Builders-Components-File.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020file\u0020component.",
+            "url": "classes/Discord-Builders-Components-File.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003AsetFile\u0028\u0029",
+            "name": "setFile",
+            "summary": "Sets\u0020the\u0020file\u0020to\u0020be\u0020displayed.",
+            "url": "classes/Discord-Builders-Components-File.html#method_setFile"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003AsetSpoiler\u0028\u0029",
+            "name": "setSpoiler",
+            "summary": "Sets\u0020whether\u0020the\u0020file\u0020is\u0020a\u0020spoiler.",
+            "url": "classes/Discord-Builders-Components-File.html#method_setSpoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003AgetFile\u0028\u0029",
+            "name": "getFile",
+            "summary": "Returns\u0020the\u0020file\u0020reference.",
+            "url": "classes/Discord-Builders-Components-File.html#method_getFile"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003AisSpoiler\u0028\u0029",
+            "name": "isSpoiler",
+            "summary": "Returns\u0020whether\u0020the\u0020file\u0020is\u0020a\u0020spoiler.",
+            "url": "classes/Discord-Builders-Components-File.html#method_isSpoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Builders-Components-File.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003A\u0024file",
+            "name": "file",
+            "summary": "The\u0020file\u0020to\u0020be\u0020displayed.",
+            "url": "classes/Discord-Builders-Components-File.html#property_file"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003A\u0024spoiler",
+            "name": "spoiler",
+            "summary": "Whether\u0020the\u0020file\u0020is\u0020a\u0020spoiler.",
+            "url": "classes/Discord-Builders-Components-File.html#property_spoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGallery",
+            "name": "MediaGallery",
+            "summary": "Media\u0020gallery\u0020components\u0020allow\u0020you\u0020to\u0020group\u0020images,\u0020videos\u0020or\u0020gifs\u0020into\u0020a\u0020gallery\u0020grid.",
+            "url": "classes/Discord-Builders-Components-MediaGallery.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGallery\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020media\u0020gallery.",
+            "url": "classes/Discord-Builders-Components-MediaGallery.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGallery\u003A\u003AaddItem\u0028\u0029",
+            "name": "addItem",
+            "summary": "Adds\u0020a\u0020media\u0020item\u0020to\u0020the\u0020gallery.",
+            "url": "classes/Discord-Builders-Components-MediaGallery.html#method_addItem"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGallery\u003A\u003AgetItems\u0028\u0029",
+            "name": "getItems",
+            "summary": "Returns\u0020all\u0020the\u0020media\u0020items\u0020in\u0020the\u0020gallery.",
+            "url": "classes/Discord-Builders-Components-MediaGallery.html#method_getItems"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGallery\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Builders-Components-MediaGallery.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGallery\u003A\u003A\u0024items",
+            "name": "items",
+            "summary": "Array\u0020of\u0020media\u0020gallery\u0020items.",
+            "url": "classes/Discord-Builders-Components-MediaGallery.html#property_items"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem",
+            "name": "MediaGalleryItem",
+            "summary": "Represents\u0020an\u0020item\u0020in\u0020a\u0020media\u0020gallery\u0020component.",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020media\u0020gallery\u0020item.",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003AfromAttachment\u0028\u0029",
+            "name": "fromAttachment",
+            "summary": "Creates\u0020a\u0020new\u0020media\u0020gallery\u0020item\u0020from\u0020an\u0020attachment.",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#method_fromAttachment"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003AsetMedia\u0028\u0029",
+            "name": "setMedia",
+            "summary": "Sets\u0020the\u0020media\u0020item.",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#method_setMedia"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003AgetMedia\u0028\u0029",
+            "name": "getMedia",
+            "summary": "Returns\u0020the\u0020media\u0020item.",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#method_getMedia"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003AsetDescription\u0028\u0029",
+            "name": "setDescription",
+            "summary": "Sets\u0020the\u0020description\u0020for\u0020the\u0020media\u0020item.",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#method_setDescription"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "Returns\u0020the\u0020description\u0020for\u0020the\u0020media\u0020item.",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#method_getDescription"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003AsetSpoiler\u0028\u0029",
+            "name": "setSpoiler",
+            "summary": "Sets\u0020whether\u0020the\u0020media\u0020item\u0020is\u0020a\u0020spoiler.",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#method_setSpoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003AisSpoiler\u0028\u0029",
+            "name": "isSpoiler",
+            "summary": "Returns\u0020whether\u0020the\u0020media\u0020item\u0020is\u0020a\u0020spoiler.",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#method_isSpoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003A\u0024media",
+            "name": "media",
+            "summary": "Media\u0020item\u0020for\u0020the\u0020gallery.",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#property_media"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003A\u0024description",
+            "name": "description",
+            "summary": "Description\u0020for\u0020the\u0020gallery\u0020item.",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#property_description"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003A\u0024spoiler",
+            "name": "spoiler",
+            "summary": "Whether\u0020the\u0020gallery\u0020item\u0020is\u0020a\u0020spoiler.",
+            "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#property_spoiler"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\MentionableSelect",
             "name": "MentionableSelect",
@@ -495,6 +755,51 @@ Search.appendIndex(
             "name": "type",
             "summary": "Component\u0020type.",
             "url": "classes/Discord-Builders-Components-RoleSelect.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section",
+            "name": "Section",
+            "summary": "Section\u0020components\u0020allow\u0020you\u0020to\u0020define\u0020up\u0020to\u00203\u0020text\u0020display\u0020components\u0020and\u0020add\u0020either\u0020a\u0020thumbnail\u0020or\u0020button\u0020to\u0020the\u0020right\u0020side.",
+            "url": "classes/Discord-Builders-Components-Section.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020section.",
+            "url": "classes/Discord-Builders-Components-Section.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AaddComponent\u0028\u0029",
+            "name": "addComponent",
+            "summary": "Adds\u0020a\u0020text\u0020display\u0020component\u0020to\u0020the\u0020section.",
+            "url": "classes/Discord-Builders-Components-Section.html#method_addComponent"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AsetAccessory\u0028\u0029",
+            "name": "setAccessory",
+            "summary": "Sets\u0020the\u0020accessory\u0020component\u0020of\u0020the\u0020section.",
+            "url": "classes/Discord-Builders-Components-Section.html#method_setAccessory"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AgetComponents\u0028\u0029",
+            "name": "getComponents",
+            "summary": "Returns\u0020all\u0020the\u0020text\u0020components\u0020in\u0020the\u0020section.",
+            "url": "classes/Discord-Builders-Components-Section.html#method_getComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AgetAccessory\u0028\u0029",
+            "name": "getAccessory",
+            "summary": "Returns\u0020the\u0020accessory\u0020component.",
+            "url": "classes/Discord-Builders-Components-Section.html#method_getAccessory"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Builders-Components-Section.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003A\u0024components",
+            "name": "components",
+            "summary": "Array\u0020of\u0020text\u0020display\u0020components.",
+            "url": "classes/Discord-Builders-Components-Section.html#property_components"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003A\u0024accessory",
+            "name": "accessory",
+            "summary": "Accessory\u0020component\u0020\u0028Thumbnail\u0020or\u0020Button\u0029.",
+            "url": "classes/Discord-Builders-Components-Section.html#property_accessory"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu",
             "name": "SelectMenu",
@@ -671,6 +976,61 @@ Search.appendIndex(
             "summary": "Discord\u0020instance\u0020when\u0020the\u0020listener\u0020is\u0020set.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#property_discord"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator",
+            "name": "Separator",
+            "summary": "Separator\u0020components\u0020allow\u0020you\u0020to\u0020divide\u0020components\u0020with\u0020a\u0020divider.",
+            "url": "classes/Discord-Builders-Components-Separator.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020separator.",
+            "url": "classes/Discord-Builders-Components-Separator.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003AsetDivider\u0028\u0029",
+            "name": "setDivider",
+            "summary": "Sets\u0020whether\u0020the\u0020separator\u0020is\u0020a\u0020divider.",
+            "url": "classes/Discord-Builders-Components-Separator.html#method_setDivider"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003AsetSpacing\u0028\u0029",
+            "name": "setSpacing",
+            "summary": "Sets\u0020the\u0020spacing\u0020size\u0020for\u0020the\u0020separator.",
+            "url": "classes/Discord-Builders-Components-Separator.html#method_setSpacing"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003AisDivider\u0028\u0029",
+            "name": "isDivider",
+            "summary": "Returns\u0020whether\u0020the\u0020separator\u0020is\u0020a\u0020divider.",
+            "url": "classes/Discord-Builders-Components-Separator.html#method_isDivider"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003AgetSpacing\u0028\u0029",
+            "name": "getSpacing",
+            "summary": "Returns\u0020the\u0020spacing\u0020size\u0020for\u0020the\u0020separator.",
+            "url": "classes/Discord-Builders-Components-Separator.html#method_getSpacing"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Builders-Components-Separator.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003ASPACING_SMALL",
+            "name": "SPACING_SMALL",
+            "summary": "Spacing\u0020size\u0020constants.",
+            "url": "classes/Discord-Builders-Components-Separator.html#constant_SPACING_SMALL"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003ASPACING_LARGE",
+            "name": "SPACING_LARGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Separator.html#constant_SPACING_LARGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003A\u0024divider",
+            "name": "divider",
+            "summary": "Whether\u0020the\u0020separator\u0020is\u0020a\u0020divider.",
+            "url": "classes/Discord-Builders-Components-Separator.html#property_divider"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003A\u0024spacing",
+            "name": "spacing",
+            "summary": "Spacing\u0020size\u0020for\u0020the\u0020separator.",
+            "url": "classes/Discord-Builders-Components-Separator.html#property_spacing"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\StringSelect",
             "name": "StringSelect",
             "summary": "Select\u0020menu\u0020for\u0020picking\u0020from\u0020defined\u0020text\u0020options.",
@@ -700,6 +1060,36 @@ Search.appendIndex(
             "name": "options",
             "summary": "Array\u0020of\u0020options\u0020that\u0020the\u0020select\u0020menu\u0020has.",
             "url": "classes/Discord-Builders-Components-StringSelect.html#property_options"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\TextDisplay",
+            "name": "TextDisplay",
+            "summary": "Text\u0020display\u0020components\u0020allow\u0020you\u0020to\u0020send\u0020text.",
+            "url": "classes/Discord-Builders-Components-TextDisplay.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\TextDisplay\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020text\u0020display.",
+            "url": "classes/Discord-Builders-Components-TextDisplay.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\TextDisplay\u003A\u003AsetContent\u0028\u0029",
+            "name": "setContent",
+            "summary": "Sets\u0020the\u0020content\u0020of\u0020the\u0020text\u0020display.",
+            "url": "classes/Discord-Builders-Components-TextDisplay.html#method_setContent"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\TextDisplay\u003A\u003AgetContent\u0028\u0029",
+            "name": "getContent",
+            "summary": "Returns\u0020the\u0020content\u0020of\u0020the\u0020text\u0020display.",
+            "url": "classes/Discord-Builders-Components-TextDisplay.html#method_getContent"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\TextDisplay\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Builders-Components-TextDisplay.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\TextDisplay\u003A\u003A\u0024content",
+            "name": "content",
+            "summary": "Content\u0020of\u0020the\u0020text\u0020display.",
+            "url": "classes/Discord-Builders-Components-TextDisplay.html#property_content"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput",
             "name": "TextInput",
@@ -835,6 +1225,176 @@ Search.appendIndex(
             "name": "placeholder",
             "summary": "Placeholder\u0020string\u0020to\u0020display\u0020if\u0020text\u0020input\u0020is\u0020empty.\u0020Maximum\u0020100\u0020characters.",
             "url": "classes/Discord-Builders-Components-TextInput.html#property_placeholder"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail",
+            "name": "Thumbnail",
+            "summary": "Thumbnail\u0020components\u0020allow\u0020you\u0020to\u0020add\u0020a\u0020thumbnail\u0020image\u0020to\u0020a\u0020section.",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020thumbnail.",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003AsetMedia\u0028\u0029",
+            "name": "setMedia",
+            "summary": "Sets\u0020the\u0020media\u0020item\u0020for\u0020the\u0020thumbnail.",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#method_setMedia"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003AsetDescription\u0028\u0029",
+            "name": "setDescription",
+            "summary": "Sets\u0020the\u0020description\u0020for\u0020the\u0020thumbnail.",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#method_setDescription"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003AsetSpoiler\u0028\u0029",
+            "name": "setSpoiler",
+            "summary": "Sets\u0020whether\u0020the\u0020thumbnail\u0020is\u0020a\u0020spoiler.",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#method_setSpoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003AgetMedia\u0028\u0029",
+            "name": "getMedia",
+            "summary": "Returns\u0020the\u0020media\u0020item\u0020for\u0020the\u0020thumbnail.",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#method_getMedia"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "Returns\u0020the\u0020description\u0020for\u0020the\u0020thumbnail.",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#method_getDescription"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003AisSpoiler\u0028\u0029",
+            "name": "isSpoiler",
+            "summary": "Returns\u0020whether\u0020the\u0020thumbnail\u0020is\u0020a\u0020spoiler.",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#method_isSpoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003A\u0024media",
+            "name": "media",
+            "summary": "Media\u0020item\u0020for\u0020the\u0020thumbnail.",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#property_media"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003A\u0024description",
+            "name": "description",
+            "summary": "Description\u0020for\u0020the\u0020thumbnail.",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#property_description"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003A\u0024spoiler",
+            "name": "spoiler",
+            "summary": "Whether\u0020the\u0020thumbnail\u0020is\u0020a\u0020spoiler.",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#property_spoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem",
+            "name": "UnfurledMediaItem",
+            "summary": "Represents\u0020an\u0020unfurled\u0020media\u0020item,\u0020which\u0020is\u0020the\u0020base\u0020for\u0020V2\u0020components.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020unfurled\u0020media\u0020item.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AfromAttachment\u0028\u0029",
+            "name": "fromAttachment",
+            "summary": "Creates\u0020a\u0020new\u0020unfurled\u0020media\u0020item\u0020from\u0020an\u0020attachment.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_fromAttachment"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AsetUrl\u0028\u0029",
+            "name": "setUrl",
+            "summary": "Sets\u0020the\u0020URL\u0020of\u0020the\u0020media\u0020item.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_setUrl"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AgetUrl\u0028\u0029",
+            "name": "getUrl",
+            "summary": "Returns\u0020the\u0020URL\u0020of\u0020the\u0020media\u0020item.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_getUrl"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AsetResolvedData\u0028\u0029",
+            "name": "setResolvedData",
+            "summary": "Sets\u0020the\u0020resolved\u0020data\u0020for\u0020the\u0020media\u0020item.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_setResolvedData"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AisResolved\u0028\u0029",
+            "name": "isResolved",
+            "summary": "Returns\u0020whether\u0020the\u0020media\u0020item\u0020has\u0020been\u0020resolved.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isResolved"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AisLoaded\u0028\u0029",
+            "name": "isLoaded",
+            "summary": "Returns\u0020whether\u0020the\u0020media\u0020item\u0020was\u0020successfully\u0020loaded.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isLoaded"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AisNotFound\u0028\u0029",
+            "name": "isNotFound",
+            "summary": "Returns\u0020whether\u0020the\u0020media\u0020item\u0020failed\u0020to\u0020load.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isNotFound"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AisLoading\u0028\u0029",
+            "name": "isLoading",
+            "summary": "Returns\u0020whether\u0020the\u0020media\u0020item\u0020is\u0020still\u0020loading.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isLoading"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AisUnknown\u0028\u0029",
+            "name": "isUnknown",
+            "summary": "Returns\u0020whether\u0020the\u0020media\u0020item\u0027s\u0020loading\u0020state\u0020is\u0020unknown.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isUnknown"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003ALOADING_STATE_UNKNOWN",
+            "name": "LOADING_STATE_UNKNOWN",
+            "summary": "Loading\u0020states\u0020for\u0020unfurled\u0020media\u0020items.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_UNKNOWN"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003ALOADING_STATE_LOADING",
+            "name": "LOADING_STATE_LOADING",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADING"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003ALOADING_STATE_LOADED_SUCCESS",
+            "name": "LOADING_STATE_LOADED_SUCCESS",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADED_SUCCESS"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003ALOADING_STATE_LOADED_NOT_FOUND",
+            "name": "LOADING_STATE_LOADED_NOT_FOUND",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADED_NOT_FOUND"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003A\u0024url",
+            "name": "url",
+            "summary": "Source\u0020URL\u0020of\u0020media\u0020item\u0020\u0028only\u0020supports\u0020http\u0028s\u0029\u0020and\u0020attachments\u0029.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#property_url"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003A\u0024proxy_url",
+            "name": "proxy_url",
+            "summary": "A\u0020proxied\u0020URL\u0020of\u0020the\u0020media\u0020item.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#property_proxy_url"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003A\u0024height",
+            "name": "height",
+            "summary": "Height\u0020of\u0020media\u0020item.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#property_height"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003A\u0024width",
+            "name": "width",
+            "summary": "Width\u0020of\u0020media\u0020item.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#property_width"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003A\u0024content_type",
+            "name": "content_type",
+            "summary": "The\u0020media\u0020item\u0027s\u0020media\u0020type.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#property_content_type"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003A\u0024loading_state",
+            "name": "loading_state",
+            "summary": "Loading\u0020state\u0020of\u0020the\u0020media\u0020item.",
+            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#property_loading_state"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\UserSelect",
             "name": "UserSelect",
@@ -1010,6 +1570,11 @@ Search.appendIndex(
             "name": "setFlags",
             "summary": "Sets\u0020the\u0020flags\u0020of\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_setFlags"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetFlags\u0028\u0029",
+            "name": "getFlags",
+            "summary": "Get\u0020the\u0020current\u0020flags\u0020of\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getFlags"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A_setFlags\u0028\u0029",
             "name": "_setFlags",
@@ -1715,6 +2280,16 @@ Search.appendIndex(
             "name": "aliases",
             "summary": "A\u0020map\u0020of\u0020aliases\u0020for\u0020commands.",
             "url": "classes/Discord-DiscordCommandClient.html#property_aliases"
+        },                {
+            "fqsen": "\\Discord\\Exceptions\\AttachmentSizeException",
+            "name": "AttachmentSizeException",
+            "summary": "Thrown\u0020when\u0020attachment\u0020size\u0020exceeds\u0020the\u0020maximum\u0020allowed\u0020size.",
+            "url": "classes/Discord-Exceptions-AttachmentSizeException.html"
+        },                {
+            "fqsen": "\\Discord\\Exceptions\\AttachmentSizeException\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Create\u0020a\u0020new\u0020attachment\u0020size\u0020exception.",
+            "url": "classes/Discord-Exceptions-AttachmentSizeException.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Exceptions\\BufferTimedOutException",
             "name": "BufferTimedOutException",
@@ -3845,6 +4420,11 @@ Search.appendIndex(
             "name": "FLAG_HAS_SNAPSHOT",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_HAS_SNAPSHOT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_IS_V2_COMPONENTS",
+            "name": "FLAG_IS_V2_COMPONENTS",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_IS_V2_COMPONENTS"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -6486,6 +7066,11 @@ Search.appendIndex(
             "summary": "Responds\u0020to\u0020the\u0020interaction\u0020with\u0020a\u0020popup\u0020modal.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#method_showModal"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003AhasAttachmentsExceedingLimit\u0028\u0029",
+            "name": "hasAttachmentsExceedingLimit",
+            "summary": "Checks\u0020if\u0020any\u0020attachments\u0020in\u0020the\u0020MessageBuilder\u0020exceed\u0020the\u0020attachment\u0020size\u0020limit.",
+            "url": "classes/Discord-Parts-Interactions-Interaction.html#method_hasAttachmentsExceedingLimit"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ATYPE_PING",
             "name": "TYPE_PING",
             "summary": "",
@@ -6550,6 +7135,21 @@ Search.appendIndex(
             "name": "RESPONSE_TYPE_PREMIUM_REQUIRED",
             "summary": "",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_PREMIUM_REQUIRED"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ACONTEXT_TYPE_GUILD",
+            "name": "CONTEXT_TYPE_GUILD",
+            "summary": "",
+            "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_CONTEXT_TYPE_GUILD"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ACONTEXT_TYPE_BOT_DM",
+            "name": "CONTEXT_TYPE_BOT_DM",
+            "summary": "",
+            "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_CONTEXT_TYPE_BOT_DM"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ACONTEXT_TYPE_PRIVATE_CHANNEL",
+            "name": "CONTEXT_TYPE_PRIVATE_CHANNEL",
+            "summary": "",
+            "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_CONTEXT_TYPE_PRIVATE_CHANNEL"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -7325,6 +7925,11 @@ Search.appendIndex(
             "name": "setLockedAttribute",
             "summary": "Set\u0020whether\u0020the\u0020thread\u0020is\u0020locked.",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_setLockedAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AsetInvitableAttribute\u0028\u0029",
+            "name": "setInvitableAttribute",
+            "summary": "Sets\u0020whether\u0020members\u0020without\u0020\u0060MANAGE_THREADS\u0060\u0020can\u0020invite\u0020other\u0020members\u0020without\u0020\u0060MANAGE_THREADS\u0060\nAlways\u0020\u0060null\u0060\u0020in\u0020public\u0020threads",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_setInvitableAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AsetAutoArchiveDurationAttribute\u0028\u0029",
             "name": "setAutoArchiveDurationAttribute",
@@ -11540,6 +12145,11 @@ Search.appendIndex(
             "name": "Components",
             "summary": "",
             "url": "namespaces/discord-builders-components.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Contracts",
+            "name": "Contracts",
+            "summary": "",
+            "url": "namespaces/discord-builders-components-contracts.html"
         },                {
             "fqsen": "\\Discord\\CommandClient",
             "name": "CommandClient",
