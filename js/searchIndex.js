@@ -1421,35 +1421,40 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020content\u0020of\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_setContent"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetContent\u0028\u0029",
+            "name": "getContent",
+            "summary": "Retrieves\u0020the\u0020content\u0020of\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getContent"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetNonce\u0028\u0029",
             "name": "setNonce",
             "summary": "Sets\u0020the\u0020nonce\u0020of\u0020the\u0020message.\u0020Only\u0020used\u0020for\u0020sending\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_setNonce"
         },                {
-            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetEnforceNonce\u0028\u0029",
-            "name": "setEnforceNonce",
-            "summary": "If\u0020true\u0020and\u0020nonce\u0020is\u0020present,\u0020it\u0020will\u0020be\u0020checked\u0020for\u0020uniqueness\u0020in\u0020the\u0020past\u0020few\u0020minutes.",
-            "url": "classes/Discord-Builders-MessageBuilder.html#method_setEnforceNonce"
-        },                {
-            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetPoll\u0028\u0029",
-            "name": "setPoll",
-            "summary": "Sets\u0020the\u0020poll\u0020of\u0020the\u0020message.",
-            "url": "classes/Discord-Builders-MessageBuilder.html#method_setPoll"
-        },                {
-            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetPoll\u0028\u0029",
-            "name": "getPoll",
-            "summary": "Returns\u0020the\u0020poll\u0020of\u0020the\u0020message.",
-            "url": "classes/Discord-Builders-MessageBuilder.html#method_getPoll"
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetNonce\u0028\u0029",
+            "name": "getNonce",
+            "summary": "Retrieves\u0020the\u0020nonce\u0020value\u0020associated\u0020with\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getNonce"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetUsername\u0028\u0029",
             "name": "setUsername",
             "summary": "Override\u0020the\u0020default\u0020username\u0020of\u0020the\u0020webhook.\u0020Only\u0020used\u0020for\u0020executing\u0020webhook.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_setUsername"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetUsername\u0028\u0029",
+            "name": "getUsername",
+            "summary": "Retrieves\u0020the\u0020username\u0020associated\u0020with\u0020the\u0020message,\u0020if\u0020set.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getUsername"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetAvatarUrl\u0028\u0029",
             "name": "setAvatarUrl",
             "summary": "Override\u0020the\u0020default\u0020avatar\u0020URL\u0020of\u0020the\u0020webhook.\u0020Only\u0020used\u0020for\u0020executing\u0020webhook.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_setAvatarUrl"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetAvatarUrl\u0028\u0029",
+            "name": "getAvatarUrl",
+            "summary": "Retrieves\u0020the\u0020avatar\u0020URL\u0020associated\u0020with\u0020the\u0020webhook.\u0020Only\u0020used\u0020for\u0020executing\u0020webhook.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getAvatarUrl"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetTts\u0028\u0029",
             "name": "setTts",
@@ -1481,15 +1486,30 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020allowed\u0020mentions\u0020object\u0020of\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_setAllowedMentions"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetAllowedMentions\u0028\u0029",
+            "name": "getAllowedMentions",
+            "summary": "",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getAllowedMentions"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetReplyTo\u0028\u0029",
             "name": "setReplyTo",
             "summary": "Sets\u0020this\u0020message\u0020as\u0020a\u0020reply\u0020to\u0020another\u0020message.\u0020Only\u0020used\u0020for\u0020sending\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_setReplyTo"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetReplyTo\u0028\u0029",
+            "name": "getReplyTo",
+            "summary": "Retrieves\u0020the\u0020message\u0020that\u0020this\u0020builder\u0020is\u0020set\u0020to\u0020reply\u0020to,\u0020if\u0020any.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getReplyTo"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetForward\u0028\u0029",
             "name": "setForward",
             "summary": "Sets\u0020this\u0020message\u0020as\u0020a\u0020forward\u0020of\u0020another\u0020message.\u0020Only\u0020used\u0020for\u0020sending\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_setForward"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetForward\u0028\u0029",
+            "name": "getForward",
+            "summary": "Retrieves\u0020the\u0020forwarded\u0020message\u0020associated\u0020with\u0020this\u0020builder,\u0020if\u0020any.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getForward"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AaddComponent\u0028\u0029",
             "name": "addComponent",
@@ -1546,6 +1566,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020number\u0020of\u0020files\u0020attached\u0020to\u0020the\u0020builder.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_numFiles"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetFiles\u0028\u0029",
+            "name": "getFiles",
+            "summary": "Retrieves\u0020the\u0020files\u0020attached\u0020to\u0020the\u0020message\u0020builder.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getFiles"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AclearFiles\u0028\u0029",
             "name": "clearFiles",
             "summary": "Removes\u0020all\u0020files\u0020from\u0020the\u0020builder.",
@@ -1566,6 +1591,16 @@ Search.appendIndex(
             "summary": "Removes\u0020all\u0020attachments\u0020from\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_clearAttachments"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetPoll\u0028\u0029",
+            "name": "setPoll",
+            "summary": "Sets\u0020the\u0020poll\u0020of\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_setPoll"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetPoll\u0028\u0029",
+            "name": "getPoll",
+            "summary": "Returns\u0020the\u0020poll\u0020of\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getPoll"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetFlags\u0028\u0029",
             "name": "setFlags",
             "summary": "Sets\u0020the\u0020flags\u0020of\u0020the\u0020message.",
@@ -1580,6 +1615,16 @@ Search.appendIndex(
             "name": "_setFlags",
             "summary": "",
             "url": "classes/Discord-Builders-MessageBuilder.html#method__setFlags"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetEnforceNonce\u0028\u0029",
+            "name": "setEnforceNonce",
+            "summary": "If\u0020true\u0020and\u0020nonce\u0020is\u0020present,\u0020it\u0020will\u0020be\u0020checked\u0020for\u0020uniqueness\u0020in\u0020the\u0020past\u0020few\u0020minutes.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_setEnforceNonce"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetEnforceNonce\u0028\u0029",
+            "name": "getEnforceNonce",
+            "summary": "Retrieves\u0020the\u0020value\u0020indicating\u0020whether\u0020the\u0020nonce\u0020should\u0020be\u0020enforced.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getEnforceNonce"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003ArequiresMultipart\u0028\u0029",
             "name": "requiresMultipart",
