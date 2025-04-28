@@ -176,7 +176,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Fills the parts properties from a json array.
      *
-     * @param array $attributes An array of properties to build the part.
+     * @param array $json An array of properties to build the part.
      * @return $this
      */
     public function fill(array|string $json): self
