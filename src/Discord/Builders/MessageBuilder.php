@@ -421,7 +421,7 @@ class MessageBuilder implements JsonSerializable
         } else {
             if (isset($this->components)) {
                 if (count($this->components) >= 10) {
-                    throw new \OverflowException('You can only add 10 components to a v2 message');
+                    throw new \OverflowException('You can only add 10 top-level components to a v2 message');
                 }
             }
         }
