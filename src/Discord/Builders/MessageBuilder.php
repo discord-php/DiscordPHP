@@ -737,7 +737,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function jsonSerialize(): ?array
+    public function jsonSerialize(): array
     {
         $empty = true;
         $body = [];
@@ -831,8 +831,6 @@ class MessageBuilder implements JsonSerializable
             $body['enforce_nonce'] = $this->enforce_nonce;
         }
 
-        return ! empty($body)
-            ? $body
-            : null;
+        return $body;
     }
 }
