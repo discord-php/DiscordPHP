@@ -1571,6 +1571,11 @@ Search.appendIndex(
             "summary": "Retrieves\u0020the\u0020files\u0020attached\u0020to\u0020the\u0020message\u0020builder.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_getFiles"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetFiles\u0028\u0029",
+            "name": "setFiles",
+            "summary": "",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_setFiles"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AclearFiles\u0028\u0029",
             "name": "clearFiles",
             "summary": "Removes\u0020all\u0020files\u0020from\u0020the\u0020builder.",
