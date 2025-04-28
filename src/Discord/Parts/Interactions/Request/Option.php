@@ -12,6 +12,7 @@
 namespace Discord\Parts\Interactions\Request;
 
 use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Option as CommandOption;
 use Discord\Parts\Part;
 
@@ -46,7 +47,7 @@ class Option extends Part
      *
      * @return ExCollectionInterface|Option[]|null $options
      */
-    protected function getOptionsAttribute(): ?Collection
+    protected function getOptionsAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['options']) && ! in_array($this->type, [CommandOption::SUB_COMMAND, CommandOption::SUB_COMMAND_GROUP])) {
             return null;

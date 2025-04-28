@@ -61,7 +61,7 @@ class InteractionData extends Part
      *
      * @return ExCollectionInterface|Option[]|null $options
      */
-    protected function getOptionsAttribute(): ?Collection
+    protected function getOptionsAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['options']) && $this->type != Command::CHAT_INPUT) {
             return null;
@@ -81,7 +81,7 @@ class InteractionData extends Part
      *
      * @return ExCollectionInterface|Component[]|null $components
      */
-    protected function getComponentsAttribute(): ?Collection
+    protected function getComponentsAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['components'])) {
             return null;

@@ -12,6 +12,7 @@
 namespace Discord\Parts\Interactions\Request;
 
 use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
@@ -64,7 +65,7 @@ class Resolved extends Part
      *
      * @return ExCollectionInterface|User[]|null Map of Snowflakes to user objects
      */
-    protected function getUsersAttribute(): ?Collection
+    protected function getUsersAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['users'])) {
             return null;
@@ -86,7 +87,7 @@ class Resolved extends Part
      *
      * @return ExCollectionInterface|Member[]|null Map of Snowflakes to partial member objects
      */
-    protected function getMembersAttribute(): ?Collection
+    protected function getMembersAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['members'])) {
             return null;
@@ -115,7 +116,7 @@ class Resolved extends Part
      *
      * @return ExCollectionInterface|Role[]|null Map of Snowflakes to role objects
      */
-    protected function getRolesAttribute(): ?Collection
+    protected function getRolesAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['roles'])) {
             return null;
@@ -145,7 +146,7 @@ class Resolved extends Part
      *
      * @return ExCollectionInterface|Channel[]|Thread[]|null Map of Snowflakes to partial channel objects
      */
-    protected function getChannelsAttribute(): ?Collection
+    protected function getChannelsAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['channels'])) {
             return null;
@@ -177,7 +178,7 @@ class Resolved extends Part
      *
      * @return ExCollectionInterface|Message[]|null Map of Snowflakes to partial messages objects
      */
-    protected function getMessagesAttribute(): ?Collection
+    protected function getMessagesAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['messages'])) {
             return null;
@@ -203,7 +204,7 @@ class Resolved extends Part
      *
      * @return ExCollectionInterface|Attachment[]|null Map of Snowflakes to attachments objects
      */
-    protected function getAttachmentsAttribute(): ?Collection
+    protected function getAttachmentsAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['attachments'])) {
             return null;

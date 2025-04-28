@@ -691,7 +691,7 @@ class Message extends Part
      *
      * @return ExCollectionInterface|Component[]|null
      */
-    protected function getComponentsAttribute(): ?Collection
+    protected function getComponentsAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['components'])) {
             return null;
@@ -711,7 +711,7 @@ class Message extends Part
      *
      * @return ExCollectionInterface|Sticker[]|null Partial stickers.
      */
-    protected function getStickerItemsAttribute(): ?Collection
+    protected function getStickerItemsAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['sticker_items']) && ! in_array($this->type, [self::TYPE_DEFAULT, self::TYPE_REPLY])) {
             return null;

@@ -78,7 +78,7 @@ class Option extends Part
      *
      * @return ExCollectionInterface|Choice[]|null A collection of choices.
      */
-    protected function getChoicesAttribute(): ?Collection
+    protected function getChoicesAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['choices']) && ! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
             return null;
