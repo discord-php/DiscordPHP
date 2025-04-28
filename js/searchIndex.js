@@ -1656,6 +1656,11 @@ Search.appendIndex(
             "summary": "Attachments\u0020to\u0020send\u0020with\u0020this\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#property_attachments"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A\u0024poll",
+            "name": "poll",
+            "summary": "The\u0020poll\u0020for\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#property_poll"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A\u0024flags",
             "name": "flags",
             "summary": "Flags\u0020to\u0020send\u0020with\u0020this\u0020message.",
@@ -1665,11 +1670,6 @@ Search.appendIndex(
             "name": "enforce_nonce",
             "summary": "Whether\u0020to\u0020enforce\u0020the\u0020nonce.",
             "url": "classes/Discord-Builders-MessageBuilder.html#property_enforce_nonce"
-        },                {
-            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A\u0024poll",
-            "name": "poll",
-            "summary": "The\u0020poll\u0020for\u0020the\u0020message.",
-            "url": "classes/Discord-Builders-MessageBuilder.html#property_poll"
         },                {
             "fqsen": "\\Discord\\CommandClient\\Command",
             "name": "Command",
