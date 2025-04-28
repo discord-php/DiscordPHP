@@ -631,6 +631,13 @@ class MessageBuilder implements JsonSerializable
         return $this->files ?? [];
     }
 
+    public function setFiles(array $files = []): self
+    {
+        $this->files = $files;
+
+        return $this;
+    }
+
     /**
      * Removes all files from the builder.
      *
