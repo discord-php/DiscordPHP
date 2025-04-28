@@ -149,13 +149,44 @@ class MessageBuilder implements JsonSerializable
     private $enforce_nonce;
 
     /**
+     * @param array|string|null $json Optional. An associative array or a JSON string containing property values to set on the instance.
+     *                                If a JSON string is provided, it will be decoded into an array.
+     *
+     * @throws \InvalidArgumentException If a JSON string is provided and it is invalid.
+     */
+    public function __construct(array|string|null $json = null)
+    {
+        if (empty($json)) {
+            return;
+        }
+        $this->fill($json);
+    }
+
+    /**
      * Creates a new message builder.
      *
+     * @param array|string|null $json Optional data to initialize the message builder.
      * @return static
      */
-    public static function new(): self
+    public static function new(array|string|null $json = null): self
     {
-        return new static();
+        return new static($json);
+    }
+
+    public function fill(array|string|null $json = null): void
+    {
+        if (is_string($json)) {
+            $json = json_decode($json, true);
+            if ($json === false) {
+                throw new \InvalidArgumentException('Invalid JSON string provided.');
+            }
+        }
+        /** @var array $json */
+        foreach ($json as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
+        }
     }
 
     /**
