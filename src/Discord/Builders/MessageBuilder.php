@@ -173,7 +173,7 @@ class MessageBuilder implements JsonSerializable
         return new static($json);
     }
 
-    public function fill(array|string|null $json = null): void
+    public function fill(array|string $json): void
     {
         if (is_string($json)) {
             $json = json_decode($json, true);
