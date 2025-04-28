@@ -11,7 +11,6 @@
 
 namespace Discord\Builders;
 
-use Discord\Builders\Components;
 use Discord\Builders\Components\ActionRow;
 use Discord\Builders\Components\Component;
 use Discord\Builders\Components\Contracts\ComponentV2;
