@@ -128,6 +128,13 @@ class MessageBuilder implements JsonSerializable
     private $attachments;
 
     /**
+     * The poll for the message.
+     *
+     * @var Poll|null
+     */
+    private $poll;
+
+    /**
      * Flags to send with this message.
      *
      * @var int|null
@@ -140,13 +147,6 @@ class MessageBuilder implements JsonSerializable
      * @var bool|null
      */
     private $enforce_nonce;
-
-    /**
-     * The poll for the message.
-     *
-     * @var Poll|null
-     */
-    private $poll;
 
     /**
      * Creates a new message builder.
@@ -753,16 +753,16 @@ class MessageBuilder implements JsonSerializable
             }
         }
 
+        if ($this->nonce !== null) {
+            $body['nonce'] = $this->nonce;
+        }
+
         if (isset($this->username)) {
             $body['username'] = $this->username;
         }
 
         if (isset($this->avatar_url)) {
             $body['avatar_url'] = $this->avatar_url;
-        }
-
-        if ($this->nonce !== null) {
-            $body['nonce'] = $this->nonce;
         }
 
         if ($this->tts) {
@@ -774,11 +774,6 @@ class MessageBuilder implements JsonSerializable
                 $body['embeds'] = $this->embeds;
                 $empty = false;
             }
-        }
-
-        if (isset($this->poll)) {
-            $body['poll'] = $this->poll;
-            $empty = false;
         }
 
         if (isset($this->allowed_mentions)) {
@@ -819,6 +814,13 @@ class MessageBuilder implements JsonSerializable
             $empty = false;
         }
 
+        if (isset($this->poll)) {
+            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+                $body['poll'] = $this->poll;
+                $empty = false;
+            }
+        }
+
         if (isset($this->flags)) {
             $body['flags'] = $this->flags;
         } elseif ($empty) {
@@ -827,12 +829,6 @@ class MessageBuilder implements JsonSerializable
 
         if (isset($this->enforce_nonce)) {
             $body['enforce_nonce'] = $this->enforce_nonce;
-        }
-
-        if (isset($this->poll)) {
-            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
-                $body['poll'] = $this->poll;
-            }
         }
 
         return $body;
