@@ -631,6 +631,13 @@ class MessageBuilder implements JsonSerializable
         return $this->files ?? [];
     }
 
+    /**
+     * Sets the files to be attached to the message.
+     *
+     * @param array $files An array of files to attach.
+     *
+     * @return $this
+     */
     public function setFiles(array $files = []): self
     {
         $this->files = $files;
