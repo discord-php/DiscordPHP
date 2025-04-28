@@ -408,7 +408,7 @@ class MessageBuilder implements JsonSerializable
                 $this->flags |= Message::FLAG_IS_V2_COMPONENTS;
             }
         }
-        
+
         if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
             if (isset($this->components)) {
                 if (count($this->components) >= 5) {
@@ -809,8 +809,10 @@ class MessageBuilder implements JsonSerializable
         }
 
         if ($this->sticker_ids) {
-            $body['sticker_ids'] = $this->sticker_ids;
-            $empty = false;
+            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+                $body['sticker_ids'] = $this->sticker_ids;
+                $empty = false;
+            }
         }
 
         if (isset($this->attachments)) {
@@ -829,7 +831,9 @@ class MessageBuilder implements JsonSerializable
         }
 
         if (isset($this->poll)) {
-            $body['poll'] = $this->poll;
+            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+                $body['poll'] = $this->poll;
+            }
         }
 
         return $body;
