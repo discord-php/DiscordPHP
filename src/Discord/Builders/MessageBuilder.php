@@ -740,11 +740,7 @@ class MessageBuilder implements JsonSerializable
     public function jsonSerialize(): ?array
     {
         $empty = true;
-
-        if (! empty($this->files)) {
-            $body = null;
-            $empty = false;
-        }
+        $body = [];
 
         if (isset($this->content)) {
             if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
@@ -809,6 +805,10 @@ class MessageBuilder implements JsonSerializable
             }
         }
 
+        if (! empty($this->files)) {
+            $empty = false;
+        }
+
         if (isset($this->attachments)) {
             $body['attachments'] = $this->attachments;
             $empty = false;
@@ -831,6 +831,8 @@ class MessageBuilder implements JsonSerializable
             $body['enforce_nonce'] = $this->enforce_nonce;
         }
 
-        return $body;
+        return ! empty($body)
+            ? $body
+            : null;
     }
 }
