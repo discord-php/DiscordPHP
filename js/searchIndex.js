@@ -1573,7 +1573,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetFiles\u0028\u0029",
             "name": "setFiles",
-            "summary": "",
+            "summary": "Sets\u0020the\u0020files\u0020to\u0020be\u0020attached\u0020to\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_setFiles"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AclearFiles\u0028\u0029",
