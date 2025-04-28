@@ -173,7 +173,13 @@ class MessageBuilder implements JsonSerializable
         return new static($json);
     }
 
-    public function fill(array|string $json): void
+    /**
+     * Fills the parts properties from a json array.
+     *
+     * @param array $attributes An array of properties to build the part.
+     * @return $this
+     */
+    public function fill(array|string $json): self
     {
         if (is_string($json)) {
             $json = json_decode($json, true);
@@ -187,6 +193,7 @@ class MessageBuilder implements JsonSerializable
                 $this->{$key} = $value;
             }
         }
+        return $this;
     }
 
     /**
