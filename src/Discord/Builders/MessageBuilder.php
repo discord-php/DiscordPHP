@@ -165,7 +165,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Creates a new message builder.
      *
-     * @param array|string|null $json Optional data to initialize the message builder.
+     * @param array|string|null $json Optional data to initialize the builder.
      * @return static
      */
     public static function new(array|string|null $json = null): self
@@ -176,7 +176,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Fills the parts properties from a json array.
      *
-     * @param array $json An array of properties to build the part.
+     * @param array $json An array of properties to build the builder.
      * @return $this
      */
     public function fill(array|string $json): self
