@@ -46,39 +46,40 @@ use function React\Promise\reject;
  *
  * @since 2.0.0
  *
- * @property      string                      $id                     The unique identifier of the message.
- * @property      string                      $channel_id             The unique identifier of the channel that the message was sent in.
- * @property-read Channel|Thread              $channel                The channel that the message was sent in.
- * @property      User|null                   $author                 The author of the message. Will be a webhook if sent from one.
- * @property-read string|null                 $user_id                The user id of the author.
- * @property      string                      $content                The content of the message if it is a normal message.
- * @property      Carbon                      $timestamp              A timestamp of when the message was sent.
- * @property      Carbon|null                 $edited_timestamp       A timestamp of when the message was edited, or null.
- * @property      bool                        $tts                    Whether the message was sent as a text-to-speech message.
- * @property      bool                        $mention_everyone       Whether the message contained an @everyone mention.
+ * @property      string                                 $id                     The unique identifier of the message.
+ * @property      string                                 $channel_id             The unique identifier of the channel that the message was sent in.
+ * @property-read Channel|Thread                         $channel                The channel that the message was sent in.
+ * @property      User|null                              $author                 The author of the message. Will be a webhook if sent from one.
+ * @property-read string|null                            $user_id                The user id of the author.
+ * @property      string                                 $content                The content of the message if it is a normal message.
+ * @property      Carbon                                 $timestamp              A timestamp of when the message was sent.
+ * @property      Carbon|null                            $edited_timestamp       A timestamp of when the message was edited, or null.
+ * @property      bool                                   $tts                    Whether the message was sent as a text-to-speech message.
+ * @property      bool                                   $mention_everyone       Whether the message contained an @everyone mention.
  * @property      ExCollectionInterface|User[]           $mentions               A collection of the users mentioned in the message.
  * @property      ExCollectionInterface|Role[]           $mention_roles          A collection of roles that were mentioned in the message.
  * @property      ExCollectionInterface|Channel[]        $mention_channels       Collection of mentioned channels.
  * @property      ExCollectionInterface|Attachment[]     $attachments            Collection of attachment objects.
  * @property      ExCollectionInterface|Embed[]          $embeds                 A collection of embed objects.
- * @property      ReactionRepository          $reactions              Collection of reactions on the message.
- * @property      string|null                 $nonce                  A randomly generated string that provides verification for the client. Not required.
- * @property      bool                        $pinned                 Whether the message is pinned to the channel.
- * @property      string|null                 $webhook_id             ID of the webhook that made the message, if any.
- * @property      int                         $type                   The type of message.
- * @property      object|null                 $activity               Current message activity. Requires rich presence.
- * @property      object|null                 $application            Application of message. Requires rich presence.
- * @property      string|null                 $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
- * @property      object|null                 $message_reference      Message that is referenced by this message.
- * @property      int|null                    $flags                  Message flags.
- * @property      Message|null                $referenced_message     The message that is referenced in a reply.
- * @property      MessageInteraction|null     $interaction            Sent if the message is a response to an Interaction.
- * @property      Thread|null                 $thread                 The thread that was started from this message, includes thread member object.
+ * @property      ReactionRepository                     $reactions              Collection of reactions on the message.
+ * @property      string|null                            $nonce                  A randomly generated string that provides verification for the client. Not required.
+ * @property      bool                                   $pinned                 Whether the message is pinned to the channel.
+ * @property      string|null                            $webhook_id             ID of the webhook that made the message, if any.
+ * @property      int                                    $type                   The type of message.
+ * @property      object|null                            $activity               Current message activity. Requires rich presence.
+ * @property      object|null                            $application            Application of message. Requires rich presence.
+ * @property      string|null                            $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
+ * @property      object|null                            $message_reference      Message that is referenced by this message.
+ * @property      object|null                            $message_snapshot       Message that is referenced by this message.
+ * @property      int|null                               $flags                  Message flags.
+ * @property      Message|null                           $referenced_message     The message that is referenced in a reply.
+ * @property      MessageInteraction|null                $interaction            Sent if the message is a response to an Interaction.
+ * @property      Thread|null                            $thread                 The thread that was started from this message, includes thread member object.
  * @property      ExCollectionInterface|Component[]|null $components             Sent if the message contains components like buttons, action rows, or other interactive components.
  * @property      ExCollectionInterface|Sticker[]|null   $sticker_items          Stickers attached to the message.
- * @property      int|null                    $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
- * @property      object|null                 $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
- * @property      Poll|null                   $poll                   The poll attached to the message.
+ * @property      int|null                               $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
+ * @property      object|null                            $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
+ * @property      Poll|null                              $poll                   The poll attached to the message.
  *
  * @property-read bool $crossposted                            Message has been crossposted.
  * @property-read bool $is_crosspost                           Message is a crosspost from another channel.
@@ -652,6 +653,34 @@ class Message extends Part
         }
 
         return null;
+    }
+
+    /**
+     * Returns the message_snapshot attribute, if present.
+     * For forwarded messages, this contains a snapshot of the original message.
+     *
+     * @return Message|null
+     */
+    protected function getMessageSnapshotAttribute(): ?Message
+    {
+        // Only process if message_snapshot is present and is an array/object
+        if (!isset($this->attributes['message_snapshot'])) {
+            return null;
+        }
+
+        $snapshot = $this->attributes['message_snapshot'];
+
+        // Discord currently only supports a single snapshot
+        if (is_array($snapshot) && isset($snapshot[0])) {
+            $snapshot = $snapshot[0];
+        }
+
+        // The snapshot is a minimal message object, author is excluded
+        return $this->factory->part(
+            Message::class,
+            (array) $snapshot,
+            true
+        );
     }
 
     /**
