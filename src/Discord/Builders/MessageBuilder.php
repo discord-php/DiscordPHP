@@ -16,6 +16,7 @@ use Discord\Builders\Components\Component;
 use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\SelectMenu;
 use Discord\Exceptions\FileNotFoundException;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
@@ -156,6 +157,28 @@ class MessageBuilder implements JsonSerializable
     public static function new(): self
     {
         return new static();
+    }
+
+    public static function fromMessage(Message $message): self
+    {
+        return self::new()
+            ->setContent($message->content)
+            ->setNonce($message->nonce)
+            ->setUsername($message->author->username)
+            ->setAvatarUrl($message->author->avatar)
+            ->setTts($message->tts)
+            ->setEmbeds($message->embeds)
+            //setAllowedMentions($message->allowed_mentions)
+            ->setReplyTo($message->referenced_message)
+            //setForward($message->forward)
+            ->setComponents($message->components)
+            ->setStickers($message->sticker_items)
+            //setFiles($message->files)
+            ->addAttachment($message->attachments)
+            ->setPoll($message->poll)
+            ->setFlags($message->flags)
+            //->setEnforceNonce($message->enforce_nonce)
+            ;
     }
 
     /**
@@ -329,7 +352,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function setEmbeds(array $embeds): self
+    public function setEmbeds(ExCollectionInterface|array $embeds): self
     {
         $this->embeds = [];
 
@@ -478,7 +501,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function setComponents(array $components): self
+    public function setComponents(ExCollectionInterface|array $components): self
     {
         $this->components = [];
 
@@ -550,7 +573,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function setStickers(array $stickers): self
+    public function setStickers(ExCollectionInterface|array $stickers): self
     {
         $this->sticker_ids = [];
 
