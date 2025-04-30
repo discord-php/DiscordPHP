@@ -459,7 +459,7 @@ $channel-&gt;setPermissions($member, [
     &#039;add_reactions&#039;,
 ])-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -519,7 +519,7 @@ $overwrite = $channel-&gt;overwrites-&gt;create([
 // but can&#039;t add reactions to message.
 $channel-&gt;setOverwrite($member, $overwrite)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -557,13 +557,13 @@ $channel-&gt;setOverwrite($member, $overwrite)-&gt;then(function () {
 
             <pre><code class="language-php">$channel-&gt;moveMember($member)-&gt;then(function () {
     // ...
-})-&gt;done();
+});
 
 // or
 
 $channel-&gt;moveMember(&#039;123213123123213&#039;)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -602,12 +602,12 @@ $channel-&gt;moveMember(&#039;123213123123213&#039;)-&gt;then(function () {
             <pre><code class="language-php">// muting a member with a member object
 $channel-&gt;muteMember($member)-&gt;then(function () {
     // ...
-})-&gt;done();
+});
 
 // unmuting a member with a member ID
 $channel-&gt;unmuteMember(&#039;123213123123213&#039;)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -689,7 +689,7 @@ $channel-&gt;unmuteMember(&#039;123213123123213&#039;)-&gt;then(function () {
     &#039;max_uses&#039; =&gt; 5, // 5 uses
 ])-&gt;then(function (Invite $invite) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -739,7 +739,7 @@ $channel-&gt;unmuteMember(&#039;123213123123213&#039;)-&gt;then(function () {
     &#039;my_message5_id&#039;,
 ])-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -793,7 +793,7 @@ $channel-&gt;unmuteMember(&#039;123213123123213&#039;)-&gt;then(function () {
     foreach ($messages as $message) {
         // ...
     }
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -838,7 +838,7 @@ $channel-&gt;unmuteMember(&#039;123213123123213&#039;)-&gt;then(function () {
             <pre><code class="language-php">// deletes the last 15 messages
 $channel-&gt;limitDelete(15)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -883,12 +883,12 @@ $channel-&gt;limitDelete(15)-&gt;then(function () {
             <pre><code class="language-php">// to pin
 $channel-&gt;pinMessage($message)-&gt;then(function (Message $message) {
     // ...
-})-&gt;done();
+});
 
 // to unpin
 $channel-&gt;unpinMessage($message)-&gt;then(function (Message $message) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -904,7 +904,7 @@ $channel-&gt;unpinMessage($message)-&gt;then(function (Message $message) {
     foreach ($invites as $invite) {
         // ...
     }
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -945,7 +945,7 @@ $channel-&gt;unpinMessage($message)-&gt;then(function (Message $message) {
 
 $channel-&gt;sendMessage($message)-&gt;then(function (Message $message) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -983,7 +983,7 @@ $channel-&gt;sendMessage($message)-&gt;then(function (Message $message) {
 
             <pre><code class="language-php">$channel-&gt;sendEmbed($embed)-&gt;then(function (Message $message) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -998,7 +998,7 @@ $channel-&gt;sendMessage($message)-&gt;then(function (Message $message) {
 
             <pre><code class="language-php">$channel-&gt;broadcastTyping()-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -1046,7 +1046,7 @@ $channel-&gt;createMessageCollector(fn ($message) =&gt; strpos($message-&gt;cont
     foreach ($messages as $message) {
         // ...
     }
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -1094,7 +1094,7 @@ $channel-&gt;createMessageCollector(fn ($message) =&gt; strpos($message-&gt;cont
     foreach ($messages as $message) {
         // $message-&gt;...
     }
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 

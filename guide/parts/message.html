@@ -480,7 +480,7 @@
 
             <pre><code class="language-php">$message-&gt;reply(&#039;hello!&#039;)-&gt;then(function (Message $message) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -494,7 +494,7 @@
 
             <pre><code class="language-php">$message-&gt;crosspost()-&gt;then(function (Message $message) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -535,7 +535,7 @@
             <pre><code class="language-php">// &lt;@message_author_id&gt;, hello! after 1.5 seconds
 $message-&gt;delayedReply(&#039;hello!&#039;, 1500)-&gt;then(function (Message $message) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -571,19 +571,19 @@ $message-&gt;delayedReply(&#039;hello!&#039;, 1500)-&gt;then(function (Message $
 
             <pre><code class="language-php">$message-&gt;react($emoji)-&gt;then(function () {
     // ...
-})-&gt;done();
+});
 
 // or
 
 $message-&gt;react(&#039;:michael:251127796439449631&#039;)-&gt;then(function () {
     // ...
-})-&gt;done();
+});
 
 // or
 
 $message-&gt;react(&#039;😀&#039;)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -638,7 +638,7 @@ $message-&gt;react(&#039;😀&#039;)-&gt;then(function () {
 
             <pre><code class="language-php">$message-&gt;deleteReaction(Message::REACT_DELETE_ALL)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -647,7 +647,7 @@ $message-&gt;react(&#039;😀&#039;)-&gt;then(function () {
 
             <pre><code class="language-php">$message-&gt;deleteReaction(Message::REACT_DELETE_ME, $emoji)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -656,7 +656,7 @@ $message-&gt;react(&#039;😀&#039;)-&gt;then(function () {
 
             <pre><code class="language-php">$message-&gt;deleteReaction(Message::REACT_DELETE_ID, $emoji, &#039;member_id&#039;)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -665,7 +665,7 @@ $message-&gt;react(&#039;😀&#039;)-&gt;then(function () {
 
             <pre><code class="language-php">$message-&gt;deleteReaction(Message::REACT_DELETE_EMOJI, $emoji)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -679,7 +679,7 @@ $message-&gt;react(&#039;😀&#039;)-&gt;then(function () {
 
             <pre><code class="language-php">$message-&gt;delete()-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -692,7 +692,7 @@ $message-&gt;react(&#039;😀&#039;)-&gt;then(function () {
             <pre><code class="language-php">$message-&gt;edit(MessageBuilder::new()
     -&gt;setContent(&#039;new content&#039;))-&gt;then(function (Message $message) {
         // ...
-    })-&gt;done();</code></pre>
+    });</code></pre>
 
             
     <p>Note fields not set in the builder will not be updated, and will retain their previous value.</p>
@@ -746,7 +746,7 @@ $message-&gt;react(&#039;😀&#039;)-&gt;then(function () {
     foreach ($reactions as $reaction) {
         // ...
     }
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -782,7 +782,7 @@ $message-&gt;react(&#039;😀&#039;)-&gt;then(function () {
 
             <pre><code class="language-php">$message-&gt;addEmbed($embed)-&gt;then(function (Message $message) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 

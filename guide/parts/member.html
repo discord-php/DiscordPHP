@@ -397,7 +397,7 @@
 
             <pre><code class="language-php">$member-&gt;ban(5, &#039;bad person&#039;)-&gt;then(function (Ban $ban) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -435,7 +435,7 @@
 
             <pre><code class="language-php">$member-&gt;setNickname(&#039;newnick&#039;)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -470,13 +470,13 @@
 
             <pre><code class="language-php">$member-&gt;moveMember($channel)-&gt;then(function () {
     // ...
-})-&gt;done();
+});
 
 // or
 
 $member-&gt;moveMember(&#039;123451231231&#039;)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -512,13 +512,13 @@ $member-&gt;moveMember(&#039;123451231231&#039;)-&gt;then(function () {
 
             <pre><code class="language-php">$member-&gt;addRole($role)-&gt;then(function () {
     // ...
-})-&gt;done();
+});
 
 // or
 
 $member-&gt;addRole(&#039;1231231231&#039;)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -554,13 +554,13 @@ $member-&gt;addRole(&#039;1231231231&#039;)-&gt;then(function () {
 
             <pre><code class="language-php">$member-&gt;removeRole($role)-&gt;then(function () {
     // ...
-})-&gt;done();
+});
 
 // or
 
 $member-&gt;removeRole(&#039;1231231231&#039;)-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -598,12 +598,12 @@ $member-&gt;removeRole(&#039;1231231231&#039;)-&gt;then(function () {
 
             <pre><code class="language-php">$member-&gt;timeoutMember(new Carbon(&#039;6 hours&#039;))-&gt;then(function () {
     // ...
-})-&gt;done();
+});
 
 // to remove
 $member-&gt;timeoutMember()-&gt;then(function () {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -641,13 +641,13 @@ $member-&gt;timeoutMember()-&gt;then(function () {
 
             <pre><code class="language-php">$member-&gt;getPermissions($channel)-&gt;then(function (RolePermission $permission) {
     // ...
-})-&gt;done();
+});
 
 // or
 
 $member-&gt;getPermissions()-&gt;then(function (RolePermission $permission) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 

@@ -275,7 +275,7 @@
 
             <pre><code class="language-php">$discord-&gt;guilds-&gt;freshen()-&gt;then(function (GuildRepository $guilds) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -307,7 +307,7 @@
     &#039;name&#039; =&gt; &#039;My new guild name&#039;,
 ]);
 // to save
-$discord-&gt;guilds-&gt;save($guild)-&gt;then(...)-&gt;done();</code></pre>
+$discord-&gt;guilds-&gt;save($guild)-&gt;then(...);</code></pre>
 
     </section>
 
@@ -336,7 +336,7 @@ $discord-&gt;guilds-&gt;save($guild)-&gt;then(...)-&gt;done();</code></pre>
 
             <pre><code class="language-php">$discord-&gt;guilds-&gt;save($guild)-&gt;then(function (Guild $guild) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -365,7 +365,7 @@ $discord-&gt;guilds-&gt;save($guild)-&gt;then(...)-&gt;done();</code></pre>
 
             <pre><code class="language-php">$discord-&gt;guilds-&gt;delete($guild)-&gt;then(function (Guild $guild) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -399,11 +399,11 @@ $discord-&gt;guilds-&gt;save($guild)-&gt;then(...)-&gt;done();</code></pre>
 
             <pre><code class="language-php">$discord-&gt;guilds-&gt;fetch(&#039;guild_id&#039;)-&gt;then(function (Guild $guild) {
     // ...
-})-&gt;done();
+});
 // or, if you don&#039;t want to check the cache
 $discord-&gt;guilds-&gt;fetch(&#039;guild_id&#039;, true)-&gt;then(function (Guild $guild) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 

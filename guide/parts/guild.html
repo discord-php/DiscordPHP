@@ -376,7 +376,7 @@
     // ...
 ])-&gt;then(function (Role $role) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -415,9 +415,9 @@
 </tbody>
 </table>
 
-            <pre><code class="language-php">$guild-&gt;transferOwnership($member)-&gt;then(...)-&gt;done();
+            <pre><code class="language-php">$guild-&gt;transferOwnership($member)-&gt;then(...);
 // or
-$guild-&gt;transferOwnership(&#039;member_id&#039;)-&gt;then(...)-&gt;done();</code></pre>
+$guild-&gt;transferOwnership(&#039;member_id&#039;)-&gt;then(...);</code></pre>
 
     </section>
 
@@ -454,9 +454,9 @@ $guild-&gt;transferOwnership(&#039;member_id&#039;)-&gt;then(...)-&gt;done();</c
 </tbody>
 </table>
 
-            <pre><code class="language-php">$guild-&gt;unban($user)-&gt;then(...)-&gt;done();
+            <pre><code class="language-php">$guild-&gt;unban($user)-&gt;then(...);
 // or
-$guild-&gt;unban(&#039;user_id&#039;)-&gt;then(...)-&gt;done();</code></pre>
+$guild-&gt;unban(&#039;user_id&#039;)-&gt;then(...);</code></pre>
 
     </section>
 
@@ -518,7 +518,7 @@ $guild-&gt;unban(&#039;user_id&#039;)-&gt;then(...)-&gt;done();</code></pre>
     foreach ($auditLog-&gt;audit_log_entries as $entry) {
         // $entry-&gt;...
     }
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
@@ -575,7 +575,7 @@ $guild-&gt;unban(&#039;user_id&#039;)-&gt;then(...)-&gt;done();</code></pre>
 &#039;audit-log reason&#039;
 )-&gt;then(function (Emoji $emoji) {
     // ...
-})-&gt;done();</code></pre>
+});</code></pre>
 
     </section>
 
