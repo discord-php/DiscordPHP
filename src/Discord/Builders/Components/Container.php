@@ -71,10 +71,6 @@ class Container extends Component implements Contracts\ComponentV2
      */
     public function addComponent(Component $component): self
     {
-        if (count($this->components) >= 10) {
-            throw new \OverflowException('You can only have 10 components per container.');
-        }
-
         if (! ( $component instanceof ActionRow || $component instanceof Section || $component instanceof TextDisplay || $component instanceof MediaGallery || $component instanceof File || $component instanceof Separator )) {
             throw new \InvalidArgumentException('Invalid component type.');
         }
