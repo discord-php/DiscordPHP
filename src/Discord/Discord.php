@@ -351,16 +351,17 @@ class Discord
      *
      * @param  array           $options Array of options.
      * @throws IntentException
+     * @throws \RuntimeException
      */
     public function __construct(array $options = [])
     {
         if (php_sapi_name() !== 'cli') {
-            trigger_error('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.', E_USER_ERROR);
+            throw new \RuntimeException('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.');
         }
 
         // x86 need gmp extension for big integer operation
         if (PHP_INT_SIZE === 4 && ! BigInt::init()) {
-            trigger_error('ext-gmp is not loaded, it is required for 32-bits (x86) PHP.', E_USER_ERROR);
+            throw new \RuntimeException('ext-gmp is not loaded, it is required for 32-bits (x86) PHP.');
         }
 
         $options = $this->resolveOptions($options);
@@ -1078,7 +1079,7 @@ class Discord
     /**
      * Initializes the connection with the Discord gateway.
      */
-    protected function connectWs(): void
+    public function connectWs(): void
     {
         $this->setGateway()->then(function ($gateway) {
             if (isset($gateway['session']) && $session = $gateway['session']) {

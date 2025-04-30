@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Poll;
 
 use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 
 /**
@@ -25,7 +25,7 @@ use Discord\Parts\Part;
  * @since 10.0.0
  *
  * @property boolean                                $is_finalized   Whether the votes have been precisely counted
- * @property CollectionInterface|PollAnswerCount[]  $answer_counts  The counts for each answer
+ * @property ExCollectionInterface|PollAnswerCount[]  $answer_counts  The counts for each answer
  */
 class PollResults extends Part
 {
@@ -40,9 +40,9 @@ class PollResults extends Part
     /**
      * Returns the answer counts attribute.
      *
-     * @return CollectionInterface<PollAnswerCount> A collection of poll answer counts.
+     * @return ExCollectionInterface<PollAnswerCount> A collection of poll answer counts.
      */
-    protected function getAnswerCountsAttribute(): CollectionInterface
+    protected function getAnswerCountsAttribute(): ExCollectionInterface
     {
         $answerCounts = Collection::for(PollAnswerCount::class);
 

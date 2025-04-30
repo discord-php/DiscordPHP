@@ -34,7 +34,7 @@ Gets the private direct message channel for the user. Returns a [Channel](#chann
 ```php
 $user->getPrivateChannel()->then(function (Channel $channel) {
     // ...
-})->done();
+});
 ```
 
 ### Send user a message
@@ -52,7 +52,7 @@ Sends a private direct message to the user. Note that your bot account can be su
 ```php
 $user->sendMessage('Hello, world!', false, $embed)->then(function (Message $message) {
     // ...
-})->done();
+});
 ```
 
 ### Get avatar URL

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Builders;
 
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
 use JsonSerializable;
@@ -57,6 +58,13 @@ class CommandBuilder implements JsonSerializable
     protected $default_permission = true;
 
     /**
+     * The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
+     *
+     * @var ExCollectionInterface<Option|Option[]|null
+     */
+    protected $options = null;
+
+    /**
      * Creates a new command builder.
      *
      * @return static
@@ -69,7 +77,7 @@ class CommandBuilder implements JsonSerializable
     /**
      * Returns all the options in the command.
      *
-     * @return CollectionInterface<Option>|Option[]|null
+     * @return ExCollectionInterface<Option>|Option[]|null
      */
     public function getOptions()
     {

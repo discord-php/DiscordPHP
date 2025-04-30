@@ -15,6 +15,7 @@ namespace Discord\Parts\Interactions\Request;
 
 use Discord\Builders\Components\Component as ComponentBuilder;
 use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 
@@ -38,7 +39,7 @@ use Discord\Parts\Part;
  * @property string|null                 $placeholder Custom placeholder text if nothing is selected; max 150 characters. (Select Menus, Text Inputs)
  * @property int|null                    $min_values  The minimum number of items that must be chosen; default 1, min 0, max 25. (Select Menus)
  * @property int|null                    $max_values  The maximum number of items that can be chosen; default 1, max 25. (Select Menus)
- * @property CollectionInterface|Component[]|null $components  A list of child components. (Action Rows)
+ * @property ExCollectionInterface|Component[]|null $components  A list of child components. (Action Rows)
  * @property int|null                    $min_length  Minimum input length for a text input. (Text Inputs)
  * @property int|null                    $max_length  Maximum input length for a text input. (Text Inputs)
  * @property bool|null                   $required    Whether this component is required to be filled; defaults to `true` (Text Inputs)
@@ -71,9 +72,9 @@ class Component extends Part
     /**
      * Gets the sub-components of the component.
      *
-     * @return CollectionInterface|Component[]|null $components
+     * @return ExCollectionInterface|Component[]|null $components
      */
-    protected function getComponentsAttribute(): ?Collection
+    protected function getComponentsAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['components']) && $this->type != ComponentBuilder::TYPE_ACTION_ROW) {
             return null;

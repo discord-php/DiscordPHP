@@ -114,7 +114,7 @@ text string text to send in the message
 
    $message->reply('hello!')->then(function (Message $message) {
        // ...
-   })->done();
+   });
 
 Crosspost a message
 ===================
@@ -125,7 +125,7 @@ Crossposts a message to any channels that are following the channel the message 
 
    $message->crosspost()->then(function (Message $message) {
        // ...
-   })->done();
+   });
 
 Reply to a message after a delay
 ================================
@@ -149,7 +149,7 @@ delay int    time in milliseconds to delay before sending the message
    // <@message_author_id>, hello! after 1.5 seconds
    $message->delayedReply('hello!', 1500)->then(function (Message $message) {
        // ...
-   })->done();
+   });
 
 React to a message
 ==================
@@ -171,19 +171,19 @@ emoticon `Emoji <#emoji>`_ or string the emoji to react with
 
    $message->react($emoji)->then(function () {
        // ...
-   })->done();
+   });
 
    // or
 
    $message->react(':michael:251127796439449631')->then(function () {
        // ...
-   })->done();
+   });
 
    // or
 
    $message->react('😀')->then(function () {
        // ...
-   })->done();
+   });
 
 Delete reaction(s) from a message
 =================================
@@ -212,7 +212,7 @@ Delete all reactions
 
    $message->deleteReaction(Message::REACT_DELETE_ALL)->then(function () {
        // ...
-   })->done();
+   });
 
 Delete reaction by current user
 -------------------------------
@@ -221,7 +221,7 @@ Delete reaction by current user
 
    $message->deleteReaction(Message::REACT_DELETE_ME, $emoji)->then(function () {
        // ...
-   })->done();
+   });
 
 Delete reaction by another user
 -------------------------------
@@ -230,7 +230,7 @@ Delete reaction by another user
 
    $message->deleteReaction(Message::REACT_DELETE_ID, $emoji, 'member_id')->then(function () {
        // ...
-   })->done();
+   });
 
 Delete all reactions of one emoji
 ---------------------------------
@@ -239,7 +239,7 @@ Delete all reactions of one emoji
 
    $message->deleteReaction(Message::REACT_DELETE_EMOJI, $emoji)->then(function () {
        // ...
-   })->done();
+   });
 
 Delete the message
 ==================
@@ -250,7 +250,7 @@ Deletes the message. Returns nothing in a promise.
 
    $message->delete()->then(function () {
        // ...
-   })->done();
+   });
 
 Edit the message
 ================
@@ -262,7 +262,7 @@ Updates the message. Takes a message builder. Returns the updated message in a p
    $message->edit(MessageBuilder::new()
        ->setContent('new content'))->then(function (Message $message) {
            // ...
-       })->done();
+       });
 
 Note fields not set in the builder will not be updated, and will retain their previous value.
 
@@ -297,7 +297,7 @@ At least one of ``time`` or ``limit`` must be specified.
        foreach ($reactions as $reaction) {
            // ...
        }
-   })->done();
+   });
 
 Add embed to message
 ====================
@@ -319,4 +319,4 @@ embed `Embed <#embed>`_ the embed to add
 
    $message->addEmbed($embed)->then(function (Message $message) {
        // ...
-   })->done();
+   });

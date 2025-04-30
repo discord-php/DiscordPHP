@@ -16,7 +16,8 @@ namespace Discord\Parts\Channel;
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
+use Discord\Parts\Channel\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Role;
@@ -57,11 +58,11 @@ use function React\Promise\reject;
  * @property      Carbon|null                 $edited_timestamp       A timestamp of when the message was edited, or null.
  * @property      bool                        $tts                    Whether the message was sent as a text-to-speech message.
  * @property      bool                        $mention_everyone       Whether the message contained an @everyone mention.
- * @property      CollectionInterface|User[]           $mentions               A collection of the users mentioned in the message.
- * @property      CollectionInterface|Role[]           $mention_roles          A collection of roles that were mentioned in the message.
- * @property      CollectionInterface|Channel[]        $mention_channels       Collection of mentioned channels.
- * @property      CollectionInterface|Attachment[]     $attachments            Collection of attachment objects.
- * @property      CollectionInterface|Embed[]          $embeds                 A collection of embed objects.
+ * @property      ExCollectionInterface|User[]           $mentions               A collection of the users mentioned in the message.
+ * @property      ExCollectionInterface|Role[]           $mention_roles          A collection of roles that were mentioned in the message.
+ * @property      ExCollectionInterface|Channel[]        $mention_channels       Collection of mentioned channels.
+ * @property      ExCollectionInterface|Attachment[]     $attachments            Collection of attachment objects.
+ * @property      ExCollectionInterface|Embed[]          $embeds                 A collection of embed objects.
  * @property      ReactionRepository          $reactions              Collection of reactions on the message.
  * @property      string|null                 $nonce                  A randomly generated string that provides verification for the client. Not required.
  * @property      bool                        $pinned                 Whether the message is pinned to the channel.
@@ -75,8 +76,8 @@ use function React\Promise\reject;
  * @property      Message|null                $referenced_message     The message that is referenced in a reply.
  * @property      MessageInteraction|null     $interaction            Sent if the message is a response to an Interaction.
  * @property      Thread|null                 $thread                 The thread that was started from this message, includes thread member object.
- * @property      CollectionInterface|Component[]|null $components             Sent if the message contains components like buttons, action rows, or other interactive components.
- * @property      CollectionInterface|Sticker[]|null   $sticker_items          Stickers attached to the message.
+ * @property      ExCollectionInterface|Component[]|null $components             Sent if the message contains components like buttons, action rows, or other interactive components.
+ * @property      ExCollectionInterface|Sticker[]|null   $sticker_items          Stickers attached to the message.
  * @property      int|null                    $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
  * @property      object|null                 $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
  * @property      Poll|null                   $poll                   The poll attached to the message.
@@ -187,6 +188,7 @@ class Message extends Part
     public const FLAG_SUPPRESS_NOTIFICATIONS = (1 << 12);
     public const FLAG_IS_VOICE_MESSAGE = (1 << 13);
     public const FLAG_HAS_SNAPSHOT = (1 << 14);
+    public const FLAG_IS_V2_COMPONENTS = (1 << 15);
 
     /**
      * {@inheritDoc}
@@ -342,9 +344,9 @@ class Message extends Part
     /**
      * Gets the mention_channels attribute.
      *
-     * @return CollectionInterface|Channel[]
+     * @return ExCollectionInterface|Channel[]
      */
-    protected function getMentionChannelsAttribute(): CollectionInterface
+    protected function getMentionChannelsAttribute(): ExCollectionInterface
     {
         $collection = Collection::for(Channel::class);
 
@@ -366,9 +368,9 @@ class Message extends Part
     /**
      * Returns any attached files.
      *
-     * @return CollectionInterface|Attachment[] Attachment objects.
+     * @return ExCollectionInterface|Attachment[] Attachment objects.
      */
-    protected function getAttachmentsAttribute(): CollectionInterface
+    protected function getAttachmentsAttribute(): ExCollectionInterface
     {
         $attachments = Collection::for(Attachment::class);
 
@@ -498,9 +500,9 @@ class Message extends Part
     /**
      * Returns the mention_roles attribute.
      *
-     * @return CollectionInterface<?Role> The roles that were mentioned. null role only contains the ID in the collection.
+     * @return ExCollectionInterface<?Role> The roles that were mentioned. null role only contains the ID in the collection.
      */
-    protected function getMentionRolesAttribute(): CollectionInterface
+    protected function getMentionRolesAttribute(): ExCollectionInterface
     {
         $roles = new Collection();
 
@@ -522,9 +524,9 @@ class Message extends Part
     /**
      * Returns the mention attribute.
      *
-     * @return CollectionInterface|User[] The users that were mentioned.
+     * @return ExCollectionInterface|User[] The users that were mentioned.
      */
-    protected function getMentionsAttribute(): CollectionInterface
+    protected function getMentionsAttribute(): ExCollectionInterface
     {
         $users = Collection::for(User::class);
 
@@ -589,9 +591,9 @@ class Message extends Part
     /**
      * Returns the embed attribute.
      *
-     * @return CollectionInterface<Embed> A collection of embeds.
+     * @return ExCollectionInterface<Embed> A collection of embeds.
      */
-    protected function getEmbedsAttribute(): CollectionInterface
+    protected function getEmbedsAttribute(): ExCollectionInterface
     {
         $embeds = new Collection([], null);
 
@@ -689,9 +691,9 @@ class Message extends Part
     /**
      * Returns the components attribute.
      *
-     * @return CollectionInterface|Component[]|null
+     * @return ExCollectionInterface|Component[]|null
      */
-    protected function getComponentsAttribute(): ?Collection
+    protected function getComponentsAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['components'])) {
             return null;
@@ -709,9 +711,9 @@ class Message extends Part
     /**
      * Returns the sticker_items attribute.
      *
-     * @return CollectionInterface|Sticker[]|null Partial stickers.
+     * @return ExCollectionInterface|Sticker[]|null Partial stickers.
      */
-    protected function getStickerItemsAttribute(): ?Collection
+    protected function getStickerItemsAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['sticker_items']) && ! in_array($this->type, [self::TYPE_DEFAULT, self::TYPE_REPLY])) {
             return null;

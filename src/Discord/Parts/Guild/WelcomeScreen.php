@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Guild;
 
 use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 
 /**
@@ -25,7 +25,7 @@ use Discord\Parts\Part;
  * @since 7.0.0
  *
  * @property ?string                     $description      The server description shown in the welcome screen.
- * @property CollectionInterface|WelcomeChannel[] $welcome_channels The channels shown in the welcome screen, up to 5.
+ * @property ExCollectionInterface|WelcomeChannel[] $welcome_channels The channels shown in the welcome screen, up to 5.
  */
 class WelcomeScreen extends Part
 {
@@ -40,9 +40,9 @@ class WelcomeScreen extends Part
     /**
      * Returns the Welcome Channels of the Welcome Screen.
      *
-     * @return CollectionInterface|WelcomeChannel[] The channels of welcome screen.
+     * @return ExCollectionInterface|WelcomeChannel[] The channels of welcome screen.
      */
-    protected function getWelcomeChannelsAttribute(): CollectionInterface
+    protected function getWelcomeChannelsAttribute(): ExCollectionInterface
     {
         $collection = Collection::for(WelcomeChannel::class, null);
 
