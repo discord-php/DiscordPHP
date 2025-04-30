@@ -65,7 +65,7 @@ $channel->setPermissions($member, [
     'add_reactions',
 ])->then(function () {
     // ...
-})->done();
+});
 ```
 
 ### Set permissions of a member or role with an Overwrite
@@ -98,7 +98,7 @@ $overwrite = $channel->overwrites->create([
 // but can't add reactions to message.
 $channel->setOverwrite($member, $overwrite)->then(function () {
     // ...
-})->done();
+});
 ```
 
 ### Move member to voice channel
@@ -114,13 +114,13 @@ Moves a member to a voice channel if the member is already in one. Takes a [Memb
 ```php
 $channel->moveMember($member)->then(function () {
     // ...
-})->done();
+});
 
 // or
 
 $channel->moveMember('123213123123213')->then(function () {
     // ...
-})->done();
+});
 ```
 
 ### Muting and unmuting member in voice channel
@@ -137,12 +137,12 @@ Mutes or unmutes a member in the voice channel. Takes a [Member](#member) object
 // muting a member with a member object
 $channel->muteMember($member)->then(function () {
     // ...
-})->done();
+});
 
 // unmuting a member with a member ID
 $channel->unmuteMember('123213123123213')->then(function () {
     // ...
-})->done();
+});
 ```
 
 ### Creating an invite
@@ -169,7 +169,7 @@ $channel->createInvite([
     'max_uses' => 5, // 5 uses
 ])->then(function (Invite $invite) {
     // ...
-})->done();
+});
 ```
 
 ### Bulk deleting messages
@@ -192,7 +192,7 @@ $channel->deleteMessages([
     'my_message5_id',
 ])->then(function () {
     // ...
-})->done();
+});
 ```
 
 ### Getting message history
@@ -215,7 +215,7 @@ $channel->getMessageHistory([
     foreach ($messages as $message) {
         // ...
     }
-})->done();
+});
 ```
 
 ### Limit delete messages
@@ -234,7 +234,7 @@ Deletes a number of messages, in order from the last one sent. Takes an integer 
 // deletes the last 15 messages
 $channel->limitDelete(15)->then(function () {
     // ...
-})->done();
+});
 ```
 
 ### Pin or unpin  a message
@@ -252,12 +252,12 @@ Pins or unpins a message from the channel pinboard. Takes a message object and r
 // to pin
 $channel->pinMessage($message)->then(function (Message $message) {
     // ...
-})->done();
+});
 
 // to unpin
 $channel->unpinMessage($message)->then(function (Message $message) {
     // ...
-})->done();
+});
 ```
 
 ### Get invites
@@ -269,7 +269,7 @@ $channel->getInvites()->then(function (Collection $invites) {
     foreach ($invites as $invite) {
         // ...
     }
-})->done();
+});
 ```
 
 ### Send a message
@@ -290,7 +290,7 @@ $message = MessageBuilder::new()
 
 $channel->sendMessage($message)->then(function (Message $message) {
     // ...
-})->done();
+});
 ```
 
 ### Send an embed
@@ -306,7 +306,7 @@ Sends an embed to the channel. Takes an embed and returns the sent message in a 
 ```php
 $channel->sendEmbed($embed)->then(function (Message $message) {
     // ...
-})->done();
+});
 ```
 
 ### Broadcast typing
@@ -316,7 +316,7 @@ Broadcasts to the channel that the bot is typing. Genreally, bots should _not_ u
 ```php
 $channel->broadcastTyping()->then(function () {
     // ...
-})->done();
+});
 ```
 
 ### Create a message collector
@@ -338,7 +338,7 @@ $channel->createMessageCollector(fn ($message) => strpos($message->content, 'hel
     foreach ($messages as $message) {
         // ...
     }
-})->done();
+});
 ```
 
 #### Options
@@ -359,5 +359,5 @@ $channel->getPinnedMessages()->then(function (Collection $messages) {
     foreach ($messages as $message) {
         // $message->...
     }
-})->done();
+});
 ```

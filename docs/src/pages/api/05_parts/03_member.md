@@ -54,7 +54,7 @@ Bans the member from the guild. Returns a [Ban](#ban) part in a promise.
 ```php
 $member->ban(5, 'bad person')->then(function (Ban $ban) {
     // ...
-})->done();
+});
 ```
 
 ### Set the nickname of the member
@@ -70,7 +70,7 @@ Sets the nickname of the member. Requires the `MANAGE_NICKNAMES` permission or `
 ```php
 $member->setNickname('newnick')->then(function () {
     // ...
-})->done();
+});
 ```
 
 ### Move member to channel
@@ -86,13 +86,13 @@ Moves the member to another voice channel. Member must already be in a voice cha
 ```php
 $member->moveMember($channel)->then(function () {
     // ...
-})->done();
+});
 
 // or
 
 $member->moveMember('123451231231')->then(function () {
     // ...
-})->done();
+});
 ```
 
 ### Add member to role
@@ -108,13 +108,13 @@ Adds the member to a role. Takes a role or role ID and returns nothing in a prom
 ```php
 $member->addRole($role)->then(function () {
     // ...
-})->done();
+});
 
 // or
 
 $member->addRole('1231231231')->then(function () {
     // ...
-})->done();
+});
 ```
 
 ### Remove member from role
@@ -130,13 +130,13 @@ Removes the member from a role. Takes a role or role ID and returns nothing in a
 ```php
 $member->removeRole($role)->then(function () {
     // ...
-})->done();
+});
 
 // or
 
 $member->removeRole('1231231231')->then(function () {
     // ...
-})->done();
+});
 ```
 
 ### Timeout member
@@ -152,12 +152,12 @@ Times out the member in the server. Takes a carbon or null to remove. Returns no
 ```php
 $member->timeoutMember(new Carbon('6 hours'))->then(function () {
     // ...
-})->done();
+});
 
 // to remove
 $member->timeoutMember()->then(function () {
     // ...
-})->done();
+});
 ```
 
 ### Get permissions of member

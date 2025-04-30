@@ -57,7 +57,7 @@ Gets the private direct message channel for the user. Returns a `Channel <#chann
 
    $user->getPrivateChannel()->then(function (Channel $channel) {
        // ...
-   })->done();
+   });
 
 Send user a message
 ===================
@@ -79,7 +79,7 @@ embed   Embed  embed to send in the message
 
    $user->sendMessage('Hello, world!', false, $embed)->then(function (Message $message) {
        // ...
-   })->done();
+   });
 
 Get avatar URL
 ==============

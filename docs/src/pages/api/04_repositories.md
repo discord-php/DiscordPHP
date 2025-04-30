@@ -23,7 +23,7 @@ Clears the repository and fills it with new data from Discord. It takes no param
 ```php
 $discord->guilds->freshen()->then(function (GuildRepository $guilds) {
     // ...
-})->done();
+});
 ```
 
 #### Creating a part
@@ -39,7 +39,7 @@ $guild = $discord->guilds->create([
     'name' => 'My new guild name',
 ]);
 // to save
-$discord->guilds->save($guild)->then(...)->done();
+$discord->guilds->save($guild)->then(...);
 ```
 
 #### Saving a part
@@ -53,7 +53,7 @@ Creates or updates a repository part in the Discord servers. Takes a part and re
 ```php
 $discord->guilds->save($guild)->then(function (Guild $guild) {
     // ...
-})->done();
+});
 ```
 
 #### Deleting a part
@@ -67,7 +67,7 @@ Deletes a repository part from the Discord servers. Takes a part and returns the
 ```php
 $discord->guilds->delete($guild)->then(function (Guild $guild) {
     // ...
-})->done();
+});
 ```
 
 #### Fetch a part
@@ -82,9 +82,9 @@ Fetches/freshens a part from the repository. If the part is present in the cache
 ```php
 $discord->guilds->fetch('guild_id')->then(function (Guild $guild) {
     // ...
-})->done();
+});
 // or, if you don't want to check the cache
 $discord->guilds->fetch('guild_id', true)->then(function (Guild $guild) {
     // ...
-})->done();
+});
 ```

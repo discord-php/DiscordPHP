@@ -106,7 +106,7 @@ Parameters
        'add_reactions',
    ])->then(function () {
        // ...
-   })->done();
+   });
 
 Set permissions of a member or role with an Overwrite
 =====================================================
@@ -146,7 +146,7 @@ Parameters
    // but can't add reactions to message.
    $channel->setOverwrite($member, $overwrite)->then(function () {
        // ...
-   })->done();
+   });
 
 Move member to voice channel
 ============================
@@ -168,13 +168,13 @@ member `Member <#member>`_ or string The member to move required
 
    $channel->moveMember($member)->then(function () {
        // ...
-   })->done();
+   });
 
    // or
 
    $channel->moveMember('123213123123213')->then(function () {
        // ...
-   })->done();
+   });
 
 Muting and unmuting member in voice channel
 ===========================================
@@ -197,12 +197,12 @@ member `Member <#member>`_ or string The member to mute/unmute required
    // muting a member with a member object
    $channel->muteMember($member)->then(function () {
        // ...
-   })->done();
+   });
 
    // unmuting a member with a member ID
    $channel->unmuteMember('123213123123213')->then(function () {
        // ...
-   })->done();
+   });
 
 Creating an invite
 ==================
@@ -241,7 +241,7 @@ Parameters are in an array.
        'max_uses' => 5, // 5 uses
    ])->then(function (Invite $invite) {
        // ...
-   })->done();
+   });
 
 Bulk deleting messages
 ======================
@@ -271,7 +271,7 @@ Parameters
        'my_message5_id',
    ])->then(function () {
        // ...
-   })->done();
+   });
 
 Getting message history
 =======================
@@ -303,7 +303,7 @@ Parameters
        foreach ($messages as $message) {
            // ...
        }
-   })->done();
+   });
 
 Limit delete messages
 =====================
@@ -328,7 +328,7 @@ Parameters
    // deletes the last 15 messages
    $channel->limitDelete(15)->then(function () {
        // ...
-   })->done();
+   });
 
 Pin or unpin a message
 ======================
@@ -344,7 +344,7 @@ Parameters
 name    type                   description              default
 ======= ====================== ======================== ========
 message `Message <#message>`_ The message to pin/unpin required
-reason  string                 Reason for Audit Log     
+reason  string                 Reason for Audit Log
 ======= ====================== ======================== ========
 
 .. code:: php
@@ -352,12 +352,12 @@ reason  string                 Reason for Audit Log
    // to pin
    $channel->pinMessage($message)->then(function (Message $message) {
        // ...
-   })->done();
+   });
 
    // to unpin
    $channel->unpinMessage($message)->then(function (Message $message) {
        // ...
-   })->done();
+   });
 
 Get invites
 ===========
@@ -370,7 +370,7 @@ Gets the channels invites. Returns a collection of invites in a promise.
        foreach ($invites as $invite) {
            // ...
        }
-   })->done();
+   });
 
 Send a message
 ==============
@@ -397,7 +397,7 @@ Parameters
 
    $channel->sendMessage($message)->then(function (Message $message) {
        // ...
-   })->done();
+   });
 
 Send an embed
 =============
@@ -419,7 +419,7 @@ embed `Embed <#embed>`_ The embed to send required
 
    $channel->sendEmbed($embed)->then(function (Message $message) {
        // ...
-   })->done();
+   });
 
 Broadcast typing
 ================
@@ -430,7 +430,7 @@ Broadcasts to the channel that the bot is typing. Genreally, bots should *not* u
 
    $channel->broadcastTyping()->then(function () {
        // ...
-   })->done();
+   });
 
 Create a message collector
 ==========================
@@ -458,7 +458,7 @@ options array    Array of options                      []
        foreach ($messages as $message) {
            // ...
        }
-   })->done();
+   });
 
 Options
 -------
@@ -484,4 +484,4 @@ Returns the messages pinned in the channel. Only applicable for text channels. R
        foreach ($messages as $message) {
            // $message->...
        }
-   })->done();
+   });
