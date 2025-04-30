@@ -444,8 +444,21 @@ class MessageBuilder implements JsonSerializable
             }
         } else {
             if (isset($this->components)) {
-                if (count($this->components) >= 10) {
-                    throw new \OverflowException('You can only add 10 top-level components to a v2 message');
+                $countComponents = function ($components) use (&$countComponents) {
+                    $count = 0;
+                    foreach ($components as $component) {
+                        $count++;
+                        if (is_array($component)) {
+                            if (isset($component['components']) && is_array($component['components'])) {
+                                $count += $countComponents($component['components']);
+                            }
+                        }
+                    }
+                    return $count;
+                };
+                $count = $countComponents($this->components);
+                if ($count >= 40) {
+                    throw new \OverflowException('You can only add 40 components to a v2 message');
                 }
             }
         }
