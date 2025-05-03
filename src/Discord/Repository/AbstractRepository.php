@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -26,6 +28,7 @@ use Discord\Helpers\Collection;
  */
 abstract class AbstractRepository extends Collection implements AbstractRepositoryInterface
 {
+    use AbstractRepositoryTrait;
     /**
      * The collection discriminator.
      *
@@ -46,6 +49,4 @@ abstract class AbstractRepository extends Collection implements AbstractReposito
      * @var string
      */
     protected $class;
-
-    use AbstractRepositoryTrait;
 }

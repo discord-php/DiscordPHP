@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -25,6 +27,7 @@ use JsonSerializable;
  */
 abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
 {
+    use PartTrait;
     /**
      * The HTTP client.
      *
@@ -104,6 +107,4 @@ abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
      * @var bool Whether the part has been created.
      */
     public $created = false;
-
-    use PartTrait;
 }

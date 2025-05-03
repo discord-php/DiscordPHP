@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -12,7 +14,6 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
-use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Poll\PollAnswer;
 use Discord\Parts\Channel\Poll\PollMedia;

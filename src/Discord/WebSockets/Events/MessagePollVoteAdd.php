@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -15,7 +17,6 @@ use Discord\Parts\Channel\Poll\PollAnswer;
 use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
-use Discord\Parts\Channel\Reaction;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 
