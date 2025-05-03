@@ -11,9 +11,14 @@
 
 namespace Discord\Repository\Interaction;
 
+use Discord\Builders\CommandBuilder;
 use Discord\Http\Endpoint;
+use Discord\Parts\Part;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Repository\AbstractRepository;
+use React\Promise\ExtendedPromiseInterface;
+
+use function Discord\nowait;
 
 /**
  * Contains application global commands.
@@ -46,4 +51,56 @@ class GlobalCommandRepository extends AbstractRepository
      * {@inheritDoc}
      */
     protected $class = Command::class;
+
+    /**
+     * Attempts to save a part to the Discord servers.
+     *
+     * @param CommandBuilder|Part $part   The CommandBuilder or part to save.
+     * @param string|null         $reason Reason for Audit Log (if supported).
+     *
+     * @return ExtendedPromiseInterface<Part>
+     *
+     * @throws \Exception
+     */
+    public function save(CommandBuilder|Part $part, ?string $reason = null): ExtendedPromiseInterface
+    {
+        if ($part instanceof CommandBuilder) {
+            $method = 'post';
+            $endpoint = new Endpoint($this->endpoints['create']);
+            $endpoint->bindAssoc($this->vars);
+            $attributes = $part->toArray();
+        } else {
+            if ($part->created) {
+                $method = 'patch';
+                $endpoint = new Endpoint($this->endpoints['update']);
+                $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
+                $attributes = $part->getUpdatableAttributes();
+            } else {
+                $method = 'post';
+                $endpoint = new Endpoint($this->endpoints['create']);
+                $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
+                $attributes = $part->getCreatableAttributes();
+            }
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->{$method}($endpoint, $attributes, $headers)->then(function ($response) use ($method, $part) {
+            switch ($method) {
+                case 'patch': // Update old part
+                    if ($part instanceof CommandBuilder) {
+                        $part = nowait($this->cache->get($part->{$this->discrim})) ?? $this->factory->create($this->class, (array) $response, true);
+                    }
+                    $part->created = true;
+                    $part->fill((array) $response);
+                    return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
+                default: // Create new part
+                    $newPart = $this->factory->create($this->class, (array) $response, true);
+                    return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
+            }
+        });
+    }
 }
