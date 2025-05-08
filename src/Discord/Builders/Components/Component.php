@@ -31,13 +31,14 @@ abstract class Component implements JsonSerializable
     public const TYPE_ROLE_SELECT = 6;
     public const TYPE_MENTIONABLE_SELECT = 7;
     public const TYPE_CHANNEL_SELECT = 8;
+    // Requires IS_COMPONENTS_V2 flag
     public const TYPE_SECTION = 9;
     public const TYPE_TEXT_DISPLAY = 10;
     public const TYPE_THUMBNAIL = 11;
     public const TYPE_MEDIA_GALLERY = 12;
     public const TYPE_FILE = 13;
     public const TYPE_SEPARATOR = 14;
-    public const TYPE_CONTENT_INVENTORY_ENTRY = 16;
+    public const TYPE_CONTENT_INVENTORY_ENTRY = 16; // Not documented
     public const TYPE_CONTAINER = 17;
 
     /** @deprecated 7.4.0 Use `Component::TYPE_STRING_SELECT` */
