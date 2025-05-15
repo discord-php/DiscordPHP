@@ -1165,7 +1165,7 @@ class Discord
      * Updates the clients presence.
      *
      * @param Activity|null $activity The current client activity, or null.
-     *                                Note: The emoji must be set to use custom, and the only valid fields are `name`, `type` and `url`.
+     *                                Note: The emoji must be set to use custom, and the only valid fields are `name`, `state`, `type` and `url`.
      * @param bool          $idle     Whether the client is idle.
      * @param string        $status   The current status of the client.
      *                                Must be one of the following:
