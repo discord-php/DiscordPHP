@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -335,7 +337,7 @@ class Button extends Component
         $this->listener = function (Interaction $interaction) use ($callback, $oneOff) {
             if ($interaction->data->component_type == Component::TYPE_BUTTON && $interaction->data->custom_id == $this->custom_id) {
                 $response = $callback($interaction);
-                $ack = static fn() => $interaction->isResponded() ?: $interaction->acknowledge();
+                $ack = static fn () => $interaction->isResponded() ?: $interaction->acknowledge();
 
                 if ($response instanceof PromiseInterface) {
                     $response->then($ack);

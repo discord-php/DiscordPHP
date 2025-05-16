@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -96,7 +98,7 @@ class Reaction extends Part
     protected function setIdAttribute(string $value): void
     {
         if (! isset($this->attributes['emoji'])) {
-            $this->attributes['emoji'] = new stdClass;
+            $this->attributes['emoji'] = new stdClass();
         }
 
         $colonDelimiter = explode(':', $value);
