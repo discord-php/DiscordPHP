@@ -13,8 +13,8 @@ namespace Discord;
 
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
-use Discord\Helpers\CacheConfig;
 use Discord\Helpers\BigInt;
+use Discord\Helpers\CacheConfig;
 use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
