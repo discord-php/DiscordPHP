@@ -4026,6 +4026,11 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020referenced\u0020message\u0020attribute,\u0020if\u0020present.",
             "url": "classes/Discord-Parts-Channel-Message.html#method_getReferencedMessageAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetMessageSnapshotAttribute\u0028\u0029",
+            "name": "getMessageSnapshotAttribute",
+            "summary": "Returns\u0020the\u0020message_snapshot\u0020attribute,\u0020if\u0020present.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_getMessageSnapshotAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetTimestampAttribute\u0028\u0029",
             "name": "getTimestampAttribute",
             "summary": "Returns\u0020the\u0020timestamp\u0020attribute.",
@@ -10051,6 +10056,46 @@ Search.appendIndex(
             "summary": "The\u0020pause\u0020buffer.",
             "url": "classes/Discord-Voice-RecieveStream.html#property_opusPauseBuffer"
         },                {
+            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState",
+            "name": "UserSpeakingState",
+            "summary": "",
+            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003AgetUserId\u0028\u0029",
+            "name": "getUserId",
+            "summary": "",
+            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#method_getUserId"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003AisSpeaking\u0028\u0029",
+            "name": "isSpeaking",
+            "summary": "",
+            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#method_isSpeaking"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003AgetPacketsByUserId\u0028\u0029",
+            "name": "getPacketsByUserId",
+            "summary": "",
+            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#method_getPacketsByUserId"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003A\u0024userId",
+            "name": "userId",
+            "summary": "",
+            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#property_userId"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003A\u0024speaking",
+            "name": "speaking",
+            "summary": "",
+            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#property_speaking"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003A\u0024packets",
+            "name": "packets",
+            "summary": "",
+            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#property_packets"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient",
             "name": "VoiceClient",
             "summary": "The\u0020Discord\u0020voice\u0020client.",
@@ -12335,6 +12380,11 @@ Search.appendIndex(
             "name": "Voice",
             "summary": "",
             "url": "namespaces/discord-voice.html"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Speaking",
+            "name": "Speaking",
+            "summary": "",
+            "url": "namespaces/discord-voice-speaking.html"
         },                {
             "fqsen": "\\Discord\\WebSockets",
             "name": "WebSockets",
