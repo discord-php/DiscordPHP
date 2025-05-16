@@ -1698,12 +1698,19 @@ class VoiceClient extends EventEmitter
      */
     public function ffmpegEncode(?string $filename = null, ?array $preArgs = null): Process
     {
+        $dB = match($this->volume) {
+            0 => -100,
+            100 => 0,
+            default => -40 + ($this->volume / 100) * 40,
+        };
+
         $flags = [
             '-i', $filename ?? 'pipe:0',
             '-map_metadata', '-1',
             '-f', 'opus',
             '-c:a', 'libopus',
             '-ar', '48000',
+            '-af', 'volume=' . $dB . 'dB',
             '-ac', '2',
             '-b:a', $this->bitrate,
             '-loglevel', 'warning',
