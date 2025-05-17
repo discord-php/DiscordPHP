@@ -446,6 +446,11 @@ Search.appendIndex(
             "summary": "Creates\u0020a\u0020new\u0020container.",
             "url": "classes/Discord-Builders-Components-Container.html#method_new"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AresolveColor\u0028\u0029",
+            "name": "resolveColor",
+            "summary": "Resolves\u0020a\u0020color\u0020to\u0020an\u0020integer.",
+            "url": "classes/Discord-Builders-Components-Container.html#method_resolveColor"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AaddComponent\u0028\u0029",
             "name": "addComponent",
             "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020container.",
