@@ -145,12 +145,16 @@ class Container extends Component implements Contracts\ComponentV2
     /**
      * Sets the accent color for the container.
      *
-     * @param int|null $color Color code for the container.
+     * @param mixed $color Color code for the container.
      *
      * @return $this
      */
-    public function setAccentColor(?int $color): self
+    public function setAccentColor($color): self
     {
+        if ($color !== null) {
+            $color = self::resolveColor($color);
+        }
+
         $this->accent_color = $color;
 
         return $this;
