@@ -144,7 +144,7 @@ class ThreadRepository extends AbstractRepository
             $endpoint->addQuery('before', $before);
         }
 
-        return $this->http->get(Endpoint::bind($endpoint, $this->vars['channel_id']))
+        return $this->http->get(Endpoint::bind((string) $endpoint, $this->vars['channel_id']))
             ->then(fn ($response) => $this->handleThreadPaginationResponse($response));
     }
 
