@@ -555,6 +555,10 @@ class Embed extends Part
      */
     protected static function resolveColor($color): int
     {
+        if (is_numeric($color)) {
+            $color = (int) $color;
+        }
+
         if (is_int($color)) {
             return $color;
         }
