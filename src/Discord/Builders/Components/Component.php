@@ -53,6 +53,6 @@ abstract class Component implements JsonSerializable
      */
     protected static function generateUuid(): string
     {
-        return uniqid(time(), true);
+        return uniqid((string) time(), true);
     }
 }
