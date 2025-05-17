@@ -60,6 +60,36 @@ class Container extends Component implements Contracts\ComponentV2
     }
 
     /**
+     * Resolves a color to an integer.
+     *
+     * @param array|int|string $color
+     *
+     * @throws \InvalidArgumentException `$color` cannot be resolved
+     *
+     * @return int
+     */
+    protected static function resolveColor($color): int
+    {
+        if (is_numeric($color)) {
+            $color = (int) $color;
+        }
+
+        if (is_int($color)) {
+            return $color;
+        }
+
+        if (! is_array($color)) {
+            return hexdec((str_replace('#', '', (string) $color)));
+        }
+
+        if (count($color) < 1) {
+            throw new \InvalidArgumentException('Color "'.var_export($color, true).'" is not resolvable');
+        }
+
+        return (($color[0] << 16) + (($color[1] ?? 0) << 8) + ($color[2] ?? 0));
+    }
+
+    /**
      * Adds a component to the container.
      *
      * @param ActionRow|Section|TextDisplay|MediaGallery|File|Separator $component Component to add.
