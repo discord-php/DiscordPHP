@@ -94,9 +94,16 @@ class Container extends Component implements Contracts\ComponentV2
      */
     public function addComponent(Component $component): self
     {
+        /*
+         * This is correct per Discord's documentation,
+         * but undocumented behavior show that ActionRow is not required,
+         * e.g. SelectMenu is a valid component, but would normally be in an ActionRow
+         */
+        /*
         if (! ( $component instanceof ActionRow || $component instanceof Section || $component instanceof TextDisplay || $component instanceof MediaGallery || $component instanceof File || $component instanceof Separator )) {
             throw new \InvalidArgumentException('Invalid component type.');
         }
+        */
 
         $this->components[] = $component;
 
