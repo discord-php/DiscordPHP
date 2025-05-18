@@ -11,13 +11,6 @@
 
 namespace Discord\Builders\Components;
 
-use Discord\Builders\Components\ActionRow;
-use Discord\Builders\Components\Section;
-use Discord\Builders\Components\TextDisplay;
-use Discord\Builders\Components\MediaGallery;
-use Discord\Builders\Components\File;
-use Discord\Builders\Components\Separator;
-
 /**
  * Containers are a new way to group components together.
  * You can also specify an accent color (similar to embeds) and spoiler it.
