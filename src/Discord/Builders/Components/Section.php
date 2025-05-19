@@ -20,6 +20,8 @@ namespace Discord\Builders\Components;
  */
 class Section extends Layout implements Contracts\ComponentV2
 {
+    public const USAGE = ['Message'];
+
     /**
      * Component type.
      *

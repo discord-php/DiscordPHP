@@ -21,6 +21,8 @@ namespace Discord\Builders\Components;
  */
 class Separator extends Layout implements Contracts\ComponentV2
 {
+    public const USAGE = ['Message'];
+
     /**
      * Spacing size constants.
      */

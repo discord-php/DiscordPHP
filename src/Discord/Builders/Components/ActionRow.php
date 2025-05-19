@@ -24,6 +24,8 @@ namespace Discord\Builders\Components;
  */
 class ActionRow extends Layout
 {
+    public const USAGE = ['Message', 'Modal'];
+
     /**
      * Component type.
      *

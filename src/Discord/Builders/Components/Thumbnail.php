@@ -20,6 +20,8 @@ namespace Discord\Builders\Components;
  */
 class Thumbnail extends Content implements Contracts\ComponentV2
 {
+    public const USAGE = ['Message'];
+
     /**
      * Component type.
      *

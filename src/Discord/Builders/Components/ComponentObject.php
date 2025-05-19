@@ -26,6 +26,8 @@ namespace Discord\Builders\Components;
  */
 abstract class ComponentObject extends Component
 {
+    public const USAGE = [];
+
     /**
      * The type of the component.
      *

@@ -32,6 +32,8 @@ use function Discord\poly_strlen;
  */
 class Button extends Interactive
 {
+    public const USAGE = ['Message'];
+
     public const STYLE_PRIMARY = 1;
     public const STYLE_SECONDARY = 2;
     public const STYLE_SUCCESS = 3;

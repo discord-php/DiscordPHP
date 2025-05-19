@@ -24,6 +24,8 @@ use function Discord\poly_strlen;
  */
 class TextInput extends Interactive
 {
+    public const USAGE = ['Message', 'Modal'];
+
     public const STYLE_SHORT = 1;
     public const STYLE_PARAGRAPH = 2;
 

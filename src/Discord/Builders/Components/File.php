@@ -22,6 +22,8 @@ use Discord\Parts\Channel\Attachment;
  */
 class File extends Content implements Contracts\ComponentV2
 {
+    public const USAGE = ['Message'];
+
     /**
      * Component type.
      *
