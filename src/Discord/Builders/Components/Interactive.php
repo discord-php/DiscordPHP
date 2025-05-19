@@ -24,4 +24,9 @@ abstract class Interactive extends ComponentObject
      * @var string|null
      */
     protected $custom_id;
+
+    public function getCustomId(): ?string
+    {
+        return $this->custom_id;
+    }
 }
