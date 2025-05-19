@@ -88,7 +88,6 @@ class Container extends Component implements Contracts\ComponentV2
      * @param ActionRow|SelectMenu|Section|TextDisplay|MediaGallery|File|Separator $component Component to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
-     * @throws \OverflowException        Container exceeds 10 components.
      *
      * @return $this
      */
