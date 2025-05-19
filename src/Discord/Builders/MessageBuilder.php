@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Builders\Components\ActionRow;
+use Discord\Builders\Components\Component;
 use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\SelectMenu;
@@ -427,8 +428,12 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function addComponent(ComponentObject $component): self
+    public function addComponent(Component $component): self
     {
+        if (! $component instanceof ComponentObject) {
+            throw new \InvalidArgumentException('You can only add component objects to a message.');
+        }
+
         if ($component instanceof ComponentV2) {
             $this->setV2Flag();
         }
@@ -470,7 +475,7 @@ class MessageBuilder implements JsonSerializable
      * @throws \OverflowException If more than 5 components are added.
      * @throws \InvalidArgumentException If a component is not an ActionRow or is not properly wrapped.
      */
-    protected function enforceV1Limits(ComponentObject $component): void
+    protected function enforceV1Limits(Component $component): void
     {
         if (! $component instanceof ActionRow) {
             throw new \InvalidArgumentException('You can only add action rows as components to v1 messages. Put your other components inside an action row.');
@@ -505,7 +510,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function removeComponent(ComponentObject $component): self
+    public function removeComponent(Component $component): self
     {
         if (($idx = array_search($component, $this->components)) !== null) {
             array_splice($this->components, $idx, 1);
