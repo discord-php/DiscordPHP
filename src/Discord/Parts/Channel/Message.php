@@ -28,6 +28,7 @@ use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Channel\Message\MessageReference;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Component;
@@ -72,7 +73,7 @@ use function React\Promise\reject;
  * @property      object|null                            $application            Application of message. Requires rich presence.
  * @property      string|null                            $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
  * @property      int|null                               $flags                  Message flags.
- * @property      object|null                            $message_reference      Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
+ * @property      MessageReference|null                  $message_reference      Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
  * @property      object|null                            $message_snapshot       The message associated with the message_reference. This is a minimal subset of fields in a message (e.g. author is excluded.).
  * @property      Message|null                           $referenced_message     The message that is referenced in a reply.
  * @property      MessageInteraction|null                $interaction            Sent if the message is a response to an Interaction.
@@ -655,6 +656,15 @@ class Message extends Part
         }
 
         return null;
+    }
+
+    protected function getMessageReferenceAttribute(): ?MessageReference
+    {
+        if (! isset($this->attributes['message_reference'])) {
+            return null;
+        }
+
+        return $this->factory->part(MessageReference::class, (array) $this->attributes['message_reference'], true);
     }
 
     /**
