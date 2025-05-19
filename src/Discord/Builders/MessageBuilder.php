@@ -456,8 +456,7 @@ class MessageBuilder implements JsonSerializable
     protected function enforceV2Limits(): void
     {
         if (isset($this->components)) {
-            $count = $this->countTotalComponents($this->components);
-            if ($count >= 40) {
+            if ($this->countTotalComponents($this->components) >= 40) {
                 throw new \OverflowException('You can only add 40 components to a v2 message');
             }
         }
