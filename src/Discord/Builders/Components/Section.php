@@ -18,8 +18,15 @@ namespace Discord\Builders\Components;
  *
  * @since 10.5.0
  */
-class Section extends Component implements Contracts\ComponentV2
+class Section extends Layout implements Contracts\ComponentV2
 {
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_SECTION;
+
     /**
      * Array of text display components.
      *
@@ -117,7 +124,7 @@ class Section extends Component implements Contracts\ComponentV2
     public function jsonSerialize(): array
     {
         $data = [
-            'type' => Component::TYPE_SECTION,
+            'type' => $this->type,
             'components' => $this->components,
         ];
 

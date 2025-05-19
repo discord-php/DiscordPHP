@@ -19,8 +19,15 @@ namespace Discord\Builders\Components;
  *
  * @since 10.5.0
  */
-class Container extends Component implements Contracts\ComponentV2
+class Container extends Layout implements Contracts\ComponentV2
 {
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_CONTAINER;
+
     /**
      * Array of components.
      *
@@ -210,7 +217,7 @@ class Container extends Component implements Contracts\ComponentV2
     public function jsonSerialize(): array
     {
         $data = [
-            'type' => Component::TYPE_CONTAINER,
+            'type' => $this->type,
             'components' => $this->components,
         ];
 

@@ -20,8 +20,15 @@ use Discord\Parts\Channel\Attachment;
  *
  * @since 10.5.0
  */
-class File extends Component implements Contracts\ComponentV2
+class File extends Content implements Contracts\ComponentV2
 {
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_FILE;
+
     /**
      * The file to be displayed.
      *
@@ -112,7 +119,7 @@ class File extends Component implements Contracts\ComponentV2
     public function jsonSerialize(): array
     {
         $data = [
-            'type' => Component::TYPE_FILE,
+            'type' => $this->type,
             'file' => $this->file,
         ];
 

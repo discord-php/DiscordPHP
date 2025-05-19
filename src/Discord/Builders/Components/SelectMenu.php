@@ -30,15 +30,16 @@ use function Discord\poly_strlen;
  * @link https://discord.com/developers/docs/interactions/message-components#select-menus
  *
  * @since 10.0.0 Renamed from SelectMenu to StringSelect and made SelectMenu abstract
+ * @since 10.9.0 Extends Interactive instead of Component
  */
-abstract class SelectMenu extends Component
+abstract class SelectMenu extends Interactive
 {
     /**
-     * Type of select menu component (text: 3, user: 5, role: 6, mentionable: 7, channels: 8)
+     * Component type.
      *
-     * @var integer
+     * @var int
      */
-    protected $type;
+    protected $type = Component::TYPE_SELECT_MENU; // Default type
 
     /**
      * Custom ID to identify the select menu.
@@ -120,7 +121,7 @@ abstract class SelectMenu extends Component
      */
     public function __construct(?string $custom_id)
     {
-        $this->setCustomId($custom_id ?? $this->generateUuid());
+        $this->setCustomId($custom_id ?? self::generateUuid());
     }
 
     /**
@@ -528,7 +529,7 @@ abstract class SelectMenu extends Component
         }
 
         return [
-            'type' => Component::TYPE_ACTION_ROW,
+            'type' => $this->type,
             'components' => [$content],
         ];
     }

@@ -80,7 +80,7 @@ class Option extends Component
         }
 
         $this->label = $label;
-        $this->value = $value ?? $this->generateUuid();
+        $this->value = $value ?? self::generateUuid();
     }
 
     /**

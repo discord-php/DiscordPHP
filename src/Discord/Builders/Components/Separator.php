@@ -19,13 +19,20 @@ namespace Discord\Builders\Components;
  *
  * @since 10.5.0
  */
-class Separator extends Component implements Contracts\ComponentV2
+class Separator extends Layout implements Contracts\ComponentV2
 {
     /**
      * Spacing size constants.
      */
     public const SPACING_SMALL = 1;
     public const SPACING_LARGE = 2;
+
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_SEPARATOR;
 
     /**
      * Whether the separator is a divider.
@@ -112,7 +119,7 @@ class Separator extends Component implements Contracts\ComponentV2
     public function jsonSerialize(): array
     {
         $data = [
-            'type' => Component::TYPE_SEPARATOR,
+            'type' => $this->type,
         ];
 
         if (! $this->divider) {

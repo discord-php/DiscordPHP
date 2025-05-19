@@ -22,8 +22,15 @@ namespace Discord\Builders\Components;
  *
  * @since 7.0.0
  */
-class ActionRow extends Component
+class ActionRow extends Layout
 {
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_ACTION_ROW;
+
     /**
      * Components contained by the action row.
      *
@@ -110,7 +117,7 @@ class ActionRow extends Component
     public function jsonSerialize(): array
     {
         return [
-            'type' => Component::TYPE_ACTION_ROW,
+            'type' => $this->type,
             'components' => $this->components,
         ];
     }
