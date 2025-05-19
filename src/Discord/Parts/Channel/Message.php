@@ -82,6 +82,7 @@ use function React\Promise\reject;
  * @property      int|null                               $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
  * @property      object|null                            $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
  * @property      Poll|null                              $poll                   The poll attached to the message.
+ * @property      MessageCall|null                       $call                   The call associated with the message
  *
  * @property-read bool $crossposted                            Message has been crossposted.
  * @property-read bool $is_crosspost                           Message is a crosspost from another channel.
