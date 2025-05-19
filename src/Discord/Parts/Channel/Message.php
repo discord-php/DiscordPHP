@@ -71,9 +71,9 @@ use function React\Promise\reject;
  * @property      object|null                            $activity               Current message activity. Requires rich presence.
  * @property      object|null                            $application            Application of message. Requires rich presence.
  * @property      string|null                            $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
- * @property      object|null                            $message_reference      Message that is referenced by this message.
- * @property      object|null                            $message_snapshot       Message that is referenced by this message.
  * @property      int|null                               $flags                  Message flags.
+ * @property      object|null                            $message_reference      Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
+ * @property      object|null                            $message_snapshot       The message associated with the message_reference. This is a minimal subset of fields in a message (e.g. author is excluded.).
  * @property      Message|null                           $referenced_message     The message that is referenced in a reply.
  * @property      MessageInteraction|null                $interaction            Sent if the message is a response to an Interaction.
  * @property      Thread|null                            $thread                 The thread that was started from this message, includes thread member object.
