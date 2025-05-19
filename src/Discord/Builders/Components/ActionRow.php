@@ -64,6 +64,14 @@ class ActionRow extends Layout
             throw new \InvalidArgumentException('You cannot add another `ActionRow` to this action row.');
         }
 
+        if ($component instanceof SelectMenu) {
+            foreach ($this->components as $existingComponent) {
+                if ($existingComponent instanceof SelectMenu) {
+                    throw new \InvalidArgumentException('You cannot add more than one select menu to an action row.');
+                }
+            }
+        }
+
         if (count($this->components) >= 5) {
             throw new \OverflowException('You can only have 5 components per action row.');
         }

@@ -528,9 +528,6 @@ abstract class SelectMenu extends Interactive
             $content['disabled'] = true;
         }
 
-        return [
-            'type' => $this->type,
-            'components' => [$content],
-        ];
+        return $content;
     }
 }
