@@ -274,7 +274,7 @@ class AllowedMentions implements JsonSerializable
     /**
      * Sets the list of allowed mentioned users.
      *
-     * @param ExCollectionInterface|string[]|null $users
+     * @param ExCollectionInterface|string[]|null $items
      *
      * @throws \InvalidArgumentException Allowed mention type must be one of: users, users, everyone
      *
