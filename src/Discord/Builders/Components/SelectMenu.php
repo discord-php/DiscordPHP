@@ -527,9 +527,6 @@ abstract class SelectMenu extends Component
             $content['disabled'] = true;
         }
 
-        return [
-            'type' => Component::TYPE_ACTION_ROW,
-            'components' => [$content],
-        ];
+        return $content;
     }
 }

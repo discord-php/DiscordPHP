@@ -441,8 +441,11 @@ class MessageBuilder implements JsonSerializable
                     throw new \OverflowException('You can only add 5 components to a v1 message');
                 }
             }
-            if (! ($component instanceof ActionRow || $component instanceof SelectMenu)) {
-                throw new \InvalidArgumentException('You can only add action rows and select menus as components to v1 messages. Put your other components inside an action row.');
+            if ($component instanceof SelectMenu) {
+                $component = ActionRow::new()->addComponent($component);
+            }
+            if (! $component instanceof ActionRow) {
+                throw new \InvalidArgumentException('You can only add action rows as components to v1 messages. Put your other components inside an action row.');
             }
         } else {
             if (isset($this->components)) {
