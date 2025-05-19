@@ -36,14 +36,4 @@ abstract class Interactive extends ComponentObject
     {
         return null;
     }
-
-    /**
-     * Returns the custom ID of the button.
-     *
-     * @return string|null
-     */
-    public function getCustomId(): ?string
-    {
-        return $this->custom_id;
-    }
 }
