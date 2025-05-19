@@ -430,47 +430,73 @@ class MessageBuilder implements JsonSerializable
     public function addComponent(ComponentObject $component): self
     {
         if ($component instanceof ComponentV2) {
-            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
-                $this->flags |= Message::FLAG_IS_V2_COMPONENTS;
-            }
+            $this->setV2Flag();
         }
 
-        if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
-            if (isset($this->components)) {
-                if (count($this->components) >= 5) {
-                    throw new \OverflowException('You can only add 5 components to a v1 message');
-                }
-            }
-            if ($component instanceof SelectMenu) {
-                $component = ActionRow::new()->addComponent($component);
-            }
-            if (! $component instanceof ActionRow) {
-                throw new \InvalidArgumentException('You can only add action rows as components to v1 messages. Put your other components inside an action row.');
-            }
+        if ($component instanceof SelectMenu) {
+            $component = ActionRow::new()->addComponent($component);
+        }
+
+        if ($this->flags & Message::FLAG_IS_V2_COMPONENTS) {
+            $this->enforceV2Limits();
         } else {
-            if (isset($this->components)) {
-                $countComponents = function ($components) use (&$countComponents) {
-                    $count = 0;
-                    foreach ($components as $component) {
-                        $count++;
-                        if (is_array($component)) {
-                            if (isset($component['components']) && is_array($component['components'])) {
-                                $count += $countComponents($component['components']);
-                            }
-                        }
-                    }
-                    return $count;
-                };
-                $count = $countComponents($this->components);
-                if ($count >= 40) {
-                    throw new \OverflowException('You can only add 40 components to a v2 message');
-                }
-            }
+            $this->enforceV1Limits($component);
         }
 
         $this->components[] = $component;
 
         return $this;
+    }
+
+    /**
+     * Validates the total number of components added to the message.
+     *
+     * @throws \OverflowException If the total number of components is 40 or more.
+     */
+    protected function enforceV2Limits(): void
+    {
+        if (isset($this->components)) {
+            $count = $this->countTotalComponents($this->components);
+            if ($count >= 40) {
+                throw new \OverflowException('You can only add 40 components to a v2 message');
+            }
+        }
+    }
+
+    /**
+     * Enforces the component limits and structure for v2 messages.
+     *
+     * @param ComponentObject $component
+     *
+     * @throws \OverflowException If more than 5 components are added.
+     * @throws \InvalidArgumentException If a component is not an ActionRow or is not properly wrapped.
+     */
+    protected function enforceV1Limits(ComponentObject $component): void
+    {
+        if (! $component instanceof ActionRow) {
+            throw new \InvalidArgumentException('You can only add action rows as components to v1 messages. Put your other components inside an action row.');
+        }
+
+        if (isset($this->components)) {
+            if (count($this->components) >= 5) {
+                throw new \OverflowException('You can only add 5 components to a v1 message');
+            }
+        }
+    }
+
+    /**
+     * Recursively counts the total number of components, including nested components, in the given array.
+     *
+     * @return int
+     */
+    public function countTotalComponents(): int
+    {
+        return (int) array_sum(array_map(
+            fn($component) => (is_array($component) && isset($component['components']) && is_array($component['components']))
+                ? 1 + $this->countTotalComponents($component['components'])
+                : 1,
+            $this->components ?? []
+        ));
     }
 
     /**
