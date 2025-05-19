@@ -120,7 +120,7 @@ abstract class SelectMenu extends Component
      */
     public function __construct(?string $custom_id)
     {
-        $this->setCustomId($custom_id ?? $this->generateUuid());
+        $this->setCustomId($custom_id ?? self::generateUuid());
     }
 
     /**
