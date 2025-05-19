@@ -116,7 +116,7 @@ class Button extends Component
 
         $this->style = $style;
         if ($this->style != self::STYLE_LINK) {
-            $this->setCustomId($custom_id ?? $this->generateUuid());
+            $this->setCustomId($custom_id ?? self::generateUuid());
         }
     }
 
@@ -320,7 +320,7 @@ class Button extends Component
         }
 
         if (! isset($this->custom_id)) {
-            $this->custom_id = $this->generateUuid();
+            $this->custom_id = self::generateUuid();
         }
 
         // Remove any existing listener
