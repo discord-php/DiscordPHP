@@ -25,6 +25,23 @@ abstract class Interactive extends ComponentObject
      */
     protected $custom_id;
 
+
+    /**
+     * Retrieves the ID associated with the interactive component.
+     * Always returns null as this component does not have an ID.
+     *
+     * @return null
+     */
+    protected function getId(): null
+    {
+        return null;
+    }
+
+    /**
+     * Returns the custom ID of the button.
+     *
+     * @return string|null
+     */
     public function getCustomId(): ?string
     {
         return $this->custom_id;

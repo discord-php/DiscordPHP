@@ -397,16 +397,6 @@ class Button extends Interactive
     }
 
     /**
-     * Returns the custom ID of the button.
-     *
-     * @return string|null
-     */
-    public function getCustomId(): ?string
-    {
-        return $this->custom_id;
-    }
-
-    /**
      * Returns the URL of the button. Only for link buttons.
      *
      * @return string|null

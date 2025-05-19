@@ -393,26 +393,6 @@ abstract class SelectMenu extends Interactive
     }
 
     /**
-     * Returns the type of the select menu.
-     *
-     * @return int
-     */
-    public function getType(): int
-    {
-        return $this->type;
-    }
-
-    /**
-     * Returns the Custom ID of the select menu.
-     *
-     * @return string
-     */
-    public function getCustomId(): string
-    {
-        return $this->custom_id;
-    }
-
-    /**
      * Returns the options of the select menu.
      *
      * @return array|null

@@ -266,16 +266,6 @@ class TextInput extends Interactive
     }
 
     /**
-     * Returns the Custom ID of the text input.
-     *
-     * @return string
-     */
-    public function getCustomId(): string
-    {
-        return $this->custom_id;
-    }
-
-    /**
      * Returns the placeholder string of the text input.
      *
      * @return string|null

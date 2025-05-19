@@ -43,9 +43,9 @@ abstract class ComponentObject extends Component
     /**
      * Retrieves the type of the component.
      *
-     * @return int|null The type of the component.
+     * @return int
      */
-    protected function getType(): int
+    public function getType(): int
     {
         return $this->type;
     }
