@@ -118,12 +118,14 @@ class AllowedMentions implements JsonSerializable
      */
     public function addParse(...$items): self
     {
+        $allowed = [self::TYPE_ROLE, self::TYPE_USER, self::TYPE_EVERYONE];
+
         foreach ($items as &$item) {
             if (!is_string($item)) {
                 throw new \InvalidArgumentException('Allowed mention type must be a string.');
             }
-            if (!in_array($item, [self::TYPE_ROLE, self::TYPE_USER, self::TYPE_EVERYONE], true)) {
-                throw new \InvalidArgumentException('Allowed mention type must be one of: ' . implode(', ', [self::TYPE_ROLE, self::TYPE_USER, self::TYPE_EVERYONE]));
+            if (!in_array($item, $allowed, true)) {
+                throw new \InvalidArgumentException('Allowed mention type must be one of: roles, users, everyone');
             }
         }
 
