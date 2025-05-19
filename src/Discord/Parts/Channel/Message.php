@@ -30,6 +30,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
+use Discord\Parts\Interactions\Resolved;
 use Discord\Parts\Interactions\Request\Component;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
@@ -81,6 +82,7 @@ use function React\Promise\reject;
  * @property      ExCollectionInterface|Sticker[]|null   $sticker_items          Stickers attached to the message.
  * @property      int|null                               $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
  * @property      object|null                            $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
+ * @property      Resolved|null                          $resolved               Data for users, members, channels, and roles in the message's auto-populated select menus
  * @property      Poll|null                              $poll                   The poll attached to the message.
  *
  * @property-read bool $crossposted                            Message has been crossposted.
