@@ -94,7 +94,7 @@ class TextInput extends Component
     {
         $this->setLabel($label);
         $this->setStyle($style);
-        $this->setCustomId($custom_id ?? $this->generateUuid());
+        $this->setCustomId($custom_id ?? self::generateUuid());
     }
 
     /**
