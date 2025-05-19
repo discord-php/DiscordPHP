@@ -36,7 +36,7 @@ class ActionRow extends Layout
     /**
      * Components contained by the action row.
      *
-     * @var Component[]
+     * @var ComponentObject[]
      */
     private $components = [];
 
@@ -53,14 +53,14 @@ class ActionRow extends Layout
     /**
      * Adds a component to the action row.
      *
-     * @param Component $component Component to add.
+     * @param ComponentObject $component Component to add.
      *
      * @throws \InvalidArgumentException
      * @throws \OverflowException
      *
      * @return $this
      */
-    public function addComponent(Component $component): self
+    public function addComponent(ComponentObject $component): self
     {
         if ($component instanceof ActionRow) {
             throw new \InvalidArgumentException('You cannot add another `ActionRow` to this action row.');
@@ -86,11 +86,11 @@ class ActionRow extends Layout
     /**
      * Removes a component from the action row.
      *
-     * @param Component $component Component to remove.
+     * @param ComponentObject $component Component to remove.
      *
      * @return $this
      */
-    public function removeComponent(Component $component): self
+    public function removeComponent(ComponentObject $component): self
     {
         if (($idx = array_search($component, $this->components)) !== null) {
             array_splice($this->components, $idx, 1);
@@ -114,7 +114,7 @@ class ActionRow extends Layout
     /**
      * Returns all the components in the action row.
      *
-     * @return Component[]
+     * @return ComponentObject[]
      */
     public function getComponents(): array
     {

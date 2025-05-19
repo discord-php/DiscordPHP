@@ -33,7 +33,7 @@ class Container extends Layout implements Contracts\ComponentV2
     /**
      * Array of components.
      *
-     * @var Component[]
+     * @var ComponentObject[]
      */
     private $components = [];
 
@@ -100,7 +100,7 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function addComponent(Component $component): self
+    public function addComponent(ComponentObject $component): self
     {
         if ($component instanceof SelectMenu) {
             $component = ActionRow::new()->addComponent($component);
@@ -118,7 +118,7 @@ class Container extends Layout implements Contracts\ComponentV2
     /**
      * Add a group of components to the container.
      *
-     * @param Component[] $components Components to add.
+     * @param ComponentObject[] $components Components to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      *
@@ -136,7 +136,7 @@ class Container extends Layout implements Contracts\ComponentV2
     /**
      * Sets the components for the container.
      *
-     * @param Component[] $components Components to set.
+     * @param ComponentObject[] $components Components to set.
      *
      * @return $this
      */
@@ -182,7 +182,7 @@ class Container extends Layout implements Contracts\ComponentV2
     /**
      * Returns all the components in the container.
      *
-     * @return Component[]
+     * @return ComponentObject[]
      */
     public function getComponents(): array
     {

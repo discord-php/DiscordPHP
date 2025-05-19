@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Builders\Components\ActionRow;
-use Discord\Builders\Components\Component;
+use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\SelectMenu;
 use Discord\Exceptions\FileNotFoundException;
@@ -104,7 +104,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Components to send with this message.
      *
-     * @var Component[]|null
+     * @var ComponentObject[]|null
      */
     private $components;
 
@@ -420,14 +420,14 @@ class MessageBuilder implements JsonSerializable
     /**
      * Adds a component to the builder.
      *
-     * @param Component $component Component to add.
+     * @param ComponentObject $component Component to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
      *
      * @return $this
      */
-    public function addComponent(Component $component): self
+    public function addComponent(ComponentObject $component): self
     {
         if ($component instanceof ComponentV2) {
             if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
@@ -476,11 +476,11 @@ class MessageBuilder implements JsonSerializable
     /**
      * Removes a component from the builder.
      *
-     * @param Component $component Component to remove.
+     * @param ComponentObject $component Component to remove.
      *
      * @return $this
      */
-    public function removeComponent(Component $component): self
+    public function removeComponent(ComponentObject $component): self
     {
         if (($idx = array_search($component, $this->components)) !== null) {
             array_splice($this->components, $idx, 1);
@@ -510,7 +510,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Returns all the components in the builder.
      *
-     * @return Component[]
+     * @return ComponentObject[]
      */
     public function getComponents(): array
     {
