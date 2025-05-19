@@ -744,6 +744,25 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
+     * Sets or unsets the V2 components flag for the message.
+     *
+     * @param  bool $enable
+     * @return self
+     */
+    public function setV2Flag(bool $enable = true): self
+    {
+        if ($enable) {
+            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+                $this->flags |= Message::FLAG_IS_V2_COMPONENTS;
+            }
+        } elseif ($this->flags & Message::FLAG_IS_V2_COMPONENTS) {
+            $this->flags &= ~Message::FLAG_IS_V2_COMPONENTS;
+        }
+
+        return $this;
+    }
+
+    /**
      * Sets the flags of the message.
      * Only works for some message types and some message flags.
      *
