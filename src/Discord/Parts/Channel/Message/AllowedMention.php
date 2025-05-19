@@ -90,7 +90,7 @@ class AllowedMentions implements JsonSerializable
     /**
      * Sets the list of allowed mentioned types.
      *
-     * @param ExCollectionInterface|string[] $items
+     * @param ExCollectionInterface|string[]|null $items
      *
      * @throws \InvalidArgumentException Allowed mention type must be one of: roles, users, everyone
      *
@@ -184,7 +184,7 @@ class AllowedMentions implements JsonSerializable
     /**
      * Sets the list of allowed mentioned roles.
      *
-     * @param ExCollectionInterface|string[] $items
+     * @param ExCollectionInterface|string[]|null $items
      *
      * @throws \InvalidArgumentException Allowed mention type must be one of: roles, users, everyone
      *
