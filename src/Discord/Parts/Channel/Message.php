@@ -77,7 +77,7 @@ use function React\Promise\reject;
  * @property      Message|null                                 $referenced_message     The message that is referenced in a reply.
  * @property      MessageInteraction|null                      $interaction            Sent if the message is a response to an Interaction.
  * @property      Thread|null                                  $thread                 The thread that was started from this message, includes thread member object.
- * @property      ExCollectionInterface|Component[]|null $components             Sent if the message contains components like buttons, action rows, or other interactive components.
+ * @property      ExCollectionInterface|Component[]|null       $components             Sent if the message contains components like buttons, action rows, or other interactive components.
  * @property      ExCollectionInterface|Sticker[]|null         $sticker_items          Stickers attached to the message.
  * @property      int|null                                     $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
  * @property      object|null                                  $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
