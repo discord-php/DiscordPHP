@@ -857,6 +857,8 @@ class MessageBuilder implements JsonSerializable
      * Returns a boolean that determines whether the message needs to
      * be sent via multipart request, i.e. contains files.
      *
+     * V2 components are not supported for multipart requests as files are disallowed.
+     *
      * @return bool
      */
     public function requiresMultipart(): bool
