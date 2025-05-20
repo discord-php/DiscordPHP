@@ -56,15 +56,15 @@ class Payload implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        $data['op'] = $this->op;
+        $data[] = $this->op;
         if (isset($this->d)) {
-            $data['d'] = $this->d;
+            $data[] = $this->d;
         }
         if (isset($this->s)) {
-            $data['s'] = $this->s;
+            $data[] = $this->s;
         }
         if (isset($this->t)) {
-            $data['t'] = $this->t;
+            $data[] = $this->t;
         }
         return $data;
     }
