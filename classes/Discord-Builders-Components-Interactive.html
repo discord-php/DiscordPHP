@@ -241,8 +241,11 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Component
+    Interactive
 
+        <span class="phpdocumentor-element__extends">
+        extends <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>
+    </span>
     
             <div class="phpdocumentor-element__package">
             in package
@@ -251,9 +254,6 @@
                             </ul>
         </div>
     
-            <span class="phpdocumentor-element__implements">
-            implements
-                            <abbr title="\JsonSerializable">JsonSerializable</abbr>                    </span>
     
     </h2>
 
@@ -265,43 +265,28 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Interactive.php"><a href="files/src-discord-builders-components-interactive.html"><abbr title="src/Discord/Builders/Components/Interactive.php">Interactive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Components are a new field on the message object, so you can use them whether
-you&#039;re sending messages or responding to a slash command or other interaction.</p>
+            <p class="phpdocumentor-summary">Components allow you to style and structure your messages, modals, and interactions.</p>
 
-            <div class="phpdocumentor-admonition">
-        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-            <article>
-                <p>Use <code class="prettyprint">ComponentObject</code> instead.</p>
 
-            </article>
-        </div>
-    
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Builders-Components-Component.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Builders-Components-Interactive.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/interactions/message-components#what-is-a-component"> https://discord.com/developers/docs/interactions/message-components#what-is-a-component </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.0.0</span>
+                                            <span class="phpdocumentor-tag-link">10.9.0</span>
                                                                                 
                                              
                                     </dd>
@@ -313,26 +298,19 @@ you&#039;re sending messages or responding to a slash command or other interacti
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Builders-Components-Component.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Builders-Components-Interactive.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
 
 
-    <h4 id="toc-interfaces">
-        Interfaces
-        <a href="classes/Discord-Builders-Components-Component.html#toc-interfaces" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -interface"><abbr title="\JsonSerializable">JsonSerializable</abbr></dt>    </dl>
 
 
 
 
 <h4 id="toc-constants">
     Constants
-    <a href="classes/Discord-Builders-Components-Component.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Builders-Components-Interactive.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -438,13 +416,47 @@ you&#039;re sending messages or responding to a slash command or other interacti
         &nbsp;= 5                            </span>
 </dt>
 
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#constant_USAGE">USAGE</a>
+    <span>
+        &nbsp;= []                            </span>
+</dt>
+
     </dl>
 
 
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/Discord-Builders-Components-Interactive.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Discord-Builders-Components-Interactive.html#property_custom_id">$custom_id</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+<dd>Custom ID to send with interactive component.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#property_id">$id</a>
+    <span>
+                        &nbsp;: int|null            </span>
+</dt>
+<dd>32 bit integer used as an optional identifier for component.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#property_type">$type</a>
+    <span>
+                        &nbsp;: int            </span>
+</dt>
+<dd>The type of the component.</dd>
+
+    </dl>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Builders-Components-Component.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Builders-Components-Interactive.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -455,6 +467,13 @@ you&#039;re sending messages or responding to a slash command or other interacti
 </dt>
 <dd>Returns the custom ID of the button.</dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#method_getType">getType()</a>
+    <span>
+                                &nbsp;: int    </span>
+</dt>
+<dd>Retrieves the type of the component.</dd>
+
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Builders-Components-Component.html#method_generateUuid">generateUuid()</a>
     <span>
@@ -463,18 +482,11 @@ you&#039;re sending messages or responding to a slash command or other interacti
 <dd>Generates a UUID which can be used for component custom IDs.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Builders-Components-Component.html#method_getId">getId()</a>
+    <a class="" href="classes/Discord-Builders-Components-Interactive.html#method_getId">getId()</a>
     <span>
-                                &nbsp;: int|null    </span>
+                                &nbsp;: null    </span>
 </dt>
-<dd>The id field is optional and is used to identify components in the response from an interaction that aren&#039;t interactive components.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Builders-Components-Component.html#method_getType">getType()</a>
-    <span>
-                                &nbsp;: int|null    </span>
-</dt>
-<dd>Retrieves the type of the component.</dd>
+<dd>Retrieves the ID associated with the interactive component.</dd>
 
     </dl>
 
@@ -484,7 +496,7 @@ you&#039;re sending messages or responding to a slash command or other interacti
     <section class="phpdocumentor-constants">
         <h3 class="phpdocumentor-elements__header" id="constants">
             Constants
-            <a href="classes/Discord-Builders-Components-Component.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Builders-Components-Interactive.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
@@ -1021,14 +1033,163 @@ you&#039;re sending messages or responding to a slash command or other interacti
     
 
 </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_USAGE">
+        USAGE
+        <a href="classes/Discord-Builders-Components-ComponentObject.html#constant_USAGE" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">29</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">USAGE</span>
+    = <span class="phpdocumentor-signature__default-value">[]</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
             </section>
 
         
+    <section class="phpdocumentor-properties">
+        <h3 class="phpdocumentor-elements__header" id="properties">
+            Properties
+            <a href="classes/Discord-Builders-Components-Interactive.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_custom_id">
+        $custom_id
+        <a href="classes/Discord-Builders-Components-Interactive.html#property_custom_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Interactive.php"><a href="files/src-discord-builders-components-interactive.html"><abbr title="src/Discord/Builders/Components/Interactive.php">Interactive.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">26</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Custom ID to send with interactive component.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$custom_id</span>
+    </code>
+
+    
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_id">
+        $id
+        <a href="classes/Discord-Builders-Components-ComponentObject.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">43</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">32 bit integer used as an optional identifier for component.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">int|null</span>
+    <span class="phpdocumentor-signature__name">$id</span>
+    </code>
+
+    
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_type">
+        $type
+        <a href="classes/Discord-Builders-Components-ComponentObject.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">36</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The type of the component.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$type</span>
+    </code>
+
+    
+    
+    
+
+    
+
+</article>
+            </section>
 
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Builders-Components-Component.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Builders-Components-Interactive.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -1067,6 +1228,45 @@ you&#039;re sending messages or responding to a slash command or other interacti
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getType">
+        getType()
+        <a href="classes/Discord-Builders-Components-ComponentObject.html#method_getType" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">50</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Retrieves the type of the component.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getType</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">int</span>
             </section>
 
 </article>
@@ -1117,27 +1317,26 @@ you&#039;re sending messages or responding to a slash command or other interacti
 >
     <h4 class="phpdocumentor-element__name" id="method_getId">
         getId()
-        <a href="classes/Discord-Builders-Components-Component.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Builders-Components-Interactive.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Interactive.php"><a href="files/src-discord-builders-components-interactive.html"><abbr title="src/Discord/Builders/Components/Interactive.php">Interactive.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">The id field is optional and is used to identify components in the response from an interaction that aren&#039;t interactive components.</p>
+        <p class="phpdocumentor-summary">Retrieves the ID associated with the interactive component.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|null</span></code>
+                    <span class="phpdocumentor-signature__name">getId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
-        <section class="phpdocumentor-description"><p>The id must be unique within the message and is generated sequentially if left empty.
-Generation of ids won't use another id that exists in the message if you have one defined for another component.</p>
+        <section class="phpdocumentor-description"><p>Always returns null as this component does not have an ID.</p>
 </section>
 
     
@@ -1147,63 +1346,7 @@ Generation of ids won't use another id that exists in the message if you have on
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">int|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getType">
-        getType()
-        <a href="classes/Discord-Builders-Components-Component.html#method_getType" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">68</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Retrieves the type of the component.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getType</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <section class="phpdocumentor-description"><p>Only ComponentObjects will have this property set.</p>
-</section>
-
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Builders-Components-Component.html#method_getType#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Builders\Components\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></span>
-                                        
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">int|null</span>
+        <span class="phpdocumentor-signature__response_type">null</span>
             </section>
 
 </article>
@@ -1213,7 +1356,7 @@ Generation of ids won't use another id that exists in the message if you have on
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Builders/Components/Component.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Builders/Components/Interactive.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -1312,8 +1455,9 @@ Generation of ids won't use another id that exists in the message if you have on
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                        <li><a href="classes/Discord-Builders-Components-Component.html#toc-constants">Constants</a></li>
-                                                                                <li><a href="classes/Discord-Builders-Components-Component.html#toc-methods">Methods</a></li>
+                                        <li><a href="classes/Discord-Builders-Components-Interactive.html#toc-constants">Constants</a></li>
+                                                            <li><a href="classes/Discord-Builders-Components-Interactive.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-Builders-Components-Interactive.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
@@ -1336,17 +1480,26 @@ Generation of ids won't use another id that exists in the message if you have on
                                                     <li class=""><a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_TEXT_INPUT">TYPE_TEXT_INPUT</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_THUMBNAIL">TYPE_THUMBNAIL</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_USER_SELECT">TYPE_USER_SELECT</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_USAGE">USAGE</a></li>
                                             </ul>
                 </li>
             
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Builders-Components-Interactive.html#property_custom_id">$custom_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#property_type">$type</a></li>
+                                            </ul>
+                </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/Discord-Builders-Components-Component.html#method_getCustomId">getCustomId()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#method_getType">getType()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Component.html#method_generateUuid">generateUuid()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-Components-Component.html#method_getId">getId()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-Components-Component.html#method_getType">getType()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-Components-Interactive.html#method_getId">getId()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -1366,7 +1519,7 @@ Generation of ids won't use another id that exists in the message if you have on
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Builders-Components-Component.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Builders-Components-Interactive.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

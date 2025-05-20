@@ -156,6 +156,16 @@ Search.appendIndex(
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Builders-Components-ActionRow.html#method_jsonSerialize"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-ActionRow.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Component\u0020type.",
+            "url": "classes/Discord-Builders-Components-ActionRow.html#property_type"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003A\u0024components",
             "name": "components",
             "summary": "Components\u0020contained\u0020by\u0020the\u0020action\u0020row.",
@@ -231,11 +241,6 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020emoji\u0020display\u0020on\u0020the\u0020button.",
             "url": "classes/Discord-Builders-Components-Button.html#method_getEmoji"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003AgetCustomId\u0028\u0029",
-            "name": "getCustomId",
-            "summary": "Returns\u0020the\u0020custom\u0020ID\u0020of\u0020the\u0020button.",
-            "url": "classes/Discord-Builders-Components-Button.html#method_getCustomId"
-        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003AgetURL\u0028\u0029",
             "name": "getURL",
             "summary": "Returns\u0020the\u0020URL\u0020of\u0020the\u0020button.\u0020Only\u0020for\u0020link\u0020buttons.",
@@ -250,6 +255,11 @@ Search.appendIndex(
             "name": "jsonSerialize",
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Builders-Components-Button.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Button.html#constant_USAGE"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003ASTYLE_PRIMARY",
             "name": "STYLE_PRIMARY",
@@ -276,6 +286,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Builders-Components-Button.html#constant_STYLE_LINK"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Component\u0020type.",
+            "url": "classes/Discord-Builders-Components-Button.html#property_type"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003A\u0024style",
             "name": "style",
             "summary": "Style\u0020of\u0020button.",
@@ -290,11 +305,6 @@ Search.appendIndex(
             "name": "emoji",
             "summary": "Emoji\u0020to\u0020display\u0020on\u0020the\u0020button.",
             "url": "classes/Discord-Builders-Components-Button.html#property_emoji"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003A\u0024custom_id",
-            "name": "custom_id",
-            "summary": "Custom\u0020ID\u0020to\u0020send\u0020with\u0020the\u0020button.",
-            "url": "classes/Discord-Builders-Components-Button.html#property_custom_id"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003A\u0024url",
             "name": "url",
@@ -331,6 +341,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020array\u0020of\u0020channel\u0020types\u0020that\u0020the\u0020select\u0020menu\u0020has.",
             "url": "classes/Discord-Builders-Components-ChannelSelect.html#method_getChannelTypes"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ChannelSelect\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-ChannelSelect.html#constant_USAGE"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\ChannelSelect\u003A\u003A\u0024type",
             "name": "type",
             "summary": "Component\u0020type.",
@@ -350,6 +365,21 @@ Search.appendIndex(
             "name": "generateUuid",
             "summary": "Generates\u0020a\u0020UUID\u0020which\u0020can\u0020be\u0020used\u0020for\u0020component\u0020custom\u0020IDs.",
             "url": "classes/Discord-Builders-Components-Component.html#method_generateUuid"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003AgetType\u0028\u0029",
+            "name": "getType",
+            "summary": "Retrieves\u0020the\u0020type\u0020of\u0020the\u0020component.",
+            "url": "classes/Discord-Builders-Components-Component.html#method_getType"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "The\u0020id\u0020field\u0020is\u0020optional\u0020and\u0020is\u0020used\u0020to\u0020identify\u0020components\u0020in\u0020the\u0020response\u0020from\u0020an\u0020interaction\u0020that\u0020aren\u0027t\u0020interactive\u0020components.",
+            "url": "classes/Discord-Builders-Components-Component.html#method_getId"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003AgetCustomId\u0028\u0029",
+            "name": "getCustomId",
+            "summary": "Returns\u0020the\u0020custom\u0020ID\u0020of\u0020the\u0020button.",
+            "url": "classes/Discord-Builders-Components-Component.html#method_getCustomId"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_ACTION_ROW",
             "name": "TYPE_ACTION_ROW",
@@ -436,6 +466,31 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_SELECT_MENU"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ComponentObject",
+            "name": "ComponentObject",
+            "summary": "Components\u0020allow\u0020you\u0020to\u0020style\u0020and\u0020structure\u0020your\u0020messages,\u0020modals,\u0020and\u0020interactions.",
+            "url": "classes/Discord-Builders-Components-ComponentObject.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003AgetType\u0028\u0029",
+            "name": "getType",
+            "summary": "Retrieves\u0020the\u0020type\u0020of\u0020the\u0020component.",
+            "url": "classes/Discord-Builders-Components-ComponentObject.html#method_getType"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-ComponentObject.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "The\u0020type\u0020of\u0020the\u0020component.",
+            "url": "classes/Discord-Builders-Components-ComponentObject.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "32\u0020bit\u0020integer\u0020used\u0020as\u0020an\u0020optional\u0020identifier\u0020for\u0020component.",
+            "url": "classes/Discord-Builders-Components-ComponentObject.html#property_id"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Container",
             "name": "Container",
             "summary": "Containers\u0020are\u0020a\u0020new\u0020way\u0020to\u0020group\u0020components\u0020together.",
@@ -496,6 +551,16 @@ Search.appendIndex(
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Builders-Components-Container.html#method_jsonSerialize"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Container.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Component\u0020type.",
+            "url": "classes/Discord-Builders-Components-Container.html#property_type"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003A\u0024components",
             "name": "components",
             "summary": "Array\u0020of\u0020components.",
@@ -510,6 +575,11 @@ Search.appendIndex(
             "name": "spoiler",
             "summary": "Whether\u0020the\u0020container\u0020is\u0020a\u0020spoiler.",
             "url": "classes/Discord-Builders-Components-Container.html#property_spoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Content",
+            "name": "Content",
+            "summary": "Components\u0020allow\u0020you\u0020to\u0020style\u0020and\u0020structure\u0020your\u0020messages,\u0020modals,\u0020and\u0020interactions.",
+            "url": "classes/Discord-Builders-Components-Content.html"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Contracts\\ComponentV2",
             "name": "ComponentV2",
@@ -551,6 +621,16 @@ Search.appendIndex(
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Builders-Components-File.html#method_jsonSerialize"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-File.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Component\u0020type.",
+            "url": "classes/Discord-Builders-Components-File.html#property_type"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003A\u0024file",
             "name": "file",
             "summary": "The\u0020file\u0020to\u0020be\u0020displayed.",
@@ -560,6 +640,26 @@ Search.appendIndex(
             "name": "spoiler",
             "summary": "Whether\u0020the\u0020file\u0020is\u0020a\u0020spoiler.",
             "url": "classes/Discord-Builders-Components-File.html#property_spoiler"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Interactive",
+            "name": "Interactive",
+            "summary": "Components\u0020allow\u0020you\u0020to\u0020style\u0020and\u0020structure\u0020your\u0020messages,\u0020modals,\u0020and\u0020interactions.",
+            "url": "classes/Discord-Builders-Components-Interactive.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Interactive\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "Retrieves\u0020the\u0020ID\u0020associated\u0020with\u0020the\u0020interactive\u0020component.",
+            "url": "classes/Discord-Builders-Components-Interactive.html#method_getId"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Interactive\u003A\u003A\u0024custom_id",
+            "name": "custom_id",
+            "summary": "Custom\u0020ID\u0020to\u0020send\u0020with\u0020interactive\u0020component.",
+            "url": "classes/Discord-Builders-Components-Interactive.html#property_custom_id"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Layout",
+            "name": "Layout",
+            "summary": "Components\u0020allow\u0020you\u0020to\u0020style\u0020and\u0020structure\u0020your\u0020messages,\u0020modals,\u0020and\u0020interactions.",
+            "url": "classes/Discord-Builders-Components-Layout.html"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\MediaGallery",
             "name": "MediaGallery",
@@ -585,6 +685,16 @@ Search.appendIndex(
             "name": "jsonSerialize",
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Builders-Components-MediaGallery.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGallery\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-MediaGallery.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MediaGallery\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Component\u0020type.",
+            "url": "classes/Discord-Builders-Components-MediaGallery.html#property_type"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\MediaGallery\u003A\u003A\u0024items",
             "name": "items",
@@ -660,6 +770,11 @@ Search.appendIndex(
             "name": "MentionableSelect",
             "summary": "Select\u0020menu\u0020for\u0020mentionables\u0020\u0028users\u0020and\u0020roles\u0029.",
             "url": "classes/Discord-Builders-Components-MentionableSelect.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MentionableSelect\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-MentionableSelect.html#constant_USAGE"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\MentionableSelect\u003A\u003A\u0024type",
             "name": "type",
@@ -756,6 +871,11 @@ Search.appendIndex(
             "summary": "Select\u0020menu\u0020for\u0020roles.",
             "url": "classes/Discord-Builders-Components-RoleSelect.html"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\RoleSelect\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-RoleSelect.html#constant_USAGE"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\RoleSelect\u003A\u003A\u0024type",
             "name": "type",
             "summary": "Component\u0020type.",
@@ -795,6 +915,16 @@ Search.appendIndex(
             "name": "jsonSerialize",
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Builders-Components-Section.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Section.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Component\u0020type.",
+            "url": "classes/Discord-Builders-Components-Section.html#property_type"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003A\u0024components",
             "name": "components",
@@ -876,20 +1006,15 @@ Search.appendIndex(
             "summary": "Removes\u0020the\u0020listener\u0020from\u0020the\u0020button.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#method_removeListener"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AgetType\u0028\u0029",
-            "name": "getType",
-            "summary": "Returns\u0020the\u0020type\u0020of\u0020the\u0020select\u0020menu.",
-            "url": "classes/Discord-Builders-Components-SelectMenu.html#method_getType"
+            "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AgetOptions\u0028\u0029",
+            "name": "getOptions",
+            "summary": "Returns\u0020the\u0020options\u0020of\u0020the\u0020select\u0020menu.",
+            "url": "classes/Discord-Builders-Components-SelectMenu.html#method_getOptions"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AgetCustomId\u0028\u0029",
             "name": "getCustomId",
             "summary": "Returns\u0020the\u0020Custom\u0020ID\u0020of\u0020the\u0020select\u0020menu.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#method_getCustomId"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AgetOptions\u0028\u0029",
-            "name": "getOptions",
-            "summary": "Returns\u0020the\u0020options\u0020of\u0020the\u0020select\u0020menu.",
-            "url": "classes/Discord-Builders-Components-SelectMenu.html#method_getOptions"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AgetChannelTypes\u0028\u0029",
             "name": "getChannelTypes",
@@ -926,9 +1051,14 @@ Search.appendIndex(
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#method_jsonSerialize"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-SelectMenu.html#constant_USAGE"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003A\u0024type",
             "name": "type",
-            "summary": "Type\u0020of\u0020select\u0020menu\u0020component\u0020\u0028text\u003A\u00203,\u0020user\u003A\u00205,\u0020role\u003A\u00206,\u0020mentionable\u003A\u00207,\u0020channels\u003A\u00208\u0029",
+            "summary": "Component\u0020type.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#property_type"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003A\u0024custom_id",
@@ -1016,6 +1146,11 @@ Search.appendIndex(
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Builders-Components-Separator.html#method_jsonSerialize"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Separator.html#constant_USAGE"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003ASPACING_SMALL",
             "name": "SPACING_SMALL",
             "summary": "Spacing\u0020size\u0020constants.",
@@ -1025,6 +1160,11 @@ Search.appendIndex(
             "name": "SPACING_LARGE",
             "summary": "",
             "url": "classes/Discord-Builders-Components-Separator.html#constant_SPACING_LARGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Component\u0020type.",
+            "url": "classes/Discord-Builders-Components-Separator.html#property_type"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003A\u0024divider",
             "name": "divider",
@@ -1055,6 +1195,11 @@ Search.appendIndex(
             "name": "getOptions",
             "summary": "Returns\u0020the\u0020array\u0020of\u0020options\u0020that\u0020the\u0020select\u0020menu\u0020has.",
             "url": "classes/Discord-Builders-Components-StringSelect.html#method_getOptions"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\StringSelect\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-StringSelect.html#constant_USAGE"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\StringSelect\u003A\u003A\u0024type",
             "name": "type",
@@ -1090,6 +1235,16 @@ Search.appendIndex(
             "name": "jsonSerialize",
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Builders-Components-TextDisplay.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\TextDisplay\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-TextDisplay.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\TextDisplay\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Component\u0020type.",
+            "url": "classes/Discord-Builders-Components-TextDisplay.html#property_type"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextDisplay\u003A\u003A\u0024content",
             "name": "content",
@@ -1181,6 +1336,11 @@ Search.appendIndex(
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Builders-Components-TextInput.html#method_jsonSerialize"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-TextInput.html#constant_USAGE"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003ASTYLE_SHORT",
             "name": "STYLE_SHORT",
             "summary": "",
@@ -1191,10 +1351,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Builders-Components-TextInput.html#constant_STYLE_PARAGRAPH"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003A\u0024custom_id",
-            "name": "custom_id",
-            "summary": "Custom\u0020ID\u0020to\u0020identify\u0020the\u0020text\u0020input.",
-            "url": "classes/Discord-Builders-Components-TextInput.html#property_custom_id"
+            "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Component\u0020type.",
+            "url": "classes/Discord-Builders-Components-TextInput.html#property_type"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003A\u0024style",
             "name": "style",
@@ -1275,6 +1435,16 @@ Search.appendIndex(
             "name": "jsonSerialize",
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Builders-Components-Thumbnail.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Component\u0020type.",
+            "url": "classes/Discord-Builders-Components-Thumbnail.html#property_type"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003A\u0024media",
             "name": "media",
@@ -1406,6 +1576,11 @@ Search.appendIndex(
             "summary": "Select\u0020menu\u0020for\u0020users.",
             "url": "classes/Discord-Builders-Components-UserSelect.html"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UserSelect\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-UserSelect.html#constant_USAGE"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\UserSelect\u003A\u003A\u0024type",
             "name": "type",
             "summary": "Component\u0020type.",
@@ -1521,6 +1696,21 @@ Search.appendIndex(
             "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020builder.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_addComponent"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AenforceV2Limits\u0028\u0029",
+            "name": "enforceV2Limits",
+            "summary": "Validates\u0020the\u0020total\u0020number\u0020of\u0020components\u0020added\u0020to\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_enforceV2Limits"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AenforceV1Limits\u0028\u0029",
+            "name": "enforceV1Limits",
+            "summary": "Enforces\u0020the\u0020component\u0020limits\u0020and\u0020structure\u0020for\u0020v2\u0020messages.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_enforceV1Limits"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AcountTotalComponents\u0028\u0029",
+            "name": "countTotalComponents",
+            "summary": "Recursively\u0020counts\u0020the\u0020total\u0020number\u0020of\u0020components,\u0020including\u0020nested\u0020components,\u0020in\u0020the\u0020given\u0020array.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_countTotalComponents"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AremoveComponent\u0028\u0029",
             "name": "removeComponent",
             "summary": "Removes\u0020a\u0020component\u0020from\u0020the\u0020builder.",
@@ -1610,6 +1800,11 @@ Search.appendIndex(
             "name": "getPoll",
             "summary": "Returns\u0020the\u0020poll\u0020of\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_getPoll"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetV2Flag\u0028\u0029",
+            "name": "setV2Flag",
+            "summary": "Sets\u0020or\u0020unsets\u0020the\u0020V2\u0020components\u0020flag\u0020for\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_setV2Flag"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetFlags\u0028\u0029",
             "name": "setFlags",
@@ -12230,6 +12425,51 @@ Search.appendIndex(
             "name": "CLOSE_VOICE_UNKNOWN_ENCRYPT",
             "summary": "Unknown\u0020encryption\u0020mode.",
             "url": "classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_UNKNOWN_ENCRYPT"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Payload",
+            "name": "Payload",
+            "summary": "Represents\u0020a\u0020Gateway\u0020event\u0020payload.",
+            "url": "classes/Discord-WebSockets-Payload.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Payload\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Payload.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Payload\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Payload.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Payload\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Payload.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Payload\u003A\u003A__debugInfo\u0028\u0029",
+            "name": "__debugInfo",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Payload.html#method___debugInfo"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Payload\u003A\u003A\u0024op",
+            "name": "op",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Payload.html#property_op"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Payload\u003A\u003A\u0024d",
+            "name": "d",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Payload.html#property_d"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Payload\u003A\u003A\u0024s",
+            "name": "s",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Payload.html#property_s"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Payload\u003A\u003A\u0024t",
+            "name": "t",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Payload.html#property_t"
         },                {
             "fqsen": "\\",
             "name": "\\",
