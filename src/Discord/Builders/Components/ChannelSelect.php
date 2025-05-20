@@ -22,6 +22,8 @@ namespace Discord\Builders\Components;
  */
 class ChannelSelect extends SelectMenu
 {
+    public const USAGE = ['Message'];
+
     /**
      * Component type.
      *

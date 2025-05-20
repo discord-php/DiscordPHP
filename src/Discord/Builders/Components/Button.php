@@ -30,13 +30,22 @@ use function Discord\poly_strlen;
  *
  * @since 7.0.0
  */
-class Button extends Component
+class Button extends Interactive
 {
+    public const USAGE = ['Message'];
+
     public const STYLE_PRIMARY = 1;
     public const STYLE_SECONDARY = 2;
     public const STYLE_SUCCESS = 3;
     public const STYLE_DANGER = 4;
     public const STYLE_LINK = 5;
+
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_BUTTON;
 
     /**
      * Style of button.
@@ -58,13 +67,6 @@ class Button extends Component
      * @var array|null
      */
     private $emoji;
-
-    /**
-     * Custom ID to send with the button.
-     *
-     * @var string|null
-     */
-    private $custom_id;
 
     /**
      * URL to send as the button. Only for link buttons.
@@ -116,7 +118,7 @@ class Button extends Component
 
         $this->style = $style;
         if ($this->style != self::STYLE_LINK) {
-            $this->setCustomId($custom_id ?? $this->generateUuid());
+            $this->setCustomId($custom_id ?? self::generateUuid());
         }
     }
 
@@ -320,7 +322,7 @@ class Button extends Component
         }
 
         if (! isset($this->custom_id)) {
-            $this->custom_id = $this->generateUuid();
+            $this->custom_id = self::generateUuid();
         }
 
         // Remove any existing listener
@@ -397,16 +399,6 @@ class Button extends Component
     }
 
     /**
-     * Returns the custom ID of the button.
-     *
-     * @return string|null
-     */
-    public function getCustomId(): ?string
-    {
-        return $this->custom_id;
-    }
-
-    /**
      * Returns the URL of the button. Only for link buttons.
      *
      * @return string|null
@@ -432,7 +424,7 @@ class Button extends Component
     public function jsonSerialize(): array
     {
         $content = [
-            'type' => Component::TYPE_BUTTON,
+            'type' => $this->type,
             'style' => $this->style,
         ];
 

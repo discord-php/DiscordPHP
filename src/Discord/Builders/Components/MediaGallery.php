@@ -18,8 +18,17 @@ namespace Discord\Builders\Components;
  *
  * @since 10.5.0
  */
-class MediaGallery extends Component implements Contracts\ComponentV2
+class MediaGallery extends Content implements Contracts\ComponentV2
 {
+    public const USAGE = ['Message'];
+
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_MEDIA_GALLERY;
+
     /**
      * Array of media gallery items.
      *
@@ -80,7 +89,7 @@ class MediaGallery extends Component implements Contracts\ComponentV2
     public function jsonSerialize(): array
     {
         return [
-            'type' => Component::TYPE_MEDIA_GALLERY,
+            'type' => $this->type,
             'items' => $this->items,
         ];
     }
