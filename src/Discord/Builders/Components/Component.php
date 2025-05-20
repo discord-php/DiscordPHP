@@ -77,7 +77,7 @@ abstract class Component implements JsonSerializable
      *
      * @return int|null
      */
-    protected function getId(): ?int
+    protected function getId()
     {
         return $this->id ?? null;
     }
