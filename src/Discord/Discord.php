@@ -37,7 +37,6 @@ use Discord\Repository\UserRepository;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildCreate;
-use Discord\WebSockets\Payload;
 use Discord\WebSockets\Handlers;
 use Discord\WebSockets\Intents;
 use Discord\WebSockets\Op;
@@ -403,9 +402,9 @@ class Discord
     /**
      * Handles `VOICE_SERVER_UPDATE` packets.
      *
-     * @param Payload $data Packet data.
+     * @param object $data Packet data.
      */
-    protected function handleVoiceServerUpdate(Payload $data): void
+    protected function handleVoiceServerUpdate(object $data): void
     {
         if (isset($this->voiceClients[$data->d->guild_id])) {
             $this->logger->debug('voice server update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
@@ -416,9 +415,9 @@ class Discord
     /**
      * Handles `RESUME` packets.
      *
-     * @param Payload $data Packet data.
+     * @param object $data Packet data.
      */
-    protected function handleResume(Payload $data): void
+    protected function handleResume(object $data): void
     {
         $this->logger->info('websocket reconnected to discord');
         $this->emit('reconnected', [$this]);
@@ -427,12 +426,12 @@ class Discord
     /**
      * Handles `READY` packets.
      *
-     * @param Payload $data Packet data.
+     * @param object $data Packet data.
      *
      * @return false|void
      * @throws \Exception
      */
-    protected function handleReady(Payload $data)
+    protected function handleReady(object $data)
     {
         $this->logger->debug('ready packet received');
 
@@ -535,7 +534,7 @@ class Discord
      * @param  object     $data Packet data.
      * @throws \Exception
      */
-    protected function handleGuildMembersChunk(Payload $data): void
+    protected function handleGuildMembersChunk(object $data): void
     {
         if (! $guild = $this->guilds->get('id', $data->d->guild_id)) {
             $this->logger->warning('not chunking member, Guild is not cached.', ['guild_id' => $data->d->guild_id]);
@@ -584,9 +583,9 @@ class Discord
     /**
      * Handles `VOICE_STATE_UPDATE` packets.
      *
-     * @param Payload $data Packet data.
+     * @param object $data Packet data.
      */
-    protected function handleVoiceStateUpdate(Payload $data): void
+    protected function handleVoiceStateUpdate(object $data): void
     {
         if (isset($this->voiceClients[$data->d->guild_id])) {
             $this->logger->debug('voice state update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
@@ -635,11 +634,7 @@ class Discord
                     return;
                 }
 
-                if (($inflated = inflate_add($this->zlibDecompressor, $this->payloadBuffer)) !== false) {
-                    $this->processWsMessage($inflated);
-                } else {
-                    $this->logger->error('failed to inflate payload', ['payload' => $payload]);
-                }
+                $this->processWsMessage(inflate_add($this->zlibDecompressor, $this->payloadBuffer));
                 $this->payloadBuffer = '';
             } else {
                 $this->processWsMessage(zlib_decode($payload));
@@ -656,23 +651,15 @@ class Discord
      */
     protected function processWsMessage(string $data): void
     {
-        if (! $data = json_decode($data)) {
-            $this->logger->warning('failed to decode payload', ['payload' => $data]);
-            // @todo: handle invalid payload (reconnect), throw exception, or ignore?
-            return;
-        }
-        /** @var Payload $data */
+        $data = json_decode($data);
         $this->emit('raw', [$data, $this]);
 
         if (isset($data->s)) {
             $this->seq = $data->s;
         }
 
-        $rawOp = [
-            Op::OP_DISPATCH => 'handleDispatch',
-        ];
-
         $op = [
+            Op::OP_DISPATCH => 'handleDispatch',
             Op::OP_HEARTBEAT => 'handleHeartbeat',
             Op::OP_RECONNECT => 'handleReconnect',
             Op::OP_INVALID_SESSION => 'handleInvalidSession',
@@ -680,11 +667,9 @@ class Discord
             Op::OP_HEARTBEAT_ACK => 'handleHeartbeatAck',
         ];
 
-        isset($rawOp[$data->op])
-            ? $this->{$rawOp[$data->op]}($data)
-            : (isset($op[$data->op])
-                ? $this->{$op[$data->op]}(Payload::new($data->op, $data->d, $data->s, $data->t))
-                : $this->logger->debug('unknown op code', ['op' => $data->op, 'payload' => $data]));
+        if (isset($data, $data->op, $op[$data->op])) {
+            $this->{$op[$data->op]}($data);
+        }
     }
 
     /**
@@ -773,23 +758,17 @@ class Discord
         $hData = $this->handlers->getHandler($data->t);
 
         if (null === $hData) {
-            $voiceStateHandlers = [
-                Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
-            ];
             $handlers = [
                 Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
                 Event::RESUMED => 'handleResume',
                 Event::READY => 'handleReady',
                 Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
+                Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
             ];
 
-            if (isset($voiceStateHandlers[$data->t])) {
-                // @todo: this event is probably completely broken
-                $this->{$voiceStateHandlers[$data->t]}($data);
-            } elseif (isset($handlers[$data->t])) {
-                $this->{$handlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
+            if (isset($handlers[$data->t])) {
+                $this->{$handlers[$data->t]}($data);
             }
-
 
             return;
         }
@@ -852,10 +831,10 @@ class Discord
     {
         $this->logger->debug('received heartbeat', ['seq' => $data->d]);
 
-        $payload = Payload::new(
-            Op::OP_HEARTBEAT,
-            $data->d
-        );
+        $payload = [
+            'op' => Op::OP_HEARTBEAT,
+            'd' => $data->d,
+        ];
 
         $this->send($payload);
     }
@@ -930,20 +909,20 @@ class Discord
     protected function identify(bool $resume = true): bool
     {
         if ($resume && $this->reconnecting && null !== $this->sessionId) {
-            $payload = Payload::new(
-                Op::OP_RESUME,
-                [
+            $payload = [
+                'op' => Op::OP_RESUME,
+                'd' => [
                     'session_id' => $this->sessionId,
                     'seq' => $this->seq,
                     'token' => $this->token,
                 ],
-            );
+            ];
 
             $reason = 'resuming connection';
         } else {
-            $payload = Payload::new(
-                Op::OP_IDENTIFY,
-                [
+            $payload = [
+                'op' => Op::OP_IDENTIFY,
+                'd' => [
                     'token' => $this->token,
                     'properties' => [
                         'os' => PHP_OS,
@@ -955,13 +934,13 @@ class Discord
                     'compress' => true,
                     'intents' => $this->options['intents'],
                 ],
-            );
+            ];
 
             if (
                 array_key_exists('shardId', $this->options) &&
                 array_key_exists('shardCount', $this->options)
             ) {
-                $payload->d['shard'] = [
+                $payload['d']['shard'] = [
                     (int) $this->options['shardId'],
                     (int) $this->options['shardCount'],
                 ];
@@ -970,11 +949,14 @@ class Discord
             $reason = 'identifying';
         }
 
-        $this->logger->info($reason, ['payload' => $payload->__debugInfo()]);
+        $safePayload = $payload;
+        $safePayload['d']['token'] = 'xxxxxx';
+
+        $this->logger->info($reason, ['payload' => $safePayload]);
 
         $this->send($payload);
 
-        return $payload->op === Op::OP_RESUME;
+        return $payload['op'] == Op::OP_RESUME;
     }
 
     /**
@@ -984,10 +966,10 @@ class Discord
     {
         $this->logger->debug('sending heartbeat', ['seq' => $this->seq]);
 
-        $payload = Payload::new(
-            Op::OP_HEARTBEAT,
-            $this->seq
-        );
+        $payload = [
+            'op' => Op::OP_HEARTBEAT,
+            'd' => $this->seq,
+        ];
 
         $this->send($payload, true);
         $this->heartbeatTime = microtime(true);
@@ -1053,14 +1035,14 @@ class Discord
                 $this->logger->debug('sending chunk with '.count($chunk).' large guilds');
 
                 foreach ($chunk as $guild_id) {
-                    $payload = Payload::new(
-                        Op::OP_GUILD_MEMBER_CHUNK,
-                        [
+                    $payload = [
+                        'op' => Op::OP_GUILD_MEMBER_CHUNK,
+                        'd' => [
                             'guild_id' => $guild_id,
                             'query' => '',
                             'limit' => 0,
                         ],
-                    );
+                    ];
 
                     $this->send($payload);
                 }
@@ -1126,12 +1108,12 @@ class Discord
      */
     public function requestSoundboardSounds(array $guildIds): void
     {
-        $payload = Payload::new(
-            Op::REQUEST_SOUNDBOARD_SOUNDS,
-            [
+        $payload = [
+            'op' => Op::REQUEST_SOUNDBOARD_SOUNDS,
+            'd' => [
                 'guild_ids' => $guildIds
             ],
-        );
+        ];
 
         $this->send($payload);
     }
@@ -1139,9 +1121,9 @@ class Discord
     /**
      * Sends a packet to the Discord gateway.
      *
-     * @param Payload|array $data Packet data.
+     * @param array $data Packet data.
      */
-    protected function send(Payload|array $data, bool $force = false): void
+    protected function send(array $data, bool $force = false): void
     {
         // Wait until payload count has been reset
         // Keep 5 payloads for heartbeats as required
@@ -1212,15 +1194,15 @@ class Discord
             $status = 'online';
         }
 
-        $payload = Payload::new(
-            Op::OP_PRESENCE_UPDATE,
-            [
+        $payload = [
+            'op' => Op::OP_PRESENCE_UPDATE,
+            'd' => [
                 'since' => $idle,
                 'activities' => [$activity],
                 'status' => $status,
                 'afk' => $afk,
             ],
-        );
+        ];
 
         $this->send($payload);
     }
@@ -1326,15 +1308,15 @@ class Discord
         $this->on(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
         $this->on(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
 
-        $payload = Payload::new(
-            Op::OP_VOICE_STATE_UPDATE,
-            [
+        $payload = [
+            'op' => Op::OP_VOICE_STATE_UPDATE,
+            'd' => [
                 'guild_id' => $channel->guild_id,
                 'channel_id' => $channel->id,
                 'self_mute' => $mute,
                 'self_deaf' => $deaf,
             ],
-        );
+        ];
 
         $this->send($payload);
 
