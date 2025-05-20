@@ -970,7 +970,7 @@ class Discord
             $reason = 'identifying';
         }
 
-        $safePayload = $payload;
+        $safePayload = clone($payload);
         $safePayload->d['token'] = 'xxxxxx';
 
         $this->logger->info($reason, ['payload' => $safePayload]);
