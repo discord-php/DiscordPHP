@@ -405,6 +405,16 @@ abstract class SelectMenu extends Interactive
     }
 
     /**
+     * Returns the Custom ID of the select menu.
+     *
+     * @return string
+     */
+    public function getCustomId(): string
+    {
+        return $this->custom_id;
+    }
+
+    /**
      * Returns the channel types of the select menu.
      *
      * @return array|null
