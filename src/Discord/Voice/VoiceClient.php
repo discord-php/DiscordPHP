@@ -20,6 +20,7 @@ use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Buffer as RealBuffer;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
+use Discord\WebSockets\Payload;
 use Discord\WebSockets\Op;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
@@ -477,17 +478,17 @@ class VoiceClient extends EventEmitter
 
                         $this->logger->debug('received our IP and port', ['ip' => $ip, 'port' => $port]);
 
-                        $payload = [
-                            'op' => Op::VOICE_SELECT_PROTO,
-                            'd' => [
+                        $payload = Payload::new(
+                            Op::VOICE_SELECT_PROTO,
+                            [
                                 'protocol' => 'udp',
                                 'data' => [
                                     'address' => $ip,
                                     'port' => (int) $port,
                                     'mode' => $this->mode,
                                 ],
-                            ],
-                        ];
+                            ]
+                        );
 
                         $this->send($payload);
 
@@ -550,10 +551,10 @@ class VoiceClient extends EventEmitter
                     $this->heartbeat_interval = $data->d->heartbeat_interval;
 
                     $sendHeartbeat = function () {
-                        $this->send([
-                            'op' => Op::VOICE_HEARTBEAT,
-                            'd' => (int) microtime(true),
-                        ]);
+                        $this->send(Payload::new(
+                            Op::VOICE_HEARTBEAT,
+                            (int) microtime(true)
+                        ));
                         $this->logger->debug('sending heartbeat');
                         $this->emit('ws-heartbeat', []);
                     };
@@ -605,15 +606,15 @@ class VoiceClient extends EventEmitter
         $ws->on('close', [$this, 'handleWebSocketClose']);
 
         if (! $this->sentLoginFrame) {
-            $payload = [
-                'op' => Op::VOICE_IDENTIFY,
-                'd' => [
+            $payload = Payload::new(
+                Op::VOICE_IDENTIFY,
+                [
                     'server_id' => $this->channel->guild_id,
                     'user_id' => $this->data['user_id'],
                     'session_id' => $this->data['session'],
                     'token' => $this->data['token'],
                 ],
-            ];
+            );
 
             $this->logger->debug('sending identify', ['packet' => $payload]);
 
@@ -1082,13 +1083,13 @@ class VoiceClient extends EventEmitter
             throw new \RuntimeException('Voice Client is not ready.');
         }
 
-        $this->send([
-            'op' => Op::VOICE_SPEAKING,
-            'd' => [
+        $this->send(Payload::new(
+            Op::VOICE_SPEAKING,
+            [
                 'speaking' => $speaking,
                 'delay' => 0,
             ],
-        ]);
+        ));
 
         $this->speaking = $speaking;
     }
@@ -1106,15 +1107,15 @@ class VoiceClient extends EventEmitter
             throw new \InvalidArgumentException("Channel must be a voice channel to be able to switch, given type {$channel->type}.");
         }
 
-        $this->mainSend([
-            'op' => Op::OP_VOICE_STATE_UPDATE,
-            'd' => [
+        $this->mainSend(Payload::new(
+            Op::OP_VOICE_STATE_UPDATE,
+            [
                 'guild_id' => $channel->guild_id,
                 'channel_id' => $channel->id,
                 'self_mute' => $this->mute,
                 'self_deaf' => $this->deaf,
             ],
-        ]);
+        ));
 
         $this->channel = $channel;
     }
@@ -1187,9 +1188,9 @@ class VoiceClient extends EventEmitter
     /**
      * Sends a message to the voice websocket.
      *
-     * @param array $data The data to send to the voice WebSocket.
+     * @param Payload|array $data The data to send to the voice WebSocket.
      */
-    private function send(array $data): void
+    private function send(Payload|array $data): void
     {
         $json = json_encode($data);
         $this->voiceWebsocket->send($json);
@@ -1198,9 +1199,9 @@ class VoiceClient extends EventEmitter
     /**
      * Sends a message to the main websocket.
      *
-     * @param array $data The data to send to the main WebSocket.
+     * @param Payload $data The data to send to the main WebSocket.
      */
-    private function mainSend(array $data): void
+    private function mainSend(Payload $data): void
     {
         $json = json_encode($data);
         $this->mainWebsocket->send($json);
@@ -1223,15 +1224,15 @@ class VoiceClient extends EventEmitter
         $this->mute = $mute;
         $this->deaf = $deaf;
 
-        $this->mainSend([
-            'op' => Op::OP_VOICE_STATE_UPDATE,
-            'd' => [
+        $this->mainSend(Payload::new(
+            Op::OP_VOICE_STATE_UPDATE,
+            [
                 'guild_id' => $this->channel->guild_id,
                 'channel_id' => $this->channel->id,
                 'self_mute' => $mute,
                 'self_deaf' => $deaf,
             ],
-        ]);
+        ));
 
         $this->client->removeListener('message', [$this, 'handleAudioData']);
 
@@ -1312,15 +1313,15 @@ class VoiceClient extends EventEmitter
 
         $this->ready = false;
 
-        $this->mainSend([
-            'op' => Op::OP_VOICE_STATE_UPDATE,
-            'd' => [
+        $this->mainSend(Payload::new(
+            Op::OP_VOICE_STATE_UPDATE,
+            [
                 'guild_id' => $this->channel->guild_id,
                 'channel_id' => null,
                 'self_mute' => true,
                 'self_deaf' => true,
             ],
-        ]);
+        ));
 
         $this->userClose = true;
         $this->client->close();
@@ -1380,6 +1381,9 @@ class VoiceClient extends EventEmitter
 
     /**
      * Handles a voice state update.
+     * NOTE: This object contains the data as the VoiceStateUpdate Part.
+     * @see \Discord\Parts\WebSockets\VoiceStateUpdate
+     *
      *
      * @param object $data The WebSocket data.
      */
@@ -1511,12 +1515,12 @@ class VoiceClient extends EventEmitter
     {
         $this->logger->debug('DAVE Prepare Transition', ['data' => $data]);
         // Prepare local state necessary to perform the transition
-        $this->send([
-            'op' => Op::VOICE_DAVE_TRANSITION_READY,
-            'd' => [
+        $this->send(Payload::new(
+            Op::VOICE_DAVE_TRANSITION_READY,
+            [
                 'transition_id' => $data->d->transition_id,
             ],
-        ]);
+        ));
     }
 
     private function handleDaveExecuteTransition($data)
@@ -1536,13 +1540,13 @@ class VoiceClient extends EventEmitter
     {
         $this->logger->debug('DAVE Prepare Epoch', ['data' => $data]);
         // Prepare local MLS group with parameters appropriate for the DAVE protocol version
-        $this->send([
-            'op' => Op::VOICE_DAVE_MLS_KEY_PACKAGE,
-            'd' => [
+        $this->send(Payload::new(
+            Op::VOICE_DAVE_MLS_KEY_PACKAGE,
+            [
                 'epoch_id' => $data->d->epoch_id,
                 'key_package' => $this->generateKeyPackage(),
             ],
-        ]);
+        ));
     }
 
     private function handleDaveMlsExternalSender($data)
@@ -1561,13 +1565,13 @@ class VoiceClient extends EventEmitter
     {
         $this->logger->debug('DAVE MLS Proposals', ['data' => $data]);
         // Handle MLS proposals
-        $this->send([
-            'op' => Op::VOICE_DAVE_MLS_COMMIT_WELCOME,
-            'd' => [
+        $this->send(Payload::new(
+            Op::VOICE_DAVE_MLS_COMMIT_WELCOME,
+            [
                 'commit' => $this->generateCommit(),
                 'welcome' => $this->generateWelcome(),
             ],
-        ]);
+        ));
     }
 
     private function handleDaveMlsCommitWelcome($data)
@@ -1593,12 +1597,12 @@ class VoiceClient extends EventEmitter
         $this->logger->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
         // Handle invalid commit or welcome message
         // Reset local group state and generate a new key package
-        $this->send([
-            'op' => Op::VOICE_DAVE_MLS_KEY_PACKAGE,
-            'd' => [
+        $this->send(Payload::new(
+            Op::VOICE_DAVE_MLS_KEY_PACKAGE,
+            [
                 'key_package' => $this->generateKeyPackage(),
             ],
-        ]);
+        ));
     }
 
     private function generateKeyPackage()

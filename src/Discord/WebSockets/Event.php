@@ -158,7 +158,7 @@ abstract class Event
     /**
      * Transforms the given data, and updates the Discord instance if necessary.
      *
-     * @param object $data The data that was sent with the WebSocket.
+     * @param Payload|object $data The data that was sent with the WebSocket.
      *
      * @return \Generator
      *
