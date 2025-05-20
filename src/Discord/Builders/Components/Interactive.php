@@ -32,7 +32,7 @@ abstract class Interactive extends ComponentObject
      *
      * @return null
      */
-    protected function getId(): null
+    protected function getId()
     {
         return null;
     }
