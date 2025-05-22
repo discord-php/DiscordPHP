@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Interactions;
 
 use Discord\Builders\Components\Component;
+use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\MessageBuilder;
 use Discord\Exceptions\AttachmentSizeException;
 use Discord\Helpers\Collection;
@@ -612,10 +613,10 @@ class Interaction extends Part
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
-     * @param string            $title      The title of the popup modal, max 45 characters
-     * @param string            $custom_id  Developer-defined identifier for the component, max 100 characters
-     * @param array|Component[] $components Between 1 and 5 (inclusive) components that make up the modal contained in Action Row
-     * @param callable|null     $submit     The function to call once modal is submitted.
+     * @param string                        $title      The title of the popup modal, max 45 characters
+     * @param string                        $custom_id  Developer-defined identifier for the component, max 100 characters
+     * @param array|ComponentObject[]       $components Between 1 and 5 (inclusive) components that make up the modal contained in Action Row
+     * @param callable|null                 $submit     The function to call once modal is submitted.
      *
      * @throws \LogicException  Interaction is Ping or Modal Submit.
      * @throws \LengthException Modal title is longer than 45 characters.

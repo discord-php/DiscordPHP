@@ -18,8 +18,17 @@ namespace Discord\Builders\Components;
  *
  * @since 10.5.0
  */
-class Section extends Component implements Contracts\ComponentV2
+class Section extends Layout implements Contracts\ComponentV2
 {
+    public const USAGE = ['Message'];
+
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_SECTION;
+
     /**
      * Array of text display components.
      *
@@ -56,7 +65,7 @@ class Section extends Component implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function addComponent(Component $component): self
+    public function addComponent(ComponentObject $component): self
     {
         if (! ($component instanceof TextDisplay)) {
             throw new \InvalidArgumentException('Section can only contain TextDisplay components.');
@@ -81,7 +90,7 @@ class Section extends Component implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function setAccessory(Component $component): self
+    public function setAccessory(ComponentObject $component): self
     {
         if (! ($component instanceof Thumbnail || $component instanceof Button)) {
             throw new \InvalidArgumentException('Accessory may only contain Thumbnail or Button component.');
@@ -106,7 +115,7 @@ class Section extends Component implements Contracts\ComponentV2
      *
      * @return Thumbnail|Button|null
      */
-    public function getAccessory(): Component
+    public function getAccessory(): ComponentObject
     {
         return $this->accessory;
     }
@@ -117,7 +126,7 @@ class Section extends Component implements Contracts\ComponentV2
     public function jsonSerialize(): array
     {
         $data = [
-            'type' => Component::TYPE_SECTION,
+            'type' => $this->type,
             'components' => $this->components,
         ];
 

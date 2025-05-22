@@ -15,6 +15,7 @@ namespace Discord\Builders;
 
 use Discord\Builders\Components\ActionRow;
 use Discord\Builders\Components\Component;
+use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\SelectMenu;
 use Discord\Exceptions\FileNotFoundException;
@@ -104,7 +105,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Components to send with this message.
      *
-     * @var Component[]|null
+     * @var ComponentObject[]|null
      */
     private $components;
 
@@ -420,7 +421,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Adds a component to the builder.
      *
-     * @param Component $component Component to add.
+     * @param ComponentObject $component Component to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
@@ -429,40 +430,22 @@ class MessageBuilder implements JsonSerializable
      */
     public function addComponent(Component $component): self
     {
-        if ($component instanceof ComponentV2) {
-            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
-                $this->flags |= Message::FLAG_IS_V2_COMPONENTS;
-            }
+        if (! $component instanceof ComponentObject) {
+            throw new \InvalidArgumentException('You can only add component objects to a message.');
         }
 
-        if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
-            if (isset($this->components)) {
-                if (count($this->components) >= 5) {
-                    throw new \OverflowException('You can only add 5 components to a v1 message');
-                }
-            }
-            if (! ($component instanceof ActionRow || $component instanceof SelectMenu)) {
-                throw new \InvalidArgumentException('You can only add action rows and select menus as components to v1 messages. Put your other components inside an action row.');
-            }
+        if ($component instanceof ComponentV2) {
+            $this->setV2Flag();
+        }
+
+        if ($component instanceof SelectMenu) {
+            $component = ActionRow::new()->addComponent($component);
+        }
+
+        if ($this->flags & Message::FLAG_IS_V2_COMPONENTS) {
+            $this->enforceV2Limits();
         } else {
-            if (isset($this->components)) {
-                $countComponents = function ($components) use (&$countComponents) {
-                    $count = 0;
-                    foreach ($components as $component) {
-                        $count++;
-                        if (is_array($component)) {
-                            if (isset($component['components']) && is_array($component['components'])) {
-                                $count += $countComponents($component['components']);
-                            }
-                        }
-                    }
-                    return $count;
-                };
-                $count = $countComponents($this->components);
-                if ($count >= 40) {
-                    throw new \OverflowException('You can only add 40 components to a v2 message');
-                }
-            }
+            $this->enforceV1Limits($component);
         }
 
         $this->components[] = $component;
@@ -471,9 +454,59 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
+     * Validates the total number of components added to the message.
+     *
+     * @throws \OverflowException If the total number of components is 40 or more.
+     */
+    protected function enforceV2Limits(): void
+    {
+        if (isset($this->components)) {
+            if ($this->countTotalComponents($this->components) >= 40) {
+                throw new \OverflowException('You can only add 40 components to a v2 message');
+            }
+        }
+    }
+
+    /**
+     * Enforces the component limits and structure for v2 messages.
+     *
+     * @param ComponentObject $component
+     *
+     * @throws \OverflowException If more than 5 components are added.
+     * @throws \InvalidArgumentException If a component is not an ActionRow or is not properly wrapped.
+     */
+    protected function enforceV1Limits(Component $component): void
+    {
+        if (! $component instanceof ActionRow) {
+            throw new \InvalidArgumentException('You can only add action rows as components to v1 messages. Put your other components inside an action row.');
+        }
+
+        if (isset($this->components)) {
+            if (count($this->components) >= 5) {
+                throw new \OverflowException('You can only add 5 components to a v1 message');
+            }
+        }
+    }
+
+    /**
+     * Recursively counts the total number of components, including nested components, in the given array.
+     *
+     * @return int
+     */
+    public function countTotalComponents(): int
+    {
+        return (int) array_sum(array_map(
+            fn($component) => (is_array($component) && isset($component['components']) && is_array($component['components']))
+                ? 1 + $this->countTotalComponents($component['components'])
+                : 1,
+            $this->components ?? []
+        ));
+    }
+
+    /**
      * Removes a component from the builder.
      *
-     * @param Component $component Component to remove.
+     * @param ComponentObject $component Component to remove.
      *
      * @return $this
      */
@@ -507,7 +540,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Returns all the components in the builder.
      *
-     * @return Component[]
+     * @return ComponentObject[]
      */
     public function getComponents(): array
     {
@@ -741,6 +774,25 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
+     * Sets or unsets the V2 components flag for the message.
+     *
+     * @param  bool $enable
+     * @return self
+     */
+    public function setV2Flag(bool $enable = true): self
+    {
+        if ($enable) {
+            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+                $this->flags |= Message::FLAG_IS_V2_COMPONENTS;
+            }
+        } elseif ($this->flags & Message::FLAG_IS_V2_COMPONENTS) {
+            $this->flags &= ~Message::FLAG_IS_V2_COMPONENTS;
+        }
+
+        return $this;
+    }
+
+    /**
      * Sets the flags of the message.
      * Only works for some message types and some message flags.
      *
@@ -805,11 +857,13 @@ class MessageBuilder implements JsonSerializable
      * Returns a boolean that determines whether the message needs to
      * be sent via multipart request, i.e. contains files.
      *
+     * V2 components are not supported for multipart requests as files are disallowed.
+     *
      * @return bool
      */
     public function requiresMultipart(): bool
     {
-        return isset($this->files);
+        return isset($this->files) && ! ($this->flags & Message::FLAG_IS_V2_COMPONENTS);
     }
 
     /**
@@ -920,7 +974,9 @@ class MessageBuilder implements JsonSerializable
         }
 
         if (! empty($this->files)) {
-            $empty = false;
+            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+                $empty = false;
+            }
         }
 
         if (isset($this->attachments)) {

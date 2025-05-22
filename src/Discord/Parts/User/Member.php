@@ -743,7 +743,7 @@ class Member extends Part implements Stringable
      *
      * @return string|null The URL to the member avatar or null.
      */
-    public function getAvatarAttribute(?string $format = null, int $size = 1024): ?string
+    protected function getAvatarAttribute(?string $format = null, int $size = 1024): ?string
     {
         if (! isset($this->attributes['avatar'])) {
             return null;
