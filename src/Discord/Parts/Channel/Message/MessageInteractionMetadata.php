@@ -112,7 +112,11 @@ class MessageInteractionMetadata extends Part
             return null;
         }
 
-        // @TODO
+        if (! $channel = $this->channel) {
+            return null;
+        }
+
+        return $channel->messages->get('id', $this->attributes['original_response_message_id']);
     }
 
     /**
