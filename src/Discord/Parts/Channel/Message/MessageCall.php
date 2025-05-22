@@ -68,14 +68,6 @@ class MessageCall extends Part
      */
     protected function getUsersAttribute(): array
     {
-        $users = [];
-
-        foreach ($this->attributes['participants'] as $userData) {
-            if (is_string($userData)) {
-                $users[] = $this->discord->users->get('id', $userData) ?? $this->factory->create(User::class, ['id' => $userData], true);
-            }
-        }
-
-        return $users;
+        return array_map(fn($userData) => $this->discord->users->get('id', $userData) ?? $this->factory->create(User::class, ['id' => $userData], true), $this->attributes['participants']);
     }
 }
