@@ -22,11 +22,11 @@ use Discord\Parts\Part;
  *
  * @since 10.10.0
  *
- * @property      string       $asset     Path to the nameplate asset.
- * @property      ?string|null $expiresAt The date and time when the nameplate expires.
- * @property      ?string|null $label     The label of this nameplate.
- * @property      string       $palette   The name of the most dominant colour in this nameplate.
- * @property      string       $sku_id    ID of the nameplate's decoration SKU.
+ * @property      string       $asset      Path to the nameplate asset.
+ * @property      ?string|null $expires_at The date and time when the nameplate expires.
+ * @property      ?string|null $label      The label of this nameplate.
+ * @property      string       $palette    The name of the most dominant colour in this nameplate.
+ * @property      string       $sku_id     ID of the nameplate's decoration SKU.
  *
  * @property-read string  $id The identifier of the nameplate.
  */
@@ -41,6 +41,7 @@ class Nameplate extends Part
         'asset',
         'label',
         'palette',
+        'expires_at',
         'expiresAt',
     ];
 

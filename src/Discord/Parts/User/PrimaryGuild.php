@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\User;
 
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 
 /**
@@ -20,14 +21,15 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/resources/user#user-object-primary-guild
  *
- * @since 10.10.0
+ * @since 10.10.1
  *
- * @property string  $identityGuildId   The id of the user's primary clan.
- * @property bool    $identityEnabled   Whether the user is displaying their clan tag.
+ * @property string  $identity_guild_id The id of the user's primary clan.
+ * @property bool    $identity_enabled  Whether the user is displaying their clan tag.
  * @property string  $tag               The text of the user's clan tag (max 4 characters).
  * @property string  $badge             The clan badge hash.
  *
- * @property-read string $id The identifier of the primary guild.
+ * @property-read ?string|null $id   The identifier of the primary guild.
+ * @property-read ?Guild|null $guild The primary guild, if available.
  */
 class PrimaryGuild extends Part
 {
@@ -36,6 +38,8 @@ class PrimaryGuild extends Part
      */
     protected $fillable = [
         'id', // @internal
+        'identity_guild_id',
+        'identity_enabled',
         'identityGuildId',
         'identityEnabled',
         'tag',
@@ -47,8 +51,18 @@ class PrimaryGuild extends Part
      *
      * @return string The id attribute.
      */
-    protected function getIdAttribute(): string
+    protected function getIdAttribute(): ?string
     {
-        return $this->identityGuildId;
+        return $this->identity_guild_id ?? null;
+    }
+
+    /**
+     * Returns the guild attribute.
+     *
+     * @return Guild|null The guild attribute.
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        return $this->discord->guilds->get('id', $this->identity_guild_id);
     }
 }
