@@ -81,8 +81,7 @@ class AllowedMentions implements JsonSerializable
     public static function none(): self
     {
         $self = new static();
-        $self->disallowAllMentions();
-        return $self;
+        return $self->disallowAllMentions();
     }
 
 
