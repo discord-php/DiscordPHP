@@ -24,6 +24,8 @@ use Discord\Parts\User\User;
  *
  * @property array        $participants      Array of user object IDs that participated in the call.
  * @property ?Carbon|null $ended_timestamp   Time when the call ended (ISO8601 timestamp), or null if ongoing.
+ *
+ * @property-read User[]  $users Array of user objects that participated in the call.
  */
 class MessageCall extends Part
 {
@@ -46,24 +48,6 @@ class MessageCall extends Part
     }
 
     /**
-     * Gets the participants users.
-     *
-     * @return User[]
-     */
-    protected function getParticipantUsersAttribute(): array
-    {
-        $users = [];
-
-        foreach ($this->attributes['participants'] as $userData) {
-            if (is_string($userData)) {
-                $users[] = $this->discord->users->get('id', $userData) ?? $this->factory->create(User::class, ['id' => $userData], true);
-            }
-        }
-
-        return $users;
-    }
-
-    /**
      * Gets the ended timestamp.
      *
      * @return Carbon|null
@@ -75,5 +59,23 @@ class MessageCall extends Part
         }
 
         return Carbon::parse($this->attributes['ended_timestamp']);
+    }
+
+    /**
+     * Gets the users.
+     *
+     * @return User[]
+     */
+    protected function getUsersAttribute(): array
+    {
+        $users = [];
+
+        foreach ($this->attributes['participants'] as $userData) {
+            if (is_string($userData)) {
+                $users[] = $this->discord->users->get('id', $userData) ?? $this->factory->create(User::class, ['id' => $userData], true);
+            }
+        }
+
+        return $users;
     }
 }
