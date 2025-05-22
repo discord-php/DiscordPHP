@@ -297,9 +297,13 @@ class User extends Part implements Stringable
     /**
      * Returns the primary guild for the client.
      */
-    protected function getPrimaryGuildAttribute()
+    protected function getPrimaryGuildAttribute(): ?PrimaryGuild
     {
-        return $this->attributes['primary_guild'] ?? null;
+        if (! isset($this->attributes['primaryGuild'])) {
+            return null;
+        }
+
+        return $this->factory->part(PrimaryGuild::class, (array) $this->attributes['primaryGuild'], true);
     }
 
     /**
