@@ -614,7 +614,11 @@ class Message extends Part
      */
     protected function getInteractionMetadataAttribute(): ?MessageInteractionMetadata
     {
-        return $this->attributes['interaction_metadata'] ?? null;
+        if (! isset($this->attributes['interaction_metadata'])) {
+            return null;
+        }
+
+        return $this->createOf(MessageInteractionMetadata::class, (array) $this->attributes['interaction_metadata']);
     }
 
     /**
