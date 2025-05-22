@@ -25,7 +25,7 @@ use JsonSerializable;
  *
  * @link https://discord.com/developers/docs/resources/message#allowed-mentions-object
  *
- * @since 10.9.0
+ * @since 10.10.1
  *
  * @property ExCollectionInterface $parse        An array of allowed mention types to parse from the content.
  * @property ExCollectionInterface $roles        Array of role_ids to mention (Max size of 100).
