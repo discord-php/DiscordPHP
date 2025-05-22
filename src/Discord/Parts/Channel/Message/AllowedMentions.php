@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 
 use JsonSerializable;
@@ -80,7 +81,7 @@ class AllowedMentions implements JsonSerializable
      */
     public function disallowAllMentions(): self
     {
-        $this->parse = new ExCollectionInterface();
+        $this->parse = new Collection();
         $this->clearRoles();
         $this->clearUsers();
 
@@ -130,7 +131,7 @@ class AllowedMentions implements JsonSerializable
         }
 
         if (!isset($this->parse)) {
-            $this->parse = new ExCollectionInterface();
+            $this->parse = new Collection();
         }
 
         foreach ($items as $item) {
@@ -220,7 +221,7 @@ class AllowedMentions implements JsonSerializable
         }
 
         if (!isset($this->roles)) {
-            $this->roles = new ExCollectionInterface();
+            $this->roles = new Collection();
         }
 
         foreach ($items as $item) {
@@ -310,7 +311,7 @@ class AllowedMentions implements JsonSerializable
         }
 
         if (!isset($this->users)) {
-            $this->users = new ExCollectionInterface();
+            $this->users = new Collection();
         }
 
         foreach ($items as $item) {
