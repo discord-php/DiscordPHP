@@ -74,6 +74,19 @@ class AllowedMentions implements JsonSerializable
     }
 
     /**
+     * Creates a new allowed mention with all mention types disallowed.
+     *
+     * @return static
+     */
+    public static function none(): self
+    {
+        $self = new static();
+        $self->disallowAllMentions();
+        return $self;
+    }
+
+
+    /**
      * Sets the list of current allowed mention types to a new, empty ExCollectionInterface instance.
      * This effectively disallows all mentions on the message.
      *
