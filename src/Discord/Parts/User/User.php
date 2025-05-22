@@ -52,8 +52,8 @@ use function React\Promise\resolve;
  * @property int|null     $public_flags           Public flags on the user.
  * @property int|null     $avatar_decoration      The user's avatar decoration URL.
  * @property int|null     $avatar_decoration_hash The user's avatar decoration hash.
- * @property ?object|null $primaryGuild           The primary guild of the user. //@todo: add NamePlate object
- * @property ?object|null $collectibles           The user's collectibles. //@todo: add Collectibles object
+ * @property ?object|null $primaryGuild           The primary guild of the user. // @todo: add NamePlate object: https://discord.com/developers/docs/resources/user#nameplate-nameplate-structure
+ * @property ?object|null $collectibles           The user's collectibles. // @todo: add Collectibles object: https://discord.com/developers/docs/resources/user#collectibles
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
@@ -183,7 +183,7 @@ class User extends Part implements Stringable
      *
      * @return string The URL to the client's avatar.
      */
-    public function getAvatarAttribute(?string $format = null, int $size = 1024): string
+    protected function getAvatarAttribute(?string $format = null, int $size = 1024): string
     {
         if (empty($this->attributes['avatar'])) {
             $avatarDiscrim = (($this->discriminator) ? $this->discriminator % 5 : BigInt::shiftRight($this->id, 22) % 6);
@@ -224,7 +224,7 @@ class User extends Part implements Stringable
      *
      * @return string|null The URL to the clients avatar decoration.
      */
-    public function getAvatarDecorationAttribute(?string $format = null, int $size = 288): ?string
+    protected function getAvatarDecorationAttribute(?string $format = null, int $size = 288): ?string
     {
         if (! isset($this->attributes['avatar_decoration'])) {
             return null;
@@ -263,7 +263,7 @@ class User extends Part implements Stringable
      *
      * @return string|null The URL to the clients banner.
      */
-    public function getBannerAttribute(?string $format = null, int $size = 600): ?string
+    protected function getBannerAttribute(?string $format = null, int $size = 600): ?string
     {
         if (empty($this->attributes['banner'])) {
             return null;
@@ -292,6 +292,22 @@ class User extends Part implements Stringable
     protected function getBannerHashAttribute(): ?string
     {
         return $this->attributes['banner'] ?? null;
+    }
+
+    /**
+     * Returns the primary guild for the client.
+     */
+    protected function getPrimaryGuildAttribute()
+    {
+        return $this->attributes['primary_guild'] ?? null;
+    }
+
+    /**
+     * Returns the collectibles for the client.
+     */
+    protected function getCollectiblesAttribute()
+    {
+        return $this->attributes['collectibles'] ?? null;
     }
 
     /**
