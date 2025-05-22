@@ -42,7 +42,6 @@ class Nameplate extends Part
         'label',
         'palette',
         'expires_at',
-        'expiresAt',
     ];
 
     /**
