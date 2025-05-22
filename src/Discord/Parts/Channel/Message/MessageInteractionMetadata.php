@@ -64,6 +64,14 @@ class MessageInteractionMetadata extends Part
     ];
 
     /**
+     * {@inheritDoc}
+     */
+    protected $hidden = [
+        'guild_id',
+        'channel_id'
+    ];
+
+    /**
      * Returns the user who triggered the interaction.
      *
      * @return User
