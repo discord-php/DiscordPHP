@@ -49,6 +49,6 @@ class PrimaryGuild extends Part
      */
     protected function getIdAttribute(): string
     {
-        return $this->identityGuildId;
+        return $this->identity_guild_id;
     }
 }
