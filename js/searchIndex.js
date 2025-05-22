@@ -8511,6 +8511,21 @@ Search.appendIndex(
             "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
             "url": "classes/Discord-Parts-User-Client.html#property_repositories"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Collectibles",
+            "name": "Collectibles",
+            "summary": "Represents\u0020the\u0020collectibles\u0020a\u0020user\u0020has.",
+            "url": "classes/Discord-Parts-User-Collectibles.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Collectibles\u003A\u003AgetNameplateAttribute\u0028\u0029",
+            "name": "getNameplateAttribute",
+            "summary": "Gets\u0020the\u0020nameplate\u0020collectible\u0020as\u0020a\u0020Nameplate\u0020object,\u0020if\u0020present.",
+            "url": "classes/Discord-Parts-User-Collectibles.html#method_getNameplateAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Collectibles\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-Collectibles.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Member",
             "name": "Member",
             "summary": "A\u0020member\u0020is\u0020a\u0020relationship\u0020between\u0020a\u0020user\u0020and\u0020a\u0020guild.\u0020It\u0020contains\u0020user\u002Dto\u002Dguild\u0020specific\u0020data\u0020like\u0020roles.",
@@ -8691,6 +8706,36 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-User-Member.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Nameplate",
+            "name": "Nameplate",
+            "summary": "Represents\u0020a\u0020user\u0027s\u0020nameplate\u0020collectible.",
+            "url": "classes/Discord-Parts-User-Nameplate.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Nameplate\u003A\u003AgetIdAttribute\u0028\u0029",
+            "name": "getIdAttribute",
+            "summary": "Returns\u0020the\u0020id\u0020attribute.",
+            "url": "classes/Discord-Parts-User-Nameplate.html#method_getIdAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Nameplate\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-Nameplate.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\PrimaryGuild",
+            "name": "PrimaryGuild",
+            "summary": "Represents\u0020a\u0020user\u0027s\u0020primary\u0020guild\u0020\u0028clan\u0029\u0020information.",
+            "url": "classes/Discord-Parts-User-PrimaryGuild.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\PrimaryGuild\u003A\u003AgetIdAttribute\u0028\u0029",
+            "name": "getIdAttribute",
+            "summary": "Returns\u0020the\u0020id\u0020attribute.",
+            "url": "classes/Discord-Parts-User-PrimaryGuild.html#method_getIdAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\PrimaryGuild\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-PrimaryGuild.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\User",
             "name": "User",
             "summary": "A\u0020user\u0020is\u0020a\u0020general\u0020user\u0020that\u0020is\u0020not\u0020attached\u0020to\u0020a\u0020guild.",
@@ -8745,6 +8790,16 @@ Search.appendIndex(
             "name": "getBannerHashAttribute",
             "summary": "Returns\u0020the\u0020banner\u0020hash\u0020for\u0020the\u0020client.",
             "url": "classes/Discord-Parts-User-User.html#method_getBannerHashAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetPrimaryGuildAttribute\u0028\u0029",
+            "name": "getPrimaryGuildAttribute",
+            "summary": "Returns\u0020the\u0020primary\u0020guild\u0020for\u0020the\u0020client.",
+            "url": "classes/Discord-Parts-User-User.html#method_getPrimaryGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetCollectiblesAttribute\u0028\u0029",
+            "name": "getCollectiblesAttribute",
+            "summary": "Returns\u0020the\u0020collectibles\u0020for\u0020the\u0020client.",
+            "url": "classes/Discord-Parts-User-User.html#method_getCollectiblesAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AcreatedTimestamp\u0028\u0029",
             "name": "createdTimestamp",
