@@ -52,6 +52,8 @@ use function React\Promise\resolve;
  * @property int|null     $public_flags           Public flags on the user.
  * @property int|null     $avatar_decoration      The user's avatar decoration URL.
  * @property int|null     $avatar_decoration_hash The user's avatar decoration hash.
+ * @property ?object|null $primaryGuild           The primary guild of the user. //@todo: add NamePlate object
+ * @property ?object|null $collectibles           The user's collectibles. //@todo: add Collectibles object
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
@@ -101,6 +103,8 @@ class User extends Part implements Stringable
         'premium_type',
         'public_flags',
         'avatar_decoration',
+        'primaryGuild',
+        'collectibles',
     ];
 
     /**
