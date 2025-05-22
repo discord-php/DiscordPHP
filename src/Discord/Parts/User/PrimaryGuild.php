@@ -40,6 +40,8 @@ class PrimaryGuild extends Part
         'id', // @internal
         'identity_guild_id',
         'identity_enabled',
+        'identityGuildId',
+        'identityEnabled',
         'tag',
         'badge',
     ];
