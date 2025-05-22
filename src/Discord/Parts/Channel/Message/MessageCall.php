@@ -23,7 +23,7 @@ use Discord\Parts\User\User;
  * @link https://discord.com/developers/docs/resources/message#message-call-object
  *
  * @property array        $participants      Array of user object IDs that participated in the call.
- * @property ?Carbon|null $ended_timestamp  Time when the call ended (ISO8601 timestamp), or null if ongoing.
+ * @property ?Carbon|null $ended_timestamp   Time when the call ended (ISO8601 timestamp), or null if ongoing.
  */
 class MessageCall extends Part
 {
