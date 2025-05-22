@@ -34,9 +34,9 @@ use Discord\Parts\User\User;
  * @property string|null                     $interacted_message_id           The ID of the message that contained the interactive component (message component interactions only).
  * @property MessageInteractionMetadata|null $triggering_interaction_metadata Metadata for the interaction that was used to open the modal (modal submit interactions only).
  *
- * @property-read ?string|null  $guild_id                  The ID of the guild the interaction was sent in.
+ * @property-read string        $guild_id                  The ID of the guild the interaction was sent in.
  * @property-read ?Guild|null   $guild                     The guild the interaction was sent in.
- * @property-read ?string|null  $channel_id                The ID of the channel the interaction was sent in.
+ * @property-read string        $channel_id                The ID of the channel the interaction was sent in.
  * @property-read ?Channel|null $channel                   The channel the interaction was sent in.
  * @property-read ?Message|null $original_response_message The original response message (follow-ups only).
  * @property-read ?Message|null $target_message            The message the command was run on (message command interactions only).
