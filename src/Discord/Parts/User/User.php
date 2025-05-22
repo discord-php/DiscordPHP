@@ -52,8 +52,8 @@ use function React\Promise\resolve;
  * @property int|null     $public_flags           Public flags on the user.
  * @property int|null     $avatar_decoration      The user's avatar decoration URL.
  * @property int|null     $avatar_decoration_hash The user's avatar decoration hash.
- * @property ?object|null $primaryGuild           The primary guild of the user. // @todo: add NamePlate object: https://discord.com/developers/docs/resources/user#nameplate-nameplate-structure
- * @property ?object|null $collectibles           The user's collectibles. // @todo: add Collectibles object: https://discord.com/developers/docs/resources/user#collectibles
+ * @property ?object|null $primaryGuild           The primary guild of the user.
+ * @property ?object|null $collectibles           The user's collectibles.
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
@@ -305,9 +305,13 @@ class User extends Part implements Stringable
     /**
      * Returns the collectibles for the client.
      */
-    protected function getCollectiblesAttribute()
+    protected function getCollectiblesAttribute(): ?Collectibles
     {
-        return $this->attributes['collectibles'] ?? null;
+        if (! isset($this->attributes['collectibles'])) {
+            return null;
+        }
+
+        return $this->factory->part(Collectibles::class, (array) $this->attributes['collectibles'], true);
     }
 
     /**
