@@ -68,6 +68,7 @@ class MessageInteractionMetadata extends Part
         if (!isset($this->attributes['target_user'])) {
             return null;
         }
+
         return $this->factory->part(User::class, (array) $this->attributes['target_user'], true);
     }
 
@@ -81,6 +82,7 @@ class MessageInteractionMetadata extends Part
         if (!isset($this->attributes['triggering_interaction_metadata'])) {
             return null;
         }
+
         return $this->factory->part(self::class, (array) $this->attributes['triggering_interaction_metadata'], true);
     }
 }
