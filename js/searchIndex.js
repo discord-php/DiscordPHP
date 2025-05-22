@@ -4101,6 +4101,141 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Channel-Invite.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions",
+            "name": "AllowedMentions",
+            "summary": "The\u0020allowed\u0020mention\u0020field\u0020allows\u0020for\u0020more\u0020granular\u0020control\u0020over\u0020mentions\u0020without\u0020various\u0020hacks\u0020to\u0020the\u0020message.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020allowed\u0020mention.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003Anone\u0028\u0029",
+            "name": "none",
+            "summary": "Creates\u0020a\u0020new\u0020allowed\u0020mention\u0020with\u0020all\u0020mention\u0020types\u0020disallowed.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_none"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AdisallowAllMentions\u0028\u0029",
+            "name": "disallowAllMentions",
+            "summary": "Sets\u0020the\u0020list\u0020of\u0020current\u0020allowed\u0020mention\u0020types\u0020to\u0020a\u0020new,\u0020empty\u0020ExCollectionInterface\u0020instance.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_disallowAllMentions"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AsetParse\u0028\u0029",
+            "name": "setParse",
+            "summary": "Sets\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020types.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_setParse"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AaddParse\u0028\u0029",
+            "name": "addParse",
+            "summary": "Adds\u0020a\u0020type\u0020to\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020types.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_addParse"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AremoveParse\u0028\u0029",
+            "name": "removeParse",
+            "summary": "Removes\u0020a\u0020specific\u0020type\u0020from\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020types.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_removeParse"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AclearParse\u0028\u0029",
+            "name": "clearParse",
+            "summary": "Clears\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020types.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_clearParse"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AgetParse\u0028\u0029",
+            "name": "getParse",
+            "summary": "Retrieves\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020types.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_getParse"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AsetRoles\u0028\u0029",
+            "name": "setRoles",
+            "summary": "Sets\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020roles.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_setRoles"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AaddRole\u0028\u0029",
+            "name": "addRole",
+            "summary": "Adds\u0020a\u0020role\u0020to\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020roles.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_addRole"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AremoveRoles\u0028\u0029",
+            "name": "removeRoles",
+            "summary": "Removes\u0020a\u0020specific\u0020role\u0020from\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020roles.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_removeRoles"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AclearRoles\u0028\u0029",
+            "name": "clearRoles",
+            "summary": "Clears\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020roles.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_clearRoles"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AgetRoles\u0028\u0029",
+            "name": "getRoles",
+            "summary": "Retrieves\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020roles.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_getRoles"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AsetUsers\u0028\u0029",
+            "name": "setUsers",
+            "summary": "Sets\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020users.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_setUsers"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AaddUser\u0028\u0029",
+            "name": "addUser",
+            "summary": "Adds\u0020a\u0020user\u0020to\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020users.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_addUser"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AremoveUser\u0028\u0029",
+            "name": "removeUser",
+            "summary": "Removes\u0020a\u0020specific\u0020user\u0020from\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020users.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_removeUser"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AclearUsers\u0028\u0029",
+            "name": "clearUsers",
+            "summary": "Clears\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020users.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_clearUsers"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AgetUsers\u0028\u0029",
+            "name": "getUsers",
+            "summary": "Retrieves\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020users.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_getUsers"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003ATYPE_ROLE",
+            "name": "TYPE_ROLE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#constant_TYPE_ROLE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003ATYPE_USER",
+            "name": "TYPE_USER",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#constant_TYPE_USER"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003ATYPE_EVERYONE",
+            "name": "TYPE_EVERYONE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#constant_TYPE_EVERYONE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003A\u0024parse",
+            "name": "parse",
+            "summary": "An\u0020array\u0020of\u0020allowed\u0020mention\u0020types\u0020to\u0020parse\u0020from\u0020the\u0020content.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#property_parse"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003A\u0024roles",
+            "name": "roles",
+            "summary": "Array\u0020of\u0020role_ids\u0020to\u0020mention\u0020\u0028Max\u0020size\u0020of\u0020100\u0029.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#property_roles"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003A\u0024users",
+            "name": "users",
+            "summary": "Array\u0020of\u0020user_ids\u0020to\u0020mention\u0020\u0028Max\u0020size\u0020of\u0020100\u0029.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#property_users"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003A\u0024replied_user",
+            "name": "replied_user",
+            "summary": "For\u0020replies,\u0020whether\u0020to\u0020mention\u0020the\u0020author\u0020of\u0020the\u0020message\u0020being\u0020replied\u0020to\u0020\u0028default\u0020false\u0029.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#property_replied_user"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message",
             "name": "Message",
             "summary": "A\u0020message\u0020which\u0020is\u0020posted\u0020to\u0020a\u0020Discord\u0020text\u0020channel.",
@@ -8731,6 +8866,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020id\u0020attribute.",
             "url": "classes/Discord-Parts-User-PrimaryGuild.html#method_getIdAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\PrimaryGuild\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020attribute.",
+            "url": "classes/Discord-Parts-User-PrimaryGuild.html#method_getGuildAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\PrimaryGuild\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
@@ -12580,6 +12720,11 @@ Search.appendIndex(
             "name": "Forum",
             "summary": "",
             "url": "namespaces/discord-parts-channel-forum.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message",
+            "name": "Message",
+            "summary": "",
+            "url": "namespaces/discord-parts-channel-message.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Poll",
             "name": "Poll",
