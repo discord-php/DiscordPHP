@@ -28,6 +28,7 @@ use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Channel\Message\MessageCall;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Component;
@@ -227,6 +228,7 @@ class Message extends Part
         'position',
         'role_subscription_data',
         'poll',
+        'call',
 
         // @internal
         'guild_id',
@@ -770,6 +772,20 @@ class Message extends Part
         }
 
         return $this->factory->part(Poll::class, (array) $this->attributes['poll'] + ['channel_id' => $this->channel_id, 'message_id' => $this->id], true);
+    }
+
+    /**
+     * Returns the call attribute.
+     *
+     * @return MessageCall|null
+     */
+    protected function getCallAttribute(): ?MessageCall
+    {
+        if (! isset($this->attributes['call'])) {
+            return null;
+        }
+
+        return $this->factory->part(MessageCall::class, (array) $this->attributes['call'], true);
     }
 
     /**
