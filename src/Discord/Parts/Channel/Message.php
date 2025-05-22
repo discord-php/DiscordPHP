@@ -30,7 +30,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
-use Discord\Parts\Interactions\Resolved;
+use Discord\Parts\Interactions\Request\Resolved;
 use Discord\Parts\Interactions\Request\Component;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
@@ -757,6 +757,20 @@ class Message extends Part
         }
 
         return $sticker_items;
+    }
+
+    /**
+     * Returns the resolved attribute.
+     *
+     * @return Resolved|null
+     */
+    protected function getResolvedAttribute(): ?Resolved
+    {
+        if (! isset($this->attributes['resolved'])) {
+            return null;
+        }
+
+        return $this->factory->part(Resolved::class, (array) $this->attributes['resolved'] + ['guild_id' => $this->guild_id], true);
     }
 
     /**
