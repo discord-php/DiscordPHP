@@ -42,7 +42,7 @@ use function React\Promise\resolve;
  * @property bool|null          $system                 Whether the user is a Discord system user.
  * @property bool|null          $mfa_enabled            Whether MFA is enabled.
  * @property ?string|null       $banner                 The banner URL of the user.
- * @property string|null       $banner_hash            The banner hash of the user.
+ * @property string|null        $banner_hash            The banner hash of the user.
  * @property ?int|null          $accent_color           The user's banner color encoded as an integer representation of hexadecimal color code.
  * @property string|null        $locale                 User locale.
  * @property bool|null          $verified               Whether the user is verified.
