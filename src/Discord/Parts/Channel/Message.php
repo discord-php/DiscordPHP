@@ -220,6 +220,7 @@ class Message extends Part
         'message_snapshot',
         'flags',
         'referenced_message',
+        'interaction_metadata',
         'interaction',
         'thread',
         'components',
@@ -227,7 +228,6 @@ class Message extends Part
         'position',
         'role_subscription_data',
         'poll',
-
         // @internal
         'guild_id',
         'member',
@@ -610,7 +610,7 @@ class Message extends Part
      * Returns the interaction_metadata attribute, if present.
      * Contains metadata about the interaction that caused this message.
      *
-     * @return object|null
+     * @return MessageInteractionMetadata|null
      */
     protected function getInteractionMetadataAttribute(): ?MessageInteractionMetadata
     {
