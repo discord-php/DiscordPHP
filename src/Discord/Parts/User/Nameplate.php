@@ -20,6 +20,8 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/resources/user#nameplate-nameplate-structure
  *
+ * @since 10.10.0
+ *
  * @property      string       $asset     Path to the nameplate asset.
  * @property      ?string|null $expiresAt The date and time when the nameplate expires.
  * @property      ?string|null $label     The label of this nameplate.
