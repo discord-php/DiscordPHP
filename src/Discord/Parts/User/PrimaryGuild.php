@@ -21,7 +21,7 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/resources/user#user-object-primary-guild
  *
- * @since 10.10.0
+ * @since 10.10.1
  *
  * @property string  $identity_guild_id The id of the user's primary clan.
  * @property bool    $identity_enabled  Whether the user is displaying their clan tag.
