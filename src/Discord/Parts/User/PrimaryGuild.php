@@ -27,7 +27,7 @@ use Discord\Parts\Part;
  * @property string  $tag               The text of the user's clan tag (max 4 characters).
  * @property string  $badge             The clan badge hash.
  *
- * @property-read string $id The identifier of the primary guild.
+ * @property-read ?string|null $id The identifier of the primary guild.
  */
 class PrimaryGuild extends Part
 {
@@ -47,8 +47,8 @@ class PrimaryGuild extends Part
      *
      * @return string The id attribute.
      */
-    protected function getIdAttribute(): string
+    protected function getIdAttribute(): ?string
     {
-        return $this->identity_guild_id;
+        return $this->identity_guild_id ?? null;
     }
 }
