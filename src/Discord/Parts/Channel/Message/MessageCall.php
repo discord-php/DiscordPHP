@@ -13,15 +13,17 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Carbon\Carbon;
 use Discord\Parts\Part;
+use Discord\Parts\User\User;
 
 /**
  * Represents information about a call in a private channel.
  *
  * @link https://discord.com/developers/docs/resources/message#message-call-object
  *
- * @property array       $participants     Array of user object IDs that participated in the call.
- * @property string|null $ended_timestamp  Time when the call ended (ISO8601 timestamp), or null if ongoing.
+ * @property array        $participants      Array of user object IDs that participated in the call.
+ * @property ?Carbon|null $ended_timestamp  Time when the call ended (ISO8601 timestamp), or null if ongoing.
  */
 class MessageCall extends Part
 {
@@ -40,16 +42,38 @@ class MessageCall extends Part
      */
     protected function getParticipantsAttribute(): array
     {
-        return $this->attributes['participants'] ?? [];
+        return $this->attributes['participants'];
     }
 
     /**
-     * Gets the ended_timestamp attribute.
+     * Gets the participants users.
      *
-     * @return string|null ISO8601 timestamp or null.
+     * @return User[]
      */
-    protected function getEndedTimestampAttribute(): ?string
+    protected function getParticipantUsersAttribute(): array
     {
-        return $this->attributes['ended_timestamp'] ?? null;
+        $users = [];
+
+        foreach ($this->attributes['participants'] as $userData) {
+            if (is_string($userData)) {
+                $users[] = $this->discord->users->get('id', $userData) ?? $this->factory->create(User::class, ['id' => $userData], true);
+            }
+        }
+
+        return $users;
+    }
+
+    /**
+     * Gets the ended timestamp.
+     *
+     * @return Carbon|null
+     */
+    protected function getEndedTimestampAttribute(): ?Carbon
+    {
+        if (!isset($this->attributes['ended_timestamp'])) {
+            return null;
+        }
+
+        return Carbon::parse($this->attributes['ended_timestamp']);
     }
 }
