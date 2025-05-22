@@ -736,7 +736,7 @@ class Message extends Part
     /**
      * Returns the components attribute.
      *
-     * @return ExCollectionInterface|Component[]|null
+     * @return ExCollectionInterface|ComponentObject[]|null
      */
     protected function getComponentsAttribute(): ?ExCollectionInterface
     {
