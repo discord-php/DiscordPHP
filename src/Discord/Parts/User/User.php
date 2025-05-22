@@ -89,18 +89,18 @@ class User extends Part implements Stringable
         'discriminator',
         'global_name',
         'avatar',
-        'avatar_decoration',
         'bot',
         'system',
         'mfa_enabled',
+        'banner',
+        'accent_color',
         'locale',
         'verified',
         'email',
         'flags',
-        'banner',
-        'accent_color',
         'premium_type',
         'public_flags',
+        'avatar_decoration',
     ];
 
     /**
