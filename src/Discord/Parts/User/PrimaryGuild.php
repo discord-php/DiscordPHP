@@ -18,7 +18,7 @@ use Discord\Parts\Part;
 /**
  * Represents a user's primary guild (clan) information.
  *
- * @link TBD
+ * @link https://discord.com/developers/docs/resources/user#user-object-primary-guild
  *
  * @since 10.10.0
  *
