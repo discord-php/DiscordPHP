@@ -23,6 +23,7 @@ use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\AllowedMentions;
 use Discord\Parts\Channel\Poll\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
@@ -84,7 +85,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Allowed mentions object for the message.
      *
-     * @var array|null
+     * @var AllowedMentions|array|null
      */
     private $allowed_mentions;
 
@@ -354,11 +355,11 @@ class MessageBuilder implements JsonSerializable
      *
      * @link https://discord.com/developers/docs/resources/channel#allowed-mentions-object
      *
-     * @param array $allowed_mentions
+     * @param AllowedMentions|array $allowed_mentions
      *
      * @return $this
      */
-    public function setAllowedMentions(array $allowed_mentions): self
+    public function setAllowedMentions(AllowedMentions|array $allowed_mentions): self
     {
         $this->allowed_mentions = $allowed_mentions;
 
