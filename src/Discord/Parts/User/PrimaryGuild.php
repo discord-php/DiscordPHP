@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\User;
 
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 
 /**
@@ -27,7 +28,8 @@ use Discord\Parts\Part;
  * @property string  $tag               The text of the user's clan tag (max 4 characters).
  * @property string  $badge             The clan badge hash.
  *
- * @property-read ?string|null $id The identifier of the primary guild.
+ * @property-read ?string|null $id   The identifier of the primary guild.
+ * @property-read ?Guild|null $guild The primary guild, if available.
  */
 class PrimaryGuild extends Part
 {
@@ -50,5 +52,15 @@ class PrimaryGuild extends Part
     protected function getIdAttribute(): ?string
     {
         return $this->identity_guild_id ?? null;
+    }
+
+    /**
+     * Returns the guild attribute.
+     *
+     * @return Guild|null The guild attribute.
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        return $this->discord->guilds->get('id', $this->identity_guild_id);
     }
 }
