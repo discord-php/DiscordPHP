@@ -618,7 +618,7 @@ class Message extends Part
             return null;
         }
 
-        return $this->createOf(MessageInteractionMetadata::class, (array) $this->attributes['interaction_metadata']);
+        return $this->createOf(MessageInteractionMetadata::class, (array) $this->attributes['interaction_metadata'] + ['guild_id' => $this->guild_id] + ['channel_id' => $this->channel_id]);
     }
 
     /**
