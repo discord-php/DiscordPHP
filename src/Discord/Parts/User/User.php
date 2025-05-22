@@ -52,7 +52,7 @@ use function React\Promise\resolve;
  * @property int|null           $public_flags           Public flags on the user.
  * @property int|null           $avatar_decoration      The user's avatar decoration URL.
  * @property int|null           $avatar_decoration_hash The user's avatar decoration hash.
- * @property ?PrimaryGuild|null $primaryGuild           The primary guild of the user.
+ * @property ?PrimaryGuild|null $primary_guild           The primary guild of the user.
  * @property ?Collectibles|null $collectibles           The user's collectibles.
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
@@ -299,11 +299,11 @@ class User extends Part implements Stringable
      */
     protected function getPrimaryGuildAttribute(): ?PrimaryGuild
     {
-        if (! isset($this->attributes['primaryGuild'])) {
+        if (! isset($this->attributes['primary_guild'])) {
             return null;
         }
 
-        return $this->factory->part(PrimaryGuild::class, (array) $this->attributes['primaryGuild'], true);
+        return $this->factory->part(PrimaryGuild::class, (array) $this->attributes['primary_guild'], true);
     }
 
     /**
