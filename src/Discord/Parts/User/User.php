@@ -184,7 +184,7 @@ class User extends Part implements Stringable
      *
      * @return string The URL to the client's avatar.
      */
-    protected function getAvatarAttribute(?string $format = null, int $size = 1024): string
+    public function getAvatarAttribute(?string $format = null, int $size = 1024): string
     {
         if (empty($this->attributes['avatar'])) {
             $avatarDiscrim = (($this->discriminator) ? $this->discriminator % 5 : BigInt::shiftRight($this->id, 22) % 6);
