@@ -136,7 +136,7 @@ class Client extends Part
      */
     protected function getAvatarAttribute(): string
     {
-        return $this->user->avatar;
+        return call_user_func_array([$this->user, 'getAvatarAttribute'], func_get_args());
     }
 
     /**
