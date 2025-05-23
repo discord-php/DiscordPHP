@@ -212,7 +212,7 @@ class User extends Part implements Stringable
      *
      * @return ?string The client avatar's hash.
      */
-    protected function getAvatarHashAttribute(): ?string
+    public function getAvatarHashAttribute(): ?string
     {
         return $this->attributes['avatar'];
     }
@@ -225,7 +225,7 @@ class User extends Part implements Stringable
      *
      * @return string|null The URL to the clients avatar decoration.
      */
-    protected function getAvatarDecorationAttribute(?string $format = null, int $size = 288): ?string
+    public function getAvatarDecorationAttribute(?string $format = null, int $size = 288): ?string
     {
         if (! isset($this->attributes['avatar_decoration'])) {
             return null;
@@ -251,7 +251,7 @@ class User extends Part implements Stringable
      *
      * @return ?string The client avatar decoration's hash.
      */
-    protected function getAvatarDecorationHashAttribute(): ?string
+    public function getAvatarDecorationHashAttribute(): ?string
     {
         return $this->attributes['avatar_decoration'];
     }
@@ -264,7 +264,7 @@ class User extends Part implements Stringable
      *
      * @return string|null The URL to the clients banner.
      */
-    protected function getBannerAttribute(?string $format = null, int $size = 600): ?string
+    public function getBannerAttribute(?string $format = null, int $size = 600): ?string
     {
         if (empty($this->attributes['banner'])) {
             return null;
