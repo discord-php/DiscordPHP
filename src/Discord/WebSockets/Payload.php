@@ -69,17 +69,12 @@ class Payload implements JsonSerializable
 
     public function __debugInfo()
     {
-        $d = $this->d;
+        $array = $this->jsonEncode();
 
-        if (is_array($d) && isset($d['token'])) {
-            $d['token'] = 'xxxxx';
+        if (isset($array['d']['token'])) {
+            $array['d']['token'] = 'xxxxx';
         }
 
-        return [
-            'op' => $this->op,
-            'd'  => $d,
-            's'  => $this->s,
-            't'  => $this->t,
-        ];
+        return $array;
     }
 }
