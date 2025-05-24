@@ -864,7 +864,7 @@ class MessageBuilder implements JsonSerializable
      */
     public function requiresMultipart(): bool
     {
-        return isset($this->files) && ! ($this->flags & Message::FLAG_IS_V2_COMPONENTS);
+        return isset($this->files);
     }
 
     /**
