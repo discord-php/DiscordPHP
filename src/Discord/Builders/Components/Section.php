@@ -58,15 +58,19 @@ class Section extends Layout implements Contracts\ComponentV2
      * Text displays can only be used within sections.
      *  Use setAccessory() instead for Thumbnail or Button.
      *
-     * @param TextDisplay $component Text display component to add.
+     * @param TextDisplay|string $component Text display component to add.
      *
      * @throws \InvalidArgumentException Component is not a TextDisplay.
      * @throws \OverflowException Section exceeds 3 text components.
      *
      * @return $this
      */
-    public function addComponent(ComponentObject $component): self
+    public function addComponent(ComponentObject|string $component): self
     {
+        if (is_string($component)) {
+            $component = TextDisplay::new($component);
+        }
+
         if (! ($component instanceof TextDisplay)) {
             throw new \InvalidArgumentException('Section can only contain TextDisplay components.');
         }
