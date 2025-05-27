@@ -335,6 +335,12 @@ clicked.</p>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Builders-Components-Button.html#constant_STYLE_PREMIUM">STYLE_PREMIUM</a>
+    <span>
+        &nbsp;= 6                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Builders-Components-Button.html#constant_STYLE_PRIMARY">STYLE_PRIMARY</a>
     <span>
         &nbsp;= 1                            </span>
@@ -526,6 +532,13 @@ clicked.</p>
 <dd>Listener for when the button is pressed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/Discord-Builders-Components-Button.html#property_sku_id">$sku_id</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+<dd>Identifier for a purchasable SKU, only available when using premium-style buttons.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Discord-Builders-Components-Button.html#property_style">$style</a>
     <span>
                         &nbsp;: int            </span>
@@ -574,6 +587,13 @@ clicked.</p>
                                 &nbsp;: string|null    </span>
 </dt>
 <dd>Returns the label for the button.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-Components-Button.html#method_getSkuId">getSkuId()</a>
+    <span>
+                                &nbsp;: string|null    </span>
+</dt>
+<dd>Returns the SKU ID for the button. Only for premium buttons.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-Components-Button.html#method_getStyle">getStyle()</a>
@@ -659,6 +679,13 @@ clicked.</p>
 </dt>
 <dd>Sets the callable listener for the button. The `$callback` will be called when the button
 is pressed.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-Components-Button.html#method_setSkuId">setSkuId()</a>
+    <span>
+                                &nbsp;: $this    </span>
+</dt>
+<dd>Sets the SKU ID for the button. Only valid for premium buttons.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-Components-Button.html#method_setStyle">setStyle()</a>
@@ -751,6 +778,37 @@ is pressed.</dd>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">STYLE_LINK</span>
     = <span class="phpdocumentor-signature__default-value">5</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_STYLE_PREMIUM">
+        STYLE_PREMIUM
+        <a href="classes/Discord-Builders-Components-Button.html#constant_STYLE_PREMIUM" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">42</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">STYLE_PREMIUM</span>
+    = <span class="phpdocumentor-signature__default-value">6</span>
 </code>
 
 
@@ -1519,7 +1577,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
@@ -1556,7 +1614,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -1593,7 +1651,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
@@ -1630,7 +1688,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">69</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 
     </aside>
 
@@ -1667,7 +1725,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
@@ -1704,7 +1762,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">98</span>
 
     </aside>
 
@@ -1731,6 +1789,43 @@ is pressed.</dd>
             -private
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_sku_id">
+        $sku_id
+        <a href="classes/Discord-Builders-Components-Button.html#property_sku_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">77</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Identifier for a purchasable SKU, only available when using premium-style buttons.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$sku_id</span>
+    </code>
+
+    
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_style">
         $style
         <a href="classes/Discord-Builders-Components-Button.html#property_style" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1741,7 +1836,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -1778,7 +1873,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">84</span>
 
     </aside>
 
@@ -1820,7 +1915,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">115</span>
 
     </aside>
 
@@ -1930,7 +2025,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">396</span>
+    <span class="phpdocumentor-element-found-in__line">425</span>
 
     </aside>
 
@@ -1969,7 +2064,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">386</span>
+    <span class="phpdocumentor-element-found-in__line">415</span>
 
     </aside>
 
@@ -2000,6 +2095,45 @@ is pressed.</dd>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getSkuId">
+        getSkuId()
+        <a href="classes/Discord-Builders-Components-Button.html#method_getSkuId" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">435</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the SKU ID for the button. Only for premium buttons.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getSkuId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getStyle">
         getStyle()
         <a href="classes/Discord-Builders-Components-Button.html#method_getStyle" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2008,7 +2142,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">376</span>
+    <span class="phpdocumentor-element-found-in__line">405</span>
 
     </aside>
 
@@ -2086,7 +2220,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">406</span>
+    <span class="phpdocumentor-element-found-in__line">445</span>
 
     </aside>
 
@@ -2125,7 +2259,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">416</span>
+    <span class="phpdocumentor-element-found-in__line">455</span>
 
     </aside>
 
@@ -2164,7 +2298,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">424</span>
+    <span class="phpdocumentor-element-found-in__line">463</span>
 
     </aside>
 
@@ -2203,7 +2337,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">141</span>
 
     </aside>
 
@@ -2263,7 +2397,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">366</span>
+    <span class="phpdocumentor-element-found-in__line">395</span>
 
     </aside>
 
@@ -2302,7 +2436,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">247</span>
+    <span class="phpdocumentor-element-found-in__line">256</span>
 
     </aside>
 
@@ -2374,7 +2508,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">289</span>
+    <span class="phpdocumentor-element-found-in__line">318</span>
 
     </aside>
 
@@ -2423,7 +2557,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">200</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 
     </aside>
 
@@ -2474,7 +2608,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">182</span>
+    <span class="phpdocumentor-element-found-in__line">191</span>
 
     </aside>
 
@@ -2540,7 +2674,7 @@ is pressed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">318</span>
+    <span class="phpdocumentor-element-found-in__line">347</span>
 
     </aside>
 
@@ -2625,6 +2759,70 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setSkuId">
+        setSkuId()
+        <a href="classes/Discord-Builders-Components-Button.html#method_setSkuId" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">280</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets the SKU ID for the button. Only valid for premium buttons.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setSkuId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$sku_id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$sku_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-Components-Button.html#method_setSkuId#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\LogicException">LogicException</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">$this</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setStyle">
         setStyle()
         <a href="classes/Discord-Builders-Components-Button.html#method_setStyle" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2633,7 +2831,7 @@ To remove the listener, you can pass <code class="prettyprint">$callback</code> 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">150</span>
+    <span class="phpdocumentor-element-found-in__line">158</span>
 
     </aside>
 
@@ -2700,7 +2898,7 @@ If the button was changed to a link button, the listener will be cleared.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Button.php"><a href="files/src-discord-builders-components-button.html"><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">271</span>
+    <span class="phpdocumentor-element-found-in__line">300</span>
 
     </aside>
 
@@ -2945,6 +3143,7 @@ If the button was changed to a link button, the listener will be cleared.</p>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Discord-Builders-Components-Button.html#constant_STYLE_DANGER">STYLE_DANGER</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Button.html#constant_STYLE_LINK">STYLE_LINK</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-Button.html#constant_STYLE_PREMIUM">STYLE_PREMIUM</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Button.html#constant_STYLE_PRIMARY">STYLE_PRIMARY</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Button.html#constant_STYLE_SECONDARY">STYLE_SECONDARY</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Button.html#constant_STYLE_SUCCESS">STYLE_SUCCESS</a></li>
@@ -2980,6 +3179,7 @@ If the button was changed to a link button, the listener will be cleared.</p>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Button.html#property_emoji">$emoji</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Button.html#property_label">$label</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Button.html#property_listener">$listener</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-Button.html#property_sku_id">$sku_id</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Button.html#property_style">$style</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Button.html#property_url">$url</a></li>
                                             </ul>
@@ -2992,6 +3192,7 @@ If the button was changed to a link button, the listener will be cleared.</p>
                                             <li class=""><a href="classes/Discord-Builders-Components-Component.html#method_getCustomId">getCustomId()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Button.html#method_getEmoji">getEmoji()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Button.html#method_getLabel">getLabel()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-Components-Button.html#method_getSkuId">getSkuId()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Button.html#method_getStyle">getStyle()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#method_getType">getType()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Button.html#method_getURL">getURL()</a></li>
@@ -3004,6 +3205,7 @@ If the button was changed to a link button, the listener will be cleared.</p>
                                             <li class=""><a href="classes/Discord-Builders-Components-Button.html#method_setEmoji">setEmoji()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Button.html#method_setLabel">setLabel()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Button.html#method_setListener">setListener()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-Components-Button.html#method_setSkuId">setSkuId()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Button.html#method_setStyle">setStyle()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Button.html#method_setUrl">setUrl()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Component.html#method_generateUuid">generateUuid()</a></li>

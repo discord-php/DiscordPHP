@@ -206,6 +206,11 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020custom\u0020ID\u0020of\u0020the\u0020button.",
             "url": "classes/Discord-Builders-Components-Button.html#method_setCustomId"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003AsetSkuId\u0028\u0029",
+            "name": "setSkuId",
+            "summary": "Sets\u0020the\u0020SKU\u0020ID\u0020for\u0020the\u0020button.\u0020Only\u0020valid\u0020for\u0020premium\u0020buttons.",
+            "url": "classes/Discord-Builders-Components-Button.html#method_setSkuId"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003AsetUrl\u0028\u0029",
             "name": "setUrl",
             "summary": "Sets\u0020the\u0020URL\u0020of\u0020the\u0020button.\u0020Only\u0020valid\u0020for\u0020link\u0020buttons.",
@@ -240,6 +245,11 @@ Search.appendIndex(
             "name": "getEmoji",
             "summary": "Returns\u0020the\u0020emoji\u0020display\u0020on\u0020the\u0020button.",
             "url": "classes/Discord-Builders-Components-Button.html#method_getEmoji"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003AgetSkuId\u0028\u0029",
+            "name": "getSkuId",
+            "summary": "Returns\u0020the\u0020SKU\u0020ID\u0020for\u0020the\u0020button.\u0020Only\u0020for\u0020premium\u0020buttons.",
+            "url": "classes/Discord-Builders-Components-Button.html#method_getSkuId"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003AgetURL\u0028\u0029",
             "name": "getURL",
@@ -286,6 +296,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Builders-Components-Button.html#constant_STYLE_LINK"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003ASTYLE_PREMIUM",
+            "name": "STYLE_PREMIUM",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Button.html#constant_STYLE_PREMIUM"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003A\u0024type",
             "name": "type",
             "summary": "Component\u0020type.",
@@ -305,6 +320,11 @@ Search.appendIndex(
             "name": "emoji",
             "summary": "Emoji\u0020to\u0020display\u0020on\u0020the\u0020button.",
             "url": "classes/Discord-Builders-Components-Button.html#property_emoji"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003A\u0024sku_id",
+            "name": "sku_id",
+            "summary": "Identifier\u0020for\u0020a\u0020purchasable\u0020SKU,\u0020only\u0020available\u0020when\u0020using\u0020premium\u002Dstyle\u0020buttons.",
+            "url": "classes/Discord-Builders-Components-Button.html#property_sku_id"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003A\u0024url",
             "name": "url",
