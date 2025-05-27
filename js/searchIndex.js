@@ -4893,7 +4893,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Poll\\Poll",
             "name": "Poll",
-            "summary": "A\u0020poll\u0020that\u0020can\u0020be\u0020attached\u0020to\u0020a\u0020message.",
+            "summary": "A\u0020poll\u0020create\u0020request\u0020object\u0020that\u0020can\u0020be\u0020attached\u0020to\u0020a\u0020message.",
             "url": "classes/Discord-Parts-Channel-Poll-Poll.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Poll\\Poll\u003A\u003AsetQuestion\u0028\u0029",
