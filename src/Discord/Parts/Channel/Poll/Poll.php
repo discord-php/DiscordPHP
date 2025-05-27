@@ -26,8 +26,8 @@ use function Discord\poly_strlen;
  *
  * @property PollMedia         $question            The question of the poll. Only text is supported.
  * @property PollAnswer[]      $answers             Each of the answers available in the poll, up to 10.
- * @property int               $duration            Number of hours the poll should be open for, up to 7 days.
- * @property bool              $allow_multiselect   Whether a user can select multiple answers.
+ * @property int|null          $duration            Number of hours the poll should be open for, up to 32 days. Defaults to 24.
+ * @property bool|null         $allow_multiselect   Whether a user can select multiple answers. Defaults to false.
  * @property int|null          $layout_type?	    The layout type of the poll. Defaults to... DEFAULT!
  */
 class Poll extends Part
@@ -128,16 +128,18 @@ class Poll extends Part
     /**
      * Set the duration of the poll.
      *
-     * @param int $duration Number of hours the poll should be open for, up to 32 days. Defaults to 24
+     * @param int|null $duration Number of hours the poll should be open for, up to 32 days. Defaults to 24.
      *
      * @throws \OutOfRangeException
      *
      * @return $this
      */
-    public function setDuration(int $duration): self
+    public function setDuration(?int $duration = null): self
     {
-        if ($duration < 1 || $duration > 32 * 24) {
-            throw new \OutOfRangeException('Duration must be between 1 and 32 days.');
+        if (isset($duration)) {
+            if ($duration < 1 || $duration > 32 * 24) {
+                throw new \OutOfRangeException('Duration must be between 1 hour and 32 days.');
+            }
         }
 
         $this->attributes['duration'] = $duration;
@@ -148,11 +150,11 @@ class Poll extends Part
     /**
      * Determine whether a user can select multiple answers.
      *
-     * @param bool $multiselect Whether a user can select multiple answers.
+     * @param bool|null $multiselect Whether a user can select multiple answers. Defaults to false.
      *
      * @return $this
      */
-    public function setAllowMultiselect(bool $multiselect): self
+    public function setAllowMultiselect(?bool $multiselect = null): self
     {
         $this->attributes['allow_multiselect'] = $multiselect;
 
