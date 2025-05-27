@@ -18,7 +18,7 @@ use Discord\Parts\Part;
 use function Discord\poly_strlen;
 
 /**
- * A poll that can be attached to a message.
+ * A poll create request object that can be attached to a message.
  *
  * @link https://discord.com/developers/docs/resources/poll#poll-create-request-object-poll-create-request-object-structure
  *
