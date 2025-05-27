@@ -269,6 +269,26 @@ class Button extends Interactive
     }
 
     /**
+     * Sets the SKU ID for the button. Only valid for premium buttons.
+     *
+     * @param string|null $sku_id
+     *
+     * @throws \LogicException
+     *
+     * @return $this
+     */
+    public function setSkuId(?string $sku_id): self
+    {
+        if ($this->style != Button::STYLE_PREMIUM) {
+            throw new \LogicException('You cannot set the SKU ID of a non-premium button.');
+        }
+
+        $this->sku_id = $sku_id;
+
+        return $this;
+    }
+
+    /**
      * Sets the URL of the button. Only valid for link buttons.
      *
      * @param string|null $url
@@ -405,6 +425,16 @@ class Button extends Interactive
     public function getEmoji(): ?array
     {
         return $this->emoji;
+    }
+
+    /**
+     * Returns the SKU ID for the button. Only for premium buttons.
+     *
+     * @return string|null
+     */
+    public function getSkuId(): ?string
+    {
+        return $this->sku_id;
     }
 
     /**
