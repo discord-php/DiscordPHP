@@ -134,9 +134,10 @@ class Section extends Layout implements Contracts\ComponentV2
             'components' => $this->components,
         ];
 
-        if (isset($this->accessory)) {
-            $data['accessory'] = $this->accessory;
+        if (! isset($this->accessory)) {
+            throw new \DomainException('Section must have an accessory component set.');
         }
+        $data['accessory'] = $this->accessory;
 
         return $data;
     }
