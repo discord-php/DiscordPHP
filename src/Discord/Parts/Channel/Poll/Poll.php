@@ -89,6 +89,13 @@ class Poll extends Part
 
     /**
      * Add an answer to the poll.
+     *
+     * @param PollAnswer|PollMedia|array|string $answer
+     *
+     * @throws \OutOfRangeException
+     * @throws \LengthException
+     *
+     * @return $this
      */
     public function addAnswer(PollAnswer|PollMedia|array|string $answer): self
     {
