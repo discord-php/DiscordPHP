@@ -67,6 +67,16 @@ class Poll extends Part
     ];
 
     /**
+     * Returns the question attribute.
+     *
+     * @return PollMedia
+     */
+    protected function getQuestionAttribute(): PollMedia
+    {
+        return $this->factory->part(PollMedia::class, (array) $this->attributes['question'], true);
+    }
+
+    /**
      * Sets the answers attribute.
      *
      * @param array $answers
@@ -86,16 +96,6 @@ class Poll extends Part
         }
 
         $this->attributes['answers'] = $answers;
-    }
-
-    /**
-     * Returns the question attribute.
-     *
-     * @return PollMedia
-     */
-    protected function getQuestionAttribute(): PollMedia
-    {
-        return $this->factory->part(PollMedia::class, (array) $this->attributes['question'], true);
     }
 
     /**
