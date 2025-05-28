@@ -5021,15 +5021,15 @@ Search.appendIndex(
             "summary": "A\u0020message\u0020poll.",
             "url": "classes/Discord-Parts-Channel-Poll.html"
         },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Poll\u003A\u003AsetAnswersAttribute\u0028\u0029",
-            "name": "setAnswersAttribute",
-            "summary": "Sets\u0020the\u0020answers\u0020attribute.",
-            "url": "classes/Discord-Parts-Channel-Poll.html#method_setAnswersAttribute"
-        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Poll\u003A\u003AgetQuestionAttribute\u0028\u0029",
             "name": "getQuestionAttribute",
             "summary": "Returns\u0020the\u0020question\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Poll.html#method_getQuestionAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Poll\u003A\u003AsetAnswersAttribute\u0028\u0029",
+            "name": "setAnswersAttribute",
+            "summary": "Sets\u0020the\u0020answers\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Poll.html#method_setAnswersAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Poll\u003A\u003AgetExpiryAttribute\u0028\u0029",
             "name": "getExpiryAttribute",
