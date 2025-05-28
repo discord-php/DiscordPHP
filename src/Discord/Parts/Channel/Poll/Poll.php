@@ -164,11 +164,11 @@ class Poll extends Part
     /**
      * Set the layout type of the poll.
      *
-     * @param int $type The layout type of the poll.
+     * @param int|null $type The layout type of the poll.
      *
      * @return $this
      */
-    protected function setLayoutType(int $type): self
+    protected function setLayoutType(?int $type = null): self
     {
         $this->attributes['layout_type'] = $type;
 
