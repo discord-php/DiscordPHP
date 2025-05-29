@@ -94,7 +94,7 @@ class Component extends Part
         $components = Collection::for(Component::class, null);
 
         foreach ($this->attributes['components'] ?? [] as $component) {
-            $componentType = $component['type'] ?? 0;
+            $componentType = $component->type ?? 0;
             $components->pushItem(
                 $this->createOf(
                     isset(ComponentBuilder::TYPE_CLASSES[$componentType])
