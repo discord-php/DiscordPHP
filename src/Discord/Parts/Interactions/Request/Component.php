@@ -76,7 +76,18 @@ class Component extends Part
      */
     protected function getComponentsAttribute(): ?ExCollectionInterface
     {
-        if (! isset($this->attributes['components']) && $this->type != ComponentBuilder::TYPE_ACTION_ROW) {
+        $allowed = [
+            ComponentBuilder::TYPE_ACTION_ROW,
+            ComponentBuilder::TYPE_SECTION,
+            ComponentBuilder::TYPE_TEXT_DISPLAY,
+            ComponentBuilder::TYPE_MEDIA_GALLERY,
+            ComponentBuilder::TYPE_FILE,
+            ComponentBuilder::TYPE_SEPARATOR,
+            ComponentBuilder::TYPE_CONTAINER,
+            ComponentBuilder::TYPE_ACTION_ROW,
+        ];
+
+        if (! isset($this->attributes['components']) && ! in_array($this->type, $allowed)) {
             return null;
         }
 
