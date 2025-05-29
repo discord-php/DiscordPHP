@@ -34,14 +34,14 @@ class Section extends Layout implements Contracts\ComponentV2
      *
      * @var TextDisplay[]
      */
-    protected $components = [];
+    private $components = [];
 
     /**
      * Accessory component (Thumbnail or Button).
      *
      * @var Thumbnail|Button|null
      */
-    protected $accessory;
+    private $accessory;
 
     /**
      * Creates a new section.

@@ -37,42 +37,42 @@ class UnfurledMediaItem implements JsonSerializable
      *
      * @var string
      */
-    protected $url;
+    private $url;
 
     /**
      * A proxied URL of the media item.
      *
      * @var string|null
      */
-    protected $proxy_url;
+    private $proxy_url;
 
     /**
      * Height of media item.
      *
      * @var int|null
      */
-    protected $height;
+    private $height;
 
     /**
      * Width of media item.
      *
      * @var int|null
      */
-    protected $width;
+    private $width;
 
     /**
      * The media item's media type.
      *
      * @var string|null
      */
-    protected $content_type;
+    private $content_type;
 
     /**
      * Loading state of the media item.
      *
      * @var int|null
      */
-    protected $loading_state;
+    private $loading_state;
 
     /**
      * Creates a new unfurled media item.

@@ -41,14 +41,14 @@ class Separator extends Layout implements Contracts\ComponentV2
      *
      * @var bool
      */
-    protected $divider = true;
+    private $divider = true;
 
     /**
      * Spacing size for the separator.
      *
      * @var int
      */
-    protected $spacing = self::SPACING_SMALL;
+    private $spacing = self::SPACING_SMALL;
 
     /**
      * Creates a new separator.

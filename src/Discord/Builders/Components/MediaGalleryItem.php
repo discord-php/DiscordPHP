@@ -29,21 +29,21 @@ class MediaGalleryItem implements JsonSerializable
      *
      * @var UnfurledMediaItem
      */
-    protected $media;
+    private $media;
 
     /**
      * Description for the gallery item.
      *
      * @var string|null
      */
-    protected $description;
+    private $description;
 
     /**
      * Whether the gallery item is a spoiler.
      *
      * @var bool
      */
-    protected $spoiler = false;
+    private $spoiler = false;
 
     /**
      * Creates a new media gallery item.

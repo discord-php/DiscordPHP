@@ -53,56 +53,56 @@ class Button extends Interactive
      *
      * @var int
      */
-    protected $style = 1;
+    private $style = 1;
 
     /**
      * Label for the button.
      *
      * @var string|null
      */
-    protected $label;
+    private $label;
 
     /**
      * Emoji to display on the button.
      *
      * @var array|null
      */
-    protected $emoji;
+    private $emoji;
 
     /**
      * 	Identifier for a purchasable SKU, only available when using premium-style buttons.
      *
      * @var string|null
      */
-    protected $sku_id;
+    private $sku_id;
 
     /**
      * URL to send as the button. Only for link buttons.
      *
      * @var string|null
      */
-    protected $url;
+    private $url;
 
     /**
      * Whether the button is disabled.
      *
      * @var bool
      */
-    protected $disabled = false;
+    private $disabled = false;
 
     /**
      * Listener for when the button is pressed.
      *
      * @var callable|null
      */
-    protected $listener;
+    private $listener;
 
     /**
      * Discord instance when the listener is set.
      *
      * @var Discord|null
      */
-    protected $discord;
+    private $discord;
 
     /**
      * Creates a new button.

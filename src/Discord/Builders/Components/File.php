@@ -36,14 +36,14 @@ class File extends Content implements Contracts\ComponentV2
      *
      * @var array
      */
-    protected $file;
+    private $file;
 
     /**
      * Whether the file is a spoiler.
      *
      * @var bool
      */
-    protected $spoiler = false;
+    private $spoiler = false;
 
     /**
      * Creates a new file component.
