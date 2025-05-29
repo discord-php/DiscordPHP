@@ -31,35 +31,35 @@ class Option extends Component
      *
      * @var string
      */
-    protected $label;
+    private $label;
 
     /**
      * Developer value for the option. Maximum 100 characters.
      *
      * @var string
      */
-    protected $value;
+    private $value;
 
     /**
      * Description for the option. Maximum 50 characters.
      *
      * @var string|null
      */
-    protected $description;
+    private $description;
 
     /**
      * Emoji to display alongside the option.
      *
      * @var array|null
      */
-    protected $emoji;
+    private $emoji;
 
     /**
      * Whether the option should be enabled as default.
      *
      * @var bool
      */
-    protected $default = false;
+    private $default = false;
 
     /**
      * Creates a new select menu option.

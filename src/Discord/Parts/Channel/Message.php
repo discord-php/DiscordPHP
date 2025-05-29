@@ -31,7 +31,6 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Component;
-use Discord\Builders\Components\Component as ComponentBuilder;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
 use Discord\Repository\Channel\ReactionRepository;
@@ -729,16 +728,10 @@ class Message extends Part
             return null;
         }
 
-        $components = Collection::for(ComponentBuilder::class, null);
+        $components = Collection::for(Component::class, null);
 
-        foreach ($this->attributes['components'] ?? [] as $component) {
-            $componentType = (is_object($component)) ? (isset($component->type) ? $component->type : 0) : ($component['type'] ?? 0);
-            $components->pushItem(
-                isset(ComponentBuilder::TYPE_CLASSES[$componentType])
-                    ? (new (ComponentBuilder::TYPE_CLASSES[$componentType]))->fill((array) $component)
-                    : (new ComponentBuilder())->fill((array) $component),
-                $component
-            );
+        foreach ($this->attributes['components'] as $component) {
+            $components->pushItem($this->createOf(Component::class, $component));
         }
 
         return $components;

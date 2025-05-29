@@ -45,112 +45,112 @@ class MessageBuilder implements JsonSerializable
      *
      * @var string|null
      */
-    protected $content;
+    private $content;
 
     /**
      * A nonce that can be used for message roundtrips with the gateway (up to 25 characters).
      *
      * @var int|string|null
      */
-    protected $nonce;
+    private $nonce;
 
     /**
      * Override the default username of the webhook.
      *
      * @var string|null
      */
-    protected $username;
+    private $username;
 
     /**
      * Override the default avatar of the webhook.
      *
      * @var string|null
      */
-    protected $avatar_url;
+    private $avatar_url;
 
     /**
      * Whether the message is text-to-speech.
      *
      * @var bool
      */
-    protected $tts = false;
+    private $tts = false;
 
     /**
      * Array of embeds to send with the message.
      *
      * @var array[]|null
      */
-    protected $embeds;
+    private $embeds;
 
     /**
      * Allowed mentions object for the message.
      *
      * @var AllowedMentions|array|null
      */
-    protected $allowed_mentions;
+    private $allowed_mentions;
 
     /**
      * Message to reply to with this message.
      *
      * @var Message|null
      */
-    protected $replyTo;
+    private $replyTo;
 
     /**
      * Message to forward with this message.
      *
      * @var Message|null
      */
-    protected $forward;
+    private $forward;
 
     /**
      * Components to send with this message.
      *
      * @var ComponentObject[]|null
      */
-    protected $components;
+    private $components;
 
     /**
      * IDs of up to 3 stickers in the server to send in the message.
      *
      * @var string[]
      */
-    protected $sticker_ids = [];
+    private $sticker_ids = [];
 
     /**
      * Files to send with this message.
      *
      * @var array[]|null
      */
-    protected $files;
+    private $files;
 
     /**
      * Attachments to send with this message.
      *
      * @var Attachment[]|null
      */
-    protected $attachments;
+    private $attachments;
 
     /**
      * The poll for the message.
      *
      * @var Poll|null
      */
-    protected $poll;
+    private $poll;
 
     /**
      * Flags to send with this message.
      *
      * @var int|null
      */
-    protected $flags;
+    private $flags;
 
     /**
      * Whether to enforce the nonce.
      *
      * @var bool|null
      */
-    protected $enforce_nonce;
+    private $enforce_nonce;
 
     /**
      * Creates a new message builder.

@@ -72,35 +72,18 @@ class Component extends Part
     /**
      * Gets the sub-components of the component.
      *
-     * @return ExCollectionInterface|ComponentBuilder[]|null $components
+     * @return ExCollectionInterface|Component[]|null $components
      */
     protected function getComponentsAttribute(): ?ExCollectionInterface
     {
-        $allowed = [
-            ComponentBuilder::TYPE_ACTION_ROW,
-            ComponentBuilder::TYPE_SECTION,
-            ComponentBuilder::TYPE_TEXT_DISPLAY,
-            ComponentBuilder::TYPE_MEDIA_GALLERY,
-            ComponentBuilder::TYPE_FILE,
-            ComponentBuilder::TYPE_SEPARATOR,
-            ComponentBuilder::TYPE_CONTAINER,
-            ComponentBuilder::TYPE_ACTION_ROW,
-        ];
-
-        if (! isset($this->attributes['components']) && ! in_array($this->type, $allowed)) {
+        if (! isset($this->attributes['components']) && $this->type != ComponentBuilder::TYPE_ACTION_ROW) {
             return null;
         }
 
-        $components = Collection::for(ComponentBuilder::class, null);
+        $components = Collection::for(Component::class, null);
 
         foreach ($this->attributes['components'] ?? [] as $component) {
-            $componentType = (is_object($component)) ? (isset($component->type) ? $component->type : 0) : ($component['type'] ?? 0);
-            $components->pushItem(
-                isset(ComponentBuilder::TYPE_CLASSES[$componentType])
-                    ? (new (ComponentBuilder::TYPE_CLASSES[$componentType]))->fill((array) $component)
-                    : (new ComponentBuilder())->fill((array) $component),
-                $component
-            );
+            $components->pushItem($this->createOf(Component::class, $component));
         }
 
         return $components;
