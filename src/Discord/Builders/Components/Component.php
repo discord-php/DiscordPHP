@@ -65,6 +65,26 @@ abstract class Component implements JsonSerializable
         self::TYPE_CONTAINER => Container::class
     ];
 
+
+    /**
+     * Fills the properties of the current object with values from the provided associative array.
+     *
+     * Iterates over each key-value pair in the input array and assigns the value to the corresponding
+     * property of the object if the property exists.
+     *
+     * @param array $data
+     *
+     * @return void
+     */
+    public function fill(array $data): void
+    {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
+        }
+    }
+
     /**
      * Generates a UUID which can be used for component custom IDs.
      *

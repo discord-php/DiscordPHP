@@ -72,7 +72,7 @@ class Component extends Part
     /**
      * Gets the sub-components of the component.
      *
-     * @return ExCollectionInterface|Component[]|null $components
+     * @return ExCollectionInterface|ComponentBuilder[]|null $components
      */
     protected function getComponentsAttribute(): ?ExCollectionInterface
     {
@@ -91,17 +91,15 @@ class Component extends Part
             return null;
         }
 
-        $components = Collection::for(Component::class, null);
+        $components = Collection::for(ComponentBuilder::class, null);
 
         foreach ($this->attributes['components'] ?? [] as $component) {
             $componentType = (is_object($component)) ? (isset($component->type) ? $component->type : 0) : ($component['type'] ?? 0);
             $components->pushItem(
-                $this->createOf(
-                    isset(ComponentBuilder::TYPE_CLASSES[$componentType])
-                        ? ComponentBuilder::TYPE_CLASSES[$componentType]
-                        : ComponentBuilder::class,
-                    $component
-                )
+                isset(ComponentBuilder::TYPE_CLASSES[$componentType])
+                    ? (new (ComponentBuilder::TYPE_CLASSES[$componentType]))->fill((array) $component)
+                    : (new ComponentBuilder())->fill((array) $component),
+                $component
             );
         }
 
