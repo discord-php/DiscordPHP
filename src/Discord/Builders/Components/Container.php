@@ -35,21 +35,21 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @var ComponentObject[]
      */
-    private $components = [];
+    protected $components = [];
 
     /**
      * Accent color for the container.
      *
      * @var int|null
      */
-    private $accent_color;
+    protected $accent_color;
 
     /**
      * Whether the container is a spoiler.
      *
      * @var bool
      */
-    private $spoiler = false;
+    protected $spoiler = false;
 
     /**
      * Creates a new container.

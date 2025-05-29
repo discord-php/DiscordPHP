@@ -38,7 +38,7 @@ class ActionRow extends Layout
      *
      * @var ComponentObject[]
      */
-    private $components = [];
+    protected $components = [];
 
     /**
      * Creates a new action row.

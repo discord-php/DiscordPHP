@@ -34,21 +34,21 @@ class Thumbnail extends Content implements Contracts\ComponentV2
      *
      * @var UnfurledMediaItem
      */
-    private $media;
+    protected $media;
 
     /**
      * Description for the thumbnail.
      *
      * @var string|null
      */
-    private $description;
+    protected $description;
 
     /**
      * Whether the thumbnail is a spoiler.
      *
      * @var bool
      */
-    private $spoiler = false;
+    protected $spoiler = false;
 
     /**
      * Creates a new thumbnail.
