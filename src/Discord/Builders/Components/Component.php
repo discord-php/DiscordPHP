@@ -47,6 +47,44 @@ abstract class Component implements JsonSerializable
     /** @deprecated 7.4.0 Use `Component::TYPE_STRING_SELECT` */
     public const TYPE_SELECT_MENU = 3;
 
+    public const TYPE_CLASSES = [
+        self::TYPE_ACTION_ROW => ActionRow::class,
+        self::TYPE_BUTTON => Button::class,
+        self::TYPE_STRING_SELECT => StringSelect::class,
+        self::TYPE_TEXT_INPUT => TextInput::class,
+        self::TYPE_USER_SELECT => UserSelect::class,
+        self::TYPE_ROLE_SELECT => RoleSelect::class,
+        self::TYPE_MENTIONABLE_SELECT => MentionableSelect::class,
+        self::TYPE_CHANNEL_SELECT => ChannelSelect::class,
+        self::TYPE_SECTION => Section::class,
+        self::TYPE_TEXT_DISPLAY => TextDisplay::class,
+        self::TYPE_THUMBNAIL => Thumbnail::class,
+        self::TYPE_MEDIA_GALLERY => MediaGallery::class,
+        self::TYPE_FILE => File::class,
+        self::TYPE_SEPARATOR => Separator::class,
+        self::TYPE_CONTAINER => Container::class
+    ];
+
+
+    /**
+     * Fills the properties of the current object with values from the provided associative array.
+     *
+     * Iterates over each key-value pair in the input array and assigns the value to the corresponding
+     * property of the object if the property exists.
+     *
+     * @param array $data
+     *
+     * @return void
+     */
+    public function fill(array $data): void
+    {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
+        }
+    }
+
     /**
      * Generates a UUID which can be used for component custom IDs.
      *

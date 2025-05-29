@@ -34,7 +34,7 @@ class MediaGallery extends Content implements Contracts\ComponentV2
      *
      * @var MediaGalleryItem[]
      */
-    private $items = [];
+    protected $items = [];
 
     /**
      * Creates a new media gallery.

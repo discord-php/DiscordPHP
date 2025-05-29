@@ -41,49 +41,49 @@ class TextInput extends Interactive
      *
      * @var int
      */
-    private $style;
+    protected $style;
 
     /**
      * Label for the text input.
      *
      * @var string
      */
-    private $label;
+    protected $label;
 
     /**
      * Minimum input length for a text input, min 0, max 4000.
      *
      * @var int|null
      */
-    private $min_length;
+    protected $min_length;
 
     /**
      * Maximum input length for a text input, min 1, max 4000.
      *
      * @var int|null
      */
-    private $max_length;
+    protected $max_length;
 
     /**
      * Whether the text input is required.
      *
      * @var bool
      */
-    private $required;
+    protected $required;
 
     /**
      * Pre-filled value for text input. Max 4000 characters.
      *
      * @var string|null
      */
-    private $value;
+    protected $value;
 
     /**
      * Placeholder string to display if text input is empty. Maximum 100 characters.
      *
      * @var string|null
      */
-    private $placeholder;
+    protected $placeholder;
 
     /**
      * Creates a new text input.
