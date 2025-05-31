@@ -15,6 +15,7 @@ namespace Discord\Parts\Interactions\Request;
 
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Part;
 
@@ -92,7 +93,7 @@ class InteractionData extends Part
         $components = Collection::for(Component::class, null);
 
         foreach ($this->attributes['components'] as $component) {
-            $components->pushItem($this->createOf(Component::class, $component));
+            $components->pushItem($this->createOf(Component::TYPES[$component->type ?? 0], $component));
         }
 
         return $components;
