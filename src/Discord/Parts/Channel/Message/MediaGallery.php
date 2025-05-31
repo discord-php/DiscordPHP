@@ -46,11 +46,8 @@ class MediaGallery extends Content
         $collection = new Collection([], 'media', MediaGalleryItem::class);
 
         foreach ($this->attributes['items'] as $item) {
-            $collection->pushItem(MediaGalleryItem::new(
-                $item->media,
-                $item->description ?? null,
-                $item->spoiler ?? null
-            ));
+            /** @var MediaGalleryItem $item */
+            $collection->pushItem($item);
         }
 
         return $collection;
