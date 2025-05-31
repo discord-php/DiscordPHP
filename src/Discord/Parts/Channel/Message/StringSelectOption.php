@@ -70,7 +70,8 @@ class StringSelectOption implements JsonSerializable
         return new self($label, $value, $description, $emoji, $default);
     }
 
-    public function setEmoji(Emoji|array|null $emoji): void
+    /** @param Emoji|array|null $emoji */
+    public function setEmoji($emoji): void
     {
         if ($emoji instanceof Emoji) {
             $partial = [

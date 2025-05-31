@@ -54,7 +54,8 @@ class MediaGalleryItem implements JsonSerializable
         return new self($media, $description, $spoiler);
     }
 
-    public function setMedia(UnfurledMediaItem|array $media): void
+    /** @param UnfurledMediaItem|array $media */
+    public function setMedia($media): void
     {
         if (is_array($media)) {
             $media = new UnfurledMediaItem(
