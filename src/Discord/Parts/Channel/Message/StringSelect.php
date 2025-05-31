@@ -27,7 +27,7 @@ use Discord\Helpers\ExCollectionInterface;
  *
  * @since 10.11.0
  *
- * @property int                                        $type           6 for role select.
+ * @property int                                        $type           3 for string select.
  * @property string|null                                $id             Optional identifier for component.
  * @property string                                     $custom_id      ID for the select menu; max 100 characters
  * @property ExCollectionInterface|StringSelectOption[] $options        Specified choices in a select menu; max 25.
