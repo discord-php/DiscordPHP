@@ -33,7 +33,7 @@ namespace Discord\Parts\Channel\Message;
  * @property int|null                                   $max_values     Maximum number of items that can be chosen (defaults to 1); max 25.
  * @property bool|null                                  $disabled       Whether select menu is disabled (defaults to false).
  */
-class RoleSelect extends Interactive
+class RoleSelect extends SelectMenu
 {
     /**
      * {@inheritDoc}
