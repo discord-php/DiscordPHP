@@ -77,7 +77,7 @@ class Component extends Part
             return null;
         }
 
-        $components = Collection::for(Component::class);
+        $components = Collection::for(Component::class, null);
 
         foreach ($this->attributes['components'] as $component) {
             $components->pushItem($this->createOf(self::TYPES[$component['type'] ?? 0], $component));

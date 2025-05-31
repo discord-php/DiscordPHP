@@ -720,7 +720,7 @@ class Message extends Part
     /**
      * Returns the components attribute.
      *
-     * @return ExCollectionInterface|Component[]|null $components
+     * @return ExCollectionInterface|Component[]|null
      */
     protected function getComponentsAttribute(): ?ExCollectionInterface
     {
@@ -728,7 +728,7 @@ class Message extends Part
             return null;
         }
 
-        $components = Collection::for(Component::class);
+        $components = Collection::for(Component::class, null);
 
         foreach ($this->attributes['components'] as $component) {
             $components->pushItem($this->createOf(Component::TYPES[$component['type'] ?? 0], $component));
