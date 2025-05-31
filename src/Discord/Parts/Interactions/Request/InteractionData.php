@@ -92,6 +92,8 @@ class InteractionData extends Part
 
         $components = Collection::for(Component::class, null);
 
+        var_dump($this->attributes['components']);
+
         foreach ($this->attributes['components'] as $component) {
             $components->pushItem($this->createOf(Component::TYPES[$component->type ?? 0], $component));
         }
