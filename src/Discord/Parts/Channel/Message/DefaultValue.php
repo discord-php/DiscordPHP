@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
-use JsonSerializable;
+use Discord\Parts\Part;
 
 /**
  * List of default values for auto-populated select menu components; number of default values must be in the range defined by min_values and max_values
@@ -25,58 +25,13 @@ use JsonSerializable;
  * @property string $id   ID of a user, role, or channel.
  * @property string $type Type of value that id represents. Either "user", "role", or "channel"
  */
-class DefaultValue implements JsonSerializable
+class DefaultValue extends Part
 {
-    public const TYPE_USER    = 'user';
-    public const TYPE_ROLE    = 'role';
-    public const TYPE_CHANNEL = 'channel';
-
-    /** @var string */
-    protected $id;
-
-    /** @var string */
-    protected $type;
-
-    public function __construct(string $id, string $type)
-    {
-        $this->id = $id;
-        $this->setType($type);
-    }
-
-    public static function new(string $id, string $type): self
-    {
-        return new self($id, $type);
-    }
-
-    public static function User(string $id): self
-    {
-        return new self($id, self::TYPE_USER);
-    }
-
-    public static function Role(string $id): self
-    {
-        return new self($id, self::TYPE_ROLE);
-    }
-
-    public static function Channel(string $id): self
-    {
-        return new self($id, self::TYPE_CHANNEL);
-    }
-
-    protected function setType(string $type): void
-    {
-        $allowed = [self::TYPE_USER, self::TYPE_ROLE, self::TYPE_CHANNEL];
-
-        if (!in_array($type, $allowed, true)) {
-            throw new \InvalidArgumentException('Default value type must be one of: "user", "role", or "channel"');
-        }
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'type' => $this->type,
-        ];
-    }
+    /**
+     * {@inheritDoc}
+     */
+    protected $fillable = [
+        'id',
+        'type',
+    ];
 }

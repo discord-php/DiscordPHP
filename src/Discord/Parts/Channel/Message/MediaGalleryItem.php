@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
-use JsonSerializable;
+use Discord\Parts\Part;
 
 /**
  * @link https://discord.com/developers/docs/components/reference#media-gallery-media-gallery-item-structure
@@ -24,73 +24,14 @@ use JsonSerializable;
  * @property string|null       $description Alt text for the media, max 1024 characters.
  * @property bool|null         $spoiler     Whether the media should be a spoiler (blurred out). Defaults to false.
  */
-class MediaGalleryItem implements JsonSerializable
+class MediaGalleryItem extends Part
 {
-    /** @var UnfurledMediaItem */
-    protected $media;
-
-    /** @var string|null */
-    protected $description = null;
-
-    /** @var bool|null */
-    protected $spoiler = null;
-
     /**
-     * @param UnfurledMediaItem|array $media
-     * @param string|null             $description
-     * @param bool|null               $spoiler
-    */
-    public function __construct(
-        $media,
-        ?string $description = null,
-        ?bool $spoiler = null
-    ) {
-        $this->setMedia($media);
-        $this->description = $description;
-        $this->spoiler = $spoiler;
-    }
-
-    /**
-     * @param UnfurledMediaItem|array $media
-     * @param string|null             $description
-     * @param bool|null               $spoiler
-    */
-    public static function new(
-        $media,
-        ?string $description = null,
-        ?bool $spoiler = null
-    ): self
-    {
-        return new self($media, $description, $spoiler);
-    }
-
-    /** @param UnfurledMediaItem|array $media */
-    public function setMedia($media): void
-    {
-        if (is_array($media)) {
-            $media = new UnfurledMediaItem(
-                $media['url'],
-                $media['proxy_url'] ?? null,
-                $media['height'] ?? null,
-                $media['width'] ?? null,
-                $media['content_type'] ?? null
-            );
-        }
-
-        $this->media = $media;
-    }
-
-    public function jsonSerialize(): array
-    {
-        $data = ['media' => $this->media];
-
-        if (isset($this->description)) {
-            $data['description'] = $this->description;
-        }
-        if (isset($this->spoiler)) {
-            $data['spoiler'] = $this->spoiler;
-        }
-
-        return $data;
-    }
+     * {@inheritDoc}
+     */
+    protected $fillable = [
+        'media',
+        'description',
+        'spoiler',
+    ];
 }

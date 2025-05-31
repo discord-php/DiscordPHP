@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
-use JsonSerializable;
+use Discord\Parts\Part;
 
 /**
  * A url or attachment, except in the case of File, which only supports attachment.
@@ -28,64 +28,16 @@ use JsonSerializable;
  * @property int|null    $width        The width of the media item. This field is ignored and provided by the API as part of the response.
  * @property string|null $content_type The media type of the content. This field is ignored and provided by the API as part of the response.
  */
-class UnfurledMediaItem implements JsonSerializable
+class UnfurledMediaItem extends Part
 {
-    /** @var string */
-    protected $url;
-
-    /** @var string|null */
-    protected $proxy_url = null;
-
-    /** @var int|null */
-    protected $height = null;
-
-    /** @var int|null */
-    protected $width = null;
-
-    /** @var string|null */
-    protected $content_type = null;
-
-    public function __construct(
-        string $url,
-        ?string $proxy_url = null,
-        ?int $height = null,
-        ?int $width = null,
-        ?string $content_type = null
-    ) {
-        $this->url = $url;
-        $this->proxy_url = $proxy_url;
-        $this->height = $height;
-        $this->width = $width;
-        $this->content_type = $content_type;
-    }
-
-    public static function new(
-        string $url,
-        ?string $proxy_url = null,
-        ?int $height = null,
-        ?int $width = null,
-        ?string $content_type = null
-    ): self {
-        return new self($url, $proxy_url, $height, $width, $content_type);
-    }
-
-    public function jsonSerialize(): array
-    {
-        $data = ['url' => $this->url];
-
-        if (isset($this->proxy_url)) {
-            $data['proxy_url'] = $this->proxy_url;
-        }
-        if (isset($this->height)) {
-            $data['height'] = $this->height;
-        }
-        if (isset($this->width)) {
-            $data['width'] = $this->width;
-        }
-        if (isset($this->content_type)) {
-            $data['content_type'] = $this->content_type;
-        }
-
-        return $data;
-    }
+    /**
+     * {@inheritDoc}
+     */
+    protected $fillable = [
+        'url',
+        'proxy_url',
+        'height',
+        'width',
+        'content_type',
+    ];
 }
