@@ -40,4 +40,9 @@ class Thumbnail extends Content
         'description',
         'spoiler',
     ];
+
+    protected function getMediaAttribute(): UnfurledMediaItem
+    {
+        return $this->createOf(UnfurledMediaItem::class, $this->attributes['media'], true);
+    }
 }

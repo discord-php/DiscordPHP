@@ -34,4 +34,9 @@ class MediaGalleryItem extends Part
         'description',
         'spoiler',
     ];
+
+    protected function getMediaAttribute(): UnfurledMediaItem
+    {
+        return $this->createOf(UnfurledMediaItem::class, $this->attributes['media'], true);
+    }
 }

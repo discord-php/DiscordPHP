@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
+
 /**
  * A User Select is an interactive component that allows users to select one or more users in a message. Options are automatically populated based on the server's available users.
  *

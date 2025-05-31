@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
+use Discord\Repository\Guild\EmojiRepository;
 
 /**
  * Specified choices in a string select menu; max 25
@@ -25,7 +27,7 @@ use Discord\Parts\Part;
  * @property string      $label       User-facing name of the option; max 100 characters.
  * @property string      $value       Dev-defined value of the option; max 100 characters.
  * @property string|null $description Additional description of the option; max 100 characters.
- * @property array|null  $emoji       Partial emoji object: id, name, and animated
+ * @property Emoji|null  $emoji       Partial emoji object: id, name, and animated
  * @property bool|null   $default     Will show this option as selected by default.
  */
 class StringSelectOption extends Part
@@ -40,4 +42,9 @@ class StringSelectOption extends Part
         'emoji',
         'default',
     ];
+
+    protected function getEmojiAttribute(): Emoji
+    {
+        return $this->createOf(Emoji::class, $this->attributes['emoji'], true);
+    }
 }

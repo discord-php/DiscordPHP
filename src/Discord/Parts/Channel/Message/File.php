@@ -38,4 +38,9 @@ class File extends Content
         'file',
         'spoiler',
     ];
+
+    protected function getFileAttribute(): UnfurledMediaItem
+    {
+        return $this->createOf(UnfurledMediaItem::class, $this->attributes['file'], true);
+    }
 }
