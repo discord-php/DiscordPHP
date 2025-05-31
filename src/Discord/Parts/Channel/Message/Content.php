@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 /**
- * Abstract class for layout components.
+ * Abstract class for content components.
  *
  * @since 10.11.0
  */
-abstract class Layout extends Component
+abstract class Content extends Component
 {
     //
 }
