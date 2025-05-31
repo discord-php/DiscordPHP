@@ -30,7 +30,7 @@ namespace Discord\Parts\Channel\Message;
  * @property string|null                       $id         Optional identifier for component
  * @property ExCollectionInterface|Component[] $components Up to 5 interactive button components or a single select component
  */
-class ActionRow extends Component
+class ActionRow extends Layout
 {
     /**
      * {@inheritDoc}
