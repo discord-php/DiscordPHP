@@ -18,6 +18,7 @@ use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Poll;
+use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Role;
@@ -30,7 +31,6 @@ use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
-use Discord\Parts\Interactions\Request\Component;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
 use Discord\Repository\Channel\ReactionRepository;
@@ -720,7 +720,7 @@ class Message extends Part
     /**
      * Returns the components attribute.
      *
-     * @return ExCollectionInterface|ComponentObject[]|null
+     * @return ExCollectionInterface|Component[]|null
      */
     protected function getComponentsAttribute(): ?ExCollectionInterface
     {
@@ -731,7 +731,7 @@ class Message extends Part
         $components = Collection::for(Component::class, null);
 
         foreach ($this->attributes['components'] as $component) {
-            $components->pushItem($this->createOf(Component::class, $component));
+            $components->pushItem($this->createOf(Component::TYPES[$component->type ?? 0], $component));
         }
 
         return $components;
