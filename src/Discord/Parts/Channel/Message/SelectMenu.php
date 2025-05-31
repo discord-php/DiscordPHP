@@ -37,7 +37,7 @@ abstract class SelectMenu extends Interactive
         $collection = Collection::for(DefaultValue::class);
 
         foreach ($this->attributes['default_values'] as $value) {
-            $collection->pushItem(DefaultValue::new($value['id'], $value['type']));
+            $collection->pushItem(DefaultValue::new($value->id, $value->type));
         }
 
         return $collection;

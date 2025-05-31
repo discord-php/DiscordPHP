@@ -63,11 +63,11 @@ class StringSelect extends SelectMenu
 
         foreach ($this->attributes['options'] ?? [] as $option) {
             $options->pushItem(StringSelectOption::new(
-                $option['label'],
-                $option['value'],
-                $option['description'] ?? null,
-                $option['emoji'] ?? null,
-                $option['default'] ?? null
+                $option->label,
+                $option->value,
+                $option->description ?? null,
+                $option->emoji ?? null,
+                $option->default ?? null
             ));
         }
 
