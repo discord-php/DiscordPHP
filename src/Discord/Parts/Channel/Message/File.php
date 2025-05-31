@@ -38,15 +38,4 @@ class File extends Content
         'file',
         'spoiler',
     ];
-
-    protected function getFileAttribute(): UnfurledMediaItem
-    {
-        return new UnfurledMediaItem(
-            $this->attributes['file']['url'],
-            $this->attributes['file']['proxy_url'] ?? null,
-            $this->attributes['file']['height'] ?? null,
-            $this->attributes['file']['width'] ?? null,
-            $this->attributes['file']['content_type'] ?? null
-        );
-    }
 }
