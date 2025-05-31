@@ -46,11 +46,18 @@ class StringSelectOption implements JsonSerializable
     /** @var bool|null */
     protected $default = null;
 
+    /**
+     * @param string           $label
+     * @param string           $value
+     * @param string|null      $description
+     * @param Emoji|array|null $emoji
+     * @param bool|null        $default
+     */
     public function __construct(
         string $label,
         string $value,
         ?string $description = null,
-        Emoji|array|null $emoji = null,
+        $emoji = null,
         ?bool $default = null
     ) {
         $this->label = $label;
@@ -60,11 +67,18 @@ class StringSelectOption implements JsonSerializable
         $this->default = $default;
     }
 
+    /**
+     * @param string           $label
+     * @param string           $value
+     * @param string|null      $description
+     * @param Emoji|array|null $emoji
+     * @param bool|null        $default
+     */
     public static function new(
         string $label,
         string $value,
         ?string $description = null,
-        Emoji|array|null $emoji = null,
+        $emoji = null,
         ?bool $default = null
     ): self {
         return new self($label, $value, $description, $emoji, $default);

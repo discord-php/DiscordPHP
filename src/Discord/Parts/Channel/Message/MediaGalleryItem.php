@@ -35,8 +35,13 @@ class MediaGalleryItem implements JsonSerializable
     /** @var bool|null */
     protected $spoiler = null;
 
+    /**
+     * @param UnfurledMediaItem|array $media
+     * @param string|null             $description
+     * @param bool|null               $spoiler
+    */
     public function __construct(
-        UnfurledMediaItem|array $media,
+        $media,
         ?string $description = null,
         ?bool $spoiler = null
     ) {
@@ -45,8 +50,13 @@ class MediaGalleryItem implements JsonSerializable
         $this->spoiler = $spoiler;
     }
 
+    /**
+     * @param UnfurledMediaItem|array $media
+     * @param string|null             $description
+     * @param bool|null               $spoiler
+    */
     public static function new(
-        UnfurledMediaItem|array $media,
+        $media,
         ?string $description = null,
         ?bool $spoiler = null
     ): self
