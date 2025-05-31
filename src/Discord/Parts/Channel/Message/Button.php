@@ -49,7 +49,7 @@ class Button extends Interactive
         'custom_id',
         'sku_id',
         'url',
-        'disabled'
+        'disabled',
     ];
 
     /**

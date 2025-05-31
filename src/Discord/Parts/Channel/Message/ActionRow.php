@@ -38,6 +38,6 @@ class ActionRow extends Component
     protected $fillable = [
         'type',
         'id',
-        'components'
+        'components',
     ];
 }
