@@ -40,15 +40,4 @@ class Thumbnail extends Content
         'description',
         'spoiler',
     ];
-
-    protected function getMediaAttribute(): UnfurledMediaItem
-    {
-        return new UnfurledMediaItem(
-            $this->attributes['media']['url'],
-            $this->attributes['media']['proxy_url'] ?? null,
-            $this->attributes['media']['height'] ?? null,
-            $this->attributes['media']['width'] ?? null,
-            $this->attributes['media']['content_type'] ?? null
-        );
-    }
 }
