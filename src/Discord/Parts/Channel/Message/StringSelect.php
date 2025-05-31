@@ -61,14 +61,9 @@ class StringSelect extends SelectMenu
     {
         $options = Collection::for(StringSelectOption::class, null);
 
-        foreach ($this->attributes['options'] ?? [] as $option) {
-            $options->pushItem(StringSelectOption::new(
-                $option->label,
-                $option->value,
-                $option->description ?? null,
-                $option->emoji ?? null,
-                $option->default ?? null
-            ));
+        foreach ($this->attributes['options'] ?? [] as $item) {
+            /** @var StringSelectOption $item */
+            $options->pushItem($item);
         }
 
         return $options;
