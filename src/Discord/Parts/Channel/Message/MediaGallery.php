@@ -43,17 +43,16 @@ class MediaGallery extends Content
     /** @return ExCollectionInterface|MediaGalleryItem[] */
     protected function getItemsAttribute(): ExCollectionInterface
     {
-        return new Collection(
-            array_map(
-                fn(array $item) => MediaGalleryItem::new(
-                    $item['media'],
-                    $item['description'] ?? null,
-                    $item['spoiler'] ?? false
-                ),
-                $this->attributes['items']
-            ),
-            'media',
-            MediaGalleryItem::class
-        );
+        $collection = new Collection([], 'media', MediaGalleryItem::class);
+
+        foreach ($this->attributes['items'] as $item) {
+            $collection->pushItem(MediaGalleryItem::new(
+                $item['media'],
+                $item['description'] ?? null,
+                $item['spoiler'] ?? false
+            ));
+        }
+
+        return $collection;
     }
 }
