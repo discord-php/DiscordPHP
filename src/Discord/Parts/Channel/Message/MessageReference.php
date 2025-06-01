@@ -96,11 +96,11 @@ class MessageReference extends Part
             return $channel->messages->get('id', $this->message_id);
         }
 
-        return $this->createOf(Message::class, [
+        return $this->factory->part(Message::class, [
             'id' => $this->message_id,
             'channel_id' => $this->channel_id,
             'guild_id' => $this->guild_id,
-        ]);
+        ], true);
     }
 
     /**
