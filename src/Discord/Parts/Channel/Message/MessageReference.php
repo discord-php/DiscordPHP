@@ -34,7 +34,7 @@ use JsonSerializable;
  * @property-read Channel|Thread|null $channel  The originating message's channel.
  * @property-read Guild|null          $guild    The originating message's guild.
  */
-class MessageReference extends Part implements JsonSerializable
+class MessageReference extends Part
 {
     public const TYPE_DEFAULT = 0;
     public const TYPE_FORWARD = 1;
@@ -153,29 +153,5 @@ class MessageReference extends Part implements JsonSerializable
         }
 
         return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function jsonSerialize(): array
-    {
-        $data = [];
-        if (isset($this->type)) {
-            $data['type'] = $this->type;
-        }
-        if (isset($this->message_id)) {
-            $data['message_id'] = $this->message_id;
-        }
-        if (isset($this->channel_id)) {
-            $data['channel_id'] = $this->channel_id;
-        }
-        if (isset($this->guild_id)) {
-            $data['guild_id'] = $this->guild_id;
-        }
-        if (isset($this->fail_if_not_exists)) {
-            $data['fail_if_not_exists'] = $this->fail_if_not_exists;
-        }
-        return $data;
     }
 }
