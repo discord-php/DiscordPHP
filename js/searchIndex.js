@@ -3706,6 +3706,11 @@ Search.appendIndex(
             "summary": "Undeafens\u0020a\u0020member\u0020in\u0020the\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_undeafenMember"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AsendSoundboardSound\u0028\u0029",
+            "name": "sendSoundboardSound",
+            "summary": "Sends\u0020a\u0020soundboard\u0020sound\u0020to\u0020the\u0020voice\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#method_sendSoundboardSound"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AcreateInvite\u0028\u0029",
             "name": "createInvite",
             "summary": "Creates\u0020an\u0020invite\u0020for\u0020the\u0020channel.",
