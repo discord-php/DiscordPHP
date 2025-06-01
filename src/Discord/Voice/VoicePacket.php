@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\Voice;
 
 use Monolog\Logger;
-use TrafficCophp\ByteBuffer\FormatPackEnum;
+use Discord\Helpers\FormatPackEnum;
 
 /**
  * A voice packet received from Discord.
