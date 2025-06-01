@@ -27,6 +27,8 @@ use Discord\Parts\Part;
  * @link https://discord.com/developers/docs/interactions/message-components#component-object
  *
  * @since 7.0.0
+ * @deprecated 10.11.0 Use \Discord\Parts\Channel\Message\Component` instead.
+ * @see \Discord\Parts\Channel\Message\Component
  *
  * @property int                                    $type        Component type.
  * @property string|null                            $custom_id   Developer-defined identifier for the component; max 100 characters. (Buttons, Select Menus)

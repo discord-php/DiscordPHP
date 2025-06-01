@@ -24,7 +24,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Command\Choice;
-use Discord\Parts\Interactions\Request\Component as RequestComponent;
+use Discord\Parts\Channel\Message\Component as RequestComponent;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;

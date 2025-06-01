@@ -19,6 +19,7 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\AllowedMentions;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -139,7 +140,7 @@ class User extends Part implements Stringable
      * @param MessageBuilder|string                 $message          The message builder that should be converted into a message, or the string content of the message.
      * @param bool                                  $tts              Whether the message is TTS.
      * @param \Discord\Parts\Embed\Embed|array|null $embed            An embed object or array to send in the message.
-     * @param array|null                            $allowed_mentions Allowed mentions object for the message.
+     * @param AllowedMentions|array|null            $allowed_mentions Allowed mentions object for the message.
      * @param Message|null                          $replyTo          Sends the message as a reply to the given message instance.
      *
      * @return PromiseInterface<Message>
@@ -183,7 +184,7 @@ class User extends Part implements Stringable
      *
      * @return string The URL to the client's avatar.
      */
-    protected function getAvatarAttribute(?string $format = null, int $size = 1024): string
+    public function getAvatarAttribute(?string $format = null, int $size = 1024): string
     {
         if (empty($this->attributes['avatar'])) {
             $avatarDiscrim = (($this->discriminator) ? $this->discriminator % 5 : BigInt::shiftRight($this->id, 22) % 6);
@@ -211,7 +212,7 @@ class User extends Part implements Stringable
      *
      * @return ?string The client avatar's hash.
      */
-    protected function getAvatarHashAttribute(): ?string
+    public function getAvatarHashAttribute(): ?string
     {
         return $this->attributes['avatar'];
     }
@@ -224,7 +225,7 @@ class User extends Part implements Stringable
      *
      * @return string|null The URL to the clients avatar decoration.
      */
-    protected function getAvatarDecorationAttribute(?string $format = null, int $size = 288): ?string
+    public function getAvatarDecorationAttribute(?string $format = null, int $size = 288): ?string
     {
         if (! isset($this->attributes['avatar_decoration'])) {
             return null;
@@ -250,7 +251,7 @@ class User extends Part implements Stringable
      *
      * @return ?string The client avatar decoration's hash.
      */
-    protected function getAvatarDecorationHashAttribute(): ?string
+    public function getAvatarDecorationHashAttribute(): ?string
     {
         return $this->attributes['avatar_decoration'];
     }
@@ -263,7 +264,7 @@ class User extends Part implements Stringable
      *
      * @return string|null The URL to the clients banner.
      */
-    protected function getBannerAttribute(?string $format = null, int $size = 600): ?string
+    public function getBannerAttribute(?string $format = null, int $size = 600): ?string
     {
         if (empty($this->attributes['banner'])) {
             return null;

@@ -638,7 +638,7 @@ class Discord
                 if (($inflated = inflate_add($this->zlibDecompressor, $this->payloadBuffer)) !== false) {
                     $this->processWsMessage($inflated);
                 } else {
-                    $this->logger->error('failed to inflate payload', ['payload' => $payload]);
+                    $this->logger->error('failed to inflate payload buffer', ['payload' => $payload, 'buffer' => $this->payloadBuffer, 'payload hex' => bin2hex($payload), 'buffer hex' => bin2hex($this->payloadBuffer)]);
                 }
                 $this->payloadBuffer = '';
             } else {
