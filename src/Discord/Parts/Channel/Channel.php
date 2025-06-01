@@ -655,6 +655,8 @@ class Channel extends Part implements Stringable
      *
      * @return PromiseInterface
      *
+     * @since 10.11.3
+     *
      */
     public function sendSoundboardSound(string $sound_id, ?string $source_guild_id = null): PromiseInterface
     {
