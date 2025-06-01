@@ -664,7 +664,7 @@ class Message extends Part
             return null;
         }
 
-        return $this->factory->part(MessageReference::class, (array) $this->attributes['message_reference'], true);
+        return $this->createOf(MessageReference::class, $this->attributes['message_reference']);
     }
 
     /**
