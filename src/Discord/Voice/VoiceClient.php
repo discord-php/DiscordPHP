@@ -13,19 +13,20 @@ declare(strict_types=1);
 
 namespace Discord\Voice;
 
-use Discord\Exceptions\Voice\ClientNotReadyException;
-use Discord\Exceptions\Voice\AudioAlreadyPlayingException;
-use Discord\Helpers\Buffer as RealBuffer;
 use Discord\Exceptions\FFmpegNotFoundException;
+use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\LibSodiumNotFoundException;
+use Discord\Exceptions\OutdatedDCAException;
+use Discord\Exceptions\Voice\AudioAlreadyPlayingException;
+use Discord\Exceptions\Voice\ClientNotReadyException;
+use Discord\Helpers\Buffer as RealBuffer;
 use Discord\Helpers\Collection;
 use Discord\Helpers\CollectionInterface;
-use Discord\Exceptions\OutdatedDCAException;
-use Discord\Exceptions\FileNotFoundException;
 use Discord\Parts\Channel\Channel;
-use Discord\Voice\VoicePacket;
 use Discord\Voice\ReceiveStream;
+use Discord\Voice\VoicePacket;
 use Discord\WebSockets\Op;
+use Discord\WebSockets\Payload;
 use Evenement\EventEmitter;
 use Psr\Log\LoggerInterface;
 use Ratchet\Client\Connector as WsFactory;
@@ -209,9 +210,9 @@ class VoiceClient extends EventEmitter
     /**
      * The time we started sending packets.
      *
-     * @var int The time we started sending packets.
+     * @var null|int|float The time we started sending packets.
      */
-    protected ?int $startTime;
+    protected $startTime;
 
     /**
      * The stream time of the last packet.
