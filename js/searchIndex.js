@@ -4811,6 +4811,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020sticker_items\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Message.html#method_getStickerItemsAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetResolvedAttribute\u0028\u0029",
+            "name": "getResolvedAttribute",
+            "summary": "Returns\u0020the\u0020resolved\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_getResolvedAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetPollAttribute\u0028\u0029",
             "name": "getPollAttribute",
             "summary": "Returns\u0020the\u0020poll\u0020attribute.",
@@ -8085,6 +8090,11 @@ Search.appendIndex(
             "name": "getAttachmentsAttribute",
             "summary": "Returns\u0020a\u0020collection\u0020of\u0020resolved\u0020attachments.",
             "url": "classes/Discord-Parts-Interactions-Request-Resolved.html#method_getAttachmentsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Request\\Resolved\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Interactions-Request-Resolved.html#method_getGuildAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Request\\Resolved\u003A\u003A\u0024fillable",
             "name": "fillable",
