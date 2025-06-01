@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -12,7 +14,7 @@
 namespace Discord\Parts\Guild\AutoModeration;
 
 use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
@@ -40,10 +42,10 @@ use Discord\Parts\User\User;
  * @property      int                   $event_type       The rule event type.
  * @property      int                   $trigger_type     The rule trigger type.
  * @property      object                $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `regex_patterns`, `presets`, `allow_list`, `mention_total_limit` and `mention_raid_protection_enabled`).
- * @property      CollectionInterface|Action[]   $actions          The actions which will execute when the rule is triggered.
+ * @property      ExCollectionInterface|Action[]   $actions          The actions which will execute when the rule is triggered.
  * @property      bool                  $enabled          Whether the rule is enabled.
- * @property      CollectionInterface|?Role[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
- * @property      CollectionInterface|?Channel[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
+ * @property      ExCollectionInterface|?Role[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
+ * @property      ExCollectionInterface|?Channel[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
  */
 class Rule extends Part
 {
@@ -99,9 +101,9 @@ class Rule extends Part
     /**
      * Returns the actions attribute.
      *
-     * @return CollectionInterface|Action[] A collection of actions.
+     * @return ExCollectionInterface|Action[] A collection of actions.
      */
-    protected function getActionsAttribute(): CollectionInterface
+    protected function getActionsAttribute(): ExCollectionInterface
     {
         $actions = Collection::for(Action::class, null);
 
@@ -115,9 +117,9 @@ class Rule extends Part
     /**
      * Returns the exempt roles attribute.
      *
-     * @return CollectionInterface|?Role[] A collection of roles exempt from the rule.
+     * @return ExCollectionInterface|?Role[] A collection of roles exempt from the rule.
      */
-    protected function getExemptRolesAttribute(): CollectionInterface
+    protected function getExemptRolesAttribute(): ExCollectionInterface
     {
         $roles = new Collection();
 
@@ -139,9 +141,9 @@ class Rule extends Part
     /**
      * Returns the exempt channels attribute.
      *
-     * @return CollectionInterface|?Channel[] A collection of channels exempt from the rule.
+     * @return ExCollectionInterface|?Channel[] A collection of channels exempt from the rule.
      */
-    protected function getExemptChannelsAttribute(): CollectionInterface
+    protected function getExemptChannelsAttribute(): ExCollectionInterface
     {
         $channels = new Collection();
 

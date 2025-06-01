@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -12,7 +14,7 @@
 namespace Discord\Parts\Interactions\Command;
 
 use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 
 use function Discord\poly_strlen;
@@ -30,8 +32,8 @@ use function Discord\poly_strlen;
  * @property string                   $description               1-100 character description.
  * @property ?string[]|null           $description_localizations Localization dictionary for the description field. Values follow the same restrictions as description.
  * @property bool|null                $required                  If the parameter is required or optional--default false.
- * @property CollectionInterface|Choice[]|null $choices                   Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
- * @property CollectionInterface|Option[]      $options                   Sub-options if applicable.
+ * @property ExCollectionInterface|Choice[]|null $choices                   Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
+ * @property ExCollectionInterface|Option[]      $options                   Sub-options if applicable.
  * @property array|null               $channel_types             If the option is a channel type, the channels shown will be restricted to these types.
  * @property int|float|null           $min_value                 If the option is an INTEGER or NUMBER type, the minimum value permitted.
  * @property int|float|null           $max_value                 If the option is an INTEGER or NUMBER type, the maximum value permitted.
@@ -76,9 +78,9 @@ class Option extends Part
     /**
      * Gets the choices attribute.
      *
-     * @return CollectionInterface|Choice[]|null A collection of choices.
+     * @return ExCollectionInterface|Choice[]|null A collection of choices.
      */
-    protected function getChoicesAttribute(): ?Collection
+    protected function getChoicesAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['choices']) && ! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
             return null;
@@ -96,9 +98,9 @@ class Option extends Part
     /**
      * Gets the options attribute.
      *
-     * @return CollectionInterface|Option[] A collection of options.
+     * @return ExCollectionInterface|Option[] A collection of options.
      */
-    protected function getOptionsAttribute(): CollectionInterface
+    protected function getOptionsAttribute(): ExCollectionInterface
     {
         $options = Collection::for(Option::class, null);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -12,6 +14,7 @@
 namespace Discord\Parts\Interactions\Command;
 
 use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Stringable;
@@ -79,9 +82,9 @@ class Command extends Part implements Stringable
     /**
      * Gets the options attribute.
      *
-     * @return CollectionInterface|Option[]|null A collection of options.
+     * @return ExCollectionInterface|Option[]|null A collection of options.
      */
-    protected function getOptionsAttribute(): ?Collection
+    protected function getOptionsAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['options']) && (isset($this->type) && $this->type != self::CHAT_INPUT)) {
             return null;

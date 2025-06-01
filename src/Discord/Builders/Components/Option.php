@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -78,7 +80,7 @@ class Option extends Component
         }
 
         $this->label = $label;
-        $this->value = $value ?? $this->generateUuid();
+        $this->value = $value ?? self::generateUuid();
     }
 
     /**

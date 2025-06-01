@@ -15,9 +15,9 @@
         "chat": "https://discord.gg/dphp"
     },
     "require": {
-        "php": "^8.0",
+        "php": "^8.1.2",
         "nesbot/carbon": "^2.38 || ^3.0",
-        "exan/pawl": "^0.4.4",
+        "ratchet/pawl": "^0.4.3",
         "react/datagram": "^1.8",
         "symfony/options-resolver": "^5.1.11 || ^6.0 || ^7.0",
         "trafficcophp/bytebuffer": "^0.3",
@@ -39,7 +39,8 @@
         "phpunit/phpunit": "^9.4.4",
         "davidcole1340/reactsh": "dev-master",
         "wyrihaximus/react-cache-redis": "^4.5",
-        "symfony/cache": "^5.4"
+        "symfony/cache": "^5.4",
+        "laravel/pint": "^1.21"
     },
     "autoload": {
         "files": [
@@ -58,6 +59,7 @@
         "ext-fileinfo": "For function mime_content_type()."
     },
     "scripts": {
+        "pint": ["./vendor/bin/pint --config ./pint.json ./src"],
         "cs": ["./vendor/bin/php-cs-fixer fix"],
         "unit": ["./vendor/bin/phpunit --testdox"],
         "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage --testdox"],

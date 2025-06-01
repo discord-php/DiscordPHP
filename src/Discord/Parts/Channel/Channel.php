@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -15,7 +17,7 @@ use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Exceptions\InvalidOverwriteException;
 use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
@@ -33,6 +35,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Forum\Reaction;
 use Discord\Parts\Channel\Forum\Tag;
+use Discord\Parts\Channel\Message\AllowedMentions;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\InviteRepository;
@@ -71,7 +74,7 @@ use function React\Promise\resolve;
  * @property      int|null            $bitrate                            The bitrate of the channel. Only for voice channels.
  * @property      int|null            $user_limit                         The user limit of the channel. Max 99 for voice channels and 10000 for stage channels (0 refers to no limit).
  * @property      int|null            $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message (slow mode).
- * @property      CollectionInterface|User[]   $recipients                A collection of all the recipients in the channel. Only for DM or group channels.
+ * @property      ExCollectionInterface|User[]   $recipients                A collection of all the recipients in the channel. Only for DM or group channels.
  * @property-read User|null           $recipient                          The first recipient of the channel. Only for DM or group channels.
  * @property-read string|null         $recipient_id                       The ID of the recipient of the channel, if it is a DM channel.
  * @property      ?string|null        $icon                               Icon hash.
@@ -85,7 +88,7 @@ use function React\Promise\resolve;
  * @property      int|null            $default_auto_archive_duration      Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
  * @property      string|null         $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on an application command interaction.
  * @property      int|null            $flags                              Channel flags combined as a bitfield.
- * @property      CollectionInterface|Tag[]    $available_tags                     Set of tags that can be used in a forum channel, limited to 20.
+ * @property      ExCollectionInterface|Tag[]    $available_tags                     Set of tags that can be used in a forum channel, limited to 20.
  * @property      ?Reaction|null      $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.
  * @property      int|null            $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a forum channel. this field is copied to the thread at creation time and does not live update.
  * @property      ?int|null           $default_sort_order                 The default sort order type used to order posts in forum channels.
@@ -252,9 +255,9 @@ class Channel extends Part implements Stringable
     /**
      * Gets the recipients attribute.
      *
-     * @return CollectionInterface A collection of recipients.
+     * @return ExCollectionInterface A collection of recipients.
      */
-    protected function getRecipientsAttribute(): CollectionInterface
+    protected function getRecipientsAttribute(): ExCollectionInterface
     {
         $recipients = Collection::for(User::class);
 
@@ -642,6 +645,65 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Sends a soundboard sound to the voice channel.
+     *
+     * @param string      $sound_id         The ID of the soundboard sound to play.
+     * @param string|null $source_guild_id  The ID of the guild where the sound originates, if using an external sound.
+     *
+     * @throws \RuntimeException       If the channel is not voice-based, the bot is not connected to the correct voice channel,
+     *                                 or the bot is deafened, self-deafened, muted, or suppressed.
+     * @throws NoPermissionsException  If the bot lacks the required permissions to send soundboard sounds or use external sounds.
+     *
+     * @return PromiseInterface
+     *
+     * @since 10.11.3
+     *
+     */
+    public function sendSoundboardSound(string $sound_id, ?string $source_guild_id = null): PromiseInterface
+    {
+        if (! $this->isVoiceBased()) {
+            return reject(new \RuntimeException('You cannot send soundboard sounds in a text channel.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->speak || ! $botperms->use_soundboard) {
+                return reject(new NoPermissionsException("You do not have permission to send soundboard sounds in the channel {$this->id}."));
+            }
+        }
+
+        if ($this->guild !== null) {
+            if ($member = $this->guild->members->get('id', $this->discord->id)) {
+                if (! $voiceChannel = $member->getVoiceChannel()) {
+                    return reject(new \RuntimeException('Bot must be connected to a voice channel to send soundboard sounds.'));
+                }
+                if (! $voiceChannel->id === $this->id) {
+                    return reject(new \RuntimeException("Bot must be connected to the voice channel {$this->id} to send it soundboard sounds."));
+                }
+                if ( $member->deaf || $member->mute) { // Member can also not be self-muted or suppressed
+                    return reject(new \RuntimeException('Bot must be connected to the voice channel and not deafened, muted, or suppressed to send soundboard sounds.'));
+                }
+            }
+        }
+
+        $payload = [
+            'sound_id' => $sound_id,
+        ];
+
+        if ($source_guild_id !== null) {
+            if ($botperms) {
+                if ($this->guild_id !== $source_guild_id) {
+                    if (! $botperms->use_external_sounds) {
+                        return reject(new NoPermissionsException("You do not have permission to use external sounds in the channel {$this->id}."));
+                    }
+                }
+            }
+            $payload['source_guild_id'] = $source_guild_id;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_SEND_SOUNDBOARD_SOUND, $this->id), $payload);
+    }
+
+    /**
      * Creates an invite for the channel.
      *
      * @link https://discord.com/developers/docs/resources/channel#create-channel-invite
@@ -996,11 +1058,11 @@ class Channel extends Part implements Stringable
     /**
      * Gets the available tags attribute.
      *
-     * @return CollectionInterface|Tag[] Available forum tags.
+     * @return ExCollectionInterface|Tag[] Available forum tags.
      *
      * @since 7.4.0
      */
-    protected function getAvailableTagsAttribute(): CollectionInterface
+    protected function getAvailableTagsAttribute(): ExCollectionInterface
     {
         $available_tags = Collection::for(Tag::class);
 
@@ -1198,11 +1260,11 @@ class Channel extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/channel#create-message
      *
-     * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
-     * @param bool                  $tts              Whether the message is TTS.
-     * @param Embed|array|null      $embed            An embed object or array to send in the message.
-     * @param array|null            $allowed_mentions Allowed mentions object for the message.
-     * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
+     * @param MessageBuilder|string      $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                       $tts              Whether the message is TTS.
+     * @param Embed|array|null           $embed            An embed object or array to send in the message.
+     * @param AllowedMentions|array|null $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null               $replyTo          Sends the message as a reply to the given message instance.
      *
      * @throws \RuntimeException
      * @throws NoPermissionsException Missing various permissions depending on the message body.

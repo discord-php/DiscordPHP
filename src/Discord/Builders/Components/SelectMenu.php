@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -28,15 +30,18 @@ use function Discord\poly_strlen;
  * @link https://discord.com/developers/docs/interactions/message-components#select-menus
  *
  * @since 10.0.0 Renamed from SelectMenu to StringSelect and made SelectMenu abstract
+ * @since 10.9.0 Extends Interactive instead of Component
  */
-abstract class SelectMenu extends Component
+abstract class SelectMenu extends Interactive
 {
+    public const USAGE = ['Message'];
+
     /**
-     * Type of select menu component (text: 3, user: 5, role: 6, mentionable: 7, channels: 8)
+     * Component type.
      *
-     * @var integer
+     * @var int
      */
-    protected $type;
+    protected $type = Component::TYPE_SELECT_MENU; // Default type
 
     /**
      * Custom ID to identify the select menu.
@@ -118,7 +123,7 @@ abstract class SelectMenu extends Component
      */
     public function __construct(?string $custom_id)
     {
-        $this->setCustomId($custom_id ?? $this->generateUuid());
+        $this->setCustomId($custom_id ?? self::generateUuid());
     }
 
     /**
@@ -360,7 +365,7 @@ abstract class SelectMenu extends Component
 
                     $response = $callback($interaction, $options);
                 }
-                $ack = static fn() => $interaction->isResponded() ?: $interaction->acknowledge();
+                $ack = static fn () => $interaction->isResponded() ?: $interaction->acknowledge();
 
                 if ($response instanceof PromiseInterface) {
                     $response->then($ack);
@@ -390,13 +395,13 @@ abstract class SelectMenu extends Component
     }
 
     /**
-     * Returns the type of the select menu.
+     * Returns the options of the select menu.
      *
-     * @return int
+     * @return array|null
      */
-    public function getType(): int
+    public function getOptions(): ?array
     {
-        return $this->type;
+        return $this->options;
     }
 
     /**
@@ -407,16 +412,6 @@ abstract class SelectMenu extends Component
     public function getCustomId(): string
     {
         return $this->custom_id;
-    }
-
-    /**
-     * Returns the options of the select menu.
-     *
-     * @return array|null
-     */
-    public function getOptions(): ?array
-    {
-        return $this->options;
     }
 
     /**
@@ -501,6 +496,10 @@ abstract class SelectMenu extends Component
             $content['placeholder'] = $this->placeholder;
         }
 
+        if (isset($this->default_values)) {
+            $content['default_values'] = $this->default_values;
+        }
+
         if (isset($this->min_values)) {
             if (isset($this->options) && $this->min_values > count($this->options)) {
                 throw new \OutOfBoundsException('There are less options than the minimum number of options to be selected.');
@@ -521,9 +520,6 @@ abstract class SelectMenu extends Component
             $content['disabled'] = true;
         }
 
-        return [
-            'type' => Component::TYPE_ACTION_ROW,
-            'components' => [$content],
-        ];
+        return $content;
     }
 }

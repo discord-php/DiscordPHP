@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -25,6 +27,7 @@ use JsonSerializable;
  */
 abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
 {
+    use PartTrait;
     /**
      * The HTTP client.
      *
@@ -105,5 +108,19 @@ abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
      */
     public $created = false;
 
-    use PartTrait;
+    /** @return array */
+    public function __debugInfo(): array
+    {
+        $vars = get_object_vars($this);
+        unset($vars['http']);
+        unset($vars['factory']);
+        unset($vars['discord']);
+        unset($vars['visible']);
+        unset($vars['hidden']);
+        unset($vars['repositories']);
+        unset($vars['repositories_cache']);
+        unset($vars['fillable']);
+        unset($vars['scriptData']);
+        return $vars;
+    }
 }

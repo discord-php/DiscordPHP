@@ -27,7 +27,7 @@ final class RemoveReactionTest extends DiscordTestCase
                 ->channel()
                 ->sendMessage('testing delete all reactions')
                 ->then(function (Message $message) {
-                    return \React\Promise\all($message->react('😝'), $message->react('🤪'))
+                    return \React\Promise\all([$message->react('😝'), $message->react('🤪')])
                         ->then(function () use ($message) {
                             return $message;
                         });

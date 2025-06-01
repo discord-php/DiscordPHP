@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -17,8 +19,9 @@ namespace Discord\Helpers;
  * @since 5.0.0 No longer extends Laravel's BaseCollection
  * @since 4.0.0
  */
-class Collection implements CollectionInterface
+class Collection implements ExCollectionInterface
 {
+    use CollectionTrait;
     /**
      * The collection discriminator.
      *
@@ -39,6 +42,4 @@ class Collection implements CollectionInterface
      * @var string
      */
     protected $class;
-
-    use CollectionTrait;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -20,17 +22,19 @@ use function Discord\poly_strlen;
  *
  * @since 7.0.0
  */
-class TextInput extends Component
+class TextInput extends Interactive
 {
+    public const USAGE = ['Message', 'Modal'];
+
     public const STYLE_SHORT = 1;
     public const STYLE_PARAGRAPH = 2;
 
     /**
-     * Custom ID to identify the text input.
+     * Component type.
      *
-     * @var string
+     * @var int
      */
-    private $custom_id;
+    protected $type = Component::TYPE_TEXT_INPUT;
 
     /**
      * Style of text input.
@@ -92,7 +96,7 @@ class TextInput extends Component
     {
         $this->setLabel($label);
         $this->setStyle($style);
-        $this->setCustomId($custom_id ?? $this->generateUuid());
+        $this->setCustomId($custom_id ?? self::generateUuid());
     }
 
     /**
@@ -319,7 +323,7 @@ class TextInput extends Component
     public function jsonSerialize(): array
     {
         $content = [
-            'type' => Component::TYPE_TEXT_INPUT,
+            'type' => $this->type,
             'custom_id' => $this->custom_id,
             'style' => $this->style,
             'label' => $this->label,

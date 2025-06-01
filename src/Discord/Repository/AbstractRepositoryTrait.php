@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -15,7 +17,7 @@ use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
 use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\CollectionTrait;
 use Discord\Helpers\LegacyCacheWrapper;
 use Discord\Http\Endpoint;
@@ -589,9 +591,9 @@ trait AbstractRepositoryTrait
      *
      * @param callable $callback
      *
-     * @return CollectionInterface
+     * @return ExCollectionInterface
      *
-     * @todo This method will be typed to return a CollectionInterface in v11
+     * @todo This method will be typed to return an ExCollectionInterface in v11
      */
     public function filter(callable $callback)
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -139,7 +141,7 @@ final class BigInt
             return \gmp_testbit(self::floatCast($num1), $num2);
         }
 
-        return $num1 & (1 << $num2);
+        return (bool) ($num1 & (1 << $num2));
     }
 
     /**

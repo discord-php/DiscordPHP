@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -12,7 +14,6 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
-use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Poll\PollAnswer;
 use Discord\Parts\Channel\Poll\PollMedia;
@@ -30,7 +31,7 @@ use React\Promise\PromiseInterface;
  *
  * @property PollMedia              $question            The question of the poll. Only text is supported.
  * @property PollAnswerRepository   $answers             Each of the answers available in the poll.
- * @property Carbon                 $expiry	             The time when the poll ends.
+ * @property Carbon|null            $expiry	             The time when the poll ends.
  * @property bool                   $allow_multiselect   Whether a user can select multiple answers.
  * @property int                    $layout_type         The layout type of the poll.
  * @property PollResults|null       $results             The results of the poll.
@@ -66,6 +67,16 @@ class Poll extends Part
     ];
 
     /**
+     * Returns the question attribute.
+     *
+     * @return PollMedia
+     */
+    protected function getQuestionAttribute(): PollMedia
+    {
+        return $this->factory->part(PollMedia::class, (array) $this->attributes['question'], true);
+    }
+
+    /**
      * Sets the answers attribute.
      *
      * @param array $answers
@@ -88,24 +99,18 @@ class Poll extends Part
     }
 
     /**
-     * Returns the question attribute.
-     *
-     * @return PollMedia
-     */
-    protected function getQuestionAttribute(): PollMedia
-    {
-        return $this->factory->part(PollMedia::class, (array) $this->attributes['question'], true);
-    }
-
-    /**
      * Return the expiry attribute.
      *
-     * @return Carbon
+     * @return Carbon|null
      *
      * @throws \Exception
      */
-    protected function getExpiryAttribute(): Carbon
+    protected function getExpiryAttribute(): ?Carbon
     {
+        if (! isset($this->attributes['expiry'])) {
+            return null;
+        }
+
         return Carbon::parse($this->attributes['expiry']);
     }
 

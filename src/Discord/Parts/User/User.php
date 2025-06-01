@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -17,9 +19,10 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Message\AllowedMentions;
 use React\Promise\PromiseInterface;
-
 use Stringable;
+
 use function React\Promise\resolve;
 
 /**
@@ -29,27 +32,29 @@ use function React\Promise\resolve;
  *
  * @since 2.0.0
  *
- * @property string       $id                     The unique identifier of the user.
- * @property string       $username               The username of the user.
- * @property string       $discriminator          The discriminator of the user.
- * @property string|null  $global_name            The user's display name, if it is set. For bots, this is the application name.
- * @property string       $displayname            The display name of the client.
- * @property ?string      $avatar                 The avatar URL of the user.
- * @property string|null  $avatar_hash            The avatar hash of the user.
- * @property bool|null    $bot                    Whether the user is a bot.
- * @property bool|null    $system                 Whether the user is a Discord system user.
- * @property bool|null    $mfa_enabled            Whether MFA is enabled.
- * @property ?string|null $banner                 The banner URL of the user.
- * @property string|null  $banner_hash            The banner hash of the user.
- * @property ?int|null    $accent_color           The user's banner color encoded as an integer representation of hexadecimal color code.
- * @property string|null  $locale                 User locale.
- * @property bool|null    $verified               Whether the user is verified.
- * @property ?string|null $email                  User email.
- * @property int|null     $flags                  User flags.
- * @property int|null     $premium_type           Type of nitro subscription.
- * @property int|null     $public_flags           Public flags on the user.
- * @property int|null     $avatar_decoration      The user's avatar decoration URL.
- * @property int|null     $avatar_decoration_hash The user's avatar decoration hash.
+ * @property string             $id                     The unique identifier of the user.
+ * @property string             $username               The username of the user.
+ * @property string             $discriminator          The discriminator of the user.
+ * @property string|null        $global_name            The user's display name, if it is set. For bots, this is the application name.
+ * @property string             $displayname            The display name of the client.
+ * @property ?string            $avatar                 The avatar URL of the user.
+ * @property string|null        $avatar_hash            The avatar hash of the user.
+ * @property bool|null          $bot                    Whether the user is a bot.
+ * @property bool|null          $system                 Whether the user is a Discord system user.
+ * @property bool|null          $mfa_enabled            Whether MFA is enabled.
+ * @property ?string|null       $banner                 The banner URL of the user.
+ * @property string|null        $banner_hash            The banner hash of the user.
+ * @property ?int|null          $accent_color           The user's banner color encoded as an integer representation of hexadecimal color code.
+ * @property string|null        $locale                 User locale.
+ * @property bool|null          $verified               Whether the user is verified.
+ * @property ?string|null       $email                  User email.
+ * @property int|null           $flags                  User flags.
+ * @property int|null           $premium_type           Type of nitro subscription.
+ * @property int|null           $public_flags           Public flags on the user.
+ * @property int|null           $avatar_decoration      The user's avatar decoration URL.
+ * @property int|null           $avatar_decoration_hash The user's avatar decoration hash.
+ * @property ?PrimaryGuild|null $primary_guild          The primary guild of the user.
+ * @property ?Collectibles|null $collectibles           The user's collectibles.
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
@@ -87,18 +92,20 @@ class User extends Part implements Stringable
         'discriminator',
         'global_name',
         'avatar',
-        'avatar_decoration',
         'bot',
         'system',
         'mfa_enabled',
+        'banner',
+        'accent_color',
         'locale',
         'verified',
         'email',
         'flags',
-        'banner',
-        'accent_color',
         'premium_type',
         'public_flags',
+        'avatar_decoration',
+        'primary_guild',
+        'collectibles',
     ];
 
     /**
@@ -133,7 +140,7 @@ class User extends Part implements Stringable
      * @param MessageBuilder|string                 $message          The message builder that should be converted into a message, or the string content of the message.
      * @param bool                                  $tts              Whether the message is TTS.
      * @param \Discord\Parts\Embed\Embed|array|null $embed            An embed object or array to send in the message.
-     * @param array|null                            $allowed_mentions Allowed mentions object for the message.
+     * @param AllowedMentions|array|null            $allowed_mentions Allowed mentions object for the message.
      * @param Message|null                          $replyTo          Sends the message as a reply to the given message instance.
      *
      * @return PromiseInterface<Message>
@@ -205,7 +212,7 @@ class User extends Part implements Stringable
      *
      * @return ?string The client avatar's hash.
      */
-    protected function getAvatarHashAttribute(): ?string
+    public function getAvatarHashAttribute(): ?string
     {
         return $this->attributes['avatar'];
     }
@@ -244,7 +251,7 @@ class User extends Part implements Stringable
      *
      * @return ?string The client avatar decoration's hash.
      */
-    protected function getAvatarDecorationHashAttribute(): ?string
+    public function getAvatarDecorationHashAttribute(): ?string
     {
         return $this->attributes['avatar_decoration'];
     }
@@ -286,6 +293,30 @@ class User extends Part implements Stringable
     protected function getBannerHashAttribute(): ?string
     {
         return $this->attributes['banner'] ?? null;
+    }
+
+    /**
+     * Returns the primary guild for the client.
+     */
+    protected function getPrimaryGuildAttribute(): ?PrimaryGuild
+    {
+        if (! isset($this->attributes['primary_guild'])) {
+            return null;
+        }
+
+        return $this->factory->part(PrimaryGuild::class, (array) $this->attributes['primary_guild'], true);
+    }
+
+    /**
+     * Returns the collectibles for the client.
+     */
+    protected function getCollectiblesAttribute(): ?Collectibles
+    {
+        if (! isset($this->attributes['collectibles'])) {
+            return null;
+        }
+
+        return $this->factory->part(Collectibles::class, (array) $this->attributes['collectibles'], true);
     }
 
     /**

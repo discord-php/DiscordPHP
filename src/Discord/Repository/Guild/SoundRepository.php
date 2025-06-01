@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -64,10 +66,12 @@ class SoundRepository extends AbstractRepository
      */
     protected function cacheFreshen($response): PromiseInterface
     {
-        foreach ($response as $value) foreach ($value as $value) {
-            $value = array_merge($this->vars, (array) $value);
-            $part = $this->factory->create($this->class, $value, true);
-            $items[$part->{$this->discrim}] = $part;
+        foreach ($response as $value) {
+            foreach ($value as $value) {
+                $value = array_merge($this->vars, (array) $value);
+                $part = $this->factory->create($this->class, $value, true);
+                $items[$part->{$this->discrim}] = $part;
+            }
         }
 
         if (empty($items)) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -20,12 +22,21 @@ namespace Discord\Builders\Components;
  *
  * @since 7.0.0
  */
-class ActionRow extends Component
+class ActionRow extends Layout
 {
+    public const USAGE = ['Message', 'Modal'];
+
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_ACTION_ROW;
+
     /**
      * Components contained by the action row.
      *
-     * @var Component[]
+     * @var ComponentObject[]
      */
     private $components = [];
 
@@ -42,21 +53,25 @@ class ActionRow extends Component
     /**
      * Adds a component to the action row.
      *
-     * @param Component $component Component to add.
+     * @param ComponentObject $component Component to add.
      *
      * @throws \InvalidArgumentException
      * @throws \OverflowException
      *
      * @return $this
      */
-    public function addComponent(Component $component): self
+    public function addComponent(ComponentObject $component): self
     {
         if ($component instanceof ActionRow) {
             throw new \InvalidArgumentException('You cannot add another `ActionRow` to this action row.');
         }
 
         if ($component instanceof SelectMenu) {
-            throw new \InvalidArgumentException('Cannot add a select menu to an action row.');
+            foreach ($this->components as $existingComponent) {
+                if ($existingComponent instanceof SelectMenu) {
+                    throw new \InvalidArgumentException('You cannot add more than one select menu to an action row.');
+                }
+            }
         }
 
         if (count($this->components) >= 5) {
@@ -71,11 +86,11 @@ class ActionRow extends Component
     /**
      * Removes a component from the action row.
      *
-     * @param Component $component Component to remove.
+     * @param ComponentObject $component Component to remove.
      *
      * @return $this
      */
-    public function removeComponent(Component $component): self
+    public function removeComponent(ComponentObject $component): self
     {
         if (($idx = array_search($component, $this->components)) !== null) {
             array_splice($this->components, $idx, 1);
@@ -99,7 +114,7 @@ class ActionRow extends Component
     /**
      * Returns all the components in the action row.
      *
-     * @return Component[]
+     * @return ComponentObject[]
      */
     public function getComponents(): array
     {
@@ -112,7 +127,7 @@ class ActionRow extends Component
     public function jsonSerialize(): array
     {
         return [
-            'type' => Component::TYPE_ACTION_ROW,
+            'type' => $this->type,
             'components' => $this->components,
         ];
     }

@@ -82,7 +82,7 @@ reason       string reason for the ban
 
    $member->ban(5, 'bad person')->then(function (Ban $ban) {
        // ...
-   })->done();
+   });
 
 Set the nickname of the member
 ==============================
@@ -104,7 +104,7 @@ nick string nickname of the member, null to clear, default null
 
    $member->setNickname('newnick')->then(function () {
        // ...
-   })->done();
+   });
 
 Move member to channel
 ======================
@@ -126,13 +126,13 @@ Parameters
 
    $member->moveMember($channel)->then(function () {
        // ...
-   })->done();
+   });
 
    // or
 
    $member->moveMember('123451231231')->then(function () {
        // ...
-   })->done();
+   });
 
 Add member to role
 ==================
@@ -154,13 +154,13 @@ role `Role <#role>`_ or string the role to add the member to
 
    $member->addRole($role)->then(function () {
        // ...
-   })->done();
+   });
 
    // or
 
    $member->addRole('1231231231')->then(function () {
        // ...
-   })->done();
+   });
 
 Remove member from role
 =======================
@@ -182,13 +182,13 @@ role `Role <#role>`_ or string the role to remove the member from
 
    $member->removeRole($role)->then(function () {
        // ...
-   })->done();
+   });
 
    // or
 
    $member->removeRole('1231231231')->then(function () {
        // ...
-   })->done();
+   });
 
 Timeout member
 ==============
@@ -210,12 +210,12 @@ Parameters
 
    $member->timeoutMember(new Carbon('6 hours'))->then(function () {
        // ...
-   })->done();
+   });
 
    // to remove
    $member->timeoutMember()->then(function () {
        // ...
-   })->done();
+   });
 
 Get permissions of member
 =========================
@@ -239,13 +239,13 @@ Parameters
 
    $member->getPermissions($channel)->then(function (RolePermission $permission) {
        // ...
-   })->done();
+   });
 
    // or
 
    $member->getPermissions()->then(function (RolePermission $permission) {
        // ...
-   })->done();
+   });
 
 Get guild specific avatar URL
 =============================

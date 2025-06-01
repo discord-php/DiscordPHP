@@ -43,7 +43,7 @@ $guild->createRole([
     // ...
 ])->then(function (Role $role) {
     // ...
-})->done();
+});
 ```
 
 ### Transferring ownership of guild
@@ -58,9 +58,9 @@ Transfers the ownership of the guild to another member. The bot must own the gui
 | reason | string              | Reason for Audit Log        |
 
 ```php
-$guild->transferOwnership($member)->then(...)->done();
+$guild->transferOwnership($member)->then(...);
 // or
-$guild->transferOwnership('member_id')->then(...)->done();
+$guild->transferOwnership('member_id')->then(...);
 ```
 
 ### Unbanning a member with a User or user ID
@@ -74,9 +74,9 @@ Unbans a member when passed a `User` object or a user ID. If you have the ban ob
 | user_id | `User` or user ID | The user to unban |
 
 ```php
-$guild->unban($user)->then(...)->done();
+$guild->unban($user)->then(...);
 // or
-$guild->unban('user_id')->then(...)->done();
+$guild->unban('user_id')->then(...);
 ```
 
 ### Querying the Guild audit log
@@ -102,7 +102,7 @@ $guild->getAuditLog([
     foreach ($auditLog->audit_log_entries as $entry) {
         // $entry->...
     }
-})->done();
+});
 ```
 
 ### Creating an Emoji
@@ -127,5 +127,5 @@ $guild->createEmoji([
 'audit-log reason'
 )->then(function (Emoji $emoji) {
     // ...
-})->done();
+});
 ```

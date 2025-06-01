@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -12,7 +14,7 @@
 namespace Discord\Repository\Channel;
 
 use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;
@@ -142,7 +144,7 @@ class ThreadRepository extends AbstractRepository
             $endpoint->addQuery('before', $before);
         }
 
-        return $this->http->get(Endpoint::bind($endpoint, $this->vars['channel_id']))
+        return $this->http->get(Endpoint::bind((string) $endpoint, $this->vars['channel_id']))
             ->then(fn ($response) => $this->handleThreadPaginationResponse($response));
     }
 
@@ -151,9 +153,9 @@ class ThreadRepository extends AbstractRepository
      *
      * @param object $response
      *
-     * @return CollectionInterface|Thread[]
+     * @return ExCollectionInterface|Thread[]
      */
-    private function handleThreadPaginationResponse(object $response): CollectionInterface
+    private function handleThreadPaginationResponse(object $response): ExCollectionInterface
     {
         $collection = Collection::for(Thread::class);
 

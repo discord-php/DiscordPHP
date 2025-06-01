@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -20,6 +22,8 @@ namespace Discord\Builders\Components;
  */
 class MentionableSelect extends SelectMenu
 {
+    public const USAGE = ['Message'];
+
     /**
      * Component type.
      *

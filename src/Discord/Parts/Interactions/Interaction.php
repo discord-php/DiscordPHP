@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -12,7 +14,9 @@
 namespace Discord\Parts\Interactions;
 
 use Discord\Builders\Components\Component;
+use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\MessageBuilder;
+use Discord\Exceptions\AttachmentSizeException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
@@ -20,7 +24,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Command\Choice;
-use Discord\Parts\Interactions\Request\Component as RequestComponent;
+use Discord\Parts\Channel\Message\Component as RequestComponent;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
@@ -40,22 +44,24 @@ use function React\Promise\reject;
  *
  * @since 7.0.0
  *
- * @property      string                 $id              ID of the interaction.
- * @property      string                 $application_id  ID of the application the interaction is for.
- * @property      int                    $type            Type of interaction.
- * @property      InteractionData|null   $data            Data associated with the interaction.
- * @property      string|null            $guild_id        ID of the guild the interaction was sent from.
- * @property-read Guild|null             $guild           Guild the interaction was sent from.
- * @property      string|null            $channel_id      ID of the channel the interaction was sent from.
- * @property-read Channel|null           $channel         Channel the interaction was sent from.
- * @property      Member|null            $member          Member who invoked the interaction.
- * @property      User|null              $user            User who invoked the interaction.
- * @property      string                 $token           Continuation token for responding to the interaction.
- * @property-read int                    $version         Version of interaction.
- * @property      Message|null           $message         Message that triggered the interactions, when triggered from message components.
- * @property-read ChannelPermission|null $app_permissions Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
- * @property      string|null            $locale          The selected language of the invoking user.
- * @property      string|null            $guild_locale    The guild's preferred locale, if invoked in a guild.
+ * @property      string                 $id                    ID of the interaction.
+ * @property      string                 $application_id        ID of the application the interaction is for.
+ * @property      int                    $type                  Type of interaction.
+ * @property      InteractionData|null   $data                  Data associated with the interaction.
+ * @property      string|null            $guild_id              ID of the guild the interaction was sent from.
+ * @property-read Guild|null             $guild                 Guild the interaction was sent from.
+ * @property      string|null            $channel_id            ID of the channel the interaction was sent from.
+ * @property-read Channel|null           $channel               Channel the interaction was sent from.
+ * @property      Member|null            $member                Member who invoked the interaction.
+ * @property      User|null              $user                  User who invoked the interaction.
+ * @property      string                 $token                 Continuation token for responding to the interaction.
+ * @property-read int                    $version               Version of interaction.
+ * @property      Message|null           $message               Message that triggered the interactions, when triggered from message components.
+ * @property-read ChannelPermission|null $app_permissions       Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
+ * @property      string|null            $locale                The selected language of the invoking user.
+ * @property      string|null            $guild_locale          The guild's preferred locale, if invoked in a guild.
+ * @property      int|null               $context               Context where the interaction was triggered from.
+ * @property      int                    $attachment_size_limit Attachment size limit in bytes.
  */
 class Interaction extends Part
 {
@@ -87,20 +93,24 @@ class Interaction extends Part
      */
     protected $responded = false;
 
-    const TYPE_PING = 1;
-    const TYPE_APPLICATION_COMMAND = 2;
-    const TYPE_MESSAGE_COMPONENT = 3;
-    const TYPE_APPLICATION_COMMAND_AUTOCOMPLETE = 4;
-    const TYPE_MODAL_SUBMIT = 5;
+    public const TYPE_PING = 1;
+    public const TYPE_APPLICATION_COMMAND = 2;
+    public const TYPE_MESSAGE_COMPONENT = 3;
+    public const TYPE_APPLICATION_COMMAND_AUTOCOMPLETE = 4;
+    public const TYPE_MODAL_SUBMIT = 5;
 
-    const RESPONSE_TYPE_PONG = 1;
-    const RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE = 4;
-    const RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = 5;
-    const RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE = 6;
-    const RESPONSE_TYPE_UPDATE_MESSAGE = 7;
-    const RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8;
-    const RESPONSE_TYPE_MODAL = 9;
-    const RESPONSE_TYPE_PREMIUM_REQUIRED = 10;
+    public const RESPONSE_TYPE_PONG = 1;
+    public const RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE = 4;
+    public const RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = 5;
+    public const RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE = 6;
+    public const RESPONSE_TYPE_UPDATE_MESSAGE = 7;
+    public const RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8;
+    public const RESPONSE_TYPE_MODAL = 9;
+    public const RESPONSE_TYPE_PREMIUM_REQUIRED = 10;
+
+    const CONTEXT_TYPE_GUILD = 0;
+    const CONTEXT_TYPE_BOT_DM = 1;
+    const CONTEXT_TYPE_PRIVATE_CHANNEL = 2;
 
     /**
      * Returns true if this interaction has been internally responded.
@@ -303,6 +313,10 @@ class Interaction extends Part
             return reject(new \LogicException('You can only update messages that occur due to a message component interaction.'));
         }
 
+        if ($this->hasAttachmentsExceedingLimit($builder)) {
+            return reject(New AttachmentSizeException());
+        }
+
         return $this->respond([
             'type' => self::RESPONSE_TYPE_UPDATE_MESSAGE,
             'data' => $builder,
@@ -347,6 +361,10 @@ class Interaction extends Part
     {
         if (! $this->responded) {
             return reject(new \RuntimeException('Interaction has not been responded to.'));
+        }
+
+        if ($this->hasAttachmentsExceedingLimit($builder)) {
+            return reject(New AttachmentSizeException());
         }
 
         return (function () use ($builder): PromiseInterface {
@@ -396,8 +414,12 @@ class Interaction extends Part
             return reject(new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.'));
         }
 
+        if ($this->hasAttachmentsExceedingLimit($builder)) {
+            return reject(New AttachmentSizeException());
+        }
+
         if ($ephemeral) {
-            $builder->setFlags(Message::FLAG_EPHEMERAL);
+            $builder->setFlags($builder->getFlags() | Message::FLAG_EPHEMERAL);
         }
 
         return (function () use ($builder): PromiseInterface {
@@ -433,8 +455,12 @@ class Interaction extends Part
             $builder = MessageBuilder::new()->setContent($builder);
         }
 
+        if ($this->hasAttachmentsExceedingLimit($builder)) {
+            return reject(New AttachmentSizeException());
+        }
+
         if ($ephemeral) {
-            $builder->setFlags(Message::FLAG_EPHEMERAL);
+            $builder->setFlags($builder->getFlags() | Message::FLAG_EPHEMERAL);
         }
 
         return $this->respond([
@@ -497,6 +523,10 @@ class Interaction extends Part
     {
         if (! $this->responded) {
             return reject(new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.'));
+        }
+
+        if ($this->hasAttachmentsExceedingLimit($builder)) {
+            return reject(New AttachmentSizeException());
         }
 
         return (function () use ($message_id, $builder): PromiseInterface {
@@ -583,10 +613,10 @@ class Interaction extends Part
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
-     * @param string            $title      The title of the popup modal, max 45 characters
-     * @param string            $custom_id  Developer-defined identifier for the component, max 100 characters
-     * @param array|Component[] $components Between 1 and 5 (inclusive) components that make up the modal contained in Action Row
-     * @param callable|null     $submit     The function to call once modal is submitted.
+     * @param string                        $title      The title of the popup modal, max 45 characters
+     * @param string                        $custom_id  Developer-defined identifier for the component, max 100 characters
+     * @param array|ComponentObject[]       $components Between 1 and 5 (inclusive) components that make up the modal contained in Action Row
+     * @param callable|null                 $submit     The function to call once modal is submitted.
      *
      * @throws \LogicException  Interaction is Ping or Modal Submit.
      * @throws \LengthException Modal title is longer than 45 characters.
@@ -631,5 +661,23 @@ class Interaction extends Part
 
             return $response;
         });
+    }
+
+    /**
+     * Checks if any attachments in the MessageBuilder exceed the attachment size limit.
+     *
+     * @param MessageBuilder $builder The MessageBuilder instance to check.
+     *
+     * @return bool
+     */
+    protected function hasAttachmentsExceedingLimit(MessageBuilder $builder): bool
+    {
+        $attachments = $builder->getAttachments();
+        foreach ($attachments as $attachment) {
+            if ($attachment->size > $this->attachment_size_limit) {
+                return true;
+            }
+        }
+        return false;
     }
 }

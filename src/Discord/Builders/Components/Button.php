@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -28,13 +30,23 @@ use function Discord\poly_strlen;
  *
  * @since 7.0.0
  */
-class Button extends Component
+class Button extends Interactive
 {
+    public const USAGE = ['Message'];
+
     public const STYLE_PRIMARY = 1;
     public const STYLE_SECONDARY = 2;
     public const STYLE_SUCCESS = 3;
     public const STYLE_DANGER = 4;
     public const STYLE_LINK = 5;
+    public const STYLE_PREMIUM = 6;
+
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_BUTTON;
 
     /**
      * Style of button.
@@ -58,11 +70,11 @@ class Button extends Component
     private $emoji;
 
     /**
-     * Custom ID to send with the button.
+     * 	Identifier for a purchasable SKU, only available when using premium-style buttons.
      *
      * @var string|null
      */
-    private $custom_id;
+    private $sku_id;
 
     /**
      * URL to send as the button. Only for link buttons.
@@ -114,7 +126,7 @@ class Button extends Component
 
         $this->style = $style;
         if ($this->style != self::STYLE_LINK) {
-            $this->setCustomId($custom_id ?? $this->generateUuid());
+            $this->setCustomId($custom_id ?? self::generateUuid());
         }
     }
 
@@ -151,6 +163,7 @@ class Button extends Component
             self::STYLE_SUCCESS,
             self::STYLE_DANGER,
             self::STYLE_LINK,
+            self::STYLE_PREMIUM,
         ])) {
             throw new \InvalidArgumentException('Invalid button style.');
         }
@@ -242,8 +255,8 @@ class Button extends Component
      */
     public function setCustomId(?string $custom_id): self
     {
-        if ($this->style == Button::STYLE_LINK) {
-            throw new \LogicException('You cannot set the custom ID of a link button.');
+        if ($this->style == Button::STYLE_LINK || $this->style == Button::STYLE_PREMIUM) {
+            throw new \LogicException('You cannot set the custom ID of a link or premium button.');
         }
 
         if (isset($custom_id) && poly_strlen($custom_id) > 100) {
@@ -251,6 +264,26 @@ class Button extends Component
         }
 
         $this->custom_id = $custom_id;
+
+        return $this;
+    }
+
+    /**
+     * Sets the SKU ID for the button. Only valid for premium buttons.
+     *
+     * @param string|null $sku_id
+     *
+     * @throws \LogicException
+     *
+     * @return $this
+     */
+    public function setSkuId(?string $sku_id): self
+    {
+        if ($this->style != Button::STYLE_PREMIUM) {
+            throw new \LogicException('You cannot set the SKU ID of a non-premium button.');
+        }
+
+        $this->sku_id = $sku_id;
 
         return $this;
     }
@@ -313,12 +346,12 @@ class Button extends Component
      */
     public function setListener(?callable $callback, Discord $discord, bool $oneOff = false): self
     {
-        if ($this->style == Button::STYLE_LINK) {
-            throw new \LogicException('You cannot add a listener to a link button.');
+        if ($this->style == Button::STYLE_LINK || $this->style == Button::STYLE_PREMIUM) {
+            throw new \LogicException('You cannot add a listener to a link or premium button.');
         }
 
         if (! isset($this->custom_id)) {
-            $this->custom_id = $this->generateUuid();
+            $this->custom_id = self::generateUuid();
         }
 
         // Remove any existing listener
@@ -335,7 +368,7 @@ class Button extends Component
         $this->listener = function (Interaction $interaction) use ($callback, $oneOff) {
             if ($interaction->data->component_type == Component::TYPE_BUTTON && $interaction->data->custom_id == $this->custom_id) {
                 $response = $callback($interaction);
-                $ack = static fn() => $interaction->isResponded() ?: $interaction->acknowledge();
+                $ack = static fn () => $interaction->isResponded() ?: $interaction->acknowledge();
 
                 if ($response instanceof PromiseInterface) {
                     $response->then($ack);
@@ -395,13 +428,13 @@ class Button extends Component
     }
 
     /**
-     * Returns the custom ID of the button.
+     * Returns the SKU ID for the button. Only for premium buttons.
      *
      * @return string|null
      */
-    public function getCustomId(): ?string
+    public function getSkuId(): ?string
     {
-        return $this->custom_id;
+        return $this->sku_id;
     }
 
     /**
@@ -430,29 +463,38 @@ class Button extends Component
     public function jsonSerialize(): array
     {
         $content = [
-            'type' => Component::TYPE_BUTTON,
+            'type' => $this->type,
             'style' => $this->style,
         ];
 
-        if (isset($this->label)) {
-            $content['label'] = $this->label;
-        }
-
-        if (isset($this->emoji)) {
-            $content['emoji'] = $this->emoji;
-        }
-
-        if (isset($this->custom_id)) {
-            $content['custom_id'] = $this->custom_id;
-        } elseif ($this->style != Button::STYLE_LINK) {
-            throw new \DomainException('Buttons must have a `custom_id` field set.');
-        }
-
-        if ($this->style == Button::STYLE_LINK) {
-            if (! isset($this->url)) {
-                throw new \DomainException('Link buttons must have a `url` field set.');
+        if ($this->style != Button::STYLE_PREMIUM) {
+            if (isset($this->label)) {
+                $content['label'] = $this->label;
             }
-            $content['url'] = $this->url;
+
+            if (isset($this->emoji)) {
+                $content['emoji'] = $this->emoji;
+            }
+
+            if (isset($this->custom_id)) {
+                $content['custom_id'] = $this->custom_id;
+            } elseif ($this->style != Button::STYLE_LINK) {
+                throw new \DomainException('Buttons must have a `custom_id` field set.');
+            }
+
+            if ($this->style == Button::STYLE_LINK) {
+                if (! isset($this->url)) {
+                    throw new \DomainException('Link buttons must have a `url` field set.');
+                }
+                $content['url'] = $this->url;
+            }
+        }
+
+        if ($this->style == Button::STYLE_PREMIUM) {
+            if (! isset($this->sku_id)) {
+                throw new \DomainException('Premium buttons must have a `sku_id` field set.');
+            }
+            $content['sku_id'] = $this->sku_id;
         }
 
         if ($this->disabled) {

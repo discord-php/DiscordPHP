@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -12,7 +14,7 @@
 namespace Discord\Parts\Guild;
 
 use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use Stringable;
@@ -26,7 +28,7 @@ use Stringable;
  *
  * @property ?string           $id             The identifier for the emoji.
  * @property string            $name           The name of the emoji.
- * @property CollectionInterface|Role[] $roles          The roles that are allowed to use the emoji.
+ * @property ExCollectionInterface|Role[] $roles          The roles that are allowed to use the emoji.
  * @property User|null         $user           User that created this emoji.
  * @property bool|null         $require_colons Whether the emoji requires colons to be triggered.
  * @property bool|null         $managed        Whether this emoji is managed by a role.
@@ -68,9 +70,9 @@ class Emoji extends Part implements Stringable
     /**
      * Returns the roles attribute.
      *
-     * @return CollectionInterface<?Role> A collection of roles for the emoji.
+     * @return ExCollectionInterface<?Role> A collection of roles for the emoji.
      */
-    protected function getRolesAttribute(): CollectionInterface
+    protected function getRolesAttribute(): ExCollectionInterface
     {
         $roles = new Collection();
 

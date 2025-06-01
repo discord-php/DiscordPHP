@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -13,6 +15,7 @@ namespace Discord\Parts\Interactions\Request;
 
 use Discord\Builders\Components\Component as ComponentBuilder;
 use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 
@@ -24,23 +27,25 @@ use Discord\Parts\Part;
  * @link https://discord.com/developers/docs/interactions/message-components#component-object
  *
  * @since 7.0.0
+ * @deprecated 10.11.0 Use \Discord\Parts\Channel\Message\Component` instead.
+ * @see \Discord\Parts\Channel\Message\Component
  *
- * @property int                         $type        Component type.
- * @property string|null                 $custom_id   Developer-defined identifier for the component; max 100 characters. (Buttons, Select Menus)
- * @property bool|null                   $disabled    Whether the component is disabled; defaults to `false`. (Buttons, Select Menus)
- * @property int|null                    $style       A button style. (Buttons)
- * @property string|null                 $label       Text that appears on the button; max 80 characters. (Buttons)
- * @property Emoji|null                  $emoji       Name, id, and animated. (Buttons)
- * @property string|null                 $url         URL for link-style buttons. (Buttons)
- * @property object[]|null               $options     The choices in the select; max 25. (Select Menus)
- * @property string|null                 $placeholder Custom placeholder text if nothing is selected; max 150 characters. (Select Menus, Text Inputs)
- * @property int|null                    $min_values  The minimum number of items that must be chosen; default 1, min 0, max 25. (Select Menus)
- * @property int|null                    $max_values  The maximum number of items that can be chosen; default 1, max 25. (Select Menus)
- * @property CollectionInterface|Component[]|null $components  A list of child components. (Action Rows)
- * @property int|null                    $min_length  Minimum input length for a text input. (Text Inputs)
- * @property int|null                    $max_length  Maximum input length for a text input. (Text Inputs)
- * @property bool|null                   $required    Whether this component is required to be filled; defaults to `true` (Text Inputs)
- * @property string|null                 $value       Value for this component. (Text Inputs)
+ * @property int                                    $type        Component type.
+ * @property string|null                            $custom_id   Developer-defined identifier for the component; max 100 characters. (Buttons, Select Menus)
+ * @property bool|null                              $disabled    Whether the component is disabled; defaults to `false`. (Buttons, Select Menus)
+ * @property int|null                               $style       A button style. (Buttons)
+ * @property string|null                            $label       Text that appears on the button; max 80 characters. (Buttons)
+ * @property Emoji|null                             $emoji       Name, id, and animated. (Buttons)
+ * @property string|null                            $url         URL for link-style buttons. (Buttons)
+ * @property object[]|null                          $options     The choices in the select; max 25. (Select Menus)
+ * @property string|null                            $placeholder Custom placeholder text if nothing is selected; max 150 characters. (Select Menus, Text Inputs)
+ * @property int|null                               $min_values  The minimum number of items that must be chosen; default 1, min 0, max 25. (Select Menus)
+ * @property int|null                               $max_values  The maximum number of items that can be chosen; default 1, max 25. (Select Menus)
+ * @property ExCollectionInterface|Component[]|null $components  A list of child components. (Action Rows)
+ * @property int|null                               $min_length  Minimum input length for a text input. (Text Inputs)
+ * @property int|null                               $max_length  Maximum input length for a text input. (Text Inputs)
+ * @property bool|null                              $required    Whether this component is required to be filled; defaults to `true` (Text Inputs)
+ * @property string|null                            $value       Value for this component. (Text Inputs)
  */
 class Component extends Part
 {
@@ -69,9 +74,9 @@ class Component extends Part
     /**
      * Gets the sub-components of the component.
      *
-     * @return CollectionInterface|Component[]|null $components
+     * @return ExCollectionInterface|Component[]|null $components
      */
-    protected function getComponentsAttribute(): ?Collection
+    protected function getComponentsAttribute(): ?ExCollectionInterface
     {
         if (! isset($this->attributes['components']) && $this->type != ComponentBuilder::TYPE_ACTION_ROW) {
             return null;
