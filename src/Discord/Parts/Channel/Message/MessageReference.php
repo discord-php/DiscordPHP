@@ -17,7 +17,6 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
-use JsonSerializable;
 
 /**
  * Represents a message reference object, which points to another message for replies, forwards, pins, etc.
