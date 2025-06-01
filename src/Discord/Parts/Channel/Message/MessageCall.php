@@ -20,6 +20,8 @@ use Discord\Parts\User\User;
 /**
  * Represents information about a call in a private channel.
  *
+ * @since 10.11.2
+ *
  * @link https://discord.com/developers/docs/resources/message#message-call-object
  *
  * @property array        $participants      Array of user object IDs that participated in the call.
@@ -36,16 +38,6 @@ class MessageCall extends Part
         'participants',
         'ended_timestamp',
     ];
-
-    /**
-     * Gets the participants attribute.
-     *
-     * @return array Array of user IDs (snowflakes).
-     */
-    protected function getParticipantsAttribute(): array
-    {
-        return $this->attributes['participants'];
-    }
 
     /**
      * Gets the ended timestamp.
@@ -68,6 +60,9 @@ class MessageCall extends Part
      */
     protected function getUsersAttribute(): array
     {
-        return array_map(fn($userData) => $this->discord->users->get('id', $userData) ?? $this->factory->create(User::class, ['id' => $userData], true), $this->attributes['participants']);
+        return array_map(
+            fn($userData) => $this->discord->users->get('id', $userData) ?? $this->factory->create(User::class, ['id' => $userData], true),
+            $this->attributes['participants']
+        );
     }
 }
