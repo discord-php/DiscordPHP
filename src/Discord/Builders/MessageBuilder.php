@@ -38,7 +38,7 @@ use function Discord\poly_strlen;
  *
  * @author David Cole <david.cole1340@gmail.com>
  */
-class MessageBuilder implements JsonSerializable
+class MessageBuilder extends Builder implements JsonSerializable
 {
     /**
      * Content of the message.
