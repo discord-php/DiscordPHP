@@ -29,6 +29,7 @@ use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Channel\Message\MessageCall;
 use Discord\Parts\Channel\Message\MessageReference;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
@@ -83,6 +84,7 @@ use function React\Promise\reject;
  * @property      int|null                                     $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
  * @property      object|null                                  $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
  * @property      Poll|null                                    $poll                   The poll attached to the message.
+ * @property      MessageCall|null                             $call                   The call associated with the message
  *
  * @property-read bool $crossposted                            Message has been crossposted.
  * @property-read bool $is_crosspost                           Message is a crosspost from another channel.
@@ -227,6 +229,7 @@ class Message extends Part
         'position',
         'role_subscription_data',
         'poll',
+        'call',
 
         // @internal
         'guild_id',
@@ -779,6 +782,20 @@ class Message extends Part
         }
 
         return $this->factory->part(Poll::class, (array) $this->attributes['poll'] + ['channel_id' => $this->channel_id, 'message_id' => $this->id], true);
+    }
+
+    /**
+     * Returns the call attribute.
+     *
+     * @return MessageCall|null
+     */
+    protected function getCallAttribute(): ?MessageCall
+    {
+        if (! isset($this->attributes['call'])) {
+            return null;
+        }
+
+        return $this->factory->part(MessageCall::class, (array) $this->attributes['call'], true);
     }
 
     /**
