@@ -107,4 +107,20 @@ abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
      * @var bool Whether the part has been created.
      */
     public $created = false;
+
+    /** @return array */
+    public function __debugInfo(): array
+    {
+        $vars = get_object_vars($this);
+        unset($vars['http']);
+        unset($vars['factory']);
+        unset($vars['discord']);
+        unset($vars['visible']);
+        unset($vars['hidden']);
+        unset($vars['repositories']);
+        unset($vars['repositories_cache']);
+        unset($vars['fillable']);
+        unset($vars['scriptData']);
+        return $vars;
+    }
 }

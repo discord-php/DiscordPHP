@@ -88,6 +88,10 @@ class MediaGallery extends Content implements Contracts\ComponentV2
      */
     public function jsonSerialize(): array
     {
+        if (empty($this->items)) {
+            throw new \DomainException('MediaGallery must have at least one item.');
+        }
+
         return [
             'type' => $this->type,
             'items' => $this->items,

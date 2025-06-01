@@ -18,6 +18,7 @@ use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Poll;
+use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Role;
@@ -29,9 +30,9 @@ use Discord\WebSockets\Event;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Message\MessageCall;
+use Discord\Parts\Channel\Message\MessageReference;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
-use Discord\Parts\Interactions\Request\Component;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
 use Discord\Repository\Channel\ReactionRepository;
@@ -73,7 +74,7 @@ use function React\Promise\reject;
  * @property      object|null                                  $application            Application of message. Requires rich presence.
  * @property      string|null                                  $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
  * @property      int|null                                     $flags                  Message flags.
- * @property      object|null                                  $message_reference      Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
+ * @property      MessageReference|null                        $message_reference      Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
  * @property      object|null                                  $message_snapshot       The message associated with the message_reference. This is a minimal subset of fields in a message (e.g. author is excluded.).
  * @property      Message|null                                 $referenced_message     The message that is referenced in a reply.
  * @property      MessageInteraction|null                      $interaction            Sent if the message is a response to an Interaction.
@@ -660,6 +661,15 @@ class Message extends Part
         return null;
     }
 
+    protected function getMessageReferenceAttribute(): ?MessageReference
+    {
+        if (! isset($this->attributes['message_reference'])) {
+            return null;
+        }
+
+        return $this->createOf(MessageReference::class, $this->attributes['message_reference']);
+    }
+
     /**
      * Returns the message_snapshot attribute, if present.
      * For forwarded messages, this contains a snapshot of the original message.
@@ -723,7 +733,7 @@ class Message extends Part
     /**
      * Returns the components attribute.
      *
-     * @return ExCollectionInterface|ComponentObject[]|null
+     * @return ExCollectionInterface|Component[]|null
      */
     protected function getComponentsAttribute(): ?ExCollectionInterface
     {
@@ -734,7 +744,7 @@ class Message extends Part
         $components = Collection::for(Component::class, null);
 
         foreach ($this->attributes['components'] as $component) {
-            $components->pushItem($this->createOf(Component::class, $component));
+            $components->pushItem($this->createOf(Component::TYPES[$component->type ?? 0], $component));
         }
 
         return $components;
