@@ -460,7 +460,10 @@ class VoiceClient extends EventEmitter
                     $sendHeartbeat = function () {
                         $this->send(Payload::new(
                             Op::VOICE_HEARTBEAT,
-                            (int) microtime(true)
+                            [
+                                't' => (int) microtime(true),
+                                'seq_ack' => 10
+                            ]
                         ));
                         $this->logger->debug('sending heartbeat');
                         $this->emit('ws-heartbeat', []);
@@ -528,6 +531,7 @@ class VoiceClient extends EventEmitter
                     $buffer[1] = "\x01";
                     $buffer[3] = "\x46";
                     $buffer->writeUInt32BE($this->ssrc, 4);
+
                     /** @var PromiseInterface */
                     $udpfac->createClient("{$data->d->ip}:{$this->udpPort}")->then(function (Socket $client) use (&$ip, &$port, $buffer): void {
                         $this->logger->debug('connected to voice UDP');
@@ -547,10 +551,7 @@ class VoiceClient extends EventEmitter
                             $this->logger->debug('sent UDP heartbeat');
                         });
 
-                        $client->on('error', function ($e): void
-                        {
-                            $this->emit('udp-error', [$e]);
-                        });
+                        $client->on('error', fn ($e) => $this->emit('udp-error', [$e]));
 
                         $decodeUDP = function ($message) use (&$ip, &$port): void {
                             /**
@@ -618,7 +619,7 @@ class VoiceClient extends EventEmitter
                 ],
             );
 
-            $this->logger->debug('sending identify', ['packet' => $payload]);
+            $this->logger->debug('sending identify', ['packet' => $payload->__debugInfo()]);
 
             $this->send($payload);
             $this->sentLoginFrame = true;
