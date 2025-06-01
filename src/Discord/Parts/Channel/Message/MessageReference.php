@@ -21,6 +21,8 @@ use Discord\Parts\Part;
 /**
  * Represents a message reference object, which points to another message for replies, forwards, pins, etc.
  *
+ * @since 10.11.2
+ *
  * @link https://discord.com/developers/docs/resources/message#message-reference-structure
  *
  * @property int|null    $type                Type of reference (0 = DEFAULT, 1 = FORWARD).
