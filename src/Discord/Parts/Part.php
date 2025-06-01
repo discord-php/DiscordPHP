@@ -107,4 +107,10 @@ abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
      * @var bool Whether the part has been created.
      */
     public $created = false;
+
+    /** @return array */
+    public function __debugInfo(): array
+    {
+        return $this->getRawAttributes();
+    }
 }
