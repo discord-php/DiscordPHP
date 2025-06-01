@@ -18,8 +18,17 @@ namespace Discord\Builders\Components;
  *
  * @since 10.5.0
  */
-class Thumbnail extends Component implements Contracts\ComponentV2
+class Thumbnail extends Content implements Contracts\ComponentV2
 {
+    public const USAGE = ['Message'];
+
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_THUMBNAIL;
+
     /**
      * Media item for the thumbnail.
      *
@@ -144,7 +153,7 @@ class Thumbnail extends Component implements Contracts\ComponentV2
     public function jsonSerialize(): array
     {
         $data = [
-            'type' => Component::TYPE_THUMBNAIL,
+            'type' => $this->type,
             'media' => $this->media,
         ];
 

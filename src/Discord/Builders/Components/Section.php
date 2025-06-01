@@ -18,8 +18,17 @@ namespace Discord\Builders\Components;
  *
  * @since 10.5.0
  */
-class Section extends Component implements Contracts\ComponentV2
+class Section extends Layout implements Contracts\ComponentV2
 {
+    public const USAGE = ['Message'];
+
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_SECTION;
+
     /**
      * Array of text display components.
      *
@@ -49,15 +58,19 @@ class Section extends Component implements Contracts\ComponentV2
      * Text displays can only be used within sections.
      *  Use setAccessory() instead for Thumbnail or Button.
      *
-     * @param TextDisplay $component Text display component to add.
+     * @param TextDisplay|string $component Text display component to add.
      *
      * @throws \InvalidArgumentException Component is not a TextDisplay.
      * @throws \OverflowException Section exceeds 3 text components.
      *
      * @return $this
      */
-    public function addComponent(Component $component): self
+    public function addComponent(ComponentObject|string $component): self
     {
+        if (is_string($component)) {
+            $component = TextDisplay::new($component);
+        }
+
         if (! ($component instanceof TextDisplay)) {
             throw new \InvalidArgumentException('Section can only contain TextDisplay components.');
         }
@@ -81,7 +94,7 @@ class Section extends Component implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function setAccessory(Component $component): self
+    public function setAccessory(ComponentObject $component): self
     {
         if (! ($component instanceof Thumbnail || $component instanceof Button)) {
             throw new \InvalidArgumentException('Accessory may only contain Thumbnail or Button component.');
@@ -106,7 +119,7 @@ class Section extends Component implements Contracts\ComponentV2
      *
      * @return Thumbnail|Button|null
      */
-    public function getAccessory(): Component
+    public function getAccessory(): ComponentObject
     {
         return $this->accessory;
     }
@@ -117,13 +130,14 @@ class Section extends Component implements Contracts\ComponentV2
     public function jsonSerialize(): array
     {
         $data = [
-            'type' => Component::TYPE_SECTION,
+            'type' => $this->type,
             'components' => $this->components,
         ];
 
-        if (isset($this->accessory)) {
-            $data['accessory'] = $this->accessory;
+        if (! isset($this->accessory)) {
+            throw new \DomainException('Section must have an accessory component set.');
         }
+        $data['accessory'] = $this->accessory;
 
         return $data;
     }

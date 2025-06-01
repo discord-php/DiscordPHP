@@ -18,8 +18,17 @@ namespace Discord\Builders\Components;
  *
  * @since 10.5.0
  */
-class TextDisplay extends Component implements Contracts\ComponentV2
+class TextDisplay extends Content implements Contracts\ComponentV2
 {
+    public const USAGE = ['Message'];
+
+    /**
+     * Component type.
+     *
+     * @var int
+     */
+    protected $type = Component::TYPE_TEXT_DISPLAY;
+
     /**
      * Content of the text display.
      *
@@ -72,7 +81,7 @@ class TextDisplay extends Component implements Contracts\ComponentV2
     public function jsonSerialize(): array
     {
         return [
-            'type' => Component::TYPE_TEXT_DISPLAY,
+            'type' => $this->type,
             'content' => $this->content,
         ];
     }
