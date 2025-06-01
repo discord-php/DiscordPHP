@@ -119,6 +119,8 @@ abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
         unset($vars['hidden']);
         unset($vars['repositories']);
         unset($vars['repositories_cache']);
+        unset($vars['fillable']);
+        unset($vars['scriptData']);
         return $vars;
     }
 }
