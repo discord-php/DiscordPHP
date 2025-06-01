@@ -2,6 +2,7 @@
 
 namespace Discord\Voice;
 
+use Discord\WebSockets\Payload;
 use Evenement\EventEmitterTrait;
 use Discord\Discord;
 use Discord\Parts\Channel\Channel;
@@ -64,15 +65,15 @@ final class Voice
         $discord->once(Event::VOICE_STATE_UPDATE, fn ($state) => $this->stateUpdate($state, $channel));
         $discord->once(Event::VOICE_SERVER_UPDATE, fn ($state, $discord) => $this->serverUpdate($state, $channel, $discord, $deferred));
 
-        $discord->send([
-            'op' => Op::OP_VOICE_STATE_UPDATE,
-            'd' => [
+        $discord->send(Payload::new(
+            Op::OP_VOICE_STATE_UPDATE,
+            [
                 'guild_id' => $channel->guild_id,
                 'channel_id' => $channel->id,
                 'self_mute' => $mute,
                 'self_deaf' => $deaf,
             ],
-        ]);
+        ));
 
         return $deferred->promise();
     }
