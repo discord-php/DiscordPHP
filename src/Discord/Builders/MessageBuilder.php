@@ -192,8 +192,7 @@ class MessageBuilder implements JsonSerializable
         }
 
         foreach ($attributes['components'] ?? [] as $component) {
-            // @todo
-            //$builder->addComponent($message->createOf(ComponentPart::TYPES[$component->type ?? 0], $component));
+            $builder->addComponent($message->createOf(ComponentPart::TYPES[$component->type ?? 0], $component));
         }
 
         return $builder;
