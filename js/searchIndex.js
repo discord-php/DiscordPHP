@@ -4406,6 +4406,116 @@ Search.appendIndex(
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Parts-Channel-Message-MentionableSelect.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageCall",
+            "name": "MessageCall",
+            "summary": "Represents\u0020information\u0020about\u0020a\u0020call\u0020in\u0020a\u0020private\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageCall.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageCall\u003A\u003AgetEndedTimestampAttribute\u0028\u0029",
+            "name": "getEndedTimestampAttribute",
+            "summary": "Gets\u0020the\u0020ended\u0020timestamp.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageCall.html#method_getEndedTimestampAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageCall\u003A\u003AgetUsersAttribute\u0028\u0029",
+            "name": "getUsersAttribute",
+            "summary": "Gets\u0020the\u0020users.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageCall.html#method_getUsersAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageCall\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageCall.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageInteractionMetadata",
+            "name": "MessageInteractionMetadata",
+            "summary": "Represents\u0020metadata\u0020about\u0020the\u0020interaction\u0020that\u0020caused\u0020a\u0020message.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageInteractionMetadata\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Returns\u0020the\u0020user\u0020who\u0020triggered\u0020the\u0020interaction.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageInteractionMetadata\u003A\u003AgetTargetUserAttribute\u0028\u0029",
+            "name": "getTargetUserAttribute",
+            "summary": "Returns\u0020the\u0020target\u0020user\u0020\u0028if\u0020present\u0029.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getTargetUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageInteractionMetadata\u003A\u003AgetTriggeringInteractionMetadataAttribute\u0028\u0029",
+            "name": "getTriggeringInteractionMetadataAttribute",
+            "summary": "Returns\u0020the\u0020triggering\u0020interaction\u0020metadata\u0020\u0028for\u0020modal\u0020submit\u0020interactions\u0029.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getTriggeringInteractionMetadataAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageInteractionMetadata\u003A\u003AgetOriginalResponseMessageAttribute\u0028\u0029",
+            "name": "getOriginalResponseMessageAttribute",
+            "summary": "Returns\u0020the\u0020original\u0020response\u0020message\u0020associated\u0020with\u0020this\u0020interaction,\u0020if\u0020available.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getOriginalResponseMessageAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageInteractionMetadata\u003A\u003AgetTargetMessageAttribute\u0028\u0029",
+            "name": "getTargetMessageAttribute",
+            "summary": "Returns\u0020the\u0020target\u0020message\u0020associated\u0020with\u0020this\u0020interaction,\u0020if\u0020available.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getTargetMessageAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageInteractionMetadata\u003A\u003AgetInteractedMessageAttribute\u0028\u0029",
+            "name": "getInteractedMessageAttribute",
+            "summary": "Returns\u0020the\u0020interacted\u0020message\u0020associated\u0020with\u0020this\u0020interaction,\u0020if\u0020available.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getInteractedMessageAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageInteractionMetadata\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageInteractionMetadata\u003A\u003AgetChannelAttribute\u0028\u0029",
+            "name": "getChannelAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getChannelAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageInteractionMetadata\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageInteractionMetadata\u003A\u003A\u0024hidden",
+            "name": "hidden",
+            "summary": "Attributes\u0020that\u0020are\u0020hidden\u0020from\u0020debug\u0020info.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_hidden"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageReference",
+            "name": "MessageReference",
+            "summary": "Represents\u0020a\u0020message\u0020reference\u0020object,\u0020which\u0020points\u0020to\u0020another\u0020message\u0020for\u0020replies,\u0020forwards,\u0020pins,\u0020etc.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageReference.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageReference\u003A\u003AgetMessageAttribute\u0028\u0029",
+            "name": "getMessageAttribute",
+            "summary": "Gets\u0020the\u0020message\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageReference.html#method_getMessageAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageReference\u003A\u003AgetChannelAttribute\u0028\u0029",
+            "name": "getChannelAttribute",
+            "summary": "Returns\u0020the\u0020channel\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageReference.html#method_getChannelAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageReference\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020which\u0020the\u0020channel\u0020that\u0020the\u0020message\u0020was\u0020sent\u0020in\u0020belongs\u0020to.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageReference.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageReference\u003A\u003ATYPE_DEFAULT",
+            "name": "TYPE_DEFAULT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-MessageReference.html#constant_TYPE_DEFAULT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageReference\u003A\u003ATYPE_FORWARD",
+            "name": "TYPE_FORWARD",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-MessageReference.html#constant_TYPE_FORWARD"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageReference\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageReference.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\RoleSelect",
             "name": "RoleSelect",
             "summary": "A\u0020Role\u0020Select\u0020is\u0020an\u0020interactive\u0020component\u0020that\u0020allows\u0020users\u0020to\u0020select\u0020one\u0020or\u0020more\u0020roles\u0020in\u0020a\u0020message.\u0020Options\u0020are\u0020automatically\u0020populated\u0020based\u0020on\u0020the\u0020server\u0027s\u0020available\u0020roles.",
@@ -4651,6 +4761,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020embed\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Message.html#method_getEmbedsAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetInteractionMetadataAttribute\u0028\u0029",
+            "name": "getInteractionMetadataAttribute",
+            "summary": "Returns\u0020the\u0020interaction_metadata\u0020attribute,\u0020if\u0020present.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_getInteractionMetadataAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetInteractionAttribute\u0028\u0029",
             "name": "getInteractionAttribute",
             "summary": "Gets\u0020the\u0020interaction\u0020which\u0020triggered\u0020the\u0020message\u0020\u0028application\u0020commands\u0029.",
@@ -4660,6 +4775,11 @@ Search.appendIndex(
             "name": "getReferencedMessageAttribute",
             "summary": "Gets\u0020the\u0020referenced\u0020message\u0020attribute,\u0020if\u0020present.",
             "url": "classes/Discord-Parts-Channel-Message.html#method_getReferencedMessageAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetMessageReferenceAttribute\u0028\u0029",
+            "name": "getMessageReferenceAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_getMessageReferenceAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetMessageSnapshotAttribute\u0028\u0029",
             "name": "getMessageSnapshotAttribute",
@@ -4690,6 +4810,11 @@ Search.appendIndex(
             "name": "getPollAttribute",
             "summary": "Returns\u0020the\u0020poll\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Message.html#method_getPollAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetCallAttribute\u0028\u0029",
+            "name": "getCallAttribute",
+            "summary": "Returns\u0020the\u0020call\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_getCallAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetLinkAttribute\u0028\u0029",
             "name": "getLinkAttribute",
@@ -8090,6 +8215,11 @@ Search.appendIndex(
             "name": "Part",
             "summary": "This\u0020class\u0020is\u0020the\u0020base\u0020of\u0020all\u0020objects\u0020that\u0020are\u0020returned.\u0020All\u0020\u0022Parts\u0022\u0020extend\noff\u0020this\u0020base\u0020class.",
             "url": "classes/Discord-Parts-Part.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Part\u003A\u003A__debugInfo\u0028\u0029",
+            "name": "__debugInfo",
+            "summary": "",
+            "url": "classes/Discord-Parts-Part.html#method___debugInfo"
         },                {
             "fqsen": "\\Discord\\Parts\\Part\u003A\u003A\u0024http",
             "name": "http",

@@ -236,12 +236,13 @@
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts.html">Parts</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-user.html">User</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-channel.html">Channel</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-channel-message.html">Message</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    PrimaryGuild
+    MessageCall
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
@@ -263,53 +264,44 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageCall.php"><a href="files/src-discord-parts-channel-message-messagecall.html"><abbr title="src/Discord/Parts/Channel/Message/MessageCall.php">MessageCall.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Represents a user&#039;s primary guild (clan) information.</p>
+            <p class="phpdocumentor-summary">Represents information about a call in a private channel.</p>
 
 
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-Message-MessageCall.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/user#user-object-primary-guild"> https://discord.com/developers/docs/resources/user#user-object-primary-guild </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.10.1</span>
+                                            <span class="phpdocumentor-tag-link">10.11.2</span>
                                                                                 
                                              
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property-read</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>?string|null $id   The identifier of the primary guild.</p>
-</section>
-
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/message#message-call-object"> https://discord.com/developers/docs/resources/message#message-call-object </a>
+                    
                                     </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property-read</span>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?Guild|null $guild The primary guild, if available.</p>
+                                                 <section class="phpdocumentor-description"><p>?Carbon|null $ended_timestamp   Time when the call ended (ISO8601 timestamp), or null if ongoing.</p>
 </section>
 
                                     </dd>
@@ -321,7 +313,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Parts-User-PrimaryGuild.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Channel-Message-MessageCall.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -335,16 +327,10 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-Parts-User-PrimaryGuild.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Channel-Message-MessageCall.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#property_badge">$badge</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Part.html#property_created">$created</a>
     <span>
@@ -353,15 +339,9 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#property_identity_enabled">$identity_enabled</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageCall.html#property_participants">$participants</a>
     <span>
-                        &nbsp;: bool            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#property_identity_guild_id">$identity_guild_id</a>
-    <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -372,9 +352,9 @@
 <dd>Custom script data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#property_tag">$tag</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageCall.html#property_users">$users</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
@@ -399,7 +379,7 @@
 <dd>The factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#property_fillable">$fillable</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageCall.html#property_fillable">$fillable</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -444,7 +424,7 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Parts-User-PrimaryGuild.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Channel-Message-MessageCall.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -616,18 +596,18 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Called after the part has been constructed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#method_getGuildAttribute">getGuildAttribute()</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageCall.html#method_getEndedTimestampAttribute">getEndedTimestampAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null    </span>
+                                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null    </span>
 </dt>
-<dd>Returns the guild attribute.</dd>
+<dd>Gets the ended timestamp.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#method_getIdAttribute">getIdAttribute()</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageCall.html#method_getUsersAttribute">getUsersAttribute()</a>
     <span>
-                                &nbsp;: string    </span>
+                                &nbsp;: array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;    </span>
 </dt>
-<dd>Returns the id attribute.</dd>
+<dd>Gets the users.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a>
@@ -681,47 +661,9 @@ JSON. Used for JsonSerializable.</dd>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-User-PrimaryGuild.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Channel-Message-MessageCall.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_badge">
-        $badge
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#property_badge" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$badge</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The clan badge hash.</p>
-</section>
-
-    
-    
-
-    
-
-</article>
                     <article
         class="
             phpdocumentor-element
@@ -768,15 +710,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_identity_enabled">
-        $identity_enabled
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#property_identity_enabled" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_participants">
+        $participants
+        <a href="classes/Discord-Parts-Channel-Message-MessageCall.html#property_participants" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageCall.php"><a href="files/src-discord-parts-channel-message-messagecall.html"><abbr title="src/Discord/Parts/Channel/Message/MessageCall.php">MessageCall.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -786,49 +728,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$identity_enabled</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$participants</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Whether the user is displaying their clan tag.</p>
-</section>
-
-    
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_identity_guild_id">
-        $identity_guild_id
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#property_identity_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$identity_guild_id</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The id of the user's primary clan.</p>
+        <section class="phpdocumentor-description"><p>Array of user object IDs that participated in the call.</p>
 </section>
 
     
@@ -888,17 +792,17 @@ JSON. Used for JsonSerializable.</dd>
             phpdocumentor-element
             -property
             -public
-                                                        "
+                                                -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_tag">
-        $tag
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#property_tag" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_users">
+        $users
+        <a href="classes/Discord-Parts-Channel-Message-MessageCall.html#property_users" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageCall.php"><a href="files/src-discord-parts-channel-message-messagecall.html"><abbr title="src/Discord/Parts/Channel/Message/MessageCall.php">MessageCall.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -908,11 +812,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$tag</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$users</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The text of the user's clan tag (max 4 characters).</p>
+        <section class="phpdocumentor-description"><p>Array of user objects that participated in the call.</p>
 </section>
 
     
@@ -1047,15 +951,15 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_fillable">
         $fillable
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-Message-MessageCall.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageCall.php"><a href="files/src-discord-parts-channel-message-messagecall.html"><abbr title="src/Discord/Parts/Channel/Message/MessageCall.php">MessageCall.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -1066,16 +970,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[
-    &#039;id&#039;,
-    // @internal
-    &#039;identity_guild_id&#039;,
-    &#039;identity_enabled&#039;,
-    &#039;identityGuildId&#039;,
-    &#039;identityEnabled&#039;,
-    &#039;tag&#039;,
-    &#039;badge&#039;,
-]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;participants&#039;, &#039;ended_timestamp&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -1282,7 +1177,7 @@ JSON. Used for JsonSerializable.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-User-PrimaryGuild.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Channel-Message-MessageCall.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -2587,23 +2482,23 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
-        getGuildAttribute()
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getEndedTimestampAttribute">
+        getEndedTimestampAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-MessageCall.html#method_getEndedTimestampAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageCall.php"><a href="files/src-discord-parts-channel-message-messagecall.html"><abbr title="src/Discord/Parts/Channel/Message/MessageCall.php">MessageCall.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns the guild attribute.</p>
+        <p class="phpdocumentor-summary">Gets the ended timestamp.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getGuildAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getEndedTimestampAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2616,11 +2511,7 @@ JSON. Used for JsonSerializable.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The guild attribute.</p>
-</section>
-
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
             </section>
 
 </article>
@@ -2630,23 +2521,23 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getIdAttribute">
-        getIdAttribute()
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#method_getIdAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getUsersAttribute">
+        getUsersAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-MessageCall.html#method_getUsersAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageCall.php"><a href="files/src-discord-parts-channel-message-messagecall.html"><abbr title="src/Discord/Parts/Channel/Message/MessageCall.php">MessageCall.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns the id attribute.</p>
+        <p class="phpdocumentor-summary">Gets the users.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getIdAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">getUsersAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2659,11 +2550,7 @@ JSON. Used for JsonSerializable.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The id attribute.</p>
-</section>
-
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span>
             </section>
 
 </article>
@@ -3067,7 +2954,7 @@ static as we may move it outside this class in future.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/User/PrimaryGuild.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Channel/Message/MessageCall.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -3166,24 +3053,22 @@ static as we may move it outside this class in future.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/Discord-Parts-User-PrimaryGuild.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-Parts-User-PrimaryGuild.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Discord-Parts-Channel-Message-MessageCall.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-Parts-Channel-Message-MessageCall.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#property_badge">$badge</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#property_identity_enabled">$identity_enabled</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#property_identity_guild_id">$identity_guild_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageCall.html#property_participants">$participants</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#property_tag">$tag</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageCall.html#property_users">$users</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#property_fillable">$fillable</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageCall.html#property_fillable">$fillable</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_http">$http</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories">$repositories</a></li>
@@ -3219,8 +3104,8 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_serialize">serialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_unserialize">unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_afterConstruct">afterConstruct()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#method_getGuildAttribute">getGuildAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#method_getIdAttribute">getIdAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageCall.html#method_getEndedTimestampAttribute">getEndedTimestampAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageCall.html#method_getUsersAttribute">getUsersAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
@@ -3246,7 +3131,7 @@ static as we may move it outside this class in future.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Parts-Channel-Message-MessageCall.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

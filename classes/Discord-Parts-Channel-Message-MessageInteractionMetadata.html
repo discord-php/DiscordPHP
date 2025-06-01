@@ -236,12 +236,13 @@
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts.html">Parts</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-user.html">User</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-channel.html">Channel</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-channel-message.html">Message</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    PrimaryGuild
+    MessageInteractionMetadata
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
@@ -263,44 +264,44 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Represents a user&#039;s primary guild (clan) information.</p>
+            <p class="phpdocumentor-summary">Represents metadata about the interaction that caused a message.</p>
 
 
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/user#user-object-primary-guild"> https://discord.com/developers/docs/resources/user#user-object-primary-guild </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.10.1</span>
+                                            <span class="phpdocumentor-tag-link">10.11.2</span>
                                                                                 
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/message#message-interaction-metadata-object"> https://discord.com/developers/docs/resources/message#message-interaction-metadata-object </a>
+                    
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">@property-read</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null $id   The identifier of the primary guild.</p>
+                                                 <section class="phpdocumentor-description"><p>?Guild|null   $guild                     The guild the interaction was sent in.</p>
 </section>
 
                                     </dd>
@@ -309,7 +310,34 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?Guild|null $guild The primary guild, if available.</p>
+                                                 <section class="phpdocumentor-description"><p>?Channel|null $channel                   The channel the interaction was sent in.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property-read</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Message|null $original_response_message The original response message (follow-ups only).</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property-read</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Message|null $target_message            The message the command was run on (message command interactions only).</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property-read</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Message|null $interacted_message        The message that contained the interactive component (message component interactions only).</p>
 </section>
 
                                     </dd>
@@ -321,7 +349,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Parts-User-PrimaryGuild.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -335,12 +363,18 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-Parts-User-PrimaryGuild.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#property_badge">$badge</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_authorizing_integration_owners">$authorizing_integration_owners</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_channel_id">$channel_id</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
@@ -353,15 +387,27 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#property_identity_enabled">$identity_enabled</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_guild_id">$guild_id</a>
     <span>
-                        &nbsp;: bool            </span>
+                        &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#property_identity_guild_id">$identity_guild_id</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_id">$id</a>
     <span>
                         &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_interacted_message_id">$interacted_message_id</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_original_response_message_id">$original_response_message_id</a>
+    <span>
+                        &nbsp;: string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -372,9 +418,33 @@
 <dd>Custom script data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#property_tag">$tag</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_target_message_id">$target_message_id</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_target_user">$target_user</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_triggering_interaction_metadata">$triggering_interaction_metadata</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html"><abbr title="\Discord\Parts\Channel\Message\MessageInteractionMetadata">MessageInteractionMetadata</abbr></a>|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_type">$type</a>
+    <span>
+                        &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_user">$user</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
@@ -399,14 +469,14 @@
 <dd>The factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#property_fillable">$fillable</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_fillable">$fillable</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 <dd>The parts fillable attributes.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_hidden">$hidden</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -444,7 +514,7 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Parts-User-PrimaryGuild.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -616,18 +686,58 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Called after the part has been constructed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#method_getGuildAttribute">getGuildAttribute()</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getChannelAttribute">getChannelAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getGuildAttribute">getGuildAttribute()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null    </span>
 </dt>
-<dd>Returns the guild attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-User-PrimaryGuild.html#method_getIdAttribute">getIdAttribute()</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getInteractedMessageAttribute">getInteractedMessageAttribute()</a>
     <span>
-                                &nbsp;: string    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null    </span>
 </dt>
-<dd>Returns the id attribute.</dd>
+<dd>Returns the interacted message associated with this interaction, if available.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getOriginalResponseMessageAttribute">getOriginalResponseMessageAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null    </span>
+</dt>
+<dd>Returns the original response message associated with this interaction, if available.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getTargetMessageAttribute">getTargetMessageAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null    </span>
+</dt>
+<dd>Returns the target message associated with this interaction, if available.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getTargetUserAttribute">getTargetUserAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null    </span>
+</dt>
+<dd>Returns the target user (if present).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getTriggeringInteractionMetadataAttribute">getTriggeringInteractionMetadataAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html"><abbr title="\Discord\Parts\Channel\Message\MessageInteractionMetadata">MessageInteractionMetadata</abbr></a>|null    </span>
+</dt>
+<dd>Returns the triggering interaction metadata (for modal submit interactions).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getUserAttribute">getUserAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>    </span>
+</dt>
+<dd>Returns the user who triggered the interaction.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a>
@@ -681,7 +791,7 @@ JSON. Used for JsonSerializable.</dd>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-User-PrimaryGuild.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -691,15 +801,53 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_badge">
-        $badge
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#property_badge" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_authorizing_integration_owners">
+        $authorizing_integration_owners
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_authorizing_integration_owners" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$authorizing_integration_owners</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>IDs for installation context(s) related to the interaction.</p>
+</section>
+
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_channel_id">
+        $channel_id
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_channel_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -710,10 +858,10 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$badge</span>
+    <span class="phpdocumentor-signature__name">$channel_id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The clan badge hash.</p>
+        <section class="phpdocumentor-description"><p>The ID of the channel the interaction was sent in.</p>
 </section>
 
     
@@ -766,17 +914,17 @@ JSON. Used for JsonSerializable.</dd>
             phpdocumentor-element
             -property
             -public
-                                                        "
+                                                -read-only        "
 >
-    <h4 class="phpdocumentor-element__name" id="property_identity_enabled">
-        $identity_enabled
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#property_identity_enabled" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_guild_id">
+        $guild_id
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -786,11 +934,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$identity_enabled</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$guild_id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Whether the user is displaying their clan tag.</p>
+        <section class="phpdocumentor-description"><p>The ID of the guild the interaction was sent in.</p>
 </section>
 
     
@@ -806,15 +954,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_identity_guild_id">
-        $identity_guild_id
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#property_identity_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_id">
+        $id
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -825,10 +973,86 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$identity_guild_id</span>
+    <span class="phpdocumentor-signature__name">$id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The id of the user's primary clan.</p>
+        <section class="phpdocumentor-description"><p>ID of the interaction.</p>
+</section>
+
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_interacted_message_id">
+        $interacted_message_id
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_interacted_message_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$interacted_message_id</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The ID of the message that contained the interactive component (message component interactions only).</p>
+</section>
+
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_original_response_message_id">
+        $original_response_message_id
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_original_response_message_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$original_response_message_id</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>ID of the original response message (follow-ups only).</p>
 </section>
 
     
@@ -890,15 +1114,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_tag">
-        $tag
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#property_tag" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_target_message_id">
+        $target_message_id
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_target_message_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -908,11 +1132,163 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$tag</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$target_message_id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The text of the user's clan tag (max 4 characters).</p>
+        <section class="phpdocumentor-description"><p>The ID of the message the command was run on (message command interactions only).</p>
+</section>
+
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_target_user">
+        $target_user
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_target_user" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$target_user</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The user the command was run on (user command interactions only).</p>
+</section>
+
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_triggering_interaction_metadata">
+        $triggering_interaction_metadata
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_triggering_interaction_metadata" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html"><abbr title="\Discord\Parts\Channel\Message\MessageInteractionMetadata">MessageInteractionMetadata</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$triggering_interaction_metadata</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Metadata for the interaction that was used to open the modal (modal submit interactions only).</p>
+</section>
+
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_type">
+        $type
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$type</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Type of interaction.</p>
+</section>
+
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_user">
+        $user
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_user" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$user</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>User who triggered the interaction.</p>
 </section>
 
     
@@ -1047,15 +1423,15 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_fillable">
         $fillable
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -1068,13 +1444,17 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$fillable</span>
      = <span class="phpdocumentor-signature__default-value">[
     &#039;id&#039;,
+    &#039;type&#039;,
+    &#039;user&#039;,
+    &#039;authorizing_integration_owners&#039;,
+    &#039;original_response_message_id&#039;,
+    &#039;target_user&#039;,
+    &#039;target_message_id&#039;,
+    &#039;interacted_message_id&#039;,
+    &#039;triggering_interaction_metadata&#039;,
     // @internal
-    &#039;identity_guild_id&#039;,
-    &#039;identity_enabled&#039;,
-    &#039;identityGuildId&#039;,
-    &#039;identityEnabled&#039;,
-    &#039;tag&#039;,
-    &#039;badge&#039;,
+    &#039;guild_id&#039;,
+    &#039;channel_id&#039;,
 ]</span></code>
 
     
@@ -1095,15 +1475,15 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_hidden">
         $hidden
-        <a href="classes/Discord-Parts-Part.html#property_hidden" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_hidden" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
@@ -1114,7 +1494,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$hidden</span>
-     = <span class="phpdocumentor-signature__default-value">[]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;guild_id&#039;, &#039;channel_id&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>Attributes that are hidden from public.</p>
@@ -1282,7 +1662,7 @@ JSON. Used for JsonSerializable.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-User-PrimaryGuild.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -2587,20 +2967,57 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
-        getGuildAttribute()
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getChannelAttribute">
+        getChannelAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getChannelAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns the guild attribute.</p>
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getChannelAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
+        getGuildAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">168</span>
+
+    </aside>
+
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">getGuildAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span></code>
@@ -2617,10 +3034,6 @@ JSON. Used for JsonSerializable.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The guild attribute.</p>
-</section>
-
             </section>
 
 </article>
@@ -2630,23 +3043,23 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getIdAttribute">
-        getIdAttribute()
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#method_getIdAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getInteractedMessageAttribute">
+        getInteractedMessageAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getInteractedMessageAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/PrimaryGuild.php"><a href="files/src-discord-parts-user-primaryguild.html"><abbr title="src/Discord/Parts/User/PrimaryGuild.php">PrimaryGuild.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">155</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns the id attribute.</p>
+        <p class="phpdocumentor-summary">Returns the interacted message associated with this interaction, if available.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getIdAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">getInteractedMessageAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2659,11 +3072,202 @@ JSON. Used for JsonSerializable.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The id attribute.</p>
-</section>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
+            </section>
 
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getOriginalResponseMessageAttribute">
+        getOriginalResponseMessageAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getOriginalResponseMessageAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">119</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the original response message associated with this interaction, if available.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getOriginalResponseMessageAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getTargetMessageAttribute">
+        getTargetMessageAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getTargetMessageAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">137</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the target message associated with this interaction, if available.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getTargetMessageAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getTargetUserAttribute">
+        getTargetUserAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getTargetUserAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">91</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the target user (if present).</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getTargetUserAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getTriggeringInteractionMetadataAttribute">
+        getTriggeringInteractionMetadataAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getTriggeringInteractionMetadataAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">105</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the triggering interaction metadata (for modal submit interactions).</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getTriggeringInteractionMetadataAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html"><abbr title="\Discord\Parts\Channel\Message\MessageInteractionMetadata">MessageInteractionMetadata</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html"><abbr title="\Discord\Parts\Channel\Message\MessageInteractionMetadata">MessageInteractionMetadata</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getUserAttribute">
+        getUserAttribute()
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getUserAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php"><a href="files/src-discord-parts-channel-message-messageinteractionmetadata.html"><abbr title="src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php">MessageInteractionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">81</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the user who triggered the interaction.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getUserAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></span>
             </section>
 
 </article>
@@ -3067,7 +3671,7 @@ static as we may move it outside this class in future.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/User/PrimaryGuild.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Channel/Message/MessageInteractionMetadata.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -3166,25 +3770,32 @@ static as we may move it outside this class in future.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/Discord-Parts-User-PrimaryGuild.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-Parts-User-PrimaryGuild.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#property_badge">$badge</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_authorizing_integration_owners">$authorizing_integration_owners</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_channel_id">$channel_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#property_identity_enabled">$identity_enabled</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#property_identity_guild_id">$identity_guild_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_guild_id">$guild_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_interacted_message_id">$interacted_message_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_original_response_message_id">$original_response_message_id</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#property_tag">$tag</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_target_message_id">$target_message_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_target_user">$target_user</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_triggering_interaction_metadata">$triggering_interaction_metadata</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_type">$type</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_user">$user</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#property_fillable">$fillable</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_fillable">$fillable</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_http">$http</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories">$repositories</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories_cache">$repositories_cache</a></li>
@@ -3219,8 +3830,14 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_serialize">serialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_unserialize">unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_afterConstruct">afterConstruct()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#method_getGuildAttribute">getGuildAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-User-PrimaryGuild.html#method_getIdAttribute">getIdAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getChannelAttribute">getChannelAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getGuildAttribute">getGuildAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getInteractedMessageAttribute">getInteractedMessageAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getOriginalResponseMessageAttribute">getOriginalResponseMessageAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getTargetMessageAttribute">getTargetMessageAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getTargetUserAttribute">getTargetUserAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getTriggeringInteractionMetadataAttribute">getTriggeringInteractionMetadataAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#method_getUserAttribute">getUserAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
@@ -3246,7 +3863,7 @@ static as we may move it outside this class in future.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Parts-User-PrimaryGuild.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
