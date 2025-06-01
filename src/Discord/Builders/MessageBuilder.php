@@ -466,9 +466,9 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function addComponent(Component $component): self
+    public function addComponent($component): self
     {
-        if (! $component instanceof ComponentObject) {
+        if (! $component instanceof ComponentObject && ! $component instanceof ComponentPart) {
             throw new \InvalidArgumentException('You can only add component objects to a message.');
         }
 
