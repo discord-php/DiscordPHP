@@ -40,37 +40,6 @@ class MessageReference extends Part
     public const TYPE_FORWARD = 1;
 
     /**
-     * The type of the message reference.
-     *
-     * @var int|null
-     */
-    protected $type;
-    /**
-     * The ID of the message being referenced.
-     *
-     * @var string|null
-     */
-    protected $message_id;
-    /**
-     * The ID of the channel the message was sent in.
-     *
-     * @var string|null
-     */
-    protected $channel_id;
-    /**
-     * The ID of the guild the message was sent in.
-     *
-     * @var string|null
-     */
-    protected $guild_id;
-    /**
-     * Whether to fail if the message does not exist.
-     *
-     * @var bool|null
-     */
-    protected $fail_if_not_exists;
-
-    /**
      * {@inheritDoc}
      */
     protected $fillable = [
