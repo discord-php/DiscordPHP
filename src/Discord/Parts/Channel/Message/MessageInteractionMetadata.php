@@ -22,6 +22,8 @@ use Discord\Parts\User\User;
 /**
  * Represents metadata about the interaction that caused a message.
  *
+ * @since 10.11.2
+ *
  * @link https://discord.com/developers/docs/resources/message#message-interaction-metadata-object
  *
  * @property string                          $id                              ID of the interaction.
