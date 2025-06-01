@@ -35,6 +35,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Forum\Reaction;
 use Discord\Parts\Channel\Forum\Tag;
+use Discord\Parts\Channel\Message\AllowedMentions;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\InviteRepository;
@@ -644,6 +645,65 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Sends a soundboard sound to the voice channel.
+     *
+     * @param string      $sound_id         The ID of the soundboard sound to play.
+     * @param string|null $source_guild_id  The ID of the guild where the sound originates, if using an external sound.
+     *
+     * @throws \RuntimeException       If the channel is not voice-based, the bot is not connected to the correct voice channel,
+     *                                 or the bot is deafened, self-deafened, muted, or suppressed.
+     * @throws NoPermissionsException  If the bot lacks the required permissions to send soundboard sounds or use external sounds.
+     *
+     * @return PromiseInterface
+     *
+     * @since 10.11.3
+     *
+     */
+    public function sendSoundboardSound(string $sound_id, ?string $source_guild_id = null): PromiseInterface
+    {
+        if (! $this->isVoiceBased()) {
+            return reject(new \RuntimeException('You cannot send soundboard sounds in a text channel.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->speak || ! $botperms->use_soundboard) {
+                return reject(new NoPermissionsException("You do not have permission to send soundboard sounds in the channel {$this->id}."));
+            }
+        }
+
+        if ($this->guild !== null) {
+            if ($member = $this->guild->members->get('id', $this->discord->id)) {
+                if (! $voiceChannel = $member->getVoiceChannel()) {
+                    return reject(new \RuntimeException('Bot must be connected to a voice channel to send soundboard sounds.'));
+                }
+                if (! $voiceChannel->id === $this->id) {
+                    return reject(new \RuntimeException("Bot must be connected to the voice channel {$this->id} to send it soundboard sounds."));
+                }
+                if ( $member->deaf || $member->mute) { // Member can also not be self-muted or suppressed
+                    return reject(new \RuntimeException('Bot must be connected to the voice channel and not deafened, muted, or suppressed to send soundboard sounds.'));
+                }
+            }
+        }
+
+        $payload = [
+            'sound_id' => $sound_id,
+        ];
+
+        if ($source_guild_id !== null) {
+            if ($botperms) {
+                if ($this->guild_id !== $source_guild_id) {
+                    if (! $botperms->use_external_sounds) {
+                        return reject(new NoPermissionsException("You do not have permission to use external sounds in the channel {$this->id}."));
+                    }
+                }
+            }
+            $payload['source_guild_id'] = $source_guild_id;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_SEND_SOUNDBOARD_SOUND, $this->id), $payload);
+    }
+
+    /**
      * Creates an invite for the channel.
      *
      * @link https://discord.com/developers/docs/resources/channel#create-channel-invite
@@ -1200,11 +1260,11 @@ class Channel extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/channel#create-message
      *
-     * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
-     * @param bool                  $tts              Whether the message is TTS.
-     * @param Embed|array|null      $embed            An embed object or array to send in the message.
-     * @param array|null            $allowed_mentions Allowed mentions object for the message.
-     * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
+     * @param MessageBuilder|string      $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                       $tts              Whether the message is TTS.
+     * @param Embed|array|null           $embed            An embed object or array to send in the message.
+     * @param AllowedMentions|array|null $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null               $replyTo          Sends the message as a reply to the given message instance.
      *
      * @throws \RuntimeException
      * @throws NoPermissionsException Missing various permissions depending on the message body.

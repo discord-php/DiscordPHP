@@ -13,6 +13,8 @@ namespace Discord\Builders\Components;
 
 use JsonSerializable;
 
+use function Discord\poly_strlen;
+
 /**
  * Represents an item in a media gallery component.
  *
