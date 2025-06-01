@@ -459,7 +459,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Adds a component to the builder.
      *
-     * @param ComponentObject $component Component to add.
+     * @param ComponentObject|ComponentPart $component Component to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
