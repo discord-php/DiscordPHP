@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Discord\Builders\Components\Contracts;
+
 /**
  * A Container is a top-level layout component. Containers are visually distinct from surrounding components and have an optional customizable color bar.
  *
@@ -28,7 +30,7 @@ namespace Discord\Parts\Channel\Message;
  * @property int|null                          $accent_color Color for the accent on the container as RGB from 0x000000 to 0xFFFFFF.
  * @property bool|null                         $spoiler      Whether the container should be a spoiler (or blurred out). Defaults to false.
  */
-class Container extends Layout
+class Container extends Layout implements Contracts\ComponentV2
 {
     /**
      * {@inheritDoc}

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Discord\Builders\Components\Contracts;
+
 /**
  * A Text Display is a top-level content component that allows you to add text to your message formatted with markdown and mention users and roles. This is similar to the content field of a message, but allows you to add multiple text components, controlling the layout of your message.
  *
@@ -26,7 +28,7 @@ namespace Discord\Parts\Channel\Message;
  * @property string|null $id      Optional identifier for component.
  * @property string      $content Text that will be displayed similar to a message.
  */
-class TextDisplay extends Content
+class TextDisplay extends Content implements Contracts\ComponentV2
 {
     /**
      * {@inheritDoc}

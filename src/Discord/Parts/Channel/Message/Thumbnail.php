@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Discord\Builders\Components\Contracts;
+
 /**
  * A Thumbnail is a content component that is a small image only usable as an accessory in a section. The preview comes from an url or attachment through the unfurled media item structure.
  *
@@ -28,7 +30,7 @@ namespace Discord\Parts\Channel\Message;
  * @property string|null       $description Alt text for the media, max 1024 characters.
  * @property bool              $spoiler     Whether the thumbnail should be a spoiler (or blurred out). Defaults to false.
  */
-class Thumbnail extends Content
+class Thumbnail extends Content implements Contracts\ComponentV2
 {
     /**
      * {@inheritDoc}

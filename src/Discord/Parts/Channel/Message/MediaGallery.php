@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Discord\Builders\Components\Contracts;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 
@@ -29,7 +30,7 @@ use Discord\Helpers\ExCollectionInterface;
  * @property string|null                              $id    Optional identifier for component.
  * @property ExCollectionInterface|MediaGalleryItem[] $items 1 to 10 media gallery items.
  */
-class MediaGallery extends Content
+class MediaGallery extends Content implements Contracts\ComponentV2
 {
     /**
      * {@inheritDoc}

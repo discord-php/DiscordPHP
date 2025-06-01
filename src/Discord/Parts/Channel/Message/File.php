@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Discord\Builders\Components\Contracts;
+
 /**
  * A File is a top-level component that allows you to display an uploaded file as an attachment to the message and reference it in the component. Each file component can only display 1 attached file, but you can upload multiple files and add them to different file components within your payload.
  *
@@ -27,7 +29,7 @@ namespace Discord\Parts\Channel\Message;
  * @property UnfurledMediaItem $file    Unfurled media item, supports only attachment://<filename> syntax.
  * @property bool|null         $spoiler Whether the media should be a spoiler (blurred out). Defaults to false.
  */
-class File extends Content
+class File extends Content implements Contracts\ComponentV2
 {
     /**
      * {@inheritDoc}

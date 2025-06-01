@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 use Discord\Helpers\Collection;
+use Discord\Builders\Components\Contracts;
 
 /**
  * A Separator is a top-level layout component that adds vertical padding and visual division between other components.
@@ -29,7 +30,7 @@ use Discord\Helpers\Collection;
  * @property ExCollectionInterface|TextDisplay[] $components  One to three text components.
  * @property Thumbnail|Button                    $accessory   A thumbnail or a button component, with a future possibility of adding more compatible components.
  */
-class Section extends Layout
+class Section extends Layout implements Contracts\ComponentV2
 {
     /**
      * {@inheritDoc}

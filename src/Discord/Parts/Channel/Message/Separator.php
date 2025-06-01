@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
+use Discord\Builders\Components\Contracts;
+
 /**
  * A Separator is a top-level layout component that adds vertical padding and visual division between other components.
  *
@@ -27,7 +29,7 @@ namespace Discord\Parts\Channel\Message;
  * @property bool|null    $divider Whether a visual divider should be displayed in the component. Defaults to true.
  * @property integer|null $spacing Size of separator padding—1 for small padding, 2 for large padding. Defaults to 1
  */
-class Separator extends Layout
+class Separator extends Layout implements Contracts\ComponentV2
 {
     /**
      * {@inheritDoc}
