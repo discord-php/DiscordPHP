@@ -25,8 +25,6 @@ use TrafficCophp\ByteBuffer\Buffer as BaseBuffer;
  */
 class Buffer extends BaseBuffer implements ArrayAccess
 {
-    protected SplFixedArray $buffer;
-
     public function __construct($argument)
     {
         match (true) {
