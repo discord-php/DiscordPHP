@@ -604,7 +604,7 @@ class Message extends Part
      */
     protected function getEmbedsAttribute(): ExCollectionInterface
     {
-        $embeds = new Collection([], null);
+        $embeds = Collection::for(Embed::class, null);
 
         foreach ($this->attributes['embeds'] ?? [] as $embed) {
             $embeds->pushItem($this->createOf(Embed::class, $embed));
