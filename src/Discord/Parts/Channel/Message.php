@@ -34,6 +34,7 @@ use Discord\Parts\Channel\Message\MessageCall;
 use Discord\Parts\Channel\Message\MessageReference;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
+use Discord\Parts\Interactions\Request\Resolved;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
 use Discord\Repository\Channel\ReactionRepository;
@@ -85,6 +86,7 @@ use function React\Promise\reject;
  * @property      ExCollectionInterface|Sticker[]|null         $sticker_items          Stickers attached to the message.
  * @property      int|null                                     $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
  * @property      object|null                                  $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
+ * @property      Resolved|null                                $resolved               Data for users, members, channels, and roles in the message's auto-populated select menus
  * @property      Poll|null                                    $poll                   The poll attached to the message.
  * @property      MessageCall|null                             $call                   The call associated with the message
  *
@@ -785,6 +787,20 @@ class Message extends Part
         }
 
         return $sticker_items;
+    }
+
+    /**
+     * Returns the resolved attribute.
+     *
+     * @return Resolved|null
+     */
+    protected function getResolvedAttribute(): ?Resolved
+    {
+        if (! isset($this->attributes['resolved'])) {
+            return null;
+        }
+
+        return $this->factory->part(Resolved::class, (array) $this->attributes['resolved'] + ['guild_id' => $this->guild_id], true);
     }
 
     /**

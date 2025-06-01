@@ -18,6 +18,7 @@ use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Thread\Thread;
@@ -38,7 +39,8 @@ use Discord\Parts\User\User;
  * @property ExCollectionInterface|Message[]|null          $messages    The ids and partial Message objects.
  * @property ExCollectionInterface|Attachment[]|null       $attachments The ids and partial Attachment objects.
  *
- * @property string|null $guild_id ID of the guild internally passed from Interaction.
+ * @property      string|null $guild_id ID of the guild internally passed from Interaction.
+ * @property-read ?Guild|null $guild The guild the interaction was sent in.
  */
 class Resolved extends Part
 {
@@ -219,5 +221,14 @@ class Resolved extends Part
         }
 
         return $attachments;
+    }
+
+    protected function getGuildAttribute(): ?Guild
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        return $this->discord->guilds->get('id', $this->attributes['guild_id']);
     }
 }
