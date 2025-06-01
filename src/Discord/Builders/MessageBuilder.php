@@ -24,6 +24,7 @@ use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
+use Discord\Parts\Channel\Message\Component as ComponentPart;
 use Discord\Parts\Channel\Poll\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
@@ -160,6 +161,42 @@ class MessageBuilder implements JsonSerializable
     public static function new(): self
     {
         return new static();
+    }
+
+    /**
+     * Creates a new message builder from an existing message.
+     *
+     * @param Message $message The message to build from.
+     *
+     * @return static
+     */
+    public static function fromMessage(Message $message): self
+    {
+        $builder = new static();
+        $attributes = $message->getRawAttributes();
+
+        $builder->setContent($attributes['content'] ?? '')
+            ->setNonce($attributes['nonce'] ?? null)
+            ->setTts($attributes['tts'] ?? false)
+            ->setEmbeds($attributes['embeds'] ?? [])
+            ->setReplyTo($message->replyTo)
+            ->setStickers($attributes['sticker_ids'] ?? [])
+            ->setPoll($message->poll);
+
+        if (isset($message->flags)) {
+            $builder->setFlags($message->flags);
+        }
+
+        foreach ($attributes['attachments'] as $attachment) {
+            $builder->addAttachment($attachment);
+        }
+
+        foreach ($attributes['components'] ?? [] as $component) {
+            // @todo
+            //$builder->addComponent($message->createOf(ComponentPart::TYPES[$component->type ?? 0], $component));
+        }
+
+        return $builder;
     }
 
     /**
@@ -797,13 +834,13 @@ class MessageBuilder implements JsonSerializable
      * Sets the flags of the message.
      * Only works for some message types and some message flags.
      *
-     * @param int $flags
+     * @param int|null $flags
      *
      * @since 10.0.0
      *
      * @return $this
      */
-    public function setFlags(int $flags): self
+    public function setFlags(?int $flags): self
     {
         $this->flags = $flags;
 
