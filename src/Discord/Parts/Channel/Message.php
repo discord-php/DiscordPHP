@@ -19,6 +19,7 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Poll;
 use Discord\Parts\Channel\Message\Component;
+use Discord\Parts\Channel\Message\MessageInteractionMetadata;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Role;
@@ -77,6 +78,7 @@ use function React\Promise\reject;
  * @property      MessageReference|null                        $message_reference      Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
  * @property      object|null                                  $message_snapshot       The message associated with the message_reference. This is a minimal subset of fields in a message (e.g. author is excluded.).
  * @property      Message|null                                 $referenced_message     The message that is referenced in a reply.
+ * @property      MessageInteractionMetadata|null              $interaction_metadata   Sent if the message is sent as a result of an interaction.
  * @property      MessageInteraction|null                      $interaction            Sent if the message is a response to an Interaction.
  * @property      Thread|null                                  $thread                 The thread that was started from this message, includes thread member object.
  * @property      ExCollectionInterface|Component[]|null       $components             Sent if the message contains components like buttons, action rows, or other interactive components.
@@ -222,6 +224,7 @@ class Message extends Part
         'message_snapshot',
         'flags',
         'referenced_message',
+        'interaction_metadata',
         'interaction',
         'thread',
         'components',
@@ -230,7 +233,6 @@ class Message extends Part
         'role_subscription_data',
         'poll',
         'call',
-
         // @internal
         'guild_id',
         'member',
@@ -607,6 +609,21 @@ class Message extends Part
         }
 
         return $embeds;
+    }
+
+    /**
+     * Returns the interaction_metadata attribute, if present.
+     * Contains metadata about the interaction that caused this message.
+     *
+     * @return MessageInteractionMetadata|null
+     */
+    protected function getInteractionMetadataAttribute(): ?MessageInteractionMetadata
+    {
+        if (! isset($this->attributes['interaction_metadata'])) {
+            return null;
+        }
+
+        return $this->createOf(MessageInteractionMetadata::class, (array) $this->attributes['interaction_metadata'] + ['guild_id' => $this->guild_id] + ['channel_id' => $this->channel_id]);
     }
 
     /**
