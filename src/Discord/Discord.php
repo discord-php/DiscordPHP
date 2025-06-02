@@ -656,9 +656,8 @@ class Discord
      */
     protected function processWsMessage(string $data): void
     {
-        $original = $data;
         if (! $data = json_decode($data)) {
-            $this->logger->warning('failed to decode payload', ['payload' => $original]);
+            $this->logger->warning('failed to decode payload', ['payload' => $data]);
             // @todo: handle invalid payload (reconnect), throw exception, or ignore?
             return;
         }
