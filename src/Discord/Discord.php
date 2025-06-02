@@ -657,11 +657,11 @@ class Discord
     protected function processWsMessage(string $data): void
     {
         if (! $data = json_decode($data)) {
-            $this->logger->warning('failed to decode payload', ['payload' => $data]);
+            $this->logger->warning('failed to decode websocket message', ['payload' => $data]);
             // @todo: handle invalid payload (reconnect), throw exception, or ignore?
             return;
         }
-        /** @var Payload $data */
+
         $this->emit('raw', [$data, $this]);
 
         if (isset($data->s)) {
