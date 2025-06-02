@@ -15,13 +15,13 @@ namespace Discord\Voice;
 
 use Discord\Exceptions\Voice\ClientNotReadyException;
 use Discord\Exceptions\Voice\AudioAlreadyPlayingException;
-use Discord\Helpers\Buffer as RealBuffer;
 use Discord\Exceptions\FFmpegNotFoundException;
+use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\LibSodiumNotFoundException;
+use Discord\Exceptions\OutdatedDCAException;
+use Discord\Helpers\Buffer as RealBuffer;
 use Discord\Helpers\Collection;
 use Discord\Helpers\CollectionInterface;
-use Discord\Exceptions\OutdatedDCAException;
-use Discord\Exceptions\FileNotFoundException;
 use Discord\Parts\Channel\Channel;
 use Discord\Voice\VoicePacket;
 use Discord\Voice\ReceiveStream;
@@ -210,7 +210,7 @@ class VoiceClient extends EventEmitter
     /**
      * The time we started sending packets.
      *
-     * @var int The time we started sending packets.
+     * @var null|int|float The time we started sending packets.
      */
     protected ?int $startTime;
 
@@ -416,91 +416,6 @@ class VoiceClient extends EventEmitter
 
         $ws->on('message', function (Message $message) use ($udpfac, &$ip, &$port): void {
             $data = json_decode($message->getPayload());
-
-            if ($data->op == Op::VOICE_READY) {
-                $ws->removeListener('message', $discoverUdp);
-
-                $this->udpPort = $data->d->port;
-                $this->ssrc = $data->d->ssrc;
-
-                $this->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
-
-                $buffer = new Buffer(74);
-                $buffer[1] = "\x01";
-                $buffer[3] = "\x46";
-                $buffer->writeUInt32BE($this->ssrc, 4);
-                /** @var PromiseInterface */
-                $promise = $udpfac->createClient("{$data->d->ip}:{$this->udpPort}");
-
-                $promise->then(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
-                    $this->logger->debug('connected to voice UDP');
-                    $this->client = $client;
-
-                    $this->loop->addTimer(0.1, function () use (&$client, $buffer) {
-                        $client->send((string) $buffer);
-                    });
-
-                    $this->udpHeartbeat = $this->loop->addPeriodicTimer(5, function () use ($client) {
-                        $buffer = new Buffer(9);
-                        $buffer[0] = "\xC9";
-                        $buffer->writeUInt64LE($this->heartbeatSeq, 1);
-                        ++$this->heartbeatSeq;
-
-                        $client->send((string) $buffer);
-                        $this->emit('udp-heartbeat', []);
-                    });
-
-                    $client->on('error', function ($e) {
-                        $this->emit('udp-error', [$e]);
-                    });
-
-                    $decodeUDP = function ($message) use (&$decodeUDP, $client, &$ip, &$port) {
-                        $message = (string) $message;
-                        // let's get our IP
-                        $ip_start = 8;
-                        $ip = substr($message, $ip_start);
-                        $ip_end = strpos($ip, "\x00");
-                        $ip = substr($ip, 0, $ip_end);
-
-                        // now the port!
-                        $port = substr($message, strlen($message) - 2);
-                        $port = unpack('v', $port)[1];
-
-                        $this->logger->debug('received our IP and port', ['ip' => $ip, 'port' => $port]);
-
-                        $payload = Payload::new(
-                            Op::VOICE_SELECT_PROTO,
-                            [
-                                'protocol' => 'udp',
-                                'data' => [
-                                    'address' => $ip,
-                                    'port' => (int) $port,
-                                    'mode' => $this->mode,
-                                ],
-                            ]
-                        );
-
-                        $this->send($payload);
-
-                        $client->removeListener('message', $decodeUDP);
-
-                        if (! $this->deaf) {
-                            $client->on('message', [$this, 'handleAudioData']);
-                        }
-                    };
-
-                    $client->on('message', $decodeUDP);
-                }, function ($e) {
-                    $this->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
-                    $this->emit('error', [$e]);
-                });
-            }
-        };
-
-        $ws->on('message', $discoverUdp);
-        $ws->on('message', function ($message) {
-            $data = json_decode($message->getPayload());
-
             $this->emit('ws-message', [$message, $this]);
 
             switch ($data->op) {
@@ -545,7 +460,10 @@ class VoiceClient extends EventEmitter
                     $sendHeartbeat = function () {
                         $this->send(Payload::new(
                             Op::VOICE_HEARTBEAT,
-                            (int) microtime(true)
+                            [
+                                't' => (int) microtime(true),
+                                'seq_ack' => 10
+                            ]
                         ));
                         $this->logger->debug('sending heartbeat');
                         $this->emit('ws-heartbeat', []);
@@ -632,10 +550,7 @@ class VoiceClient extends EventEmitter
                             $this->logger->debug('sent UDP heartbeat');
                         });
 
-                        $client->on('error', function ($e): void
-                        {
-                            $this->emit('udp-error', [$e]);
-                        });
+                        $client->on('error', fn ($e) => $this->emit('udp-error', [$e]));
 
                         $decodeUDP = function ($message) use (&$ip, &$port): void {
                             /**
@@ -703,7 +618,7 @@ class VoiceClient extends EventEmitter
                 ],
             );
 
-            $this->logger->debug('sending identify', ['packet' => $payload]);
+            $this->logger->debug('sending identify', ['packet' => $payload->__debugInfo()]);
 
             $this->send($payload);
             $this->sentLoginFrame = true;

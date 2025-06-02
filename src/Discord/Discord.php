@@ -38,11 +38,13 @@ use Discord\Voice\Voice;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildCreate;
-use Discord\WebSockets\Payload;
 use Discord\WebSockets\Handlers;
 use Discord\WebSockets\Intents;
 use Discord\WebSockets\Op;
+use Discord\WebSockets\Payload;
 use Evenement\EventEmitterTrait;
+use function React\Async\coroutine;
+use function React\Promise\all;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Level;
@@ -58,9 +60,6 @@ use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
-use function React\Async\coroutine;
-use function React\Promise\all;
 
 /**
  * The Discord client class.
@@ -1162,7 +1161,7 @@ class Discord
         }
         $this->emittedInit = true;
 
-        $this->voice = new Voice($this->ws, $this->loop, $this->logger, $this?->id ?? $this->client->id);
+        $this->voice = new Voice($this->ws, $this->loop, $this->logger, (int) $this?->id ?? $this->client->id);
         $this->logger->info('voice class initialized');
 
         $this->logger->info('client is ready');
