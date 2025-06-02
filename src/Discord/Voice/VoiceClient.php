@@ -553,7 +553,10 @@ class VoiceClient extends EventEmitter
                     $sendHeartbeat = function () {
                         $this->send(Payload::new(
                             Op::VOICE_HEARTBEAT,
-                            (int) microtime(true)
+                            [
+                                't' => (int) microtime(true),
+                                'seq_ack' => 10,
+                            ]
                         ));
                         $this->logger->debug('sending heartbeat');
                         $this->emit('ws-heartbeat', []);
