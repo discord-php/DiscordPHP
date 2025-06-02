@@ -649,6 +649,13 @@ class Discord
         }
     }
 
+    protected function handleWsReconnect($code = Op::CLOSE_ABNORMAL, $reason = 'failed to decode payload, reconnecting')
+    {
+        $this->ws->close($code, $reason);
+        $this->loop->addTimer(2, fn () => $this->connectWs());
+        $this->logger->info('gateway', ['gateway' => $this->gateway]);
+    }
+
     /**
      * Process WebSocket message payloads.
      *
@@ -657,8 +664,8 @@ class Discord
     protected function processWsMessage(string $data): void
     {
         if (! $data = json_decode($data)) {
-            $this->logger->warning('failed to decode websocket message', ['payload' => $data]);
             // @todo: handle invalid payload (reconnect), throw exception, or ignore?
+            $this->handleWsReconnect();
             return;
         }
 
