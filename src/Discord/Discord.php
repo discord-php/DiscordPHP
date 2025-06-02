@@ -1365,7 +1365,9 @@ class Discord
                 'encoding' => $this->encoding,
             ];
 
-            if ($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
+            if (($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) === false) {
+                $this->logger->warning('zlib decompression is not supported, using zlib-stream compression');
+            } else {
                 $params['compress'] = 'zlib-stream';
             }
 
