@@ -25,7 +25,7 @@ use JsonSerializable;
  *
  * @author Mark `PeanutNL` Versluis
  */
-class CommandBuilder implements JsonSerializable
+class CommandBuilder extends Builder implements JsonSerializable
 {
     use CommandAttributes;
 
