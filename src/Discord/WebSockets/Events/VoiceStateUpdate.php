@@ -37,9 +37,9 @@ class VoiceStateUpdate extends Event
         $statePart = $this->factory->part(VoiceStateUpdatePart::class, (array) $data, true);
 
         /** @var ?Guild */
-        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+        if ($guild = yield $this->discord->guilds->cacheGet($statePart->guild_id)) {
             // Preload target new voice state channel
-            yield $guild->channels->cacheGet($data->channel_id);
+            yield $guild->channels->cacheGet($statePart->channel_id);
 
             /** @var ?Channel */
             foreach ($guild->channels as $channel) {
@@ -48,10 +48,10 @@ class VoiceStateUpdate extends Event
                 }
 
                 /** @var ?VoiceStateUpdatePart */
-                if ($cachedVoiceState = yield $channel->members->cacheGet($data->user_id)) {
+                if ($cachedVoiceState = yield $channel->members->cacheGet($statePart->user_id)) {
                     // Copy
                     $oldVoiceState = clone $cachedVoiceState;
-                    if ($cachedVoiceState->channel_id == $data->channel_id) {
+                    if ($cachedVoiceState->channel_id == $statePart->channel_id) {
                         // Move
                         $statePart = $cachedVoiceState;
                         // Update
@@ -59,18 +59,18 @@ class VoiceStateUpdate extends Event
                     }
                 }
 
-                if ($channel->id == $data->channel_id) {
+                if ($channel->id == $statePart->channel_id) {
                     // Add/update this member to the voice channel
-                    yield $channel->members->cache->set($data->user_id, $statePart);
+                    yield $channel->members->cache->set($statePart->user_id, $statePart);
                 } else {
                     // Remove each voice channels containing this member
-                    yield $channel->members->cache->delete($data->user_id);
+                    yield $channel->members->cache->delete($statePart->user_id);
                 }
             }
 
-            if (isset($data->member)) {
-                $this->cacheMember($guild->members, (array) $data->member);
-                $this->cacheUser($data->member->user);
+            if (isset($statePart->member)) {
+                $this->cacheMember($guild->members, (array) $statePart->member);
+                $this->cacheUser($statePart->member->user);
             }
         }
 
