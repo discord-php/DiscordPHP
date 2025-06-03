@@ -15,11 +15,26 @@ namespace Discord\Builders;
 
 use Discord\Parts\Part;
 
+/**
+ * Abstract base class providing helper methods for builder classes.
+ *
+ * @since 10.12.0
+ *
+ * @author Valithor Obsidion <valithor@valgorithms.com>
+ */
 abstract class Builder
 {
+    /**
+     * Creates a new instance of the builder from a given Part.
+     *
+     * @param Part $part
+     *
+     * @return self
+     */
     public static function fromPart(Part $part): self
     {
         $builder = new static();
+
         $attributes = $part->getRawAttributes();
 
         foreach ($attributes as $key => $value) {
