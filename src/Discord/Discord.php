@@ -348,6 +348,13 @@ class Discord
     private $application_commands;
 
     /**
+     * The gateway compression setting.
+     *
+     * @var bool Whether to use zlib gateway compression.
+     */
+    protected $useGatewayCompression;
+
+    /**
      * Creates a Discord client instance.
      *
      * @param  array           $options Array of options.
@@ -397,6 +404,7 @@ class Discord
         $this->factory = new Factory($this);
         $this->client = $this->factory->part(Client::class, []);
 
+        $this->useGatewayCompression = $options['useGatewayCompression'];
         $this->connectWs();
     }
 
@@ -1365,7 +1373,7 @@ class Discord
                 'encoding' => $this->encoding,
             ];
 
-            if ($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
+            if ($this->useGatewayCompression && $this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
                 $params['compress'] = 'zlib-stream';
             }
 
@@ -1429,6 +1437,7 @@ class Discord
                 'socket_options',
                 'dnsConfig',
                 'cache',
+                'useGatewayCompression'
             ])
             ->setDefaults([
                 'logger' => null,
@@ -1439,6 +1448,7 @@ class Discord
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
                 'cache' => [AbstractRepository::class => null], // use LegacyCacheWrapper
+                'useGatewayCompression' => true,
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1461,7 +1471,8 @@ class Discord
                 }
 
                 return $value;
-            });
+            })
+            ->setAllowedTypes('useGatewayCompression', 'bool');
 
         $options = $resolver->resolve($options);
 
