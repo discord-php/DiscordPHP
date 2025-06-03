@@ -1,6 +1,16 @@
 Search.appendIndex(
     [
                 {
+            "fqsen": "\\Discord\\Builders\\Builder",
+            "name": "Builder",
+            "summary": "Abstract\u0020base\u0020class\u0020providing\u0020helper\u0020methods\u0020for\u0020builder\u0020classes.",
+            "url": "classes/Discord-Builders-Builder.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Builder\u003A\u003AfromPart\u0028\u0029",
+            "name": "fromPart",
+            "summary": "Creates\u0020a\u0020new\u0020instance\u0020of\u0020the\u0020builder\u0020from\u0020a\u0020given\u0020Part.",
+            "url": "classes/Discord-Builders-Builder.html#method_fromPart"
+        },                {
             "fqsen": "\\Discord\\Builders\\CommandAttributes",
             "name": "CommandAttributes",
             "summary": "Application\u0020Command\u0020attributes.",
@@ -2470,6 +2480,11 @@ Search.appendIndex(
             "name": "application_commands",
             "summary": "An\u0020array\u0020of\u0020registered\u0020slash\u0020commands.",
             "url": "classes/Discord-Discord.html#property_application_commands"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024useGatewayCompression",
+            "name": "useGatewayCompression",
+            "summary": "The\u0020gateway\u0020compression\u0020setting.",
+            "url": "classes/Discord-Discord.html#property_useGatewayCompression"
         },                {
             "fqsen": "\\Discord\\DiscordCommandClient",
             "name": "DiscordCommandClient",
