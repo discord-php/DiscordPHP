@@ -150,6 +150,78 @@ class Button extends Interactive
     }
 
     /**
+     * Creates a new primary button.
+     *
+     * @param string|null $custom_id Custom ID of the button.
+     *
+     * @return self
+     */
+    public static function primary(?string $custom_id = null)
+    {
+        $button = new self(self::STYLE_PRIMARY);
+
+        if (! isset($custom_id)) {
+            $custom_id = self::generateUuid();
+        }
+
+        return $button->setCustomId($custom_id);
+    }
+
+    /**
+     * Creates a new secondary button.
+     *
+     * @param string|null $custom_id Custom ID of the button.
+     *
+     * @return self
+     */
+    public static function secondary(?string $custom_id = null)
+    {
+        $button = new self(self::STYLE_SECONDARY);
+
+        if (! isset($custom_id)) {
+            $custom_id = self::generateUuid();
+        }
+
+        return $button->setCustomId($custom_id);
+    }
+
+    /**
+     * Creates a new success button.
+     *
+     * @param string|null $custom_id Custom ID of the button.
+     *
+     * @return self
+     */
+    public static function success(?string $custom_id = null)
+    {
+        $button = new self(self::STYLE_SUCCESS);
+
+        if (! isset($custom_id)) {
+            $custom_id = self::generateUuid();
+        }
+
+        return $button->setCustomId($custom_id);
+    }
+
+    /**
+     * Creates a new danger button.
+     *
+     * @param string|null $custom_id Custom ID of the button.
+     *
+     * @return self
+     */
+    public static function danger(?string $custom_id = null)
+    {
+        $button = new self(self::STYLE_DANGER);
+
+        if (! isset($custom_id)) {
+            $custom_id = self::generateUuid();
+        }
+
+        return $button->setCustomId($custom_id);
+    }
+
+    /**
      * Creates a new link button.
      *
      * @param string $url
@@ -159,7 +231,9 @@ class Button extends Interactive
     public static function link(string $url): self
     {
         $button = new self(self::STYLE_LINK);
+
         $button->setUrl($url);
+
         return $button;
     }
 
@@ -173,7 +247,9 @@ class Button extends Interactive
     public static function premium(string $sku_id): self
     {
         $button = new self(self::STYLE_PREMIUM);
+
         $button->setSkuId($sku_id);
+
         return $button;
     }
 
