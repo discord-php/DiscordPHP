@@ -196,6 +196,26 @@ Search.appendIndex(
             "summary": "Creates\u0020a\u0020new\u0020button.",
             "url": "classes/Discord-Builders-Components-Button.html#method_new"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003Aprimary\u0028\u0029",
+            "name": "primary",
+            "summary": "Creates\u0020a\u0020new\u0020primary\u0020button.",
+            "url": "classes/Discord-Builders-Components-Button.html#method_primary"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003Asecondary\u0028\u0029",
+            "name": "secondary",
+            "summary": "Creates\u0020a\u0020new\u0020secondary\u0020button.",
+            "url": "classes/Discord-Builders-Components-Button.html#method_secondary"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003Asuccess\u0028\u0029",
+            "name": "success",
+            "summary": "Creates\u0020a\u0020new\u0020success\u0020button.",
+            "url": "classes/Discord-Builders-Components-Button.html#method_success"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003Adanger\u0028\u0029",
+            "name": "danger",
+            "summary": "Creates\u0020a\u0020new\u0020danger\u0020button.",
+            "url": "classes/Discord-Builders-Components-Button.html#method_danger"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003Alink\u0028\u0029",
             "name": "link",
             "summary": "Creates\u0020a\u0020new\u0020link\u0020button.",
