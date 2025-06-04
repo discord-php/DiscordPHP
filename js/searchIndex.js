@@ -196,6 +196,16 @@ Search.appendIndex(
             "summary": "Creates\u0020a\u0020new\u0020button.",
             "url": "classes/Discord-Builders-Components-Button.html#method_new"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003Alink\u0028\u0029",
+            "name": "link",
+            "summary": "Creates\u0020a\u0020new\u0020link\u0020button.",
+            "url": "classes/Discord-Builders-Components-Button.html#method_link"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003Apremium\u0028\u0029",
+            "name": "premium",
+            "summary": "Creates\u0020a\u0020new\u0020premium\u0020button.",
+            "url": "classes/Discord-Builders-Components-Button.html#method_premium"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003AsetStyle\u0028\u0029",
             "name": "setStyle",
             "summary": "Sets\u0020the\u0020style\u0020of\u0020the\u0020button.",
