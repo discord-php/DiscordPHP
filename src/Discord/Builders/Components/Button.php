@@ -144,6 +144,34 @@ class Button extends Interactive
     }
 
     /**
+     * Creates a new link button.
+     *
+     * @param string $url
+     *
+     * @return self
+     */
+    public static function link(string $url): self
+    {
+        $button = new self(self::STYLE_LINK);
+        $button->setUrl($url);
+        return $button;
+    }
+
+    /**
+     * Creates a new premium button.
+     *
+     * @param string $sku_id
+     *
+     * @return self
+     */
+    public static function premium(string $sku_id): self
+    {
+        $button = new self(self::STYLE_PREMIUM);
+        $button->setSkuId($sku_id);
+        return $button;
+    }
+
+    /**
      * Sets the style of the button.
      *
      * If the button is originally a link button, the link attribute will be cleared.
