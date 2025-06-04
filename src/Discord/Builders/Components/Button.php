@@ -120,12 +120,18 @@ class Button extends Interactive
             self::STYLE_SUCCESS,
             self::STYLE_DANGER,
             self::STYLE_LINK,
+            self::STYLE_PREMIUM,
         ])) {
             throw new \InvalidArgumentException('Invalid button style.');
         }
 
         $this->style = $style;
-        if ($this->style != self::STYLE_LINK) {
+        if (in_array($style, [
+            self::STYLE_PRIMARY,
+            self::STYLE_SECONDARY,
+            self::STYLE_SUCCESS,
+            self::STYLE_DANGER,
+        ])) {
             $this->setCustomId($custom_id ?? self::generateUuid());
         }
     }
@@ -141,6 +147,34 @@ class Button extends Interactive
     public static function new(int $style, ?string $custom_id = null): self
     {
         return new self($style, $custom_id);
+    }
+
+    /**
+     * Creates a new link button.
+     *
+     * @param string $url
+     *
+     * @return self
+     */
+    public static function link(string $url): self
+    {
+        $button = new self(self::STYLE_LINK);
+        $button->setUrl($url);
+        return $button;
+    }
+
+    /**
+     * Creates a new premium button.
+     *
+     * @param string $sku_id
+     *
+     * @return self
+     */
+    public static function premium(string $sku_id): self
+    {
+        $button = new self(self::STYLE_PREMIUM);
+        $button->setSkuId($sku_id);
+        return $button;
     }
 
     /**
