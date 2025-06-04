@@ -120,12 +120,18 @@ class Button extends Interactive
             self::STYLE_SUCCESS,
             self::STYLE_DANGER,
             self::STYLE_LINK,
+            self::STYLE_PREMIUM,
         ])) {
             throw new \InvalidArgumentException('Invalid button style.');
         }
 
         $this->style = $style;
-        if ($this->style != self::STYLE_LINK) {
+        if (in_array($style, [
+            self::STYLE_PRIMARY,
+            self::STYLE_SECONDARY,
+            self::STYLE_SUCCESS,
+            self::STYLE_DANGER,
+        ])) {
             $this->setCustomId($custom_id ?? self::generateUuid());
         }
     }
