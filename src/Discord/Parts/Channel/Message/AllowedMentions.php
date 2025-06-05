@@ -376,6 +376,19 @@ class AllowedMentions implements JsonSerializable
     }
 
     /**
+     * Sets whether to mention the author of the message being replied to (default false).
+     *
+     * @param bool $replied_user
+     * @return self
+     */
+    public function setRepliedUser(bool $replied_user = true): self
+    {
+        $this->replied_user = $replied_user;
+
+        return $this;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function jsonSerialize(): array
