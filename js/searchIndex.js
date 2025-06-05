@@ -4276,6 +4276,11 @@ Search.appendIndex(
             "summary": "Retrieves\u0020the\u0020list\u0020of\u0020allowed\u0020mentioned\u0020users.",
             "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_getUsers"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AsetRepliedUser\u0028\u0029",
+            "name": "setRepliedUser",
+            "summary": "Sets\u0020whether\u0020to\u0020mention\u0020the\u0020author\u0020of\u0020the\u0020message\u0020being\u0020replied\u0020to\u0020\u0028default\u0020false\u0029.",
+            "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_setRepliedUser"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
             "summary": "\u007B\u0040inheritDoc\u007D",
