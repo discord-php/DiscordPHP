@@ -397,10 +397,10 @@ class AllowedMentions implements JsonSerializable
 
         // Remove invalid configurations
         if (isset($this->roles) && in_array(self::TYPE_ROLE, $this->parse->values(), true)) {
-            $this->removeParse(self::TYPE_ROLE);
+            unset($this->roles);
         }
         if (isset($this->users) && in_array(self::TYPE_USER, $this->parse->values(), true)) {
-            $this->removeParse(self::TYPE_USER);
+            unset($this->users);
         }
 
         if (isset($this->parse)) {
