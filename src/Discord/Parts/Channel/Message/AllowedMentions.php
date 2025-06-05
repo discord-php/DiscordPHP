@@ -411,6 +411,14 @@ class AllowedMentions implements JsonSerializable
             $data['replied_user'] = $this->replied_user;
         }
 
+        // Remove invalid configurations
+        if (isset($this->roles) && in_array(self::TYPE_ROLE, $this->parse->values(), true)) {
+            $this->removeParse(self::TYPE_ROLE);
+        }
+        if (isset($this->users) && in_array(self::TYPE_USER, $this->parse->values(), true)) {
+            $this->removeParse(self::TYPE_USER);
+        }
+
         return $data;
     }
 }
