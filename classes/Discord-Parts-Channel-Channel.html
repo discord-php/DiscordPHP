@@ -313,7 +313,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null        $name                               The name of the channel.</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null                 $name                               The name of the channel.</p>
 </section>
 
                                     </dd>
@@ -322,7 +322,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null        $topic                              The topic of the channel (0-4096 characters for forum channels, 0-1024 characters for all others).</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null                 $topic                              The topic of the channel (0-4096 characters for forum channels, 0-1024 characters for all others).</p>
 </section>
 
                                     </dd>
@@ -331,7 +331,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null        $last_message_id                    The unique identifier of the last message sent in the channel (or thread for forum channels) (may not point to an existing or valid message or thread).</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null                 $last_message_id                    The unique identifier of the last message sent in the channel (or thread for forum channels) (may not point to an existing or valid message or thread).</p>
 </section>
 
                                     </dd>
@@ -340,7 +340,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null        $icon                               Icon hash.</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null                 $icon                               Icon hash.</p>
 </section>
 
                                     </dd>
@@ -349,7 +349,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null        $parent_id                          ID of the parent channel.</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null                 $parent_id                          ID of the parent channel.</p>
 </section>
 
                                     </dd>
@@ -358,7 +358,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null        $rtc_region                         Voice region id for the voice channel, automatic when set to null.</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null                 $rtc_region                         Voice region id for the voice channel, automatic when set to null.</p>
 </section>
 
                                     </dd>
@@ -367,7 +367,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?Reaction|null      $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.</p>
+                                                 <section class="phpdocumentor-description"><p>int|null                     o_quality_mode                      The camera video quality mode of the voice channel, 1 when not present.</p>
 </section>
 
                                     </dd>
@@ -376,7 +376,16 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?int|null           $default_sort_order                 The default sort order type used to order posts in forum channels.</p>
+                                                 <section class="phpdocumentor-description"><p>?Reaction|null               $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?int|null                    $default_sort_order                 The default sort order type used to order posts in forum channels.</p>
 </section>
 
                                     </dd>
@@ -796,12 +805,6 @@
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_user_limit">$user_limit</a>
-    <span>
-                        &nbsp;: int|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_video_quality_mode">$video_quality_mode</a>
     <span>
                         &nbsp;: int|null            </span>
 </dt>
@@ -3636,44 +3639,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>The user limit of the channel. Max 99 for voice channels and 10000 for stage channels (0 refers to no limit).</p>
-</section>
-
-    
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_video_quality_mode">
-        $video_quality_mode
-        <a href="classes/Discord-Parts-Channel-Channel.html#property_video_quality_mode" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$video_quality_mode</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The camera video quality mode of the voice channel, 1 when not present.</p>
 </section>
 
     
@@ -8774,7 +8739,6 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_threads">$threads</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_type">$type</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_user_limit">$user_limit</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_video_quality_mode">$video_quality_mode</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_webhooks">$webhooks</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
