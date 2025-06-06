@@ -44,24 +44,26 @@ use function React\Promise\reject;
  *
  * @since 7.0.0
  *
- * @property      string                 $id                    ID of the interaction.
- * @property      string                 $application_id        ID of the application the interaction is for.
- * @property      int                    $type                  Type of interaction.
- * @property      InteractionData|null   $data                  Data associated with the interaction.
- * @property      string|null            $guild_id              ID of the guild the interaction was sent from.
- * @property-read Guild|null             $guild                 Guild the interaction was sent from.
- * @property      string|null            $channel_id            ID of the channel the interaction was sent from.
- * @property-read Channel|null           $channel               Channel the interaction was sent from.
- * @property      Member|null            $member                Member who invoked the interaction.
- * @property      User|null              $user                  User who invoked the interaction.
- * @property      string                 $token                 Continuation token for responding to the interaction.
- * @property-read int                    $version               Version of interaction.
- * @property      Message|null           $message               Message that triggered the interactions, when triggered from message components.
- * @property-read ChannelPermission|null $app_permissions       Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
- * @property      string|null            $locale                The selected language of the invoking user.
- * @property      string|null            $guild_locale          The guild's preferred locale, if invoked in a guild.
- * @property      int|null               $context               Context where the interaction was triggered from.
- * @property      int                    $attachment_size_limit Attachment size limit in bytes.
+ * @property      string                 $id                             ID of the interaction.
+ * @property      string                 $application_id                 ID of the application the interaction is for.
+ * @property      int                    $type                           Type of interaction.
+ * @property      InteractionData|null   $data                           Data associated with the interaction.
+ * @property      string|null            $guild_id                       ID of the guild the interaction was sent from.
+ * @property-read Guild|null             $guild                          Guild the interaction was sent from.
+ * @property      string|null            $channel_id                     ID of the channel the interaction was sent from.
+ * @property-read Channel|null           $channel                        Channel the interaction was sent from.
+ * @property      Member|null            $member                         Member who invoked the interaction.
+ * @property      User|null              $user                           User who invoked the interaction.
+ * @property      string                 $token                          Continuation token for responding to the interaction.
+ * @property-read int                    $version                        Version of interaction.
+ * @property      Message|null           $message                        Message that triggered the interactions, when triggered from message components.
+ * @property-read ChannelPermission|null $app_permissions                Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
+ * @property      string|null            $locale                         The selected language of the invoking user.
+ * @property      string|null            $guild_locale                   The guild's preferred locale, if invoked in a guild.
+ * @property      array                  $entitlements                   For monetized apps, any entitlements for the invoking user, representing access to premium SKUs
+ * @property      array                  $authorizing_integration_owners Mapping of installation contexts that the interaction was authorized for to related user or guild IDs. See Authorizing Integration Owners Object for details
+ * @property      int|null               $context                        Context where the interaction was triggered from.
+ * @property      int                    $attachment_size_limit          Attachment size limit in bytes.
  */
 class Interaction extends Part
 {
@@ -84,6 +86,10 @@ class Interaction extends Part
         'app_permissions',
         'locale',
         'guild_locale',
+        'entitlements',
+        'authorizing_integration_owners',
+        'context',
+        'attachment_size_limit',
     ];
 
     /**
