@@ -45,6 +45,15 @@ class Command extends Part implements Stringable
     /** A UI-based command that shows up when you right click or tap on a message */
     public const MESSAGE = 3;
 
+    /** A UI-based command that represents the primary way to invoke an app's Activity */
+    public const PRIMARY_ENTRY_POINT = 4;
+
+    /** The app handles the interaction using an interaction token */
+    public const APP_HANDLER = 1;
+
+    /** Discord handles the interaction by launching an Activity and sending a follow-up message without coordinating with the app */
+    public const DISCORD_LAUNCH_ACTIVITY = 2;
+
     /**
      * {@inheritDoc}
      */
@@ -62,7 +71,10 @@ class Command extends Part implements Stringable
         'dm_permission',
         'default_permission',
         'nsfw',
+        'integration_types',
+        'contexts',
         'version',
+        'handler',
     ];
 
     /**
@@ -134,6 +146,9 @@ class Command extends Part implements Stringable
             'default_permission' => $this->default_permission,
             'type' => $this->type,
             'nsfw' => $this->nsfw,
+            'integration_types',
+            'contexts',
+            'handler',
 
             'dm_permission' => $this->dm_permission,  // Guild command might omit this fillable
         ]);
@@ -157,6 +172,9 @@ class Command extends Part implements Stringable
             'default_member_permissions' => $this->default_member_permissions,
             'default_permission' => $this->default_permission,
             'nsfw' => $this->nsfw,
+            'integration_types',
+            'contexts',
+            'handler',
         ]);
 
         if (! isset($this->guild_id)) {
