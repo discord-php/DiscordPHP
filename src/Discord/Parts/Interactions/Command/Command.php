@@ -90,7 +90,7 @@ class Command extends Part implements Stringable
         'name_localizations',
         'description',
         'description_localizations',
-        'options', // can only be set for application commands of type CHAT_INPUT.
+        'options',
         'default_member_permissions',
         'dm_permission',
         'default_permission',
@@ -98,7 +98,7 @@ class Command extends Part implements Stringable
         'integration_types',
         'contexts',
         'version',
-        'handler', // can only be set for application commands of type PRIMARY_ENTRY_POINT for applications with the EMBEDDED flag (i.e. applications that have an Activity).
+        'handler',
     ];
 
     /**
