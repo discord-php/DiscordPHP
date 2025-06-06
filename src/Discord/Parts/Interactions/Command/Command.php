@@ -45,6 +45,39 @@ class Command extends Part implements Stringable
     /** A UI-based command that shows up when you right click or tap on a message */
     public const MESSAGE = 3;
 
+    /** A UI-based command that represents the primary way to invoke an app's Activity */
+    public const PRIMARY_ENTRY_POINT = 4;
+
+    // Interaction Types
+    public const PING = 1;
+    public const APPLICATION_COMMAND = 2;
+    public const MESSAGE_COMPONENT = 3;
+    public const APPLICATION_COMMAND_AUTOCOMPLETE = 4;
+    public const MODAL_SUBMIT = 5;
+
+    // Interaction Context Types
+
+    /** Interaction can be used within servers */
+    public const GUILD = 0;
+    /** Interaction can be used within DMs with the app's bot user */
+    public const BOT_DM = 1;
+    /** Interaction can be used within Group DMs and DMs other than the app's bot user */
+    public const PRIVATE_CHANNEL = 2;
+
+    // Application Integration Types
+
+    /** App is installable to servers */
+    public const GUILD_INSTALL = 0;
+
+    /**	App is installable to users */
+    public const USER_INSTALL = 1;
+
+    /** The app handles the interaction using an interaction token */
+    public const APP_HANDLER = 1;
+
+    /** Discord handles the interaction by launching an Activity and sending a follow-up message without coordinating with the app */
+    public const DISCORD_LAUNCH_ACTIVITY = 2;
+
     /**
      * {@inheritDoc}
      */
@@ -57,12 +90,15 @@ class Command extends Part implements Stringable
         'name_localizations',
         'description',
         'description_localizations',
-        'options',
+        'options', // can only be set for application commands of type CHAT_INPUT.
         'default_member_permissions',
         'dm_permission',
         'default_permission',
         'nsfw',
+        'integration_types',
+        'contexts',
         'version',
+        'handler', // can only be set for application commands of type PRIMARY_ENTRY_POINT for applications with the EMBEDDED flag (i.e. applications that have an Activity).
     ];
 
     /**
@@ -134,6 +170,9 @@ class Command extends Part implements Stringable
             'default_permission' => $this->default_permission,
             'type' => $this->type,
             'nsfw' => $this->nsfw,
+            'integration_types',
+            'contexts',
+            'handler',
 
             'dm_permission' => $this->dm_permission,  // Guild command might omit this fillable
         ]);
@@ -157,6 +196,9 @@ class Command extends Part implements Stringable
             'default_member_permissions' => $this->default_member_permissions,
             'default_permission' => $this->default_permission,
             'nsfw' => $this->nsfw,
+            'integration_types',
+            'contexts',
+            'handler',
         ]);
 
         if (! isset($this->guild_id)) {

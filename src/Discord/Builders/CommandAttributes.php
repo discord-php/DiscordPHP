@@ -35,10 +35,13 @@ use function Discord\poly_strlen;
  * @property ?string[]|null                      $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
  * @property ExCollectionInterface|Option[]|null $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
  * @property ?string                             $default_member_permissions Set of permissions represented as a bit set.
- * @property bool|null                           $dm_permission              Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
+ * @property bool|null                           $dm_permission              Deprecated (use contexts instead); Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
  * @property ?bool                               $default_permission         Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
  * @property ?int                                $guild_id                   The optional guild ID this command is for. If not set, the command is global.
  * @property bool|null                           $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
+ * @property ExCollectionInterface|null          $integration_types          Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts
+ * @property ExCollectionInterface|null          $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.
+ * @property int|null                            $handler                    Determines whether the interaction is handled by the app's interactions handler or by Discord
  */
 trait CommandAttributes
 {
@@ -188,6 +191,8 @@ trait CommandAttributes
     /**
      * Sets the default member permissions of the command.
      *
+     * @deprecated 10.14.0 See `CommandAttributes::setContextPermissions()`.
+     *
      * @param string|int $permissions Default member permission bits of the command.
      *
      * @return $this
@@ -209,6 +214,20 @@ trait CommandAttributes
     public function setDmPermission(bool $permission): self
     {
         $this->dm_permission = $permission;
+
+        return $this;
+    }
+
+    /**
+     * Sets the contexts of the command. (Only for globally-scoped commands)
+     *
+     * @param array|null $contexts Interaction contexts where the command can be used.
+     *
+     * @return $this
+     */
+    public function setContextPermissions(?array $contexts): self
+    {
+        $this->contexts = $contexts;
 
         return $this;
     }
@@ -286,6 +305,140 @@ trait CommandAttributes
         if (isset($this->options) && ($idx = $this->options->search($option)) !== false) {
             $this->options->splice($idx, 1);
         }
+
+        return $this;
+    }
+
+    /**
+     * Adds an integration type to the command.
+     *
+     * @param int $integration_type The integration type to add. Must be one of GUILD_INSTALL (0) or USER_INSTALL (1).
+     *
+     * @throws \DomainException If the command is not globally-scoped or if an invalid integration type is provided.
+     *
+     * @return $this
+     */
+    public function addIntegrationType(int $integration_type): self
+    {
+        if (isset($this->guild_id)) {
+            throw new \DomainException('Only globally-scopped commands can have an integration type.');
+        }
+
+        $allowed = [
+            Command::GUILD_INSTALL,
+            Command::USER_INSTALL,
+        ];
+
+        if (! in_array($integration_type, $allowed, true)) {
+            throw new \DomainException('Invalid integration type provided.');
+        }
+
+        $this->integration_type ??= new Collection();
+
+        $this->integration_type->push($integration_type);
+
+        return $this;
+    }
+
+    /**
+     * Removed an integration type from the command.
+     *
+     * @param int $integration_type The integration type to remove.
+     *
+     * @throws \DomainException If the command is not globally-scoped.
+     *
+     * @return $this
+     */
+    public function removeIntegrationType($integration_type): self
+    {
+        if (isset($this->guild_id)) {
+            throw new \DomainException('Only globally-scopped commands can have an integration type.');
+        }
+
+        if (isset($this->integration_types) && ($idx = $this->integration_types->search($integration_type)) !== false) {
+            $this->integration_types->splice($idx, 1);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * Adds a context to the command.
+     *
+     * @param int $context Context to add.
+     *
+     * @throws \DomainException If the command is not globally-scoped.
+     *
+     * @return $this
+     */
+    public function addContext(int $context): self
+    {
+        if (isset($this->guild_id)) {
+            throw new \DomainException('Only globally-scopped commands can have context.');
+        }
+
+        $allowed = [
+            Command::GUILD,
+            Command::BOT_DM,
+            Command::PRIVATE_CHANNEL,
+        ];
+
+        if (! in_array($context, $allowed, true)) {
+            throw new \DomainException('Invalid context provided.');
+        }
+
+        $this->contexts ??= new Collection();
+
+        $this->contexts->push($context);
+
+        return $this;
+    }
+
+    /**
+     * Removes a context from the command.
+     *
+     * @param int $context Context to remove.
+     *
+     * @throws \DomainException If the command is not globally-scoped.
+     *
+     * @return $this
+     */
+    public function removeContext(int $context): self
+    {
+        if (isset($this->guild_id)) {
+            throw new \DomainException('Only globally-scopped commands can have context.');
+        }
+
+        if (isset($this->contexts) && ($idx = $this->contexts->search($context)) !== false) {
+            $this->contexts->splice($idx, 1);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Sets the handler for the command.
+     *
+     * @param int $handler Handler to set.
+     *
+     * @throws \DomainException Command type is not PRIMARY_ENTRY_POINT (4) or if the handler is not valid.
+     *
+     * @return $this
+     */
+    public function setHandler(?int $handler): self
+    {
+        if (isset($this->type) && $this->type !== Command::PRIMARY_ENTRY_POINT) {
+            throw new \DomainException('Only PRIMARY_ENTRY_POINT Command type can have handler.');
+        }
+
+        $allowed = [Command::APP_HANDLER, Command::DISCORD_LAUNCH_ACTIVITY];
+
+        if (is_int($handler) && ! in_array($handler, $allowed)) {
+            throw new \DomainException('Invalid handler provided.');
+        }
+
+        $this->handler = $handler;
 
         return $this;
     }
