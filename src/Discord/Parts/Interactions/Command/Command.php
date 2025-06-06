@@ -59,18 +59,12 @@ class Command extends Part implements Stringable
 
     /** Interaction can be used within servers */
     public const GUILD = 0;
+
     /** Interaction can be used within DMs with the app's bot user */
     public const BOT_DM = 1;
+
     /** Interaction can be used within Group DMs and DMs other than the app's bot user */
     public const PRIVATE_CHANNEL = 2;
-
-    // Application Integration Types
-
-    /** App is installable to servers */
-    public const GUILD_INSTALL = 0;
-
-    /**	App is installable to users */
-    public const USER_INSTALL = 1;
 
     /** The app handles the interaction using an interaction token */
     public const APP_HANDLER = 1;
