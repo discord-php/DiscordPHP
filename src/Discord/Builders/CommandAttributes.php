@@ -316,7 +316,7 @@ trait CommandAttributes
     }
 
     /**
-     * Adds an integration type to the command.
+     * Adds an integration type to the command. (Only for globally-scoped commands)
      *
      * @param int $integration_type The integration type to add. Must be one of GUILD_INSTALL (0) or USER_INSTALL (1).
      *
@@ -347,7 +347,7 @@ trait CommandAttributes
     }
 
     /**
-     * Removed an integration type from the command.
+     * Removed an integration type from the command. (Only for globally-scoped commands)
      *
      * @param int $integration_type The integration type to remove.
      *
@@ -370,7 +370,7 @@ trait CommandAttributes
 
 
     /**
-     * Adds a context to the command.
+     * Adds a context to the command. (Only for globally-scoped commands)
      *
      * @param int $context Context to add.
      *
@@ -402,7 +402,7 @@ trait CommandAttributes
     }
 
     /**
-     * Removes a context from the command.
+     * Removes a context from the command. (Only for globally-scoped commands)
      *
      * @param int $context Context to remove.
      *
