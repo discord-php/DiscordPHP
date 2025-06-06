@@ -17,6 +17,7 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
+use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\OAuth\Application;
 
 use function Discord\poly_strlen;
@@ -386,9 +387,9 @@ trait CommandAttributes
         }
 
         $allowed = [
-            Command::GUILD,
-            Command::BOT_DM,
-            Command::PRIVATE_CHANNEL,
+            Interaction::CONTEXT_TYPE_GUILD,
+            Interaction::CONTEXT_TYPE_BOT_DM,
+            Interaction::CONTEXT_TYPE_PRIVATE_CHANNEL,
         ];
 
         if (! in_array($context, $allowed, true)) {
