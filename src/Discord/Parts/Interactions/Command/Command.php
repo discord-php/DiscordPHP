@@ -48,15 +48,6 @@ class Command extends Part implements Stringable
     /** A UI-based command that represents the primary way to invoke an app's Activity */
     public const PRIMARY_ENTRY_POINT = 4;
 
-    /** Interaction can be used within servers */
-    public const GUILD = 0;
-
-    /** Interaction can be used within DMs with the app's bot user */
-    public const BOT_DM = 1;
-
-    /** Interaction can be used within Group DMs and DMs other than the app's bot user */
-    public const PRIVATE_CHANNEL = 2;
-
     /** The app handles the interaction using an interaction token */
     public const APP_HANDLER = 1;
 
