@@ -48,15 +48,6 @@ class Command extends Part implements Stringable
     /** A UI-based command that represents the primary way to invoke an app's Activity */
     public const PRIMARY_ENTRY_POINT = 4;
 
-    // Interaction Types
-    public const PING = 1;
-    public const APPLICATION_COMMAND = 2;
-    public const MESSAGE_COMPONENT = 3;
-    public const APPLICATION_COMMAND_AUTOCOMPLETE = 4;
-    public const MODAL_SUBMIT = 5;
-
-    // Interaction Context Types
-
     /** Interaction can be used within servers */
     public const GUILD = 0;
 
