@@ -17,6 +17,7 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
+use Discord\Parts\OAuth\Application;
 
 use function Discord\poly_strlen;
 
@@ -331,8 +332,8 @@ trait CommandAttributes
         }
 
         $allowed = [
-            Command::GUILD_INSTALL,
-            Command::USER_INSTALL,
+            Application::INTEGRATION_TYPE_GUILD_INSTALL,
+            Application::INTEGRATION_TYPE_USER_INSTALL,
         ];
 
         if (! in_array($integration_type, $allowed, true)) {
