@@ -223,10 +223,16 @@ trait CommandAttributes
      *
      * @param array|null $contexts Interaction contexts where the command can be used.
      *
+     * @throws \DomainException If the command is not globally-scoped.
+     *
      * @return $this
      */
     public function setContextPermissions(?array $contexts): self
     {
+        if (isset($this->guild_id)) {
+            throw new \DomainException('Only globally-scopped commands can have contexts.');
+        }
+
         $this->contexts = $contexts;
 
         return $this;
