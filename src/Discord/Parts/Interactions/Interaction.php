@@ -114,9 +114,9 @@ class Interaction extends Part
     public const RESPONSE_TYPE_MODAL = 9;
     public const RESPONSE_TYPE_PREMIUM_REQUIRED = 10;
 
-    const CONTEXT_TYPE_GUILD = 0;
-    const CONTEXT_TYPE_BOT_DM = 1;
-    const CONTEXT_TYPE_PRIVATE_CHANNEL = 2;
+    public const CONTEXT_TYPE_GUILD = 0;
+    public const CONTEXT_TYPE_BOT_DM = 1;
+    public const CONTEXT_TYPE_PRIVATE_CHANNEL = 2;
 
     /**
      * Returns true if this interaction has been internally responded.
