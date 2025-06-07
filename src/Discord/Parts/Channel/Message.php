@@ -1083,7 +1083,7 @@ class Message extends Part
     {
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
-        } else {
+        } elseif (isset($emoticon)) {
             $emoticon = urlencode($emoticon);
         }
 
