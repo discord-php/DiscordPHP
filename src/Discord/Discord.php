@@ -412,6 +412,7 @@ class Discord
         $this->client = $this->factory->part(Client::class, []);
 
         $this->useTransportCompression = $options['useTransportCompression'];
+        $this->usePayloadCompression = $options['usePayloadCompression'];
         $this->connectWs();
     }
 
