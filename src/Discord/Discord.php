@@ -348,11 +348,18 @@ class Discord
     private $application_commands;
 
     /**
-     * The gateway compression setting.
+     * The transport compression setting.
      *
-     * @var bool Whether to use zlib gateway compression.
+     * @var bool Whether to use transport compression.
      */
-    protected $useGatewayCompression;
+    protected $useTransportCompression;
+
+    /**
+     * The payload compression setting.
+     *
+     * @var bool Whether to use payload compression.
+     */
+    protected $usePayloadCompression;
 
     /**
      * Creates a Discord client instance.
@@ -404,7 +411,7 @@ class Discord
         $this->factory = new Factory($this);
         $this->client = $this->factory->part(Client::class, []);
 
-        $this->useGatewayCompression = $options['useGatewayCompression'];
+        $this->useTransportCompression = $options['useTransportCompression'];
         $this->connectWs();
     }
 
@@ -960,7 +967,7 @@ class Discord
                         'referrer' => 'https://github.com/discord-php/DiscordPHP',
                         'referring_domain' => 'https://github.com/discord-php/DiscordPHP',
                     ],
-                    'compress' => true,
+                    'compress' => $this->usePayloadCompression,
                     'intents' => $this->options['intents'],
                 ],
             );
@@ -1373,8 +1380,11 @@ class Discord
                 'encoding' => $this->encoding,
             ];
 
-            if ($this->useGatewayCompression && $this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
-                $params['compress'] = 'zlib-stream';
+            if ($this->useTransportCompression) {
+                if ($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
+                    $params['compress'] = 'zlib-stream';
+                }
+                // @todo: add support for zstd-stream
             }
 
             $query = http_build_query($params);
@@ -1437,7 +1447,8 @@ class Discord
                 'socket_options',
                 'dnsConfig',
                 'cache',
-                'useGatewayCompression'
+                'useTransportCompression',
+                'usePayloadCompression',
             ])
             ->setDefaults([
                 'logger' => null,
@@ -1448,7 +1459,8 @@ class Discord
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
                 'cache' => [AbstractRepository::class => null], // use LegacyCacheWrapper
-                'useGatewayCompression' => true,
+                'useTransportCompression' => true,
+                'usePayloadCompression' => true,
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1472,7 +1484,8 @@ class Discord
 
                 return $value;
             })
-            ->setAllowedTypes('useGatewayCompression', 'bool');
+            ->setAllowedTypes('useTransportCompression', 'bool')
+            ->setAllowedTypes('usePayloadCompression', 'bool');
 
         $options = $resolver->resolve($options);
 
