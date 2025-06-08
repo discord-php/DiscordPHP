@@ -2511,10 +2511,15 @@ Search.appendIndex(
             "summary": "An\u0020array\u0020of\u0020registered\u0020slash\u0020commands.",
             "url": "classes/Discord-Discord.html#property_application_commands"
         },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024useGatewayCompression",
-            "name": "useGatewayCompression",
-            "summary": "The\u0020gateway\u0020compression\u0020setting.",
-            "url": "classes/Discord-Discord.html#property_useGatewayCompression"
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024useTransportCompression",
+            "name": "useTransportCompression",
+            "summary": "The\u0020transport\u0020compression\u0020setting.",
+            "url": "classes/Discord-Discord.html#property_useTransportCompression"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024usePayloadCompression",
+            "name": "usePayloadCompression",
+            "summary": "The\u0020payload\u0020compression\u0020setting.",
+            "url": "classes/Discord-Discord.html#property_usePayloadCompression"
         },                {
             "fqsen": "\\Discord\\DiscordCommandClient",
             "name": "DiscordCommandClient",
