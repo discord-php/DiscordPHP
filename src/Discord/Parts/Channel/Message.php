@@ -1067,6 +1067,8 @@ class Message extends Part
     /**
      * Deletes a reaction.
      *
+     * @deprecated 10.14.0 Use `Message::deleteAllReactions()`, `Message::deleteOwnReaction()`, `Message::deleteUserReaction()`, or `Message::deleteEmojiReactions()`.
+     *
      * @link https://discord.com/developers/docs/resources/channel#delete-own-reaction
      * @link https://discord.com/developers/docs/resources/channel#delete-user-reaction
      *
