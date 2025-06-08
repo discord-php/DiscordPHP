@@ -1076,6 +1076,7 @@ class Message extends Part
      *
      * @throws \UnexpectedValueException Invalid reaction `$type`.
      * @throws NoPermissionsException    Missing manage_messages permission when deleting others reaction.
+     * @throws \DomainException          Missing emoji or user ID when deleting reaction by emoji or user ID.
      *
      * @return PromiseInterface
      */
@@ -1092,12 +1093,21 @@ class Message extends Part
                 $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_ALL, $this->channel_id, $this->id);
                 break;
             case self::REACT_DELETE_ME:
+                if (! isset($emoticon)) {
+                    return reject(new \DomainException('You must provide an emoji to delete a reaction by emoji.'));
+                }
                 $url = Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon);
                 break;
             case self::REACT_DELETE_ID:
+                if (! isset($emoticon, $id)) {
+                    return reject(new \DomainException('You must provide an emoji and a user ID to delete a reaction by user.'));
+                }
                 $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon, $id);
                 break;
             case self::REACT_DELETE_EMOJI:
+                if (! isset($emoticon)) {
+                    return reject(new \DomainException('You must provide an emoji to delete a reaction by emoji.'));
+                }
                 $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->id, $emoticon);
                 break;
             default:
