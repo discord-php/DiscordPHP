@@ -1099,6 +1099,8 @@ class Message extends Part
     /**
      * Deletes all reactions from the message.
      *
+     * @throws NoPermissionsException Missing manage_messages permission when deleting others reaction.
+     *
      * @return PromiseInterface
      */
     public function deleteAllReactions(): PromiseInterface
@@ -1117,6 +1119,8 @@ class Message extends Part
      * Deletes the bot's own reaction from the message.
      *
      * @param Emoji|string $emoticon
+     *
+     * @throws \DomainException Missing emoji when deleting own reaction.
      *
      * @return PromiseInterface
      */
@@ -1138,6 +1142,9 @@ class Message extends Part
      *
      * @param Emoji|string $emoticon
      * @param string $user_id
+     *
+     * @throws \DomainException       Missing emoji or user ID when deleting reaction by user ID.
+     * @throws NoPermissionsException Missing manage_messages permission when deleting others reaction.
      *
      * @return PromiseInterface
      */
@@ -1173,6 +1180,9 @@ class Message extends Part
      * Deletes all reactions for a specific emoji from the message.
      *
      * @param Emoji|string $emoticon
+     *
+     * @throws \DomainException       Missing emoji when deleting reaction by reaction.
+     * @throws NoPermissionsException Missing manage_messages permission when deleting others reaction.
      *
      * @return PromiseInterface
      */
