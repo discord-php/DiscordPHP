@@ -1082,46 +1082,118 @@ class Message extends Part
      */
     public function deleteReaction(int $type, $emoticon = null, ?string $id = null): PromiseInterface
     {
+        switch ($type) {
+            case self::REACT_DELETE_ALL:
+                return $this->deleteAllReactions();
+            case self::REACT_DELETE_ME:
+                return $this->deleteOwnReaction($emoticon);
+            case self::REACT_DELETE_ID:
+                return $this->deleteUserReaction($emoticon, $id);
+            case self::REACT_DELETE_EMOJI:
+                return $this->deleteEmojiReactions($emoticon);
+            default:
+                return reject(new \UnexpectedValueException('Invalid reaction type'));
+        }
+    }
+
+    /**
+     * Deletes all reactions from the message.
+     *
+     * @return PromiseInterface
+     */
+    public function deleteAllReactions(): PromiseInterface
+    {
+        if ($channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete reactions by others in channel {$channel->id}."));
+            }
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::MESSAGE_REACTION_ALL, $this->channel_id, $this->id));
+    }
+
+    /**
+     * Deletes the bot's own reaction from the message.
+     *
+     * @param Emoji|string $emoticon
+     *
+     * @return PromiseInterface
+     */
+    public function deleteOwnReaction($emoticon): PromiseInterface
+    {
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
         } elseif (isset($emoticon)) {
             $emoticon = urlencode($emoticon);
+        } else {
+            return reject(new \DomainException('You must provide an emoji to delete a reaction by emoji.'));
         }
 
-        switch ($type) {
-            case self::REACT_DELETE_ALL:
-                $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_ALL, $this->channel_id, $this->id);
-                break;
-            case self::REACT_DELETE_ME:
-                if (! isset($emoticon)) {
-                    return reject(new \DomainException('You must provide an emoji to delete a reaction by emoji.'));
-                }
-                $url = Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon);
-                break;
-            case self::REACT_DELETE_ID:
-                if (! isset($emoticon, $id)) {
-                    return reject(new \DomainException('You must provide an emoji and a user ID to delete a reaction by user.'));
-                }
-                $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon, $id);
-                break;
-            case self::REACT_DELETE_EMOJI:
-                if (! isset($emoticon)) {
-                    return reject(new \DomainException('You must provide an emoji to delete a reaction by emoji.'));
-                }
-                $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->id, $emoticon);
-                break;
-            default:
-                return reject(new \UnexpectedValueException('Invalid reaction type'));
+        return $this->http->delete(Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon));
+    }
+
+    /**
+     * Deletes a specific user's reaction from the message.
+     *
+     * @param Emoji|string $emoticon
+     * @param string $user_id
+     *
+     * @return PromiseInterface
+     */
+    public function deleteUserReaction($emoticon, string $user_id): PromiseInterface
+    {
+        if ($user_id === $this->discord->id) {
+            return $this->deleteOwnReaction($emoticon);
         }
 
-        if (($type != self::REACT_DELETE_ME || $id != $this->discord->id) && $channel = $this->channel) {
+        if ($emoticon instanceof Emoji) {
+            $emoticon = $emoticon->toReactionString();
+        } elseif (isset($emoticon)) {
+            $emoticon = urlencode($emoticon);
+        } else {
+            return reject(new \DomainException('You must provide an emoji to delete a reaction by user.'));
+        }
+
+        if (!isset($user_id)) {
+            return reject(new \DomainException('You must provide a user ID to delete a reaction by user.'));
+        }
+
+        if ($channel = $this->channel) {
             $botperms = $channel->getBotPermissions();
             if ($botperms && ! $botperms->manage_messages) {
                 return reject(new NoPermissionsException("You do not have permission to delete reaction by others in channel {$channel->id}."));
             }
         }
 
-        return $this->http->delete($url);
+        return $this->http->delete(Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon, $user_id));
+    }
+
+    /**
+     * Deletes all reactions for a specific emoji from the message.
+     *
+     * @param Emoji|string $emoticon
+     *
+     * @return PromiseInterface
+     */
+    public function deleteEmojiReactions($emoticon): PromiseInterface
+    {
+        if ($emoticon instanceof Emoji) {
+            $emoticon = $emoticon->toReactionString();
+        } elseif (isset($emoticon)) {
+            $emoticon = urlencode($emoticon);
+        } else {
+            return reject(new \DomainException('You must provide an emoji to delete reactions by emoji.'));
+        }
+
+        if ($channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete reactions by others in channel {$channel->id}."));
+            }
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->id, $emoticon));
     }
 
     /**
