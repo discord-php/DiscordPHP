@@ -4916,6 +4916,26 @@ Search.appendIndex(
             "summary": "Deletes\u0020a\u0020reaction.",
             "url": "classes/Discord-Parts-Channel-Message.html#method_deleteReaction"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AdeleteAllReactions\u0028\u0029",
+            "name": "deleteAllReactions",
+            "summary": "Deletes\u0020all\u0020reactions\u0020from\u0020the\u0020message.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_deleteAllReactions"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AdeleteOwnReaction\u0028\u0029",
+            "name": "deleteOwnReaction",
+            "summary": "Deletes\u0020the\u0020bot\u0027s\u0020own\u0020reaction\u0020from\u0020the\u0020message.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_deleteOwnReaction"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AdeleteUserReaction\u0028\u0029",
+            "name": "deleteUserReaction",
+            "summary": "Deletes\u0020a\u0020specific\u0020user\u0027s\u0020reaction\u0020from\u0020the\u0020message.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_deleteUserReaction"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AdeleteEmojiReactions\u0028\u0029",
+            "name": "deleteEmojiReactions",
+            "summary": "Deletes\u0020all\u0020reactions\u0020for\u0020a\u0020specific\u0020emoji\u0020from\u0020the\u0020message.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_deleteEmojiReactions"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003Aedit\u0028\u0029",
             "name": "edit",
             "summary": "Edits\u0020the\u0020message.",

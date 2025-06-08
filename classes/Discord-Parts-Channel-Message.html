@@ -1222,11 +1222,39 @@
 <dd>Deletes the message from the channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Message.html#method_deleteReaction">deleteReaction()</a>
+    <a class="" href="classes/Discord-Parts-Channel-Message.html#method_deleteAllReactions">deleteAllReactions()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
+</dt>
+<dd>Deletes all reactions from the message.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message.html#method_deleteEmojiReactions">deleteEmojiReactions()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
+</dt>
+<dd>Deletes all reactions for a specific emoji from the message.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message.html#method_deleteOwnReaction">deleteOwnReaction()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
+</dt>
+<dd>Deletes the bot&#039;s own reaction from the message.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="-deprecated" href="classes/Discord-Parts-Channel-Message.html#method_deleteReaction">deleteReaction()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
 <dd>Deletes a reaction.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message.html#method_deleteUserReaction">deleteUserReaction()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
+</dt>
+<dd>Deletes a specific user&#039;s reaction from the message.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Channel-Message.html#method_edit">edit()</a>
@@ -6775,7 +6803,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1242</span>
+    <span class="phpdocumentor-element-found-in__line">1334</span>
 
     </aside>
 
@@ -6824,7 +6852,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1191</span>
+    <span class="phpdocumentor-element-found-in__line">1283</span>
 
     </aside>
 
@@ -7118,7 +7146,7 @@ manage_messages if this message author is other user.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1166</span>
+    <span class="phpdocumentor-element-found-in__line">1258</span>
 
     </aside>
 
@@ -7183,6 +7211,228 @@ manage_messages if this message author is other user.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_deleteAllReactions">
+        deleteAllReactions()
+        <a href="classes/Discord-Parts-Channel-Message.html#method_deleteAllReactions" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1110</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Deletes all reactions from the message.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">deleteAllReactions</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-Message.html#method_deleteAllReactions#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.14.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Discord\Http\Exceptions\NoPermissionsException">NoPermissionsException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>Missing manage_messages permission when deleting others reaction.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_deleteEmojiReactions">
+        deleteEmojiReactions()
+        <a href="classes/Discord-Parts-Channel-Message.html#method_deleteEmojiReactions" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1199</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Deletes all reactions for a specific emoji from the message.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">deleteEmojiReactions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$emoticon</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$emoticon</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-Message.html#method_deleteEmojiReactions#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.14.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>Missing emoji when deleting reaction by reaction.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Discord\Http\Exceptions\NoPermissionsException">NoPermissionsException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>Missing manage_messages permission when deleting others reaction.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_deleteOwnReaction">
+        deleteOwnReaction()
+        <a href="classes/Discord-Parts-Channel-Message.html#method_deleteOwnReaction" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1133</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Deletes the bot&#039;s own reaction from the message.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">deleteOwnReaction</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$emoticon</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$emoticon</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-Message.html#method_deleteOwnReaction#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.14.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>Missing emoji when deleting own reaction.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+            -deprecated                                            "
+>
     <h4 class="phpdocumentor-element__name" id="method_deleteReaction">
         deleteReaction()
         <a href="classes/Discord-Parts-Channel-Message.html#method_deleteReaction" class="headerlink"><i class="fas fa-link"></i></a>
@@ -7191,17 +7441,24 @@ manage_messages if this message author is other user.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1083</span>
+    <span class="phpdocumentor-element-found-in__line">1085</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Deletes a reaction.</p>
 
-    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">deleteReaction</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$emoticon</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
+        </div>
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>Use <code class="prettyprint">Message::deleteAllReactions()</code>, <code class="prettyprint">Message::deleteOwnReaction()</code>, <code class="prettyprint">Message::deleteUserReaction()</code>, or <code class="prettyprint">Message::deleteEmojiReactions()</code>.</p>
+
+            </article>
         </div>
     
     
@@ -7303,6 +7560,97 @@ manage_messages if this message author is other user.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_deleteUserReaction">
+        deleteUserReaction()
+        <a href="classes/Discord-Parts-Channel-Message.html#method_deleteUserReaction" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">1159</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Deletes a specific user&#039;s reaction from the message.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">deleteUserReaction</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$emoticon</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user_id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$emoticon</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$user_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-Message.html#method_deleteUserReaction#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.14.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>Missing emoji or user ID when deleting reaction by user ID.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Discord\Http\Exceptions\NoPermissionsException">NoPermissionsException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>Missing manage_messages permission when deleting others reaction.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_edit">
         edit()
         <a href="classes/Discord-Parts-Channel-Message.html#method_edit" class="headerlink"><i class="fas fa-link"></i></a>
@@ -7311,7 +7659,7 @@ manage_messages if this message author is other user.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1136</span>
+    <span class="phpdocumentor-element-found-in__line">1228</span>
 
     </aside>
 
@@ -7712,7 +8060,7 @@ manage_messages if this message author is other user.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1286</span>
+    <span class="phpdocumentor-element-found-in__line">1378</span>
 
     </aside>
 
@@ -7750,7 +8098,7 @@ manage_messages if this message author is other user.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1275</span>
+    <span class="phpdocumentor-element-found-in__line">1367</span>
 
     </aside>
 
@@ -7802,7 +8150,7 @@ manage_messages if this message author is other user.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1253</span>
+    <span class="phpdocumentor-element-found-in__line">1345</span>
 
     </aside>
 
@@ -10088,7 +10436,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1145</span>
+    <span class="phpdocumentor-element-found-in__line">1237</span>
 
     </aside>
 
@@ -10732,7 +11080,11 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Message.html#method_delayedDelete">delayedDelete()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Message.html#method_delayedReply">delayedReply()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Message.html#method_delete">delete()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Message.html#method_deleteReaction">deleteReaction()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message.html#method_deleteAllReactions">deleteAllReactions()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message.html#method_deleteEmojiReactions">deleteEmojiReactions()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message.html#method_deleteOwnReaction">deleteOwnReaction()</a></li>
+                                            <li class="-deprecated"><a href="classes/Discord-Parts-Channel-Message.html#method_deleteReaction">deleteReaction()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Message.html#method_deleteUserReaction">deleteUserReaction()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Message.html#method_edit">edit()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
