@@ -1099,6 +1099,8 @@ class Message extends Part
     /**
      * Deletes all reactions from the message.
      *
+     * @since 10.14.0
+     *
      * @throws NoPermissionsException Missing manage_messages permission when deleting others reaction.
      *
      * @return PromiseInterface
@@ -1117,6 +1119,8 @@ class Message extends Part
 
     /**
      * Deletes the bot's own reaction from the message.
+     *
+     * @since 10.14.0
      *
      * @param Emoji|string $emoticon
      *
@@ -1139,6 +1143,8 @@ class Message extends Part
 
     /**
      * Deletes a specific user's reaction from the message.
+     *
+     * @since 10.14.0
      *
      * @param Emoji|string $emoticon
      * @param string $user_id
@@ -1178,6 +1184,8 @@ class Message extends Part
 
     /**
      * Deletes all reactions for a specific emoji from the message.
+     *
+     * @since 10.14.0
      *
      * @param Emoji|string $emoticon
      *
