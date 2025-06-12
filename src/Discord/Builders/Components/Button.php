@@ -613,4 +613,14 @@ class Button extends Interactive
 
         return $content;
     }
+
+    public function __debugInfo(): array
+    {
+        $vars = get_object_vars($this);
+        unset($vars['discord']);
+        if (isset($vars['listener'])) {
+            $vars['listener'] = 'object(Closure)';
+        }
+        return $vars;
+    }
 }
