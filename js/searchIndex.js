@@ -306,6 +306,11 @@ Search.appendIndex(
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Builders-Components-Button.html#method_jsonSerialize"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003A__debugInfo\u0028\u0029",
+            "name": "__debugInfo",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Button.html#method___debugInfo"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003AUSAGE",
             "name": "USAGE",
             "summary": "",
