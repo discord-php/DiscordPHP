@@ -112,15 +112,17 @@ abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
     public function __debugInfo(): array
     {
         $vars = get_object_vars($this);
-        unset($vars['http']);
-        unset($vars['factory']);
-        unset($vars['discord']);
-        unset($vars['visible']);
-        unset($vars['hidden']);
-        unset($vars['repositories']);
-        unset($vars['repositories_cache']);
-        unset($vars['fillable']);
-        unset($vars['scriptData']);
+        unset(
+            $vars['http'],
+            $vars['factory'],
+            $vars['discord'],
+            $vars['visible'],
+            $vars['hidden'],
+            $vars['repositories'],
+            $vars['repositories_cache'],
+            $vars['fillable'],
+            $vars['scriptData']
+        );
         return $vars;
     }
 }
