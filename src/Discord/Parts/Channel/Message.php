@@ -1271,7 +1271,7 @@ class Message extends Part
         }
 
         if ($channel = $this->channel) {
-            return $channel->messages->delete($this->id, $reason);
+            return $channel->messages->delete($this, $reason);
         }
 
         // We can still delete the message if we don't have the channel object cached.
