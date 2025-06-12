@@ -1248,7 +1248,9 @@ class Message extends Part
     /**
      * Deletes the message from the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#delete-message
+     * @link https://discord.com/developers/docs/resources/message#delete-message
+     *
+     * @param string|null $reason Reason for Audit Log (if supported).
      *
      * @return PromiseInterface
      *
