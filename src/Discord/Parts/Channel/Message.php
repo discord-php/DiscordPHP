@@ -1255,7 +1255,7 @@ class Message extends Part
      * @throws \RuntimeException      This type of message cannot be deleted.
      * @throws NoPermissionsException Missing manage_messages permission when deleting others message.
      */
-    public function delete(): PromiseInterface
+    public function delete(?string $reason = null): PromiseInterface
     {
         if (! $this->isDeletable()) {
             return reject(new \RuntimeException("Cannot delete this type of message: {$this->type}", 50021));
@@ -1268,7 +1268,17 @@ class Message extends Part
             }
         }
 
-        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id));
+        if ($channel = $this->channel) {
+            return $channel->messages->delete($this->id, $reason);
+        }
+
+        // We can still delete the message if we don't have the channel object cached.
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), null, $headers);
     }
 
     /**
