@@ -578,9 +578,10 @@ class Button extends Interactive
         ];
 
         if ($this->style != Button::STYLE_PREMIUM) {
-            if (isset($this->label)) {
-                $content['label'] = $this->label;
+            if (! isset($this->label)) {
+                throw new \DomainException('Non-Premium buttons must have a `label` field set.');
             }
+            $content['label'] = $this->label;
 
             if (isset($this->emoji)) {
                 $content['emoji'] = $this->emoji;
