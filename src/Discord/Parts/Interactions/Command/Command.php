@@ -26,11 +26,14 @@ use Stringable;
  *
  * @since 7.0.0
  *
- * @property      string      $id             The unique identifier of the command.
- * @property      string      $application_id The unique identifier of the parent Application that made the command, if made by one.
- * @property      string|null $guild_id       The unique identifier of the guild that the command belongs to. Null if global.
- * @property-read Guild|null  $guild          The guild that the command belongs to. Null if global.
- * @property      string      $version        Autoincrementing version identifier updated during substantial record changes.
+ * @property      string      $id                The unique identifier of the command.
+ * @property      string      $application_id    The unique identifier of the parent Application that made the command, if made by one.
+ * @property      string|null $guild_id          The unique identifier of the guild that the command belongs to. Null if global.
+ * @property-read Guild|null  $guild             The guild that the command belongs to. Null if global.
+ * @property      array|null  $integration_types Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts.
+ * @property      array|null  $contexts          Interaction context(s) where the command can be used, only for globally-scoped commands.
+ * @property      string      $version           Autoincrementing version identifier updated during substantial record changes.
+ * @property      int         $handler           Determines whether the interaction is handled by the app's interactions handler or by Discord.
  */
 class Command extends Part implements Stringable
 {
