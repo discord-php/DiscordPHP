@@ -17,7 +17,7 @@ use Discord\WebSockets\Event;
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#entitlement-delete
  *
- * @since 10.0.0
+ * @since 10.15.0
  */
 class EntitlementDelete extends Event
 {

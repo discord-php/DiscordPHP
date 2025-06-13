@@ -17,7 +17,7 @@ use Discord\WebSockets\Event;
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#entitlement-update
  *
- * @since 10.0.0
+ * @since 10.15.0
  */
 class EntitlementUpdate extends Event
 {
