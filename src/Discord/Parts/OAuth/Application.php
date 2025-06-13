@@ -16,8 +16,8 @@ namespace Discord\Parts\OAuth;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\User;
-use Discord\Repository\EntitlementRepository;
-use Discord\Repository\SKURepository;
+use Discord\Repository\Monetization\EntitlementRepository;
+use Discord\Repository\Monetization\SKURepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
 
 /**

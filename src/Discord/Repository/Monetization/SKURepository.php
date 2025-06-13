@@ -11,11 +11,12 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Repository;
+namespace Discord\Repository\Monetization;
 
 use Discord\Discord;
 use Discord\Http\Endpoint;
-use Discord\Parts\SKU\SKU;
+use Discord\Parts\Monetization\SKU;
+use Discord\Repository\AbstractRepository;
 
 /**
  * Contains all SKUs for a given application.

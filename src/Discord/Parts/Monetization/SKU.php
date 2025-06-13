@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Discord\Parts\SKU;
+namespace Discord\Parts\Monetization;
 
 use Discord\Parts\Part;
 

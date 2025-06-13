@@ -11,7 +11,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Entitlement;
+namespace Discord\Parts\Monetization;
 
 use Carbon\Carbon;
 use Discord\Parts\Part;

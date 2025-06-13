@@ -11,16 +11,17 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Repository;
+namespace Discord\Repository\Monetization;
 
 use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
-use Discord\Parts\Entitlement\Entitlement;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Monetization\Entitlement;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
