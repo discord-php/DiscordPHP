@@ -25,7 +25,7 @@ use Discord\Repository\AbstractRepository;
  *
  * For integration and testing entitlements for Subscriptions, you should use the SKU with type: 5.
  *
- * @see \Discord\Parts\SKU\SKU
+ * @see \Discord\Parts\Monetization\SKU
  * @see \Discord\Parts\User\Client
  *
  * @since 10.15.0

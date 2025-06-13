@@ -28,7 +28,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Contains all entitlements for a given app, active and expired.
  *
- * @see Entitlement
+ * @see \Discord\Parts\Monetization\Entitlement
  * @see \Discord\Parts\User\Client
  *
  * @since 10.15.0
