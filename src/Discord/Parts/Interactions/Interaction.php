@@ -114,6 +114,7 @@ class Interaction extends Part
     public const RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8;
     public const RESPONSE_TYPE_MODAL = 9;
     public const RESPONSE_TYPE_PREMIUM_REQUIRED = 10;
+    public const RESPONSE_TYPE_LAUNCH_ACTIVITY = 12;
 
     public const CONTEXT_TYPE_GUILD = 0;
     public const CONTEXT_TYPE_BOT_DM = 1;
