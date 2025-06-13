@@ -13,12 +13,12 @@ use Discord\Parts\Part;
  *
  * @since 10.15.0
  *
- * @property string      $id               ID of the SKU.
- * @property int         $type             Type of SKU.
- * @property string      $application_id   ID of the parent application.
- * @property string      $name             Customer-facing name of the premium offering.
- * @property string      $slug             System-generated URL slug.
- * @property int         $flags            SKU flags as a bitfield.
+ * @property string $id             ID of the SKU.
+ * @property int    $type           Type of SKU.
+ * @property string $application_id ID of the parent application.
+ * @property string $name           Customer-facing name of the premium offering.
+ * @property string slug            System-generated URL slug.
+ * @property int    $flags          SKU flags as a bitfield.
  */
 class SKU extends Part
 {
