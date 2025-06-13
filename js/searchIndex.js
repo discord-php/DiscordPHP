@@ -8341,10 +8341,65 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Monetization-Subscription.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ActivityInstance",
+            "name": "ActivityInstance",
+            "summary": "Represents\u0020an\u0020Activity\u0020Instance.",
+            "url": "classes/Discord-Parts-OAuth-ActivityInstance.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ActivityInstance\u003A\u003AgetLocationAttribute\u0028\u0029",
+            "name": "getLocationAttribute",
+            "summary": "Gets\u0020the\u0020location\u0020object.",
+            "url": "classes/Discord-Parts-OAuth-ActivityInstance.html#method_getLocationAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ActivityInstance\u003A\u003AgetUsersAttribute\u0028\u0029",
+            "name": "getUsersAttribute",
+            "summary": "Returns\u0020a\u0020collection\u0020of\u0020users\u0020currently\u0020connected\u0020to\u0020the\u0020instance.",
+            "url": "classes/Discord-Parts-OAuth-ActivityInstance.html#method_getUsersAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ActivityInstance\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-OAuth-ActivityInstance.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ActivityLocation",
+            "name": "ActivityLocation",
+            "summary": "Represents\u0020an\u0020Activity\u0020Location.",
+            "url": "classes/Discord-Parts-OAuth-ActivityLocation.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ActivityLocation\u003A\u003AgetChannelAttribute\u0028\u0029",
+            "name": "getChannelAttribute",
+            "summary": "Gets\u0020the\u0020channel\u0020part.",
+            "url": "classes/Discord-Parts-OAuth-ActivityLocation.html#method_getChannelAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ActivityLocation\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020attribute.",
+            "url": "classes/Discord-Parts-OAuth-ActivityLocation.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ActivityLocation\u003A\u003AKIND_GUILD_CHANNEL",
+            "name": "KIND_GUILD_CHANNEL",
+            "summary": "Location\u0020is\u0020a\u0020Guild\u0020Channel",
+            "url": "classes/Discord-Parts-OAuth-ActivityLocation.html#constant_KIND_GUILD_CHANNEL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ActivityLocation\u003A\u003AKIND_PRIVATE_CHANNEL",
+            "name": "KIND_PRIVATE_CHANNEL",
+            "summary": "Location\u0020is\u0020a\u0020Private\u0020Channel\u0020\u0028DM\u0020or\u0020GDM\u0029",
+            "url": "classes/Discord-Parts-OAuth-ActivityLocation.html#constant_KIND_PRIVATE_CHANNEL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ActivityLocation\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-OAuth-ActivityLocation.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application",
             "name": "Application",
             "summary": "The\u0020OAuth2\u0020application\u0020of\u0020the\u0020bot.",
             "url": "classes/Discord-Parts-OAuth-Application.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AgetActivityInstance\u0028\u0029",
+            "name": "getActivityInstance",
+            "summary": "Returns\u0020a\u0020serialized\u0020activity\u0020instance,\u0020if\u0020it\u0020exists.",
+            "url": "classes/Discord-Parts-OAuth-Application.html#method_getActivityInstance"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AgetIconAttribute\u0028\u0029",
             "name": "getIconAttribute",
@@ -10375,6 +10430,26 @@ Search.appendIndex(
             "name": "cache",
             "summary": "",
             "url": "classes/Discord-Repository-AbstractRepositoryTrait.html#property_cache"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ActivityInstanceRepository",
+            "name": "ActivityInstanceRepository",
+            "summary": "Contains\u0020activity\u0020instances\u0020of\u0020an\u0020application.",
+            "url": "classes/Discord-Repository-ActivityInstanceRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ActivityInstanceRepository\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-Repository-ActivityInstanceRepository.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ActivityInstanceRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Repository-ActivityInstanceRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\ActivityInstanceRepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
+            "url": "classes/Discord-Repository-ActivityInstanceRepository.html#property_class"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\InviteRepository",
             "name": "InviteRepository",
