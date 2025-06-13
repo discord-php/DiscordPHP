@@ -48,10 +48,10 @@ use function React\Promise\reject;
  * @property      string                 $application_id                 ID of the application the interaction is for.
  * @property      int                    $type                           Type of interaction.
  * @property      InteractionData|null   $data                           Data associated with the interaction.
- * @property      string|null            $guild_id                       ID of the guild the interaction was sent from.
  * @property-read Guild|null             $guild                          Guild the interaction was sent from.
- * @property      string|null            $channel_id                     ID of the channel the interaction was sent from.
+ * @property      string|null            $guild_id                       ID of the guild the interaction was sent from.
  * @property-read Channel|null           $channel                        Channel the interaction was sent from.
+ * @property      string|null            $channel_id                     ID of the channel the interaction was sent from.
  * @property      Member|null            $member                         Member who invoked the interaction.
  * @property      User|null              $user                           User who invoked the interaction.
  * @property      string                 $token                          Continuation token for responding to the interaction.
@@ -154,7 +154,15 @@ class Interaction extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
+            return $guild;
+        }
+
+        if (isset($this->attributes['guild'])) {
+            return $this->factory->part(Guild::class, (array) $this->attributes['guild'], true);
+        }
+
+        return null;
     }
 
     /**
@@ -180,7 +188,15 @@ class Interaction extends Part
             }
         }
 
-        return $this->discord->getChannel($channelId);
+        if ($channel = $this->discord->getChannel($channelId)) {
+            return $channel;
+        }
+
+        if (isset($this->attributes['channel'])) {
+            return $this->factory->part(Channel::class, (array) $this->attributes['channel'], true);
+        }
+
+        return null;
     }
 
     /**
