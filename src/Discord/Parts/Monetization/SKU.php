@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Monetization;
 
 use Discord\Parts\Part;
+use Discord\Repository\Monetization\SubscriptionRepository;
 
 /**
  * SKUs (stock-keeping units) in Discord represent premium offerings that can be made available to your application's users or guilds.
@@ -19,6 +20,8 @@ use Discord\Parts\Part;
  * @property string $name           Customer-facing name of the premium offering.
  * @property string slug            System-generated URL slug.
  * @property int    $flags          SKU flags as a bitfield.
+ *
+ * @property-read SubscriptionRepository $subscriptions Subscriptions related to this SKU.
  */
 class SKU extends Part
 {
@@ -43,5 +46,12 @@ class SKU extends Part
         'name',
         'slug',
         'flags',
+    ];
+
+    /**
+     * {@inheritDoc}
+     */
+    protected $repositories = [
+        'subscriptions' => SubscriptionRepository::class,
     ];
 }
