@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\OAuth;
 
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 
 /**
@@ -29,6 +30,7 @@ use Discord\Parts\Part;
  * @property string|null $guild_id   ID of the Guild.
  *
  * @property-read Channel|null $channel
+ * @property-read Guild|null   $guild
  */
 class ActivityLocation extends Part
 {
@@ -70,5 +72,19 @@ class ActivityLocation extends Part
         }
 
         return $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']] + ['guild_id' => $this->attributes['guild_id'] ?? null], true);
+    }
+
+    /**
+     * Returns the guild attribute.
+     *
+     * @return Guild|null The guild attribute.
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        if (!isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        return $this->discord->guilds->get('id', $this->attributes['guild_id']);
     }
 }
