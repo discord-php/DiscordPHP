@@ -9281,6 +9281,16 @@ Search.appendIndex(
             "summary": "Runs\u0020any\u0020extra\u0020construction\u0020tasks.",
             "url": "classes/Discord-Parts-User-Client.html#method_afterConstruct"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetCurrentApplication\u0028\u0029",
+            "name": "getCurrentApplication",
+            "summary": "Gets\u0020the\u0020current\u0020application\u0020of\u0020the\u0020client.",
+            "url": "classes/Discord-Parts-User-Client.html#method_getCurrentApplication"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AupdateCurrentApplication\u0028\u0029",
+            "name": "updateCurrentApplication",
+            "summary": "Updates\u0020the\u0020current\u0020application\u0020associated\u0020with\u0020the\u0020bot\u0020user.",
+            "url": "classes/Discord-Parts-User-Client.html#method_updateCurrentApplication"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetUserAttribute\u0028\u0029",
             "name": "getUserAttribute",
             "summary": "Gets\u0020the\u0020user\u0020attribute.",
