@@ -17,6 +17,7 @@ use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\User;
 use Discord\Repository\EntitlementRepository;
+use Discord\Repository\SKURepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
 
 /**
@@ -61,6 +62,7 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  *
  * @property GlobalCommandRepository $commands     The application global commands.
  * @property EntitlementRepository   $entitlements The application entitlements.
+ * @property SKURepository           $skus         The application SKUs.
  */
 class Application extends Part
 {
@@ -133,6 +135,7 @@ class Application extends Part
     protected $repositories = [
         'commands' => GlobalCommandRepository::class,
         'entitlements' => EntitlementRepository::class,
+        'skus' => SKURepository::class,
     ];
 
     /**
