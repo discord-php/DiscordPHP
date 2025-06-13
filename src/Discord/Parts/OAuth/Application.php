@@ -144,12 +144,16 @@ class Application extends Part
      * Returns a serialized activity instance, if it exists.
      * Useful for preventing unwanted activity sessions.
      *
-     * @param string $instance_id The activity instance ID.
+     * @param ActivityInstance|string $instance_id The activity instance ID.
      *
      * @return PromiseInterface<?ActivityInstance>
      */
-    public function getActivityInstance(string $instance_id): PromiseInterface
+    public function getActivityInstance($instance_id): PromiseInterface
     {
+        if ($instance_id instanceof ActivityInstance) {
+            $instance_id = $instance_id->id;
+        }
+
         return $this->http->get(Endpoint::bind(Endpoint::APPLICATION_ACTIVITY_INSTANCE, $this->id, $instance_id))
             ->then(function ($response) {
                 if (empty($response)) {
