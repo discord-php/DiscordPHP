@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 namespace Discord\Parts\OAuth;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\User;
 use Discord\Repository\Monetization\EntitlementRepository;
 use Discord\Repository\Monetization\SKURepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
+use React\Promise\PromiseInterface;
 
 /**
  * The OAuth2 application of the bot.
@@ -137,6 +139,25 @@ class Application extends Part
         'entitlements' => EntitlementRepository::class,
         'skus' => SKURepository::class,
     ];
+
+    /**
+     * Returns a serialized activity instance, if it exists.
+     * Useful for preventing unwanted activity sessions.
+     *
+     * @param string $instance_id The activity instance ID.
+     *
+     * @return PromiseInterface<?ActivityInstance>
+     */
+    public function getActivityInstance(string $instance_id): PromiseInterface
+    {
+        return $this->http->get(Endpoint::bind(Endpoint::APPLICATION_ACTIVITY_INSTANCE, $this->id, $instance_id))
+            ->then(function ($response) {
+                if (empty($response)) {
+                    return null;
+                }
+                return $this->factory->part(ActivityInstance::class, (array) $response, true);
+            });
+    }
 
     /**
      * Returns the application icon.
