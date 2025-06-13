@@ -62,7 +62,10 @@ class Command extends Part implements Stringable
         'dm_permission',
         'default_permission',
         'nsfw',
+        'integration_types',
+        'contexts',
         'version',
+        'handler',
     ];
 
     /**
