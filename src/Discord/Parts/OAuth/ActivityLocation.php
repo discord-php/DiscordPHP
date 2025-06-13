@@ -77,7 +77,7 @@ class ActivityLocation extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return Guild|null The guild attribute.
+     * @return Guild|null
      */
     protected function getGuildAttribute(): ?Guild
     {
