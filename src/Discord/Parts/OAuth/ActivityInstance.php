@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace Discord\Parts\OAuth;
 
+use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
+use Discord\Parts\User\User;
 
 /**
  * Represents an Activity Instance.
@@ -22,11 +25,11 @@ use Discord\Parts\Part;
  *
  * @since 10.17.0
  *
- * @property string           $application_id Application ID.
- * @property string           $instance_id    Activity Instance ID.
- * @property string           $launch_id      Unique identifier for the launch.
- * @property ActivityLocation $location       Location the instance is running in.
- * @property array            $users          IDs of the Users currently connected to the instance.
+ * @property string                       $application_id Application ID.
+ * @property string                       $instance_id    Activity Instance ID.
+ * @property string                       $launch_id      Unique identifier for the launch.
+ * @property ActivityLocation             $location       Location the instance is running in.
+ * @property ExCollectionInterface|User[] $users          IDs of the Users currently connected to the instance.
  */
 class ActivityInstance extends Part
 {
@@ -50,5 +53,21 @@ class ActivityInstance extends Part
         }
 
         return $this->factory->part(ActivityLocation::class, (array) $this->attributes['location'], true);
+    }
+
+    /**
+     * Returns a collection of users currently connected to the instance.
+     *
+     * @return ExCollectionInterface|User[]
+     */
+    protected function getUsersAttribute(): ExCollectionInterface
+    {
+        $collection = Collection::for(User::class);
+
+        foreach ($this->attributes['users'] as $user) {
+            $collection->pushItem($this->discord->users->get('id', $user->id) ?: $this->factory->part(User::class, (array) $user, true));
+        }
+
+        return $collection;
     }
 }
