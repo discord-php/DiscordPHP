@@ -8041,6 +8041,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_PREMIUM_REQUIRED"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_LAUNCH_ACTIVITY",
+            "name": "RESPONSE_TYPE_LAUNCH_ACTIVITY",
+            "summary": "",
+            "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_LAUNCH_ACTIVITY"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ACONTEXT_TYPE_GUILD",
             "name": "CONTEXT_TYPE_GUILD",
             "summary": "",
@@ -8185,6 +8190,156 @@ Search.appendIndex(
             "name": "hidden",
             "summary": "Attributes\u0020that\u0020are\u0020hidden\u0020from\u0020debug\u0020info.",
             "url": "classes/Discord-Parts-Interactions-Request-Resolved.html#property_hidden"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement",
+            "name": "Entitlement",
+            "summary": "Entitlements\u0020in\u0020Discord\u0020represent\u0020that\u0020a\u0020user\u0020or\u0020guild\u0020has\u0020access\u0020to\u0020a\u0020premium\u0020offering\u0020in\u0020your\u0020application.",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003AgetStartsAtAttribute\u0028\u0029",
+            "name": "getStartsAtAttribute",
+            "summary": "Return\u0020the\u0020starts_at\u0020attribute.",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html#method_getStartsAtAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003AgetEndsAtAttribute\u0028\u0029",
+            "name": "getEndsAtAttribute",
+            "summary": "Return\u0020the\u0020ends_at\u0020attribute.",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html#method_getEndsAtAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003APURCHASE",
+            "name": "PURCHASE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_PURCHASE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003APREMIUM_SUBSCRIPTION",
+            "name": "PREMIUM_SUBSCRIPTION",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_PREMIUM_SUBSCRIPTION"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003ADEVELOPER_GIFT",
+            "name": "DEVELOPER_GIFT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_DEVELOPER_GIFT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003ATEST_MODE_PURCHASE",
+            "name": "TEST_MODE_PURCHASE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_TEST_MODE_PURCHASE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003AFREE_PURCHASE",
+            "name": "FREE_PURCHASE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_FREE_PURCHASE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003AUSER_GIFT",
+            "name": "USER_GIFT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_USER_GIFT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003APREMIUM_PURCHASE",
+            "name": "PREMIUM_PURCHASE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_PREMIUM_PURCHASE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003AAPPLICATION_SUBSCRIPTION",
+            "name": "APPLICATION_SUBSCRIPTION",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_APPLICATION_SUBSCRIPTION"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU",
+            "name": "SKU",
+            "summary": "SKUs\u0020\u0028stock\u002Dkeeping\u0020units\u0029\u0020in\u0020Discord\u0020represent\u0020premium\u0020offerings\u0020that\u0020can\u0020be\u0020made\u0020available\u0020to\u0020your\u0020application\u0027s\u0020users\u0020or\u0020guilds.",
+            "url": "classes/Discord-Parts-Monetization-SKU.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003ADURABLE",
+            "name": "DURABLE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_DURABLE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003ACONSUMABLE",
+            "name": "CONSUMABLE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_CONSUMABLE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003ASUBSCRIPTION",
+            "name": "SUBSCRIPTION",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_SUBSCRIPTION"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003ASUBSCRIPTION_GROUP",
+            "name": "SUBSCRIPTION_GROUP",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_SUBSCRIPTION_GROUP"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003AAVAILABLE",
+            "name": "AVAILABLE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_AVAILABLE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003AGUILD_SUBSCRIPTION",
+            "name": "GUILD_SUBSCRIPTION",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_GUILD_SUBSCRIPTION"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003AUSER_SUBSCRIPTION",
+            "name": "USER_SUBSCRIPTION",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_USER_SUBSCRIPTION"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003A\u0024repositories",
+            "name": "repositories",
+            "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#property_repositories"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Subscription",
+            "name": "Subscription",
+            "summary": "Subscriptions\u0020in\u0020Discord\u0020represent\u0020a\u0020user\u0020making\u0020recurring\u0020payments\u0020for\u0020at\u0020least\u0020one\u0020SKU\u0020over\u0020an\u0020ongoing\u0020period.",
+            "url": "classes/Discord-Parts-Monetization-Subscription.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003AgetCurrentPeriodStartAttribute\u0028\u0029",
+            "name": "getCurrentPeriodStartAttribute",
+            "summary": "Get\u0020the\u0020start\u0020of\u0020the\u0020current\u0020subscription\u0020period\u0020as\u0020a\u0020Carbon\u0020instance.",
+            "url": "classes/Discord-Parts-Monetization-Subscription.html#method_getCurrentPeriodStartAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003AgetCurrentPeriodEndAttribute\u0028\u0029",
+            "name": "getCurrentPeriodEndAttribute",
+            "summary": "Get\u0020the\u0020end\u0020of\u0020the\u0020current\u0020subscription\u0020period\u0020as\u0020a\u0020Carbon\u0020instance.",
+            "url": "classes/Discord-Parts-Monetization-Subscription.html#method_getCurrentPeriodEndAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003AgetCanceledAtAttribute\u0028\u0029",
+            "name": "getCanceledAtAttribute",
+            "summary": "Get\u0020the\u0020canceled_at\u0020timestamp\u0020as\u0020a\u0020Carbon\u0020instance.",
+            "url": "classes/Discord-Parts-Monetization-Subscription.html#method_getCanceledAtAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003ASTATUS_ACTIVE",
+            "name": "STATUS_ACTIVE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_ACTIVE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003ASTATUS_ENDING",
+            "name": "STATUS_ENDING",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_ENDING"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003ASTATUS_INACTIVE",
+            "name": "STATUS_INACTIVE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_INACTIVE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Monetization-Subscription.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application",
             "name": "Application",
@@ -10726,6 +10881,86 @@ Search.appendIndex(
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-Interaction-GlobalCommandRepository.html#property_class"
         },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository",
+            "name": "EntitlementRepository",
+            "summary": "Contains\u0020all\u0020entitlements\u0020for\u0020a\u0020given\u0020app,\u0020active\u0020and\u0020expired.",
+            "url": "classes/Discord-Repository-Monetization-EntitlementRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-Repository-Monetization-EntitlementRepository.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003Aconsume\u0028\u0029",
+            "name": "consume",
+            "summary": "For\u0020One\u002DTime\u0020Purchase\u0020consumable\u0020SKUs,\u0020marks\u0020a\u0020given\u0020entitlement\u0020for\u0020the\u0020user\u0020as\u0020consumed.\u0020The\u0020entitlement\u0020will\u0020have\u0020consumed\u003A\u0020true\u0020when\u0020using\u0020List\u0020Entitlements.",
+            "url": "classes/Discord-Repository-Monetization-EntitlementRepository.html#method_consume"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003AgetEntitlements\u0028\u0029",
+            "name": "getEntitlements",
+            "summary": "Returns\u0020all\u0020entitlements\u0020for\u0020a\u0020given\u0020app,\u0020active\u0020and\u0020expired.",
+            "url": "classes/Discord-Repository-Monetization-EntitlementRepository.html#method_getEntitlements"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003AcreateTestEntitlement\u0028\u0029",
+            "name": "createTestEntitlement",
+            "summary": "Creates\u0020a\u0020test\u0020entitlement\u0020to\u0020a\u0020given\u0020SKU\u0020for\u0020a\u0020given\u0020guild\u0020or\u0020user.\u0020Discord\u0020will\u0020act\u0020as\u0020though\u0020that\u0020user\u0020or\u0020guild\u0020has\u0020entitlement\u0020to\u0020your\u0020premium\u0020offering.",
+            "url": "classes/Discord-Repository-Monetization-EntitlementRepository.html#method_createTestEntitlement"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003AdeleteTestEntitlement\u0028\u0029",
+            "name": "deleteTestEntitlement",
+            "summary": "Deletes\u0020a\u0020currently\u002Dactive\u0020test\u0020entitlement.\u0020Discord\u0020will\u0020act\u0020as\u0020though\u0020that\u0020user\u0020or\u0020guild\u0020no\u0020longer\u0020has\u0020entitlement\u0020to\u0020your\u0020premium\u0020offering.",
+            "url": "classes/Discord-Repository-Monetization-EntitlementRepository.html#method_deleteTestEntitlement"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Repository-Monetization-EntitlementRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
+            "url": "classes/Discord-Repository-Monetization-EntitlementRepository.html#property_class"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\SKURepository",
+            "name": "SKURepository",
+            "summary": "Contains\u0020all\u0020SKUs\u0020for\u0020a\u0020given\u0020application.",
+            "url": "classes/Discord-Repository-Monetization-SKURepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\SKURepository\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-Repository-Monetization-SKURepository.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\SKURepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Repository-Monetization-SKURepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\SKURepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
+            "url": "classes/Discord-Repository-Monetization-SKURepository.html#property_class"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\SubscriptionRepository",
+            "name": "SubscriptionRepository",
+            "summary": "Contains\u0020all\u0020Subscriptions\u0020for\u0020a\u0020given\u0020SKU.",
+            "url": "classes/Discord-Repository-Monetization-SubscriptionRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\SubscriptionRepository\u003A\u003AgetSubscriptions\u0028\u0029",
+            "name": "getSubscriptions",
+            "summary": "Returns\u0020all\u0020subscriptions\u0020for\u0020a\u0020given\u0020SKU,\u0020optionally\u0020filtered\u0020by\u0020user.",
+            "url": "classes/Discord-Repository-Monetization-SubscriptionRepository.html#method_getSubscriptions"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\SubscriptionRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Repository-Monetization-SubscriptionRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization\\SubscriptionRepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
+            "url": "classes/Discord-Repository-Monetization-SubscriptionRepository.html#property_class"
+        },                {
             "fqsen": "\\Discord\\Repository\\PrivateChannelRepository",
             "name": "PrivateChannelRepository",
             "summary": "Contains\u0020private\u0020channels\u0020and\u0020groups\u0020that\u0020the\u0020client\u0020has\u0020access\u0020to.",
@@ -12001,6 +12236,21 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_MESSAGE_POLL_VOTE_REMOVE"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AENTITLEMENT_CREATE",
+            "name": "ENTITLEMENT_CREATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_ENTITLEMENT_CREATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AENTITLEMENT_UPDATE",
+            "name": "ENTITLEMENT_UPDATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_ENTITLEMENT_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AENTITLEMENT_DELETE",
+            "name": "ENTITLEMENT_DELETE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_ENTITLEMENT_DELETE"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003A\u0024discord",
             "name": "discord",
             "summary": "The\u0020Discord\u0020client\u0020instance.",
@@ -12105,6 +12355,36 @@ Search.appendIndex(
             "name": "handle",
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-ChannelUpdate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\EntitlementCreate",
+            "name": "EntitlementCreate",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-EntitlementCreate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\EntitlementCreate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-EntitlementCreate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\EntitlementDelete",
+            "name": "EntitlementDelete",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-EntitlementDelete.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\EntitlementDelete\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-EntitlementDelete.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\EntitlementUpdate",
+            "name": "EntitlementUpdate",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-EntitlementUpdate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\EntitlementUpdate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-EntitlementUpdate.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildAuditLogEntryCreate",
             "name": "GuildAuditLogEntryCreate",
@@ -13291,6 +13571,11 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/discord-parts-interactions-request.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Monetization",
+            "name": "Monetization",
+            "summary": "",
+            "url": "namespaces/discord-parts-monetization.html"
+        },                {
             "fqsen": "\\Discord\\Parts\\OAuth",
             "name": "OAuth",
             "summary": "",
@@ -13340,6 +13625,11 @@ Search.appendIndex(
             "name": "Interaction",
             "summary": "",
             "url": "namespaces/discord-repository-interaction.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Monetization",
+            "name": "Monetization",
+            "summary": "",
+            "url": "namespaces/discord-repository-monetization.html"
         },                {
             "fqsen": "\\Discord\\Repository\\Thread",
             "name": "Thread",
