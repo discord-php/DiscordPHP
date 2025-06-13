@@ -11,7 +11,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Channel;
+namespace Discord\Parts\Entitlement;
 
 use Carbon\Carbon;
 use Discord\Parts\Part;
