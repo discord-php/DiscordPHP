@@ -90,10 +90,40 @@ class Client extends Part
     public function afterConstruct(): void
     {
         $this->application = $this->factory->part(Application::class, [], true);
+        $this->getCurrentApplication();
+    }
 
-        $this->http->get(Endpoint::APPLICATION_CURRENT)->then(function ($response) {
+    /**
+     * Gets the current application of the client.
+     *
+     * @return PromiseInterface<Application>
+     */
+    public function getCurrentApplication(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::APPLICATION_CURRENT)->then(function ($response) {
             $this->application->fill((array) $response);
             $this->created = true;
+
+            return $this->application;
+        });
+    }
+
+    /**
+     * Updates the current application associated with the bot user.
+     *
+     * @link https://discord.com/developers/docs/resources/application#edit-current-application
+     *
+     * @param array $options Array of fields to update. All fields are optional.
+     *
+     * @return PromiseInterface<Application>
+     */
+    public function updateCurrentApplication(array $options): PromiseInterface
+    {
+        return $this->http->patch(Endpoint::APPLICATION_CURRENT, $options)->then(function ($response) {
+            $this->application->fill((array) $response);
+            $this->created = true;
+
+            return $this->application;
         });
     }
 
