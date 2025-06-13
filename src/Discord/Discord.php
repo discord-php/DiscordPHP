@@ -370,10 +370,6 @@ class Discord
      */
     public function __construct(array $options = [])
     {
-        if (php_sapi_name() !== 'cli') {
-            throw new \RuntimeException('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.');
-        }
-
         // x86 need gmp extension for big integer operation
         if (PHP_INT_SIZE === 4 && ! BigInt::init()) {
             throw new \RuntimeException('ext-gmp is not loaded, it is required for 32-bits (x86) PHP.');
@@ -385,6 +381,10 @@ class Discord
         $this->token = $options['token'];
         $this->loop = $options['loop'];
         $this->logger = $options['logger'];
+
+        if (!in_array(php_sapi_name(), ['cli', 'micro'])) {
+            $this->logger->critical('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.');
+        }
 
         $this->logger->debug('Initializing DiscordPHP '.self::VERSION.' (DiscordPHP-Http: '.Http::VERSION.' & Gateway: v'.self::GATEWAY_VERSION.') on PHP '.PHP_VERSION);
 
