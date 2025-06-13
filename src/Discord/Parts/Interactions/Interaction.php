@@ -75,6 +75,7 @@ class Interaction extends Part
         'application_id',
         'type',
         'data',
+        'guild',
         'guild_id',
         'channel',
         'channel_id',
