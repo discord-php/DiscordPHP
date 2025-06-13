@@ -22,6 +22,8 @@ use Discord\Repository\Monetization\SKURepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
 use React\Promise\PromiseInterface;
 
+use function React\Promise\reject;
+
 /**
  * The OAuth2 application of the bot.
  *
@@ -146,10 +148,16 @@ class Application extends Part
      *
      * @param ActivityInstance|string $instance_id The activity instance ID.
      *
+     * @throws \DomainException Missing instance ID.
+     *
      * @return PromiseInterface<?ActivityInstance>
      */
     public function getActivityInstance($instance_id): PromiseInterface
     {
+        if (!isset($instance_id)) {
+            return reject(new \DomainException('You must provide an instance ID to get an activity instance.'));
+        }
+
         if ($instance_id instanceof ActivityInstance) {
             $instance_id = $instance_id->id;
         }
