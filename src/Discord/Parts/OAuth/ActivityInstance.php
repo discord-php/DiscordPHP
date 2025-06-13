@@ -18,6 +18,10 @@ use Discord\Parts\Part;
 /**
  * Represents an Activity Instance.
  *
+ * @link https://discord.com/developers/docs/resources/application#get-application-activity-instance-activity-instance-object
+ *
+ * @since 10.17.0
+ *
  * @property string           $application_id Application ID.
  * @property string           $instance_id    Activity Instance ID.
  * @property string           $launch_id      Unique identifier for the launch.

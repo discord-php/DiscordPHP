@@ -19,6 +19,10 @@ use Discord\Parts\Part;
 /**
  * Represents an Activity Location.
  *
+ * @link https://discord.com/developers/docs/resources/application#get-application-activity-instance-activity-location-object
+ *
+ * @since 10.17.0
+ *
  * @property string      $id         Unique identifier for the location.
  * @property string      $kind       Enum describing kind of location ('gc' or 'pc').
  * @property string      $channel_id ID of the Channel.
