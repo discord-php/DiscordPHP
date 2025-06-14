@@ -106,7 +106,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      * read.
      *
      * @param int         $length  Number of bytes to read.
-     * @param null|string $format  Format to read the bytes in. See `pack()`.
+     * @param string|null $format  Format to read the bytes in. See `pack()`.
      * @param int         $timeout Time in milliseconds before the read times out.
      *
      * @return PromiseInterface<mixed, \RuntimeException>
