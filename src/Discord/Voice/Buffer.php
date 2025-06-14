@@ -114,10 +114,10 @@ class Buffer extends BaseBuffer implements \ArrayAccess
      * @throws \InvalidArgumentException
      * @return static
      */
-    protected function checkForOverSize($excpectedMax, $actual): self
+    protected function checkForOverSize($expectedMax, string|int $actual): self
     {
-        if ($actual > $excpectedMax) {
-            throw new \InvalidArgumentException(sprintf('%d exceeded limit of %d', $actual, $excpectedMax));
+        if ($actual > $expectedMax) {
+            throw new \InvalidArgumentException("actual exceeded expectedMax limit");
         }
 
         return $this;
