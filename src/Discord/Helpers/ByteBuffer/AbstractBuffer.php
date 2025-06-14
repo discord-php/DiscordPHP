@@ -12,7 +12,7 @@
 namespace Discord\Helpers\ByteBuffer;
 
 /**
- * @author alexandre433.
+ * @author alexandre433
  */
 abstract class AbstractBuffer implements ReadableBuffer, WriteableBuffer
 {

@@ -14,7 +14,7 @@ namespace Discord\Helpers\ByteBuffer;
 /**
  * @link https://www.php.net/manual/en/function.pack.php
  *
- * @author alexandre433.
+ * @author alexandre433
  */
 enum FormatPackEnum: string
 {
