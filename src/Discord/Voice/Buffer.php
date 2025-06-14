@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Discord\Voice;
 
 use ArrayAccess;
-use SplFixedArray;
 use Discord\Helpers\FormatPackEnum;
+use SplFixedArray;
 use TrafficCophp\ByteBuffer\Buffer as BaseBuffer;
 
 /**
