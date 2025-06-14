@@ -99,9 +99,9 @@ class VoicePacket
     /**
      * The payload type.
      *
-     * @var string The payload type.
+     * @var string|null The payload type.
      */
-    public ?string $payloadType;
+    public $payloadType;
 
     /**
      * The encrypted audio.
