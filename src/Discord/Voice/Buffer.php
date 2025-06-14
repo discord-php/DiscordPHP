@@ -13,17 +13,15 @@ declare(strict_types=1);
 
 namespace Discord\Voice;
 
-use ArrayAccess;
+use Discord\Helpers\ByteBuffer\Buffer as BaseBuffer;
 use Discord\Helpers\FormatPackEnum;
-use SplFixedArray;
-use TrafficCophp\ByteBuffer\Buffer as BaseBuffer;
 
 /**
  * A Byte Buffer similar to Buffer in NodeJS.
  *
  * @since 3.2.0
  */
-class Buffer extends BaseBuffer implements ArrayAccess
+class Buffer extends BaseBuffer implements \ArrayAccess
 {
     public function __construct($argument)
     {
@@ -50,7 +48,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
 
     protected function initializeStructs($length, $content): void
     {
-        $this->buffer = new SplFixedArray($length);
+        $this->buffer = new \SplFixedArray($length);
         for ($i = 0; $i < $length; $i++) {
             $this->buffer[$i] = $content[$i];
         }
@@ -452,7 +450,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
     }
 
     /**
-     * Gets an attribute via key. Used for ArrayAccess.
+     * Gets an attribute via key. Used for \ArrayAccess.
      *
      * @param mixed $key The attribute key.
      *
@@ -465,7 +463,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
     }
 
     /**
-     * Checks if an attribute exists via key. Used for ArrayAccess.
+     * Checks if an attribute exists via key. Used for \ArrayAccess.
      *
      * @param mixed $key The attribute key.
      *
@@ -477,7 +475,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
     }
 
     /**
-     * Sets an attribute via key. Used for ArrayAccess.
+     * Sets an attribute via key. Used for \ArrayAccess.
      *
      * @param mixed $key   The attribute key.
      * @param mixed $value The attribute value.
@@ -488,7 +486,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
     }
 
     /**
-     * Unsets an attribute via key. Used for ArrayAccess.
+     * Unsets an attribute via key. Used for \ArrayAccess.
      *
      * @param string $key The attribute key.
      */
