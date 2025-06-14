@@ -146,6 +146,9 @@ class Command extends Part implements Stringable
             'default_permission' => $this->default_permission,
             'type' => $this->type,
             'nsfw' => $this->nsfw,
+            'integration_types',
+            'contexts',
+            'handler' => $this->handler,
 
             'dm_permission' => $this->dm_permission,  // Guild command might omit this fillable
         ]);
@@ -169,6 +172,9 @@ class Command extends Part implements Stringable
             'default_member_permissions' => $this->default_member_permissions,
             'default_permission' => $this->default_permission,
             'nsfw' => $this->nsfw,
+            'integration_types',
+            'contexts',
+            'handler' => $this->handler,
         ]);
 
         if (! isset($this->guild_id)) {
