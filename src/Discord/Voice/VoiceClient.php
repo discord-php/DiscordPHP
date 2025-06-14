@@ -20,6 +20,7 @@ use Discord\Exceptions\OutdatedDCAException;
 use Discord\Exceptions\Voice\ClientNotReadyException;
 use Discord\Exceptions\Voice\AudioAlreadyPlayingException;
 use Discord\Helpers\Buffer as RealBuffer;
+use Discord\Helpers\ByteBuffer\Buffer;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Channel;

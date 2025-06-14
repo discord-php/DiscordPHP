@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Voice;
 
+use Discord\Helpers\ByteBuffer\Buffer;
 use Monolog\Logger;
 use Discord\Helpers\FormatPackEnum;
 
