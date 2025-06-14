@@ -246,7 +246,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -330,6 +330,12 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_contexts">$contexts</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_default_member_permissions">$default_member_permissions</a>
     <span>
                         &nbsp;: string|null            </span>
@@ -357,6 +363,18 @@
     <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_guild_id">$guild_id</a>
     <span>
                         &nbsp;: int|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_handler">$handler</a>
+    <span>
+                        &nbsp;: int|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#property_integration_types">$integration_types</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -503,6 +521,44 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_contexts">
+        $contexts
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_contexts" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$contexts</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Interaction context(s) where the command can be used, only for globally-scoped commands.</p>
+</section>
+
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_default_member_permissions">
         $default_member_permissions
         <a href="classes/Discord-Builders-CommandAttributes.html#property_default_member_permissions" class="headerlink"><i class="fas fa-link"></i></a>
@@ -639,7 +695,7 @@
     <span class="phpdocumentor-signature__name">$dm_permission</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.</p>
+        <section class="phpdocumentor-description"><p>(Deprecated) Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.</p>
 </section>
 
     
@@ -678,6 +734,82 @@
     </code>
 
         <section class="phpdocumentor-description"><p>The optional guild ID this command is for. If not set, the command is global.</p>
+</section>
+
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_handler">
+        $handler
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_handler" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">int|null</span>
+    <span class="phpdocumentor-signature__name">$handler</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Determines whether the interaction is handled by the app's interactions handler or by Discord</p>
+</section>
+
+    
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_integration_types">
+        $integration_types
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_integration_types" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$integration_types</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts</p>
 </section>
 
     
@@ -860,7 +992,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">254</span>
+    <span class="phpdocumentor-element-found-in__line">257</span>
 
     </aside>
 
@@ -938,7 +1070,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">298</span>
+    <span class="phpdocumentor-element-found-in__line">301</span>
 
     </aside>
 
@@ -977,7 +1109,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">280</span>
+    <span class="phpdocumentor-element-found-in__line">283</span>
 
     </aside>
 
@@ -1045,7 +1177,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">195</span>
+    <span class="phpdocumentor-element-found-in__line">198</span>
 
     </aside>
 
@@ -1096,7 +1228,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
@@ -1154,7 +1286,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">135</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -1222,7 +1354,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
+    <span class="phpdocumentor-element-found-in__line">162</span>
 
     </aside>
 
@@ -1299,7 +1431,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">209</span>
+    <span class="phpdocumentor-element-found-in__line">212</span>
 
     </aside>
 
@@ -1350,7 +1482,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">223</span>
+    <span class="phpdocumentor-element-found-in__line">226</span>
 
     </aside>
 
@@ -1401,7 +1533,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
@@ -1479,7 +1611,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">104</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
@@ -1566,7 +1698,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">237</span>
+    <span class="phpdocumentor-element-found-in__line">240</span>
 
     </aside>
 
@@ -1617,7 +1749,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -1783,11 +1915,14 @@
                                     <li class="phpdocumentor-on-this-page-section__title">Properties</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_contexts">$contexts</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_default_member_permissions">$default_member_permissions</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_default_permission">$default_permission</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_description">$description</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_dm_permission">$dm_permission</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_guild_id">$guild_id</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_handler">$handler</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_integration_types">$integration_types</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_name">$name</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_nsfw">$nsfw</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#property_options">$options</a></li>
