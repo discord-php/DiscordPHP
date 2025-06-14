@@ -49,6 +49,18 @@ class VoicePayload extends Payload
         return new self($op, $d, $s, $t, $token);
     }
 
+    public function setToken(?string $token = null): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token ?? null;
+    }
+
     public function jsonSerialize(): array
     {
         $data = parent::jsonSerialize();
