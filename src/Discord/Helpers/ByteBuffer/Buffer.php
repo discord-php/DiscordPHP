@@ -33,11 +33,7 @@ class Buffer extends AbstractBuffer
 
     public function __toString(): string
     {
-        $buf = '';
-        foreach ($this->buffer as $bytes) {
-            $buf .= $bytes;
-        }
-        return $buf;
+        return implode('', iterator_to_array($this->buffer, false));
     }
 
     public static function make($argument): static
