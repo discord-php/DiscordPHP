@@ -104,10 +104,13 @@ class CommandBuilder extends Builder implements JsonSerializable
             'name_localizations',
             'description_localizations',
             'default_member_permissions',
-            'default_permission',
             'dm_permission',
+            'default_permission',
             'guild_id',
             'nsfw',
+            'integration_types',
+            'contexts',
+            'handler'
         ];
 
         foreach ($optionals as $optional) {

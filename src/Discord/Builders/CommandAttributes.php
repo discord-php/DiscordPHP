@@ -35,10 +35,13 @@ use function Discord\poly_strlen;
  * @property ?string[]|null                      $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
  * @property ExCollectionInterface|Option[]|null $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
  * @property ?string                             $default_member_permissions Set of permissions represented as a bit set.
- * @property bool|null                           $dm_permission              Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
+ * @property bool|null                           $dm_permission              (Deprecated) Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
  * @property ?bool                               $default_permission         Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
  * @property ?int                                $guild_id                   The optional guild ID this command is for. If not set, the command is global.
  * @property bool|null                           $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
+ * @property ExCollectionInterface|null          $integration_types          Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts
+ * @property ExCollectionInterface|null          $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.
+ * @property int|null                            $handler                    Determines whether the interaction is handled by the app's interactions handler or by Discord
  */
 trait CommandAttributes
 {
