@@ -45,7 +45,7 @@ class Buffer extends AbstractBuffer implements \ArrayAccess
         return new static($argument);
     }
 
-    protected function initializeStructs(string $length, string $content): void
+    protected function initializeStructs($length, string $content): void
     {
         $this->buffer = new \SplFixedArray($length);
         for ($i = 0; $i < $length; $i++) {
