@@ -44,24 +44,26 @@ use function React\Promise\reject;
  *
  * @since 7.0.0
  *
- * @property      string                 $id                    ID of the interaction.
- * @property      string                 $application_id        ID of the application the interaction is for.
- * @property      int                    $type                  Type of interaction.
- * @property      InteractionData|null   $data                  Data associated with the interaction.
- * @property      string|null            $guild_id              ID of the guild the interaction was sent from.
- * @property-read Guild|null             $guild                 Guild the interaction was sent from.
- * @property      string|null            $channel_id            ID of the channel the interaction was sent from.
- * @property-read Channel|null           $channel               Channel the interaction was sent from.
- * @property      Member|null            $member                Member who invoked the interaction.
- * @property      User|null              $user                  User who invoked the interaction.
- * @property      string                 $token                 Continuation token for responding to the interaction.
- * @property-read int                    $version               Version of interaction.
- * @property      Message|null           $message               Message that triggered the interactions, when triggered from message components.
- * @property-read ChannelPermission|null $app_permissions       Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
- * @property      string|null            $locale                The selected language of the invoking user.
- * @property      string|null            $guild_locale          The guild's preferred locale, if invoked in a guild.
- * @property      int|null               $context               Context where the interaction was triggered from.
- * @property      int                    $attachment_size_limit Attachment size limit in bytes.
+ * @property      string                 $id                             ID of the interaction.
+ * @property      string                 $application_id                 ID of the application the interaction is for.
+ * @property      int                    $type                           Type of interaction.
+ * @property      InteractionData|null   $data                           Data associated with the interaction.
+ * @property-read Guild|null             $guild                          Guild the interaction was sent from.
+ * @property      string|null            $guild_id                       ID of the guild the interaction was sent from.
+ * @property-read Channel|null           $channel                        Channel the interaction was sent from.
+ * @property      string|null            $channel_id                     ID of the channel the interaction was sent from.
+ * @property      Member|null            $member                         Member who invoked the interaction.
+ * @property      User|null              $user                           User who invoked the interaction.
+ * @property      string                 $token                          Continuation token for responding to the interaction.
+ * @property-read int                    $version                        Version of interaction.
+ * @property      Message|null           $message                        Message that triggered the interactions, when triggered from message components.
+ * @property-read ChannelPermission|null $app_permissions                Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
+ * @property      string|null            $locale                         The selected language of the invoking user.
+ * @property      string|null            $guild_locale                   The guild's preferred locale, if invoked in a guild.
+ * @property      array                  $entitlements                   For monetized apps, any entitlements for the invoking user, representing access to premium SKUs
+ * @property      array                  $authorizing_integration_owners Mapping of installation contexts that the interaction was authorized for to related user or guild IDs.
+ * @property      int|null               $context                        Context where the interaction was triggered from.
+ * @property      int                    $attachment_size_limit          Attachment size limit in bytes.
  */
 class Interaction extends Part
 {
@@ -73,6 +75,7 @@ class Interaction extends Part
         'application_id',
         'type',
         'data',
+        'guild',
         'guild_id',
         'channel',
         'channel_id',
@@ -84,6 +87,10 @@ class Interaction extends Part
         'app_permissions',
         'locale',
         'guild_locale',
+        'entitlements',
+        'authorizing_integration_owners',
+        'context',
+        'attachment_size_limit',
     ];
 
     /**
@@ -107,10 +114,11 @@ class Interaction extends Part
     public const RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8;
     public const RESPONSE_TYPE_MODAL = 9;
     public const RESPONSE_TYPE_PREMIUM_REQUIRED = 10;
+    public const RESPONSE_TYPE_LAUNCH_ACTIVITY = 12;
 
-    const CONTEXT_TYPE_GUILD = 0;
-    const CONTEXT_TYPE_BOT_DM = 1;
-    const CONTEXT_TYPE_PRIVATE_CHANNEL = 2;
+    public const CONTEXT_TYPE_GUILD = 0;
+    public const CONTEXT_TYPE_BOT_DM = 1;
+    public const CONTEXT_TYPE_PRIVATE_CHANNEL = 2;
 
     /**
      * Returns true if this interaction has been internally responded.
@@ -148,7 +156,15 @@ class Interaction extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
+            return $guild;
+        }
+
+        if (isset($this->attributes['guild'])) {
+            return $this->factory->part(Guild::class, (array) $this->attributes['guild'], true);
+        }
+
+        return null;
     }
 
     /**
@@ -174,7 +190,15 @@ class Interaction extends Part
             }
         }
 
-        return $this->discord->getChannel($channelId);
+        if ($channel = $this->discord->getChannel($channelId)) {
+            return $channel;
+        }
+
+        if (isset($this->attributes['channel'])) {
+            return $this->factory->part(Channel::class, (array) $this->attributes['channel'], true);
+        }
+
+        return null;
     }
 
     /**

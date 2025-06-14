@@ -38,119 +38,119 @@ use function Discord\poly_strlen;
  *
  * @author David Cole <david.cole1340@gmail.com>
  */
-class MessageBuilder implements JsonSerializable
+class MessageBuilder extends Builder implements JsonSerializable
 {
     /**
      * Content of the message.
      *
      * @var string|null
      */
-    private $content;
+    protected $content;
 
     /**
      * A nonce that can be used for message roundtrips with the gateway (up to 25 characters).
      *
      * @var int|string|null
      */
-    private $nonce;
+    protected $nonce;
 
     /**
      * Override the default username of the webhook.
      *
      * @var string|null
      */
-    private $username;
+    protected $username;
 
     /**
      * Override the default avatar of the webhook.
      *
      * @var string|null
      */
-    private $avatar_url;
+    protected $avatar_url;
 
     /**
      * Whether the message is text-to-speech.
      *
      * @var bool
      */
-    private $tts = false;
+    protected $tts = false;
 
     /**
      * Array of embeds to send with the message.
      *
      * @var array[]|null
      */
-    private $embeds;
+    protected $embeds;
 
     /**
      * Allowed mentions object for the message.
      *
      * @var AllowedMentions|array|null
      */
-    private $allowed_mentions;
+    protected $allowed_mentions;
 
     /**
      * Message to reply to with this message.
      *
      * @var Message|null
      */
-    private $replyTo;
+    protected $replyTo;
 
     /**
      * Message to forward with this message.
      *
      * @var Message|null
      */
-    private $forward;
+    protected $forward;
 
     /**
      * Components to send with this message.
      *
      * @var ComponentObject[]|null
      */
-    private $components;
+    protected $components;
 
     /**
      * IDs of up to 3 stickers in the server to send in the message.
      *
      * @var string[]
      */
-    private $sticker_ids = [];
+    protected $sticker_ids = [];
 
     /**
      * Files to send with this message.
      *
      * @var array[]|null
      */
-    private $files;
+    protected $files;
 
     /**
      * Attachments to send with this message.
      *
      * @var Attachment[]|null
      */
-    private $attachments;
+    protected $attachments;
 
     /**
      * The poll for the message.
      *
      * @var Poll|null
      */
-    private $poll;
+    protected $poll;
 
     /**
      * Flags to send with this message.
      *
      * @var int|null
      */
-    private $flags;
+    protected $flags;
 
     /**
      * Whether to enforce the nonce.
      *
      * @var bool|null
      */
-    private $enforce_nonce;
+    protected $enforce_nonce;
 
     /**
      * Creates a new message builder.

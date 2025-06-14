@@ -13,10 +13,17 @@ declare(strict_types=1);
 
 namespace Discord\Parts\OAuth;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\User;
+use Discord\Repository\ActivityInstanceRepository;
+use Discord\Repository\Monetization\EntitlementRepository;
+use Discord\Repository\Monetization\SKURepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
+use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * The OAuth2 application of the bot.
@@ -58,7 +65,10 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  *
  * @property string $invite_url The invite URL to invite the bot to a guild.
  *
- * @property GlobalCommandRepository $commands The application global commands.
+ * @property GlobalCommandRepository    $commands           The application global commands.
+ * @property EntitlementRepository      $entitlements       The application entitlements.
+ * @property SKURepository              $skus               The application SKUs.
+ * @property ActivityInstanceRepository $activity_instances The application activity instances.
  */
 class Application extends Part
 {
@@ -130,7 +140,39 @@ class Application extends Part
      */
     protected $repositories = [
         'commands' => GlobalCommandRepository::class,
+        'entitlements' => EntitlementRepository::class,
+        'skus' => SKURepository::class,
+        'activity_instances' => ActivityInstanceRepository::class,
     ];
+
+    /**
+     * Returns a serialized activity instance, if it exists.
+     * Useful for preventing unwanted activity sessions.
+     *
+     * @param ActivityInstance|string $instance_id The activity instance ID.
+     *
+     * @throws \DomainException Missing instance ID.
+     *
+     * @return PromiseInterface<?ActivityInstance>
+     */
+    public function getActivityInstance($instance_id): PromiseInterface
+    {
+        if (!isset($instance_id)) {
+            return reject(new \DomainException('You must provide an instance ID to get an activity instance.'));
+        }
+
+        if ($instance_id instanceof ActivityInstance) {
+            $instance_id = $instance_id->id;
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::APPLICATION_ACTIVITY_INSTANCE, $this->id, $instance_id))
+            ->then(function ($response) {
+                if (empty($response)) {
+                    return null;
+                }
+                return $this->factory->part(ActivityInstance::class, (array) $response, true);
+            });
+    }
 
     /**
      * Returns the application icon.

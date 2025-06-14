@@ -341,6 +341,20 @@ class Discord
     public Voice $voice;
 
     /**
+     * The transport compression setting.
+     *
+     * @var bool Whether to use transport compression.
+     */
+    protected $useTransportCompression;
+
+    /**
+     * The payload compression setting.
+     *
+     * @var bool Whether to use payload compression.
+     */
+    protected $usePayloadCompression;
+
+    /**
      * Creates a Discord client instance.
      *
      * @param  array           $options Array of options.
@@ -349,10 +363,6 @@ class Discord
      */
     public function __construct(array $options = [])
     {
-        if (php_sapi_name() !== 'cli') {
-            throw new \RuntimeException('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.');
-        }
-
         // x86 need gmp extension for big integer operation
         if (PHP_INT_SIZE === 4 && ! BigInt::init()) {
             throw new \RuntimeException('ext-gmp is not loaded, it is required for 32-bits (x86) PHP.');
@@ -364,6 +374,10 @@ class Discord
         $this->token = $options['token'];
         $this->loop = $options['loop'];
         $this->logger = $options['logger'];
+
+        if (!in_array(php_sapi_name(), ['cli', 'micro'])) {
+            $this->logger->critical('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.');
+        }
 
         $this->logger->debug('Initializing DiscordPHP '.self::VERSION.' (DiscordPHP-Http: '.Http::VERSION.' & Gateway: v'.self::GATEWAY_VERSION.') on PHP '.PHP_VERSION);
 
@@ -390,6 +404,8 @@ class Discord
         $this->factory = new Factory($this);
         $this->client = $this->factory->part(Client::class, []);
 
+        $this->useTransportCompression = $options['useTransportCompression'];
+        $this->usePayloadCompression = $options['usePayloadCompression'];
         $this->connectWs();
     }
 
@@ -650,11 +666,11 @@ class Discord
     protected function processWsMessage(string $data): void
     {
         if (! $data = json_decode($data)) {
-            $this->logger->warning('failed to decode payload', ['payload' => $data]);
+            $this->logger->warning('failed to decode websocket message', ['payload' => $data]);
             // @todo: handle invalid payload (reconnect), throw exception, or ignore?
             return;
         }
-        /** @var Payload $data */
+
         $this->emit('raw', [$data, $this]);
 
         if (isset($data->s)) {
@@ -945,7 +961,7 @@ class Discord
                         'referrer' => 'https://github.com/discord-php/DiscordPHP',
                         'referring_domain' => 'https://github.com/discord-php/DiscordPHP',
                     ],
-                    'compress' => true,
+                    'compress' => $this->usePayloadCompression,
                     'intents' => $this->options['intents'],
                 ],
             );
@@ -1278,8 +1294,11 @@ class Discord
                 'encoding' => $this->encoding,
             ];
 
-            if ($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
-                $params['compress'] = 'zlib-stream';
+            if ($this->useTransportCompression) {
+                if ($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
+                    $params['compress'] = 'zlib-stream';
+                }
+                // @todo: add support for zstd-stream
             }
 
             $query = http_build_query($params);
@@ -1342,6 +1361,8 @@ class Discord
                 'socket_options',
                 'dnsConfig',
                 'cache',
+                'useTransportCompression',
+                'usePayloadCompression',
             ])
             ->setDefaults([
                 'logger' => null,
@@ -1352,6 +1373,8 @@ class Discord
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
                 'cache' => [AbstractRepository::class => null], // use LegacyCacheWrapper
+                'useTransportCompression' => true,
+                'usePayloadCompression' => true,
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1374,7 +1397,9 @@ class Discord
                 }
 
                 return $value;
-            });
+            })
+            ->setAllowedTypes('useTransportCompression', 'bool')
+            ->setAllowedTypes('usePayloadCompression', 'bool');
 
         $options = $resolver->resolve($options);
 

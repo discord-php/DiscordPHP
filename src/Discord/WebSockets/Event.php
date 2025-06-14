@@ -122,6 +122,11 @@ abstract class Event
     public const MESSAGE_POLL_VOTE_ADD = 'MESSAGE_POLL_VOTE_ADD';
     public const MESSAGE_POLL_VOTE_REMOVE = 'MESSAGE_POLL_VOTE_REMOVE';
 
+     // Entitlements
+    public const ENTITLEMENT_CREATE = 'ENTITLEMENT_CREATE';
+    public const ENTITLEMENT_UPDATE = 'ENTITLEMENT_UPDATE';
+    public const ENTITLEMENT_DELETE = 'ENTITLEMENT_DELETE';
+
     /**
      * The Discord client instance.
      *

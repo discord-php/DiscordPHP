@@ -120,12 +120,18 @@ class Button extends Interactive
             self::STYLE_SUCCESS,
             self::STYLE_DANGER,
             self::STYLE_LINK,
+            self::STYLE_PREMIUM,
         ])) {
             throw new \InvalidArgumentException('Invalid button style.');
         }
 
         $this->style = $style;
-        if ($this->style != self::STYLE_LINK) {
+        if (in_array($style, [
+            self::STYLE_PRIMARY,
+            self::STYLE_SECONDARY,
+            self::STYLE_SUCCESS,
+            self::STYLE_DANGER,
+        ])) {
             $this->setCustomId($custom_id ?? self::generateUuid());
         }
     }
@@ -141,6 +147,110 @@ class Button extends Interactive
     public static function new(int $style, ?string $custom_id = null): self
     {
         return new self($style, $custom_id);
+    }
+
+    /**
+     * Creates a new primary button.
+     *
+     * @param string|null $custom_id Custom ID of the button.
+     *
+     * @return self
+     */
+    public static function primary(?string $custom_id = null)
+    {
+        $button = new self(self::STYLE_PRIMARY);
+
+        if (! isset($custom_id)) {
+            $custom_id = self::generateUuid();
+        }
+
+        return $button->setCustomId($custom_id);
+    }
+
+    /**
+     * Creates a new secondary button.
+     *
+     * @param string|null $custom_id Custom ID of the button.
+     *
+     * @return self
+     */
+    public static function secondary(?string $custom_id = null)
+    {
+        $button = new self(self::STYLE_SECONDARY);
+
+        if (! isset($custom_id)) {
+            $custom_id = self::generateUuid();
+        }
+
+        return $button->setCustomId($custom_id);
+    }
+
+    /**
+     * Creates a new success button.
+     *
+     * @param string|null $custom_id Custom ID of the button.
+     *
+     * @return self
+     */
+    public static function success(?string $custom_id = null)
+    {
+        $button = new self(self::STYLE_SUCCESS);
+
+        if (! isset($custom_id)) {
+            $custom_id = self::generateUuid();
+        }
+
+        return $button->setCustomId($custom_id);
+    }
+
+    /**
+     * Creates a new danger button.
+     *
+     * @param string|null $custom_id Custom ID of the button.
+     *
+     * @return self
+     */
+    public static function danger(?string $custom_id = null)
+    {
+        $button = new self(self::STYLE_DANGER);
+
+        if (! isset($custom_id)) {
+            $custom_id = self::generateUuid();
+        }
+
+        return $button->setCustomId($custom_id);
+    }
+
+    /**
+     * Creates a new link button.
+     *
+     * @param string $url
+     *
+     * @return self
+     */
+    public static function link(string $url): self
+    {
+        $button = new self(self::STYLE_LINK);
+
+        $button->setUrl($url);
+
+        return $button;
+    }
+
+    /**
+     * Creates a new premium button.
+     *
+     * @param string $sku_id
+     *
+     * @return self
+     */
+    public static function premium(string $sku_id): self
+    {
+        $button = new self(self::STYLE_PREMIUM);
+
+        $button->setSkuId($sku_id);
+
+        return $button;
     }
 
     /**
@@ -468,9 +578,10 @@ class Button extends Interactive
         ];
 
         if ($this->style != Button::STYLE_PREMIUM) {
-            if (isset($this->label)) {
-                $content['label'] = $this->label;
+            if (! isset($this->label)) {
+                throw new \DomainException('Non-Premium buttons must have a `label` field set.');
             }
+            $content['label'] = $this->label;
 
             if (isset($this->emoji)) {
                 $content['emoji'] = $this->emoji;
@@ -502,5 +613,15 @@ class Button extends Interactive
         }
 
         return $content;
+    }
+
+    public function __debugInfo(): array
+    {
+        $vars = get_object_vars($this);
+        unset($vars['discord']);
+        if (isset($vars['listener'])) {
+            $vars['listener'] = 'object(Closure)';
+        }
+        return $vars;
     }
 }

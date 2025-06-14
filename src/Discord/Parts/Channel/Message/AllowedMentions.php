@@ -376,11 +376,32 @@ class AllowedMentions implements JsonSerializable
     }
 
     /**
+     * Sets whether to mention the author of the message being replied to (default false).
+     *
+     * @param bool $replied_user
+     * @return self
+     */
+    public function setRepliedUser(bool $replied_user = true): self
+    {
+        $this->replied_user = $replied_user;
+
+        return $this;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function jsonSerialize(): array
     {
         $data = [];
+
+        // Remove invalid configurations
+        if (isset($this->roles) && in_array(self::TYPE_ROLE, $this->parse->values(), true)) {
+            unset($this->roles);
+        }
+        if (isset($this->users) && in_array(self::TYPE_USER, $this->parse->values(), true)) {
+            unset($this->users);
+        }
 
         if (isset($this->parse)) {
             $data['parse'] = $this->parse->values();
@@ -396,6 +417,14 @@ class AllowedMentions implements JsonSerializable
 
         if (isset($this->replied_user)) {
             $data['replied_user'] = $this->replied_user;
+        }
+
+        // Remove invalid configurations
+        if (isset($this->roles) && in_array(self::TYPE_ROLE, $this->parse->values(), true)) {
+            $this->removeParse(self::TYPE_ROLE);
+        }
+        if (isset($this->users) && in_array(self::TYPE_USER, $this->parse->values(), true)) {
+            $this->removeParse(self::TYPE_USER);
         }
 
         return $data;

@@ -125,6 +125,11 @@ class Handlers
         $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_UPDATE, \Discord\WebSockets\Events\GuildSoundboardSoundUpdate::class);
         $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_DELETE, \Discord\WebSockets\Events\GuildSoundboardSoundDelete::class);
         $this->addHandler(Event::SOUNDBOARD_SOUNDS, \Discord\WebSockets\Events\SoundboardSounds::class);
+
+        // Entitlements Event Handlers
+        $this->addHandler(Event::ENTITLEMENT_CREATE, \Discord\WebSockets\Events\EntitlementCreate::class);
+        $this->addHandler(Event::ENTITLEMENT_UPDATE, \Discord\WebSockets\Events\EntitlementUpdate::class);
+        $this->addHandler(Event::ENTITLEMENT_DELETE, \Discord\WebSockets\Events\EntitlementDelete::class);
     }
 
     /**

@@ -1067,6 +1067,8 @@ class Message extends Part
     /**
      * Deletes a reaction.
      *
+     * @deprecated 10.14.0 Use `Message::deleteAllReactions()`, `Message::deleteOwnReaction()`, `Message::deleteUserReaction()`, or `Message::deleteEmojiReactions()`.
+     *
      * @link https://discord.com/developers/docs/resources/channel#delete-own-reaction
      * @link https://discord.com/developers/docs/resources/channel#delete-user-reaction
      *
@@ -1076,42 +1078,142 @@ class Message extends Part
      *
      * @throws \UnexpectedValueException Invalid reaction `$type`.
      * @throws NoPermissionsException    Missing manage_messages permission when deleting others reaction.
+     * @throws \DomainException          Missing emoji or user ID when deleting reaction by emoji or user ID.
      *
      * @return PromiseInterface
      */
     public function deleteReaction(int $type, $emoticon = null, ?string $id = null): PromiseInterface
     {
-        if ($emoticon instanceof Emoji) {
-            $emoticon = $emoticon->toReactionString();
-        } else {
-            $emoticon = urlencode($emoticon);
-        }
-
         switch ($type) {
             case self::REACT_DELETE_ALL:
-                $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_ALL, $this->channel_id, $this->id);
-                break;
+                return $this->deleteAllReactions();
             case self::REACT_DELETE_ME:
-                $url = Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon);
-                break;
+                return $this->deleteOwnReaction($emoticon);
             case self::REACT_DELETE_ID:
-                $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon, $id);
-                break;
+                return $this->deleteUserReaction($emoticon, $id);
             case self::REACT_DELETE_EMOJI:
-                $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->id, $emoticon);
-                break;
+                return $this->deleteEmojiReactions($emoticon);
             default:
                 return reject(new \UnexpectedValueException('Invalid reaction type'));
         }
+    }
 
-        if (($type != self::REACT_DELETE_ME || $id != $this->discord->id) && $channel = $this->channel) {
+    /**
+     * Deletes all reactions from the message.
+     *
+     * @since 10.14.0
+     *
+     * @throws NoPermissionsException Missing manage_messages permission when deleting others reaction.
+     *
+     * @return PromiseInterface
+     */
+    public function deleteAllReactions(): PromiseInterface
+    {
+        if ($channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete reactions by others in channel {$channel->id}."));
+            }
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::MESSAGE_REACTION_ALL, $this->channel_id, $this->id));
+    }
+
+    /**
+     * Deletes the bot's own reaction from the message.
+     *
+     * @since 10.14.0
+     *
+     * @param Emoji|string $emoticon
+     *
+     * @throws \DomainException Missing emoji when deleting own reaction.
+     *
+     * @return PromiseInterface
+     */
+    public function deleteOwnReaction($emoticon): PromiseInterface
+    {
+        if ($emoticon instanceof Emoji) {
+            $emoticon = $emoticon->toReactionString();
+        } elseif (isset($emoticon)) {
+            $emoticon = urlencode($emoticon);
+        } else {
+            return reject(new \DomainException('You must provide an emoji to delete a reaction by emoji.'));
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon));
+    }
+
+    /**
+     * Deletes a specific user's reaction from the message.
+     *
+     * @since 10.14.0
+     *
+     * @param Emoji|string $emoticon
+     * @param string $user_id
+     *
+     * @throws \DomainException       Missing emoji or user ID when deleting reaction by user ID.
+     * @throws NoPermissionsException Missing manage_messages permission when deleting others reaction.
+     *
+     * @return PromiseInterface
+     */
+    public function deleteUserReaction($emoticon, string $user_id): PromiseInterface
+    {
+        if ($user_id === $this->discord->id) {
+            return $this->deleteOwnReaction($emoticon);
+        }
+
+        if ($emoticon instanceof Emoji) {
+            $emoticon = $emoticon->toReactionString();
+        } elseif (isset($emoticon)) {
+            $emoticon = urlencode($emoticon);
+        } else {
+            return reject(new \DomainException('You must provide an emoji to delete a reaction by user.'));
+        }
+
+        if (!isset($user_id)) {
+            return reject(new \DomainException('You must provide a user ID to delete a reaction by user.'));
+        }
+
+        if ($channel = $this->channel) {
             $botperms = $channel->getBotPermissions();
             if ($botperms && ! $botperms->manage_messages) {
                 return reject(new NoPermissionsException("You do not have permission to delete reaction by others in channel {$channel->id}."));
             }
         }
 
-        return $this->http->delete($url);
+        return $this->http->delete(Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon, $user_id));
+    }
+
+    /**
+     * Deletes all reactions for a specific emoji from the message.
+     *
+     * @since 10.14.0
+     *
+     * @param Emoji|string $emoticon
+     *
+     * @throws \DomainException       Missing emoji when deleting reaction by reaction.
+     * @throws NoPermissionsException Missing manage_messages permission when deleting others reaction.
+     *
+     * @return PromiseInterface
+     */
+    public function deleteEmojiReactions($emoticon): PromiseInterface
+    {
+        if ($emoticon instanceof Emoji) {
+            $emoticon = $emoticon->toReactionString();
+        } elseif (isset($emoticon)) {
+            $emoticon = urlencode($emoticon);
+        } else {
+            return reject(new \DomainException('You must provide an emoji to delete reactions by emoji.'));
+        }
+
+        if ($channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete reactions by others in channel {$channel->id}."));
+            }
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->id, $emoticon));
     }
 
     /**
@@ -1146,14 +1248,16 @@ class Message extends Part
     /**
      * Deletes the message from the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#delete-message
+     * @link https://discord.com/developers/docs/resources/message#delete-message
+     *
+     * @param string|null $reason Reason for Audit Log (if supported).
      *
      * @return PromiseInterface
      *
      * @throws \RuntimeException      This type of message cannot be deleted.
      * @throws NoPermissionsException Missing manage_messages permission when deleting others message.
      */
-    public function delete(): PromiseInterface
+    public function delete(?string $reason = null): PromiseInterface
     {
         if (! $this->isDeletable()) {
             return reject(new \RuntimeException("Cannot delete this type of message: {$this->type}", 50021));
@@ -1166,7 +1270,17 @@ class Message extends Part
             }
         }
 
-        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id));
+        if ($channel = $this->channel) {
+            return $channel->messages->delete($this, $reason);
+        }
+
+        // We can still delete the message if we don't have the channel object cached.
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), null, $headers);
     }
 
     /**

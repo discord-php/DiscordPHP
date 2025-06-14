@@ -462,7 +462,7 @@ class VoiceClient extends EventEmitter
                             Op::VOICE_HEARTBEAT,
                             [
                                 't' => (int) microtime(true),
-                                'seq_ack' => 10
+                                'seq_ack' => 10,
                             ]
                         ));
                         $this->logger->debug('sending heartbeat');
