@@ -863,7 +863,7 @@ class Message extends Part
      *
      * @since 10.0.0 Arguments for `$name` and `$auto_archive_duration` are now inside `$options`
      */
-    public function startThread(array|string $options, string|null|int $reason = null, ?string $_reason = null): PromiseInterface
+    public function startThread(array|string $options, string|int|null $reason = null, ?string $_reason = null): PromiseInterface
     {
         // Old v7 signature
         if (is_string($options)) {
