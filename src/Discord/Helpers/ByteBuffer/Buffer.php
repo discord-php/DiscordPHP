@@ -18,8 +18,10 @@ namespace Discord\Helpers\ByteBuffer;
  *
  * @throws \InvalidArgumentException If invalid arguments are provided or buffer overflows.
  */
-class Buffer extends AbstractBuffer
+class Buffer extends AbstractBuffer implements \ArrayAccess
 {
+    use BufferArrayAccessTrait;
+
     protected \SplFixedArray $buffer;
 
     public function __construct($argument)
@@ -49,7 +51,16 @@ class Buffer extends AbstractBuffer
         }
     }
 
-    protected function insert(FormatPackEnum|string $format, $value, int $offset, ?int $length): self
+    /**
+     * Inserts a value into the buffer at the specified offset.
+     *
+     * @param FormatPackEnum|string $format
+     * @param mixed $value
+     * @param int $offset
+     * @param ?int $length
+     * @return Buffer
+     */
+    protected function insert(FormatPackEnum|string $format, $value, int $offset, ?int $length = null): self
     {
         $bytes = pack($format?->value ?? $format, $value);
 
@@ -64,6 +75,14 @@ class Buffer extends AbstractBuffer
         return $this;
     }
 
+    /**
+     * Extracts a value from the buffer at the specified offset.
+     *
+     * @param FormatPackEnum|string $format
+     * @param int $offset
+     * @param int $length
+     * @return mixed
+     */
     protected function extract(FormatPackEnum|string $format, int $offset, int $length)
     {
         $encoded = '';
@@ -84,6 +103,14 @@ class Buffer extends AbstractBuffer
         return $result;
     }
 
+    /**
+     * Checks if the actual value exceeds the expected maximum size.
+     *
+     * @param mixed $excpectedMax
+     * @param mixed $actual
+     * @throws \InvalidArgumentException
+     * @return static
+     */
     protected function checkForOverSize($expectedMax, string|int $actual): self
     {
         if ($actual > $expectedMax) {
@@ -109,6 +136,13 @@ class Buffer extends AbstractBuffer
         return 0;
     }
 
+    /**
+     * Writes a string to the buffer at the specified offset.
+     *
+     * @param string $value  The value that will be written.
+     * @param int|null $offset The offset that the value will be written at.
+     * @return static
+     */
     public function write($value, ?int $offset = null): self
     {
         if (null === $offset) {
@@ -121,6 +155,13 @@ class Buffer extends AbstractBuffer
         return $this;
     }
 
+    /**
+     * Writes an 8-bit signed integer to the buffer at the specified offset.
+     *
+     * @param int $value  The value that will be written.
+     * @param int|null $offset The offset that the value will be written at.
+     * @return static
+     */
     public function writeInt8($value, ?int $offset = null): self
     {
         if (null === $offset) {
@@ -134,6 +175,13 @@ class Buffer extends AbstractBuffer
         return $this;
     }
 
+    /**
+     * Writes a 16-bit signed integer to the buffer at the specified offset.
+     *
+     * @param int $value  The value that will be written.
+     * @param int|null $offset The offset that the value will be written at.
+     * @return static
+     */
     public function writeInt16BE($value, ?int $offset = null): self
     {
         if (null === $offset) {
@@ -147,6 +195,13 @@ class Buffer extends AbstractBuffer
         return $this;
     }
 
+     /**
+     * Writes a 16-bit signed integer to the buffer at the specified offset.
+     *
+     * @param int $value  The value that will be written.
+     * @param int|null $offset The offset that the value will be written at.
+     * @return static
+     */
     public function writeInt16LE($value, ?int $offset = null): self
     {
         if (null === $offset) {
@@ -160,6 +215,13 @@ class Buffer extends AbstractBuffer
         return $this;
     }
 
+    /**
+     * Writes a 32-bit signed integer to the buffer at the specified offset.
+     *
+     * @param int $value  The value that will be written.
+     * @param int|null $offset The offset that the value will be written at.
+     * @return static
+     */
     public function writeInt32BE($value, ?int $offset = null): self
     {
         if (null === $offset) {
@@ -173,6 +235,14 @@ class Buffer extends AbstractBuffer
         return $this;
     }
 
+    /**
+     * Writes a 32-bit signed integer to the buffer at the specified offset.
+     *
+     * @param int $value  The value that will be written.
+     * @param int|null $offset The offset that the value will be written at.
+     * @return static
+     */
+    #[\Override]
     public function writeInt32LE($value, ?int $offset = null): self
     {
         if (null === $offset) {
@@ -186,6 +256,13 @@ class Buffer extends AbstractBuffer
         return $this;
     }
 
+    /**
+     * Reads a string from the buffer at the specified offset.
+     *
+     * @param int $offset The offset to read from.
+     * @param int $length The length of the string to read.
+     * @return string The data read.
+     */
     public function read(int $offset, int $length)
     {
         return $this->extract('a' . $length, $offset, $length);
