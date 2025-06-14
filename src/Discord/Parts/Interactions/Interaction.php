@@ -423,10 +423,19 @@ class Interaction extends Part
     /**
      * Sends a follow-up message to the interaction.
      *
+     * Apps are limited to 5 followup messages per interaction if it was initiated from a user-installed app and isn't installed in the server (meaning the authorizing integration owners object only contains USER_INSTALL)
+     *
+     * When using this endpoint directly after responding to an interaction with `acknowledgeWithResponse()`,
+     * this endpoint will function as Edit Original Interaction Response for backwards compatibility.
+     * In this case, no new message will be created, and the loading message will be edited instead.
+     * The ephemeral flag will be ignored, and the value you provided in the initial defer response will be preserved,
+     * as an existing message's ephemeral state cannot be changed.
+     * This behavior is deprecated, and you should use the Edit Original Interaction Response endpoint in this case instead.
+     *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message
      *
      * @param MessageBuilder $builder   Message to send.
-     * @param bool           $ephemeral Whether the created follow-up should be ephemeral. Will be ignored if the respond is previously ephemeral.
+     * @param bool           $ephemeral Whether the created follow-up should be ephemeral
      *
      * @throws \RuntimeException Interaction is not responded yet.
      *
