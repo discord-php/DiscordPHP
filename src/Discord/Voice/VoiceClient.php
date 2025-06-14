@@ -308,7 +308,7 @@ class VoiceClient extends EventEmitter
      *
      * @var string|\React\Dns\Config\Config
      */
-    protected null|string|Config $dnsConfig;
+    protected Config|string|null $dnsConfig;
 
     /**
      * Silence Frame Remain Count.
@@ -1428,9 +1428,9 @@ class VoiceClient extends EventEmitter
      *
      * @deprecated 10.5.0 Use getReceiveStream instead.
      *
-     * @return null|RecieveStream|ReceiveStream
+     * @return RecieveStream|ReceiveStream|null
      */
-    public function getRecieveStream($id): null|RecieveStream|ReceiveStream
+    public function getRecieveStream($id)
     {
         return $this->getReceiveStream($id);
     }
@@ -1440,9 +1440,9 @@ class VoiceClient extends EventEmitter
      *
      * @param int|string $id Either a SSRC or User ID.
      *
-     * @return null|ReceiveStream
+     * @return ReceiveStream|null
      */
-    public function getReceiveStream($id): null|ReceiveStream
+    public function getReceiveStream($id)
     {
         if (isset($this->receiveStreams[$id])) {
             return $this->receiveStreams[$id];
