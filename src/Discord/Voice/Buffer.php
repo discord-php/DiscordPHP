@@ -60,10 +60,10 @@ class Buffer extends BaseBuffer implements \ArrayAccess
      * @param FormatPackEnum|string $format
      * @param mixed $value
      * @param int $offset
-     * @param mixed $length
+     * @param ?int $length
      * @return Buffer
      */
-    protected function insert($format, $value, $offset, $length): self
+    protected function insert(FormatPackEnum|string $format, $value, $offset, $length): self
     {
         $bytes = pack($format?->value ?? $format, $value);
 
