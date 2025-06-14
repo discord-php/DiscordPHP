@@ -2,13 +2,13 @@
 
 namespace Discord\Voice;
 
-use Discord\WebSockets\Payload;
-use Evenement\EventEmitterTrait;
 use Discord\Discord;
 use Discord\Parts\Channel\Channel;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Op;
+use Discord\WebSockets\Payload;
+use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
 use Ratchet\Client\WebSocket;
 use React\EventLoop\LoopInterface;
