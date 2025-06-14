@@ -11,6 +11,8 @@
 
 namespace Discord\Helpers\ByteBuffer;
 
+use Discord\Helpers\FormatPackEnum;
+
 /**
  * Helper class for handling binary data.
  *

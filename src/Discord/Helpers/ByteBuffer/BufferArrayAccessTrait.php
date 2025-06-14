@@ -11,6 +11,8 @@
 
 namespace Discord\Helpers\ByteBuffer;
 
+use Discord\Helpers\FormatPackEnum;
+
 /**
  * @author Valithor Obsidion <valithor@discordphp.org>
  */
