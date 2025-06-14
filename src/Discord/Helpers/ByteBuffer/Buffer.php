@@ -26,11 +26,11 @@ class Buffer extends AbstractBuffer implements \ArrayAccess
 
     public function __construct($argument)
     {
-        match (true) {
-            is_string($argument) => $this->initializeStructs(strlen($argument), $argument),
-            is_int($argument) => $this->initializeStructs($argument, pack(FormatPackEnum::x->value . "$argument")),
-            default => throw new \InvalidArgumentException('Constructor argument must be an binary string or integer')
-        };
+        is_string($argument)
+            ? $this->initializeStructs(strlen($argument), $argument)
+            : (is_int($argument)
+                ? $this->initializeStructs($argument, pack(FormatPackEnum::x->value . "$argument"))
+                : throw new \InvalidArgumentException('Constructor argument must be an binary string or integer'));
     }
 
     public function __toString(): string
