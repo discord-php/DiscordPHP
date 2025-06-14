@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace Discord\Voice;
 
-use Discord\Exceptions\Voice\ClientNotReadyException;
-use Discord\Exceptions\Voice\AudioAlreadyPlayingException;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Exceptions\OutdatedDCAException;
+use Discord\Exceptions\Voice\ClientNotReadyException;
+use Discord\Exceptions\Voice\AudioAlreadyPlayingException;
 use Discord\Helpers\Buffer as RealBuffer;
 use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Channel;
 use Discord\Voice\VoicePacket;
 use Discord\Voice\ReceiveStream;
@@ -43,7 +43,6 @@ use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 use React\Stream\ReadableResourceStream as Stream;
 use React\Stream\ReadableStreamInterface;
-use Throwable;
 
 /**
  * The Discord voice client.
@@ -210,7 +209,7 @@ class VoiceClient extends EventEmitter
     /**
      * The time we started sending packets.
      *
-     * @var float|int|null The time we started sending packets.
+     * @var float The time we started sending packets.
      */
     protected float|int|null $startTime;
 
@@ -588,7 +587,7 @@ class VoiceClient extends EventEmitter
                         };
 
                         $client->once('message', $decodeUDP);
-                    }, function (Throwable $e): void {
+                    }, function (\Throwable $e): void {
                         $this->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
                         $this->emit('error', [$e]);
                     });
