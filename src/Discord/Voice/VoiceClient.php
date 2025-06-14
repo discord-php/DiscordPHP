@@ -1913,5 +1913,4 @@ class VoiceClient extends EventEmitter
             $this->sendBuffer(self::SILENCE_FRAME);
         }
     }
-
 }
