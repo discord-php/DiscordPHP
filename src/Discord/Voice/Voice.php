@@ -10,6 +10,7 @@ use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Op;
 use Discord\WebSockets\Payload;
+use Discord\WebSockets\VoicePayload;
 use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
 use Ratchet\Client\WebSocket;
@@ -67,7 +68,7 @@ final class Voice
         $discord->once(Event::VOICE_STATE_UPDATE, fn ($state) => $this->stateUpdate($state, $channel));
         $discord->once(Event::VOICE_SERVER_UPDATE, fn ($state, $discord) => $this->serverUpdate($state, $channel, $discord, $deferred));
 
-        $discord->send(Payload::new(
+        $discord->send(VoicePayload::new(
             Op::OP_VOICE_STATE_UPDATE,
             [
                 'guild_id' => $channel->guild_id,
