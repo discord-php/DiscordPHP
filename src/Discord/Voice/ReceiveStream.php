@@ -11,10 +11,6 @@
 
 namespace Discord\Voice;
 
-use Evenement\EventEmitter;
-use React\Stream\DuplexStreamInterface;
-use React\Stream\WritableStreamInterface;
-
 /**
  * Handles recieving audio from Discord.
  *
