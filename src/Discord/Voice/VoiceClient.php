@@ -210,9 +210,9 @@ class VoiceClient extends EventEmitter
     /**
      * The time we started sending packets.
      *
-     * @var null|int|float The time we started sending packets.
+     * @var float|int|null The time we started sending packets.
      */
-    protected ?int $startTime;
+    protected float|int|null $startTime;
 
     /**
      * The stream time of the last packet.
