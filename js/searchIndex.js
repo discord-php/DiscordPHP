@@ -41,31 +41,6 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020description\u0020of\u0020the\u0020command\u0020in\u0020another\u0020language.",
             "url": "classes/Discord-Builders-CommandAttributes.html#method_setDescriptionLocalization"
         },                {
-            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetDefaultPermission\u0028\u0029",
-            "name": "setDefaultPermission",
-            "summary": "Sets\u0020the\u0020default\u0020permission\u0020of\u0020the\u0020command.",
-            "url": "classes/Discord-Builders-CommandAttributes.html#method_setDefaultPermission"
-        },                {
-            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetDefaultMemberPermissions\u0028\u0029",
-            "name": "setDefaultMemberPermissions",
-            "summary": "Sets\u0020the\u0020default\u0020member\u0020permissions\u0020of\u0020the\u0020command.",
-            "url": "classes/Discord-Builders-CommandAttributes.html#method_setDefaultMemberPermissions"
-        },                {
-            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetDmPermission\u0028\u0029",
-            "name": "setDmPermission",
-            "summary": "Sets\u0020the\u0020DM\u0020permission\u0020of\u0020the\u0020command.",
-            "url": "classes/Discord-Builders-CommandAttributes.html#method_setDmPermission"
-        },                {
-            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetGuildId\u0028\u0029",
-            "name": "setGuildId",
-            "summary": "Sets\u0020the\u0020guild\u0020ID\u0020of\u0020the\u0020command.",
-            "url": "classes/Discord-Builders-CommandAttributes.html#method_setGuildId"
-        },                {
-            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetNsfw\u0028\u0029",
-            "name": "setNsfw",
-            "summary": "Sets\u0020the\u0020age\u0020restriction\u0020of\u0020the\u0020command.",
-            "url": "classes/Discord-Builders-CommandAttributes.html#method_setNsfw"
-        },                {
             "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AaddOption\u0028\u0029",
             "name": "addOption",
             "summary": "Adds\u0020an\u0020option\u0020to\u0020the\u0020command.",
@@ -80,6 +55,61 @@ Search.appendIndex(
             "name": "clearOptions",
             "summary": "Clear\u0020all\u0020options\u0020from\u0020the\u0020command.",
             "url": "classes/Discord-Builders-CommandAttributes.html#method_clearOptions"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetDefaultMemberPermissions\u0028\u0029",
+            "name": "setDefaultMemberPermissions",
+            "summary": "Sets\u0020the\u0020default\u0020member\u0020permissions\u0020of\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setDefaultMemberPermissions"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetDmPermission\u0028\u0029",
+            "name": "setDmPermission",
+            "summary": "Sets\u0020the\u0020DM\u0020permission\u0020of\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setDmPermission"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetDefaultPermission\u0028\u0029",
+            "name": "setDefaultPermission",
+            "summary": "Sets\u0020the\u0020default\u0020permission\u0020of\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setDefaultPermission"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetGuildId\u0028\u0029",
+            "name": "setGuildId",
+            "summary": "Sets\u0020the\u0020guild\u0020ID\u0020of\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setGuildId"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetNsfw\u0028\u0029",
+            "name": "setNsfw",
+            "summary": "Sets\u0020the\u0020age\u0020restriction\u0020of\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setNsfw"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AaddIntegrationType\u0028\u0029",
+            "name": "addIntegrationType",
+            "summary": "Adds\u0020an\u0020integration\u0020type\u0020to\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_addIntegrationType"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AremoveIntegrationType\u0028\u0029",
+            "name": "removeIntegrationType",
+            "summary": "Removes\u0020an\u0020integration\u0020type\u0020from\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_removeIntegrationType"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AaddContext\u0028\u0029",
+            "name": "addContext",
+            "summary": "Adds\u0020a\u0020context\u0020to\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_addContext"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AremoveContext\u0028\u0029",
+            "name": "removeContext",
+            "summary": "Removes\u0020a\u0020context\u0020from\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_removeContext"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetContextPermissions\u0028\u0029",
+            "name": "setContextPermissions",
+            "summary": "Sets\u0020the\u0020contexts\u0020of\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setContextPermissions"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetHandler\u0028\u0029",
+            "name": "setHandler",
+            "summary": "Sets\u0020the\u0020handler\u0020for\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setHandler"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder",
             "name": "CommandBuilder",
@@ -7670,6 +7700,21 @@ Search.appendIndex(
             "name": "MESSAGE",
             "summary": "A\u0020UI\u002Dbased\u0020command\u0020that\u0020shows\u0020up\u0020when\u0020you\u0020right\u0020click\u0020or\u0020tap\u0020on\u0020a\u0020message",
             "url": "classes/Discord-Parts-Interactions-Command-Command.html#constant_MESSAGE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Command\u003A\u003APRIMARY_ENTRY_POINT",
+            "name": "PRIMARY_ENTRY_POINT",
+            "summary": "A\u0020UI\u002Dbased\u0020command\u0020that\u0020represents\u0020the\u0020primary\u0020way\u0020to\u0020invoke\u0020an\u0020app\u0027s\u0020Activity",
+            "url": "classes/Discord-Parts-Interactions-Command-Command.html#constant_PRIMARY_ENTRY_POINT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Command\u003A\u003AAPP_HANDLER",
+            "name": "APP_HANDLER",
+            "summary": "The\u0020app\u0020handles\u0020the\u0020interaction\u0020using\u0020an\u0020interaction\u0020token",
+            "url": "classes/Discord-Parts-Interactions-Command-Command.html#constant_APP_HANDLER"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Command\u003A\u003ADISCORD_LAUNCH_ACTIVITY",
+            "name": "DISCORD_LAUNCH_ACTIVITY",
+            "summary": "Discord\u0020handles\u0020the\u0020interaction\u0020by\u0020launching\u0020an\u0020Activity\u0020and\u0020sending\u0020a\u0020follow\u002Dup\u0020message\u0020without\u0020coordinating\u0020with\u0020the\u0020app",
+            "url": "classes/Discord-Parts-Interactions-Command-Command.html#constant_DISCORD_LAUNCH_ACTIVITY"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Command\u003A\u003A\u0024fillable",
             "name": "fillable",

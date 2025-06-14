@@ -334,6 +334,13 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Interactions-Command-Command.html#constant_APP_HANDLER">APP_HANDLER</a>
+    <span>
+        &nbsp;= 1                            </span>
+</dt>
+<dd>The app handles the interaction using an interaction token</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Command.html#constant_CHAT_INPUT">CHAT_INPUT</a>
     <span>
         &nbsp;= 1                            </span>
@@ -341,11 +348,25 @@
 <dd>Slash commands; a text-based command that shows up when a user types /</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Interactions-Command-Command.html#constant_DISCORD_LAUNCH_ACTIVITY">DISCORD_LAUNCH_ACTIVITY</a>
+    <span>
+        &nbsp;= 2                            </span>
+</dt>
+<dd>Discord handles the interaction by launching an Activity and sending a follow-up message without coordinating with the app</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Command.html#constant_MESSAGE">MESSAGE</a>
     <span>
         &nbsp;= 3                            </span>
 </dt>
 <dd>A UI-based command that shows up when you right click or tap on a message</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Interactions-Command-Command.html#constant_PRIMARY_ENTRY_POINT">PRIMARY_ENTRY_POINT</a>
+    <span>
+        &nbsp;= 4                            </span>
+</dt>
+<dd>A UI-based command that represents the primary way to invoke an app&#039;s Activity</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Interactions-Command-Command.html#constant_USER">USER</a>
@@ -525,6 +546,20 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#method_addContext">addContext()</a>
+    <span>
+                                &nbsp;: $this    </span>
+</dt>
+<dd>Adds a context to the command. (Only for globally-scoped commands)</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#method_addIntegrationType">addIntegrationType()</a>
+    <span>
+                                &nbsp;: $this    </span>
+</dt>
+<dd>Adds an integration type to the command. (Only for globally-scoped commands)</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-CommandAttributes.html#method_addOption">addOption()</a>
     <span>
                                 &nbsp;: $this    </span>
@@ -636,6 +671,20 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Unsets an attribute via key. Used for ArrayAccess.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#method_removeContext">removeContext()</a>
+    <span>
+                                &nbsp;: $this    </span>
+</dt>
+<dd>Removes a context from the command. (Only for globally-scoped commands)</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#method_removeIntegrationType">removeIntegrationType()</a>
+    <span>
+                                &nbsp;: $this    </span>
+</dt>
+<dd>Removes an integration type from the command. (Only for globally-scoped commands)</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-CommandAttributes.html#method_removeOption">removeOption()</a>
     <span>
                                 &nbsp;: $this    </span>
@@ -648,6 +697,13 @@ JSON. Used for JsonSerializable.</dd>
                                 &nbsp;: string|null    </span>
 </dt>
 <dd>Serializes the data. Used for Serializable.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#method_setContextPermissions">setContextPermissions()</a>
+    <span>
+                                &nbsp;: $this    </span>
+</dt>
+<dd>Sets the contexts of the command. (Only for globally-scoped commands)</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-CommandAttributes.html#method_setDefaultMemberPermissions">setDefaultMemberPermissions()</a>
@@ -690,6 +746,13 @@ JSON. Used for JsonSerializable.</dd>
                                 &nbsp;: $this    </span>
 </dt>
 <dd>Sets the guild ID of the command.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-CommandAttributes.html#method_setHandler">setHandler()</a>
+    <span>
+                                &nbsp;: $this    </span>
+</dt>
+<dd>Sets the handler for the command.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-CommandAttributes.html#method_setName">setName()</a>
@@ -808,6 +871,38 @@ JSON. Used for JsonSerializable.</dd>
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_APP_HANDLER">
+        APP_HANDLER
+        <a href="classes/Discord-Parts-Interactions-Command-Command.html#constant_APP_HANDLER" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">52</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The app handles the interaction using an interaction token</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">APP_HANDLER</span>
+    = <span class="phpdocumentor-signature__default-value">1</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_CHAT_INPUT">
         CHAT_INPUT
         <a href="classes/Discord-Parts-Interactions-Command-Command.html#constant_CHAT_INPUT" class="headerlink"><i class="fas fa-link"></i></a>
@@ -840,6 +935,38 @@ JSON. Used for JsonSerializable.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_DISCORD_LAUNCH_ACTIVITY">
+        DISCORD_LAUNCH_ACTIVITY
+        <a href="classes/Discord-Parts-Interactions-Command-Command.html#constant_DISCORD_LAUNCH_ACTIVITY" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">55</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Discord handles the interaction by launching an Activity and sending a follow-up message without coordinating with the app</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">DISCORD_LAUNCH_ACTIVITY</span>
+    = <span class="phpdocumentor-signature__default-value">2</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_MESSAGE">
         MESSAGE
         <a href="classes/Discord-Parts-Interactions-Command-Command.html#constant_MESSAGE" class="headerlink"><i class="fas fa-link"></i></a>
@@ -861,6 +988,38 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">MESSAGE</span>
     = <span class="phpdocumentor-signature__default-value">3</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_PRIMARY_ENTRY_POINT">
+        PRIMARY_ENTRY_POINT
+        <a href="classes/Discord-Parts-Interactions-Command-Command.html#constant_PRIMARY_ENTRY_POINT" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">49</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">A UI-based command that represents the primary way to invoke an app&#039;s Activity</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">PRIMARY_ENTRY_POINT</span>
+    = <span class="phpdocumentor-signature__default-value">4</span>
 </code>
 
 
@@ -1321,7 +1480,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -1850,7 +2009,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">191</span>
+    <span class="phpdocumentor-element-found-in__line">206</span>
 
     </aside>
 
@@ -1929,6 +2088,142 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_addContext">
+        addContext()
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_addContext" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">374</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Adds a context to the command. (Only for globally-scoped commands)</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">addContext</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$context</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$context</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Context to add.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_addContext#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>If the command is not globally-scoped.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">$this</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_addIntegrationType">
+        addIntegrationType()
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_addIntegrationType" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">320</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Adds an integration type to the command. (Only for globally-scoped commands)</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">addIntegrationType</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$integration_type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$integration_type</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The integration type to add. Must be one of GUILD_INSTALL (0) or USER_INSTALL (1).</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_addIntegrationType#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>If the command is not globally-scoped or if an invalid integration type is provided.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">$this</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_addOption">
         addOption()
         <a href="classes/Discord-Builders-CommandAttributes.html#method_addOption" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1937,7 +2232,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">257</span>
+    <span class="phpdocumentor-element-found-in__line">187</span>
 
     </aside>
 
@@ -2015,7 +2310,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">301</span>
+    <span class="phpdocumentor-element-found-in__line">231</span>
 
     </aside>
 
@@ -2172,7 +2467,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
@@ -2371,7 +2666,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">177</span>
+    <span class="phpdocumentor-element-found-in__line">192</span>
 
     </aside>
 
@@ -2409,7 +2704,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">152</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
@@ -2820,6 +3115,142 @@ JSON. Used for JsonSerializable.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_removeContext">
+        removeContext()
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_removeContext" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">406</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Removes a context from the command. (Only for globally-scoped commands)</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">removeContext</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$context</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$context</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Context to remove.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_removeContext#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>If the command is not globally-scoped.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">$this</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_removeIntegrationType">
+        removeIntegrationType()
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_removeIntegrationType" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">351</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Removes an integration type from the command. (Only for globally-scoped commands)</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">removeIntegrationType</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$integration_type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$integration_type</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The integration type to remove.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_removeIntegrationType#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>If the command is not globally-scoped.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">$this</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_removeOption">
         removeOption()
         <a href="classes/Discord-Builders-CommandAttributes.html#method_removeOption" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2828,7 +3259,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">283</span>
+    <span class="phpdocumentor-element-found-in__line">213</span>
 
     </aside>
 
@@ -2931,6 +3362,74 @@ JSON. Used for JsonSerializable.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setContextPermissions">
+        setContextPermissions()
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_setContextPermissions" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">428</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets the contexts of the command. (Only for globally-scoped commands)</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setContextPermissions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$contexts</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$contexts</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Interaction contexts where the command can be used.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_setContextPermissions#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>If the command is not globally-scoped.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">$this</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setDefaultMemberPermissions">
         setDefaultMemberPermissions()
         <a href="classes/Discord-Builders-CommandAttributes.html#method_setDefaultMemberPermissions" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2939,7 +3438,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">198</span>
+    <span class="phpdocumentor-element-found-in__line">245</span>
 
     </aside>
 
@@ -2990,7 +3489,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">184</span>
+    <span class="phpdocumentor-element-found-in__line">275</span>
 
     </aside>
 
@@ -3048,7 +3547,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">138</span>
+    <span class="phpdocumentor-element-found-in__line">140</span>
 
     </aside>
 
@@ -3116,7 +3615,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">162</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
@@ -3193,7 +3692,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">212</span>
+    <span class="phpdocumentor-element-found-in__line">259</span>
 
     </aside>
 
@@ -3244,7 +3743,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">226</span>
+    <span class="phpdocumentor-element-found-in__line">290</span>
 
     </aside>
 
@@ -3287,6 +3786,74 @@ JSON. Used for JsonSerializable.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setHandler">
+        setHandler()
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_setHandler" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">448</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets the handler for the command.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setHandler</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$handler</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$handler</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Handler to set.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_setHandler#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>Command type is not PRIMARY_ENTRY_POINT (4) or if the handler is not valid.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">$this</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setName">
         setName()
         <a href="classes/Discord-Builders-CommandAttributes.html#method_setName" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3295,7 +3862,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
@@ -3373,7 +3940,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">109</span>
 
     </aside>
 
@@ -3460,7 +4027,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">240</span>
+    <span class="phpdocumentor-element-found-in__line">304</span>
 
     </aside>
 
@@ -3511,7 +4078,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
@@ -3678,7 +4245,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
@@ -3721,7 +4288,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -3764,7 +4331,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -4300,8 +4867,11 @@ static as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Command-Command.html#constant_APP_HANDLER">APP_HANDLER</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Command-Command.html#constant_CHAT_INPUT">CHAT_INPUT</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Command-Command.html#constant_DISCORD_LAUNCH_ACTIVITY">DISCORD_LAUNCH_ACTIVITY</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Command-Command.html#constant_MESSAGE">MESSAGE</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Command-Command.html#constant_PRIMARY_ENTRY_POINT">PRIMARY_ENTRY_POINT</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Command-Command.html#constant_USER">USER</a></li>
                                             </ul>
                 </li>
@@ -4338,6 +4908,8 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___set">__set()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Command-Command.html#method___toString">__toString()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___unserialize">__unserialize()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_addContext">addContext()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_addIntegrationType">addIntegrationType()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_addOption">addOption()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_clearOptions">clearOptions()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
@@ -4354,14 +4926,18 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetGet">offsetGet()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetSet">offsetSet()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetUnset">offsetUnset()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_removeContext">removeContext()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_removeIntegrationType">removeIntegrationType()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_removeOption">removeOption()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_serialize">serialize()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_setContextPermissions">setContextPermissions()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_setDefaultMemberPermissions">setDefaultMemberPermissions()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Builders-CommandAttributes.html#method_setDefaultPermission">setDefaultPermission()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_setDescription">setDescription()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_setDescriptionLocalization">setDescriptionLocalization()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_setDmPermission">setDmPermission()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_setGuildId">setGuildId()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_setHandler">setHandler()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_setName">setName()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_setNameLocalization">setNameLocalization()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-CommandAttributes.html#method_setNsfw">setNsfw()</a></li>
