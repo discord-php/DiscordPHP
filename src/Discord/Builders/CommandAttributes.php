@@ -17,6 +17,7 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
+use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\OAuth\Application;
 
 use function Discord\poly_strlen;
@@ -339,7 +340,7 @@ trait CommandAttributes
     }
 
     /**
-     * Removed an integration type from the command. (Only for globally-scoped commands)
+     * Removes an integration type from the command. (Only for globally-scoped commands)
      *
      * @param int $integration_type The integration type to remove.
      *

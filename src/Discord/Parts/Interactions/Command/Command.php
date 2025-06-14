@@ -45,6 +45,15 @@ class Command extends Part implements Stringable
     /** A UI-based command that shows up when you right click or tap on a message */
     public const MESSAGE = 3;
 
+    /** A UI-based command that represents the primary way to invoke an app's Activity */
+    public const PRIMARY_ENTRY_POINT = 4;
+
+    /** The app handles the interaction using an interaction token */
+    public const APP_HANDLER = 1;
+
+    /** Discord handles the interaction by launching an Activity and sending a follow-up message without coordinating with the app */
+    public const DISCORD_LAUNCH_ACTIVITY = 2;
+
     /**
      * {@inheritDoc}
      */
