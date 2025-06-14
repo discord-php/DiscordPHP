@@ -60,7 +60,7 @@ class Buffer extends AbstractBuffer implements \ArrayAccess
      * @param ?int $length
      * @return Buffer
      */
-    protected function insert(FormatPackEnum|string $format, $value, int $offset, ?int $length = null): self
+    protected function insert($format, $value, int $offset, ?int $length = null): self
     {
         $bytes = pack($format?->value ?? $format, $value);
 
