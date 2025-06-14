@@ -56,7 +56,7 @@ class VoicePacket
      *
      * @var string
      */
-    protected string $header;
+    protected $header;
 
     /**
      * The buffer containing the voice packet.
@@ -70,30 +70,30 @@ class VoicePacket
     /**
      * The client SSRC.
      *
-     * @var int The client SSRC.
+     * @var int|null The client SSRC.
      */
-    public ?int $ssrc;
+    public $ssrc;
 
     /**
      * The packet sequence.
      *
-     * @var int The packet sequence.
+     * @var int|null The packet sequence.
      */
-    public ?int $seq;
+    public $seq;
 
     /**
      * The packet timestamp.
      *
-     * @var int The packet timestamp.
+     * @var int|null The packet timestamp.
      */
-    public ?int $timestamp;
+    public $timestamp;
 
     /**
      * The version and flags.
      *
-     * @var string The version and flags.
+     * @var string|null The version and flags.
      */
-    public ?string $versionPlusFlags;
+    public $versionPlusFlags;
 
     /**
      * The payload type.
@@ -105,37 +105,37 @@ class VoicePacket
     /**
      * The encrypted audio.
      *
-     * @var string The encrypted audio.
+     * @var string|null The encrypted audio.
      */
-    public ?string $encryptedAudio;
+    public $encryptedAudio;
 
     /**
      * The dencrypted audio.
      *
-     * @var string
+     * @var string|false|null
      */
-    public null|string|false $decryptedAudio;
+    public $decryptedAudio;
 
     /**
      * The secret key.
      *
-     * @var string The secret key.
+     * @var string|null The secret key.
      */
-    public ?string $secretKey;
+    public $secretKey;
 
     /**
      * The raw data
      *
      * @var string
      */
-    private string $rawData;
+    private $rawData;
 
     /**
      * Current packet header size. May differ depending on the RTP header.
      *
      * @var int
      */
-    private int $headerSize;
+    private $headerSize;
 
     /**
      * Constructs the voice packet.
@@ -207,9 +207,9 @@ class VoicePacket
      *
      * @param string|null $message The message to decrypt.
      *
-     * @return false|null|string
+     * @return string|false|null
      */
-    public function decrypt(?string $message = null): false|null|string
+    public function decrypt(?string $message = null): string|false|null
     {
         if (! $message) {
             $message = $this?->rawData ?? null;
@@ -443,9 +443,9 @@ class VoicePacket
      * Retrieves the decrypted audio data.
      * Will return null if the audio data is not decrypted and false on error.
      *
-     * @return null|string|false
+     * @return string|false|null
      */
-    public function getAudioData(): null|string|false
+    public function getAudioData(): string|false|null
     {
         return $this?->decryptedAudio;
     }

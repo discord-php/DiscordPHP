@@ -70,56 +70,56 @@ class VoiceClient extends EventEmitter
      *
      * @var bool Whether the voice client is ready.
      */
-    protected bool $ready = false;
+    protected $ready = false;
 
     /**
      * The DCA binary name that we will use.
      *
-     * @var string The DCA binary name that will be run.
+     * @var string|null The DCA binary name that will be run.
      */
-    protected ?string $dca;
+    protected $dca;
 
     /**
      * The FFmpeg binary location.
      *
-     * @var string
+     * @var string|null The FFmpeg binary location.
      */
-    protected ?string $ffmpeg;
+    protected $ffmpeg;
 
     /**
      * The voice WebSocket instance.
      *
-     * @var WebSocket The voice WebSocket client.
+     * @var WebSocket|null The voice WebSocket client.
      */
-    protected ?WebSocket $voiceWebsocket;
+    protected $voiceWebsocket;
 
     /**
      * The UDP client.
      *
-     * @var Socket The voiceUDP client.
+     * @var Socket|null The voiceUDP client.
      */
-    public ?Socket $client;
+    public $client;
 
     /**
      * The Voice WebSocket endpoint.
      *
-     * @var string The endpoint the Voice WebSocket and UDP client will connect to.
+     * @var string|null The endpoint the Voice WebSocket and UDP client will connect to.
      */
-    protected ?string $endpoint;
+    protected $endpoint;
 
     /**
      * The port the UDP client will use.
      *
-     * @var int The port that the UDP client will connect to.
+     * @var int|null The port that the UDP client will connect to.
      */
-    protected ?int $udpPort;
+    protected $udpPort;
 
     /**
      * The UDP heartbeat interval.
      *
-     * @var int How often we send a heartbeat packet.
+     * @var int|null How often we send a heartbeat packet.
      */
-    protected ?int $heartbeatInterval;
+    protected $heartbeatInterval;
 
     /**
      * The Voice WebSocket heartbeat timer.
@@ -140,28 +140,28 @@ class VoiceClient extends EventEmitter
      *
      * @var int The heartbeat sequence.
      */
-    protected int $heartbeatSeq = 0;
+    protected $heartbeatSeq = 0;
 
     /**
      * The SSRC value.
      *
-     * @var int The SSRC value used for RTP.
+     * @var int|null The SSRC value used for RTP.
      */
-    public ?int $ssrc;
+    public $ssrc;
 
     /**
      * The sequence of audio packets being sent.
      *
      * @var int The sequence of audio packets.
      */
-    protected int $seq = 0;
+    protected $seq = 0;
 
     /**
      * The timestamp of the last packet.
      *
      * @var int The timestamp the last packet was constructed.
      */
-    protected int $timestamp = 0;
+    protected $timestamp = 0;
 
     /**
      * The Voice WebSocket mode.
@@ -169,63 +169,63 @@ class VoiceClient extends EventEmitter
      * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes
      * @var string The voice mode.
      */
-    protected string $mode = 'aead_aes256_gcm_rtpsize';
+    protected $mode = 'aead_aes256_gcm_rtpsize';
 
     /**
      * The secret key used for encrypting voice.
      *
-     * @var string The secret key.
+     * @var string|null The secret key.
      */
-    protected ?string $secretKey;
+    protected $secretKey;
 
     /**
-     * The raw secret key
+     * The raw secret key.
      *
-     * @var array
+     * @var array|null The raw secret key.
      */
-    protected ?array $rawKey;
+    protected $rawKey;
 
     /**
      * Are we currently set as speaking?
      *
      * @var bool Whether we are speaking or not.
      */
-    protected bool $speaking = false;
+    protected $speaking = false;
 
     /**
      * Whether the voice client is currently paused.
      *
      * @var bool Whether the voice client is currently paused.
      */
-    protected bool $paused = false;
+    protected $paused = false;
 
     /**
      * Have we sent the login frame yet?
      *
      * @var bool Whether we have sent the login frame.
      */
-    protected bool $sentLoginFrame = false;
+    protected $sentLoginFrame = false;
 
     /**
      * The time we started sending packets.
      *
-     * @var float The time we started sending packets.
+     * @var float|int|null The time we started sending packets.
      */
-    protected float|int|null $startTime;
+    protected $startTime;
 
     /**
      * The stream time of the last packet.
      *
      * @var int The time we sent the last packet.
      */
-    protected int $streamTime = 0;
+    protected $streamTime = 0;
 
     /**
      * The size of audio frames, in milliseconds.
      *
      * @var int The size of audio frames.
      */
-    protected int $frameSize = 20;
+    protected $frameSize = 20;
 
     /**
      * Collection of the status of people speaking.
@@ -246,23 +246,23 @@ class VoiceClient extends EventEmitter
      *
      * @deprecated 10.5.0 Use receiveStreams instead.
      *
-     * @var array<ReceiveStream> Voice audio recieve streams.
+     * @var array<ReceiveStream>|null Voice audio recieve streams.
      */
-    protected ?array $recieveStreams;
+    protected $recieveStreams;
 
     /**
      * Voice audio recieve streams.
      *
-     * @var array<ReceiveStream> Voice audio recieve streams.
+     * @var array<ReceiveStream>|null Voice audio recieve streams.
      */
-    protected ?array $receiveStreams;
+    protected $receiveStreams;
 
     /**
      * The volume the audio will be encoded with.
      *
      * @var int The volume that the audio will be encoded in.
      */
-    protected int $volume = 100;
+    protected $volume = 100;
 
     /**
      * The audio application to encode with.
@@ -271,28 +271,28 @@ class VoiceClient extends EventEmitter
      *
      * @var string The audio application.
      */
-    protected string $audioApplication = 'audio';
+    protected $audioApplication = 'audio';
 
     /**
      * The bitrate to encode with.
      *
      * @var int Encoding bitrate.
      */
-    protected int $bitrate = 128000;
+    protected $bitrate = 128000;
 
     /**
      * Is the voice client reconnecting?
      *
      * @var bool Whether the voice client is reconnecting.
      */
-    protected bool $reconnecting = false;
+    protected $reconnecting = false;
 
     /**
      * Is the voice client being closed by user?
      *
      * @var bool Whether the voice client is being closed by user.
      */
-    protected bool $userClose = false;
+    protected $userClose = false;
 
     /**
      * The Discord voice gateway version.
@@ -301,21 +301,21 @@ class VoiceClient extends EventEmitter
      *
      * @var int Voice version.
      */
-    protected int $version = 8;
+    protected $version = 8;
 
     /**
      * The Config for DNS Resolver.
      *
-     * @var string|\React\Dns\Config\Config
+     * @var \React\Dns\Config\Config|string|null
      */
-    protected Config|string|null $dnsConfig;
+    protected $dnsConfig;
 
     /**
      * Silence Frame Remain Count.
      *
      * @var int Amount of silence frames remaining.
      */
-    protected int $silenceRemaining = 5;
+    protected $silenceRemaining = 5;
 
     /**
      * readopus Timer.
@@ -327,18 +327,23 @@ class VoiceClient extends EventEmitter
     /**
      * Audio Buffer.
      *
-     * @var RealBuffer The Audio Buffer
+     * @var RealBuffer|null The Audio Buffer
      */
-    protected ?RealBuffer $buffer;
+    protected $buffer;
 
     /**
      * Current clients connected to the voice chat
      *
      * @var array
      */
-    public array $clientsConnected = [];
+    public $clientsConnected = [];
 
-    public array $tempFiles;
+    /**
+     * Temporary files.
+     *
+     * @var array|null
+     */
+    public $tempFiles;
 
     /**
      * Constructs the Voice client instance
