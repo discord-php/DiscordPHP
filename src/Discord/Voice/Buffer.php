@@ -116,7 +116,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @throws \InvalidArgumentException
      * @return static
      */
-    protected function checkForOverSize($excpectedMax, $actual)
+    protected function checkForOverSize($excpectedMax, $actual): self
     {
         if ($actual > $excpectedMax) {
             throw new \InvalidArgumentException(sprintf('%d exceeded limit of %d', $actual, $excpectedMax));
@@ -148,7 +148,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int|null $offset The offset that the value will be written at.
      * @return static
      */
-    public function write($value, $offset = null)
+    public function write($value, $offset = null): self
     {
         if (null === $offset) {
             $offset = $this->getLastEmptyPosition();
@@ -167,7 +167,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int|null $offset The offset that the value will be written at.
      * @return static
      */
-    public function writeInt8($value, $offset = null)
+    public function writeInt8($value, $offset = null): self
     {
         if (null === $offset) {
             $offset = $this->getLastEmptyPosition();
@@ -187,7 +187,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int|null $offset The offset that the value will be written at.
      * @return static
      */
-    public function writeInt16BE($value, $offset = null)
+    public function writeInt16BE($value, $offset = null): self
     {
         if (null === $offset) {
             $offset = $this->getLastEmptyPosition();
@@ -207,7 +207,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int|null $offset The offset that the value will be written at.
      * @return static
      */
-    public function writeInt16LE($value, $offset = null)
+    public function writeInt16LE($value, $offset = null): self
     {
         if (null === $offset) {
             $offset = $this->getLastEmptyPosition();
@@ -227,7 +227,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int|null $offset The offset that the value will be written at.
      * @return static
      */
-    public function writeInt32BE($value, $offset = null)
+    public function writeInt32BE($value, $offset = null): self
     {
         if (null === $offset) {
             $offset = $this->getLastEmptyPosition();
@@ -247,7 +247,8 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int|null $offset The offset that the value will be written at.
      * @return static
      */
-    public function writeInt32LE($value, $offset = null)
+    #[\Override]
+    public function writeInt32LE($value, $offset = null): self
     {
         if (null === $offset) {
             $offset = $this->getLastEmptyPosition();
