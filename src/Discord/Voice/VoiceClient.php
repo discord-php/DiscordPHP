@@ -1406,18 +1406,6 @@ class VoiceClient extends EventEmitter
      */
     public function handleVoiceStateUpdate(object $data): void
     {
-        $removeDecoder = function ($ss) {
-            $decoder = $this->voiceDecoders[$ss->ssrc] ?? null;
-
-            if (null === $decoder) {
-                return; // no voice decoder to remove
-            }
-
-            $decoder->close();
-            unset($this->voiceDecoders[$ss->ssrc]);
-            unset($this->speakingStatus[$ss->ssrc]);
-        };
-
         $ss = $this->speakingStatus->get('user_id', $data->user_id);
 
         if (null === $ss) {
@@ -1428,7 +1416,20 @@ class VoiceClient extends EventEmitter
             return; // ignore, just a mute/deaf change
         }
 
-        $removeDecoder($ss);
+        $this->removeDecoder($ss);
+    }
+
+    protected function removeDecoder($ss)
+    {
+        $decoder = $this->voiceDecoders[$ss->ssrc] ?? null;
+
+        if (null === $decoder) {
+            return; // no voice decoder to remove
+        }
+
+        $decoder->close();
+        unset($this->voiceDecoders[$ss->ssrc]);
+        unset($this->speakingStatus[$ss->ssrc]);
     }
 
     /**
