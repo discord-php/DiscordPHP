@@ -1436,7 +1436,15 @@ class VoiceClient extends EventEmitter
         $this->removeDecoder($ss);
     }
 
-    protected function removeDecoder($ss)
+    /**
+     * Removes and closes the voice decoder associated with the given SSRC.
+     *
+     * @param object $ss An object containing the SSRC (Synchronization Source identifier).
+     *                   Expected to have a property 'ssrc'.
+     *
+     * @return void
+     */
+    protected function removeDecoder($ss): void
     {
         $decoder = $this->voiceDecoders[$ss->ssrc] ?? null;
 
