@@ -982,43 +982,6 @@ class VoiceClient extends EventEmitter
             $this->buffer->write($d);
         });
 
-        $readOpus = function () use ($deferred, &$readOpus) {
-            $this->readOpusTimer = null;
-
-            // If the client is paused, delay by frame size and check again.
-            if ($this->paused) {
-                $this->insertSilence();
-                $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
-
-                return;
-            }
-
-            // Read opus length
-            $this->buffer->readInt16(1000)->then(function ($opusLength) {
-                // Read opus data
-                return $this->buffer->read($opusLength, null, 1000);
-            })->then(function ($opus) use (&$readOpus) {
-                $this->sendBuffer($opus);
-
-                // increment sequence
-                // uint16 overflow protection
-                if (++$this->seq >= 2 ** 16) {
-                    $this->seq = 0;
-                }
-
-                // increment timestamp
-                // uint32 overflow protection
-                if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
-                    $this->timestamp = 0;
-                }
-
-                $this->readOpusTimer = $this->loop->addTimer(($this->frameSize - 1) / 1000, $readOpus);
-            }, function () use ($deferred) {
-                $this->reset();
-                $deferred->resolve(null);
-            });
-        };
-
         $this->setSpeaking(true);
 
         // Read magic byte header
@@ -1032,7 +995,7 @@ class VoiceClient extends EventEmitter
         })->then(function ($jsonLength) {
             // Read JSON content
             return $this->buffer->read($jsonLength);
-        })->then(function ($metadata) use ($readOpus) {
+        })->then(function ($metadata) use ($deferred) {
             $metadata = json_decode($metadata, true);
 
             if (null !== $metadata) {
@@ -1040,10 +1003,48 @@ class VoiceClient extends EventEmitter
             }
 
             $this->startTime = microtime(true) + 0.5;
-            $this->readOpusTimer = $this->loop->addTimer(0.5, $readOpus);
+            $this->readOpusTimer = $this->loop->addTimer(0.5, fn () => $this->readDCAOpus($deferred));
         });
 
         return $deferred->promise();
+    }
+
+    protected function readDCAOpus(Deferred $deferred)
+    {
+        $this->readOpusTimer = null;
+
+        // If the client is paused, delay by frame size and check again.
+        if ($this->paused) {
+            $this->insertSilence();
+            $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, fn () => $this->readDCAOpus($deferred));
+
+            return;
+        }
+
+        // Read opus length
+        $this->buffer->readInt16(1000)->then(function ($opusLength) {
+            // Read opus data
+            return $this->buffer->read($opusLength, null, 1000);
+        })->then(function ($opus) use ($deferred) {
+            $this->sendBuffer($opus);
+
+            // increment sequence
+            // uint16 overflow protection
+            if (++$this->seq >= 2 ** 16) {
+                $this->seq = 0;
+            }
+
+            // increment timestamp
+            // uint32 overflow protection
+            if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
+                $this->timestamp = 0;
+            }
+
+            $this->readOpusTimer = $this->loop->addTimer(($this->frameSize - 1) / 1000, fn () => $this->readDCAOpus($deferred));
+        }, function () use ($deferred) {
+            $this->reset();
+            $deferred->resolve(null);
+        });
     }
 
     /**
