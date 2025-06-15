@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Voice;
 
+use Discord\Discord;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\LibSodiumNotFoundException;
@@ -362,6 +363,7 @@ class VoiceClient extends EventEmitter
      * @param bool $mute Default: false
      */
     public function __construct(
+        protected Discord $discord,
         protected WebSocket $mainWebsocket,
         protected LoopInterface $loop,
         protected Channel $channel,
