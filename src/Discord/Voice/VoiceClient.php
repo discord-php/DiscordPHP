@@ -1554,7 +1554,12 @@ class VoiceClient extends EventEmitter
         fclose($stdinHandle);
     }
 
-    protected function createDecoder($ss)
+    /**
+     * Creates and initializes a decoder process for the given stream session.
+     *
+     * @param object $ss The stream session object containing information such as SSRC and user ID.
+     */
+    protected function createDecoder($ss): void
     {
         $decoder = $this->ffmpegDecode();
         $decoder->start($this->loop);
