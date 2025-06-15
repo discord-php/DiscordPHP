@@ -3358,7 +3358,7 @@ which can be edited later through the `updateOriginalResponse` function.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">623</span>
+    <span class="phpdocumentor-element-found-in__line">632</span>
 
     </aside>
 
@@ -3433,7 +3433,7 @@ which can be edited later through the `updateOriginalResponse` function.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">603</span>
+    <span class="phpdocumentor-element-found-in__line">612</span>
 
     </aside>
 
@@ -3767,7 +3767,7 @@ which can be edited later through the `updateOriginalResponse` function.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">578</span>
+    <span class="phpdocumentor-element-found-in__line">587</span>
 
     </aside>
 
@@ -4500,7 +4500,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">472</span>
+    <span class="phpdocumentor-element-found-in__line">481</span>
 
     </aside>
 
@@ -4584,7 +4584,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">435</span>
+    <span class="phpdocumentor-element-found-in__line">444</span>
 
     </aside>
 
@@ -4597,7 +4597,15 @@ JSON. Used for JsonSerializable.</p>
     <div class="phpdocumentor-label-line">
         </div>
     
-    
+        <section class="phpdocumentor-description"><p>Apps are limited to 5 followup messages per interaction if it was initiated from a user-installed app and isn't installed in the server (meaning the authorizing integration owners object only contains USER_INSTALL)</p>
+<p>When using this endpoint directly after responding to an interaction with <code class="prettyprint">acknowledgeWithResponse()</code>,
+this endpoint will function as Edit Original Interaction Response for backwards compatibility.
+In this case, no new message will be created, and the loading message will be edited instead.
+The ephemeral flag will be ignored, and the value you provided in the initial defer response will be preserved,
+as an existing message's ephemeral state cannot be changed.
+This behavior is deprecated, and you should use the Edit Original Interaction Response endpoint in this case instead.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -4614,7 +4622,7 @@ JSON. Used for JsonSerializable.</p>
                 : <span class="phpdocumentor-signature__argument__return-type">bool</span>
                  = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Whether the created follow-up should be ephemeral. Will be ignored if the respond is previously ephemeral.</p>
+                    <section class="phpdocumentor-description"><p>Whether the created follow-up should be ephemeral</p>
 </section>
 
             </dd>
@@ -4711,7 +4719,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">650</span>
+    <span class="phpdocumentor-element-found-in__line">659</span>
 
     </aside>
 
@@ -4887,7 +4895,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">546</span>
+    <span class="phpdocumentor-element-found-in__line">555</span>
 
     </aside>
 
@@ -5439,7 +5447,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">697</span>
+    <span class="phpdocumentor-element-found-in__line">706</span>
 
     </aside>
 
@@ -5543,7 +5551,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">511</span>
+    <span class="phpdocumentor-element-found-in__line">520</span>
 
     </aside>
 
