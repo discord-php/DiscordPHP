@@ -871,61 +871,62 @@ class VoiceClient extends EventEmitter
 
         $loops = 0;
 
-        $readOpus = function () use ($deferred, &$ogg, &$readOpus, &$loops) {
-            $this->readOpusTimer = null;
+        $this->setSpeaking(true);
 
-            $loops += 1;
+        OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($deferred, &$ogg, &$loops) {
+            $ogg = $os;
+            $this->startTime = microtime(true) + 0.5;
+            $this->readOpusTimer = $this->loop->addTimer(0.5, fn () => $this->readOggOpus($deferred, $ogg, $loops));
+        });
 
-            // If the client is paused, delay by frame size and check again.
-            if ($this->paused) {
-                $this->insertSilence();
-                $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
+        return $deferred->promise();
+    }
+
+    protected function readOggOpus(Deferred $deferred, OggStream &$ogg, int &$loops)
+    {
+        $this->readOpusTimer = null;
+
+        $loops += 1;
+
+        // If the client is paused, delay by frame size and check again.
+        if ($this->paused) {
+            $this->insertSilence();
+            $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, fn () => $this->readOggOpus($deferred, $ogg, $loops));
+
+            return;
+        }
+
+        $ogg->getPacket()->then(function ($packet) use (&$loops, $deferred) {
+            // EOF for Ogg stream.
+            if (null === $packet) {
+                $this->reset();
+                $deferred->resolve(null);
 
                 return;
             }
 
-            $ogg->getPacket()->then(function ($packet) use (&$readOpus, &$loops, $deferred) {
-                // EOF for Ogg stream.
-                if (null === $packet) {
-                    $this->reset();
-                    $deferred->resolve(null);
+            // increment sequence
+            // uint16 overflow protection
+            if (++$this->seq >= 2 ** 16) {
+                $this->seq = 0;
+            }
 
-                    return;
-                }
+            $this->sendBuffer($packet);
 
-                // increment sequence
-                // uint16 overflow protection
-                if (++$this->seq >= 2 ** 16) {
-                    $this->seq = 0;
-                }
+            // increment timestamp
+            // uint32 overflow protection
+            if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
+                $this->timestamp = 0;
+            }
 
-                $this->sendBuffer($packet);
+            $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
+            $delay = $nextTime - microtime(true);
 
-                // increment timestamp
-                // uint32 overflow protection
-                if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
-                    $this->timestamp = 0;
-                }
-
-                $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
-                $delay = $nextTime - microtime(true);
-
-                $this->readOpusTimer = $this->loop->addTimer($delay, $readOpus);
-            }, function ($e) use ($deferred) {
-                $this->reset();
-                $deferred->resolve(null);
-            });
-        };
-
-        $this->setSpeaking(true);
-
-        OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($readOpus, &$ogg) {
-            $ogg = $os;
-            $this->startTime = microtime(true) + 0.5;
-            $this->readOpusTimer = $this->loop->addTimer(0.5, $readOpus);
+            $this->readOpusTimer = $this->loop->addTimer($delay, fn () => $this->readOggOpus($deferred, $ogg, $loops));
+        }, function ($e) use ($deferred) {
+            $this->reset();
+            $deferred->resolve(null);
         });
-
-        return $deferred->promise();
     }
 
     /**
