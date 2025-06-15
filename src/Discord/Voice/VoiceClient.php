@@ -548,42 +548,7 @@ class VoiceClient extends EventEmitter
 
                         $client->on('error', fn ($e) => $this->emit('udp-error', [$e]));
 
-                        $decodeUDP = function ($message) use (&$ip, &$port): void {
-                            /**
-                             * Unpacks the message into an array.
-                             *
-                             * C2 (unsigned char)   | Type      | 2 bytes   | Values 0x1 and 0x2 indicate request and response, respectively
-                             * n (unsigned short)   | Length    | 2 bytes   | Length of the following data
-                             * I (unsigned int)     | SSRC      | 4 bytes   | The SSRC of the sender
-                             * A64 (string)         | Address   | 64 bytes  | The IP address of the sender
-                             * n (unsigned short)   | Port      | 2 bytes   | The port of the sender
-                             *
-                             * @see https://discord.com/developers/docs/topics/voice-connections#ip-discovery
-                             * @see https://www.php.net/manual/en/function.unpack.php
-                             * @see https://www.php.net/manual/en/function.pack.php For the formats
-                             */
-                            $unpackedMessageArray = \unpack("C2Type/nLength/ISSRC/A64Address/nPort", $message);
-
-                            $this->ssrc = $unpackedMessageArray['SSRC'];
-                            $ip = $unpackedMessageArray['Address'];
-                            $port = $unpackedMessageArray['Port'];
-
-                            $this->logger->debug('received our IP and port', ['ip' => $ip, 'port' => $port]);
-
-                            $this->send([
-                                'op' => Op::VOICE_SELECT_PROTO,
-                                'd' => [
-                                    'protocol' => 'udp',
-                                    'data' => [
-                                        'address' => $ip,
-                                        'port' => $port,
-                                        'mode' => $this->mode,
-                                    ],
-                                ],
-                            ]);
-                        };
-
-                        $client->once('message', $decodeUDP);
+                        $client->once('message', fn ($message) => $this->decodeUDP($message, $ip, $port));
                     }, function (\Throwable $e): void {
                         $this->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
                         $this->emit('error', [$e]);
@@ -619,6 +584,42 @@ class VoiceClient extends EventEmitter
             $this->send($payload);
             $this->sentLoginFrame = true;
         }
+    }
+
+    protected function decodeUDP($message, string &$ip, string &$port): void
+    {
+        /**
+         * Unpacks the message into an array.
+         *
+         * C2 (unsigned char)   | Type      | 2 bytes   | Values 0x1 and 0x2 indicate request and response, respectively
+         * n (unsigned short)   | Length    | 2 bytes   | Length of the following data
+         * I (unsigned int)     | SSRC      | 4 bytes   | The SSRC of the sender
+         * A64 (string)         | Address   | 64 bytes  | The IP address of the sender
+         * n (unsigned short)   | Port      | 2 bytes   | The port of the sender
+         *
+         * @see https://discord.com/developers/docs/topics/voice-connections#ip-discovery
+         * @see https://www.php.net/manual/en/function.unpack.php
+         * @see https://www.php.net/manual/en/function.pack.php For the formats
+         */
+        $unpackedMessageArray = \unpack("C2Type/nLength/ISSRC/A64Address/nPort", $message);
+
+        $this->ssrc = $unpackedMessageArray['SSRC'];
+        $ip = $unpackedMessageArray['Address'];
+        $port = $unpackedMessageArray['Port'];
+
+        $this->logger->debug('received our IP and port', ['ip' => $ip, 'port' => $port]);
+
+        $this->send([
+            'op' => Op::VOICE_SELECT_PROTO,
+            'd' => [
+                'protocol' => 'udp',
+                'data' => [
+                    'address' => $ip,
+                    'port' => $port,
+                    'mode' => $this->mode,
+                ],
+            ],
+        ]);
     }
 
     protected function sendHeartbeat(): void
