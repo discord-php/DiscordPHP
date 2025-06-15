@@ -9,7 +9,6 @@ use Discord\Parts\Channel\Channel;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Op;
-use Discord\WebSockets\Payload;
 use Discord\WebSockets\VoicePayload;
 use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
@@ -90,7 +89,7 @@ final class Voice
         return $this->clients[$guildId];
     }
 
-    private function stateUpdate($state, $channel): void
+    protected function stateUpdate($state, $channel): void
     {
         if ($state->guild_id != $channel->guild_id) {
             return; // This voice state update isn't for our guild.
@@ -100,7 +99,7 @@ final class Voice
         $this->logger->info('received session id for voice session', ['guild' => $channel->guild_id, 'session_id' => $state->session_id]);
     }
 
-    private function serverUpdate($state, Channel $channel, $discord, Deferred $deferred): void
+    protected function serverUpdate($state, Channel $channel, $discord, Deferred $deferred): void
     {
         if ($state->guild_id !== $channel->guild_id) {
             return; // This voice server update isn't for our guild.
@@ -141,7 +140,7 @@ final class Voice
             ->start();
     }
 
-    private function sendStateUpdate(Channel $channel, bool $mute = false, bool $deaf = true): void
+    protected function sendStateUpdate(Channel $channel, bool $mute = false, bool $deaf = true): void
     {
         $this->botWs->send(json_encode([
             'op' => Op::OP_VOICE_STATE_UPDATE,

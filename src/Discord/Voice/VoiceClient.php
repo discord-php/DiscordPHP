@@ -347,6 +347,9 @@ class VoiceClient extends EventEmitter
      */
     public $tempFiles;
 
+    /** @var TimerInterface */
+    public $monitorProcessTimer;
+
     /**
      * Constructs the Voice client instance
      *
@@ -1045,7 +1048,7 @@ class VoiceClient extends EventEmitter
     /**
      * Resets the voice client.
      */
-    private function reset(): void
+    protected function reset(): void
     {
         if ($this->readOpusTimer) {
             $this->loop->cancelTimer($this->readOpusTimer);
@@ -1065,7 +1068,7 @@ class VoiceClient extends EventEmitter
      * @param string $data The data to send to the UDP server.
      * @todo Fix after new change in VoicePacket
      */
-    private function sendBuffer(string $data): void
+    protected function sendBuffer(string $data): void
     {
         if (! $this->ready) {
             return;
@@ -1204,7 +1207,7 @@ class VoiceClient extends EventEmitter
      *
      * @param Payload|array $data The data to send to the voice WebSocket.
      */
-    private function send($data): void
+    protected function send($data): void
     {
         $json = json_encode($data);
         $this->voiceWebsocket->send($json);
@@ -1215,7 +1218,7 @@ class VoiceClient extends EventEmitter
      *
      * @param Payload $data The data to send to the main WebSocket.
      */
-    private function mainSend($data): void
+    protected function mainSend($data): void
     {
         $json = json_encode($data);
         $this->mainWebsocket->send($json);
@@ -1509,37 +1512,7 @@ class VoiceClient extends EventEmitter
                 });
             }
 
-            $createDecoder = function () use (&$createDecoder, $ss) {
-                $decoder = $this->ffmpegDecode();
-                $decoder->start($this->loop);
-
-                // Handle stdout
-                $stdoutHandle = fopen($this->tempFiles['stdout'], 'r');
-                $this->loop->addPeriodicTimer(0.1, function () use ($stdoutHandle, $ss) {
-                    $data = fread($stdoutHandle, 8192);
-                    if ($data) {
-                        $this->receiveStreams[$ss->ssrc]->writePCM($data);
-                    }
-                });
-
-                // Handle stderr
-                $stderrHandle = fopen($this->tempFiles['stderr'], 'r');
-                $this->loop->addPeriodicTimer(0.1, function () use ($stderrHandle, $ss) {
-                    $data = fread($stderrHandle, 8192);
-                    if ($data) {
-                        $this->emit("voice.{$ss->ssrc}.stderr", [$data, $this]);
-                        $this->emit("voice.{$ss->user_id}.stderr", [$data, $this]);
-                    }
-                });
-
-                // Store the decoder
-                $this->voiceDecoders[$ss->ssrc] = $decoder;
-
-                // Monitor the process for exit
-                $this->monitorProcessExit($decoder, $ss, $createDecoder);
-            };
-
-            $createDecoder();
+            $this->createDecoder($ss);
             $decoder = $this->voiceDecoders[$voicePacket->getSSRC()] ?? null;
         }
 
@@ -1555,6 +1528,37 @@ class VoiceClient extends EventEmitter
         fclose($stdinHandle);
     }
 
+    protected function createDecoder($ss)
+    {
+        $decoder = $this->ffmpegDecode();
+        $decoder->start($this->loop);
+
+        // Handle stdout
+        $stdoutHandle = fopen($this->tempFiles['stdout'], 'r');
+        $this->loop->addPeriodicTimer(0.1, function () use ($stdoutHandle, $ss) {
+            $data = fread($stdoutHandle, 8192);
+            if ($data) {
+                $this->receiveStreams[$ss->ssrc]->writePCM($data);
+            }
+        });
+
+        // Handle stderr
+        $stderrHandle = fopen($this->tempFiles['stderr'], 'r');
+        $this->loop->addPeriodicTimer(0.1, function () use ($stderrHandle, $ss) {
+            $data = fread($stderrHandle, 8192);
+            if ($data) {
+                $this->emit("voice.{$ss->ssrc}.stderr", [$data, $this]);
+                $this->emit("voice.{$ss->user_id}.stderr", [$data, $this]);
+            }
+        });
+
+        // Store the decoder
+        $this->voiceDecoders[$ss->ssrc] = $decoder;
+
+        // Monitor the process for exit
+        $this->monitorProcessExit($decoder, $ss);
+    }
+
     /**
      * Monitor a process for exit and trigger callbacks when it exits
      *
@@ -1562,25 +1566,25 @@ class VoiceClient extends EventEmitter
      * @param object $ss The speaking status object
      * @param callable $createDecoder Function to create a new decoder if needed
      */
-    private function monitorProcessExit(Process $process, $ss, callable $createDecoder): void
+    protected function monitorProcessExit(Process $process, $ss): void
     {
         // Store the process ID
         // $pid = $process->getPid();
 
         // Check every second if the process is still running
-        $timer = $this->loop->addPeriodicTimer(1.0, function () use ($process, $ss, &$createDecoder, &$timer) {
+        $this->monitorProcessTimer = $this->loop->addPeriodicTimer(1.0, function () use ($process, $ss) {
             // Check if the process is still running
             if (!$process->isRunning()) {
                 // Get the exit code
                 $exitCode = $process->getExitCode();
 
                 // Clean up the timer
-                $this->loop->cancelTimer($timer);
+                $this->loop->cancelTimer($this->monitorProcessTimer);
 
                 // If exit code indicates an error, emit event and recreate decoder
                 if ($exitCode > 0) {
                     $this->emit('decoder-error', [$exitCode, null, $ss]);
-                    $createDecoder();
+                    $this->createDecoder($ss);
                 }
 
                 // Clean up temporary files
@@ -1589,7 +1593,7 @@ class VoiceClient extends EventEmitter
         });
     }
 
-    private function cleanupTempFiles(): void
+    protected function cleanupTempFiles(): void
     {
         if (isset($this->tempFiles)) {
             foreach ($this->tempFiles as $file) {
@@ -1600,7 +1604,7 @@ class VoiceClient extends EventEmitter
         }
     }
 
-    private function handleDavePrepareTransition($data)
+    protected function handleDavePrepareTransition($data)
     {
         $this->logger->debug('DAVE Prepare Transition', ['data' => $data]);
         // Prepare local state necessary to perform the transition
@@ -1612,20 +1616,20 @@ class VoiceClient extends EventEmitter
         ));
     }
 
-    private function handleDaveExecuteTransition($data)
+    protected function handleDaveExecuteTransition($data)
     {
         $this->logger->debug('DAVE Execute Transition', ['data' => $data]);
         // Execute the transition
         // Update local state to reflect the new protocol context
     }
 
-    private function handleDaveTransitionReady($data)
+    protected function handleDaveTransitionReady($data)
     {
         $this->logger->debug('DAVE Transition Ready', ['data' => $data]);
         // Handle transition ready state
     }
 
-    private function handleDavePrepareEpoch($data)
+    protected function handleDavePrepareEpoch($data)
     {
         $this->logger->debug('DAVE Prepare Epoch', ['data' => $data]);
         // Prepare local MLS group with parameters appropriate for the DAVE protocol version
@@ -1638,19 +1642,19 @@ class VoiceClient extends EventEmitter
         ));
     }
 
-    private function handleDaveMlsExternalSender($data)
+    protected function handleDaveMlsExternalSender($data)
     {
         $this->logger->debug('DAVE MLS External Sender', ['data' => $data]);
         // Handle external sender public key and credential
     }
 
-    private function handleDaveMlsKeyPackage($data)
+    protected function handleDaveMlsKeyPackage($data)
     {
         $this->logger->debug('DAVE MLS Key Package', ['data' => $data]);
         // Handle MLS key package
     }
 
-    private function handleDaveMlsProposals($data)
+    protected function handleDaveMlsProposals($data)
     {
         $this->logger->debug('DAVE MLS Proposals', ['data' => $data]);
         // Handle MLS proposals
@@ -1663,25 +1667,25 @@ class VoiceClient extends EventEmitter
         ));
     }
 
-    private function handleDaveMlsCommitWelcome($data)
+    protected function handleDaveMlsCommitWelcome($data)
     {
         $this->logger->debug('DAVE MLS Commit Welcome', ['data' => $data]);
         // Handle MLS commit and welcome messages
     }
 
-    private function handleDaveMlsAnnounceCommitTransition($data)
+    protected function handleDaveMlsAnnounceCommitTransition($data)
     {
         // Handle MLS announce commit transition
         $this->logger->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
     }
 
-    private function handleDaveMlsWelcome($data)
+    protected function handleDaveMlsWelcome($data)
     {
         // Handle MLS welcome message
         $this->logger->debug('DAVE MLS Welcome', ['data' => $data]);
     }
 
-    private function handleDaveMlsInvalidCommitWelcome($data)
+    protected function handleDaveMlsInvalidCommitWelcome($data)
     {
         $this->logger->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
         // Handle invalid commit or welcome message
@@ -1694,17 +1698,17 @@ class VoiceClient extends EventEmitter
         ));
     }
 
-    private function generateKeyPackage()
+    protected function generateKeyPackage()
     {
         // Generate and return a new MLS key package
     }
 
-    private function generateCommit()
+    protected function generateCommit()
     {
         // Generate and return an MLS commit message
     }
 
-    private function generateWelcome()
+    protected function generateWelcome()
     {
         // Generate and return an MLS welcome message
     }
@@ -1724,7 +1728,7 @@ class VoiceClient extends EventEmitter
      *
      * @return bool Whether FFmpeg is installed or not.
      */
-    private function checkForFFmpeg(): bool
+    protected function checkForFFmpeg(): bool
     {
         $binaries = [
             'ffmpeg',
@@ -1750,7 +1754,7 @@ class VoiceClient extends EventEmitter
      *
      * @return bool
      */
-    private function checkForLibsodium(): bool
+    protected function checkForLibsodium(): bool
     {
         if (! function_exists('sodium_crypto_secretbox')) {
             $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
@@ -1767,7 +1771,7 @@ class VoiceClient extends EventEmitter
      * @param  string      $executable
      * @return string|null
      */
-    private static function checkForExecutable(string $executable): ?string
+    protected static function checkForExecutable(string $executable): ?string
     {
         $which = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'where' : 'command -v';
         $executable = rtrim((string) explode(PHP_EOL, shell_exec("{$which} {$executable}"))[0]);

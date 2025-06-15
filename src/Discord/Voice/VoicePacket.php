@@ -129,14 +129,14 @@ class VoicePacket
      *
      * @var string
      */
-    private $rawData;
+    protected $rawData;
 
     /**
      * Current packet header size. May differ depending on the RTP header.
      *
      * @var int
      */
-    private $headerSize;
+    protected $headerSize;
 
     /**
      * Constructs the voice packet.
@@ -148,7 +148,7 @@ class VoicePacket
      * @param bool        $encryption Whether the packet should be encrypted.
      * @param string|null $key        The encryption key.
      */
-    public function __construct(?string $data = null, ?int $ssrc = null, ?int $seq = null, ?int $timestamp = null, bool $encryption = false, private ?string $key = null, private ?Logger $log = null)
+    public function __construct(?string $data = null, ?int $ssrc = null, ?int $seq = null, ?int $timestamp = null, bool $encryption = false, protected ?string $key = null, protected ?Logger $log = null)
     {
         $this->unpack($data)
             ->decrypt();
