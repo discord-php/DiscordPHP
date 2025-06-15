@@ -882,7 +882,14 @@ class VoiceClient extends EventEmitter
         return $deferred->promise();
     }
 
-    protected function readOggOpus(Deferred $deferred, OggStream &$ogg, int &$loops)
+    /**
+     * Reads Ogg Opus packets and sends them to the voice server.
+     *
+     * @param Deferred $deferred The deferred promise.
+     * @param OggStream $ogg The Ogg stream to read packets from.
+     * @param int &$loops The number of loops that have been executed.
+     */
+    protected function readOggOpus(Deferred $deferred, OggStream &$ogg, int &$loops): void
     {
         $this->readOpusTimer = null;
 
@@ -1010,7 +1017,14 @@ class VoiceClient extends EventEmitter
         return $deferred->promise();
     }
 
-    protected function readDCAOpus(Deferred $deferred)
+    /**
+     * Reads and processes a single Opus audio frame from a DCA (Discord Compressed Audio) stream.
+     *
+     * @param Deferred $deferred A promise that will be resolved when the reading process completes or fails.
+     *
+     * @return void
+     */
+    protected function readDCAOpus(Deferred $deferred): void
     {
         $this->readOpusTimer = null;
 
