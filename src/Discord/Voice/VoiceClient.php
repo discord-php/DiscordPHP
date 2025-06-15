@@ -465,21 +465,8 @@ class VoiceClient extends EventEmitter
                     break;
                 case Op::VOICE_HELLO:
                     $this->heartbeatInterval = $data->d->heartbeat_interval;
-
-                    $sendHeartbeat = function () {
-                        $this->send(VoicePayload::new(
-                            Op::VOICE_HEARTBEAT,
-                            [
-                                't' => (int) microtime(true),
-                                'seq_ack' => 10,
-                            ]
-                        ));
-                        $this->logger->debug('sending heartbeat');
-                        $this->emit('ws-heartbeat', []);
-                    };
-
-                    $sendHeartbeat();
-                    $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeatInterval / 1000, $sendHeartbeat);
+                    $this->sendHeartbeat();
+                    $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeatInterval / 1000, fn () => $this->sendHeartbeat());
                     break;
                 case Op::VOICE_CLIENTS_CONNECT:
                     # "d" contains an array with ['user_ids' => array<string>]
@@ -632,6 +619,19 @@ class VoiceClient extends EventEmitter
             $this->send($payload);
             $this->sentLoginFrame = true;
         }
+    }
+
+    protected function sendHeartbeat(): void
+    {
+        $this->send(VoicePayload::new(
+            Op::VOICE_HEARTBEAT,
+            [
+                't' => (int) microtime(true),
+                'seq_ack' => 10,
+            ]
+        ));
+        $this->logger->debug('sending heartbeat');
+        $this->emit('ws-heartbeat', []);
     }
 
     /**
