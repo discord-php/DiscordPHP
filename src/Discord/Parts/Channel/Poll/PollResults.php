@@ -47,7 +47,7 @@ class PollResults extends Part
         $answerCounts = Collection::for(PollAnswerCount::class);
 
         foreach ($this->attributes['answer_counts'] as $answerCount) {
-            $answerCounts->pushItem($this->factory->create(PollAnswerCount::class, $answerCount, true));
+            $answerCounts->pushItem($this->factory->part(PollAnswerCount::class, $answerCount, true));
         }
 
         return $answerCounts;

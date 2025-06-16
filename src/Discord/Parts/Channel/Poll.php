@@ -139,7 +139,7 @@ class Poll extends Part
     {
         return $this->http->post(Endpoint::bind(Endpoint::MESSAGE_POLL_EXPIRE, $this->channel_id, $this->message_id))
             ->then(function ($response) {
-                return $this->factory->create(Message::class, (array) $response, true);
+                return $this->factory->part(Message::class, (array) $response, true);
             });
     }
 }

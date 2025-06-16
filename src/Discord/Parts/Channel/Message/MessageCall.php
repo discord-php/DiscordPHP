@@ -61,7 +61,7 @@ class MessageCall extends Part
     protected function getUsersAttribute(): array
     {
         return array_map(
-            fn($userData) => $this->discord->users->get('id', $userData) ?? $this->factory->create(User::class, ['id' => $userData], true),
+            fn($userData) => $this->discord->users->get('id', $userData) ?? $this->factory->part(User::class, ['id' => $userData], true),
             $this->attributes['participants']
         );
     }
