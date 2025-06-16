@@ -675,25 +675,39 @@ class Interaction extends Part
             ],
         ])->then(function ($response) use ($custom_id, $submit) {
             if ($submit) {
-                $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener) {
-                    if ($interaction->type == self::TYPE_MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
-                        $components = Collection::for(RequestComponent::class, 'custom_id');
-                        foreach ($interaction->data->components as $actionrow) {
-                            if ($actionrow->type == Component::TYPE_ACTION_ROW) {
-                                foreach ($actionrow->components as $component) {
-                                    $components->pushItem($component);
-                                }
-                            }
-                        }
-                        $submit($interaction, $components);
-                        $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
-                    }
-                };
+                $listener = $this->createListener($custom_id, $submit, $listener);
                 $this->discord->on(Event::INTERACTION_CREATE, $listener);
             }
 
             return $response;
         });
+    }
+
+    /**
+     * Creates a listener callback for handling modal submit interactions with a specific custom ID.
+     *
+     * @param string $custom_id The custom ID to match against the interaction's custom_id.
+     * @param callable $submit The callback to execute when the interaction matches. Receives the interaction and a collection of components.
+     * @param callable $listener Reference to the listener, used for removing it after execution.
+     *
+     * @return callable The listener callback to be registered for interaction events.
+     */
+    protected function createListener(string $custom_id, callable $submit, callable &$listener): callable
+    {
+        return function (Interaction $interaction) use ($custom_id, $submit, &$listener) {
+            if ($interaction->type == self::TYPE_MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
+                $components = Collection::for(RequestComponent::class, 'custom_id');
+                foreach ($interaction->data->components as $actionrow) {
+                    if ($actionrow->type == Component::TYPE_ACTION_ROW) {
+                        foreach ($actionrow->components as $component) {
+                            $components->pushItem($component);
+                        }
+                    }
+                }
+                $submit($interaction, $components);
+                $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
+            }
+        };
     }
 
     /**

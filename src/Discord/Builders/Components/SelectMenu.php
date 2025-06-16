@@ -349,7 +349,26 @@ abstract class SelectMenu extends Interactive
             return $this;
         }
 
-        $this->listener = function (Interaction $interaction) use ($callback, $oneOff) {
+        $this->listener = $this->createListener($callback, $oneOff);
+
+        $discord->on(Event::INTERACTION_CREATE, $this->listener);
+
+        return $this;
+    }
+
+    /**
+     * Creates a listener callback for handling select menu interactions.
+     *
+     * @param callable $callback The callback to execute when the interaction is received.
+     *                           If the select menu has options, the callback receives
+     *                           ($interaction, $options), otherwise just ($interaction).
+     * @param bool $oneOff Whether the listener should be removed after being triggered once.
+     *
+     * @return callable The listener closure to be registered for interaction events.
+     */
+    protected function createListener(callable $callback, bool $oneOff = false): callable
+    {
+        return function(Interaction $interaction) use ($callback, $oneOff) {
             if ($interaction->data->component_type == $this->type &&
                 $interaction->data->custom_id == $this->custom_id) {
                 if (empty($this->options)) {
@@ -378,10 +397,6 @@ abstract class SelectMenu extends Interactive
                 }
             }
         };
-
-        $discord->on(Event::INTERACTION_CREATE, $this->listener);
-
-        return $this;
     }
 
     /**
