@@ -475,7 +475,24 @@ class Button extends Interactive
             return $this;
         }
 
-        $this->listener = function (Interaction $interaction) use ($callback, $oneOff) {
+        $this->listener = $this->createListener($callback, $oneOff);
+
+        $discord->on(Event::INTERACTION_CREATE, $this->listener);
+
+        return $this;
+    }
+
+    /**
+     * Creates a listener.
+     *
+     * @param callable $callback The callback to execute when the interaction occurs.
+     * @param bool $oneOff Whether the listener should be removed after one use.
+     *
+     * @return callable The listener closure.
+     */
+    protected function createListener(callable $callback, bool $oneOff = false): callable
+    {
+        return function (Interaction $interaction) use ($callback, $oneOff) {
             if ($interaction->data->component_type == Component::TYPE_BUTTON && $interaction->data->custom_id == $this->custom_id) {
                 $response = $callback($interaction);
                 $ack = static fn () => $interaction->isResponded() ?: $interaction->acknowledge();
@@ -491,10 +508,6 @@ class Button extends Interactive
                 }
             }
         };
-
-        $discord->on(Event::INTERACTION_CREATE, $this->listener);
-
-        return $this;
     }
 
     /**
