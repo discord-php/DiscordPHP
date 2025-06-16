@@ -458,7 +458,7 @@ class VoiceClient extends EventEmitter
                 case Op::VOICE_SPEAKING: // currently connected users
                     $this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
                     $this->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this]);
-                    $this->speakingStatus[$data->d->user_id] = $this->discord->factory->create(VoiceSpeaking::class, $data->d);
+                    $this->speakingStatus[$data->d->user_id] = $this->discord->getFactory()->create(VoiceSpeaking::class, $data->d);
                     break;
                 case Op::VOICE_HELLO:
                     $this->heartbeatInterval = $data->d->heartbeat_interval;
