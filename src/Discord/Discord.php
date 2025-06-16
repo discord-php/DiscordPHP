@@ -23,6 +23,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Gateway\GetGatewayBot;
+use Discord\Parts\Gateway\SessionStartLimit;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
@@ -1118,6 +1119,7 @@ class Discord
     {
         $this->setGateway()->then(function ($gateway) {
             if (isset($gateway['session']) && $session = $gateway['session']) {
+                $this->logger->info('session data received', ['session' => $session]);
                 if ($session['remaining'] < 2) {
                     $this->logger->error('exceeded number of reconnects allowed, waiting before attempting reconnect', $session);
                     $this->loop->addTimer($session['reset_after'] / 1000, function () {
@@ -1402,11 +1404,11 @@ class Discord
      *
      * @param Deferred          $deferred The deferred object to resolve with the gateway and session data.
      * @param string            $gateway  The base gateway URL to connect to.
-     * @param object|array|null $session  Optional session information. If null, a default session is used.
+     * @param SessionStartLimit $session  Optional session information. If null, a default session is used.
      *
      * @return void
      */
-    protected function buildParams(Deferred $deferred, string $gateway, $session = null): void
+    protected function buildParams(Deferred $deferred, string $gateway, ?SessionStartLimit $session = null): void
     {
         $defaultSession = [
             'total' => 1000,
@@ -1415,7 +1417,7 @@ class Discord
             'max_concurrency' => 1,
         ];
 
-        $session = $session ?? $defaultSession;
+        $session = $session ?? $this->factory->part(SessionStartLimit::class, $defaultSession);
         $params = [
             'v' => self::GATEWAY_VERSION,
             'encoding' => $this->encoding,

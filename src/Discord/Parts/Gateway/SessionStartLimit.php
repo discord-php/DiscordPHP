@@ -38,4 +38,14 @@ class SessionStartLimit extends Part
         'reset_after',
         'max_concurrency',
     ];
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'total' => $this->total,
+            'remaining' => $this->remaining,
+            'reset_after' => $this->reset_after,
+            'max_concurrency' => $this->max_concurrency,
+        ];
+    }
 }
