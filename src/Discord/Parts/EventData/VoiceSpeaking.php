@@ -11,7 +11,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\WebSockets\EventData;
+namespace Discord\Parts\EventData;
 
 use Discord\Parts\Part;
 

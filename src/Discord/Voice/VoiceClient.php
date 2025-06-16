@@ -27,7 +27,7 @@ use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Channel;
 use Discord\Voice\VoicePacket;
 use Discord\Voice\ReceiveStream;
-use Discord\WebSockets\EventData\VoiceSpeaking;
+use Discord\Parts\EventData\VoiceSpeaking;
 use Discord\WebSockets\Payload;
 use Discord\WebSockets\Op;
 use Discord\WebSockets\VoicePayload;
