@@ -1367,46 +1367,20 @@ class Discord
     protected function setGateway(?string $gateway = null): PromiseInterface
     {
         $deferred = new Deferred();
-        $defaultSession = [
-            'total' => 1000,
-            'remaining' => 1000,
-            'reset_after' => 0,
-            'max_concurrency' => 1,
-        ];
-
-        $buildParams = function ($gateway, $session = null) use ($deferred, $defaultSession) {
-            $session = $session ?? $defaultSession;
-            $params = [
-                'v' => self::GATEWAY_VERSION,
-                'encoding' => $this->encoding,
-            ];
-
-            if ($this->useTransportCompression) {
-                if ($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
-                    $params['compress'] = 'zlib-stream';
-                }
-                // @todo: add support for zstd-stream
-            }
-
-            $query = http_build_query($params);
-            $this->gateway = trim($gateway, '/').'/?'.$query;
-
-            $deferred->resolve(['gateway' => $this->gateway, 'session' => (array) $session]);
-        };
 
         if (null === $gateway) {
-            $this->http->get(Endpoint::GATEWAY_BOT)->then(function ($response) use ($buildParams) {
+            $this->http->get(Endpoint::GATEWAY_BOT)->then(function ($response) use ($deferred) {
                 if ($response->shards > 1) {
                     $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interested in assisting us with sharding support development.');
                 }
-                $buildParams($this->resume_gateway_url ?? $response->url, $response->session_start_limit);
-            }, function ($e) use ($buildParams) {
+                $this->buildParams($deferred, $this->resume_gateway_url ?? $response->url, $response->session_start_limit);
+            }, function ($e) use ($deferred) {
                 // Can't access the API server so we will use the default gateway.
                 $this->logger->warning('could not retrieve gateway, using default');
-                $buildParams('wss://gateway.discord.gg');
+                $this->buildParams($deferred, 'wss://gateway.discord.gg');
             });
         } else {
-            $buildParams($gateway);
+            $this->buildParams($deferred, $gateway);
         }
 
         return $deferred->promise()->then(function ($gateway) {
@@ -1418,6 +1392,43 @@ class Discord
 
             return $e;
         });
+    }
+
+    /**
+     * Builds the gateway connection parameters and resolves the deferred with the gateway URL and session information.
+     *
+     * @param Deferred          $deferred The deferred object to resolve with the gateway and session data.
+     * @param string            $gateway  The base gateway URL to connect to.
+     * @param object|array|null $session  Optional session information. If null, a default session is used.
+     *
+     * @return void
+     */
+    protected function buildParams(Deferred $deferred, string $gateway, $session = null): void
+    {
+        $defaultSession = [
+            'total' => 1000,
+            'remaining' => 1000,
+            'reset_after' => 0,
+            'max_concurrency' => 1,
+        ];
+
+        $session = $session ?? $defaultSession;
+        $params = [
+            'v' => self::GATEWAY_VERSION,
+            'encoding' => $this->encoding,
+        ];
+
+        if ($this->useTransportCompression) {
+            if ($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
+                $params['compress'] = 'zlib-stream';
+            }
+            // @todo: add support for zstd-stream
+        }
+
+        $query = http_build_query($params);
+        $this->gateway = trim($gateway, '/').'/?'.$query;
+
+        $deferred->resolve(['gateway' => $this->gateway, 'session' => (array) $session]);
     }
 
     /**
