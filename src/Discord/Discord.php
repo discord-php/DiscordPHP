@@ -1433,7 +1433,7 @@ class Discord
         $query = http_build_query($params);
         $this->gateway = trim($gateway, '/').'/?'.$query;
 
-        $deferred->resolve(['gateway' => $this->gateway, 'session' => (array) $session]);
+        $deferred->resolve(['gateway' => $this->gateway, 'session' => $session->jsonSerialize()]);
     }
 
     /**
