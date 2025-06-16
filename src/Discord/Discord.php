@@ -22,6 +22,7 @@ use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Gateway\GetGatewayBot;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
@@ -1370,10 +1371,12 @@ class Discord
 
         if (null === $gateway) {
             $this->http->get(Endpoint::GATEWAY_BOT)->then(function ($response) use ($deferred) {
-                if ($response->shards > 1) {
+                /** @var GetGatewayBot $part */
+                $part = $this->factory->part(GetGatewayBot::class, (array) $response);
+                if ($part->shards > 1) {
                     $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interested in assisting us with sharding support development.');
                 }
-                $this->buildParams($deferred, $this->resume_gateway_url ?? $response->url, $response->session_start_limit);
+                $this->buildParams($deferred, $this->resume_gateway_url ?? $part->url, $part->session_start_limit);
             }, function ($e) use ($deferred) {
                 // Can't access the API server so we will use the default gateway.
                 $this->logger->warning('could not retrieve gateway, using default');
