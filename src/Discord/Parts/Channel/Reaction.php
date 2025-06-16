@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel;
 
 use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
@@ -189,28 +190,37 @@ class Reaction extends Part
     public function getAllUsers(): PromiseInterface
     {
         $response = Collection::for(User::class);
-        $getUsers = function ($after = null) use (&$getUsers, $response) {
-            $options = ['limit' => 100];
-            if ($after != null) {
-                $options['after'] = $after;
+        return $this->__getUsers($response);
+    }
+
+    /**
+     * Recursively retrieves users who reacted, handling pagination.
+     *
+     * @param ExCollectionInterface $response The collection to accumulate users into.
+     * @param mixed|null $after The user ID to paginate after, or null to start from the beginning.
+     *
+     * @return PromiseInterface Resolves with the collection of users who reacted.
+     */
+    protected function __getUsers(ExCollectionInterface $response, $after = null): PromiseInterface
+    {
+        $options = ['limit' => 100];
+        if ($after != null) {
+            $options['after'] = $after;
+        }
+
+        return $this->getUsers($options)->then(function (Collection $users) use ($response) {
+            $last = null;
+            foreach ($users as $user) {
+                $response->pushItem($user);
+                $last = $user;
             }
 
-            return $this->getUsers($options)->then(function (Collection $users) use ($response, &$getUsers) {
-                $last = null;
-                foreach ($users as $user) {
-                    $response->pushItem($user);
-                    $last = $user;
-                }
+            if ($users->count() < 100) {
+                return resolve($response);
+            }
 
-                if ($users->count() < 100) {
-                    return resolve($response);
-                }
-
-                return $getUsers($last);
-            });
-        };
-
-        return $getUsers();
+            return $this->__getUsers($response, $last);
+        });
     }
 
     /**
