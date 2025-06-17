@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord;
 
 use Discord\Exceptions\IntentException;
+use Discord\Exceptions\Runtime\RequiredExtensionNotLoadedException;
 use Discord\Factory\Factory;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\CacheConfig;
@@ -44,6 +45,8 @@ use Discord\WebSockets\Intents;
 use Discord\WebSockets\Op;
 use Discord\WebSockets\Payload;
 use Evenement\EventEmitterTrait;
+use function React\Async\coroutine;
+use function React\Promise\all;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
@@ -55,12 +58,10 @@ use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
+
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
-use function React\Async\coroutine;
-use function React\Promise\all;
 
 /**
  * The Discord client class.
@@ -366,7 +367,7 @@ class Discord
     {
         // x86 need gmp extension for big integer operation
         if (PHP_INT_SIZE === 4 && ! BigInt::init()) {
-            throw new \RuntimeException('ext-gmp is not loaded, it is required for 32-bits (x86) PHP.');
+            throw new RequiredExtensionNotLoadedException();
         }
 
         $options = $this->resolveOptions($options);
@@ -376,7 +377,8 @@ class Discord
         $this->loop = $options['loop'];
         $this->logger = $options['logger'];
 
-        if (!in_array(php_sapi_name(), ['cli', 'micro'])) {
+        if (! in_array(php_sapi_name(), ['cli', 'micro'])) {
+            // @todo: throw an exception instead?
             $this->logger->critical('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.');
         }
 
@@ -607,6 +609,10 @@ class Discord
     /**
      * Handles WebSocket connections received by the client.
      *
+     * @uses \Discord\Discord::handleWsMessage
+     * @uses \Discord\Discord::handleWsClose
+     * @uses \Discord\Discord::handleWsError
+     *
      * @param WebSocket $ws WebSocket client.
      */
     public function handleWsConnection(WebSocket $ws): void
@@ -776,6 +782,12 @@ class Discord
     /**
      * Handles dispatch events received by the WebSocket.
      *
+     * @uses \Discord\Discord::handleVoiceStateUpdate
+     * @uses \Discord\Discord::handleVoiceServerUpdate
+     * @uses \Discord\Discord::handleResume
+     * @uses \Discord\Discord::handleReady
+     * @uses \Discord\Discord::handleGuildMembersChunk
+     *
      * @param object $data Packet data.
      */
     protected function handleDispatch(object $data): void
@@ -799,7 +811,6 @@ class Discord
             } elseif (isset($handlers[$data->t])) {
                 $this->{$handlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
             }
-
 
             return;
         }
@@ -846,11 +857,13 @@ class Discord
                 $promise = coroutine([$handler, 'handle'], $data->d);
                 $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
             };
-        } else {
-            /** @var PromiseInterface */
-            $promise = coroutine([$handler, 'handle'], $data->d);
-            $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
+
+            return;
         }
+
+        /** @var PromiseInterface */
+        $promise = coroutine([$handler, 'handle'], $data->d);
+        $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
     }
 
     /**
