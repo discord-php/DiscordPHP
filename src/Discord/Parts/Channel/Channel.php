@@ -1722,4 +1722,44 @@ class Channel extends Part implements Stringable
     {
         return "<#{$this->id}>";
     }
+
+    /**
+     * Checks if the channel can be connected to.
+     *
+     * @return bool
+     */
+    public function canConnect(): bool
+    {
+        return $this->isVoiceBased() && $this->getBotPermissions()->connect;
+    }
+
+    /**
+     * Alias of canConnect.
+     *
+     * @return bool
+     */
+    public function canJoin(): bool
+    {
+        return $this->canConnect();
+    }
+
+    /**
+     * Checks if the channel can be spoken in.
+     *
+     * @return bool
+     */
+    public function canSpeak(): bool
+    {
+        return $this->isVoiceBased() && $this->getBotPermissions()->speak;
+    }
+
+    /**
+     * Checks if the bot is a priority speaker in the channel.
+     *
+     * @return bool
+     */
+    public function isPrioritySpeaker(): bool
+    {
+        return $this->isVoiceBased() && $this->getBotPermissions()->priority_speaker;
+    }
 }
