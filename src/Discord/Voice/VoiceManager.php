@@ -112,7 +112,7 @@ final class VoiceManager
             'endpoint' => $state->endpoint
         ]);
 
-        $client = new VoiceClient($discord, $this->bot->getWs(), $channel, $data);
+        $client = new VoiceClient($discord, $channel, $data);
 
         $client->once('ready', function () use ($client, $deferred, $channel) {
                 $this->bot->getLogger()->info('voice client is ready');
