@@ -80,6 +80,8 @@ class Choice extends Part
     /**
      * Sets the name of the choice in another language.
      *
+     * @link https://discord.com/developers/docs/reference#locales
+     *
      * @param string      $locale Discord locale code.
      * @param string|null $name   Localized name of the choice.
      *
