@@ -1178,7 +1178,7 @@ class Discord
         }
         $this->emittedInit = true;
 
-        $this->voice = new VoiceManager($this->ws, $this->loop, $this->logger, (int) $this?->id ?? $this->client->id);
+        $this->voice = new VoiceManager($this);
         $this->logger->info('voice class initialized');
 
         $this->logger->info('client is ready');
@@ -1555,7 +1555,7 @@ class Discord
      */
     public function getHttp(): Http
     {
-        return $this->http;
+        return $this->getHttpClient();
     }
 
     /**
@@ -1704,5 +1704,10 @@ class Discord
         $config[] = $this->client;
 
         return $config;
+    }
+
+    public function getWs(): ?WebSocket
+    {
+        return $this->ws;
     }
 }

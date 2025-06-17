@@ -21,17 +21,11 @@ final class VoiceManager
     use EventEmitterTrait;
 
     /**
-     * @param \Ratchet\Client\WebSocket $botWs
-     * @param \React\EventLoop\LoopInterface $loop
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param int $botId
+     * @param Discord $bot
      * @param array<VoiceClient> $clients
      */
     public function __construct(
-        protected WebSocket $botWs,
-        protected LoopInterface $loop,
-        protected LoggerInterface $logger,
-        protected int $botId,
+        protected Discord $bot,
         public array $clients = [],
     ) {
     }
@@ -59,13 +53,13 @@ final class VoiceManager
 
         $this->clients[$channel->guild_id] = ['data' => []];
         $this->clients[$channel->guild_id]['data'] = [
-            'user_id' => $this->botId,
+            'user_id' => $this->bot->id,
             'deaf' => $deaf,
             'mute' => $mute,
         ];
 
         $discord->once(Event::VOICE_STATE_UPDATE, fn ($state) => $this->stateUpdate($state, $channel));
-        $discord->once(Event::VOICE_SERVER_UPDATE, fn ($state, $discord) => $this->serverUpdate($state, $channel, $discord, $deferred));
+        $discord->once(Event::VOICE_SERVER_UPDATE, fn ($state, Discord $discord) => $this->serverUpdate($state, $channel, $discord, $deferred));
 
         $discord->send(VoicePayload::new(
             Op::OP_VOICE_STATE_UPDATE,
@@ -96,10 +90,10 @@ final class VoiceManager
         }
 
         $this->clients[$channel->guild_id]['data']['session'] = $state->session_id;
-        $this->logger->info('received session id for voice session', ['guild' => $channel->guild_id, 'session_id' => $state->session_id]);
+        $this->bot->getLogger()->info('received session id for voice session', ['guild' => $channel->guild_id, 'session_id' => $state->session_id]);
     }
 
-    protected function serverUpdate($state, Channel $channel, $discord, Deferred $deferred): void
+    protected function serverUpdate($state, Channel $channel, Discord $discord, Deferred $deferred): void
     {
         if ($state->guild_id !== $channel->guild_id) {
             return; // This voice server update isn't for our guild.
@@ -112,29 +106,29 @@ final class VoiceManager
         $data['endpoint'] = $state->endpoint;
         $data['dnsConfig'] = $discord->options['dnsConfig'];
 
-        $this->logger->info('received token and endpoint for voice session', [
+        $this->bot->getLogger()->info('received token and endpoint for voice session', [
             'guild' => $channel->guild_id,
             'token' => $state->token,
             'endpoint' => $state->endpoint
         ]);
 
-        $client = new VoiceClient($discord, $this->botWs, $channel, $data);
+        $client = new VoiceClient($discord, $this->bot->getWs(), $channel, $data);
 
         $client->once('ready', function () use ($client, $deferred, $channel) {
-                $this->logger->info('voice client is ready');
+                $this->bot->getLogger()->info('voice client is ready');
                 $this->clients[$channel->guild_id] = $client;
 
                 $client->setBitrate($channel->bitrate);
 
-                $this->logger->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
+                $this->bot->getLogger()->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
                 $deferred->resolve($client);
             })
             ->once('error', function ($e) use ($deferred) {
-                $this->logger->error('error initializing voice client', ['e' => $e->getMessage()]);
+                $this->bot->getLogger()->error('error initializing voice client', ['e' => $e->getMessage()]);
                 $deferred->reject($e);
             })
             ->once('close', function () use ($channel) {
-                $this->logger->warning('voice client closed');
+                $this->bot->getLogger()->warning('voice client closed');
                 unset($this->clients[$channel->guild_id]);
             })
             ->start();
@@ -142,7 +136,7 @@ final class VoiceManager
 
     protected function sendStateUpdate(Channel $channel, bool $mute = false, bool $deaf = true): void
     {
-        $this->botWs->send(json_encode([
+        $this->bot->ws->send(json_encode([
             'op' => Op::OP_VOICE_STATE_UPDATE,
             'd' => [
                 'guild_id' => $channel->guild_id,
