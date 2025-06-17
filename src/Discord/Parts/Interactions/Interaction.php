@@ -675,7 +675,7 @@ class Interaction extends Part
             ],
         ])->then(function ($response) use ($custom_id, $submit) {
             if ($submit) {
-                $listener = $this->createListener($custom_id, $submit, $listener);
+                $listener = $this->createListener($custom_id, $submit);
                 $this->discord->on(Event::INTERACTION_CREATE, $listener);
             }
 
@@ -688,13 +688,12 @@ class Interaction extends Part
      *
      * @param string $custom_id The custom ID to match against the interaction's custom_id.
      * @param callable $submit The callback to execute when the interaction matches. Receives the interaction and a collection of components.
-     * @param callable $listener Reference to the listener, used for removing it after execution.
      *
      * @return callable The listener callback to be registered for interaction events.
      */
-    protected function createListener(string $custom_id, callable $submit, callable &$listener): callable
+    protected function createListener(string $custom_id, callable $submit): callable
     {
-        return function (Interaction $interaction) use ($custom_id, $submit, &$listener) {
+        return $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener) {
             if ($interaction->type == self::TYPE_MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
                 $components = Collection::for(RequestComponent::class, 'custom_id');
                 foreach ($interaction->data->components as $actionrow) {
