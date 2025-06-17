@@ -27,6 +27,7 @@ use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\EventData\VoiceSpeaking;
 use Discord\Voice\Client\User;
+use Discord\Voice\Processes\Ffmpeg;
 use Discord\Voice\ReceiveStream;
 use Discord\Voice\VoicePacket;
 use Discord\WebSockets\Op;
@@ -373,12 +374,16 @@ class VoiceClient extends EventEmitter
         protected array $data,
         protected bool $deaf = false,
         protected bool $mute = false,
+        protected ?Deferred $deferred = null,
+        protected ?VoiceManager &$manager = null,
     ) {
         $this->deaf = $this->data['deaf'] ?? false;
         $this->mute = $this->data['mute'] ?? false;
         $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
         $this->speakingStatus = Collection::for(VoiceSpeaking::class, 'ssrc');
         $this->dnsConfig = $data['dnsConfig'];
+
+        $this->boot();
     }
 
     /**
@@ -389,7 +394,7 @@ class VoiceClient extends EventEmitter
     public function start(): bool
     {
         if (
-            ! $this->checkForFFmpeg() ||
+            ! Ffmpeg::checkForFFmpeg() ||
             ! $this->checkForLibsodium()
         ) {
             return false;
@@ -772,7 +777,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $process = $this->ffmpegEncode($file);
+        $process = Ffmpeg::encode($file, volume: $this->getDbVolume());
         $process->start($this->bot->loop);
 
         return $this->playOggStream($process);
@@ -816,7 +821,7 @@ class VoiceClient extends EventEmitter
             $stream = new Stream($stream, $this->bot->loop);
         }
 
-        $process = $this->ffmpegEncode(preArgs: [
+        $process = Ffmpeg::encode(volume: $this->getDbVolume(), preArgs: [
             '-f', 's16le',
             '-ac', $channels,
             '-ar', $audioRate,
@@ -1577,7 +1582,7 @@ class VoiceClient extends EventEmitter
      */
     protected function createDecoder($ss): void
     {
-        $decoder = $this->ffmpegDecode();
+        $decoder = Ffmpeg::decode();
         $decoder->start($this->bot->loop);
 
         $decoder->stdout->on('data', function ($data) use ($ss) {
@@ -1789,32 +1794,6 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Checks if FFmpeg is installed.
-     *
-     * @return bool Whether FFmpeg is installed or not.
-     */
-    protected function checkForFFmpeg(): bool
-    {
-        $binaries = [
-            'ffmpeg',
-        ];
-
-        foreach ($binaries as $binary) {
-            $output = $this->checkForExecutable($binary);
-
-            if (null !== $output) {
-                $this->ffmpeg = $output;
-
-                return true;
-            }
-        }
-
-        $this->emit('error', [new FFmpegNotFoundException('No FFmpeg binary was found.')]);
-
-        return false;
-    }
-
-    /**
      * Checks if libsodium-php is installed.
      *
      * @return bool
@@ -1830,71 +1809,13 @@ class VoiceClient extends EventEmitter
         return true;
     }
 
-    /**
-     * Checks if an executable exists on the system.
-     *
-     * @param  string      $executable
-     * @return string|null
-     */
-    protected static function checkForExecutable(string $executable): ?string
+    public function getDbVolume(): float|int
     {
-        $which = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'where' : 'command -v';
-        $executable = rtrim((string) explode(PHP_EOL, shell_exec("{$which} {$executable}"))[0]);
-
-        return is_executable($executable) ? $executable : null;
-    }
-
-    /**
-     * Creates a process that will run FFmpeg and encode `$filename` into Ogg
-     * Opus format.
-     *
-     * If `$filename` is null, the process will expect some sort of audio data
-     * to be piped in via stdin. It is highly recommended to set `$preArgs` to
-     * contain the format of the piped data when using a pipe as an input. You
-     * may also want to provide some arguments to FFmpeg via `$preArgs`, which
-     * will be appended to the FFmpeg command _before_ setting the input
-     * arguments.
-     *
-     * @param ?string $filename Path to file to be converted into Ogg Opus, or
-     *                          null for pipe via stdin.
-     * @param ?array  $preArgs  A list of arguments to be appended before the
-     *                          input filename.
-     *
-     * @return Process A ReactPHP child process.
-     */
-    public function ffmpegEncode(?string $filename = null, ?array $preArgs = null): Process
-    {
-        $dB = match($this->volume) {
+        return match($this->volume) {
             0 => -100,
             100 => 0,
             default => -40 + ($this->volume / 100) * 40,
         };
-
-        $flags = [
-            '-i', $filename ?? 'pipe:0',
-            '-map_metadata', '-1',
-            '-f', 'opus',
-            '-c:a', 'libopus',
-            '-ar', '48000',
-            '-af', 'volume=' . $dB . 'dB',
-            '-ac', '2',
-            '-b:a', $this->bitrate,
-            '-loglevel', 'warning',
-            'pipe:1',
-        ];
-
-        if (null !== $preArgs) {
-            $flags = array_merge($preArgs, $flags);
-        }
-
-        $flags = implode(' ', $flags);
-        $cmd = "{$this->ffmpeg} {$flags}";
-
-        return new Process($cmd, null, null, [
-            ['socket'],
-            ['socket'],
-            ['socket'],
-        ]);
     }
 
     /**
@@ -1923,40 +1844,6 @@ class VoiceClient extends EventEmitter
         return new Process("{$this->dca} {$flags}");
     }
 
-    public function ffmpegDecode(int $channels = 2, ?int $frameSize = null): Process
-    {
-        if (null === $frameSize) {
-            $frameSize = round($this->frameSize * 48);
-        }
-
-        $flags = [
-            '-ac:opus', $channels, // Channels
-            '-ab', round($this->bitrate / 1000), // Bitrate
-            '-as', $frameSize, // Frame Size
-            '-ar', '48000', // Audio Rate
-            '-mode', 'decode', // Decode mode
-        ];
-
-        $flags = implode(' ', $flags);
-
-        // Create temporary files for stdin, stdout, and stderr
-        $tempDir = sys_get_temp_dir();
-        $stdinFile = tempnam($tempDir, 'discord_ffmpeg_stdin_' . $this->ssrc);
-        $stdoutFile = tempnam($tempDir, 'discord_ffmpeg_stdout_' . $this->ssrc);
-        $stderrFile = tempnam($tempDir, 'discord_ffmpeg_stderr_' . $this->ssrc);
-
-        // Store temp file paths for later cleanup
-        $this->tempFiles = [
-            'stdin' => 'php://temp',
-            'stdout' => 'php://temp',
-            'stderr' => 'php://temp',
-        ];
-
-        return new Process(
-            "{$this->ffmpeg} {$flags}",
-        );
-    }
-
     /**
      * Returns the connected channel.
      *
@@ -1977,5 +1864,58 @@ class VoiceClient extends EventEmitter
         while (--$this->silenceRemaining > 0) {
             $this->sendBuffer(self::SILENCE_FRAME);
         }
+    }
+
+    /**
+     * Creates a new voice client instance statically
+     *
+     * @param \Discord\Discord $bot
+     * @param \Discord\Parts\Channel\Channel $channel
+     * @param array $data
+     * @param bool $deaf
+     * @param bool $mute
+     * @param mixed $deferred
+     * @param mixed $manager
+     * @param array $
+     * @return \Discord\Voice\VoiceClient
+     */
+    public static function make(
+        Discord $bot,
+        Channel $channel,
+        array $data,
+        bool $deaf = false,
+        bool $mute = false,
+        ?Deferred $deferred = null,
+        ?VoiceManager &$manager = null,
+    ): self
+    {
+        return new static(...func_get_args());
+    }
+
+    /**
+     * Boots the voice client and sets up event listeners.
+     *
+     * @return void
+     */
+    public function boot(): void
+    {
+        $this->once('ready', function () {
+            $this->bot->getLogger()->info('voice client is ready');
+            $this->manager->clients[$this->channel->guild_id] = $this;
+
+            $this->setBitrate($this->channel->bitrate);
+
+            $this->bot->getLogger()->info('set voice client bitrate', ['bitrate' => $this->channel->bitrate]);
+            $this->deferred->resolve($this);
+        })
+        ->once('error', function ($e) {
+            $this->bot->getLogger()->error('error initializing voice client', ['e' => $e->getMessage()]);
+            $this->deferred->reject($e);
+        })
+        ->once('close', function () {
+            $this->bot->getLogger()->warning('voice client closed');
+            unset($this->manager->clients[$this->channel->guild_id]);
+        })
+        ->start();
     }
 }

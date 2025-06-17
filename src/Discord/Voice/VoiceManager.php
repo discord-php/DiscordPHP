@@ -22,7 +22,7 @@ final class VoiceManager
 
     /**
      * @param Discord $bot
-     * @param array<VoiceClient> $clients
+     * @param array<string, VoiceClient> $clients
      */
     public function __construct(
         protected Discord $bot,
@@ -30,6 +30,15 @@ final class VoiceManager
     ) {
     }
 
+    /**
+     * Handles the creation of a new voice client and joins the specified channel.
+     *
+     * @param \Discord\Parts\Channel\Channel $channel
+     * @param \Discord\Discord $discord
+     * @param bool $mute
+     * @param bool $deaf
+     * @return \React\Promise\PromiseInterface<T>
+     */
     public function createClientAndJoinChannel(
         Channel $channel,
         Discord $discord,
@@ -41,6 +50,18 @@ final class VoiceManager
 
         if (! $channel->isVoiceBased()) {
             $deferred->reject(new \RuntimeException('Channel must allow voice.'));
+
+            return $deferred->promise();
+        }
+
+        if (! $channel->canJoin()) {
+            $deferred->reject(new \RuntimeException('The bot must have proper permissions to join this channel.'));
+
+            return $deferred->promise();
+        }
+
+        if (! $channel->canSpeak() && ! $mute) {
+            $deferred->reject(new \RuntimeException('The bot must have permission to speak in this channel.'));
 
             return $deferred->promise();
         }
@@ -59,6 +80,7 @@ final class VoiceManager
         ];
 
         $discord->once(Event::VOICE_STATE_UPDATE, fn ($state) => $this->stateUpdate($state, $channel));
+        // Creates Voice Client and waits for the voice server update.
         $discord->once(Event::VOICE_SERVER_UPDATE, fn ($state, Discord $discord) => $this->serverUpdate($state, $channel, $discord, $deferred));
 
         $discord->send(VoicePayload::new(
@@ -83,7 +105,7 @@ final class VoiceManager
         return $this->clients[$guildId];
     }
 
-    protected function stateUpdate($state, $channel): void
+    protected function stateUpdate($state, Channel $channel): void
     {
         if ($state->guild_id != $channel->guild_id) {
             return; // This voice state update isn't for our guild.
@@ -112,38 +134,7 @@ final class VoiceManager
             'endpoint' => $state->endpoint
         ]);
 
-        $client = new VoiceClient($discord, $channel, $data);
-
-        $client->once('ready', function () use ($client, $deferred, $channel) {
-                $this->bot->getLogger()->info('voice client is ready');
-                $this->clients[$channel->guild_id] = $client;
-
-                $client->setBitrate($channel->bitrate);
-
-                $this->bot->getLogger()->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
-                $deferred->resolve($client);
-            })
-            ->once('error', function ($e) use ($deferred) {
-                $this->bot->getLogger()->error('error initializing voice client', ['e' => $e->getMessage()]);
-                $deferred->reject($e);
-            })
-            ->once('close', function () use ($channel) {
-                $this->bot->getLogger()->warning('voice client closed');
-                unset($this->clients[$channel->guild_id]);
-            })
-            ->start();
+        VoiceClient::make($discord, $channel, $data, deferred: $deferred, manager: $this);
     }
 
-    protected function sendStateUpdate(Channel $channel, bool $mute = false, bool $deaf = true): void
-    {
-        $this->bot->ws->send(json_encode([
-            'op' => Op::OP_VOICE_STATE_UPDATE,
-            'd' => [
-                'guild_id' => $channel->guild_id,
-                'channel_id' => $channel->id,
-                'self_mute' => $mute,
-                'self_deaf' => $deaf,
-            ],
-        ]));
-    }
 }
