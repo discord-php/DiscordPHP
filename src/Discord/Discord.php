@@ -36,6 +36,7 @@ use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
 use Discord\Voice\Voice;
 use Discord\Voice\VoiceClient;
+use Discord\Voice\VoiceManager;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildCreate;
 use Discord\WebSockets\Handlers;
@@ -336,9 +337,9 @@ class Discord
     /**
      * The voice handler, of clients and packets.
      *
-     * @var Voice
+     * @var VoiceManager
      */
-    public Voice $voice;
+    public VoiceManager $voice;
 
     /**
      * The transport compression setting.
@@ -1177,7 +1178,7 @@ class Discord
         }
         $this->emittedInit = true;
 
-        $this->voice = new Voice($this->ws, $this->loop, $this->logger, (int) $this?->id ?? $this->client->id);
+        $this->voice = new VoiceManager($this->ws, $this->loop, $this->logger, (int) $this?->id ?? $this->client->id);
         $this->logger->info('voice class initialized');
 
         $this->logger->info('client is ready');

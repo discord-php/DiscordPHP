@@ -16,7 +16,7 @@ use Ratchet\Client\WebSocket;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 
-final class Voice
+final class VoiceManager
 {
     use EventEmitterTrait;
 
