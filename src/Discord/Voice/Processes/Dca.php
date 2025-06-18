@@ -5,7 +5,7 @@ namespace Discord\Voice\Processes;
 use Discord\Voice\Processes\ProcessAbstract;
 use React\ChildProcess\Process;
 
-final class Dca extends ProcessAbstract
+final class DCA extends ProcessAbstract
 {
     /**
      * The DCA version the client is using.

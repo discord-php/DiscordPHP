@@ -18,7 +18,7 @@ use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DnsFactory;
 use React\Promise\PromiseInterface;
 
-final class Ws
+final class WS
 {
     protected static VoiceClient $vc;
 

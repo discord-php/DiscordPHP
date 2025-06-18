@@ -28,7 +28,7 @@ use Discord\Parts\EventData\VoiceSpeaking;
 use Discord\Parts\Voice\UserConnected;
 use Discord\Voice\Client\Packet;
 use Discord\Voice\Client\User;
-use Discord\Voice\Client\Ws;
+use Discord\Voice\Client\WS;
 use Discord\Voice\Processes\Dca;
 use Discord\Voice\Processes\Ffmpeg;
 use Discord\Voice\ReceiveStream;
@@ -402,7 +402,7 @@ class VoiceClient extends EventEmitter
             return false;
         }
 
-        Ws::make($this);
+        WS::make($this);
         return true;
     }
 
