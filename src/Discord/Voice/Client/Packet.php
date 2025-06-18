@@ -11,7 +11,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Voice;
+namespace Discord\Voice\Client;
 
 use Discord\Helpers\ByteBuffer\Buffer;
 use Discord\Helpers\FormatPackEnum;
@@ -26,32 +26,8 @@ use Monolog\Logger;
  *
  * @since 3.2.0
  */
-class VoicePacket
+class Packet
 {
-
-    # RTP Header Constants
-    public const RTP_HEADER_BYTE_LENGTH = 12;
-
-    public const RTP_VERSION_PAD_EXTEND_INDEX = 0;
-
-    public const RTP_VERSION_PAD_EXTEND = 0x80;
-
-    public const RTP_PAYLOAD_INDEX = 1;
-
-    public const RTP_PAYLOAD_TYPE = 0x78;
-
-    public const SEQ_INDEX = 2;
-
-    public const TIMESTAMP_INDEX = 4;
-
-    public const SSRC_INDEX = 8;
-
-    public const NONCE_LENGTH = 12;
-
-    public const NONCE_BYTE_LENGTH = 4;
-
-    public const AUTH_TAG_LENGTH = 16;
-
     /**
      * The audio header, in binary, containing the version, flags, sequence, timestamp, and SSRC.
      *
@@ -67,27 +43,6 @@ class VoicePacket
      * @var Buffer
      */
     protected $buffer;
-
-    /**
-     * The client SSRC.
-     *
-     * @var int|null The client SSRC.
-     */
-    public $ssrc;
-
-    /**
-     * The packet sequence.
-     *
-     * @var int|null The packet sequence.
-     */
-    public $seq;
-
-    /**
-     * The packet timestamp.
-     *
-     * @var int|null The packet timestamp.
-     */
-    public $timestamp;
 
     /**
      * The version and flags.
@@ -148,10 +103,20 @@ class VoicePacket
      * @param bool        $encryption Whether the packet should be encrypted.
      * @param string|null $key        The encryption key.
      */
-    public function __construct(?string $data = null, ?int $ssrc = null, ?int $seq = null, ?int $timestamp = null, bool $encryption = false, protected ?string $key = null, protected ?Logger $log = null)
-    {
-        $this->unpack($data)
-            ->decrypt();
+    public function __construct(
+        ?string $data = null,
+        public ?int $ssrc = null,
+        public ?int $seq = null,
+        public ?int $timestamp = null,
+        bool $decrypt = true,
+        protected ?string $key = null,
+        protected ?Logger $log = null
+    ) {
+        $this->unpack($data);
+
+        if ($decrypt) {
+            $this->decrypt();
+        }
     }
 
     /**
@@ -167,6 +132,10 @@ class VoicePacket
      * @see https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure
      * @see https://www.php.net/manual/en/function.unpack.php
      * @see https://www.php.net/manual/en/function.pack.php For the formats
+     *
+     * @param string $message The voice message to unpack.
+     *
+     * @return self The unpacked voice packet.
      */
     public function unpack(string $message): self
     {
@@ -179,8 +148,8 @@ class VoicePacket
 
         $byteData = substr(
             $message,
-            self::RTP_HEADER_BYTE_LENGTH,
-            strlen($message) - self::AUTH_TAG_LENGTH - self::NONCE_LENGTH
+            HeaderValuesEnum::RTP_HEADER_OR_NONCE_LENGTH->value,
+            strlen($message) - HeaderValuesEnum::AUTH_TAG_LENGTH->value - HeaderValuesEnum::RTP_HEADER_OR_NONCE_LENGTH->value
         );
 
         $unpackedMessage = unpack('Cfirst/Csecond/nseq/Ntimestamp/Nssrc', $byteHeader);
@@ -231,16 +200,16 @@ class VoicePacket
         }
 
         // 3. Extract the nonce
-        $nonce = substr($message, $len - self::NONCE_BYTE_LENGTH, self::NONCE_BYTE_LENGTH);
+        $nonce = substr($message, $len - HeaderValuesEnum::TIMESTAMP_OR_NONCE_INDEX->value, HeaderValuesEnum::TIMESTAMP_OR_NONCE_INDEX->value);
         // 4. Pad the nonce to 12 bytes
         $nonceBuffer = str_pad($nonce, SODIUM_CRYPTO_AEAD_AES256GCM_NPUBBYTES, "\0", STR_PAD_RIGHT);
 
         // 5. Extract the ciphertext and auth tag
         //    The message: [header][ciphertext][auth tag][nonce]
         //    The size of the ciphertext is: total - headerSize - 16 (auth tag) - 4 (nonce)
-        $encryptedLength = $len - $this->headerSize - self::AUTH_TAG_LENGTH - self::NONCE_BYTE_LENGTH;
+        $encryptedLength = $len - $this->headerSize - HeaderValuesEnum::AUTH_TAG_LENGTH->value - HeaderValuesEnum::TIMESTAMP_OR_NONCE_INDEX->value;
         $cipherText = substr($message, $this->headerSize, $encryptedLength);
-        $authTag = substr($message, $this->headerSize + $encryptedLength, self::AUTH_TAG_LENGTH);
+        $authTag = substr($message, $this->headerSize + $encryptedLength, HeaderValuesEnum::AUTH_TAG_LENGTH->value);
 
         // Concatenate the ciphertext and the auth tag
         $combined = "$cipherText$authTag";
@@ -322,12 +291,12 @@ class VoicePacket
      */
     protected function buildHeader(): Buffer
     {
-        $header = new Buffer(self::RTP_HEADER_BYTE_LENGTH);
-        $header[self::RTP_VERSION_PAD_EXTEND_INDEX] = pack(FormatPackEnum::C->value, self::RTP_VERSION_PAD_EXTEND);
-        $header[self::RTP_PAYLOAD_INDEX] = pack(FormatPackEnum::C->value, self::RTP_PAYLOAD_TYPE);
-        return $header->writeShort($this->seq, self::SEQ_INDEX)
-            ->writeUInt($this->timestamp, self::TIMESTAMP_INDEX)
-            ->writeUInt($this->ssrc, self::SSRC_INDEX);
+        $header = new Buffer(HeaderValuesEnum::RTP_HEADER_OR_NONCE_LENGTH->value);
+        $header[HeaderValuesEnum::RTP_VERSION_PAD_EXTEND_INDEX->value] = pack(FormatPackEnum::C->value, HeaderValuesEnum::RTP_VERSION_PAD_EXTEND->value);
+        $header[HeaderValuesEnum::RTP_PAYLOAD_INDEX->value] = pack(FormatPackEnum::C->value, HeaderValuesEnum::RTP_PAYLOAD_TYPE->value);
+        return $header->writeShort($this->seq, HeaderValuesEnum::SEQ_INDEX->value)
+            ->writeUInt($this->timestamp, HeaderValuesEnum::TIMESTAMP_OR_NONCE_INDEX->value)
+            ->writeUInt($this->ssrc, HeaderValuesEnum::SSRC_INDEX->value);
     }
 
     public function setHeader(?string $message = null): ?string
@@ -341,7 +310,7 @@ class VoicePacket
             return null;
         }
 
-        $this->headerSize = self::RTP_HEADER_BYTE_LENGTH;
+        $this->headerSize = HeaderValuesEnum::RTP_HEADER_OR_NONCE_LENGTH->value;
         $firstByte = ord($message[0]);
         if (($firstByte >> 4) & 0x01) {
             $this->headerSize += 4;
@@ -392,7 +361,10 @@ class VoicePacket
      */
     public function getData(): string
     {
-        return $this->buffer->read(self::RTP_HEADER_BYTE_LENGTH, strlen((string) $this->buffer) - self::RTP_HEADER_BYTE_LENGTH);
+        return $this->buffer->read(
+            HeaderValuesEnum::RTP_HEADER_OR_NONCE_LENGTH->value,
+            strlen((string) $this->buffer) - HeaderValuesEnum::RTP_HEADER_OR_NONCE_LENGTH->value
+        );
     }
 
     /**
@@ -400,9 +372,9 @@ class VoicePacket
      *
      * @param string $data Data from Discord.
      *
-     * @return VoicePacket A voice packet.
+     * @return self A voice packet.
      */
-    public static function make(string $data): VoicePacket
+    public static function make(string $data): self
     {
         $n = new self('', 0, 0, 0);
         $buff = new Buffer($data);
@@ -423,9 +395,9 @@ class VoicePacket
     {
         $this->buffer = $buffer;
 
-        $this->seq = $this->buffer->readShort(self::SEQ_INDEX);
-        $this->timestamp = $this->buffer->readUInt(self::TIMESTAMP_INDEX);
-        $this->ssrc = $this->buffer->readUInt(self::SSRC_INDEX);
+        $this->seq = $this->buffer->readShort(HeaderValuesEnum::SEQ_INDEX->value);
+        $this->timestamp = $this->buffer->readUInt(HeaderValuesEnum::TIMESTAMP_OR_NONCE_INDEX->value);
+        $this->ssrc = $this->buffer->readUInt(HeaderValuesEnum::SSRC_INDEX->value);
 
         return $this;
     }
@@ -437,7 +409,7 @@ class VoicePacket
      */
     public function __toString(): string
     {
-        return (string) $this->buffer;
+        return (string) $this?->buffer ?? $this->decryptedAudio ?? '';
     }
 
     /**
