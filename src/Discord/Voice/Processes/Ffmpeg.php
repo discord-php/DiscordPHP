@@ -107,6 +107,10 @@ final class Ffmpeg extends ProcessAbstract
             '-mode', 'decode', // Decode mode
         ];
 
+        if (null !== $preArgs) {
+            $flags = array_merge($preArgs, $flags);
+        }
+
         $flags = implode(' ', $flags);
 
         return new Process(

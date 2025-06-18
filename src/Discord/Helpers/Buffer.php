@@ -54,7 +54,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      */
     protected $loop;
 
-    public function __construct(LoopInterface $loop = null)
+    public function __construct(?LoopInterface $loop = null)
     {
         $this->loop = $loop;
     }

@@ -141,6 +141,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
     public function write($data)
     {
         $this->writePCM($data);
+        $this->writeOpus($data);
     }
 
     /**
@@ -217,6 +218,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
     public function pipe(WritableStreamInterface $dest, array $options = [])
     {
         $this->pipePCM($dest, $options);
+        $this->pipeOpus($dest, $options);
     }
 
     /**
