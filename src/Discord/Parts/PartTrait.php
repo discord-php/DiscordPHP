@@ -112,6 +112,12 @@ trait PartTrait
             return $str;
         }
 
+        if (str_starts_with($key, 'get') && str_ends_with($key, 'Attribute')) {
+            if (method_exists($this, $key)) {
+                return $key;
+            }
+        }
+
         return false;
     }
 
@@ -130,6 +136,12 @@ trait PartTrait
 
         if (method_exists($this, $str)) {
             return $str;
+        }
+
+        if (str_starts_with($key, 'set') && str_ends_with($key, 'Attribute')) {
+            if (method_exists($this, $key)) {
+                return $key;
+            }
         }
 
         return false;
