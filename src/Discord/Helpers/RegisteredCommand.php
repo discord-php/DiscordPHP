@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Helpers;
 
 use Discord\Discord;
+use Discord\Helpers\Collection;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Request\Option;
 
@@ -85,12 +86,12 @@ class RegisteredCommand
      * Executes the command. Will search for a sub-command if given, otherwise
      * executes the callback, if given.
      *
-     * @param array       $options
+     * @param Collection|array       $options
      * @param Interaction $interaction
      *
      * @return bool Whether the command successfully executed.
      */
-    public function execute(array $options, Interaction $interaction): bool
+    public function execute($options, Interaction $interaction): bool
     {
         $params = Collection::for(Option::class, 'name');
 
