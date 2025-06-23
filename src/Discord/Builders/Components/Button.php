@@ -17,6 +17,7 @@ use Discord\Discord;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
+use React\EventLoop\TimerInterface;
 use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
@@ -492,7 +493,9 @@ class Button extends Interactive
      */
     protected function createListener(callable $callback, bool $oneOff = false): callable
     {
-        return function (Interaction $interaction) use ($callback, $oneOff) {
+        $timer = null;
+
+        $listener = function (Interaction $interaction) use ($callback, $oneOff, &$timer) {
             if ($interaction->data->component_type == Component::TYPE_BUTTON && $interaction->data->custom_id == $this->custom_id) {
                 $response = $callback($interaction);
                 $ack = static fn () => $interaction->isResponded() ?: $interaction->acknowledge();
@@ -506,8 +509,15 @@ class Button extends Interactive
                 if ($oneOff) {
                     $this->removeListener();
                 }
+
+                /** @var TimerInterface $timer */
+                $this->discord->getLoop()->cancelTimer($timer);
             }
         };
+
+        $timer = $this->discord->getLoop()->addTimer(60*15, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+
+        return $listener;
     }
 
     /**
