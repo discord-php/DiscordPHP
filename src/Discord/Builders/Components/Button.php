@@ -447,9 +447,10 @@ class Button extends Interactive
      *
      * The button listener will not persist when the bot restarts.
      *
-     * @param ?callable $callback Callback to call when the button is pressed. Will be called with the interaction object.
-     * @param Discord   $discord  Discord client.
-     * @param bool      $oneOff   Whether the listener should be removed after the button is pressed for the first time.
+     * @param ?callable      $callback Callback to call when the button is pressed. Will be called with the interaction object.
+     * @param Discord        $discord  Discord client.
+     * @param bool           $oneOff   Whether the listener should be removed after the button is pressed for the first time.
+     * @param int|float|null $timeout Optional timeout in seconds after which the listener will be removed.
      *
      * @throws \LogicException
      *
@@ -486,8 +487,9 @@ class Button extends Interactive
     /**
      * Creates a listener.
      *
-     * @param callable $callback The callback to execute when the interaction occurs.
-     * @param bool $oneOff Whether the listener should be removed after one use.
+     * @param callable       $callback The callback to execute when the interaction occurs.
+     * @param bool           $oneOff   Whether the listener should be removed after one use.
+     * @param int|float|null $timeout  Optional timeout in seconds after which the listener will be removed.
      *
      * @return callable The listener closure.
      */

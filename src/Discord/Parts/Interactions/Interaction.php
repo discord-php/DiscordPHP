@@ -689,7 +689,7 @@ class Interaction extends Part
      *
      * @param string         $custom_id The custom ID to match against the interaction's custom_id.
      * @param callable       $submit    The callback to execute when the interaction matches. Receives the interaction and a collection of components.
-     * @param int|float|null $timeout   Optional timeout in seconds for the listener. If provided, the listener will be removed after this duration.
+     * @param int|float|null $timeout   Optional timeout in seconds after which the listener will be removed. (Mandatory for modal submit interactions)
      *
      * @return callable The listener callback to be registered for interaction events.
      */

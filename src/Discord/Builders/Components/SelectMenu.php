@@ -360,10 +360,11 @@ abstract class SelectMenu extends Interactive
     /**
      * Creates a listener callback for handling select menu interactions.
      *
-     * @param callable $callback The callback to execute when the interaction is received.
-     *                           If the select menu has options, the callback receives
-     *                           ($interaction, $options), otherwise just ($interaction).
-     * @param bool $oneOff Whether the listener should be removed after being triggered once.
+     * @param callable       $callback The callback to execute when the interaction is received.
+     *                                   If the select menu has options, the callback receives
+     *                                   ($interaction, $options), otherwise just ($interaction).
+     * @param bool           $oneOff   Whether the listener should be removed after being triggered once.
+     * @param int|float|null $timeout  Optional timeout in seconds after which the listener will be removed.
      *
      * @return callable The listener closure to be registered for interaction events.
      */
