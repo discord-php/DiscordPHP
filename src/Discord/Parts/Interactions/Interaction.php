@@ -676,7 +676,7 @@ class Interaction extends Part
             ],
         ])->then(function ($response) use ($custom_id, $submit) {
             if ($submit) {
-                $listener = $this->createListener($custom_id, $submit);
+                $listener = $this->createListener($custom_id, $submit, 60*15);
                 $this->discord->on(Event::INTERACTION_CREATE, $listener);
             }
 
@@ -687,12 +687,13 @@ class Interaction extends Part
     /**
      * Creates a listener callback for handling modal submit interactions with a specific custom ID.
      *
-     * @param string $custom_id The custom ID to match against the interaction's custom_id.
-     * @param callable $submit The callback to execute when the interaction matches. Receives the interaction and a collection of components.
+     * @param string         $custom_id The custom ID to match against the interaction's custom_id.
+     * @param callable       $submit    The callback to execute when the interaction matches. Receives the interaction and a collection of components.
+     * @param int|float|null $timeout   Optional timeout in seconds for the listener. If provided, the listener will be removed after this duration.
      *
      * @return callable The listener callback to be registered for interaction events.
      */
-    protected function createListener(string $custom_id, callable $submit): callable
+    protected function createListener(string $custom_id, callable $submit, int|float|null $timeout = null): callable
     {
         $timer = null;
 
@@ -709,12 +710,16 @@ class Interaction extends Part
                 $submit($interaction, $components);
                 $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
 
-                /** @var TimerInterface $timer */
-                $this->discord->getLoop()->cancelTimer($timer);
+                /** @var ?TimerInterface $timer */
+                if ($timer !== null) {
+                    $this->discord->getLoop()->cancelTimer($timer);
+                }
             }
         };
 
-        $timer = $this->discord->getLoop()->addTimer(60*15, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+        if ($timeout) {
+            $timer = $this->discord->getLoop()->addTimer($timeout, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+        }
 
         return $listener;
     }

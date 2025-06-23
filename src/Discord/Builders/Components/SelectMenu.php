@@ -367,7 +367,7 @@ abstract class SelectMenu extends Interactive
      *
      * @return callable The listener closure to be registered for interaction events.
      */
-    protected function createListener(callable $callback, bool $oneOff = false): callable
+    protected function createListener(callable $callback, bool $oneOff = false, int|float|null $timeout = null): callable
     {
         $timer = null;
 
@@ -399,12 +399,16 @@ abstract class SelectMenu extends Interactive
                     $this->removeListener();
                 }
 
-                /** @var TimerInterface $timer */
-                $this->discord->getLoop()->cancelTimer($timer);
+                /** @var ?TimerInterface $timer */
+                if ($timer) {
+                    $this->discord->getLoop()->cancelTimer($timer);
+                }
             }
         };
 
-        $timer = $this->discord->getLoop()->addTimer(60*15, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+        if ($timeout) {
+            $timer = $this->discord->getLoop()->addTimer($timeout, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+        }
 
         return $listener;
     }

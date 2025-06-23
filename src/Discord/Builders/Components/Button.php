@@ -455,7 +455,7 @@ class Button extends Interactive
      *
      * @return $this
      */
-    public function setListener(?callable $callback, Discord $discord, bool $oneOff = false): self
+    public function setListener(?callable $callback, Discord $discord, bool $oneOff = false, int|float|null $timeout = null): self
     {
         if ($this->style == Button::STYLE_LINK || $this->style == Button::STYLE_PREMIUM) {
             throw new \LogicException('You cannot add a listener to a link or premium button.');
@@ -476,7 +476,7 @@ class Button extends Interactive
             return $this;
         }
 
-        $this->listener = $this->createListener($callback, $oneOff);
+        $this->listener = $this->createListener($callback, $oneOff, $timeout);
 
         $discord->on(Event::INTERACTION_CREATE, $this->listener);
 
@@ -491,7 +491,7 @@ class Button extends Interactive
      *
      * @return callable The listener closure.
      */
-    protected function createListener(callable $callback, bool $oneOff = false): callable
+    protected function createListener(callable $callback, bool $oneOff = false, int|float|null $timeout = null): callable
     {
         $timer = null;
 
@@ -510,12 +510,16 @@ class Button extends Interactive
                     $this->removeListener();
                 }
 
-                /** @var TimerInterface $timer */
-                $this->discord->getLoop()->cancelTimer($timer);
+                /** @var ?TimerInterface $timer */
+                if ($timer) {
+                    $this->discord->getLoop()->cancelTimer($timer);
+                }
             }
         };
 
-        $timer = $this->discord->getLoop()->addTimer(60*15, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+        if ($timeout) {
+            $timer = $this->discord->getLoop()->addTimer($timeout, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+        }
 
         return $listener;
     }
