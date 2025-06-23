@@ -56,7 +56,9 @@ class InteractionData extends Part
         'custom_id',
         'component_type',
         'values',
-        'components', // modal only
+
+        // modal components
+        'components',
     ];
 
     /**
