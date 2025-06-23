@@ -708,6 +708,7 @@ class Interaction extends Part
                 }
                 $submit($interaction, $components);
                 $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
+
                 /** @var TimerInterface $timer */
                 $this->discord->getLoop()->cancelTimer($timer);
             }
