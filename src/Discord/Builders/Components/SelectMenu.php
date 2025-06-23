@@ -338,7 +338,7 @@ abstract class SelectMenu extends Interactive
      *
      * @todo setListener callback return for each type.
      */
-    public function setListener(?callable $callback, Discord $discord, bool $oneOff = false): self
+    public function setListener(?callable $callback, Discord $discord, bool $oneOff = false, int|float|null $timeout = null): self
     {
         if ($this->listener) {
             $this->discord->removeListener(Event::INTERACTION_CREATE, $this->listener);
@@ -350,7 +350,7 @@ abstract class SelectMenu extends Interactive
             return $this;
         }
 
-        $this->listener = $this->createListener($callback, $oneOff);
+        $this->listener = $this->createListener($callback, $oneOff, $timeout);
 
         $discord->on(Event::INTERACTION_CREATE, $this->listener);
 
