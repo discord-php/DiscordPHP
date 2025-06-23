@@ -17,6 +17,7 @@ use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
+use React\EventLoop\TimerInterface;
 use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
@@ -368,7 +369,9 @@ abstract class SelectMenu extends Interactive
      */
     protected function createListener(callable $callback, bool $oneOff = false): callable
     {
-        return function(Interaction $interaction) use ($callback, $oneOff) {
+        $timer = null;
+
+        $listener = function(Interaction $interaction) use ($callback, $oneOff, &$timer) {
             if ($interaction->data->component_type == $this->type &&
                 $interaction->data->custom_id == $this->custom_id) {
                 if (empty($this->options)) {
@@ -395,8 +398,15 @@ abstract class SelectMenu extends Interactive
                 if ($oneOff) {
                     $this->removeListener();
                 }
+
+                /** @var TimerInterface $timer */
+                $this->discord->getLoop()->cancelTimer($timer);
             }
         };
+
+        $timer = $this->discord->getLoop()->addTimer(60*15, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+
+        return $listener;
     }
 
     /**
