@@ -32,6 +32,7 @@ use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
+use React\EventLoop\TimerInterface;
 use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
@@ -693,7 +694,8 @@ class Interaction extends Part
      */
     protected function createListener(string $custom_id, callable $submit): callable
     {
-        return $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener) {
+        $timer = null;
+        $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener, &$timer) {
             if ($interaction->type == self::TYPE_MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
                 $components = Collection::for(RequestComponent::class, 'custom_id');
                 foreach ($interaction->data->components as $actionrow) {
@@ -705,8 +707,12 @@ class Interaction extends Part
                 }
                 $submit($interaction, $components);
                 $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
+                /** @var TimerInterface $timer */
+                $this->discord->getLoop()->cancelTimer($timer);
             }
         };
+        $timer = $this->discord->getLoop()->addTimer(60*15, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+        return $listener;
     }
 
     /**
