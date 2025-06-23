@@ -695,6 +695,7 @@ class Interaction extends Part
     protected function createListener(string $custom_id, callable $submit): callable
     {
         $timer = null;
+
         $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener, &$timer) {
             if ($interaction->type == self::TYPE_MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
                 $components = Collection::for(RequestComponent::class, 'custom_id');
@@ -711,7 +712,9 @@ class Interaction extends Part
                 $this->discord->getLoop()->cancelTimer($timer);
             }
         };
+
         $timer = $this->discord->getLoop()->addTimer(60*15, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+
         return $listener;
     }
 
