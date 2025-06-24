@@ -425,7 +425,7 @@ trait CommandAttributes
      *
      * @return $this
      */
-    public function setContextPermissions(?array $contexts): self
+    public function setContext(?array $contexts): self
     {
         if (isset($this->guild_id)) {
             throw new \DomainException('Only globally-scopped commands can have contexts.');
