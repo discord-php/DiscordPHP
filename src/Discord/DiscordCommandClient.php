@@ -476,7 +476,7 @@ class DiscordCommandClient extends Discord
      */
     public function __get(string $name)
     {
-        $allowed = ['commands', 'aliases'];
+        static $allowed = ['commands', 'aliases'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};

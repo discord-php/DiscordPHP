@@ -111,7 +111,7 @@ class Role extends Part implements Stringable
             return null;
         }
 
-        $allowed = ['png', 'jpg', 'webp'];
+        static $allowed = ['png', 'jpg', 'webp'];
 
         if (! in_array(strtolower($format), $allowed)) {
             $format = 'png';

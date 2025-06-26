@@ -751,7 +751,7 @@ class Member extends Part implements Stringable
         }
 
         if (isset($format)) {
-            $allowed = ['png', 'jpg', 'webp', 'gif'];
+            static $allowed = ['png', 'jpg', 'webp', 'gif'];
 
             if (! in_array(strtolower($format), $allowed)) {
                 $format = 'webp';

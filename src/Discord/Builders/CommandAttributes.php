@@ -323,7 +323,7 @@ trait CommandAttributes
             throw new \DomainException('Only globally-scopped commands can have an integration type.');
         }
 
-        $allowed = [
+        static $allowed = [
             Application::INTEGRATION_TYPE_GUILD_INSTALL,
             Application::INTEGRATION_TYPE_USER_INSTALL,
         ];
@@ -377,7 +377,7 @@ trait CommandAttributes
             throw new \DomainException('Only globally-scopped commands can have context.');
         }
 
-        $allowed = [
+        static $allowed = [
             Interaction::CONTEXT_TYPE_GUILD,
             Interaction::CONTEXT_TYPE_BOT_DM,
             Interaction::CONTEXT_TYPE_PRIVATE_CHANNEL,
@@ -451,7 +451,7 @@ trait CommandAttributes
             throw new \DomainException('Only PRIMARY_ENTRY_POINT Command type can have handler.');
         }
 
-        $allowed = [Command::APP_HANDLER, Command::DISCORD_LAUNCH_ACTIVITY];
+        static $allowed = [Command::APP_HANDLER, Command::DISCORD_LAUNCH_ACTIVITY];
 
         if (is_int($handler) && ! in_array($handler, $allowed)) {
             throw new \DomainException('Invalid handler provided.');

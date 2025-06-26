@@ -132,7 +132,7 @@ class AllowedMentions implements JsonSerializable
      */
     public function addParse(...$items): self
     {
-        $allowed = [self::TYPE_ROLE, self::TYPE_USER, self::TYPE_EVERYONE];
+        static $allowed = [self::TYPE_ROLE, self::TYPE_USER, self::TYPE_EVERYONE];
 
         foreach ($items as &$item) {
             if (!is_string($item)) {
