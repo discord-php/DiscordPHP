@@ -17,6 +17,7 @@ use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
+use React\EventLoop\TimerInterface;
 use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
@@ -337,7 +338,7 @@ abstract class SelectMenu extends Interactive
      *
      * @todo setListener callback return for each type.
      */
-    public function setListener(?callable $callback, Discord $discord, bool $oneOff = false): self
+    public function setListener(?callable $callback, Discord $discord, bool $oneOff = false, int|float|null $timeout = null): self
     {
         if ($this->listener) {
             $this->discord->removeListener(Event::INTERACTION_CREATE, $this->listener);
@@ -349,7 +350,7 @@ abstract class SelectMenu extends Interactive
             return $this;
         }
 
-        $this->listener = $this->createListener($callback, $oneOff);
+        $this->listener = $this->createListener($callback, $oneOff, $timeout);
 
         $discord->on(Event::INTERACTION_CREATE, $this->listener);
 
@@ -359,16 +360,19 @@ abstract class SelectMenu extends Interactive
     /**
      * Creates a listener callback for handling select menu interactions.
      *
-     * @param callable $callback The callback to execute when the interaction is received.
-     *                           If the select menu has options, the callback receives
-     *                           ($interaction, $options), otherwise just ($interaction).
-     * @param bool $oneOff Whether the listener should be removed after being triggered once.
+     * @param callable       $callback The callback to execute when the interaction is received.
+     *                                   If the select menu has options, the callback receives
+     *                                   ($interaction, $options), otherwise just ($interaction).
+     * @param bool           $oneOff   Whether the listener should be removed after being triggered once.
+     * @param int|float|null $timeout  Optional timeout in seconds after which the listener will be removed.
      *
      * @return callable The listener closure to be registered for interaction events.
      */
-    protected function createListener(callable $callback, bool $oneOff = false): callable
+    protected function createListener(callable $callback, bool $oneOff = false, int|float|null $timeout = null): callable
     {
-        return function(Interaction $interaction) use ($callback, $oneOff) {
+        $timer = null;
+
+        $listener = function(Interaction $interaction) use ($callback, $oneOff, &$timer) {
             if ($interaction->data->component_type == $this->type &&
                 $interaction->data->custom_id == $this->custom_id) {
                 if (empty($this->options)) {
@@ -395,8 +399,19 @@ abstract class SelectMenu extends Interactive
                 if ($oneOff) {
                     $this->removeListener();
                 }
+
+                /** @var ?TimerInterface $timer */
+                if ($timer) {
+                    $this->discord->getLoop()->cancelTimer($timer);
+                }
             }
         };
+
+        if ($timeout) {
+            $timer = $this->discord->getLoop()->addTimer($timeout, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+        }
+
+        return $listener;
     }
 
     /**

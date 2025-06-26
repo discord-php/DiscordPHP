@@ -370,6 +370,8 @@ trait CommandAttributes
      * @throws \DomainException If the command is not globally-scoped.
      *
      * @return $this
+     *
+     * @since 10.18.0
      */
     public function addContext(int $context): self
     {
@@ -402,6 +404,8 @@ trait CommandAttributes
      * @throws \DomainException If the command is not globally-scoped.
      *
      * @return $this
+     *
+     * @since 10.18.0
      */
     public function removeContext(int $context): self
     {
@@ -424,8 +428,10 @@ trait CommandAttributes
      * @throws \DomainException If the command is not globally-scoped.
      *
      * @return $this
+     *
+     * @since 10.18.0
      */
-    public function setContextPermissions(?array $contexts): self
+    public function setContext(?array $contexts): self
     {
         if (isset($this->guild_id)) {
             throw new \DomainException('Only globally-scopped commands can have contexts.');

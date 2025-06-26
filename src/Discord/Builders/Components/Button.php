@@ -17,6 +17,7 @@ use Discord\Discord;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
+use React\EventLoop\TimerInterface;
 use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
@@ -446,15 +447,16 @@ class Button extends Interactive
      *
      * The button listener will not persist when the bot restarts.
      *
-     * @param ?callable $callback Callback to call when the button is pressed. Will be called with the interaction object.
-     * @param Discord   $discord  Discord client.
-     * @param bool      $oneOff   Whether the listener should be removed after the button is pressed for the first time.
+     * @param ?callable      $callback Callback to call when the button is pressed. Will be called with the interaction object.
+     * @param Discord        $discord  Discord client.
+     * @param bool           $oneOff   Whether the listener should be removed after the button is pressed for the first time.
+     * @param int|float|null $timeout Optional timeout in seconds after which the listener will be removed.
      *
      * @throws \LogicException
      *
      * @return $this
      */
-    public function setListener(?callable $callback, Discord $discord, bool $oneOff = false): self
+    public function setListener(?callable $callback, Discord $discord, bool $oneOff = false, int|float|null $timeout = null): self
     {
         if ($this->style == Button::STYLE_LINK || $this->style == Button::STYLE_PREMIUM) {
             throw new \LogicException('You cannot add a listener to a link or premium button.');
@@ -475,7 +477,7 @@ class Button extends Interactive
             return $this;
         }
 
-        $this->listener = $this->createListener($callback, $oneOff);
+        $this->listener = $this->createListener($callback, $oneOff, $timeout);
 
         $discord->on(Event::INTERACTION_CREATE, $this->listener);
 
@@ -485,14 +487,17 @@ class Button extends Interactive
     /**
      * Creates a listener.
      *
-     * @param callable $callback The callback to execute when the interaction occurs.
-     * @param bool $oneOff Whether the listener should be removed after one use.
+     * @param callable       $callback The callback to execute when the interaction occurs.
+     * @param bool           $oneOff   Whether the listener should be removed after one use.
+     * @param int|float|null $timeout  Optional timeout in seconds after which the listener will be removed.
      *
      * @return callable The listener closure.
      */
-    protected function createListener(callable $callback, bool $oneOff = false): callable
+    protected function createListener(callable $callback, bool $oneOff = false, int|float|null $timeout = null): callable
     {
-        return function (Interaction $interaction) use ($callback, $oneOff) {
+        $timer = null;
+
+        $listener = function (Interaction $interaction) use ($callback, $oneOff, &$timer) {
             if ($interaction->data->component_type == Component::TYPE_BUTTON && $interaction->data->custom_id == $this->custom_id) {
                 $response = $callback($interaction);
                 $ack = static fn () => $interaction->isResponded() ?: $interaction->acknowledge();
@@ -506,8 +511,19 @@ class Button extends Interactive
                 if ($oneOff) {
                     $this->removeListener();
                 }
+
+                /** @var ?TimerInterface $timer */
+                if ($timer) {
+                    $this->discord->getLoop()->cancelTimer($timer);
+                }
             }
         };
+
+        if ($timeout) {
+            $timer = $this->discord->getLoop()->addTimer($timeout, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+        }
+
+        return $listener;
     }
 
     /**

@@ -32,6 +32,7 @@ use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
+use React\EventLoop\TimerInterface;
 use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
@@ -675,7 +676,7 @@ class Interaction extends Part
             ],
         ])->then(function ($response) use ($custom_id, $submit) {
             if ($submit) {
-                $listener = $this->createListener($custom_id, $submit);
+                $listener = $this->createListener($custom_id, $submit, 60*15);
                 $this->discord->on(Event::INTERACTION_CREATE, $listener);
             }
 
@@ -686,14 +687,17 @@ class Interaction extends Part
     /**
      * Creates a listener callback for handling modal submit interactions with a specific custom ID.
      *
-     * @param string $custom_id The custom ID to match against the interaction's custom_id.
-     * @param callable $submit The callback to execute when the interaction matches. Receives the interaction and a collection of components.
+     * @param string         $custom_id The custom ID to match against the interaction's custom_id.
+     * @param callable       $submit    The callback to execute when the interaction matches. Receives the interaction and a collection of components.
+     * @param int|float|null $timeout   Optional timeout in seconds after which the listener will be removed. (Mandatory for modal submit interactions)
      *
      * @return callable The listener callback to be registered for interaction events.
      */
-    protected function createListener(string $custom_id, callable $submit): callable
+    protected function createListener(string $custom_id, callable $submit, int|float|null $timeout = null): callable
     {
-        return $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener) {
+        $timer = null;
+
+        $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener, &$timer) {
             if ($interaction->type == self::TYPE_MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
                 $components = Collection::for(RequestComponent::class, 'custom_id');
                 foreach ($interaction->data->components as $actionrow) {
@@ -705,8 +709,19 @@ class Interaction extends Part
                 }
                 $submit($interaction, $components);
                 $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
+
+                /** @var ?TimerInterface $timer */
+                if ($timer !== null) {
+                    $this->discord->getLoop()->cancelTimer($timer);
+                }
             }
         };
+
+        if ($timeout) {
+            $timer = $this->discord->getLoop()->addTimer($timeout, fn () => $this->discord->removeListener(Event::INTERACTION_CREATE, $listener));
+        }
+
+        return $listener;
     }
 
     /**
