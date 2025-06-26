@@ -323,7 +323,7 @@ trait CommandAttributes
             throw new \DomainException('Only globally-scopped commands can have an integration type.');
         }
 
-        $allowed = [
+        static $allowed = [
             Application::INTEGRATION_TYPE_GUILD_INSTALL,
             Application::INTEGRATION_TYPE_USER_INSTALL,
         ];
@@ -370,6 +370,8 @@ trait CommandAttributes
      * @throws \DomainException If the command is not globally-scoped.
      *
      * @return $this
+     *
+     * @since 10.18.0
      */
     public function addContext(int $context): self
     {
@@ -377,7 +379,7 @@ trait CommandAttributes
             throw new \DomainException('Only globally-scopped commands can have context.');
         }
 
-        $allowed = [
+        static $allowed = [
             Interaction::CONTEXT_TYPE_GUILD,
             Interaction::CONTEXT_TYPE_BOT_DM,
             Interaction::CONTEXT_TYPE_PRIVATE_CHANNEL,
@@ -402,6 +404,8 @@ trait CommandAttributes
      * @throws \DomainException If the command is not globally-scoped.
      *
      * @return $this
+     *
+     * @since 10.18.0
      */
     public function removeContext(int $context): self
     {
@@ -424,6 +428,8 @@ trait CommandAttributes
      * @throws \DomainException If the command is not globally-scoped.
      *
      * @return $this
+     *
+     * @since 10.18.0
      */
     public function setContext(?array $contexts): self
     {
@@ -451,7 +457,7 @@ trait CommandAttributes
             throw new \DomainException('Only PRIMARY_ENTRY_POINT Command type can have handler.');
         }
 
-        $allowed = [Command::APP_HANDLER, Command::DISCORD_LAUNCH_ACTIVITY];
+        static $allowed = [Command::APP_HANDLER, Command::DISCORD_LAUNCH_ACTIVITY];
 
         if (is_int($handler) && ! in_array($handler, $allowed)) {
             throw new \DomainException('Invalid handler provided.');
