@@ -1225,7 +1225,7 @@ class Discord
             }
         }
 
-        $allowed = ['online', 'dnd', 'idle', 'invisible', 'offline'];
+        static $allowed = ['online', 'dnd', 'idle', 'invisible', 'offline'];
 
         if (! in_array($status, $allowed)) {
             $status = 'online';
@@ -1685,7 +1685,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
+        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};

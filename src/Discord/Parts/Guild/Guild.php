@@ -520,7 +520,7 @@ class Guild extends Part
         }
 
         if (isset($format)) {
-            $allowed = ['png', 'jpg', 'webp', 'gif'];
+            static $allowed = ['png', 'jpg', 'webp', 'gif'];
 
             if (! in_array(strtolower($format), $allowed)) {
                 $format = 'webp';
@@ -558,7 +558,7 @@ class Guild extends Part
             return null;
         }
 
-        $allowed = ['png', 'jpg', 'webp'];
+        static $allowed = ['png', 'jpg', 'webp'];
 
         if (! in_array(strtolower($format), $allowed)) {
             $format = 'webp';

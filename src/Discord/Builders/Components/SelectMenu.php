@@ -150,7 +150,7 @@ abstract class SelectMenu extends Interactive
      */
     public function setType(int $type): self
     {
-        $allowed_types = [self::TYPE_STRING_SELECT, self::TYPE_USER_SELECT, self::TYPE_ROLE_SELECT, self::TYPE_MENTIONABLE_SELECT, self::TYPE_CHANNEL_SELECT];
+        static $allowed_types = [self::TYPE_STRING_SELECT, self::TYPE_USER_SELECT, self::TYPE_ROLE_SELECT, self::TYPE_MENTIONABLE_SELECT, self::TYPE_CHANNEL_SELECT];
         if (! in_array($type, $allowed_types)) {
             throw new \InvalidArgumentException('Invalid select menu type.');
         }
@@ -245,7 +245,7 @@ abstract class SelectMenu extends Interactive
 
     public function setDefaultValues(?array $default_values): self
     {
-        $allowed_types = [self::TYPE_USER_SELECT, self::TYPE_ROLE_SELECT, self::TYPE_MENTIONABLE_SELECT, self::TYPE_CHANNEL_SELECT];
+        static $allowed_types = [self::TYPE_USER_SELECT, self::TYPE_ROLE_SELECT, self::TYPE_MENTIONABLE_SELECT, self::TYPE_CHANNEL_SELECT];
         if (! in_array($this->type, $allowed_types)) {
             throw new \InvalidArgumentException('Default values can only be set for user, role, mentionable, and channel selects.');
         }

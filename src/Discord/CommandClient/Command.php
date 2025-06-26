@@ -311,7 +311,7 @@ class Command
      */
     public function __get(string $variable)
     {
-        $allowed = ['command', 'description', 'longDescription', 'usage', 'cooldown', 'cooldownMessage', 'showHelp'];
+        static $allowed = ['command', 'description', 'longDescription', 'usage', 'cooldown', 'cooldownMessage', 'showHelp'];
 
         if (in_array($variable, $allowed)) {
             return $this->{$variable};
