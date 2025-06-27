@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord;
 
 use Discord\Exceptions\IntentException;
+use Discord\Exceptions\Runtime\RequiredExtensionNotLoadedException;
 use Discord\Factory\Factory;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\CacheConfig;
@@ -36,14 +37,18 @@ use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
+use Discord\Voice\Voice;
 use Discord\Voice\VoiceClient;
+use Discord\Voice\VoiceManager;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildCreate;
-use Discord\WebSockets\Payload;
 use Discord\WebSockets\Handlers;
 use Discord\WebSockets\Intents;
 use Discord\WebSockets\Op;
+use Discord\WebSockets\Payload;
 use Evenement\EventEmitterTrait;
+use function React\Async\coroutine;
+use function React\Promise\all;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
@@ -55,12 +60,10 @@ use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
+
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
-use function React\Async\coroutine;
-use function React\Promise\all;
 
 /**
  * The Discord client class.
@@ -83,7 +86,6 @@ use function React\Promise\all;
  * @property PrivateChannelRepository   $private_channels
  * @property SoundRepository            $sounds
  * @property UserRepository             $users
-
  */
 class Discord
 {
@@ -109,13 +111,6 @@ class Discord
      * @var LoggerInterface Logger.
      */
     protected $logger;
-
-    /**
-     * An array of loggers for voice clients.
-     *
-     * @var ?LoggerInterface[] Loggers.
-     */
-    protected $voiceLoggers = [];
 
     /**
      * An array of options passed to the client.
@@ -193,13 +188,6 @@ class Discord
      * @var string Session ID.
      */
     protected $sessionId;
-
-    /**
-     * An array of voice clients that are currently connected.
-     *
-     * @var array Voice Clients.
-     */
-    protected $voiceClients = [];
 
     /**
      * An array of large guilds that need to be requested for members.
@@ -350,6 +338,13 @@ class Discord
     private $application_commands;
 
     /**
+     * The voice handler, of clients and packets.
+     *
+     * @var VoiceManager
+     */
+    public VoiceManager $voice;
+
+    /**
      * The transport compression setting.
      *
      * @var bool Whether to use transport compression.
@@ -374,7 +369,7 @@ class Discord
     {
         // x86 need gmp extension for big integer operation
         if (PHP_INT_SIZE === 4 && ! BigInt::init()) {
-            throw new \RuntimeException('ext-gmp is not loaded, it is required for 32-bits (x86) PHP.');
+            throw new RequiredExtensionNotLoadedException();
         }
 
         $options = $this->resolveOptions($options);
@@ -384,7 +379,8 @@ class Discord
         $this->loop = $options['loop'];
         $this->logger = $options['logger'];
 
-        if (!in_array(php_sapi_name(), ['cli', 'micro'])) {
+        if (! in_array(php_sapi_name(), ['cli', 'micro'])) {
+            // @todo: throw an exception instead?
             $this->logger->critical('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.');
         }
 
@@ -425,9 +421,9 @@ class Discord
      */
     protected function handleVoiceServerUpdate(Payload $data): void
     {
-        if (isset($this->voiceClients[$data->d->guild_id])) {
+        if (isset($this->voice->clients[$data->d->guild_id])) {
             $this->logger->debug('voice server update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
-            $this->voiceClients[$data->d->guild_id]->handleVoiceServerChange((array) $data->d);
+            $this->voice->clients[$data->d->guild_id]->handleVoiceServerChange((array) $data->d);
         }
     }
 
@@ -606,14 +602,18 @@ class Discord
      */
     protected function handleVoiceStateUpdate(Payload $data): void
     {
-        if (isset($this->voiceClients[$data->d->guild_id])) {
+        if (isset($this->voice->clients[$data->d->guild_id])) {
             $this->logger->debug('voice state update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
-            $this->voiceClients[$data->d->guild_id]->handleVoiceStateUpdate($data->d);
+            $this->voice->clients[$data->d->guild_id]->handleVoiceStateUpdate($data->d);
         }
     }
 
     /**
      * Handles WebSocket connections received by the client.
+     *
+     * @uses \Discord\Discord::handleWsMessage
+     * @uses \Discord\Discord::handleWsClose
+     * @uses \Discord\Discord::handleWsError
      *
      * @param WebSocket $ws WebSocket client.
      */
@@ -784,6 +784,12 @@ class Discord
     /**
      * Handles dispatch events received by the WebSocket.
      *
+     * @uses \Discord\Discord::handleVoiceStateUpdate
+     * @uses \Discord\Discord::handleVoiceServerUpdate
+     * @uses \Discord\Discord::handleResume
+     * @uses \Discord\Discord::handleReady
+     * @uses \Discord\Discord::handleGuildMembersChunk
+     *
      * @param object $data Packet data.
      */
     protected function handleDispatch(object $data): void
@@ -807,7 +813,6 @@ class Discord
             } elseif (isset($handlers[$data->t])) {
                 $this->{$handlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
             }
-
 
             return;
         }
@@ -854,11 +859,13 @@ class Discord
                 $promise = coroutine([$handler, 'handle'], $data->d);
                 $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
             };
-        } else {
-            /** @var PromiseInterface */
-            $promise = coroutine([$handler, 'handle'], $data->d);
-            $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
+
+            return;
         }
+
+        /** @var PromiseInterface */
+        $promise = coroutine([$handler, 'handle'], $data->d);
+        $promise->then([$deferred, 'resolve'], [$deferred, 'reject']);
     }
 
     /**
@@ -1160,7 +1167,7 @@ class Discord
      *
      * @param Payload|array $data Packet data.
      */
-    protected function send(Payload|array $data, bool $force = false): void
+    public function send(Payload|array $data, bool $force = false): void
     {
         // Wait until payload count has been reset
         // Keep 5 payloads for heartbeats as required
@@ -1186,6 +1193,9 @@ class Discord
             return false;
         }
         $this->emittedInit = true;
+
+        $this->voice = new VoiceManager($this);
+        $this->logger->info('voice class initialized');
 
         $this->logger->info('client is ready');
         $this->emit('init', [$this]);
@@ -1248,12 +1258,13 @@ class Discord
      * Gets a voice client from a guild ID. Returns null if there is no voice client.
      *
      * @param string $guild_id The guild ID to look up.
+     * @deprecated Use $discord->voice->getVoiceClient()
      *
      * @return VoiceClient|null
      */
     public function getVoiceClient(string $guild_id): ?VoiceClient
     {
-        return $this->voiceClients[$guild_id] ?? null;
+        return $this->voice->clients[$guild_id] ?? null;
     }
 
     /**
@@ -1269,95 +1280,11 @@ class Discord
      * @since 10.0.0 Removed argument $check that has no effect (it is always checked)
      * @since 4.0.0
      *
-     * @return PromiseInterface<VoiceClient>
+     * @return PromiseInterface<Voice>
      */
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null): PromiseInterface
     {
-        $deferred = new Deferred();
-
-        if (! $channel->isVoiceBased()) {
-            $deferred->reject(new \RuntimeException('Channel must allow voice.'));
-
-            return $deferred->promise();
-        }
-
-        if (isset($this->voiceClients[$channel->guild_id])) {
-            $deferred->reject(new \RuntimeException('You cannot join more than one voice channel per guild.'));
-
-            return $deferred->promise();
-        }
-
-        $data = [
-            'user_id' => $this->id,
-            'deaf' => $deaf,
-            'mute' => $mute,
-        ];
-
-        $voiceStateUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceStateUpdate) {
-            if ($vs->guild_id != $channel->guild_id) {
-                return; // This voice state update isn't for our guild.
-            }
-
-            $data['session'] = $vs->session_id;
-            $this->logger->info('received session id for voice session', ['guild' => $channel->guild_id, 'session_id' => $vs->session_id]);
-            $this->removeListener(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
-        };
-
-        $voiceServerUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceServerUpdate, $deferred, $logger) {
-            if ($vs->guild_id != $channel->guild_id) {
-                return; // This voice server update isn't for our guild.
-            }
-
-            $data['token'] = $vs->token;
-            $data['endpoint'] = $vs->endpoint;
-            $data['dnsConfig'] = $discord->options['dnsConfig'];
-            $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
-
-            if (null === $logger) {
-                $logger = $this->logger;
-            }
-
-            $vc = new VoiceClient($this->ws, $this->loop, $channel, $logger, $data);
-
-            $vc->once('ready', function () use ($vc, $deferred, $channel, $logger) {
-                $logger->info('voice client is ready');
-                $this->voiceClients[$channel->guild_id] = $vc;
-
-                $vc->setBitrate($channel->bitrate);
-                $logger->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
-                $deferred->resolve($vc);
-            });
-            $vc->once('error', function ($e) use ($deferred, $logger) {
-                $logger->error('error initializing voice client', ['e' => $e->getMessage()]);
-                $deferred->reject($e);
-            });
-            $vc->once('close', function () use ($channel, $logger) {
-                $logger->warning('voice client closed');
-                unset($this->voiceClients[$channel->guild_id]);
-            });
-
-            $vc->start();
-
-            $this->voiceLoggers[$channel->guild_id] = $logger;
-            $this->removeListener(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
-        };
-
-        $this->on(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
-        $this->on(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
-
-        $payload = Payload::new(
-            Op::OP_VOICE_STATE_UPDATE,
-            [
-                'guild_id' => $channel->guild_id,
-                'channel_id' => $channel->id,
-                'self_mute' => $mute,
-                'self_deaf' => $deaf,
-            ],
-        );
-
-        $this->send($payload);
-
-        return $deferred->promise();
+        return $this->voice->createClientAndJoinChannel($channel, $this, $mute, $deaf);
     }
 
     /**
@@ -1657,7 +1584,7 @@ class Discord
      */
     public function getHttp(): Http
     {
-        return $this->http;
+        return $this->getHttpClient();
     }
 
     /**
@@ -1806,5 +1733,10 @@ class Discord
         $config[] = $this->client;
 
         return $config;
+    }
+
+    public function getWs(): ?WebSocket
+    {
+        return $this->ws;
     }
 }

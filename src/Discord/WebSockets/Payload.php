@@ -49,7 +49,13 @@ class Payload implements JsonSerializable
         $this->t = $t;
     }
 
-    public static function new(int $op, $d = null, ?int $s = null, ?string $t = null): self
+    public static function new(
+        int $op,
+        $d = null,
+        ?int $s = null,
+        // token - add attribute
+        ?string $t = null
+    ): self
     {
         return new self($op, $d, $s, $t);
     }
