@@ -77,12 +77,12 @@ class InteractionCreate extends Event
         if ($interaction->type == Interaction::TYPE_APPLICATION_COMMAND) {
             $command = $interaction->data;
             if (isset($this->discord->application_commands[$command->name])) {
-                $this->discord->application_commands[$command->name]->execute($command->options ?? [], $interaction);
+                $this->discord->application_commands[$command->name]->execute($command->options ?? [], $data);
             }
         } elseif ($interaction->type == Interaction::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE) {
             $command = $interaction->data;
             if (isset($this->discord->application_commands[$command->name])) {
-                $this->checkCommand($this->discord->application_commands[$command->name], $command->options, $interaction);
+                $this->checkCommand($this->discord->application_commands[$command->name], $command->options, $data);
             }
         }
 
@@ -92,13 +92,13 @@ class InteractionCreate extends Event
     /**
      * Recursively checks and handles command options for an interaction.
      *
-     * @param RegisteredCommand                   $command    The command or subcommand to check.
-     * @param ExCollectionInterface|Option[]|null $options    The list of options to process.
-     * @param Interaction                         $interaction The interaction instance from Discord.
+     * @param RegisteredCommand                   $command     The command or subcommand to check.
+     * @param ExCollectionInterface|Option[]|null $options     The list of options to process.
+     * @param Interaction|object                  $interaction The interaction instance from Discord.
      *
      * @return bool Returns true if a suggestion was triggered, otherwise false.
      */
-    protected function checkCommand(RegisteredCommand $command, $options, Interaction $interaction): bool
+    protected function checkCommand(RegisteredCommand $command, $options, object $interaction): bool
     {
         foreach ($options as $option) {
             /** @var ?RegisteredCommand $subCommand */
