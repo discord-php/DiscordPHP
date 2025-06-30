@@ -86,8 +86,8 @@ class RegisteredCommand
      * Executes the command. Will search for a sub-command if given, otherwise
      * executes the callback, if given.
      *
-     * @param Collection|array       $options
-     * @param Interaction $interaction
+     * @param ExCollectionInterface|Option[] $options
+     * @param Interaction                    $interaction
      *
      * @return bool Whether the command successfully executed.
      */
@@ -95,7 +95,6 @@ class RegisteredCommand
     {
         $params = Collection::for(Option::class, 'name');
 
-        /** @var Option $option */
         foreach ($options as $option) {
             if (isset($this->subCommands[$option->name])) {
                 if ($this->subCommands[$option->name]->execute($option->options ?? [], $interaction)) {
