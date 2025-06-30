@@ -16,6 +16,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Helpers\RegisteredCommand;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Interaction;
+use Discord\Parts\Interactions\Request\Option as RequestOption;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\WebSockets\Event;
 
@@ -92,9 +93,9 @@ class InteractionCreate extends Event
     /**
      * Recursively checks and handles command options for an interaction.
      *
-     * @param RegisteredCommand                   $command    The command or subcommand to check.
-     * @param ExCollectionInterface|Option[]|null $options    The list of options to process.
-     * @param Interaction                         $interaction The interaction instance from Discord.
+     * @param RegisteredCommand                          $command    The command or subcommand to check.
+     * @param ExCollectionInterface|RequestOption[]|null $options    The list of options to process.
+     * @param Interaction                                $interaction The interaction instance from Discord.
      *
      * @return bool Returns true if a suggestion was triggered, otherwise false.
      */
@@ -103,13 +104,13 @@ class InteractionCreate extends Event
         foreach ($options as $option) {
             /** @var ?RegisteredCommand $subCommand */
             if ($subCommand = $command->getSubCommand($option->name)) {
-                if (! empty($option->focused)) {
+                if (isset($option->focused) && $option->focused) {
                     return $subCommand->suggest($interaction);
                 }
                 if (! empty($option->options)) {
                     return $this->checkCommand($subCommand, $option->options, $interaction);
                 }
-            } elseif (! empty($option->focused)) {
+            } elseif (isset($option->focused) && $option->focused) {
                 return $command->suggest($interaction);
             }
         }
