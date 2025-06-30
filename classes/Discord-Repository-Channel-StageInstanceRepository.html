@@ -354,24 +354,11 @@
 <dd>The collection discriminator.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_cache">$cache</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Helpers-CacheWrapper.html"><abbr title="\Discord\Helpers\CacheWrapper">CacheWrapper</abbr></a>            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Repository-Channel-StageInstanceRepository.html#property_class">$class</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>Class type allowed into the collection.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Repository-AbstractRepository.html#property_discrim">$discrim</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>The collection discriminator.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Repository-Channel-StageInstanceRepository.html#property_endpoints">$endpoints</a>
@@ -537,14 +524,6 @@ within the class. If it does, it calls that method with the provided arguments.<
 based on the response of the callback.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_find">find()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null    </span>
-</dt>
-<dd>Runs a filter callback over the repository and returns the first part
-where the callback returns `true` when given the part.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-Channel-StageInstanceRepository.html#method_find">find()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-Channel-StageInstance.html"><abbr title="\Discord\Parts\Channel\StageInstance">StageInstance</abbr></a>|null    </span>
@@ -556,13 +535,6 @@ where the callback returns `true` when given the part.</dd>
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Finds the key of the first item that matches the callback.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_first">first()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null    </span>
-</dt>
-<dd>Returns the first cached part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-Channel-StageInstanceRepository.html#method_first">first()</a>
@@ -597,13 +569,6 @@ where the callback returns `true` when given the part.</dd>
                                 &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>    </span>
 </dt>
 <dd>Creates a collection from an array.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_get">get()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null    </span>
-</dt>
-<dd>Gets a part from the repository.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-Channel-StageInstanceRepository.html#method_get">get()</a>
@@ -654,13 +619,6 @@ where the callback returns `true` when given the part.</dd>
 <dd>Get the keys of the items.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_last">last()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null    </span>
-</dt>
-<dd>Returns the last cached part.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-Channel-StageInstanceRepository.html#method_last">last()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-Channel-StageInstance.html"><abbr title="\Discord\Parts\Channel\StageInstance">StageInstance</abbr></a>|null    </span>
@@ -707,13 +665,6 @@ where the callback returns `true` when given the part.</dd>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Unsets an index from the repository.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="-deprecated" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_pull">pull()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|mixed    </span>
-</dt>
-<dd>Pulls a part from the repository.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-Channel-StageInstanceRepository.html#method_pull">pull()</a>
@@ -857,14 +808,14 @@ where the callback returns `true` when given the part.</dd>
             phpdocumentor-element
             -property
             -public
-                                                -read-only        "
+                                                -read-only                    "
 >
     <h4 class="phpdocumentor-element__name" id="property_cache">
         $cache
         <a href="classes/Discord-Repository-AbstractRepository.html#property_cache" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
@@ -876,8 +827,8 @@ where the callback returns `true` when given the part.</dd>
     
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Discord\Repository\CacheWrapper">CacheWrapper</abbr></span>
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type"><abbr title="\Discord\Repository\CacheWrapper">CacheWrapper</abbr></span>
     <span class="phpdocumentor-signature__name">$cache</span>
     </code>
 
@@ -889,20 +840,22 @@ where the callback returns `true` when given the part.</dd>
 
     
 
+    
+
 </article>
                     <article
         class="
             phpdocumentor-element
             -property
             -public
-                                                        "
+                                                                    "
 >
     <h4 class="phpdocumentor-element__name" id="property_discrim">
         $discrim
         <a href="classes/Discord-Repository-AbstractRepository.html#property_discrim" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                                            </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
@@ -915,8 +868,8 @@ where the callback returns `true` when given the part.</dd>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$discrim</span>
     </code>
 
@@ -928,40 +881,6 @@ where the callback returns `true` when given the part.</dd>
 
     
 
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_cache">
-        $cache
-        <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_cache" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">116</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-CacheWrapper.html"><abbr title="\Discord\Helpers\CacheWrapper">CacheWrapper</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$cache</span>
-    </code>
-
-    
-    
-    
-
     
 
 </article>
@@ -970,14 +889,14 @@ where the callback returns `true` when given the part.</dd>
             phpdocumentor-element
             -property
             -protected
-                                                        "
+                                                                    "
 >
     <h4 class="phpdocumentor-element__name" id="property_class">
         $class
         <a href="classes/Discord-Repository-Channel-StageInstanceRepository.html#property_class" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                                            </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/StageInstanceRepository.php"><a href="files/src-discord-repository-channel-stageinstancerepository.html"><abbr title="src/Discord/Repository/Channel/StageInstanceRepository.php">StageInstanceRepository.php</abbr></a></abbr>
@@ -990,8 +909,8 @@ where the callback returns `true` when given the part.</dd>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$class</span>
      = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Channel\StageInstance::class</span></code>
 
@@ -1001,43 +920,6 @@ where the callback returns `true` when given the part.</dd>
 
     
 
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_discrim">
-        $discrim
-        <a href="classes/Discord-Repository-AbstractRepository.html#property_discrim" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">37</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The collection discriminator.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$discrim</span>
-     = <span class="phpdocumentor-signature__default-value">&#039;id&#039;</span></code>
-
-    
-        <section class="phpdocumentor-description"><p>Discriminator.</p>
-</section>
-
-    
-
     
 
 </article>
@@ -1046,14 +928,14 @@ where the callback returns `true` when given the part.</dd>
             phpdocumentor-element
             -property
             -protected
-                                                        "
+                                                                    "
 >
     <h4 class="phpdocumentor-element__name" id="property_endpoints">
         $endpoints
         <a href="classes/Discord-Repository-Channel-StageInstanceRepository.html#property_endpoints" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                                            </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/StageInstanceRepository.php"><a href="files/src-discord-repository-channel-stageinstancerepository.html"><abbr title="src/Discord/Repository/Channel/StageInstanceRepository.php">StageInstanceRepository.php</abbr></a></abbr>
@@ -1066,13 +948,15 @@ where the callback returns `true` when given the part.</dd>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$endpoints</span>
      = <span class="phpdocumentor-signature__default-value">[&#039;get&#039; =&gt; \Discord\Http\Endpoint::STAGE_INSTANCE, &#039;create&#039; =&gt; \Discord\Http\Endpoint::STAGE_INSTANCES, &#039;update&#039; =&gt; \Discord\Http\Endpoint::STAGE_INSTANCE, &#039;delete&#039; =&gt; \Discord\Http\Endpoint::STAGE_INSTANCE]</span></code>
 
     
     
+    
+
     
 
     
@@ -1083,14 +967,14 @@ where the callback returns `true` when given the part.</dd>
             phpdocumentor-element
             -property
             -protected
-                                                        "
+                                                                    "
 >
     <h4 class="phpdocumentor-element__name" id="property_factory">
         $factory
         <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_factory" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                                            </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
@@ -1103,8 +987,8 @@ where the callback returns `true` when given the part.</dd>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">Factory</abbr></a></span>
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">Factory</abbr></a></span>
     <span class="phpdocumentor-signature__name">$factory</span>
     </code>
 
@@ -1116,20 +1000,22 @@ where the callback returns `true` when given the part.</dd>
 
     
 
+    
+
 </article>
                     <article
         class="
             phpdocumentor-element
             -property
             -protected
-                                                        "
+                                                                    "
 >
     <h4 class="phpdocumentor-element__name" id="property_http">
         $http
         <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_http" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                                            </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
@@ -1142,8 +1028,8 @@ where the callback returns `true` when given the part.</dd>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Discord\Http\Http">Http</abbr></span>
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type"><abbr title="\Discord\Http\Http">Http</abbr></span>
     <span class="phpdocumentor-signature__name">$http</span>
     </code>
 
@@ -1155,20 +1041,22 @@ where the callback returns `true` when given the part.</dd>
 
     
 
+    
+
 </article>
                     <article
         class="
             phpdocumentor-element
             -property
             -protected
-                                                        "
+                                                                    "
 >
     <h4 class="phpdocumentor-element__name" id="property_items">
         $items
         <a href="classes/Discord-Repository-AbstractRepository.html#property_items" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                                            </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
@@ -1181,13 +1069,15 @@ where the callback returns `true` when given the part.</dd>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$items</span>
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
     
     
+    
+
     
 
     
@@ -1198,14 +1088,14 @@ where the callback returns `true` when given the part.</dd>
             phpdocumentor-element
             -property
             -protected
-                                                        "
+                                                                    "
 >
     <h4 class="phpdocumentor-element__name" id="property_vars">
         $vars
         <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_vars" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                </span>
+                                            </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
@@ -1218,14 +1108,16 @@ where the callback returns `true` when given the part.</dd>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$vars</span>
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
     
         <section class="phpdocumentor-description"><p>Variables.</p>
 </section>
+
+    
 
     
 
@@ -2174,60 +2066,6 @@ based on the response of the callback.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_find">
         find()
-        <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_find" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">630</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Runs a filter callback over the repository and returns the first part
-where the callback returns `true` when given the part.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">find</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$callback</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$callback</span>
-                : <span class="phpdocumentor-signature__argument__return-type">callable</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p><code class="prettyprint">null</code> if no items returns <code class="prettyprint">true</code> when called in the callback.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_find">
-        find()
         <a href="classes/Discord-Repository-Channel-StageInstanceRepository.html#method_find" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
@@ -2312,45 +2150,6 @@ where the callback returns `true` when given the part.</p>
     
 
     
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_first">
-        first()
-        <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_first" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">525</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the first cached part.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">first</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span>
-            </section>
-
 </article>
                     <article
         class="phpdocumentor-element
@@ -2647,62 +2446,6 @@ where the callback returns `true` when given the part.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a></span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_get">
-        get()
-        <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_get" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">399</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Gets a part from the repository.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discrim</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$discrim</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span>
             </section>
 
 </article>
@@ -3039,45 +2782,6 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, int&gt;|array&lt;string|int, string&gt;</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_last">
-        last()
-        <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_last" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">548</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the last cached part.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">last</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span>
             </section>
 
 </article>
@@ -3441,69 +3145,6 @@ This method is deprecated for userland code but can still be used internally wit
     
 
     
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-            -deprecated                                            "
->
-    <h4 class="phpdocumentor-element__name" id="method_pull">
-        pull()
-        <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_pull" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">473</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Pulls a part from the repository.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">pull</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$default</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-                <div class="phpdocumentor-admonition">
-        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-            <article>
-                <p>Use async <code class="prettyprint">$repository-&gt;cachePull()</code></p>
-
-            </article>
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|int</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$default</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|mixed</span>
-            </section>
-
 </article>
                     <article
         class="phpdocumentor-element
@@ -4564,9 +4205,7 @@ This method is deprecated for userland code but can still be used internally wit
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_cache">$cache</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_discrim">$discrim</a></li>
-                                                    <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_cache">$cache</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-Channel-StageInstanceRepository.html#property_class">$class</a></li>
-                                                    <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_discrim">$discrim</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-Channel-StageInstanceRepository.html#property_endpoints">$endpoints</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_factory">$factory</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_http">$http</a></li>
@@ -4595,16 +4234,13 @@ This method is deprecated for userland code but can still be used internally wit
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_fetch">fetch()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_fill">fill()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_filter">filter()</a></li>
-                                            <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_find">find()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-Channel-StageInstanceRepository.html#method_find">find()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_find_key">find_key()</a></li>
-                                            <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_first">first()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-Channel-StageInstanceRepository.html#method_first">first()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_for">for()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_fresh">fresh()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_freshen">freshen()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_from">from()</a></li>
-                                            <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_get">get()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-Channel-StageInstanceRepository.html#method_get">get()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_getIterator">getIterator()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_has">has()</a></li>
@@ -4612,7 +4248,6 @@ This method is deprecated for userland code but can still be used internally wit
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_isset">isset()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_jsonSerialize">jsonSerialize()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_keys">keys()</a></li>
-                                            <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_last">last()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-Channel-StageInstanceRepository.html#method_last">last()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_map">map()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_merge">merge()</a></li>
@@ -4620,7 +4255,6 @@ This method is deprecated for userland code but can still be used internally wit
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetGet">offsetGet()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetSet">offsetSet()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetUnset">offsetUnset()</a></li>
-                                            <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_pull">pull()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-Channel-StageInstanceRepository.html#method_pull">pull()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_push">push()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_pushItem">pushItem()</a></li>

@@ -101,10 +101,10 @@ Search.appendIndex(
             "summary": "Removes\u0020a\u0020context\u0020from\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029",
             "url": "classes/Discord-Builders-CommandAttributes.html#method_removeContext"
         },                {
-            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetContextPermissions\u0028\u0029",
-            "name": "setContextPermissions",
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetContext\u0028\u0029",
+            "name": "setContext",
             "summary": "Sets\u0020the\u0020contexts\u0020of\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029",
-            "url": "classes/Discord-Builders-CommandAttributes.html#method_setContextPermissions"
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setContext"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetHandler\u0028\u0029",
             "name": "setHandler",
@@ -295,6 +295,11 @@ Search.appendIndex(
             "name": "setListener",
             "summary": "Sets\u0020the\u0020callable\u0020listener\u0020for\u0020the\u0020button.\u0020The\u0020\u0060\u0024callback\u0060\u0020will\u0020be\u0020called\u0020when\u0020the\u0020button\nis\u0020pressed.",
             "url": "classes/Discord-Builders-Components-Button.html#method_setListener"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003AcreateListener\u0028\u0029",
+            "name": "createListener",
+            "summary": "Creates\u0020a\u0020listener.",
+            "url": "classes/Discord-Builders-Components-Button.html#method_createListener"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003AremoveListener\u0028\u0029",
             "name": "removeListener",
@@ -1095,6 +1100,11 @@ Search.appendIndex(
             "name": "setListener",
             "summary": "Sets\u0020the\u0020callable\u0020listener\u0020for\u0020the\u0020select\u0020menu.\u0020The\u0020\u0060\u0024callback\u0060\u0020function\nwill\u0020be\u0020called\u0020when\u0020the\u0020selection\u0020of\u0020the\u0020menu\u0020is\u0020changed.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#method_setListener"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AcreateListener\u0028\u0029",
+            "name": "createListener",
+            "summary": "Creates\u0020a\u0020listener\u0020callback\u0020for\u0020handling\u0020select\u0020menu\u0020interactions.",
+            "url": "classes/Discord-Builders-Components-SelectMenu.html#method_createListener"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AremoveListener\u0028\u0029",
             "name": "removeListener",
@@ -2280,6 +2290,11 @@ Search.appendIndex(
             "name": "setGateway",
             "summary": "Retrieves\u0020and\u0020sets\u0020the\u0020gateway\u0020URL\u0020for\u0020the\u0020client.",
             "url": "classes/Discord-Discord.html#method_setGateway"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AbuildParams\u0028\u0029",
+            "name": "buildParams",
+            "summary": "Builds\u0020the\u0020gateway\u0020connection\u0020parameters\u0020and\u0020resolves\u0020the\u0020deferred\u0020with\u0020the\u0020gateway\u0020URL\u0020and\u0020session\u0020information.",
+            "url": "classes/Discord-Discord.html#method_buildParams"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AresolveOptions\u0028\u0029",
             "name": "resolveOptions",
@@ -5611,6 +5626,11 @@ Search.appendIndex(
             "summary": "Gets\u0020all\u0020the\u0020users\u0020that\u0020have\u0020used\u0020this\u0020reaction.",
             "url": "classes/Discord-Parts-Channel-Reaction.html#method_getAllUsers"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Reaction\u003A\u003A__getUsers\u0028\u0029",
+            "name": "__getUsers",
+            "summary": "Recursively\u0020retrieves\u0020users\u0020who\u0020reacted,\u0020handling\u0020pagination.",
+            "url": "classes/Discord-Parts-Channel-Reaction.html#method___getUsers"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Reaction\u003A\u003AgetEmojiAttribute\u0028\u0029",
             "name": "getEmojiAttribute",
             "summary": "Gets\u0020the\u0020partial\u0020emoji\u0020attribute.",
@@ -5995,6 +6015,36 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Embed-Video.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\GetGatewayBot",
+            "name": "GetGatewayBot",
+            "summary": "An\u0020object\u0020based\u0020on\u0020the\u0020information\u0020in\u0020Get\u0020Gateway,\nplus\u0020additional\u0020metadata\u0020that\u0020can\u0020help\u0020during\u0020the\u0020operation\u0020of\u0020large\u0020or\u0020sharded\u0020bots.",
+            "url": "classes/Discord-Parts-Gateway-GetGatewayBot.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\GetGatewayBot\u003A\u003AgetSessionStartLimitAttribute\u0028\u0029",
+            "name": "getSessionStartLimitAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Gateway-GetGatewayBot.html#method_getSessionStartLimitAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\GetGatewayBot\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Gateway-GetGatewayBot.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\SessionStartLimit",
+            "name": "SessionStartLimit",
+            "summary": "Information\u0020on\u0020the\u0020current\u0020session\u0020start\u0020limit.",
+            "url": "classes/Discord-Parts-Gateway-SessionStartLimit.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\SessionStartLimit\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Parts-Gateway-SessionStartLimit.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway\\SessionStartLimit\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Gateway-SessionStartLimit.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\AuditLog",
             "name": "AuditLog",
@@ -8015,6 +8065,11 @@ Search.appendIndex(
             "name": "showModal",
             "summary": "Responds\u0020to\u0020the\u0020interaction\u0020with\u0020a\u0020popup\u0020modal.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#method_showModal"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003AcreateListener\u0028\u0029",
+            "name": "createListener",
+            "summary": "Creates\u0020a\u0020listener\u0020callback\u0020for\u0020handling\u0020modal\u0020submit\u0020interactions\u0020with\u0020a\u0020specific\u0020custom\u0020ID.",
+            "url": "classes/Discord-Parts-Interactions-Interaction.html#method_createListener"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003AhasAttachmentsExceedingLimit\u0028\u0029",
             "name": "hasAttachmentsExceedingLimit",
@@ -12796,6 +12851,11 @@ Search.appendIndex(
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-InteractionCreate.html#method_handle"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\InteractionCreate\u003A\u003AcheckCommand\u0028\u0029",
+            "name": "checkCommand",
+            "summary": "Recursively\u0020checks\u0020and\u0020handles\u0020command\u0020options\u0020for\u0020an\u0020interaction.",
+            "url": "classes/Discord-WebSockets-Events-InteractionCreate.html#method_checkCommand"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\InteractionCreate\u003A\u003AcacheMember\u0028\u0029",
             "name": "cacheMember",
             "summary": "Cache\u0020Member\u0020repository\u0020from\u0020Event\u0020data.",
@@ -13670,6 +13730,11 @@ Search.appendIndex(
             "name": "Embed",
             "summary": "",
             "url": "namespaces/discord-parts-embed.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Gateway",
+            "name": "Gateway",
+            "summary": "",
+            "url": "namespaces/discord-parts-gateway.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog",
             "name": "AuditLog",
