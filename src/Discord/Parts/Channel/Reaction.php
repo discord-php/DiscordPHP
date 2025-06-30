@@ -189,8 +189,7 @@ class Reaction extends Part
      */
     public function getAllUsers(): PromiseInterface
     {
-        $response = Collection::for(User::class);
-        return $this->__getUsers($response);
+        return $this->__getUsers(Collection::for(User::class));
     }
 
     /**
