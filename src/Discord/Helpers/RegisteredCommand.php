@@ -86,12 +86,12 @@ class RegisteredCommand
      * Executes the command. Will search for a sub-command if given, otherwise
      * executes the callback, if given.
      *
-     * @param Collection|array   $options
-     * @param Interaction|object $interaction
+     * @param Collection|array       $options
+     * @param Interaction $interaction
      *
      * @return bool Whether the command successfully executed.
      */
-    public function execute($options, object $interaction): bool
+    public function execute($options, Interaction $interaction): bool
     {
         $params = Collection::for(Option::class, 'name');
 
