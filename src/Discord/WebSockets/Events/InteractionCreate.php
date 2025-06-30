@@ -104,13 +104,13 @@ class InteractionCreate extends Event
         foreach ($options as $option) {
             /** @var ?RegisteredCommand $subCommand */
             if ($subCommand = $command->getSubCommand($option->name)) {
-                if (isset($option->focused) && $option->focused) {
+                if ($option->focused) {
                     return $subCommand->suggest($interaction);
                 }
                 if (! empty($option->options)) {
                     return $this->checkCommand($subCommand, $option->options, $interaction);
                 }
-            } elseif (isset($option->focused) && $option->focused) {
+            } elseif ($option->focused) {
                 return $command->suggest($interaction);
             }
         }
