@@ -138,8 +138,6 @@ class Poll extends Part
     public function expire(): PromiseInterface
     {
         return $this->http->post(Endpoint::bind(Endpoint::MESSAGE_POLL_EXPIRE, $this->channel_id, $this->message_id))
-            ->then(function ($response) {
-                return $this->factory->part(Message::class, (array) $response, true);
-            });
+            ->then(fn ($response) => $this->factory->part(Message::class, (array) $response, true));
     }
 }
