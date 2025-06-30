@@ -1119,7 +1119,7 @@ class Discord
     {
         $this->setGateway()->then(function ($gateway) {
             if (isset($gateway['session']) && $session = $gateway['session']) {
-                $this->logger->info('session data received', ['session' => $session]);
+                $this->logger->debug('session data received', ['session' => $session]);
                 if ($session['remaining'] < 2) {
                     $this->logger->error('exceeded number of reconnects allowed, waiting before attempting reconnect', $session);
                     $this->loop->addTimer($session['reset_after'] / 1000, function () {
