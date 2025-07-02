@@ -29,6 +29,7 @@ use Stringable;
  * @since 7.0.0 Namespace moved from Guild to Channel
  * @since 2.0.0
  *
+ * @property int                 $type                       The type of invite
  * @property string              $code                       The invite code.
  * @property Guild|null          $guild                      The partial guild that the invite is for.
  * @property string|null         $guild_id
@@ -42,6 +43,7 @@ use Stringable;
  * @property int|null            $approximate_member_count   Approximate count of total members, returned from the GET /invites/<code> endpoint when with_counts is true.
  * @property Carbon|null         $expires_at                 The expiration date of this invite, returned from the GET /invites/<code> endpoint when with_expiration is true.
  * @property ScheduledEvent|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
+ * @property int                 $flags                      Guild invite flags for guild invites.
  *
  * @property int|null    $uses       How many times the invite has been used.
  * @property int|null    $max_uses   How many times the invite can be used.
@@ -53,10 +55,15 @@ use Stringable;
  */
 class Invite extends Part implements Stringable
 {
+    public const TYPE_GUILD = 0;
+    public const TYPE_GROUP_DM = 1;
+    public const TYPE_FRIEND = 2;
+
     /**
      * {@inheritDoc}
      */
     protected $fillable = [
+        'type',
         'code',
         'guild',
         'channel',
@@ -83,6 +90,8 @@ class Invite extends Part implements Stringable
 
     public const TARGET_TYPE_STREAM = 1;
     public const TARGET_TYPE_EMBEDDED_APPLICATION = 2;
+
+    public const FLAG_IS_GUEST_INVITE = 1 << 0; // This invite is a guest invite for a voice channel
 
     /**
      * Returns the id attribute.
@@ -261,6 +270,16 @@ class Invite extends Part implements Stringable
         }
 
         return $this->factory->part(ScheduledEvent::class, (array) $this->attributes['guild_scheduled_event'], true);
+    }
+
+    /**
+     * Returns whether the guest invite flag is set.
+     *
+     * @return bool Whether the invite is a guest invite for a voice channel.
+     */
+    public function isGuestInvite(): bool
+    {
+        return ($this->flags & self::FLAG_IS_GUEST_INVITE) === self::FLAG_IS_GUEST_INVITE;
     }
 
     /**
