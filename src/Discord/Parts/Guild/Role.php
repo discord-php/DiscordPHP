@@ -27,7 +27,7 @@ use Stringable;
  *
  * @property      string         $id            The unique identifier of the role.
  * @property      string         $name          The name of the role.
- * @property      int            $color         Integer representation of hexadecimal color code.
+ * @property      int            $color         (deprecated) Integer representation of hexadecimal color code.
  * @property      Colors         $colors        The role's colors.
  * @property      bool           $hoist         If this role is pinned in the user listing
  * @property      ?string|null   $icon          The URL to the role icon.
