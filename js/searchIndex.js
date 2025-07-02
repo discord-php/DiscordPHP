@@ -7341,6 +7341,11 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020color\u0020for\u0020a\u0020role.\u0020RGB.",
             "url": "classes/Discord-Parts-Guild-Role.html#method_setColor"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003AsetColors\u0028\u0029",
+            "name": "setColors",
+            "summary": "Sets\u0020the\u0020colors\u0020for\u0020a\u0020role.",
+            "url": "classes/Discord-Parts-Guild-Role.html#method_setColors"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003AgetIconAttribute\u0028\u0029",
             "name": "getIconAttribute",
             "summary": "Returns\u0020the\u0020role\u0020icon.",
