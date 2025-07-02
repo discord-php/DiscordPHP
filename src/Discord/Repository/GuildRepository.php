@@ -15,6 +15,7 @@ namespace Discord\Repository;
 
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\GuildPreview;
 use React\Promise\PromiseInterface;
 
 /**
@@ -42,6 +43,7 @@ class GuildRepository extends AbstractRepository
         'update' => Endpoint::GUILD,
         'delete' => Endpoint::GUILD,
         'leave' => Endpoint::USER_CURRENT_GUILD,
+        'preview' => Endpoint::GUILD_PREVIEW,
     ];
 
     /**
@@ -67,5 +69,24 @@ class GuildRepository extends AbstractRepository
         return $this->http
             ->delete(Endpoint::bind(Endpoint::USER_CURRENT_GUILD, $guild))
             ->then(fn () => $this->cache->delete($guild)->then(fn ($success) => $this));
+    }
+
+    /**
+     * Returns the guild preview object for the given id. If the bot is not in the guild, then the guild must be discoverable.
+     *
+     * @link https://discord.com/developers/docs/resources/guild#get-guild-preview
+     *
+     * @param Guild|string $guild_id
+     *
+     * @return PromiseInterface<?GuildPreview>
+     */
+    public function preview($guild_id): PromiseInterface
+    {
+        if ($guild_id instanceof Guild) {
+            $guild_id = $guild_id->id;
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_PREVIEW, $guild_id))
+            ->then(fn ($data) => $data ? $this->createOf(GuildPreview::class, $data) : null);
     }
 }
