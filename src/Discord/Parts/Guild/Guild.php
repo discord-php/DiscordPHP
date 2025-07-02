@@ -268,11 +268,18 @@ class Guild extends Part
         'feature_invite_splash',
         'feature_linked_to_hub',
         'feature_member_verification_gate_enabled',
+        'feature_more_soundboard',
+        'feature_more_stickers',
         'feature_monetization_enabled',
         'feature_more_stickers',
         'feature_news',
         'feature_partnered',
         'feature_preview_enabled',
+        'feature_raid_alerts_disabled',
+        'feature_role_icons',
+        'feature_role_subscriptions_available_for_purchase',
+        'feature_role_subscriptions_enabled',
+        'feature_soundboard',
         'feature_private_threads',
         'feature_raid_alerts_enabled',
         'feature_role_icons',
@@ -283,6 +290,8 @@ class Guild extends Part
         'feature_verified',
         'feature_vip_regions',
         'feature_welcome_screen_enabled',
+        'feature_guest_enabled',
+        'feature_enhanced_role_colors',
     ];
 
     /**
