@@ -69,6 +69,7 @@ use Discord\Repository\Guild\StickerRepository;
  * @property-read bool               $feature_enhanced_role_colors                      Guild is able to set gradient colors to roles.
  * @property      int|null           $approximate_member_count                          Approximate number of members in this guild, returned from the GET /guilds/<id> endpoint when with_counts is true.
  * @property      int|null           $approximate_presence_count                        Approximate number of non-offline members in this guild, returned from the GET /guilds/<id> endpoint when with_counts is true.
+ * @property      ?string            $description                                       The description of the guild.
  * @property      StickerRepository  $stickers                                          Custom guild stickers.
  */
 class GuildPreview extends Part
