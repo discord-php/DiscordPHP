@@ -6601,6 +6601,16 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-Ban.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Colors",
+            "name": "Colors",
+            "summary": "The\u0020colors\u0020of\u0020a\u0020role.",
+            "url": "classes/Discord-Parts-Guild-Colors.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Colors\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-Colors.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\CommandPermissions",
             "name": "CommandPermissions",
             "summary": "Guild\u0020Application\u0020Command\u0020Permissions\u0020Class.",
@@ -7311,6 +7321,11 @@ Search.appendIndex(
             "summary": "A\u0020role\u0020defines\u0020permissions\u0020for\u0020the\u0020guild.\u0020Members\u0020can\u0020be\u0020added\u0020to\u0020the\u0020role.",
             "url": "classes/Discord-Parts-Guild-Role.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003AgetColorsAttribute\u0028\u0029",
+            "name": "getColorsAttribute",
+            "summary": "Gets\u0020the\u0020colors\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-Role.html#method_getColorsAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003AgetPermissionsAttribute\u0028\u0029",
             "name": "getPermissionsAttribute",
             "summary": "Gets\u0020the\u0020permissions\u0020attribute.",
@@ -7355,6 +7370,11 @@ Search.appendIndex(
             "name": "__toString",
             "summary": "Returns\u0020a\u0020formatted\u0020mention.",
             "url": "classes/Discord-Parts-Guild-Role.html#method___toString"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003AIN_PROMPT",
+            "name": "IN_PROMPT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Role.html#constant_IN_PROMPT"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003A\u0024fillable",
             "name": "fillable",
