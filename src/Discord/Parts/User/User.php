@@ -32,29 +32,30 @@ use function React\Promise\resolve;
  *
  * @since 2.0.0
  *
- * @property string             $id                     The unique identifier of the user.
- * @property string             $username               The username of the user.
- * @property string             $discriminator          The discriminator of the user.
- * @property string|null        $global_name            The user's display name, if it is set. For bots, this is the application name.
- * @property string             $displayname            The display name of the client.
- * @property ?string            $avatar                 The avatar URL of the user.
- * @property string|null        $avatar_hash            The avatar hash of the user.
- * @property bool|null          $bot                    Whether the user is a bot.
- * @property bool|null          $system                 Whether the user is a Discord system user.
- * @property bool|null          $mfa_enabled            Whether MFA is enabled.
- * @property ?string|null       $banner                 The banner URL of the user.
- * @property string|null        $banner_hash            The banner hash of the user.
- * @property ?int|null          $accent_color           The user's banner color encoded as an integer representation of hexadecimal color code.
- * @property string|null        $locale                 User locale.
- * @property bool|null          $verified               Whether the user is verified.
- * @property ?string|null       $email                  User email.
- * @property int|null           $flags                  User flags.
- * @property int|null           $premium_type           Type of nitro subscription.
- * @property int|null           $public_flags           Public flags on the user.
- * @property int|null           $avatar_decoration      The user's avatar decoration URL.
- * @property int|null           $avatar_decoration_hash The user's avatar decoration hash.
- * @property ?PrimaryGuild|null $primary_guild          The primary guild of the user.
- * @property ?Collectibles|null $collectibles           The user's collectibles.
+ * @property string                     $id                     The unique identifier of the user.
+ * @property string                     $username               The username of the user.
+ * @property string                     $discriminator          The discriminator of the user.
+ * @property string|null                $global_name            The user's display name, if it is set. For bots, this is the application name.
+ * @property string                     $displayname            The display name of the client.
+ * @property ?string                    $avatar                 The avatar URL of the user.
+ * @property string|null                $avatar_hash            The avatar hash of the user.
+ * @property bool|null                  $bot                    Whether the user is a bot.
+ * @property bool|null                  $system                 Whether the user is a Discord system user.
+ * @property bool|null                  $mfa_enabled            Whether MFA is enabled.
+ * @property ?string|null               $banner                 The banner URL of the user.
+ * @property string|null                $banner_hash            The banner hash of the user.
+ * @property ?int|null                  $accent_color           The user's banner color encoded as an integer representation of hexadecimal color code.
+ * @property string|null                $locale                 User locale.
+ * @property bool|null                  $verified               Whether the user is verified.
+ * @property ?string|null               $email                  User email.
+ * @property int|null                   $flags                  User flags.
+ * @property int|null                   $premium_type           Type of nitro subscription.
+ * @property int|null                   $public_flags           Public flags on the user.
+ * @property int|null                   $avatar_decoration      The user's avatar decoration URL.
+ * @property int|null                   $avatar_decoration_hash The user's avatar decoration hash.
+ * @property ?AvatarDecorationData|null $avatar_decoration_data Data for the user's avatar decoration.
+ * @property ?Collectibles|null         $collectibles           Data for the user's collectibles.
+ * @property ?PrimaryGuild|null         $primary_guild          The user's primary guild
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
@@ -103,9 +104,9 @@ class User extends Part implements Stringable
         'flags',
         'premium_type',
         'public_flags',
-        'avatar_decoration',
-        'primary_guild',
+        'avatar_decoration_data',
         'collectibles',
+        'primary_guild',
     ];
 
     /**
@@ -296,6 +297,34 @@ class User extends Part implements Stringable
     }
 
     /**
+     * Returns the avatar decoration data.
+     *
+     * @return ?AvatarDecorationData|null The avatar decoration.
+     */
+    public function getAvatarDecorationDataAttribute(): ?AvatarDecorationData
+    {
+        if (! isset($this->attributes['avatar_decoration_data'])) {
+            return null;
+        }
+
+        return $this->factory->part(AvatarDecorationData::class, (array) $this->attributes['avatar_decoration_data'], true);
+    }
+
+    /**
+     * Returns the collectibles for the client.
+     *
+     * @return ?Collectibles|null The collectibles data.
+     */
+    protected function getCollectiblesAttribute(): ?Collectibles
+    {
+        if (! isset($this->attributes['collectibles'])) {
+            return null;
+        }
+
+        return $this->factory->part(Collectibles::class, (array) $this->attributes['collectibles'], true);
+    }
+
+    /**
      * Returns the primary guild for the client.
      */
     protected function getPrimaryGuildAttribute(): ?PrimaryGuild
@@ -305,18 +334,6 @@ class User extends Part implements Stringable
         }
 
         return $this->factory->part(PrimaryGuild::class, (array) $this->attributes['primary_guild'], true);
-    }
-
-    /**
-     * Returns the collectibles for the client.
-     */
-    protected function getCollectiblesAttribute(): ?Collectibles
-    {
-        if (! isset($this->attributes['collectibles'])) {
-            return null;
-        }
-
-        return $this->factory->part(Collectibles::class, (array) $this->attributes['collectibles'], true);
     }
 
     /**
