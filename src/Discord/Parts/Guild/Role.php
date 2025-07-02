@@ -110,10 +110,34 @@ class Role extends Part implements Stringable
      * @param int $red   The red value in RGB.
      * @param int $green The green value in RGB.
      * @param int $blue  The blue value in RGB.
+     *
+     * @deprecated 10.18.2 Use `Role::setColors()`
      */
     public function setColor(int $red = 0, int $green = 0, int $blue = 0): void
     {
         $this->color = ($red * 16 ** 4 + $green * 16 ** 2 + $blue);
+    }
+
+    /**
+     * Sets the colors for a role.
+     *
+     * When sending tertiary_color the API enforces the role color to be a holographic style with values of:
+     * primary_color = 11127295, secondary_color = 16759788, and tertiary_color = 16761760.
+     *
+     * @param int      $primary   The primary color for the role.
+     * @param int|null $secondary The secondary color for the role, this will make the role a gradient between the other provided colors.
+     * @param int|null $tertiary  The tertiary color for the role, this will turn the gradient into a holographic style.
+     *
+     * @since 10.18.2
+     */
+    public function setColors(int $primary = 0, ?int $secondary = null, ?int $tertiary = null): void
+    {
+        $colors = ['primary_color' => $primary];
+        if ($secondary !== null) $colors['secondary_color'] = $secondary;
+        if ($tertiary !== null) $colors['tertiary_color'] = $tertiary;
+
+        $this->color = $primary;
+        $this->colors = $this->createOf(Colors::class, $colors);
     }
 
     /**
