@@ -66,6 +66,7 @@ use function React\Promise\resolve;
  * @property      string|null                  $guild_id                           The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
  * @property-read Guild|null                   $guild                              The guild that the channel belongs to. Only for text or voice channels.
  * @property      int|null                     $position                           The position of the channel on the sidebar.
+ * @property      ?array                       $permission_overwrites              Explicit permission overwrites for members and roles
  * @property      OverwriteRepository          $overwrites                         Permission overwrites
  * @property      ?string|null                 $name                               The name of the channel.
  * @property      ?string|null                 $topic                              The topic of the channel (0-4096 characters for forum channels, 0-1024 characters for all others).
@@ -84,7 +85,7 @@ use function React\Promise\resolve;
  * @property      ?string|null                 $parent_id                          ID of the parent channel.
  * @property      Carbon|null                  $last_pin_timestamp                 When the last message was pinned.
  * @property      ?string|null                 $rtc_region                         Voice region id for the voice channel, automatic when set to null.
- * @property      int|null                     o_quality_mode                      The camera video quality mode of the voice channel, 1 when not present.
+ * @property      int|null                     $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.
  * @property      int|null                     $default_auto_archive_duration      Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
  * @property      string|null                  $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on an application command interaction.
  * @property      int|null                     $flags                              Channel flags combined as a bitfield.
