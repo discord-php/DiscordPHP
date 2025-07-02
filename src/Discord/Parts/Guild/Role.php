@@ -27,22 +27,27 @@ use Stringable;
  *
  * @property      string         $id            The unique identifier of the role.
  * @property      string         $name          The name of the role.
- * @property      int            $color         The color of the guild.
- * @property      bool           $hoist         Whether the role is hoisted on the sidebar.
+ * @property      int            $color         Integer representation of hexadecimal color code.
+ * @property      Colors         $colors        The role's colors.
+ * @property      bool           $hoist         If this role is pinned in the user listing
  * @property      ?string|null   $icon          The URL to the role icon.
  * @property-read string|null    $icon_hash     The icon hash for the role.
  * @property      ?string|null   $unicode_emoji The unicode emoji for the role.
- * @property      int            $position      The position of the role on the sidebar.
- * @property      RolePermission $permissions   The permissions of the role.
- * @property      bool           $managed       Whether the role is managed by a Twitch subscriber feature.
+ * @property      int            $position      Position of this role (roles with the same position are sorted by id).
+ * @property      RolePermission $permissions   Permission bit set.
+ * @property      bool           $managed       Whether this role is managed by an integration.
  * @property      bool           $mentionable   Whether the role is mentionable.
  * @property      object|null    $tags          The tags this role has (`bot_id`, `integration_id`, `premium_subscriber`, `subscription_listing_id`, `available_for_purchase`, and `guild_connections`).
+ * @property      int            $flags         Role flags combined as a bitfield.
  *
  * @property      string|null $guild_id The unique identifier of the guild that the role belongs to.
  * @property-read Guild|null  $guild    The guild that the role belongs to.
  */
 class Role extends Part implements Stringable
 {
+    // Flags
+    const IN_PROMPT	= 1 << 0; // Role can be selected by members in an onboarding prompt.
+
     /**
      * {@inheritDoc}
      */
@@ -50,6 +55,7 @@ class Role extends Part implements Stringable
         'id',
         'name',
         'color',
+        'colors',
         'hoist',
         'icon',
         'unicode_emoji',
@@ -58,6 +64,7 @@ class Role extends Part implements Stringable
         'managed',
         'mentionable',
         'tags',
+        'flags',
 
         // @internal
         'guild_id',
