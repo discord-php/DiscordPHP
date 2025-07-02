@@ -275,16 +275,13 @@ class Guild extends Part
         'feature_news',
         'feature_partnered',
         'feature_preview_enabled',
+        'feature_private_threads',
+        'feature_raid_alerts_enabled',
         'feature_raid_alerts_disabled',
         'feature_role_icons',
         'feature_role_subscriptions_available_for_purchase',
         'feature_role_subscriptions_enabled',
         'feature_soundboard',
-        'feature_private_threads',
-        'feature_raid_alerts_enabled',
-        'feature_role_icons',
-        'feature_role_subscriptions_available_for_purchase',
-        'feature_role_subscriptions_enabled',
         'feature_ticketed_events_enabled',
         'feature_vanity_url',
         'feature_verified',
@@ -687,6 +684,11 @@ class Guild extends Part
         return in_array('MEMBER_VERIFICATION_GATE_ENABLED', $this->features);
     }
 
+    protected function getFeatureMoreSoundboardAttribute(): bool
+    {
+        return in_array('MORE_SOUNDBOARD', $this->features);
+    }
+
     protected function getFeatureMonetizationEnabledAttribute(): bool
     {
         return in_array('MONETIZATION_ENABLED', $this->features);
@@ -717,6 +719,11 @@ class Guild extends Part
         return in_array('PRIVATE_THREADS', $this->features);
     }
 
+    protected function getFeatureRaidAlertsDisabledAttribute(): bool
+    {
+        return in_array('RAID_ALERTS_DISABLED', $this->features);
+    }
+
     protected function getFeatureRaidAlertsEnabledAttribute(): bool
     {
         return in_array('RAID_ALERTS_ENABLED', $this->features);
@@ -735,6 +742,11 @@ class Guild extends Part
     protected function getFeatureRoleSubscriptionsEnabledAttribute(): bool
     {
         return in_array('ROLE_SUBSCRIPTIONS_ENABLED', $this->features);
+    }
+
+    protected function getFeatureSoundboardAttribute(): bool
+    {
+        return in_array('SOUNDBOARD', $this->features);
     }
 
     protected function getFeatureTicketedEventsEnabledAttribute(): bool
@@ -760,6 +772,16 @@ class Guild extends Part
     protected function getFeatureWelcomeScreenEnabledAttribute(): bool
     {
         return in_array('WELCOME_SCREEN_ENABLED', $this->features);
+    }
+
+    protected function getFeatureGuestEnabledAttribute(): bool
+    {
+        return in_array('GUEST_ENABLED', $this->features);
+    }
+
+    protected function getFeatureEnhancedRoleColorsAttribute(): bool
+    {
+        return in_array('ENHANCED_ROLE_COLORS', $this->features);
     }
 
     /**
