@@ -28,7 +28,7 @@ use Discord\Repository\Guild\StickerRepository;
  * @property      ?string|null       $icon_hash                                         The icon hash for the guild.
  * @property      ?string            $splash                                            The URL to the guild splash.
  * @property      ?string|null       $splash_hash                                       The splash hash for the guild.
- * @property      ?string            $discovery_splash                                  Discovery splash hash. Only for discoverable gui
+ * @property      ?string            $discovery_splash                                  Discovery splash hash. Only for discoverable guilds.
  * @property      EmojiRepository    $emojis                                            Custom guild emojis.
  * @property      string[]           $features                                          An array of features that the guild has.
  * @property-read bool               $feature_animated_banner                           Guild has access to set an animated guild banner image.
