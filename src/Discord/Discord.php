@@ -129,7 +129,7 @@ class Discord
      *
      * @var LoopInterface Event loop.
      */
-    public $loop;
+    protected $loop;
 
     /**
      * The WebSocket client factory.
