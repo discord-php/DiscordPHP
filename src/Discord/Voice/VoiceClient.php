@@ -20,13 +20,12 @@ use Discord\Exceptions\OutdatedDCAException;
 use Discord\Exceptions\Voice\AudioAlreadyPlayingException;
 use Discord\Exceptions\Voice\ClientNotReadyException;
 use Discord\Helpers\Buffer as RealBuffer;
-use Discord\Helpers\ByteBuffer\Buffer;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\EventData\VoiceSpeaking;
-use Discord\Parts\Voice\UserConnected;
 use Discord\Voice\Client\Packet;
+use Discord\Voice\Client\UDP;
 use Discord\Voice\Client\User;
 use Discord\Voice\Client\WS;
 use Discord\Voice\Processes\Dca;
@@ -36,14 +35,10 @@ use Discord\WebSockets\Op;
 use Discord\WebSockets\Payload;
 use Discord\WebSockets\VoicePayload;
 use Evenement\EventEmitter;
-use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket;
-use Ratchet\RFC6455\Messaging\Message;
 use React\ChildProcess\Process;
-use React\Datagram\Factory as DatagramFactory;
 use React\Datagram\Socket;
 use React\Dns\Config\Config;
-use React\Dns\Resolver\Factory as DNSFactory;
 use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
@@ -99,12 +94,7 @@ class VoiceClient extends EventEmitter
      */
     public ?WebSocket $voiceWebsocket;
 
-    /**
-     * The UDP client.
-     *
-     * @var Socket|null The voiceUDP client.
-     */
-    public $client;
+    public null|Socket|UDP $client;
 
     /**
      * The Voice WebSocket endpoint.
@@ -169,27 +159,7 @@ class VoiceClient extends EventEmitter
      */
     public $timestamp = 0;
 
-    /**
-     * The Voice WebSocket mode.
-     *
-     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes
-     * @var string The voice mode.
-     */
-    public $mode = 'aead_aes256_gcm_rtpsize';
 
-    /**
-     * The secret key used for encrypting voice.
-     *
-     * @var string|null The secret key.
-     */
-    public $secretKey;
-
-    /**
-     * The raw secret key.
-     *
-     * @var array|null The raw secret key.
-     */
-    public $rawKey;
 
     /**
      * Are we currently set as speaking?
@@ -404,63 +374,6 @@ class VoiceClient extends EventEmitter
 
         WS::make($this);
         return true;
-    }
-
-
-    /**
-     * Handles a WebSocket close.
-     *
-     * @param int    $op
-     * @param string $reason
-     */
-    public function handleWebSocketClose(int $op, string $reason): void
-    {
-        $this->bot->logger->warning('voice websocket closed', ['op' => $op, 'reason' => $reason]);
-        $this->emit('ws-close', [$op, $reason, $this]);
-
-        $this->clientsConnected = [];
-        $this->voiceWebsocket->close();
-
-        // Cancel heartbeat timers
-        if (null !== $this->heartbeat) {
-            $this->bot->loop->cancelTimer($this->heartbeat);
-            $this->heartbeat = null;
-        }
-
-        if (null !== $this->udpHeartbeat) {
-            $this->bot->loop->cancelTimer($this->udpHeartbeat);
-            $this->udpHeartbeat = null;
-        }
-
-        // Close UDP socket.
-        if (isset($this->client)) {
-            $this->bot->logger->warning('closing UDP client');
-            $this->client->close();
-        }
-
-        // Don't reconnect on a critical opcode or if closed by user.
-        if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this->userClose) {
-            $this->bot->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
-            $this->emit('close');
-
-            return;
-        }
-
-        if (in_array($op, [Op::CLOSE_VOICE_DISCONNECTED])) {
-            $this->emit('close');
-
-            return;
-        }
-
-        $this->bot->logger->warning('reconnecting in 2 seconds');
-
-        // Retry connect after 2 seconds
-        $this->bot->loop->addTimer(2, function (): void {
-            $this->reconnecting = true;
-            $this->sentLoginFrame = false;
-
-            $this->start();
-        });
     }
 
     /**

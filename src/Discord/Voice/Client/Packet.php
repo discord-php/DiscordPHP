@@ -16,6 +16,7 @@ namespace Discord\Voice\Client;
 use Discord\Helpers\ByteBuffer\Buffer;
 use Discord\Helpers\FormatPackEnum;
 use Monolog\Logger;
+use function Discord\logger;
 
 /**
  * A voice packet received from Discord.
@@ -116,6 +117,10 @@ class Packet
 
         if ($decrypt) {
             $this->decrypt();
+        }
+
+        if (!$log) {
+            $this->log = logger();
         }
     }
 

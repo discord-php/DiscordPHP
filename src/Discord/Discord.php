@@ -129,7 +129,7 @@ class Discord
      *
      * @var LoopInterface Event loop.
      */
-    public static $loop;
+    public $loop;
 
     /**
      * The WebSocket client factory.
@@ -357,6 +357,13 @@ class Discord
     protected $usePayloadCompression;
 
     /**
+     * The instance of the Discord client.
+     *
+     * @var Discord|null Instance.
+     */
+    protected static Discord $instance;
+
+    /**
      * Creates a Discord client instance.
      *
      * @param  array           $options Array of options.
@@ -410,6 +417,22 @@ class Discord
         $this->useTransportCompression = $options['useTransportCompression'];
         $this->usePayloadCompression = $options['usePayloadCompression'];
         $this->connectWs();
+
+        if (!isset(self::$instance)) {
+            // If the instance is not set, set it to this instance.
+            // This allows for static access to the Discord client.
+            self::$instance = $this;
+        }
+    }
+
+    # BETA - still testing if it works
+    public static function __callStatic($method, $args)
+    {
+        if (method_exists(self::class, $method)) {
+            return self::$instance->$method(...$args);
+        }
+
+        throw new \BadMethodCallException("Method {$method} does not exist in " . __CLASS__);
     }
 
     /**
@@ -1722,5 +1745,10 @@ class Discord
     public function getWs(): ?WebSocket
     {
         return $this->ws;
+    }
+
+    public static function getInstance(): ?self
+    {
+        return self::$instance;
     }
 }
