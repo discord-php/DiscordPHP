@@ -73,6 +73,7 @@ class GuildRepository extends AbstractRepository
 
     /**
      * Returns the guild preview object for the given id. If the bot is not in the guild, then the guild must be discoverable.
+     * Rejects with 10004 Unknown Guild if the guild does not exist or the bot is not in the guild and it is not discoverable.
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-preview
      *
