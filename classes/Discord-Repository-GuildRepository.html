@@ -264,7 +264,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/GuildRepository.php"><a href="files/src-discord-repository-guildrepository.html"><abbr title="src/Discord/Repository/GuildRepository.php">GuildRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -655,6 +655,13 @@ based on the response of the callback.</dd>
 <dd>Unsets an index from the repository.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Repository-GuildRepository.html#method_preview">preview()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Guild-GuildPreview.html"><abbr title="\Discord\Parts\Guild\GuildPreview">GuildPreview</abbr></a>|null&gt;    </span>
+</dt>
+<dd>Returns the guild preview object for the given id. If the bot is not in the guild, then the guild must be discoverable.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-GuildRepository.html#method_pull">pull()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null    </span>
@@ -889,7 +896,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/GuildRepository.php"><a href="files/src-discord-repository-guildrepository.html"><abbr title="src/Discord/Repository/GuildRepository.php">GuildRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -928,7 +935,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/GuildRepository.php"><a href="files/src-discord-repository-guildrepository.html"><abbr title="src/Discord/Repository/GuildRepository.php">GuildRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -939,7 +946,7 @@ based on the response of the callback.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$endpoints</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;all&#039; =&gt; \Discord\Http\Endpoint::USER_CURRENT_GUILDS, &#039;get&#039; =&gt; \Discord\Http\Endpoint::GUILD, &#039;create&#039; =&gt; \Discord\Http\Endpoint::GUILDS, &#039;update&#039; =&gt; \Discord\Http\Endpoint::GUILD, &#039;delete&#039; =&gt; \Discord\Http\Endpoint::GUILD, &#039;leave&#039; =&gt; \Discord\Http\Endpoint::USER_CURRENT_GUILD]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;all&#039; =&gt; \Discord\Http\Endpoint::USER_CURRENT_GUILDS, &#039;get&#039; =&gt; \Discord\Http\Endpoint::GUILD, &#039;create&#039; =&gt; \Discord\Http\Endpoint::GUILDS, &#039;update&#039; =&gt; \Discord\Http\Endpoint::GUILD, &#039;delete&#039; =&gt; \Discord\Http\Endpoint::GUILD, &#039;leave&#039; =&gt; \Discord\Http\Endpoint::USER_CURRENT_GUILD, &#039;preview&#039; =&gt; \Discord\Http\Endpoint::GUILD_PREVIEW]</span></code>
 
     
     
@@ -2825,7 +2832,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/GuildRepository.php"><a href="files/src-discord-repository-guildrepository.html"><abbr title="src/Discord/Repository/GuildRepository.php">GuildRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
@@ -3196,6 +3203,77 @@ This method is deprecated for userland code but can still be used internally wit
     
 
     
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_preview">
+        preview()
+        <a href="classes/Discord-Repository-GuildRepository.html#method_preview" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/GuildRepository.php"><a href="files/src-discord-repository-guildrepository.html"><abbr title="src/Discord/Repository/GuildRepository.php">GuildRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">85</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the guild preview object for the given id. If the bot is not in the guild, then the guild must be discoverable.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">preview</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$guild_id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Guild-GuildPreview.html"><abbr title="\Discord\Parts\Guild\GuildPreview">GuildPreview</abbr></a>|null&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$guild_id</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Repository-GuildRepository.html#method_preview#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/guild#get-guild-preview"> https://discord.com/developers/docs/resources/guild#get-guild-preview </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.19.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Guild-GuildPreview.html"><abbr title="\Discord\Parts\Guild\GuildPreview">GuildPreview</abbr></a>|null&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -4307,6 +4385,7 @@ This method is deprecated for userland code but can still be used internally wit
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetGet">offsetGet()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetSet">offsetSet()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetUnset">offsetUnset()</a></li>
+                                            <li class=""><a href="classes/Discord-Repository-GuildRepository.html#method_preview">preview()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-GuildRepository.html#method_pull">pull()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_push">push()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_pushItem">pushItem()</a></li>

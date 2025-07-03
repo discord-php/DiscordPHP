@@ -4191,6 +4191,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020guild\u0020scheduled\u0020event\u0020on\u0020this\u0020invite.",
             "url": "classes/Discord-Parts-Channel-Invite.html#method_getGuildScheduledEventAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AisGuestInvite\u0028\u0029",
+            "name": "isGuestInvite",
+            "summary": "Returns\u0020whether\u0020the\u0020guest\u0020invite\u0020flag\u0020is\u0020set.",
+            "url": "classes/Discord-Parts-Channel-Invite.html#method_isGuestInvite"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AgetCreatedAtAttribute\u0028\u0029",
             "name": "getCreatedAtAttribute",
             "summary": "Returns\u0020the\u0020created\u0020at\u0020attribute.",
@@ -4211,6 +4216,21 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Invite.html#method___toString"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003ATYPE_GUILD",
+            "name": "TYPE_GUILD",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Invite.html#constant_TYPE_GUILD"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003ATYPE_GROUP_DM",
+            "name": "TYPE_GROUP_DM",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Invite.html#constant_TYPE_GROUP_DM"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003ATYPE_FRIEND",
+            "name": "TYPE_FRIEND",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Invite.html#constant_TYPE_FRIEND"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003ATARGET_TYPE_STREAM",
             "name": "TARGET_TYPE_STREAM",
             "summary": "",
@@ -4220,6 +4240,11 @@ Search.appendIndex(
             "name": "TARGET_TYPE_EMBEDDED_APPLICATION",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Invite.html#constant_TARGET_TYPE_EMBEDDED_APPLICATION"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AFLAG_IS_GUEST_INVITE",
+            "name": "FLAG_IS_GUEST_INVITE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Invite.html#constant_FLAG_IS_GUEST_INVITE"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -6736,185 +6761,10 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020joined_at\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getJoinedAtAttribute"
         },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetIconAttribute\u0028\u0029",
-            "name": "getIconAttribute",
-            "summary": "Returns\u0020the\u0020guilds\u0020icon.",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getIconAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetIconHashAttribute\u0028\u0029",
-            "name": "getIconHashAttribute",
-            "summary": "Returns\u0020the\u0020guild\u0020icon\u0020hash.",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getIconHashAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetSplashAttribute\u0028\u0029",
-            "name": "getSplashAttribute",
-            "summary": "Returns\u0020the\u0020guild\u0020splash.",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getSplashAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetSplashHashAttribute\u0028\u0029",
-            "name": "getSplashHashAttribute",
-            "summary": "Returns\u0020the\u0020guild\u0020splash\u0020hash.",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getSplashHashAttribute"
-        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetStageInstancesAttribute\u0028\u0029",
             "name": "getStageInstancesAttribute",
             "summary": "Returns\u0020the\u0020channels\u0020stage\u0020instances.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getStageInstancesAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureAnimatedBannerAttribute\u0028\u0029",
-            "name": "getFeatureAnimatedBannerAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureAnimatedBannerAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureAnimatedIconAttribute\u0028\u0029",
-            "name": "getFeatureAnimatedIconAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureAnimatedIconAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureApplicationCommandPermissionsV2\u0028\u0029",
-            "name": "getFeatureApplicationCommandPermissionsV2",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureApplicationCommandPermissionsV2"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureAutoModerationAttribute\u0028\u0029",
-            "name": "getFeatureAutoModerationAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureAutoModerationAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureBannerAttribute\u0028\u0029",
-            "name": "getFeatureBannerAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureBannerAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureCommunityAttribute\u0028\u0029",
-            "name": "getFeatureCommunityAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureCommunityAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureCreatorMonetizableProvisionalAttribute\u0028\u0029",
-            "name": "getFeatureCreatorMonetizableProvisionalAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureCreatorMonetizableProvisionalAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureCreatorStorePageAttribute\u0028\u0029",
-            "name": "getFeatureCreatorStorePageAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureCreatorStorePageAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureDeveloperSupportServerAttribute\u0028\u0029",
-            "name": "getFeatureDeveloperSupportServerAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureDeveloperSupportServerAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureDiscoverableAttribute\u0028\u0029",
-            "name": "getFeatureDiscoverableAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureDiscoverableAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureFeaturableAttribute\u0028\u0029",
-            "name": "getFeatureFeaturableAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureFeaturableAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureHasDirectoryEntryAttribute\u0028\u0029",
-            "name": "getFeatureHasDirectoryEntryAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureHasDirectoryEntryAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureInvitesDisabledAttribute\u0028\u0029",
-            "name": "getFeatureInvitesDisabledAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureInvitesDisabledAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureInviteSplashAttribute\u0028\u0029",
-            "name": "getFeatureInviteSplashAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureInviteSplashAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureLinkedToHubAttribute\u0028\u0029",
-            "name": "getFeatureLinkedToHubAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureLinkedToHubAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureMemberVerificationGateEnabledAttribute\u0028\u0029",
-            "name": "getFeatureMemberVerificationGateEnabledAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureMemberVerificationGateEnabledAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureMonetizationEnabledAttribute\u0028\u0029",
-            "name": "getFeatureMonetizationEnabledAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureMonetizationEnabledAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureMoreStickersAttribute\u0028\u0029",
-            "name": "getFeatureMoreStickersAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureMoreStickersAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureNewsAttribute\u0028\u0029",
-            "name": "getFeatureNewsAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureNewsAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeaturePartneredAttribute\u0028\u0029",
-            "name": "getFeaturePartneredAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeaturePartneredAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeaturePreviewEnabledAttribute\u0028\u0029",
-            "name": "getFeaturePreviewEnabledAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeaturePreviewEnabledAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeaturePrivateThreadsAttribute\u0028\u0029",
-            "name": "getFeaturePrivateThreadsAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeaturePrivateThreadsAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureRaidAlertsEnabledAttribute\u0028\u0029",
-            "name": "getFeatureRaidAlertsEnabledAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureRaidAlertsEnabledAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureRoleIconsAttribute\u0028\u0029",
-            "name": "getFeatureRoleIconsAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureRoleIconsAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureRoleSubscriptionsAvailableForPurchaseAttribute\u0028\u0029",
-            "name": "getFeatureRoleSubscriptionsAvailableForPurchaseAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureRoleSubscriptionsAvailableForPurchaseAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureRoleSubscriptionsEnabledAttribute\u0028\u0029",
-            "name": "getFeatureRoleSubscriptionsEnabledAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureRoleSubscriptionsEnabledAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureTicketedEventsEnabledAttribute\u0028\u0029",
-            "name": "getFeatureTicketedEventsEnabledAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureTicketedEventsEnabledAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureVanityUrlAttribute\u0028\u0029",
-            "name": "getFeatureVanityUrlAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureVanityUrlAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureVerifiedAttribute\u0028\u0029",
-            "name": "getFeatureVerifiedAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureVerifiedAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureVipRegionsAttribute\u0028\u0029",
-            "name": "getFeatureVipRegionsAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureVipRegionsAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureWelcomeScreenEnabledAttribute\u0028\u0029",
-            "name": "getFeatureWelcomeScreenEnabledAttribute",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureWelcomeScreenEnabledAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetVoiceRegions\u0028\u0029",
             "name": "getVoiceRegions",
@@ -7035,11 +6885,6 @@ Search.appendIndex(
             "name": "getUpdatableAttributes",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getUpdatableAttributes"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetRepositoryAttributes\u0028\u0029",
-            "name": "getRepositoryAttributes",
-            "summary": "",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getRepositoryAttributes"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AcreatedTimestamp\u0028\u0029",
             "name": "createdTimestamp",
@@ -7216,6 +7061,26 @@ Search.appendIndex(
             "summary": "An\u0020array\u0020of\u0020valid\u0020regions.",
             "url": "classes/Discord-Parts-Guild-Guild.html#property_regions"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildPreview",
+            "name": "GuildPreview",
+            "summary": "A\u0020guild\u0020can\u0020be\u0020previewed\u0020before\u0020joining\u0020via\u0020Membership\u0020Screening\u0020or\u0020the\u0020directory.",
+            "url": "classes/Discord-Parts-Guild-GuildPreview.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildPreview\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-GuildPreview.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildPreview\u003A\u003A\u0024visible",
+            "name": "visible",
+            "summary": "Attributes\u0020which\u0020are\u0020visible\u0020from\u0020debug\u0020info.",
+            "url": "classes/Discord-Parts-Guild-GuildPreview.html#property_visible"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildPreview\u003A\u003A\u0024repositories",
+            "name": "repositories",
+            "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
+            "url": "classes/Discord-Parts-Guild-GuildPreview.html#property_repositories"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildTemplate",
             "name": "GuildTemplate",
             "summary": "A\u0020Guild\u0020Template\u0020is\u0020a\u0020code\u0020that\u0020when\u0020used,\u0020creates\u0020a\u0020guild\u0020based\u0020on\u0020a\nsnapshot\u0020of\u0020an\u0020existing\u0020guild.",
@@ -7275,6 +7140,216 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-GuildTemplate.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait",
+            "name": "GuildTrait",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetIconAttribute\u0028\u0029",
+            "name": "getIconAttribute",
+            "summary": "Returns\u0020the\u0020guilds\u0020icon.",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getIconAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetIconHashAttribute\u0028\u0029",
+            "name": "getIconHashAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020icon\u0020hash.",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getIconHashAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetSplashAttribute\u0028\u0029",
+            "name": "getSplashAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020splash.",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getSplashAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetSplashHashAttribute\u0028\u0029",
+            "name": "getSplashHashAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020splash\u0020hash.",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getSplashHashAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureAnimatedBannerAttribute\u0028\u0029",
+            "name": "getFeatureAnimatedBannerAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureAnimatedBannerAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureAnimatedIconAttribute\u0028\u0029",
+            "name": "getFeatureAnimatedIconAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureAnimatedIconAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureApplicationCommandPermissionsV2\u0028\u0029",
+            "name": "getFeatureApplicationCommandPermissionsV2",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureApplicationCommandPermissionsV2"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureAutoModerationAttribute\u0028\u0029",
+            "name": "getFeatureAutoModerationAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureAutoModerationAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureBannerAttribute\u0028\u0029",
+            "name": "getFeatureBannerAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureBannerAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureCommunityAttribute\u0028\u0029",
+            "name": "getFeatureCommunityAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureCommunityAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureCreatorMonetizableProvisionalAttribute\u0028\u0029",
+            "name": "getFeatureCreatorMonetizableProvisionalAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureCreatorMonetizableProvisionalAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureCreatorStorePageAttribute\u0028\u0029",
+            "name": "getFeatureCreatorStorePageAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureCreatorStorePageAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureDeveloperSupportServerAttribute\u0028\u0029",
+            "name": "getFeatureDeveloperSupportServerAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureDeveloperSupportServerAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureDiscoverableAttribute\u0028\u0029",
+            "name": "getFeatureDiscoverableAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureDiscoverableAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureFeaturableAttribute\u0028\u0029",
+            "name": "getFeatureFeaturableAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureFeaturableAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureHasDirectoryEntryAttribute\u0028\u0029",
+            "name": "getFeatureHasDirectoryEntryAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureHasDirectoryEntryAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureInvitesDisabledAttribute\u0028\u0029",
+            "name": "getFeatureInvitesDisabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureInvitesDisabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureInviteSplashAttribute\u0028\u0029",
+            "name": "getFeatureInviteSplashAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureInviteSplashAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureLinkedToHubAttribute\u0028\u0029",
+            "name": "getFeatureLinkedToHubAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureLinkedToHubAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureMemberVerificationGateEnabledAttribute\u0028\u0029",
+            "name": "getFeatureMemberVerificationGateEnabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureMemberVerificationGateEnabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureMoreSoundboardAttribute\u0028\u0029",
+            "name": "getFeatureMoreSoundboardAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureMoreSoundboardAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureMonetizationEnabledAttribute\u0028\u0029",
+            "name": "getFeatureMonetizationEnabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureMonetizationEnabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureMoreStickersAttribute\u0028\u0029",
+            "name": "getFeatureMoreStickersAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureMoreStickersAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureNewsAttribute\u0028\u0029",
+            "name": "getFeatureNewsAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureNewsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeaturePartneredAttribute\u0028\u0029",
+            "name": "getFeaturePartneredAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeaturePartneredAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeaturePreviewEnabledAttribute\u0028\u0029",
+            "name": "getFeaturePreviewEnabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeaturePreviewEnabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeaturePrivateThreadsAttribute\u0028\u0029",
+            "name": "getFeaturePrivateThreadsAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeaturePrivateThreadsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureRaidAlertsDisabledAttribute\u0028\u0029",
+            "name": "getFeatureRaidAlertsDisabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureRaidAlertsDisabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureRaidAlertsEnabledAttribute\u0028\u0029",
+            "name": "getFeatureRaidAlertsEnabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureRaidAlertsEnabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureRoleIconsAttribute\u0028\u0029",
+            "name": "getFeatureRoleIconsAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureRoleIconsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureRoleSubscriptionsAvailableForPurchaseAttribute\u0028\u0029",
+            "name": "getFeatureRoleSubscriptionsAvailableForPurchaseAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureRoleSubscriptionsAvailableForPurchaseAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureRoleSubscriptionsEnabledAttribute\u0028\u0029",
+            "name": "getFeatureRoleSubscriptionsEnabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureRoleSubscriptionsEnabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureSoundboardAttribute\u0028\u0029",
+            "name": "getFeatureSoundboardAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureSoundboardAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureTicketedEventsEnabledAttribute\u0028\u0029",
+            "name": "getFeatureTicketedEventsEnabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureTicketedEventsEnabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureVanityUrlAttribute\u0028\u0029",
+            "name": "getFeatureVanityUrlAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureVanityUrlAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureVerifiedAttribute\u0028\u0029",
+            "name": "getFeatureVerifiedAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureVerifiedAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureVipRegionsAttribute\u0028\u0029",
+            "name": "getFeatureVipRegionsAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureVipRegionsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureWelcomeScreenEnabledAttribute\u0028\u0029",
+            "name": "getFeatureWelcomeScreenEnabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureWelcomeScreenEnabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureGuestEnabledAttribute\u0028\u0029",
+            "name": "getFeatureGuestEnabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuestEnabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureEnhancedRoleColorsAttribute\u0028\u0029",
+            "name": "getFeatureEnhancedRoleColorsAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureEnhancedRoleColorsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetRepositoryAttributes\u0028\u0029",
+            "name": "getRepositoryAttributes",
+            "summary": "\u007B\u0040inheritDoc\u007D",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getRepositoryAttributes"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Integration",
             "name": "Integration",
@@ -9451,6 +9526,16 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-User-Activity.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\AvatarDecorationData",
+            "name": "AvatarDecorationData",
+            "summary": "The\u0020data\u0020for\u0020the\u0020user\u0027s\u0020avatar\u0020decoration.",
+            "url": "classes/Discord-Parts-User-AvatarDecorationData.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\AvatarDecorationData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-AvatarDecorationData.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Client",
             "name": "Client",
             "summary": "The\u0020client\u0020is\u0020the\u0020main\u0020interface\u0020for\u0020the\u0020client.\u0020Most\u0020calls\u0020on\u0020the\u0020main\u0020class\u0020are\u0020forwarded\u0020here.",
@@ -9801,15 +9886,20 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020banner\u0020hash\u0020for\u0020the\u0020client.",
             "url": "classes/Discord-Parts-User-User.html#method_getBannerHashAttribute"
         },                {
-            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetPrimaryGuildAttribute\u0028\u0029",
-            "name": "getPrimaryGuildAttribute",
-            "summary": "Returns\u0020the\u0020primary\u0020guild\u0020for\u0020the\u0020client.",
-            "url": "classes/Discord-Parts-User-User.html#method_getPrimaryGuildAttribute"
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetAvatarDecorationDataAttribute\u0028\u0029",
+            "name": "getAvatarDecorationDataAttribute",
+            "summary": "Returns\u0020the\u0020avatar\u0020decoration\u0020data.",
+            "url": "classes/Discord-Parts-User-User.html#method_getAvatarDecorationDataAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetCollectiblesAttribute\u0028\u0029",
             "name": "getCollectiblesAttribute",
             "summary": "Returns\u0020the\u0020collectibles\u0020for\u0020the\u0020client.",
             "url": "classes/Discord-Parts-User-User.html#method_getCollectiblesAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetPrimaryGuildAttribute\u0028\u0029",
+            "name": "getPrimaryGuildAttribute",
+            "summary": "Returns\u0020the\u0020primary\u0020guild\u0020for\u0020the\u0020client.",
+            "url": "classes/Discord-Parts-User-User.html#method_getPrimaryGuildAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AcreatedTimestamp\u0028\u0029",
             "name": "createdTimestamp",
@@ -11065,6 +11155,11 @@ Search.appendIndex(
             "name": "leave",
             "summary": "Causes\u0020the\u0020client\u0020to\u0020leave\u0020a\u0020guild.",
             "url": "classes/Discord-Repository-GuildRepository.html#method_leave"
+        },                {
+            "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003Apreview\u0028\u0029",
+            "name": "preview",
+            "summary": "Returns\u0020the\u0020guild\u0020preview\u0020object\u0020for\u0020the\u0020given\u0020id.\u0020If\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020guild,\u0020then\u0020the\u0020guild\u0020must\u0020be\u0020discoverable.",
+            "url": "classes/Discord-Repository-GuildRepository.html#method_preview"
         },                {
             "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
