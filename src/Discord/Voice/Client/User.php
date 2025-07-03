@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Discord\Voice\Client;
 
 use Discord\Discord;
