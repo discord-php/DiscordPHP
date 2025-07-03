@@ -79,6 +79,8 @@ class GuildRepository extends AbstractRepository
      * @param Guild|string $guild_id
      *
      * @return PromiseInterface<?GuildPreview>
+     *
+     * @since 10.19.0
      */
     public function preview($guild_id): PromiseInterface
     {
