@@ -72,7 +72,7 @@ final class WS
         $f("wss://" . $this->data['endpoint'] . "?v=" . self::$version)
             ->then(
                 fn (WebSocket $ws) => $this->handleConnection($ws),
-                fn (\Throwable $e) => logger()->error(
+                fn (\Throwable $e) => $this->bot->logger->error(
                     'Failed to connect to voice gateway: {error}',
                     ['error' => $e->getMessage()]
                 ) && $this->vc->emit('error', [$e])
@@ -94,7 +94,7 @@ final class WS
      */
     public function handleConnection(WebSocket $ws): void
     {
-        logger()->debug('connected to voice websocket');
+        $this->bot->logger->debug('connected to voice websocket');
 
         $resolver = (new DnsFactory())->createCached($this->data['dnsConfig'], $this->bot->loop);
         $udpfac = new SocketFactory($this->bot->loop, $resolver, $this);
@@ -113,7 +113,7 @@ final class WS
                     $start = $data->d->t;
                     $diff = ($end - $start) * 1000;
 
-                    logger()->debug('received heartbeat ack', ['response_time' => $diff]);
+                    $this->bot->logger->debug('received heartbeat ack', ['response_time' => $diff]);
                     $this->vc->emit('ws-ping', [$diff]);
                     $this->vc->emit('ws-heartbeat-ack', [$data->d->t]);
                     break;
@@ -124,7 +124,7 @@ final class WS
                     $this->rawKey = $data->d->secret_key;
                     $this->secretKey = implode('', array_map(static fn ($value) => pack('C', $value), $this->rawKey));
 
-                    logger()->debug('received description packet, vc ready', ['data' => json_decode(json_encode($data->d), true)]);
+                    $this->bot->logger->debug('received description packet, vc ready', ['data' => json_decode(json_encode($data->d), true)]);
 
                     if (! $this->vc->reconnecting) {
                         $this->vc->emit('ready', [$this->vc]);
@@ -139,7 +139,7 @@ final class WS
 
                     break;
                 case Op::VOICE_SPEAKING: // currently connected users
-                    logger()->debug('received speaking packet', ['data' => json_decode(json_encode($data->d), true)]);
+                    $this->bot->logger->debug('received speaking packet', ['data' => json_decode(json_encode($data->d), true)]);
                     $this->vc->emit('speaking', [$data->d->speaking, $data->d->user_id, $this->vc]);
                     $this->vc->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this->vc]);
                     $this->vc->speakingStatus[$data->d->user_id] = $this->bot->getFactory()->create(VoiceSpeaking::class, $data->d);
@@ -150,21 +150,21 @@ final class WS
                     $this->vc->heartbeat = $this->bot->loop->addPeriodicTimer($this->vc->heartbeatInterval / 1000, fn () => $this->sendHeartbeat());
                     break;
                 case Op::VOICE_CLIENTS_CONNECT:
-                    logger()->debug('received clients connected packet', ['data' => json_decode(json_encode($data->d), true)]);
+                    $this->bot->logger->debug('received clients connected packet', ['data' => json_decode(json_encode($data->d), true)]);
                     # "d" contains an array with ['user_ids' => array<string>]
 
                     $this->vc->users = array_map(fn (int $userId) => $this->bot->getFactory()->create(UserConnected::class, $userId), $data->d->user_ids);
                     break;
                 case Op::VOICE_CLIENT_DISCONNECT:
-                    logger()->debug('received client disconnected packet', ['data' => json_decode(json_encode($data->d), true)]);
+                    $this->bot->logger->debug('received client disconnected packet', ['data' => json_decode(json_encode($data->d), true)]);
                     unset($this->vc->clientsConnected[$data->d->user_id]);
                     break;
                 case Op::VOICE_CLIENT_UNKNOWN_15:
                 case Op::VOICE_CLIENT_UNKNOWN_18:
-                    logger()->debug('received unknown opcode', ['data' => json_decode(json_encode($data), true)]);
+                    $this->bot->logger->debug('received unknown opcode', ['data' => json_decode(json_encode($data), true)]);
                     break;
                 case Op::VOICE_CLIENT_PLATFORM:
-                    logger()->debug('received platform packet', ['data' => json_decode(json_encode($data->d), true)]);
+                    $this->bot->logger->debug('received platform packet', ['data' => json_decode(json_encode($data->d), true)]);
                     # handlePlatformPerUser
                     # platform = 0 assumed to be Desktop
                     break;
@@ -206,7 +206,7 @@ final class WS
                     $this->vc->udpPort = $data->d->port;
                     $this->vc->ssrc = $data->d->ssrc;
 
-                    logger()->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
+                    $this->bot->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
 
                     /** @var PromiseInterface */
                     $udpfac->createClient("{$data->d->ip}:" . $this->vc->udpPort)->then(function (UDP $client): void {
@@ -216,19 +216,19 @@ final class WS
                             ->handleErrors()
                             ->decodeOnce();
                     }, function (\Throwable $e): void {
-                        logger()->error('error while connecting to udp', ['e' => $e->getMessage()]);
+                        $this->bot->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
                         $this->vc->emit('error', [$e]);
                     });
                     break;
                 }
                 default:
-                    logger()->warning('Unknown opcode.', $data);
+                    $this->bot->logger->warning('Unknown opcode.', $data);
                     break;
             }
         });
 
         $ws->on('error', function ($e): void {
-            logger()->error('error with voice websocket', ['e' => $e->getMessage()]);
+            $this->bot->logger->error('error with voice websocket', ['e' => $e->getMessage()]);
             $this->vc->emit('ws-error', [$e]);
         });
 
@@ -249,7 +249,7 @@ final class WS
             ],
         );
 
-        logger()->debug('sending identify', ['packet' => $payload->__debugInfo()]);
+        $this->bot->logger->debug('sending identify', ['packet' => $payload->__debugInfo()]);
 
         $this->send($payload);
         $this->vc->sentLoginFrame = true;
@@ -300,9 +300,9 @@ final class WS
         });
     }
 
-    protected function handleDavePrepareTransition($data)
+    protected function handleDavePrepareTransition($data): void
     {
-        logger()->debug('DAVE Prepare Transition', ['data' => $data]);
+        $this->bot->logger->debug('DAVE Prepare Transition', ['data' => $data]);
         // Prepare local state necessary to perform the transition
         $this->send(VoicePayload::new(
             Op::VOICE_DAVE_TRANSITION_READY,
@@ -312,22 +312,22 @@ final class WS
         ));
     }
 
-    protected function handleDaveExecuteTransition($data)
+    protected function handleDaveExecuteTransition($data): void
     {
-        logger()->debug('DAVE Execute Transition', ['data' => $data]);
+        $this->bot->logger->debug('DAVE Execute Transition', ['data' => $data]);
         // Execute the transition
         // Update local state to reflect the new protocol context
     }
 
-    protected function handleDaveTransitionReady($data)
+    protected function handleDaveTransitionReady($data): void
     {
-        logger()->debug('DAVE Transition Ready', ['data' => $data]);
+        $this->bot->logger->debug('DAVE Transition Ready', ['data' => $data]);
         // Handle transition ready state
     }
 
-    protected function handleDavePrepareEpoch($data)
+    protected function handleDavePrepareEpoch($data): void
     {
-        logger()->debug('DAVE Prepare Epoch', ['data' => $data]);
+        $this->bot->logger->debug('DAVE Prepare Epoch', ['data' => $data]);
         // Prepare local MLS group with parameters appropriate for the DAVE protocol version
         $this->send(VoicePayload::new(
             Op::VOICE_DAVE_MLS_KEY_PACKAGE,
@@ -338,21 +338,21 @@ final class WS
         ));
     }
 
-    protected function handleDaveMlsExternalSender($data)
+    protected function handleDaveMlsExternalSender($data): void
     {
-        logger()->debug('DAVE MLS External Sender', ['data' => $data]);
+        $this->bot->logger->debug('DAVE MLS External Sender', ['data' => $data]);
         // Handle external sender public key and credential
     }
 
-    protected function handleDaveMlsKeyPackage($data)
+    protected function handleDaveMlsKeyPackage($data): void
     {
-        logger()->debug('DAVE MLS Key Package', ['data' => $data]);
+        $this->bot->logger->debug('DAVE MLS Key Package', ['data' => $data]);
         // Handle MLS key package
     }
 
-    protected function handleDaveMlsProposals($data)
+    protected function handleDaveMlsProposals($data): void
     {
-        logger()->debug('DAVE MLS Proposals', ['data' => $data]);
+        $this->bot->logger->debug('DAVE MLS Proposals', ['data' => $data]);
         // Handle MLS proposals
         $this->send(VoicePayload::new(
             Op::VOICE_DAVE_MLS_COMMIT_WELCOME,
@@ -363,27 +363,27 @@ final class WS
         ));
     }
 
-    protected function handleDaveMlsCommitWelcome($data)
+    protected function handleDaveMlsCommitWelcome($data): void
     {
-        logger()->debug('DAVE MLS Commit Welcome', ['data' => $data]);
+        $this->bot->logger->debug('DAVE MLS Commit Welcome', ['data' => $data]);
         // Handle MLS commit and welcome messages
     }
 
     protected function handleDaveMlsAnnounceCommitTransition($data)
     {
         // Handle MLS announce commit transition
-        logger()->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
+        $this->bot->logger->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
     }
 
     protected function handleDaveMlsWelcome($data)
     {
         // Handle MLS welcome message
-        logger()->debug('DAVE MLS Welcome', ['data' => $data]);
+        $this->bot->logger->debug('DAVE MLS Welcome', ['data' => $data]);
     }
 
     protected function handleDaveMlsInvalidCommitWelcome($data)
     {
-        logger()->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
+        $this->bot->logger->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
         // Handle invalid commit or welcome message
         // Reset local group state and generate a new key package
         $this->send(VoicePayload::new(
@@ -392,42 +392,6 @@ final class WS
                 //'key_package' => $this->generateKeyPackage(),
             ],
         ));
-    }
-
-    protected function decodeUDP($message, string &$ip, int &$port): void
-    {
-        /**
-         * Unpacks the message into an array.
-         *
-         * C2 (unsigned char)   | Type      | 2 bytes   | Values 0x1 and 0x2 indicate request and response, respectively
-         * n (unsigned short)   | Length    | 2 bytes   | Length of the following data
-         * I (unsigned int)     | SSRC      | 4 bytes   | The SSRC of the sender
-         * A64 (string)         | Address   | 64 bytes  | The IP address of the sender
-         * n (unsigned short)   | Port      | 2 bytes   | The port of the sender
-         *
-         * @see https://discord.com/developers/docs/topics/voice-connections#ip-discovery
-         * @see https://www.php.net/manual/en/function.unpack.php
-         * @see https://www.php.net/manual/en/function.pack.php For the formats
-         */
-        $unpackedMessageArray = \unpack("C2Type/nLength/ISSRC/A64Address/nPort", $message);
-
-        $this->ssrc = $unpackedMessageArray['SSRC'];
-        $ip = $unpackedMessageArray['Address'];
-        $port = $unpackedMessageArray['Port'];
-
-        logger()->debug('received our IP and port', ['ip' => $ip, 'port' => $port]);
-
-        $this->send([
-            'op' => Op::VOICE_SELECT_PROTO,
-            'd' => [
-                'protocol' => 'udp',
-                'data' => [
-                    'address' => $ip,
-                    'port' => $port,
-                    'mode' => $this->mode,
-                ],
-            ],
-        ]);
     }
 
     public function sendHeartbeat(): void
@@ -439,13 +403,13 @@ final class WS
                 'seq_ack' => 10,
             ]
         ));
-        logger()->debug('sending heartbeat');
+        $this->bot->logger->debug('sending heartbeat');
         $this->vc->emit('ws-heartbeat', []);
     }
 
     public function handleClose(int $op, string $reason): void
     {
-        logger()->warning('voice websocket closed', ['op' => $op, 'reason' => $reason]);
+        $this->bot->logger->warning('voice websocket closed', ['op' => $op, 'reason' => $reason]);
         $this->vc->emit('ws-close', [$op, $reason, $this]);
 
         $this->clientsConnected = [];
@@ -464,13 +428,13 @@ final class WS
 
         // Close UDP socket.
         if (isset($this->client)) {
-            logger()->warning('closing UDP client');
+            $this->bot->logger->warning('closing UDP client');
             $this->client->close();
         }
 
         // Don't reconnect on a critical opcode or if closed by user.
         if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this?->userClose) {
-            logger()->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
+            $this->bot->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
             $this->vc->emit('close');
 
             return;
@@ -482,7 +446,7 @@ final class WS
             return;
         }
 
-        logger()->warning('reconnecting in 2 seconds');
+        $this->bot->logger->warning('reconnecting in 2 seconds');
 
         // Retry connect after 2 seconds
         $this->bot->loop->addTimer(2, function (): void {
