@@ -60,13 +60,6 @@ class VoiceClient extends EventEmitter
     public const DCA_VERSION = 'DCA1';
 
     /**
-     * The Opus Silence Frame.
-     *
-     * @var string The silence frame.
-     */
-    public const SILENCE_FRAME = "\0xF8\0xFF\0xFE";
-
-    /**
      * Is the voice client ready?
      *
      * @var bool Whether the voice client is ready.
@@ -92,9 +85,14 @@ class VoiceClient extends EventEmitter
      *
      * @var WebSocket|null The voice WebSocket client.
      */
-    public ?WebSocket $voiceWebsocket;
+    public ?WebSocket $ws;
 
-    public null|Socket|UDP $client;
+    /**
+     * The UDP client instance.
+     *
+     * @var null|Socket|\Discord\Voice\Client\UDP
+     */
+    public null|Socket|UDP $udp;
 
     /**
      * The Voice WebSocket endpoint.
@@ -102,13 +100,6 @@ class VoiceClient extends EventEmitter
      * @var string|null The endpoint the Voice WebSocket and UDP client will connect to.
      */
     public $endpoint;
-
-    /**
-     * The port the UDP client will use.
-     *
-     * @var int|null The port that the UDP client will connect to.
-     */
-    public $udpPort;
 
     /**
      * The UDP heartbeat interval.
@@ -123,13 +114,6 @@ class VoiceClient extends EventEmitter
      * @var TimerInterface|null The heartbeat periodic timer.
      */
     public $heartbeat;
-
-    /**
-     * The UDP heartbeat timer.
-     *
-     * @var TimerInterface|null The heartbeat periodic timer.
-     */
-    public $udpHeartbeat;
 
     /**
      * The UDP heartbeat sequence.
@@ -159,8 +143,6 @@ class VoiceClient extends EventEmitter
      */
     public $timestamp = 0;
 
-
-
     /**
      * Are we currently set as speaking?
      *
@@ -188,13 +170,6 @@ class VoiceClient extends EventEmitter
      * @var float|int|null The time we started sending packets.
      */
     public $startTime;
-
-    /**
-     * The stream time of the last packet.
-     *
-     * @var int The time we sent the last packet.
-     */
-    public $streamTime = 0;
 
     /**
      * The size of audio frames, in milliseconds.
@@ -287,13 +262,6 @@ class VoiceClient extends EventEmitter
     public $dnsConfig;
 
     /**
-     * Silence Frame Remain Count.
-     *
-     * @var int Amount of silence frames remaining.
-     */
-    public $silenceRemaining = 5;
-
-    /**
      * readopus Timer.
      *
      * @var TimerInterface Timer
@@ -339,6 +307,8 @@ class VoiceClient extends EventEmitter
      * @param array $data
      * @param bool $deaf Default: false
      * @param bool $mute Default: false
+     * @param Deferred|null $deferred
+     * @param VoiceManager|null $manager
      */
     public function __construct(
         public Discord $bot,
@@ -381,18 +351,17 @@ class VoiceClient extends EventEmitter
      *
      * @param array $data New voice server information.
      */
-    public function handleVoiceServerChange(array $data = []): void
+    public function handleVoiceServerChange(Payload|array $data = []): void
     {
         $this->bot->logger->debug('voice server has changed, dynamically changing servers in the background', ['data' => $data]);
         $this->reconnecting = true;
-        $this->sentLoginFrame = false;
+
         $this->pause();
 
-        $this->client->close();
-        $this->voiceWebsocket->close();
+        $this->udp->close();
+        $this->ws->close();
 
         $this->bot->loop->cancelTimer($this->heartbeat);
-        $this->bot->loop->cancelTimer($this->udpHeartbeat);
 
         $this->data['token'] = $data['token']; // set the token if it changed
         $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
@@ -580,7 +549,7 @@ class VoiceClient extends EventEmitter
 
         // If the client is paused, delay by frame size and check again.
         if ($this->paused) {
-            $this->insertSilence();
+            $this->udp->insertSilence();
             $this->readOpusTimer = $this->bot->loop->addTimer($this->frameSize / 1000, fn () => $this->readOggOpus($deferred, $ogg, $loops));
 
             return;
@@ -601,7 +570,7 @@ class VoiceClient extends EventEmitter
                 $this->seq = 0;
             }
 
-            $this->sendBuffer($packet);
+            $this->udp->sendBuffer($packet);
 
             // increment timestamp
             // uint32 overflow protection
@@ -713,7 +682,7 @@ class VoiceClient extends EventEmitter
 
         // If the client is paused, delay by frame size and check again.
         if ($this->paused) {
-            $this->insertSilence();
+            $this->udp->insertSilence();
             $this->readOpusTimer = $this->bot->loop->addTimer($this->frameSize / 1000, fn () => $this->readDCAOpus($deferred));
 
             return;
@@ -724,7 +693,7 @@ class VoiceClient extends EventEmitter
             // Read opus data
             return $this->buffer->read($opusLength, null, 1000);
         })->then(function ($opus) use ($deferred) {
-            $this->sendBuffer($opus);
+            $this->udp->sendBuffer($opus);
 
             // increment sequence
             // uint16 overflow protection
@@ -763,33 +732,13 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Sends a buffer to the UDP socket.
-     *
-     * @param string $data The data to send to the UDP server.
-     * @todo Fix after new change in VoicePacket
-     */
-    protected function sendBuffer(string $data): void
-    {
-        if (! $this->ready) {
-            return;
-        }
-
-        $packet = new Packet($data, $this->ssrc, $this->seq, $this->timestamp, true, $this->secretKey, log: $this->bot->logger);
-        $this->client->send((string) $packet);
-
-        $this->streamTime = (int) microtime(true);
-
-        $this->emit('packet-sent', [$packet]);
-    }
-
-    /**
      * Sets the speaking value of the client.
      *
      * @param bool $speaking Whether the client is speaking or not.
      *
      * @throws \RuntimeException
      */
-    /* public function setSpeaking(bool $speaking = true): void
+    public function setSpeaking(bool $speaking = true): void
     {
         if ($this->speaking == $speaking) {
             return;
@@ -799,7 +748,7 @@ class VoiceClient extends EventEmitter
             throw new \RuntimeException('Voice Client is not ready.');
         }
 
-        $this->send(VoicePayload::new(
+        $this->ws->send(VoicePayload::new(
             Op::VOICE_SPEAKING,
             [
                 'speaking' => $speaking,
@@ -809,7 +758,7 @@ class VoiceClient extends EventEmitter
         ));
 
         $this->speaking = $speaking;
-    } */
+    }
 
     /**
      * Switches voice channels.
@@ -902,8 +851,6 @@ class VoiceClient extends EventEmitter
         $this->audioApplication = $app;
     }
 
-
-
     /**
      * Sends a message to the main websocket.
      *
@@ -942,10 +889,10 @@ class VoiceClient extends EventEmitter
             ],
         ));
 
-        $this->client->removeListener('message', [$this, 'handleAudioData']);
+        $this->udp->removeListener('message', [$this, 'handleAudioData']);
 
         if (! $deaf) {
-            $this->client->on('message', [$this, 'handleAudioData']);
+            $this->udp->on('message', [$this, 'handleAudioData']);
         }
     }
 
@@ -965,7 +912,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->paused = true;
-        $this->silenceRemaining = 5;
+        $this->udp->refreshSilenceFrames();
     }
 
     /**
@@ -999,7 +946,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->buffer->end();
-        $this->insertSilence();
+        $this->udp->insertSilence();
         $this->reset();
     }
 
@@ -1032,19 +979,14 @@ class VoiceClient extends EventEmitter
         ));
 
         $this->userClose = true;
-        $this->client->close();
-        $this->voiceWebsocket->close();
+        $this->udp->close();
+        $this->ws->close();
 
         $this->heartbeatInterval = null;
 
         if (null !== $this->heartbeat) {
             $this->bot->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
-        }
-
-        if (null !== $this->udpHeartbeat) {
-            $this->bot->loop->cancelTimer($this->udpHeartbeat);
-            $this->udpHeartbeat = null;
         }
 
         $this->seq = 0;
@@ -1066,15 +1008,12 @@ class VoiceClient extends EventEmitter
      */
     public function isSpeaking($id = null): bool
     {
-        if (! isset($id)) {
-            return $this->speaking;
-        } elseif ($user = $this->speakingStatus->get('user_id', $id)) {
-            return $user->speaking;
-        } elseif ($ssrc = $this->speakingStatus->get('ssrc', $id)) {
-            return $ssrc->speaking;
-        }
-
-        return false;
+        return match(true) {
+            ! isset($id) => $this->speaking,
+            $user = $this->speakingStatus->get('user_id', $id) => $user->speaking,
+            $ssrc = $this->speakingStatus->get('ssrc', $id) => $ssrc->speaking,
+            default => false,
+        };
     }
 
     /**
@@ -1091,7 +1030,6 @@ class VoiceClient extends EventEmitter
      * Handles a voice state update.
      * NOTE: This object contains the data as the VoiceStateUpdate Part.
      * @see \Discord\Parts\WebSockets\VoiceStateUpdate
-     *
      *
      * @param object $data The WebSocket data.
      */
@@ -1162,8 +1100,8 @@ class VoiceClient extends EventEmitter
         }
 
         foreach ($this->speakingStatus as $status) {
-            if ($status->user_id == $id) {
-                return $this->receiveStreams[$status->ssrc];
+            if ($status?->user_id == $id) {
+                return $this->receiveStreams[$status?->ssrc];
             }
         }
 
@@ -1218,7 +1156,7 @@ class VoiceClient extends EventEmitter
             $this->createDecoder($ss);
         }
 
-        //$audioData = $decoder->stdin->write($voicePacket->getAudioData());
+        $audioData = $decoder->stdin->write($voicePacket->getAudioData());
 
         /* $buff = new Buffer(strlen($audioData) + 2);
         $buff->write(pack('s', strlen($audioData)), 0);
@@ -1263,23 +1201,6 @@ class VoiceClient extends EventEmitter
 
         // Monitor the process for exit
         #$this->monitorProcessExit($decoder, $ss);
-    }
-
-
-
-    protected function generateKeyPackage()
-    {
-        // Generate and return a new MLS key package
-    }
-
-    protected function generateCommit()
-    {
-        // Generate and return an MLS commit message
-    }
-
-    protected function generateWelcome()
-    {
-        // Generate and return an MLS welcome message
     }
 
     /**
@@ -1328,18 +1249,6 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Insert 5 frames of silence.
-     *
-     * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
-     */
-    public function insertSilence(): void
-    {
-        while (--$this->silenceRemaining > 0) {
-            $this->sendBuffer(self::SILENCE_FRAME);
-        }
-    }
-
-    /**
      * Creates a new voice client instance statically
      *
      * @param \Discord\Discord $bot
@@ -1362,7 +1271,7 @@ class VoiceClient extends EventEmitter
         ?VoiceManager &$manager = null,
     ): self
     {
-        return new static(...func_get_args());
+        return new static($bot, $channel, $data, $deaf, $mute, $deferred, $manager);
     }
 
     /**
@@ -1370,9 +1279,9 @@ class VoiceClient extends EventEmitter
      *
      * @return void
      */
-    public function boot(): void
+    public function boot(): bool
     {
-        $this->once('ready', function () {
+        return $this->once('ready', function () {
             $this->bot->getLogger()->info('voice client is ready');
             $this->manager->clients[$this->channel->guild_id] = $this;
 

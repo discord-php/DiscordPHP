@@ -6,7 +6,6 @@ namespace Discord\Voice\Client;
 
 use Discord\Discord;
 use Discord\Factory\SocketFactory;
-use Discord\Helpers\ByteBuffer\Buffer;
 use Discord\Parts\EventData\VoiceSpeaking;
 use Discord\Parts\Voice\UserConnected;
 use Discord\Voice\VoiceClient;
@@ -15,12 +14,8 @@ use Discord\WebSockets\VoicePayload;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
-use React\ChildProcess\Process;
-use React\Datagram\Factory;
-use React\Datagram\Socket;
-use React\Dns\Resolver\Factory as DnsFactory;
+use React\EventLoop\TimerInterface;
 use React\Promise\PromiseInterface;
-use function Discord\logger;
 
 final class WS
 {
@@ -58,10 +53,18 @@ final class WS
 
     public $ssrc;
 
+    private bool $sentLoginFrame = false;
+
+    protected TimerInterface $heartbeat;
+
+    protected $hbInterval;
+
+    protected int $hbSequence = 0;
+
     public function __construct(
         public VoiceClient $vc,
         protected ?Discord $bot = null,
-        protected ?array $data = [],
+        public ?array $data = [],
     ) {
         $this->data ??= $this->vc->data;
         $this->bot ??= $this->vc->bot;
@@ -75,15 +78,12 @@ final class WS
                 fn (\Throwable $e) => $this->bot->logger->error(
                     'Failed to connect to voice gateway: {error}',
                     ['error' => $e->getMessage()]
-                ) && $this->vc->emit('error', [$e])
+                ) && $this->vc->emit('error', arguments: [$e])
             );
     }
 
-    public static function make(
-        VoiceClient $vc,
-        ?Discord $bot = null,
-        ?array $data = null
-    ): self {
+    public static function make(VoiceClient $vc, ?Discord $bot = null, ?array $data = null): self
+    {
         return new self($vc, $bot, $data);
     }
 
@@ -96,12 +96,9 @@ final class WS
     {
         $this->bot->logger->debug('connected to voice websocket');
 
-        $resolver = (new DnsFactory())->createCached($this->data['dnsConfig'], $this->bot->loop);
-        $udpfac = new SocketFactory($this->bot->loop, $resolver, $this);
+        $udpfac = new SocketFactory($this->bot->loop, ws: $this);
 
-        $this->socket = $this->vc->voiceWebsocket = $ws;
-
-        $ip = $port = '';
+        $this->socket = $this->vc->ws = $ws;
 
         $ws->on('message', function (Message $message) use ($udpfac): void {
             $data = json_decode($message->getPayload());
@@ -131,10 +128,12 @@ final class WS
                     } else {
                         $this->vc->reconnecting = false;
                         $this->vc->emit('resumed', [$this->vc]);
+                        # TODO: check if this can fix the reconnect issue
+                        $this->vc->emit('ready', [$this->vc]);
                     }
 
                     if (! $this->vc->deaf && $this->secretKey) {
-                        $this->vc->client->handleMessages($this->vc, $this->secretKey);
+                        $this->vc->udp->handleMessages($this->secretKey);
                     }
 
                     break;
@@ -145,9 +144,12 @@ final class WS
                     $this->vc->speakingStatus[$data->d->user_id] = $this->bot->getFactory()->create(VoiceSpeaking::class, $data->d);
                     break;
                 case Op::VOICE_HELLO:
-                    $this->vc->heartbeatInterval = $data->d->heartbeat_interval;
+                    $this->hbInterval = $data->d->heartbeat_interval;
                     $this->sendHeartbeat();
-                    $this->vc->heartbeat = $this->bot->loop->addPeriodicTimer($this->vc->heartbeatInterval / 1000, fn () => $this->sendHeartbeat());
+                    $this->heartbeat = $this->bot->loop->addPeriodicTimer(
+                        $this->hbInterval / 1000,
+                        fn () => $this->sendHeartbeat()
+                    );
                     break;
                 case Op::VOICE_CLIENTS_CONNECT:
                     $this->bot->logger->debug('received clients connected packet', ['data' => json_decode(json_encode($data->d), true)]);
@@ -203,18 +205,21 @@ final class WS
                     break;
 
                 case Op::VOICE_READY: {
-                    $this->vc->udpPort = $data->d->port;
                     $this->vc->ssrc = $data->d->ssrc;
 
                     $this->bot->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
 
                     /** @var PromiseInterface */
-                    $udpfac->createClient("{$data->d->ip}:" . $this->vc->udpPort)->then(function (UDP $client): void {
-                        $this->vc->client = $client;
+                    $udpfac->createClient("{$data->d->ip}:" . $data->d->port)->then(function (UDP $client) use ($data): void {
+                        $this->vc->udp = $client;
                         $client->handleSsrcSending()
                             ->handleHeartbeat()
                             ->handleErrors()
                             ->decodeOnce();
+
+                        $client->ip = $data->d->ip;
+                        $client->port = $data->d->port;
+                        $client->ssrc = $data->d->ssrc;
                     }, function (\Throwable $e): void {
                         $this->bot->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
                         $this->vc->emit('error', [$e]);
@@ -234,25 +239,7 @@ final class WS
 
         $ws->on('close', [$this, 'handleClose']);
 
-
-        if ($this->vc->sentLoginFrame) {
-            return;
-        }
-
-        $payload = VoicePayload::new(
-            Op::VOICE_IDENTIFY,
-            [
-                'server_id' => $this->vc->channel->guild_id,
-                'user_id' => $this->data['user_id'],
-                'session_id' => $this->data['session'],
-                'token' => $this->data['token'],
-            ],
-        );
-
-        $this->bot->logger->debug('sending identify', ['packet' => $payload->__debugInfo()]);
-
-        $this->send($payload);
-        $this->vc->sentLoginFrame = true;
+        $this->handleSendingOfLoginFrame();
     }
 
     /**
@@ -266,49 +253,13 @@ final class WS
         $this->socket->send($json);
     }
 
-    /**
-     * Monitor a process for exit and trigger callbacks when it exits
-     *
-     * @param Process $process The process to monitor
-     * @param object $ss The speaking status object
-     * @param callable $createDecoder Function to create a new decoder if needed
-     */
-    protected function monitorProcessExit(Process $process, $ss): void
-    {
-        // Store the process ID
-        // $pid = $process->getPid();
-
-        // Check every second if the process is still running
-        $this->monitorProcessTimer = $this->bot->loop->addPeriodicTimer(1.0, function () use ($process, $ss) {
-            // Check if the process is still running
-            if (!$process->isRunning()) {
-                // Get the exit code
-                $exitCode = $process->getExitCode();
-
-                // Clean up the timer
-                $this->bot->loop->cancelTimer($this->monitorProcessTimer);
-
-                // If exit code indicates an error, emit event and recreate decoder
-                if ($exitCode > 0) {
-                    $this->vc->emit('decoder-error', [$exitCode, null, $ss]);
-                    //$this->createDecoder($ss);
-                }
-
-                // Clean up temporary files
-                // $this->cleanupTempFiles();
-            }
-        });
-    }
-
     protected function handleDavePrepareTransition($data): void
     {
         $this->bot->logger->debug('DAVE Prepare Transition', ['data' => $data]);
         // Prepare local state necessary to perform the transition
         $this->send(VoicePayload::new(
             Op::VOICE_DAVE_TRANSITION_READY,
-            [
-                'transition_id' => $data->d->transition_id,
-            ],
+            ['transition_id' => $data->d->transition_id],
         ));
     }
 
@@ -400,7 +351,7 @@ final class WS
             Op::VOICE_HEARTBEAT,
             [
                 't' => (int) microtime(true),
-                'seq_ack' => 10,
+                'seq_ack' => ++$this->hbSequence,
             ]
         ));
         $this->bot->logger->debug('sending heartbeat');
@@ -412,35 +363,25 @@ final class WS
         $this->bot->logger->warning('voice websocket closed', ['op' => $op, 'reason' => $reason]);
         $this->vc->emit('ws-close', [$op, $reason, $this]);
 
-        $this->clientsConnected = [];
-        $this->socket->close();
+        $this->vc->clientsConnected = [];
 
         // Cancel heartbeat timers
         if (null !== $this->vc->heartbeat) {
             $this->bot->loop->cancelTimer($this->vc->heartbeat);
-            $this->heartbeat = null;
-        }
-
-        if (null !== $this->vc->udpHeartbeat) {
-            $this->bot->loop->cancelTimer($this->vc->udpHeartbeat);
-            $this->vc->udpHeartbeat = null;
+            $this->vc->heartbeat = null;
         }
 
         // Close UDP socket.
-        if (isset($this->client)) {
+        if (isset($this->vc->udp)) {
             $this->bot->logger->warning('closing UDP client');
-            $this->client->close();
+            $this->vc->udp->close();
         }
+
+        $this->socket->close();
 
         // Don't reconnect on a critical opcode or if closed by user.
-        if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this?->userClose) {
+        if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this?->vc->userClose) {
             $this->bot->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
-            $this->vc->emit('close');
-
-            return;
-        }
-
-        if (in_array($op, [Op::CLOSE_VOICE_DISCONNECTED])) {
             $this->vc->emit('close');
 
             return;
@@ -450,10 +391,34 @@ final class WS
 
         // Retry connect after 2 seconds
         $this->bot->loop->addTimer(2, function (): void {
-            $this->reconnecting = true;
+            $this->vc->reconnecting = true;
+            $this->vc->sentLoginFrame = false;
             $this->sentLoginFrame = false;
 
             $this->vc->start();
         });
+    }
+
+    public function handleSendingOfLoginFrame(): void
+    {
+        if ($this->sentLoginFrame) {
+            return;
+        }
+
+        $payload = VoicePayload::new(
+            Op::VOICE_IDENTIFY,
+            [
+                'server_id' => $this->vc->channel->guild_id,
+                'user_id' => $this->data['user_id'],
+                'session_id' => $this->data['session'],
+                'token' => $this->data['token'],
+            ],
+        );
+
+        $this->bot->logger->debug('sending identify', ['packet' => $payload->__debugInfo()]);
+
+        $this->send($payload);
+        $this->sentLoginFrame = true;
+        $this->vc->sentLoginFrame = true;
     }
 }

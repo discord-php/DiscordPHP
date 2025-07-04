@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Discord\Factory;
 
-use Discord\Discord;
 use Discord\Voice\Client\UDP;
 use Discord\Voice\Client\WS;
 use React\Datagram\Factory;
-use React\Datagram\Socket;
-use function Discord\logger;
-use function Discord\loop;
+use React\Dns\Resolver\Factory as DnsFactory;
 
 final class SocketFactory extends Factory
 {
@@ -18,7 +15,11 @@ final class SocketFactory extends Factory
 
     public function __construct($loop = null, $resolver = null, ?WS $ws = null)
     {
-        parent::__construct($loop ?? loop(), $resolver);
+        if (null === $resolver) {
+            $resolver = (new DnsFactory())->createCached($ws->data['dnsConfig'], $loop);
+        }
+
+        parent::__construct($loop, $resolver);
 
         if ($ws !== null) {
             $this->ws = $ws;

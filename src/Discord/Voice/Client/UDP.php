@@ -5,13 +5,52 @@ namespace Discord\Voice\Client;
 use Discord\Helpers\ByteBuffer\Buffer;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Op;
+use React\EventLoop\TimerInterface;
 use function Discord\logger;
 use function Discord\loop;
 use React\Datagram\Socket;
 
 final class UDP extends Socket
 {
+    /**
+     * The Parent Voice WebSocket Client.
+     *
+     * @var WS
+     */
     protected WS $ws;
+
+    /**
+     * Silence Frame Remain Count.
+     *
+     * @var int Amount of silence frames remaining.
+     */
+    public int $silenceRemaining = 5;
+
+    /**
+     * The Opus Silence Frame.
+     *
+     * @var string The silence frame.
+     */
+    public const string SILENCE_FRAME = "\0xF8\0xFF\0xFE";
+
+    /**
+     * The stream time of the last packet.
+     *
+     * @var int The time we sent the last packet.
+     */
+    public int $streamTime = 0;
+
+    protected ?TimerInterface $heartbeat;
+
+    protected $hbInterval;
+
+    protected $hbSequence = 0;
+
+    public string $ip;
+
+    public int $port;
+
+    public int $ssrc;
 
     public function __construct($loop, $socket, $buffer = null, ?WS $ws = null)
     {
@@ -19,12 +58,17 @@ final class UDP extends Socket
 
         if ($ws !== null) {
             $this->ws = $ws;
+
+            if (null === $this->hbInterval) {
+                // Set the heartbeat interval to the default value if not set.
+                $this->hbInterval = $this->ws->vc->heartbeatInterval;
+            }
         }
     }
 
-    public function handleMessages(VoiceClient $vc, $secret): self
+    public function handleMessages(string $secret): self
     {
-        return $this->on('message', static fn (string $message) => $vc->handleAudioData(
+        return $this->on('message', fn (string $message) => $this->ws->vc->handleAudioData(
             new Packet($message, key: $secret)
         ));
     }
@@ -35,28 +79,40 @@ final class UDP extends Socket
         $buffer[1] = "\x01";
         $buffer[3] = "\x46";
         $buffer->writeUInt32BE($this->ws->vc->ssrc, 4);
-        loop()->addTimer(0.1, fn () => $this->ws->vc->client->send($buffer->__toString()));
+        loop()->addTimer(0.1, fn () => $this->send($buffer->__toString()));
 
         return $this;
     }
 
     public function handleHeartbeat(): self
     {
-        $this->ws->vc->udpHeartbeat = loop()->addPeriodicTimer($this->ws->vc->heartbeatInterval / 1000, function (): void {
-            $buffer = new Buffer(9);
-            $buffer[0] = 0xC9;
-            $buffer->writeUInt64LE($this->ws->vc->heartbeatSeq, 1);
-            ++$this->ws->vc->heartbeatSeq;
+        if (null === $this->hbInterval) {
+            $this->hbInterval = $this->ws->vc->heartbeatInterval;
+        }
 
-            $this->ws->vc->client->send($buffer->__toString());
-            $this->ws->vc->emit('udp-heartbeat', []);
+        $this->heartbeat = loop()->addPeriodicTimer(
+            $this->hbInterval / 1000,
+            function (): void {
+                $buffer = new Buffer(9);
+                $buffer[0] = 0xC9;
+                $buffer->writeUInt64LE($this->hbSequence, 1);
+                ++$this->hbSequence;
 
-            logger()->debug('sent UDP heartbeat');
-        });
+                $this->send($buffer->__toString());
+                $this->ws->vc->emit('udp-heartbeat', []);
+
+                logger()->debug('sent UDP heartbeat');
+            }
+        );
 
         return $this;
     }
 
+    /**
+     * Decodes the UDP message once.
+     * @see https://discord.com/developers/docs/topics/voice-connections#ip-discovery
+     * @return UDP
+     */
     public function decodeOnce(): self
     {
         return $this->once('message', function (string $message) {
@@ -101,5 +157,63 @@ final class UDP extends Socket
             logger()->error('UDP error', ['e' => $e->getMessage()]);
             $this->ws->vc->emit('udp-error', [$e]);
         });
+    }
+
+    /**
+     * Insert 5 frames of silence.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
+     */
+    public function insertSilence(): void
+    {
+        while (--$this->silenceRemaining > 0) {
+            $this->sendBuffer(self::SILENCE_FRAME);
+        }
+    }
+
+    /**
+     * Sends a buffer to the UDP socket.
+     *
+     * @param string $data The data to send to the UDP server.
+     */
+    public function sendBuffer(string $data): void
+    {
+        if (! $this->ws->vc->ready) {
+            return;
+        }
+
+        $packet = new Packet(
+            $data,
+            $this->ws->vc->ssrc,
+            $this->ws->vc->seq,
+            $this->ws->vc->timestamp,
+            true,
+            $this->ws->secretKey,
+        );
+        $this->send($packet->__toString());
+
+        $this->streamTime = (int) microtime(true);
+
+        $this->ws->vc->emit('packet-sent', [$packet]);
+    }
+
+    public function close(): void
+    {
+        if ($this->heartbeat) {
+            loop()->cancelTimer($this->heartbeat);
+            $this->heartbeat = null;
+        }
+
+        parent::close();
+    }
+
+    public function refreshSilenceFrames(): void
+    {
+        if (!$this->ws->vc->paused) {
+            // If the voice client is paused, we don't need to refresh the silence frames.
+            return;
+        }
+
+        $this->silenceRemaining = 5;
     }
 }
