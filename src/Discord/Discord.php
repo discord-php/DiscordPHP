@@ -1278,13 +1278,13 @@ class Discord
      * Gets a voice client from a guild ID. Returns null if there is no voice client.
      *
      * @param string $guild_id The guild ID to look up.
-     * @deprecated Use $discord->voice->getVoiceClient()
+     * @deprecated Use $discord->voice->getClient($guildId)
      *
      * @return VoiceClient|null
      */
-    public function getVoiceClient(string $guild_id): ?VoiceClient
+    public function getVoiceClient(string|int $guildId): ?VoiceClient
     {
-        return $this->voice->clients[$guild_id] ?? null;
+        return $this->voice->getClient($guildId);
     }
 
     /**
@@ -1626,6 +1626,7 @@ class Discord
         }
 
         if (null === $this->client) {
+            // TODO: Throw an exception here?
             return;
         }
 
@@ -1641,6 +1642,7 @@ class Discord
     public function __set(string $name, $value): void
     {
         if (null === $this->client) {
+            // TODO: Throw an exception here?
             return;
         }
 
@@ -1665,6 +1667,8 @@ class Discord
         if ($channel = $this->private_channels->get('id', $channel_id)) {
             return $channel;
         }
+
+        // TODO: Throw an exception here?
 
         return null;
     }
@@ -1715,6 +1719,7 @@ class Discord
     public function __call(string $name, array $params)
     {
         if (null === $this->client) {
+            // TODO: Throw an exception here?
             return;
         }
 
