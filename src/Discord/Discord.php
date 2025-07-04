@@ -435,18 +435,7 @@ class Discord
         throw new \BadMethodCallException("Method {$method} does not exist in " . __CLASS__);
     }
 
-    /**
-     * Handles `VOICE_SERVER_UPDATE` packets.
-     *
-     * @param Payload $data Packet data.
-     */
-    protected function handleVoiceServerUpdate(Payload $data): void
-    {
-        if (isset($this->voice->clients[$data->d->guild_id])) {
-            $this->logger->debug('voice server update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
-            $this->voice->clients[$data->d->guild_id]->handleVoiceServerChange((array) $data->d);
-        }
-    }
+
 
     /**
      * Handles `RESUME` packets.
