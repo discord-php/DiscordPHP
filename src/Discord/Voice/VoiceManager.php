@@ -11,9 +11,6 @@ use Discord\WebSockets\Event;
 use Discord\WebSockets\Op;
 use Discord\WebSockets\VoicePayload;
 use Evenement\EventEmitterTrait;
-use Psr\Log\LoggerInterface;
-use Ratchet\Client\WebSocket;
-use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 
 final class VoiceManager
@@ -48,27 +45,24 @@ final class VoiceManager
     {
         $deferred = new Deferred();
 
-        if (! $channel->isVoiceBased()) {
-            $deferred->reject(new \RuntimeException('Channel must allow voice.'));
+        try {
+            if (! $channel->isVoiceBased()) {
+                throw new \RuntimeException('Channel must allow voice.');
+            }
 
-            return $deferred->promise();
-        }
+            if (! $channel->canJoin()) {
+                throw new \RuntimeException('The bot must have proper permissions to join this channel.');
+            }
 
-        if (! $channel->canJoin()) {
-            $deferred->reject(new \RuntimeException('The bot must have proper permissions to join this channel.'));
+            if (! $channel->canSpeak() && ! $mute) {
+                throw new \RuntimeException('The bot must have permission to speak in this channel.');
+            }
 
-            return $deferred->promise();
-        }
-
-        if (! $channel->canSpeak() && ! $mute) {
-            $deferred->reject(new \RuntimeException('The bot must have permission to speak in this channel.'));
-
-            return $deferred->promise();
-        }
-
-        if (isset($this->clients[$channel->guild_id])) {
-            $deferred->reject(new \RuntimeException('You cannot join more than one voice channel per guild.'));
-
+            if (isset($this->clients[$channel->guild_id])) {
+                throw new \RuntimeException('You cannot join more than one voice channel per guild.');
+            }
+        } catch (\Throwable $th) {
+            $deferred->reject($th);
             return $deferred->promise();
         }
 
@@ -96,7 +90,7 @@ final class VoiceManager
         return $deferred->promise();
     }
 
-    public function getClient(string $guildId): ?VoiceClient
+    public function getClient(string|int $guildId): ?VoiceClient
     {
         if (! isset($this->clients[$guildId])) {
             return null;
