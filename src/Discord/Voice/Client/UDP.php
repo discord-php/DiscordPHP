@@ -40,11 +40,11 @@ final class UDP extends Socket
      */
     public int $streamTime = 0;
 
-    protected ?TimerInterface $heartbeat;
+    public ?TimerInterface $heartbeat;
 
-    protected $hbInterval;
+    public $hbInterval;
 
-    protected $hbSequence = 0;
+    protected int $hbSequence = 0;
 
     public string $ip;
 
@@ -86,8 +86,13 @@ final class UDP extends Socket
 
     public function handleHeartbeat(): self
     {
-        if (null === $this->hbInterval) {
+        if (empty($this->hbInterval)) {
             $this->hbInterval = $this->ws->vc->heartbeatInterval;
+        }
+
+        if (null === loop()) {
+            logger()->error('No event loop found. Cannot handle heartbeat.');
+            return $this;
         }
 
         $this->heartbeat = loop()->addPeriodicTimer(
