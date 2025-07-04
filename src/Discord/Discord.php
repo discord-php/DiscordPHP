@@ -45,8 +45,6 @@ use Discord\WebSockets\Intents;
 use Discord\WebSockets\Op;
 use Discord\WebSockets\Payload;
 use Evenement\EventEmitterTrait;
-use function React\Async\coroutine;
-use function React\Promise\all;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
@@ -58,10 +56,12 @@ use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
-
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use function React\Async\coroutine;
+use function React\Promise\all;
 
 /**
  * The Discord client class.
