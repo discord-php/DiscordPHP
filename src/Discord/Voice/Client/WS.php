@@ -144,7 +144,7 @@ final class WS
                     $this->vc->speakingStatus[$data->d->user_id] = $this->bot->getFactory()->create(VoiceSpeaking::class, $data->d);
                     break;
                 case Op::VOICE_HELLO:
-                    $this->hbInterval = $data->d->heartbeat_interval;
+                    $this->hbInterval = $this->vc->heartbeatInterval = $data->d->heartbeat_interval;
                     $this->sendHeartbeat();
                     $this->heartbeat = $this->bot->loop->addPeriodicTimer(
                         $this->hbInterval / 1000,
