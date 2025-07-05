@@ -21,6 +21,7 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
+use Discord\Parts\Channel\Message\MessagePinData;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
@@ -40,6 +41,7 @@ use Traversable;
 use function Discord\getSnowflakeTimestamp;
 use function React\Promise\all;
 use function React\Promise\reject;
+use function React\Promise\resolve;
 
 /**
  * Represents a Discord thread.
@@ -475,26 +477,60 @@ class Thread extends Part implements Stringable
     }
 
     /**
-     * Returns the thread's pinned messages.
+     * Returns the threads pinned messages.
      *
-     * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
+     * @link https://discord.com/developers/docs/resources/message#get-channel-pins
      *
-     * @return PromiseInterface<Collection<Message[]>>
+     * @param int                   $options['limit']  The amount of messages to retrieve.
+     * @param Message|Carbon|string $options['before'] A message or timestamp to get messages before.
+     *
+     * @return PromiseInterface<Collection<MessagePinData>
      *
      * @todo Make it in a trait along with Channel
-     */
-    public function getPinnedMessages(): PromiseInterface
+     *
+     * @since 10.19.0 Added $options parameter to allow for pagination.
+    */
+    public function getPinnedMessages(array $options = []): PromiseInterface
     {
-        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_PINS, $this->id))
-            ->then(function ($responses) {
-                $messages = Collection::for(Message::class);
+        if ($this->guild_id && $botperms = $this->getBotPermissions()) {
+            if (! $botperms->view_channel) {
+                return reject(new NoPermissionsException("You do not have permission to view messages in the channel {$this->id}."));
+            }
+            //  If the user is missing the READ_MESSAGE_HISTORY permission in the channel, then no pins will be returned.
+            if (! $botperms->read_message_history) {
+                return resolve(Collection::for(Message::class));
+            }
+        }
 
-                foreach ($responses as $response) {
-                    $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
-                }
+        $resolver = new OptionsResolver();
+        $resolver
+            //->setDefaults(['limit' => 50])
+            ->setDefined(['before', 'limit'])
+            ->setAllowedTypes('before', [Carbon::class, 'string', 'null'])
+            ->setAllowedTypes('limit', 'integer')
+            ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 50));
 
-                return $messages;
-            });
+        $options = $resolver->resolve($options);
+
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id);
+
+        if (isset($options['limit'])) {
+            $endpoint->addQuery('limit', $options['limit']);
+        }
+
+        if (isset($options['before'])) {
+            if ($options['before'] instanceof Message) {
+                $options['before'] = $options['before']->timestamp;
+            }
+            if ($options['before'] instanceof Carbon) {
+                $options['before'] = $options['before']->toIso8601String();
+            }
+
+            $endpoint->addQuery('before', $options['before']);
+        }
+
+        return $this->http->get($endpoint)
+            ->then(fn ($responses) => $this->factory->create(MessagePinData::class, $responses));
     }
 
     /**
@@ -647,7 +683,7 @@ class Thread extends Part implements Stringable
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
+        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
             $message->pinned = true;
 
             return $message;
@@ -683,7 +719,7 @@ class Thread extends Part implements Stringable
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
             $message->pinned = false;
 
             return $message;
