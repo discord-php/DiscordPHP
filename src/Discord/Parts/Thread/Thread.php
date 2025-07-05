@@ -21,6 +21,7 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
+use Discord\Parts\Channel\Message\MessagePinData;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
@@ -483,10 +484,12 @@ class Thread extends Part implements Stringable
      * @param int                   $options['limit']  The amount of messages to retrieve.
      * @param Message|Carbon|string $options['before'] A message or timestamp to get messages before.
      *
-     * @return PromiseInterface<Collection<Message[]>>
+     * @return PromiseInterface<Collection<MessagePinData>
      *
      * @todo Make it in a trait along with Channel
-     */
+     *
+     * @since 10.19.0 Added $options parameter to allow for pagination.
+    */
     public function getPinnedMessages(array $options = []): PromiseInterface
     {
         if ($this->guild_id && $botperms = $this->getBotPermissions()) {
@@ -501,14 +504,19 @@ class Thread extends Part implements Stringable
 
         $resolver = new OptionsResolver();
         $resolver
-            ->setDefaults(['limit' => 50])
+            //->setDefaults(['limit' => 50])
             ->setDefined(['before', 'limit'])
             ->setAllowedTypes('before', [Carbon::class, 'string', 'null'])
             ->setAllowedTypes('limit', 'integer')
-            ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 50))
-            ->setDefault('before', 'null');
+            ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 50));
 
         $options = $resolver->resolve($options);
+
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id);
+
+        if (isset($options['limit'])) {
+            $endpoint->addQuery('limit', $options['limit']);
+        }
 
         if (isset($options['before'])) {
             if ($options['before'] instanceof Message) {
@@ -517,18 +525,12 @@ class Thread extends Part implements Stringable
             if ($options['before'] instanceof Carbon) {
                 $options['before'] = $options['before']->toIso8601String();
             }
+
+            $endpoint->addQuery('before', $options['before']);
         }
 
-        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id), $options)
-        ->then(function ($responses) {
-            $messages = Collection::for(Message::class);
-
-            foreach ($responses as $response) {
-                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
-            }
-
-            return $messages;
-        });
+        return $this->http->get($endpoint)
+            ->then(fn ($responses) => $this->factory->create(MessagePinData::class, $responses));
     }
 
     /**
