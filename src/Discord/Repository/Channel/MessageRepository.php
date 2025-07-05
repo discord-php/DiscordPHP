@@ -13,10 +13,14 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Channel;
 
+use Carbon\Carbon;
 use Discord\Discord;
+use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Message;
 use Discord\Repository\AbstractRepository;
+use React\Promise\PromiseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Contains messages sent to a channel.
@@ -55,5 +59,44 @@ class MessageRepository extends AbstractRepository
     {
         unset($vars['thread_id']); // For thread
         parent::__construct($discord, $vars);
+    }
+
+    /**
+     * Gets the pinned messages in the channel.
+     *
+     * @link https://discord.com/developers/docs/resources/message#get-channel-pins
+     *
+     * @param int                   $options['limit'] The amount of messages to retrieve.
+     * @param Message|Carbon|string $options['before'] A message or timestamp to get messages before.
+     *
+     * @return PromiseInterface<Collection<Message>>
+     *
+     * @since 10.19.0
+    */
+    public function getPinnedMessages(array $options = []): PromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults(['limit' => 50]);
+        $resolver->setDefined(['before', 'limit']);
+        $resolver->setAllowedTypes('before', [Message::class, Carbon::class, 'string']);
+        $resolver->setAllowedTypes('limit', 'integer');
+        $resolver->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 50));
+
+        if (isset($options['before'])) {
+            if ($options['before'] instanceof Message) {
+                $options['before'] = $options['before']->timestamp;
+            }
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id), $options)
+        ->then(function ($responses) {
+            $messages = Collection::for(Message::class);
+
+            foreach ($responses as $response) {
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
+            }
+
+            return $messages;
+        });
     }
 }
