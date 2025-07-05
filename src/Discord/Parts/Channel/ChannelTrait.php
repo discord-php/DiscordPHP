@@ -40,17 +40,20 @@ use function React\Promise\resolve;
  *
  * @since 10.19.0
  *
- * @property      string                       $id                                 The ID of the channel or thread.
- * @property      int                          $type                               The type of channel or thread.
- * @property      string|null                  $guild_id                           The ID of the guild that the channel or thread belongs to. Only for text or voice channels.
- * @property-read Guild|null                   $guild                              The guild that the channel or thread belongs to. Only for text or voice channels.
- * @property      ?string|null                 $name                               The name of the channel or thread.
- * @property      ?string|null                 $last_message_id                    The unique identifier of the last message sent in the channel or thread. (may not point to an existing or valid message or thread).
- * @property      Carbon|null                  $last_pin_timestamp                 The timestamp when the last message was pinned in the channel or thread.
- * @property      int|null                     $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message (slow mode).
- * @property      string|null                  $owner_id                           The ID of the DM creator (Only for DM or group channels) or the owner of the thread.
- * @property-read User|null                    $owner                              The DM creator or the owner of the thread.
- * @property-read Member|null                  $owner_member                       The member object for the DM creator or the owner of the thread.
+ * @property      string        $id                  The ID of the channel or thread.
+ * @property      int           $type                The type of channel or thread.
+ * @property      string|null   $guild_id            The ID of the guild that the channel or thread belongs to. Only for text or voice channels.
+ * @property-read Guild|null    $guild               The guild that the channel or thread belongs to. Only for text or voice channels.
+ * @property      ?string|null  $name                The name of the channel or thread.
+ * @property      ?string|null  $last_message_id     The unique identifier of the last message sent in the channel or thread. (may not point to an existing or valid message or thread).
+ * @property      Carbon|null   $last_pin_timestamp  The timestamp when the last message was pinned in the channel or thread.
+ * @property      int|null      $rate_limit_per_user Amount of seconds a user has to wait before sending a new message (slow mode).
+ * @property      string|null   $owner_id            The ID of the DM creator (Only for DM or group channels) or the owner of the thread.
+ * @property-read User|null     $owner               The DM creator or the owner of the thread.
+ * @property-read Member|null   $owner_member        The member object for the DM creator or the owner of the thread.
+ * @property      string        $parent_id           The ID of the parent channel or the channel which the thread was started in.
+ * @property-read Channel|null  $parent              The parent channel or the channel which the thread was created in.
+ *
  */
 trait ChannelTrait
 {
