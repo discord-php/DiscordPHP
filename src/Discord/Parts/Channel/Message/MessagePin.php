@@ -37,13 +37,13 @@ class MessagePin extends Part
         'message',
     ];
 
-    protected function getMessageAttribute(): Message
-    {
-        return $this->factory->create(Message::class, $this->attributes['message'], true);
-    }
-
     protected function getPinnedAtAttribute(): Carbon
     {
         return Carbon::parse($this->attributes['pinned_at']);
+    }
+
+    protected function getMessageAttribute(): Message
+    {
+        return $this->factory->create(Message::class, $this->attributes['message'], true);
     }
 }
