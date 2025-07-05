@@ -17,7 +17,6 @@ use Carbon\Carbon;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\ChannelTrait;
-use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\Thread\Member as ThreadMember;
 use Discord\Parts\User\Member;
@@ -34,17 +33,6 @@ use Stringable;
  *
  * @since 7.0.0
  *
- * @property      string        $id                    The ID of the thread.
- * @property      int           $type                  The type of thread.
- * @property      string        $guild_id              The ID of the guild which the thread belongs to.
- * @property-read Guild|null    $guild                 The guild which the thread belongs to.
- * @property      string        $name                  The name of the thread.
- * @property      string        $last_message_id       The ID of the last message sent in the thread.
- * @property      Carbon|null   $last_pin_timestamp    The timestamp when the last message was pinned in the thread.
- * @property      int           $rate_limit_per_user   Amount of seconds a user has to wait before sending a new message.
- * @property      string        $owner_id              The ID of the owner of the thread.
- * @property-read User|null     $owner                 The owner of the thread.
- * @property-read Member|null   $owner_member          The member object for the owner of the thread.
  * @property      string        $parent_id             The ID of the channel which the thread was started in.
  * @property-read Channel|null  $parent                The channel which the thread was created in.
  * @property      int           $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, the message count is inaccurate when it's greater than 50).
@@ -123,30 +111,6 @@ class Thread extends Part implements Stringable
             $memberPart->created = &$this->created;
             $this->members->pushItem($memberPart);
         }
-    }
-
-    /**
-     * Returns the owner of the thread.
-     *
-     * @return User|null
-     */
-    protected function getOwnerAttribute(): ?User
-    {
-        return $this->discord->users->get('id', $this->owner_id);
-    }
-
-    /**
-     * Returns the member object for the owner of the thread.
-     *
-     * @return Member|null
-     */
-    protected function getOwnerMemberAttribute(): ?Member
-    {
-        if ($guild = $this->guild) {
-            return $guild->members->get('id', $this->owner_id);
-        }
-
-        return null;
     }
 
     /**
