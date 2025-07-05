@@ -13,12 +13,10 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
-use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Exceptions\InvalidOverwriteException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
-use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
@@ -53,29 +51,19 @@ use function React\Promise\resolve;
  * @since 2.0.0 Refactored as Part
  * @since 1.0.0
  *
- * @property      string                       $id                                 The unique identifier of the Channel.
- * @property      int                          $type                               The type of the channel.
- * @property      string|null                  $guild_id                           The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
- * @property-read Guild|null                   $guild                              The guild that the channel belongs to. Only for text or voice channels.
  * @property      int|null                     $position                           The position of the channel on the sidebar.
  * @property      ?array                       $permission_overwrites              Explicit permission overwrites for members and roles
  * @property      OverwriteRepository          $overwrites                         Permission overwrites
- * @property      ?string|null                 $name                               The name of the channel.
  * @property      ?string|null                 $topic                              The topic of the channel (0-4096 characters for forum channels, 0-1024 characters for all others).
  * @property      bool|null                    $nsfw                               Whether the channel is NSFW.
- * @property      ?string|null                 $last_message_id                    The unique identifier of the last message sent in the channel (or thread for forum channels) (may not point to an existing or valid message or thread).
  * @property      int|null                     $bitrate                            The bitrate of the channel. Only for voice channels.
  * @property      int|null                     $user_limit                         The user limit of the channel. Max 99 for voice channels and 10000 for stage channels (0 refers to no limit).
- * @property      int|null                     $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message (slow mode).
  * @property      ExCollectionInterface|User[] $recipients                         A collection of all the recipients in the channel. Only for DM or group channels.
  * @property-read User|null                    $recipient                          The first recipient of the channel. Only for DM or group channels.
  * @property-read string|null                  $recipient_id                       The ID of the recipient of the channel, if it is a DM channel.
  * @property      ?string|null                 $icon                               Icon hash.
- * @property      string|null                  $owner_id                           The ID of the DM creator. Only for DM or group channels.
  * @property      string|null                  $application_id                     ID of the group DM creator if it is a bot.
  * @property      bool|null                    $managed                            Whether the channel is managed by an application via the `gdm.join` OAuth2 scope. Only for group DM channels.
- * @property      ?string|null                 $parent_id                          ID of the parent channel.
- * @property      Carbon|null                  $last_pin_timestamp                 When the last message was pinned.
  * @property      ?string|null                 $rtc_region                         Voice region id for the voice channel, automatic when set to null.
  * @property      int|null                     $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.
  * @property      int|null                     $default_auto_archive_duration      Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
