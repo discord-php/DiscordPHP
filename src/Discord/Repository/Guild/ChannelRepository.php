@@ -13,15 +13,9 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Guild;
 
-use Carbon\Carbon;
-use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
-use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;
-use React\Promise\PromiseInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Contains channels on a guild.

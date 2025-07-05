@@ -13,14 +13,10 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Channel;
 
-use Carbon\Carbon;
 use Discord\Discord;
-use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Message;
 use Discord\Repository\AbstractRepository;
-use React\Promise\PromiseInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Contains messages sent to a channel.
