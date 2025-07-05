@@ -75,7 +75,6 @@ use function React\Promise\resolve;
  * @property      ?int|null                    $default_sort_order                 The default sort order type used to order posts in forum channels.
  * @property      int|null                     $default_forum_layout               The default layout type used to display posts in a forum channel. Defaults to `0`, which indicates a layout view has not been set by a channel admin.
  *
- * @property bool                    $is_private      Whether the channel is a private channel.
  * @property MemberRepository        $members         Voice channel only - members in the channel.
  * @property MessageRepository       $messages        Text channel only - messages sent in the channel.
  * @property WebhookRepository       $webhooks        Webhooks in the channel.
