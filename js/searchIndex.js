@@ -4616,6 +4616,41 @@ Search.appendIndex(
             "summary": "Attributes\u0020that\u0020are\u0020hidden\u0020from\u0020debug\u0020info.",
             "url": "classes/Discord-Parts-Channel-Message-MessageInteractionMetadata.html#property_hidden"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessagePin",
+            "name": "MessagePin",
+            "summary": "An\u0020array\u0020containing\u0020a\u0020pinned\u0020messages\u0020and\u0020its\u0020pinned_at\u0020timestamp.",
+            "url": "classes/Discord-Parts-Channel-Message-MessagePin.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessagePin\u003A\u003AgetPinnedAtAttribute\u0028\u0029",
+            "name": "getPinnedAtAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-MessagePin.html#method_getPinnedAtAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessagePin\u003A\u003AgetMessageAttribute\u0028\u0029",
+            "name": "getMessageAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-MessagePin.html#method_getMessageAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessagePin\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-MessagePin.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessagePinData",
+            "name": "MessagePinData",
+            "summary": "An\u0020array\u0020containing\u0020a\u0020pinned\u0020messages\u0020and\u0020its\u0020pinned_at\u0020timestamp.",
+            "url": "classes/Discord-Parts-Channel-Message-MessagePinData.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessagePinData\u003A\u003AgetItemsAttribute\u0028\u0029",
+            "name": "getItemsAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-MessagePinData.html#method_getItemsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessagePinData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-MessagePinData.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageReference",
             "name": "MessageReference",
             "summary": "Represents\u0020a\u0020message\u0020reference\u0020object,\u0020which\u0020points\u0020to\u0020another\u0020message\u0020for\u0020replies,\u0020forwards,\u0020pins,\u0020etc.",
@@ -9313,7 +9348,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetPinnedMessages\u0028\u0029",
             "name": "getPinnedMessages",
-            "summary": "Returns\u0020the\u0020thread\u0027s\u0020pinned\u0020messages.",
+            "summary": "Returns\u0020the\u0020threads\u0020pinned\u0020messages.",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_getPinnedMessages"
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AdeleteMessages\u0028\u0029",
