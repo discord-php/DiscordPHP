@@ -647,7 +647,7 @@ class Thread extends Part implements Stringable
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
+        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
             $message->pinned = true;
 
             return $message;
@@ -683,7 +683,7 @@ class Thread extends Part implements Stringable
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
             $message->pinned = false;
 
             return $message;
