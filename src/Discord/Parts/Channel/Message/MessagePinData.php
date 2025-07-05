@@ -23,6 +23,9 @@ use Discord\Parts\Part;
  * @link https://discord.com/developers/docs/resources/message#message-pin-object
  *
  * @since 10.19.0
+ *
+ * @property ExCollectionInterface|MessagePin[] $items
+ * @property bool                               $has_more
  */
 class MessagePinData extends Part
 {
