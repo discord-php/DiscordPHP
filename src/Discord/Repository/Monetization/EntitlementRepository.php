@@ -100,7 +100,6 @@ class EntitlementRepository extends AbstractRepository
      * @throws \RangeException
      *
      * @return PromiseInterface<Collection<Entitlement[]>>
-     * @todo Make it in a trait along with Thread
      */
     public function getEntitlements(array $options = []): PromiseInterface
     {
