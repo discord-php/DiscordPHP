@@ -30,21 +30,21 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      *
      * @var string
      */
-    private $buffer = '';
+    protected $buffer = '';
 
     /**
      * Array of deferred reads waiting to be resolved.
      *
      * @var Deferred[]|int[]
      */
-    private $reads = [];
+    protected $reads = [];
 
     /**
      * Whether the buffer has been closed.
      *
      * @var bool
      */
-    private $closed = false;
+    protected $closed = false;
 
     /**
      * ReactPHP event loop.
@@ -52,9 +52,9 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      *
      * @var LoopInterface
      */
-    private $loop;
+    protected $loop;
 
-    public function __construct(LoopInterface $loop = null)
+    public function __construct(?LoopInterface $loop = null)
     {
         $this->loop = $loop;
     }
@@ -88,7 +88,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      *
      * @return string|bool The bytes read, or false if not enough bytes are present.
      */
-    private function readRaw(int $length)
+    protected function readRaw(int $length)
     {
         if (strlen($this->buffer) >= $length) {
             $output = substr($this->buffer, 0, $length);
@@ -106,7 +106,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      * read.
      *
      * @param int         $length  Number of bytes to read.
-     * @param null|string $format  Format to read the bytes in. See `pack()`.
+     * @param string|null $format  Format to read the bytes in. See `pack()`.
      * @param int         $timeout Time in milliseconds before the read times out.
      *
      * @return PromiseInterface<mixed, \RuntimeException>
