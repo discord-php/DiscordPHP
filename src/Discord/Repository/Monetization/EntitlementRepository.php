@@ -104,17 +104,18 @@ class EntitlementRepository extends AbstractRepository
     public function getEntitlements(array $options = []): PromiseInterface
     {
         $resolver = new OptionsResolver();
-        $resolver->setDefaults(['application_id' => $this->vars['application_id']]);
-        $resolver->setAllowedTypes('application_id', [Application::class, 'string', 'int']);
-        $resolver->setAllowedTypes('user_id', ['string', 'int', Member::class, User::class]);
-        $resolver->setAllowedTypes('sku_ids', ['array', 'string, int']);
-        $resolver->setAllowedTypes('before', [Entitlement::class, 'string', 'int']);
-        $resolver->setAllowedTypes('after', [Entitlement::class, 'string', 'int']);
-        $resolver->setAllowedTypes('limit', 'integer');
-        $resolver->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100));
-        $resolver->setAllowedTypes('guild_id', [Guild::class, 'string', 'integer']);
-        $resolver->setAllowedTypes('exclude_ended', ['bool', null]);
-        $resolver->setAllowedTypes('exclude_deleted', ['bool', null]);
+        $resolver
+            ->setDefaults(['application_id' => $this->vars['application_id']])
+            ->setAllowedTypes('application_id', [Application::class, 'string', 'int'])
+            ->setAllowedTypes('user_id', ['string', 'int', Member::class, User::class])
+            ->setAllowedTypes('sku_ids', ['array', 'string', 'int'])
+            ->setAllowedTypes('before', [Entitlement::class, 'string', 'int'])
+            ->setAllowedTypes('after', [Entitlement::class, 'string', 'int'])
+            ->setAllowedTypes('limit', 'integer')
+            ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100))
+            ->setAllowedTypes('guild_id', [Guild::class, 'string', 'integer'])
+            ->setAllowedTypes('exclude_ended', ['bool', null])
+            ->setAllowedTypes('exclude_deleted', ['bool', null]);
 
         $options = $resolver->resolve($options);
 
