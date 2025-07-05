@@ -296,27 +296,6 @@ class Channel extends Part implements Stringable
     }
 
     /**
-     * Returns the channels pinned messages.
-     *
-     * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
-     *
-     * @return PromiseInterface<Collection<Message[]>>
-     */
-    public function getPinnedMessages(): PromiseInterface
-    {
-        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_PINS, $this->id))
-        ->then(function ($responses) {
-            $messages = Collection::for(Message::class);
-
-            foreach ($responses as $response) {
-                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
-            }
-
-            return $messages;
-        });
-    }
-
-    /**
      * Sets permissions in a channel.
      *
      * @link https://discord.com/developers/docs/resources/channel#edit-channel-permissions
@@ -926,17 +905,63 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Returns the channels pinned messages.
+     *
+     * @link https://discord.com/developers/docs/resources/message#get-channel-pins
+     *
+     * @param int                   $options['limit']  The amount of messages to retrieve.
+     * @param Message|Carbon|string $options['before'] A message or timestamp to get messages before.
+     *
+     * @return PromiseInterface<Collection<Message[]>>
+     *
+     * @since 10.19.0 Added $options parameter to allow for pagination.
+    */
+    public function getPinnedMessages(array $options = []): PromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefaults(['limit' => 50])
+            ->setDefined(['before', 'limit'])
+            ->setAllowedTypes('before', [Carbon::class, 'string'])
+            ->setAllowedTypes('limit', 'integer')
+            ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 50))
+            ->setDefault('before', null);
+
+        $options = $resolver->resolve($options);
+
+        if (isset($options['before'])) {
+            if ($options['before'] instanceof Message) {
+                $options['before'] = $options['before']->timestamp;
+            }
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id), $options)
+        ->then(function ($responses) {
+            $messages = Collection::for(Message::class);
+
+            foreach ($responses as $response) {
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
+            }
+
+            return $messages;
+        });
+    }
+
+    /**
      * Adds a message to the channels pinboard.
      *
-     * @link https://discord.com/developers/docs/resources/channel#pin-message
+     * @link https://discord.com/developers/docs/resources/message#pin-message
      *
      * @param Message     $message The message to pin.
      * @param string|null $reason  Reason for Audit Log.
+     * @param array       $options Additional options.
      *
      * @throws NoPermissionsException Missing manage_messages permission.
      * @throws \RuntimeException
      *
      * @return PromiseInterface<Message>
+     *
+     * @since 10.19.0 Updated endpoint to use the new pin message endpoint.
      */
     public function pinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
@@ -959,7 +984,7 @@ class Channel extends Part implements Stringable
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
+        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
             $message->pinned = true;
 
             return $message;
@@ -969,7 +994,7 @@ class Channel extends Part implements Stringable
     /**
      * Removes a message from the channels pinboard.
      *
-     * @link https://discord.com/developers/docs/resources/channel#unpin-message
+     * @link https://discord.com/developers/docs/resources/message#unpin-message
      *
      * @param Message     $message The message to un-pin.
      * @param string|null $reason  Reason for Audit Log.
@@ -978,6 +1003,8 @@ class Channel extends Part implements Stringable
      * @throws \RuntimeException
      *
      * @return PromiseInterface
+     *
+     * @since 10.19.0 Updated endpoint to use the new unpin message endpoint.
      */
     public function unpinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
@@ -1000,7 +1027,7 @@ class Channel extends Part implements Stringable
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
             $message->pinned = false;
 
             return $message;
