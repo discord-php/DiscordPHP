@@ -330,6 +330,12 @@ class Channel extends Part implements Stringable
 
         $options = $resolver->resolve($options);
 
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id);
+
+        if (isset($options['limit'])) {
+            $endpoint->addQuery('limit', $options['limit']);
+        }
+
         if (isset($options['before'])) {
             if ($options['before'] instanceof Message) {
                 $options['before'] = $options['before']->timestamp;
@@ -337,12 +343,12 @@ class Channel extends Part implements Stringable
             if ($options['before'] instanceof Carbon) {
                 $options['before'] = $options['before']->toIso8601String();
             }
+
+            $endpoint->addQuery('before', $options['before']);
         }
 
-        // @todo Passing options is failing with "An error occurred in the underlying stream"
-
-        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id))
-        ->then(fn ($responses) => $this->factory->create(MessagePinData::class, $responses));
+        return $this->http->get($endpoint)
+            ->then(fn ($responses) => $this->factory->create(MessagePinData::class, $responses));
     }
 
     /**
