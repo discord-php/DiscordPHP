@@ -11,8 +11,10 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Channel;
+namespace Discord\Parts\Channel\Message;
 
+use Carbon\Carbon;
+use Discord\Parts\Channel\Message;
 use Discord\Parts\Part;
 
 /**
@@ -35,5 +37,10 @@ class MessagePin extends Part
     protected function getMessageAttribute(): Message
     {
         return $this->factory->create(Message::class, $this->attributes['message'], true);
+    }
+
+    protected function getPinnedAtAttribute(): Carbon
+    {
+        return Carbon::parse($this->attributes['pinned_at']);
     }
 }
