@@ -54,6 +54,8 @@ use function React\Promise\resolve;
  * @property      string        $parent_id           The ID of the parent channel or the channel which the thread was started in.
  * @property-read Channel|null  $parent              The parent channel or the channel which the thread was created in.
  *
+ * @property bool $is_private Whether the channel is a private channel.
+ *
  */
 trait ChannelTrait
 {
@@ -414,7 +416,7 @@ trait ChannelTrait
      */
     public function pinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
-        if (! in_array($this->type, [Channel::TYPE_DM, Channel::TYPE_GROUP_DM]) && $botperms = $this->getBotPermissions()) {
+        if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->manage_messages) {
                 return reject(new NoPermissionsException("You do not have permission to pin messages in the channel {$this->id}."));
             }
@@ -457,7 +459,7 @@ trait ChannelTrait
      */
     public function unpinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
-        if (! in_array($this->type, [Channel::TYPE_DM, Channel::TYPE_GROUP_DM]) && $botperms = $this->getBotPermissions()) {
+        if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->manage_messages) {
                 return reject(new NoPermissionsException("You do not have permission to unpin messages in the channel {$this->id}."));
             }
