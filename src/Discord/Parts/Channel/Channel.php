@@ -322,12 +322,11 @@ class Channel extends Part implements Stringable
 
         $resolver = new OptionsResolver();
         $resolver
-            ->setDefaults(['limit' => 50])
+            //->setDefaults(['limit' => 50])
             ->setDefined(['before', 'limit'])
             ->setAllowedTypes('before', [Carbon::class, 'string', 'null'])
             ->setAllowedTypes('limit', 'integer')
-            ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 50))
-            ->setDefault('before', 'null');
+            ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 50));
 
         $options = $resolver->resolve($options);
 
@@ -339,6 +338,8 @@ class Channel extends Part implements Stringable
                 $options['before'] = $options['before']->toIso8601String();
             }
         }
+
+        // @todo Passing options is failing with "An error occurred in the underlying stream"
 
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id))
         ->then(fn ($responses) => $this->factory->create(MessagePinData::class, $responses));
