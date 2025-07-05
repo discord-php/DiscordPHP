@@ -23,6 +23,9 @@ use Discord\Parts\Part;
  * @link https://discord.com/developers/docs/resources/message#message-pin-object
  *
  * @since 10.19.0
+ *
+ * @property Carbon  $pinned_at The time the message was pinned
+ * @property Message $message   The pinned message.
  */
 class MessagePin extends Part
 {
