@@ -22,6 +22,8 @@ use Discord\Parts\Channel\Message\MessagePinData;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Permissions\RolePermission;
+use Discord\Parts\User\Member;
+use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
@@ -33,6 +35,23 @@ use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;
 
+/**
+ * Represents a guild or DM channel within Discord.
+ *
+ * @since 10.19.0
+ *
+ * @property      string                       $id                                 The ID of the channel or thread.
+ * @property      int                          $type                               The type of channel or thread.
+ * @property      string|null                  $guild_id                           The ID of the guild that the channel or thread belongs to. Only for text or voice channels.
+ * @property-read Guild|null                   $guild                              The guild that the channel or thread belongs to. Only for text or voice channels.
+ * @property      ?string|null                 $name                               The name of the channel or thread.
+ * @property      ?string|null                 $last_message_id                    The unique identifier of the last message sent in the channel or thread. (may not point to an existing or valid message or thread).
+ * @property      Carbon|null                  $last_pin_timestamp                 The timestamp when the last message was pinned in the channel or thread.
+ * @property      int|null                     $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message (slow mode).
+ * @property      string|null                  $owner_id                           The ID of the DM creator (Only for DM or group channels) or the owner of the thread.
+ * @property-read User|null                    $owner                              The DM creator or the owner of the thread.
+ * @property-read Member|null                  $owner_member                       The member object for the DM creator or the owner of the thread.
+ */
 trait ChannelTrait
 {
     /**
@@ -43,20 +62,6 @@ trait ChannelTrait
     protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
-    }
-
-    /**
-     * Returns the parent channel of the thread.
-     *
-     * @return Channel|null
-     */
-    protected function getParentAttribute(): ?Channel
-    {
-        if ($guild = $this->guild) {
-            return $guild->channels->get('id', $this->parent_id);
-        }
-
-        return $this->discord->getChannel($this->parent_id);
     }
 
     /**
@@ -73,6 +78,44 @@ trait ChannelTrait
         }
 
         return Carbon::parse($this->attributes['last_pin_timestamp']);
+    }
+
+    /**
+     * Returns the owner of the thread.
+     *
+     * @return User|null
+     */
+    protected function getOwnerAttribute(): ?User
+    {
+        return $this->discord->users->get('id', $this->owner_id);
+    }
+
+    /**
+     * Returns the member object for the owner of the thread.
+     *
+     * @return Member|null
+     */
+    protected function getOwnerMemberAttribute(): ?Member
+    {
+        if ($guild = $this->guild) {
+            return $guild->members->get('id', $this->owner_id);
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the parent channel of the thread.
+     *
+     * @return Channel|null
+     */
+    protected function getParentAttribute(): ?Channel
+    {
+        if ($guild = $this->guild) {
+            return $guild->channels->get('id', $this->parent_id);
+        }
+
+        return $this->discord->getChannel($this->parent_id);
     }
 
     /**
