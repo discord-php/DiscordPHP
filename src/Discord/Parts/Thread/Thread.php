@@ -514,6 +514,9 @@ class Thread extends Part implements Stringable
             if ($options['before'] instanceof Message) {
                 $options['before'] = $options['before']->timestamp;
             }
+            if ($options['before'] instanceof Carbon) {
+                $options['before'] = $options['before']->toIso8601String();
+            }
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id), $options)
