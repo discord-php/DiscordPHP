@@ -36,6 +36,7 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Forum\Reaction;
 use Discord\Parts\Channel\Forum\Tag;
 use Discord\Parts\Channel\Message\AllowedMentions;
+use Discord\Parts\Channel\Message\MessagePinData;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\InviteRepository;
@@ -303,7 +304,7 @@ class Channel extends Part implements Stringable
      * @param int                   $options['limit']  The amount of messages to retrieve.
      * @param Message|Carbon|string $options['before'] A message or timestamp to get messages before.
      *
-     * @return PromiseInterface<Collection<Message[]>>
+     * @return PromiseInterface<Collection<array>
      *
      * @since 10.19.0 Added $options parameter to allow for pagination.
     */
@@ -339,16 +340,8 @@ class Channel extends Part implements Stringable
             }
         }
 
-        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id), $options)
-        ->then(function ($responses) {
-            $messages = Collection::for(Message::class);
-
-            foreach ($responses as $response) {
-                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
-            }
-
-            return $messages;
-        });
+        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id))
+        ->then(fn ($responses) => $this->factory->create(MessagePinData::class, $responses));
     }
 
     /**
