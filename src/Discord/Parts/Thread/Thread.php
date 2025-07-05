@@ -492,10 +492,10 @@ class Thread extends Part implements Stringable
         $resolver
             ->setDefaults(['limit' => 50])
             ->setDefined(['before', 'limit'])
-            ->setAllowedTypes('before', [Carbon::class, 'string', null])
+            ->setAllowedTypes('before', [Carbon::class, 'string', 'null'])
             ->setAllowedTypes('limit', 'integer')
             ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 50))
-            ->setDefault('before', null);
+            ->setDefault('before', 'null');
 
         $options = $resolver->resolve($options);
 
