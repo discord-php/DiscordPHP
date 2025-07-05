@@ -304,7 +304,7 @@ class Channel extends Part implements Stringable
      * @param int                   $options['limit']  The amount of messages to retrieve.
      * @param Message|Carbon|string $options['before'] A message or timestamp to get messages before.
      *
-     * @return PromiseInterface<Collection<array>
+     * @return PromiseInterface<Collection<MessagePinData>
      *
      * @since 10.19.0 Added $options parameter to allow for pagination.
     */
