@@ -296,6 +296,49 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Returns the channels pinned messages.
+     *
+     * @link https://discord.com/developers/docs/resources/message#get-channel-pins
+     *
+     * @param int                   $options['limit']  The amount of messages to retrieve.
+     * @param Message|Carbon|string $options['before'] A message or timestamp to get messages before.
+     *
+     * @return PromiseInterface<Collection<Message[]>>
+     *
+     * @since 10.19.0 Added $options parameter to allow for pagination.
+    */
+    public function getPinnedMessages(array $options = []): PromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefaults(['limit' => 50])
+            ->setDefined(['before', 'limit'])
+            ->setAllowedTypes('before', [Carbon::class, 'string', 'null'])
+            ->setAllowedTypes('limit', 'integer')
+            ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 50))
+            ->setDefault('before', 'null');
+
+        $options = $resolver->resolve($options);
+
+        if (isset($options['before'])) {
+            if ($options['before'] instanceof Message) {
+                $options['before'] = $options['before']->timestamp;
+            }
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id), $options)
+        ->then(function ($responses) {
+            $messages = Collection::for(Message::class);
+
+            foreach ($responses as $response) {
+                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
+            }
+
+            return $messages;
+        });
+    }
+
+    /**
      * Sets permissions in a channel.
      *
      * @link https://discord.com/developers/docs/resources/channel#edit-channel-permissions
@@ -894,49 +937,6 @@ class Channel extends Part implements Stringable
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $messages = Collection::for(Message::class);
-
-            foreach ($responses as $response) {
-                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
-            }
-
-            return $messages;
-        });
-    }
-
-    /**
-     * Returns the channels pinned messages.
-     *
-     * @link https://discord.com/developers/docs/resources/message#get-channel-pins
-     *
-     * @param int                   $options['limit']  The amount of messages to retrieve.
-     * @param Message|Carbon|string $options['before'] A message or timestamp to get messages before.
-     *
-     * @return PromiseInterface<Collection<Message[]>>
-     *
-     * @since 10.19.0 Added $options parameter to allow for pagination.
-    */
-    public function getPinnedMessages(array $options = []): PromiseInterface
-    {
-        $resolver = new OptionsResolver();
-        $resolver
-            ->setDefaults(['limit' => 50])
-            ->setDefined(['before', 'limit'])
-            ->setAllowedTypes('before', [Carbon::class, 'string', 'null'])
-            ->setAllowedTypes('limit', 'integer')
-            ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 50))
-            ->setDefault('before', 'null');
-
-        $options = $resolver->resolve($options);
-
-        if (isset($options['before'])) {
-            if ($options['before'] instanceof Message) {
-                $options['before'] = $options['before']->timestamp;
-            }
-        }
-
-        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_PINS, $this->id), $options)
-        ->then(function ($responses) {
             $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
