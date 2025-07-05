@@ -41,9 +41,7 @@ use React\Promise\PromiseInterface;
 use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-use function Discord\getSnowflakeTimestamp;
 use function Discord\nowait;
-use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;
 
