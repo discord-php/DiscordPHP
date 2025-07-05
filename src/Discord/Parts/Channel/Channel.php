@@ -309,6 +309,16 @@ class Channel extends Part implements Stringable
     */
     public function getPinnedMessages(array $options = []): PromiseInterface
     {
+        if ($this->guild_id && $botperms = $this->getBotPermissions()) {
+            if (! $botperms->view_channel) {
+                return reject(new NoPermissionsException("You do not have permission to view messages in the channel {$this->id}."));
+            }
+            //  If the user is missing the READ_MESSAGE_HISTORY permission in the channel, then no pins will be returned.
+            if (! $botperms->read_message_history) {
+                return resolve(Collection::for(Message::class));
+            }
+        }
+
         $resolver = new OptionsResolver();
         $resolver
             ->setDefaults(['limit' => 50])
