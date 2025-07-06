@@ -3731,11 +3731,6 @@ Search.appendIndex(
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_afterConstruct"
         },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetIsPrivateAttribute\u0028\u0029",
-            "name": "getIsPrivateAttribute",
-            "summary": "Gets\u0020the\u0020is_private\u0020attribute.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_getIsPrivateAttribute"
-        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetRecipientAttribute\u0028\u0029",
             "name": "getRecipientAttribute",
             "summary": "Gets\u0020the\u0020recipient\u0020attribute.",
@@ -3750,21 +3745,6 @@ Search.appendIndex(
             "name": "getRecipientsAttribute",
             "summary": "Gets\u0020the\u0020recipients\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_getRecipientsAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetGuildAttribute\u0028\u0029",
-            "name": "getGuildAttribute",
-            "summary": "Returns\u0020the\u0020guild\u0020attribute.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_getGuildAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetLastPinTimestampAttribute\u0028\u0029",
-            "name": "getLastPinTimestampAttribute",
-            "summary": "Gets\u0020the\u0020last\u0020pinned\u0020message\u0020timestamp.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_getLastPinTimestampAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetPinnedMessages\u0028\u0029",
-            "name": "getPinnedMessages",
-            "summary": "Returns\u0020the\u0020channels\u0020pinned\u0020messages.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_getPinnedMessages"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AsetPermissions\u0028\u0029",
             "name": "setPermissions",
@@ -3816,30 +3796,10 @@ Search.appendIndex(
             "summary": "Creates\u0020an\u0020invite\u0020for\u0020the\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_createInvite"
         },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AdeleteMessages\u0028\u0029",
-            "name": "deleteMessages",
-            "summary": "Bulk\u0020deletes\u0020an\u0020array\u0020of\u0020messages.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_deleteMessages"
-        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AlimitDelete\u0028\u0029",
             "name": "limitDelete",
             "summary": "Deletes\u0020a\u0020given\u0020number\u0020of\u0020messages,\u0020in\u0020order\u0020of\u0020time\u0020sent.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_limitDelete"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetMessageHistory\u0028\u0029",
-            "name": "getMessageHistory",
-            "summary": "Fetches\u0020message\u0020history.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_getMessageHistory"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ApinMessage\u0028\u0029",
-            "name": "pinMessage",
-            "summary": "Adds\u0020a\u0020message\u0020to\u0020the\u0020channels\u0020pinboard.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_pinMessage"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AunpinMessage\u0028\u0029",
-            "name": "unpinMessage",
-            "summary": "Removes\u0020a\u0020message\u0020from\u0020the\u0020channels\u0020pinboard.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_unpinMessage"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AsetPermissionOverwritesAttribute\u0028\u0029",
             "name": "setPermissionOverwritesAttribute",
@@ -3865,66 +3825,6 @@ Search.appendIndex(
             "name": "startThread",
             "summary": "Starts\u0020a\u0020thread\u0020in\u0020the\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_startThread"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AsendMessage\u0028\u0029",
-            "name": "sendMessage",
-            "summary": "Sends\u0020a\u0020message\u0020to\u0020the\u0020channel.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_sendMessage"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AsendEmbed\u0028\u0029",
-            "name": "sendEmbed",
-            "summary": "Sends\u0020an\u0020embed\u0020to\u0020the\u0020channel.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_sendEmbed"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AsendFile\u0028\u0029",
-            "name": "sendFile",
-            "summary": "Sends\u0020a\u0020file\u0020to\u0020the\u0020channel.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_sendFile"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AbroadcastTyping\u0028\u0029",
-            "name": "broadcastTyping",
-            "summary": "Broadcasts\u0020that\u0020you\u0020are\u0020typing\u0020to\u0020the\u0020channel.\u0020Lasts\u0020for\u00205\u0020seconds.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_broadcastTyping"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AcreateMessageCollector\u0028\u0029",
-            "name": "createMessageCollector",
-            "summary": "Creates\u0020a\u0020message\u0020collector\u0020for\u0020the\u0020channel.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_createMessageCollector"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AallowText\u0028\u0029",
-            "name": "allowText",
-            "summary": "Returns\u0020if\u0020allow\u0020text.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_allowText"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AallowVoice\u0028\u0029",
-            "name": "allowVoice",
-            "summary": "Returns\u0020if\u0020allow\u0020voice.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_allowVoice"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AallowInvite\u0028\u0029",
-            "name": "allowInvite",
-            "summary": "Returns\u0020if\u0020allow\u0020invite.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_allowInvite"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AisTextBased\u0028\u0029",
-            "name": "isTextBased",
-            "summary": "Returns\u0020if\u0020channel\u0020type\u0020is\u0020text\u0020based.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_isTextBased"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AisVoiceBased\u0028\u0029",
-            "name": "isVoiceBased",
-            "summary": "Returns\u0020if\u0020channel\u0020type\u0020is\u0020voice\u0020based.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_isVoiceBased"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AcanInvite\u0028\u0029",
-            "name": "canInvite",
-            "summary": "Returns\u0020if\u0020invite\u0020can\u0020be\u0020created\u0020in\u0020this\u0020type\u0020of\u0020channel.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_canInvite"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetBotPermissions\u0028\u0029",
-            "name": "getBotPermissions",
-            "summary": "Returns\u0020the\u0020bot\u0027s\u0020permissions\u0020in\u0020the\u0020channel.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_getBotPermissions"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetCreatableAttributes\u0028\u0029",
             "name": "getCreatableAttributes",
@@ -4115,6 +4015,126 @@ Search.appendIndex(
             "name": "repositories",
             "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
             "url": "classes/Discord-Parts-Channel-Channel.html#property_repositories"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait",
+            "name": "ChannelTrait",
+            "summary": "Represents\u0020a\u0020guild\u0020or\u0020DM\u0020channel\u0020within\u0020Discord.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020which\u0020the\u0020thread\u0020belongs\u0020to.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AgetLastPinTimestampAttribute\u0028\u0029",
+            "name": "getLastPinTimestampAttribute",
+            "summary": "Gets\u0020the\u0020last\u0020pinned\u0020message\u0020timestamp.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_getLastPinTimestampAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AgetOwnerAttribute\u0028\u0029",
+            "name": "getOwnerAttribute",
+            "summary": "Returns\u0020the\u0020owner\u0020of\u0020the\u0020thread.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_getOwnerAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AgetOwnerMemberAttribute\u0028\u0029",
+            "name": "getOwnerMemberAttribute",
+            "summary": "Returns\u0020the\u0020member\u0020object\u0020for\u0020the\u0020owner\u0020of\u0020the\u0020thread.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_getOwnerMemberAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AgetParentAttribute\u0028\u0029",
+            "name": "getParentAttribute",
+            "summary": "Returns\u0020the\u0020parent\u0020channel\u0020of\u0020the\u0020thread.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_getParentAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AgetIsPrivateAttribute\u0028\u0029",
+            "name": "getIsPrivateAttribute",
+            "summary": "Gets\u0020the\u0020is_private\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_getIsPrivateAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AisTextBased\u0028\u0029",
+            "name": "isTextBased",
+            "summary": "Returns\u0020if\u0020channel\u0020type\u0020is\u0020text\u0020based.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_isTextBased"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AallowText\u0028\u0029",
+            "name": "allowText",
+            "summary": "Returns\u0020if\u0020allow\u0020text.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_allowText"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AallowVoice\u0028\u0029",
+            "name": "allowVoice",
+            "summary": "Returns\u0020if\u0020allow\u0020voice.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_allowVoice"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AallowInvite\u0028\u0029",
+            "name": "allowInvite",
+            "summary": "Returns\u0020if\u0020allow\u0020invite.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_allowInvite"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AcanInvite\u0028\u0029",
+            "name": "canInvite",
+            "summary": "Returns\u0020if\u0020invite\u0020can\u0020be\u0020created\u0020in\u0020this\u0020type\u0020of\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_canInvite"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AisVoiceBased\u0028\u0029",
+            "name": "isVoiceBased",
+            "summary": "Returns\u0020if\u0020channel\u0020type\u0020is\u0020voice\u0020based.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_isVoiceBased"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AgetBotPermissions\u0028\u0029",
+            "name": "getBotPermissions",
+            "summary": "Returns\u0020the\u0020bot\u0027s\u0020permissions\u0020in\u0020the\u0020thread.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_getBotPermissions"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AgetMessageHistory\u0028\u0029",
+            "name": "getMessageHistory",
+            "summary": "Fetches\u0020message\u0020history.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_getMessageHistory"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AdeleteMessages\u0028\u0029",
+            "name": "deleteMessages",
+            "summary": "Bulk\u0020deletes\u0020an\u0020array\u0020of\u0020messages.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_deleteMessages"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AgetPinnedMessages\u0028\u0029",
+            "name": "getPinnedMessages",
+            "summary": "Returns\u0020the\u0020channels\u0020pinned\u0020messages.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_getPinnedMessages"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003ApinMessage\u0028\u0029",
+            "name": "pinMessage",
+            "summary": "Pin\u0020a\u0020message\u0020in\u0020a\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_pinMessage"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AunpinMessage\u0028\u0029",
+            "name": "unpinMessage",
+            "summary": "Removes\u0020a\u0020message\u0020from\u0020the\u0020channels\u0020pinboard.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_unpinMessage"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AsendMessage\u0028\u0029",
+            "name": "sendMessage",
+            "summary": "Sends\u0020a\u0020message\u0020to\u0020the\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_sendMessage"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AsendEmbed\u0028\u0029",
+            "name": "sendEmbed",
+            "summary": "Sends\u0020an\u0020embed\u0020to\u0020the\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_sendEmbed"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AsendFile\u0028\u0029",
+            "name": "sendFile",
+            "summary": "Sends\u0020a\u0020file\u0020to\u0020the\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_sendFile"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AbroadcastTyping\u0028\u0029",
+            "name": "broadcastTyping",
+            "summary": "Broadcasts\u0020that\u0020you\u0020are\u0020typing\u0020to\u0020the\u0020channel.\u0020Lasts\u0020for\u00205\u0020seconds.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_broadcastTyping"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ChannelTrait\u003A\u003AcreateMessageCollector\u0028\u0029",
+            "name": "createMessageCollector",
+            "summary": "Creates\u0020a\u0020message\u0020collector\u0020for\u0020the\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_createMessageCollector"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Forum\\Reaction",
             "name": "Reaction",
@@ -9231,31 +9251,6 @@ Search.appendIndex(
             "summary": "\u007B\u0040inheritDoc\u007D",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_afterConstruct"
         },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetGuildAttribute\u0028\u0029",
-            "name": "getGuildAttribute",
-            "summary": "Returns\u0020the\u0020guild\u0020which\u0020the\u0020thread\u0020belongs\u0020to.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_getGuildAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetOwnerAttribute\u0028\u0029",
-            "name": "getOwnerAttribute",
-            "summary": "Returns\u0020the\u0020owner\u0020of\u0020the\u0020thread.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_getOwnerAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetOwnerMemberAttribute\u0028\u0029",
-            "name": "getOwnerMemberAttribute",
-            "summary": "Returns\u0020the\u0020member\u0020object\u0020for\u0020the\u0020owner\u0020of\u0020the\u0020thread.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_getOwnerMemberAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetParentAttribute\u0028\u0029",
-            "name": "getParentAttribute",
-            "summary": "Returns\u0020the\u0020parent\u0020channel\u0020of\u0020the\u0020thread.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_getParentAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetLastPinTimestampAttribute\u0028\u0029",
-            "name": "getLastPinTimestampAttribute",
-            "summary": "Returns\u0020the\u0020timestamp\u0020when\u0020the\u0020last\u0020message\u0020was\u0020pinned\u0020in\u0020the\u0020thread.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_getLastPinTimestampAttribute"
-        },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetArchivedAttribute\u0028\u0029",
             "name": "getArchivedAttribute",
             "summary": "Returns\u0020whether\u0020the\u0020thread\u0020is\u0020archived.",
@@ -9345,56 +9340,6 @@ Search.appendIndex(
             "name": "setAutoArchiveDuration",
             "summary": "Set\u0020auto\u0020archive\u0020duration\u0020of\u0020the\u0020thread.",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_setAutoArchiveDuration"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetPinnedMessages\u0028\u0029",
-            "name": "getPinnedMessages",
-            "summary": "Returns\u0020the\u0020threads\u0020pinned\u0020messages.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_getPinnedMessages"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AdeleteMessages\u0028\u0029",
-            "name": "deleteMessages",
-            "summary": "Bulk\u0020deletes\u0020an\u0020array\u0020of\u0020messages.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_deleteMessages"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetMessageHistory\u0028\u0029",
-            "name": "getMessageHistory",
-            "summary": "Fetches\u0020the\u0020message\u0020history\u0020of\u0020the\u0020thread\u0020with\u0020a\u0020given\u0020array\u0020of\u0020arguments.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_getMessageHistory"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003ApinMessage\u0028\u0029",
-            "name": "pinMessage",
-            "summary": "Pins\u0020a\u0020message\u0020in\u0020the\u0020thread.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_pinMessage"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AunpinMessage\u0028\u0029",
-            "name": "unpinMessage",
-            "summary": "Unpins\u0020a\u0020message\u0020in\u0020the\u0020thread.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_unpinMessage"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AsendMessage\u0028\u0029",
-            "name": "sendMessage",
-            "summary": "Sends\u0020a\u0020message\u0020to\u0020the\u0020thread.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_sendMessage"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AsendEmbed\u0028\u0029",
-            "name": "sendEmbed",
-            "summary": "Sends\u0020an\u0020embed\u0020to\u0020the\u0020thread.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_sendEmbed"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AbroadcastTyping\u0028\u0029",
-            "name": "broadcastTyping",
-            "summary": "Broadcasts\u0020that\u0020you\u0020are\u0020typing\u0020to\u0020the\u0020thread.\u0020Lasts\u0020for\u00205\u0020seconds.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_broadcastTyping"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AcreateMessageCollector\u0028\u0029",
-            "name": "createMessageCollector",
-            "summary": "Creates\u0020a\u0020message\u0020collector\u0020for\u0020the\u0020channel.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_createMessageCollector"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetBotPermissions\u0028\u0029",
-            "name": "getBotPermissions",
-            "summary": "Returns\u0020the\u0020bot\u0027s\u0020permissions\u0020in\u0020the\u0020thread.",
-            "url": "classes/Discord-Parts-Thread-Thread.html#method_getBotPermissions"
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetCreatableAttributes\u0028\u0029",
             "name": "getCreatableAttributes",

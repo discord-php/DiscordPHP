@@ -258,6 +258,9 @@
             implements
                             <abbr title="\Stringable">Stringable</abbr>                    </span>
     
+            <span class="phpdocumentor-element__extends">
+            uses
+                            <a href="classes/Discord-Parts-Channel-ChannelTrait.html"><abbr title="\Discord\Parts\Channel\ChannelTrait">ChannelTrait</abbr></a>                    </span>
     </h2>
 
 <div class="phpdocumentor-label-line">
@@ -268,7 +271,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">109</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -313,15 +316,6 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null                 $name                               The name of the channel.</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
                                                  <section class="phpdocumentor-description"><p>?string|null                 $topic                              The topic of the channel (0-4096 characters for forum channels, 0-1024 characters for all others).</p>
 </section>
 
@@ -331,25 +325,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null                 $last_message_id                    The unique identifier of the last message sent in the channel (or thread for forum channels) (may not point to an existing or valid message or thread).</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
                                                  <section class="phpdocumentor-description"><p>?string|null                 $icon                               Icon hash.</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>?string|null                 $parent_id                          ID of the parent channel.</p>
 </section>
 
                                     </dd>
@@ -662,57 +638,15 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_guild">$guild</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_guild_id">$guild_id</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_id">$id</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_invites">$invites</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Repository-Channel-InviteRepository.html"><abbr title="\Discord\Repository\Channel\InviteRepository">InviteRepository</abbr></a>            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_is_private">$is_private</a>
-    <span>
-                        &nbsp;: bool            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_last_pin_timestamp">$last_pin_timestamp</a>
-    <span>
-                        &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_managed">$managed</a>
     <span>
                         &nbsp;: bool|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_members">$members</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Repository-Channel-VoiceMemberRepository.html"><abbr title="\Discord\Repository\Channel\VoiceMemberRepository">VoiceMemberRepository</abbr></a>            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_messages">$messages</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Repository-Channel-MessageRepository.html"><abbr title="\Discord\Repository\Channel\MessageRepository">MessageRepository</abbr></a>            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -725,12 +659,6 @@
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_overwrites">$overwrites</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Repository-Channel-OverwriteRepository.html"><abbr title="\Discord\Repository\Channel\OverwriteRepository">OverwriteRepository</abbr></a>            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_owner_id">$owner_id</a>
-    <span>
-                        &nbsp;: string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -747,12 +675,6 @@
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_position">$position</a>
-    <span>
-                        &nbsp;: int|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_rate_limit_per_user">$rate_limit_per_user</a>
     <span>
                         &nbsp;: int|null            </span>
 </dt>
@@ -792,12 +714,6 @@
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_threads">$threads</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Repository-Channel-ThreadRepository.html"><abbr title="\Discord\Repository\Channel\ThreadRepository">ThreadRepository</abbr></a>            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_type">$type</a>
-    <span>
-                        &nbsp;: int            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -936,35 +852,35 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="-deprecated" href="classes/Discord-Parts-Channel-Channel.html#method_allowInvite">allowInvite()</a>
+    <a class="-deprecated" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_allowInvite">allowInvite()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
 <dd>Returns if allow invite.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="-deprecated" href="classes/Discord-Parts-Channel-Channel.html#method_allowText">allowText()</a>
+    <a class="-deprecated" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_allowText">allowText()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
 <dd>Returns if allow text.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="-deprecated" href="classes/Discord-Parts-Channel-Channel.html#method_allowVoice">allowVoice()</a>
+    <a class="-deprecated" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_allowVoice">allowVoice()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
 <dd>Returns if allow voice.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_broadcastTyping">broadcastTyping()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_broadcastTyping">broadcastTyping()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
 <dd>Broadcasts that you are typing to the channel. Lasts for 5 seconds.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_canInvite">canInvite()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_canInvite">canInvite()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
@@ -978,7 +894,7 @@
 <dd>Creates an invite for the channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_createMessageCollector">createMessageCollector()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_createMessageCollector">createMessageCollector()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>&lt;string|int, array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;&gt;&gt;    </span>
 </dt>
@@ -992,7 +908,7 @@
 <dd>Deafens a member in the voice channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_deleteMessages">deleteMessages()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_deleteMessages">deleteMessages()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
@@ -1013,11 +929,11 @@
 <dd>Fills the parts attributes from an array.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_getBotPermissions">getBotPermissions()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getBotPermissions">getBotPermissions()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a>|null    </span>
 </dt>
-<dd>Returns the bot&#039;s permissions in the channel.</dd>
+<dd>Returns the bot&#039;s permissions in the thread.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_getCreatableAttributes">getCreatableAttributes()</a>
@@ -1033,14 +949,14 @@
 <dd>Get the Discord instance that owns this Part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_getMessageHistory">getMessageHistory()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getMessageHistory">getMessageHistory()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>&lt;string|int, array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;&gt;&gt;    </span>
 </dt>
 <dd>Fetches message history.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_getPinnedMessages">getPinnedMessages()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getPinnedMessages">getPinnedMessages()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
@@ -1081,14 +997,14 @@
 be fetched from Discord.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_isTextBased">isTextBased()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_isTextBased">isTextBased()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
 <dd>Returns if channel type is text based.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_isVoiceBased">isVoiceBased()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_isVoiceBased">isVoiceBased()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
@@ -1152,28 +1068,28 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Unsets an attribute via key. Used for ArrayAccess.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_pinMessage">pinMessage()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_pinMessage">pinMessage()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;    </span>
 </dt>
-<dd>Adds a message to the channels pinboard.</dd>
+<dd>Pin a message in a channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="-deprecated" href="classes/Discord-Parts-Channel-Channel.html#method_sendEmbed">sendEmbed()</a>
+    <a class="-deprecated" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_sendEmbed">sendEmbed()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;    </span>
 </dt>
 <dd>Sends an embed to the channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="-deprecated" href="classes/Discord-Parts-Channel-Channel.html#method_sendFile">sendFile()</a>
+    <a class="-deprecated" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_sendFile">sendFile()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;    </span>
 </dt>
 <dd>Sends a file to the channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_sendMessage">sendMessage()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_sendMessage">sendMessage()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;    </span>
 </dt>
@@ -1236,7 +1152,7 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Unmutes a member on a voice channel.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_unpinMessage">unpinMessage()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_unpinMessage">unpinMessage()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
@@ -1271,25 +1187,46 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Gets the default reaction emoji attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_getGuildAttribute">getGuildAttribute()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getGuildAttribute">getGuildAttribute()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null    </span>
 </dt>
-<dd>Returns the guild attribute.</dd>
+<dd>Returns the guild which the thread belongs to.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_getIsPrivateAttribute">getIsPrivateAttribute()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getIsPrivateAttribute">getIsPrivateAttribute()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
 <dd>Gets the is_private attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_getLastPinTimestampAttribute">getLastPinTimestampAttribute()</a>
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getLastPinTimestampAttribute">getLastPinTimestampAttribute()</a>
     <span>
                                 &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null    </span>
 </dt>
 <dd>Gets the last pinned message timestamp.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getOwnerAttribute">getOwnerAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null    </span>
+</dt>
+<dd>Returns the owner of the thread.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getOwnerMemberAttribute">getOwnerMemberAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null    </span>
+</dt>
+<dd>Returns the member object for the owner of the thread.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getParentAttribute">getParentAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null    </span>
+</dt>
+<dd>Returns the parent channel of the thread.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_getPermissionOverwritesAttribute">getPermissionOverwritesAttribute()</a>
@@ -1389,7 +1326,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">150</span>
+    <span class="phpdocumentor-element-found-in__line">126</span>
 
     </aside>
 
@@ -1427,7 +1364,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">151</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -1458,7 +1395,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">158</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
@@ -1489,7 +1426,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">157</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 
     </aside>
 
@@ -1520,7 +1457,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">156</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
@@ -1551,7 +1488,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">130</span>
 
     </aside>
 
@@ -1582,7 +1519,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">153</span>
+    <span class="phpdocumentor-element-found-in__line">129</span>
 
     </aside>
 
@@ -1613,7 +1550,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">136</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 
     </aside>
 
@@ -1651,7 +1588,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -1682,7 +1619,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">132</span>
+    <span class="phpdocumentor-element-found-in__line">108</span>
 
     </aside>
 
@@ -1720,7 +1657,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">142</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -1758,7 +1695,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">88</span>
 
     </aside>
 
@@ -1789,7 +1726,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
@@ -1827,7 +1764,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">130</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
@@ -1865,7 +1802,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -1896,7 +1833,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">116</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
@@ -1927,7 +1864,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">115</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -1958,7 +1895,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">121</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -1989,7 +1926,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">122</span>
+    <span class="phpdocumentor-element-found-in__line">98</span>
 
     </aside>
 
@@ -2020,7 +1957,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -2051,7 +1988,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">120</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
@@ -2082,7 +2019,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">111</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
@@ -2113,7 +2050,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
@@ -2144,7 +2081,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
@@ -2182,7 +2119,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">138</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
@@ -2220,7 +2157,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">95</span>
 
     </aside>
 
@@ -2251,7 +2188,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">94</span>
 
     </aside>
 
@@ -2282,7 +2219,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">116</span>
 
     </aside>
 
@@ -2320,7 +2257,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">102</span>
 
     </aside>
 
@@ -2358,7 +2295,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -2396,7 +2333,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">146</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -2427,7 +2364,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">147</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -2727,7 +2664,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$default_thread_rate_limit_per_user</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The initial rate_limit_per_user to set on newly created threads in a forum channel. this field is copied to the thread at creation time and does not live update.</p>
+        <section class="phpdocumentor-description"><p>The initial rate_limit_per_user to set on newly created threads in a forum channel. This field is copied to the thread at creation time and does not live update.</p>
 </section>
 
     
@@ -2768,126 +2705,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Channel flags combined as a bitfield.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                -read-only                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_guild">
-        $guild
-        <a href="classes/Discord-Parts-Channel-Channel.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$guild</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The guild that the channel belongs to. Only for text or voice channels.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_guild_id">
-        $guild_id
-        <a href="classes/Discord-Parts-Channel-Channel.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$guild_id</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The unique identifier of the guild that the channel belongs to. Only for text or voice channels.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_id">
-        $id
-        <a href="classes/Discord-Parts-Channel-Channel.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$id</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The unique identifier of the Channel.</p>
 </section>
 
     
@@ -2945,86 +2762,6 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_is_private">
-        $is_private
-        <a href="classes/Discord-Parts-Channel-Channel.html#property_is_private" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$is_private</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Whether the channel is a private channel.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_last_pin_timestamp">
-        $last_pin_timestamp
-        <a href="classes/Discord-Parts-Channel-Channel.html#property_last_pin_timestamp" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-    <span class="phpdocumentor-signature__name">$last_pin_timestamp</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>When the last message was pinned.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_managed">
         $managed
         <a href="classes/Discord-Parts-Channel-Channel.html#property_managed" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3048,86 +2785,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Whether the channel is managed by an application via the <code class="prettyprint">gdm.join</code> OAuth2 scope. Only for group DM channels.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_members">
-        $members
-        <a href="classes/Discord-Parts-Channel-Channel.html#property_members" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Repository-Channel-VoiceMemberRepository.html"><abbr title="\Discord\Repository\Channel\VoiceMemberRepository">VoiceMemberRepository</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$members</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Voice channel only - members in the channel.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_messages">
-        $messages
-        <a href="classes/Discord-Parts-Channel-Channel.html#property_messages" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Repository-Channel-MessageRepository.html"><abbr title="\Discord\Repository\Channel\MessageRepository">MessageRepository</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$messages</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Text channel only - messages sent in the channel.</p>
 </section>
 
     
@@ -3208,46 +2865,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Permission overwrites</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_owner_id">
-        $owner_id
-        <a href="classes/Discord-Parts-Channel-Channel.html#property_owner_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$owner_id</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The ID of the DM creator. Only for DM or group channels.</p>
 </section>
 
     
@@ -3368,46 +2985,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>The position of the channel on the sidebar.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_rate_limit_per_user">
-        $rate_limit_per_user
-        <a href="classes/Discord-Parts-Channel-Channel.html#property_rate_limit_per_user" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$rate_limit_per_user</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Amount of seconds a user has to wait before sending a new message (slow mode).</p>
 </section>
 
     
@@ -3656,46 +3233,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Threads that belong to the channel.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_type">
-        $type
-        <a href="classes/Discord-Parts-Channel-Channel.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$type</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The type of the channel.</p>
 </section>
 
     
@@ -3966,7 +3503,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">163</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
     </aside>
 
@@ -4122,7 +3659,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">203</span>
+    <span class="phpdocumentor-element-found-in__line">179</span>
 
     </aside>
 
@@ -4540,7 +4077,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1762</span>
+    <span class="phpdocumentor-element-found-in__line">1154</span>
 
     </aside>
 
@@ -4621,13 +4158,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method_allowInvite">
         allowInvite()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_allowInvite" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_allowInvite" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1521</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 
@@ -4671,13 +4208,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method_allowText">
         allowText()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_allowText" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_allowText" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1497</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -4721,13 +4258,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method_allowVoice">
         allowVoice()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_allowVoice" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_allowVoice" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1509</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
@@ -4771,13 +4308,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method_broadcastTyping">
         broadcastTyping()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_broadcastTyping" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_broadcastTyping" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1427</span>
+    <span class="phpdocumentor-element-found-in__line">600</span>
 
     </aside>
 
@@ -4795,7 +4332,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_broadcastTyping#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_broadcastTyping#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -4832,13 +4369,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method_canInvite">
         canInvite()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_canInvite" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_canInvite" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1560</span>
+    <span class="phpdocumentor-element-found-in__line">199</span>
 
     </aside>
 
@@ -4881,7 +4418,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">761</span>
+    <span class="phpdocumentor-element-found-in__line">646</span>
 
     </aside>
 
@@ -4959,13 +4496,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method_createMessageCollector">
         createMessageCollector()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_createMessageCollector" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_createMessageCollector" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1446</span>
+    <span class="phpdocumentor-element-found-in__line">619</span>
 
     </aside>
 
@@ -5025,7 +4562,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">624</span>
+    <span class="phpdocumentor-element-found-in__line">509</span>
 
     </aside>
 
@@ -5106,13 +4643,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method_deleteMessages">
         deleteMessages()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_deleteMessages" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_deleteMessages" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">827</span>
+    <span class="phpdocumentor-element-found-in__line">305</span>
 
     </aside>
 
@@ -5151,7 +4688,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_deleteMessages#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_deleteMessages#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -5316,17 +4853,17 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method_getBotPermissions">
         getBotPermissions()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_getBotPermissions" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getBotPermissions" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1570</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns the bot&#039;s permissions in the channel.</p>
+        <p class="phpdocumentor-summary">Returns the bot&#039;s permissions in the thread.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -5361,7 +4898,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1580</span>
+    <span class="phpdocumentor-element-found-in__line">972</span>
 
     </aside>
 
@@ -5446,13 +4983,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method_getMessageHistory">
         getMessageHistory()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_getMessageHistory" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getMessageHistory" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">911</span>
+    <span class="phpdocumentor-element-found-in__line">240</span>
 
     </aside>
 
@@ -5482,7 +5019,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_getMessageHistory#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getMessageHistory#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -5512,15 +5049,6 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
                                                             
                                              
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">todo</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Make it in a trait along with Thread</p>
-</section>
-
-                                    </dd>
                                             </dl>
 
     
@@ -5539,13 +5067,13 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
 >
     <h4 class="phpdocumentor-element__name" id="method_getPinnedMessages">
         getPinnedMessages()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_getPinnedMessages" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getPinnedMessages" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">311</span>
+    <span class="phpdocumentor-element-found-in__line">360</span>
 
     </aside>
 
@@ -5575,7 +5103,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_getPinnedMessages#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getPinnedMessages#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -5730,7 +5258,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1749</span>
+    <span class="phpdocumentor-element-found-in__line">1141</span>
 
     </aside>
 
@@ -5768,7 +5296,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1669</span>
+    <span class="phpdocumentor-element-found-in__line">1061</span>
 
     </aside>
 
@@ -5854,13 +5382,13 @@ be fetched from Discord.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_isTextBased">
         isTextBased()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_isTextBased" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_isTextBased" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1531</span>
+    <span class="phpdocumentor-element-found-in__line">143</span>
 
     </aside>
 
@@ -5897,13 +5425,13 @@ be fetched from Discord.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_isVoiceBased">
         isVoiceBased()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_isVoiceBased" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_isVoiceBased" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1550</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 
     </aside>
 
@@ -6015,7 +5543,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">882</span>
+    <span class="phpdocumentor-element-found-in__line">711</span>
 
     </aside>
 
@@ -6097,7 +5625,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">519</span>
+    <span class="phpdocumentor-element-found-in__line">404</span>
 
     </aside>
 
@@ -6182,7 +5710,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">554</span>
+    <span class="phpdocumentor-element-found-in__line">439</span>
 
     </aside>
 
@@ -6521,17 +6049,17 @@ JSON. Used for JsonSerializable.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_pinMessage">
         pinMessage()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_pinMessage" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_pinMessage" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">979</span>
+    <span class="phpdocumentor-element-found-in__line">419</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Adds a message to the channels pinboard.</p>
+        <p class="phpdocumentor-summary">Pin a message in a channel.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -6566,7 +6094,7 @@ JSON. Used for JsonSerializable.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_pinMessage#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_pinMessage#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -6623,13 +6151,13 @@ JSON. Used for JsonSerializable.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_sendEmbed">
         sendEmbed()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_sendEmbed" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_sendEmbed" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1385</span>
+    <span class="phpdocumentor-element-found-in__line">558</span>
 
     </aside>
 
@@ -6666,7 +6194,7 @@ JSON. Used for JsonSerializable.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_sendEmbed#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_sendEmbed#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -6674,7 +6202,7 @@ JSON. Used for JsonSerializable.</p>
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Channel-Channel.html#method_sendMessage"><abbr title="\Discord\Parts\Channel\Channel::sendMessage()">Channel::sendMessage()</abbr></a></span>
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\Channel\Channel::sendMessage()">Channel::sendMessage()</abbr></span>
                                         
                                              
                                     </dd>
@@ -6696,13 +6224,13 @@ JSON. Used for JsonSerializable.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_sendFile">
         sendFile()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_sendFile" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_sendFile" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1405</span>
+    <span class="phpdocumentor-element-found-in__line">578</span>
 
     </aside>
 
@@ -6766,7 +6294,7 @@ JSON. Used for JsonSerializable.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_sendFile#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_sendFile#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -6774,7 +6302,7 @@ JSON. Used for JsonSerializable.</p>
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Channel-Channel.html#method_sendMessage"><abbr title="\Discord\Parts\Channel\Channel::sendMessage()">Channel::sendMessage()</abbr></a></span>
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\Channel\Channel::sendMessage()">Channel::sendMessage()</abbr></span>
                                         
                                              
                                     </dd>
@@ -6796,13 +6324,13 @@ JSON. Used for JsonSerializable.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_sendMessage">
         sendMessage()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_sendMessage" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_sendMessage" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1315</span>
+    <span class="phpdocumentor-element-found-in__line">510</span>
 
     </aside>
 
@@ -6810,7 +6338,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">sendMessage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Builders-MessageBuilder.html"><abbr title="\Discord\Builders\MessageBuilder">MessageBuilder</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tts</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a>|array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$embed</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Message-AllowedMentions.html"><abbr title="\Discord\Parts\Channel\Message\AllowedMentions">AllowedMentions</abbr></a>|array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$allowed_mentions</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$replyTo</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">sendMessage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Builders-MessageBuilder.html"><abbr title="\Discord\Builders\MessageBuilder">MessageBuilder</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tts</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a>|array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$embed</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Discord\Parts\Channel\AllowedMentions">AllowedMentions</abbr>|array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$allowed_mentions</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$replyTo</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -6851,7 +6379,7 @@ rest of the arguments are disregarded.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$allowed_mentions</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Message-AllowedMentions.html"><abbr title="\Discord\Parts\Channel\Message\AllowedMentions">AllowedMentions</abbr></a>|array&lt;string|int, mixed&gt;|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Discord\Parts\Channel\AllowedMentions">AllowedMentions</abbr>|array&lt;string|int, mixed&gt;|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Allowed mentions object for the message.</p>
@@ -6872,7 +6400,7 @@ rest of the arguments are disregarded.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_sendMessage#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_sendMessage#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -6925,7 +6453,7 @@ rest of the arguments are disregarded.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">698</span>
+    <span class="phpdocumentor-element-found-in__line">583</span>
 
     </aside>
 
@@ -7064,7 +6592,7 @@ or the bot is deafened, self-deafened, muted, or suppressed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">459</span>
+    <span class="phpdocumentor-element-found-in__line">344</span>
 
     </aside>
 
@@ -7166,7 +6694,7 @@ or the bot is deafened, self-deafened, muted, or suppressed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">409</span>
+    <span class="phpdocumentor-element-found-in__line">294</span>
 
     </aside>
 
@@ -7269,7 +6797,7 @@ or the bot is deafened, self-deafened, muted, or suppressed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">368</span>
+    <span class="phpdocumentor-element-found-in__line">253</span>
 
     </aside>
 
@@ -7369,7 +6897,7 @@ or the bot is deafened, self-deafened, muted, or suppressed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1159</span>
+    <span class="phpdocumentor-element-found-in__line">832</span>
 
     </aside>
 
@@ -7495,7 +7023,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">659</span>
+    <span class="phpdocumentor-element-found-in__line">544</span>
 
     </aside>
 
@@ -7582,7 +7110,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">589</span>
+    <span class="phpdocumentor-element-found-in__line">474</span>
 
     </aside>
 
@@ -7663,13 +7191,13 @@ send_messages when creating a forum post.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_unpinMessage">
         unpinMessage()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_unpinMessage" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_unpinMessage" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1022</span>
+    <span class="phpdocumentor-element-found-in__line">462</span>
 
     </aside>
 
@@ -7708,7 +7236,7 @@ send_messages when creating a forum post.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_unpinMessage#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_unpinMessage#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -7835,7 +7363,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">216</span>
+    <span class="phpdocumentor-element-found-in__line">192</span>
 
     </aside>
 
@@ -7870,7 +7398,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1106</span>
+    <span class="phpdocumentor-element-found-in__line">779</span>
 
     </aside>
 
@@ -7928,7 +7456,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1124</span>
+    <span class="phpdocumentor-element-found-in__line">797</span>
 
     </aside>
 
@@ -7980,17 +7508,17 @@ send_messages when creating a forum post.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
         getGuildAttribute()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">278</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns the guild attribute.</p>
+        <p class="phpdocumentor-summary">Returns the guild which the thread belongs to.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -8008,10 +7536,6 @@ send_messages when creating a forum post.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The guild attribute.</p>
-</section>
-
             </section>
 
 </article>
@@ -8023,13 +7547,13 @@ send_messages when creating a forum post.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getIsPrivateAttribute">
         getIsPrivateAttribute()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_getIsPrivateAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getIsPrivateAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">228</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 
     </aside>
 
@@ -8066,13 +7590,13 @@ send_messages when creating a forum post.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getLastPinTimestampAttribute">
         getLastPinTimestampAttribute()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_getLastPinTimestampAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getLastPinTimestampAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">290</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
@@ -8090,7 +7614,7 @@ send_messages when creating a forum post.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_getLastPinTimestampAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getLastPinTimestampAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -8118,6 +7642,123 @@ send_messages when creating a forum post.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getOwnerAttribute">
+        getOwnerAttribute()
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getOwnerAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">95</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the owner of the thread.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getOwnerAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getOwnerMemberAttribute">
+        getOwnerMemberAttribute()
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getOwnerMemberAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">105</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the member object for the owner of the thread.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getOwnerMemberAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getParentAttribute">
+        getParentAttribute()
+        <a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getParentAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">119</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the parent channel of the thread.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getParentAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getPermissionOverwritesAttribute">
         getPermissionOverwritesAttribute()
         <a href="classes/Discord-Parts-Channel-Channel.html#method_getPermissionOverwritesAttribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -8126,7 +7767,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1087</span>
+    <span class="phpdocumentor-element-found-in__line">760</span>
 
     </aside>
 
@@ -8169,7 +7810,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">238</span>
+    <span class="phpdocumentor-element-found-in__line">204</span>
 
     </aside>
 
@@ -8212,7 +7853,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">248</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
@@ -8251,7 +7892,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">262</span>
+    <span class="phpdocumentor-element-found-in__line">228</span>
 
     </aside>
 
@@ -8347,7 +7988,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1055</span>
+    <span class="phpdocumentor-element-found-in__line">728</span>
 
     </aside>
 
@@ -8878,29 +8519,19 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_default_forum_layout">$default_forum_layout</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_default_thread_rate_limit_per_user">$default_thread_rate_limit_per_user</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_flags">$flags</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_guild">$guild</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_guild_id">$guild_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_invites">$invites</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_is_private">$is_private</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_last_pin_timestamp">$last_pin_timestamp</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_managed">$managed</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_members">$members</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_messages">$messages</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_nsfw">$nsfw</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_overwrites">$overwrites</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_owner_id">$owner_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_permission_overwrites">$permission_overwrites</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_permissions">$permissions</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_position">$position</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_rate_limit_per_user">$rate_limit_per_user</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_recipient">$recipient</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_recipient_id">$recipient_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_recipients">$recipients</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_stage_instances">$stage_instances</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_threads">$threads</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_type">$type</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_user_limit">$user_limit</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_video_quality_mode">$video_quality_mode</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#property_webhooks">$webhooks</a></li>
@@ -8926,29 +8557,29 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___set">__set()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method___toString">__toString()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___unserialize">__unserialize()</a></li>
-                                            <li class="-deprecated"><a href="classes/Discord-Parts-Channel-Channel.html#method_allowInvite">allowInvite()</a></li>
-                                            <li class="-deprecated"><a href="classes/Discord-Parts-Channel-Channel.html#method_allowText">allowText()</a></li>
-                                            <li class="-deprecated"><a href="classes/Discord-Parts-Channel-Channel.html#method_allowVoice">allowVoice()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_broadcastTyping">broadcastTyping()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_canInvite">canInvite()</a></li>
+                                            <li class="-deprecated"><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_allowInvite">allowInvite()</a></li>
+                                            <li class="-deprecated"><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_allowText">allowText()</a></li>
+                                            <li class="-deprecated"><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_allowVoice">allowVoice()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_broadcastTyping">broadcastTyping()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_canInvite">canInvite()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_createInvite">createInvite()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_createMessageCollector">createMessageCollector()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_createMessageCollector">createMessageCollector()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_deafenMember">deafenMember()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_deleteMessages">deleteMessages()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_deleteMessages">deleteMessages()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getBotPermissions">getBotPermissions()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getBotPermissions">getBotPermissions()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getCreatableAttributes">getCreatableAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getDiscord">getDiscord()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getMessageHistory">getMessageHistory()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getPinnedMessages">getPinnedMessages()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getMessageHistory">getMessageHistory()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getPinnedMessages">getPinnedMessages()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getPublicAttributes">getPublicAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getRawAttributes">getRawAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getRepositoryAttributes">getRepositoryAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getUpdatableAttributes">getUpdatableAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_isPartial">isPartial()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_isTextBased">isTextBased()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_isVoiceBased">isVoiceBased()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_isTextBased">isTextBased()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_isVoiceBased">isVoiceBased()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_jsonSerialize">jsonSerialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_limitDelete">limitDelete()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_moveMember">moveMember()</a></li>
@@ -8957,10 +8588,10 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetGet">offsetGet()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetSet">offsetSet()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetUnset">offsetUnset()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_pinMessage">pinMessage()</a></li>
-                                            <li class="-deprecated"><a href="classes/Discord-Parts-Channel-Channel.html#method_sendEmbed">sendEmbed()</a></li>
-                                            <li class="-deprecated"><a href="classes/Discord-Parts-Channel-Channel.html#method_sendFile">sendFile()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_sendMessage">sendMessage()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_pinMessage">pinMessage()</a></li>
+                                            <li class="-deprecated"><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_sendEmbed">sendEmbed()</a></li>
+                                            <li class="-deprecated"><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_sendFile">sendFile()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_sendMessage">sendMessage()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_sendSoundboardSound">sendSoundboardSound()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_serialize">serialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_setCategory">setCategory()</a></li>
@@ -8969,14 +8600,17 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_startThread">startThread()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_undeafenMember">undeafenMember()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_unmuteMember">unmuteMember()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_unpinMessage">unpinMessage()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_unpinMessage">unpinMessage()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_unserialize">unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_afterConstruct">afterConstruct()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getAvailableTagsAttribute">getAvailableTagsAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getDefaultReactionEmojiAttribute">getDefaultReactionEmojiAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getGuildAttribute">getGuildAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getIsPrivateAttribute">getIsPrivateAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getLastPinTimestampAttribute">getLastPinTimestampAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getGuildAttribute">getGuildAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getIsPrivateAttribute">getIsPrivateAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getLastPinTimestampAttribute">getLastPinTimestampAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getOwnerAttribute">getOwnerAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getOwnerMemberAttribute">getOwnerMemberAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getParentAttribute">getParentAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getPermissionOverwritesAttribute">getPermissionOverwritesAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getRecipientAttribute">getRecipientAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getRecipientIdAttribute">getRecipientIdAttribute()</a></li>
