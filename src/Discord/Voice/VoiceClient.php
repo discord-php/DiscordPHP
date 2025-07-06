@@ -30,6 +30,7 @@ use Discord\Voice\Client\User;
 use Discord\Voice\Client\WS;
 use Discord\Voice\Processes\Dca;
 use Discord\Voice\Processes\Ffmpeg;
+use Discord\Voice\Processes\OpusFfi;
 use Discord\Voice\ReceiveStream;
 use Discord\WebSockets\Op;
 use Discord\WebSockets\Payload;
@@ -44,6 +45,9 @@ use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 use React\Stream\ReadableResourceStream as Stream;
 use React\Stream\ReadableStreamInterface;
+
+use function Discord\logger;
+use function Discord\loop;
 
 /**
  * The Discord voice client.
@@ -344,36 +348,6 @@ class VoiceClient extends EventEmitter
 
         WS::make($this);
         return true;
-    }
-
-    /**
-     * Handles a voice server change.
-     *
-     * @param array $data New voice server information.
-     */
-    public function handleVoiceServerChange(Payload|array $data = []): void
-    {
-        $this->bot->logger->debug('voice server has changed, dynamically changing servers in the background', ['data' => $data]);
-        $this->reconnecting = true;
-
-        $this->pause();
-
-        $this->udp->close();
-        $this->ws->close();
-
-        $this->bot->loop->cancelTimer($this->heartbeat);
-
-        $this->data['token'] = $data['token']; // set the token if it changed
-        $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
-
-        $this->start();
-
-        $this->on('resumed', function () {
-            $this->bot->logger->debug('voice client resumed');
-            $this->unpause();
-            $this->speaking = false;
-            //$this->setSpeaking(true);
-        });
     }
 
     /**
@@ -858,8 +832,7 @@ class VoiceClient extends EventEmitter
      */
     protected function mainSend($data): void
     {
-        $json = json_encode($data);
-        $this->bot->ws->send($json);
+        $this->bot->send($data);
     }
 
     /**
@@ -978,9 +951,28 @@ class VoiceClient extends EventEmitter
             ],
         ));
 
+        // Close processes for audio encoding
+        if (count($this->voiceDecoders) > 0) {
+            foreach ($this->voiceDecoders as $decoder) {
+                $decoder->close();
+            }
+        }
+
+        if (count($this->receiveStreams) > 0) {
+            foreach ($this->receiveStreams as $stream) {
+                $stream->close();
+            }
+        }
+
+        if (count($this->speakingStatus) > 0) {
+            foreach ($this->speakingStatus as $ss) {
+                $this->removeDecoder($ss);
+            }
+        }
+
         $this->userClose = true;
-        $this->udp->close();
         $this->ws->close();
+        $this->udp->close();
 
         $this->heartbeatInterval = null;
 
@@ -1154,18 +1146,22 @@ class VoiceClient extends EventEmitter
             }
 
             $this->createDecoder($ss);
+            $decoder = $this->voiceDecoders[$ss->ssrc] ?? null;
         }
 
-        $audioData = $decoder->stdin->write($voicePacket->getAudioData());
+        if ($decoder->stdin->isWritable() === false) {
+            logger()->warning('Decoder stdin is not writable.', ['ssrc' => $ss->ssrc]);
+            return; // decoder stdin is not writable, cannot write audio data
+        }
 
-        /* $buff = new Buffer(strlen($audioData) + 2);
-        $buff->write(pack('s', strlen($audioData)), 0);
-        $buff->write($audioData, 2);
+        if (
+            empty($voicePacket->decryptedAudio)
+            || $voicePacket->decryptedAudio === "\xf8\xff\xfe"
+        ) {
+            return; // no audio data to write
+        }
 
-        $stdinHandle = fopen($this->tempFiles['stdin'], 'a'); // Use append mode
-        fwrite($stdinHandle, (string) $buff);
-        fflush($stdinHandle); // Make sure the data is written immediately
-        fclose($stdinHandle); */
+        $decoder->stdin->write(OpusFfi::decode($voicePacket->decryptedAudio));
     }
 
     /**
@@ -1175,16 +1171,17 @@ class VoiceClient extends EventEmitter
      */
     protected function createDecoder($ss): void
     {
-        $decoder = Ffmpeg::decode();
-        $decoder->start($this->bot->loop);
+        $decoder = Ffmpeg::decode("$ss->ssrc");
+        $decoder->start(loop());
 
         $decoder->stdout->on('data', function ($data) use ($ss) {
             if (empty($data)) {
                 return; // no data to process
             }
 
-            $this->receiveStreams[$ss->ssrc]->writePCM($data);
-            $this->receiveStreams[$ss->ssrc]->writeOpus($data);
+            logger()->debug('Received data from decoder.', ['ssrc' => $ss->ssrc, 'length' => strlen($data)]);
+
+            $this->receiveStreams[$ss->ssrc]->write($data);
         });
 
         $decoder->stderr->on('data', function ($data) use ($ss) {
@@ -1200,7 +1197,39 @@ class VoiceClient extends EventEmitter
         $this->voiceDecoders[$ss->ssrc] = $decoder;
 
         // Monitor the process for exit
-        #$this->monitorProcessExit($decoder, $ss);
+        $this->monitorProcessExit($decoder, $ss);
+    }
+
+    /**
+     * Monitor a process for exit and trigger callbacks when it exits
+     *
+     * @param Process $process The process to monitor
+     * @param object $ss The speaking status object
+     * @param callable $createDecoder Function to create a new decoder if needed
+     */
+    protected function monitorProcessExit(Process $process, $ss): void
+    {
+        // Store the process ID
+        // $pid = $process->getPid();
+
+        // Check every second if the process is still running
+        $this->monitorProcessTimer = $this->bot->loop->addPeriodicTimer(1.0, function () use ($process, $ss) {
+            // Check if the process is still running
+            if (!$process->isRunning()) {
+                // Get the exit code
+                $exitCode = $process->getExitCode();
+
+                // Clean up the timer
+                $this->bot->loop->cancelTimer($this->monitorProcessTimer);
+
+                // If exit code indicates an error, emit event and recreate decoder
+                if ($exitCode > 0) {
+                    $this->emit('decoder-error', [$exitCode, null, $ss]);
+                    unset($this->voiceDecoders[$ss->ssrc]);
+                    $this->createDecoder($ss);
+                }
+            }
+        });
     }
 
     /**

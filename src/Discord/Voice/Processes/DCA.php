@@ -16,9 +16,9 @@ final class DCA extends ProcessAbstract
      */
     public const DCA_VERSION = 'DCA1';
 
-    protected static string $exec = '/usr/bin/dca';
+    protected static string $exec = 'dca';
 
-    public static function checkForFFmpeg(): bool
+    public static function checkForDca(): bool
     {
         $binaries = [
             'dca',
@@ -80,10 +80,6 @@ final class DCA extends ProcessAbstract
         }
 
         $flags = [
-            '-ac', $channels, // Channels
-            '-ab', round($bitrate / 1000), // Bitrate
-            '-as', $frameSize, // Frame Size
-            '-mode', 'decode', // Decode mode
         ];
 
         $flags = implode(' ', $flags);

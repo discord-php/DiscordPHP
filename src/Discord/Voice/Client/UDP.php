@@ -68,9 +68,14 @@ final class UDP extends Socket
 
     public function handleMessages(string $secret): self
     {
-        return $this->on('message', fn (string $message) => $this->ws->vc->handleAudioData(
-            new Packet($message, key: $secret)
-        ));
+        return $this->on('message', function (string $message) use ($secret) {
+
+            if (strlen($message) <= 8) {
+                return;
+            }
+
+            return $this->ws->vc->handleAudioData(new Packet($message, key: $secret));
+        });
     }
 
     public function handleSsrcSending(): self

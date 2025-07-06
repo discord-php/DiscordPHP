@@ -101,12 +101,28 @@ final class Ffmpeg extends ProcessAbstract
             $frameSize = round(20 * 48);
         }
 
+        if ($filename) {
+            $filename = date('Y-m-d_H-i') . '-' . $filename;
+            if (!str_ends_with($filename, '.ogg')) {
+                $filename .= '.ogg';
+            }
+        } elseif (null === $filename) {
+            $filename = 'pipe:1';
+        }
+
         $flags = [
-            '-ac:opus', $channels, // Channels
-            '-ab', round($bitrate / 1000), // Bitrate
-            '-as', $frameSize, // Frame Size
-            '-ar', '48000', // Audio Rate
-            '-mode', 'decode', // Decode mode
+            '-loglevel', 'warning', // Set log level to warning to reduce output noise
+            '-channel_layout', 'stereo',
+            '-ac', $channels,
+            '-ar', '48000',
+            '-f', 's16le',
+            '-i', 'pipe:0',
+            '-acodec', 'libopus',
+            '-f', 'ogg',
+            '-ar', '48000',
+            '-ac', $channels,
+            '-b:a', $bitrate,
+            $filename
         ];
 
         if (null !== $preArgs) {
@@ -115,13 +131,12 @@ final class Ffmpeg extends ProcessAbstract
 
         $flags = implode(' ', $flags);
 
-        return new Process(
-            self::$exec . " {$flags}",
-            fds: [
+        return new Process(self::$exec . " {$flags}",
+            fds: str_contains(PHP_OS, 'Win') ? [
                 ['socket'],
                 ['socket'],
                 ['socket'],
-            ]
+            ] : []
         );
     }
 }
