@@ -17,6 +17,12 @@ use Discord\WebSockets\VoicePayload;
 use Evenement\EventEmitterTrait;
 use React\Promise\Deferred;
 
+/**
+ * Manages voice clients for the Discord bot.
+ *
+ * @requires libopus - Linux | NOT TESTED - WINDOWS
+ * @requires FFMPEG - Linux | NOT TESTED - WINDOWS
+ */
 final class VoiceManager
 {
     use EventEmitterTrait;
