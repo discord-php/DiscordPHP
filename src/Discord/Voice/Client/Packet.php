@@ -16,6 +16,7 @@ namespace Discord\Voice\Client;
 use Discord\Helpers\ByteBuffer\Buffer;
 use Discord\Helpers\FormatPackEnum;
 use Monolog\Logger;
+
 use function Discord\logger;
 
 /**
@@ -113,6 +114,10 @@ class Packet
         protected ?string $key = null,
         protected ?Logger $log = null
     ) {
+        if (! function_exists('sodium_crypto_secretbox')) {
+            throw new LibSodiumNotFoundException('libsodium-php could not be found.');
+        }
+
         $this->unpack($data);
 
         if ($decrypt) {

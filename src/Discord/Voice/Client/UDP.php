@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Discord\Voice\Client;
 
 use Discord\Helpers\ByteBuffer\Buffer;
-use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Op;
 use React\EventLoop\TimerInterface;
+use React\Datagram\Socket;
+
 use function Discord\logger;
 use function Discord\loop;
-use React\Datagram\Socket;
 
 final class UDP extends Socket
 {
@@ -219,7 +221,7 @@ final class UDP extends Socket
 
     public function refreshSilenceFrames(): void
     {
-        if (!$this->ws->vc->paused) {
+        if (! $this->ws->vc->paused) {
             // If the voice client is paused, we don't need to refresh the silence frames.
             return;
         }

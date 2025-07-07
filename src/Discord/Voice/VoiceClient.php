@@ -15,7 +15,6 @@ namespace Discord\Voice;
 
 use Discord\Discord;
 use Discord\Exceptions\FileNotFoundException;
-use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Exceptions\OutdatedDCAException;
 use Discord\Exceptions\Voice\AudioAlreadyPlayingException;
 use Discord\Exceptions\Voice\ClientNotReadyException;
@@ -31,7 +30,6 @@ use Discord\Voice\Client\WS;
 use Discord\Voice\Processes\Dca;
 use Discord\Voice\Processes\Ffmpeg;
 use Discord\Voice\Processes\OpusFfi;
-use Discord\Voice\ReceiveStream;
 use Discord\WebSockets\Op;
 use Discord\WebSockets\Payload;
 use Discord\WebSockets\VoicePayload;
@@ -56,13 +54,6 @@ use function Discord\loop;
  */
 class VoiceClient extends EventEmitter
 {
-    /**
-     * The DCA version the client is using.
-     *
-     * @var string The DCA version.
-     */
-    public const DCA_VERSION = 'DCA1';
-
     /**
      * Is the voice client ready?
      *
@@ -104,13 +95,6 @@ class VoiceClient extends EventEmitter
      * @var TimerInterface|null The heartbeat periodic timer.
      */
     public $heartbeat;
-
-    /**
-     * The UDP heartbeat sequence.
-     *
-     * @var int The heartbeat sequence.
-     */
-    public $heartbeatSeq = 0;
 
     /**
      * The SSRC value.
@@ -236,15 +220,6 @@ class VoiceClient extends EventEmitter
     public $userClose = false;
 
     /**
-     * The Discord voice gateway version.
-     *
-     * @see https://discord.com/developers/docs/topics/voice-connections#voice-gateway-versioning-gateway-versions
-     *
-     * @var int Voice version.
-     */
-    public $version = 8;
-
-    /**
      * The Config for DNS Resolver.
      *
      * @var Config|string|null
@@ -320,10 +295,7 @@ class VoiceClient extends EventEmitter
      */
     public function start(): bool
     {
-        if (
-            ! Ffmpeg::checkForFFmpeg() ||
-            ! $this->checkForLibsodium()
-        ) {
+        if (! Ffmpeg::checkForFFmpeg()) {
             return false;
         }
 
@@ -750,11 +722,11 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Leaves the current voice channel.
+     * Disconnects the bot from the current voice channel.
      *
      * @return \Discord\Voice\VoiceClient
      */
-    public function leave(): static
+    public function disconnect(): static
     {
         $this->switchChannel(null);
 
@@ -1251,22 +1223,6 @@ class VoiceClient extends EventEmitter
         return $this->ready;
     }
 
-    /**
-     * Checks if libsodium-php is installed.
-     *
-     * @return bool
-     */
-    protected function checkForLibsodium(): bool
-    {
-        if (! function_exists('sodium_crypto_secretbox')) {
-            $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
-
-            return false;
-        }
-
-        return true;
-    }
-
     public function getDbVolume(): float|int
     {
         return match($this->volume) {
@@ -1307,8 +1263,7 @@ class VoiceClient extends EventEmitter
         bool $mute = false,
         ?Deferred $deferred = null,
         ?VoiceManager &$manager = null,
-    ): self
-    {
+    ): self {
         return new static($bot, $channel, $data, $deaf, $mute, $deferred, $manager);
     }
 
@@ -1329,11 +1284,12 @@ class VoiceClient extends EventEmitter
             $this->deferred->resolve($this);
         })
         ->once('error', function ($e) {
+            $this->disconnect();
             $this->bot->getLogger()->error('error initializing voice client', ['e' => $e->getMessage()]);
             $this->deferred->reject($e);
         })
         ->once('close', function () {
-            $this->leave();
+            $this->disconnect();
             $this->bot->getLogger()->warning('voice client closed');
             unset($this->manager->clients[$this->channel->guild_id]);
         })

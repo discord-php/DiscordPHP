@@ -6,7 +6,6 @@ namespace Discord\Voice;
 
 use Discord\Discord;
 use Discord\Parts\Channel\Channel;
-use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Op;
 use Discord\WebSockets\VoicePayload;
@@ -41,8 +40,7 @@ final class VoiceManager
         Discord $discord,
         bool $mute = false,
         bool $deaf = true,
-    )
-    {
+    ) {
         $deferred = new Deferred();
 
         try {

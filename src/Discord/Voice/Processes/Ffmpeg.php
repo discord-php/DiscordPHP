@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Discord\Voice\Processes;
 
 use Discord\Exceptions\FFmpegNotFoundException;
-use Discord\Voice\Processes\ProcessAbstract;
 use React\ChildProcess\Process;
 
 final class Ffmpeg extends ProcessAbstract
@@ -56,8 +55,7 @@ final class Ffmpeg extends ProcessAbstract
         int|float $volume = 0,
         int $bitrate = 128000,
         ?array $preArgs = null
-    ): Process
-    {
+    ): Process {
         $flags = [
             '-i', $filename ?? 'pipe:0',
             '-map_metadata', '-1',
@@ -112,8 +110,7 @@ final class Ffmpeg extends ProcessAbstract
         int $channels = 2,
         ?int $frameSize = null,
         ?array $preArgs = null,
-    ): Process
-    {
+    ): Process {
         if (null === $frameSize) {
             $frameSize = round(20 * 48);
         }

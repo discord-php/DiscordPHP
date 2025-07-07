@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Discord\Voice\Processes;
 
-use Discord\Voice\Processes\ProcessAbstract;
 use React\ChildProcess\Process;
 
 final class DCA extends ProcessAbstract
@@ -54,8 +53,7 @@ final class DCA extends ProcessAbstract
         int|float $volume = 0,
         int $bitrate = 128000,
         ?array $preArgs = null
-    ): Process
-    {
+    ): Process {
         $flags = [
             '-ab', round($bitrate / 1000), // Bitrate
             '-mode', 'decode', // Decode mode
@@ -73,8 +71,7 @@ final class DCA extends ProcessAbstract
         int $channels = 2,
         ?int $frameSize = null,
         ?array $preArgs = null,
-    ): Process
-    {
+    ): Process {
         if (null === $frameSize) {
             $frameSize = round($frameSize * 48);
         }
