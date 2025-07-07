@@ -71,20 +71,6 @@ class VoiceClient extends EventEmitter
     public $ready = false;
 
     /**
-     * The DCA binary name that we will use.
-     *
-     * @var string|null The DCA binary name that will be run.
-     */
-    public $dca;
-
-    /**
-     * The FFmpeg binary location.
-     *
-     * @var string|null The FFmpeg binary location.
-     */
-    public $ffmpeg;
-
-    /**
      * The voice WebSocket instance.
      *
      * @var WebSocket|null The voice WebSocket client.
@@ -96,7 +82,7 @@ class VoiceClient extends EventEmitter
      *
      * @var null|Socket|\Discord\Voice\Client\UDP
      */
-    public null|Socket|UDP $udp;
+    public null|UDP $udp;
 
     /**
      * The Voice WebSocket endpoint.
@@ -286,13 +272,6 @@ class VoiceClient extends EventEmitter
      */
     public array $clientsConnected = [];
 
-    /**
-     * Temporary files.
-     *
-     * @var array|null
-     */
-    public $tempFiles;
-
     /** @var TimerInterface */
     public $monitorProcessTimer;
 
@@ -302,6 +281,8 @@ class VoiceClient extends EventEmitter
      * @var array<User> Users in the current voice channel.
      */
     public array $users;
+
+    public $streamTime = 0;
 
     /**
      * Constructs the Voice client instance
@@ -737,27 +718,47 @@ class VoiceClient extends EventEmitter
     /**
      * Switches voice channels.
      *
-     * @param Channel $channel The channel to switch to.
+     * @param null|Channel $channel The channel to switch to.
      *
      * @throws \InvalidArgumentException
      */
-    public function switchChannel(Channel $channel): void
+    public function switchChannel(?Channel $channel): self
     {
-        if (! $channel->isVoiceBased()) {
+        if (isset($channel) && ! $channel->isVoiceBased()) {
             throw new \InvalidArgumentException("Channel must be a voice channel to be able to switch, given type {$channel->type}.");
+        }
+
+        // We allow the user to switch to null, which will disconnect them from the voice channel.
+        if (! isset($channel)) {
+            $channel = $this->channel;
+            $this->userClose = true;
+        } else {
+            $this->channel = $channel;
         }
 
         $this->mainSend(VoicePayload::new(
             Op::OP_VOICE_STATE_UPDATE,
             [
                 'guild_id' => $channel->guild_id,
-                'channel_id' => $channel->id,
+                'channel_id' => $channel?->id ?? null,
                 'self_mute' => $this->mute,
                 'self_deaf' => $this->deaf,
             ],
         ));
 
-        $this->channel = $channel;
+        return $this;
+    }
+
+    /**
+     * Leaves the current voice channel.
+     *
+     * @return \Discord\Voice\VoiceClient
+     */
+    public function leave(): static
+    {
+        $this->switchChannel(null);
+
+        return $this;
     }
 
     /**
@@ -936,20 +937,10 @@ class VoiceClient extends EventEmitter
 
         if ($this->speaking) {
             $this->stop();
-            #$this->setSpeaking(false);
+            $this->setSpeaking(false);
         }
 
         $this->ready = false;
-
-        $this->mainSend(VoicePayload::new(
-            Op::OP_VOICE_STATE_UPDATE,
-            [
-                'guild_id' => $this->channel->guild_id,
-                'channel_id' => null,
-                'self_mute' => true,
-                'self_deaf' => true,
-            ],
-        ));
 
         // Close processes for audio encoding
         if (count($this->voiceDecoders) > 0) {
@@ -969,6 +960,16 @@ class VoiceClient extends EventEmitter
                 $this->removeDecoder($ss);
             }
         }
+
+        $this->mainSend(VoicePayload::new(
+            Op::OP_VOICE_STATE_UPDATE,
+            [
+                'guild_id' => $this->channel->guild_id,
+                'channel_id' => null,
+                'self_mute' => true,
+                'self_deaf' => true,
+            ],
+        ));
 
         $this->userClose = true;
         $this->ws->close();
@@ -1151,17 +1152,26 @@ class VoiceClient extends EventEmitter
 
         if ($decoder->stdin->isWritable() === false) {
             logger()->warning('Decoder stdin is not writable.', ['ssrc' => $ss->ssrc]);
-            return; // decoder stdin is not writable, cannot write audio data
+            return; // decoder stdin is not writable, cannot write audio data.
+            // This should be either restarted or checked if the decoder is still running.
         }
 
         if (
             empty($voicePacket->decryptedAudio)
-            || $voicePacket->decryptedAudio === "\xf8\xff\xfe"
+            || $voicePacket->decryptedAudio === "\xf8\xff\xfe" // Opus silence frame
+            || strlen($voicePacket->decryptedAudio) < 8 // Opus frame is at least 8 bytes
         ) {
             return; // no audio data to write
         }
 
-        $decoder->stdin->write(OpusFfi::decode($voicePacket->decryptedAudio));
+        $data = OpusFfi::decode($voicePacket->decryptedAudio);
+
+        if (empty(trim($data))) {
+            logger()->debug('Received empty audio data.', ['ssrc' => $ss->ssrc]);
+            return; // no audio data to write
+        }
+
+        $decoder->stdin->write($data);
     }
 
     /**
@@ -1171,17 +1181,16 @@ class VoiceClient extends EventEmitter
      */
     protected function createDecoder($ss): void
     {
-        $decoder = Ffmpeg::decode("$ss->ssrc");
+        $decoder = Ffmpeg::decode((string) $ss->ssrc);
         $decoder->start(loop());
 
         $decoder->stdout->on('data', function ($data) use ($ss) {
             if (empty($data)) {
-                return; // no data to process
+                return; // no data to process, should be ignored
             }
 
-            logger()->debug('Received data from decoder.', ['ssrc' => $ss->ssrc, 'length' => strlen($data)]);
-
-            $this->receiveStreams[$ss->ssrc]->write($data);
+            // Emit the decoded opus data
+            $this->receiveStreams[$ss->ssrc]->writeOpus($data);
         });
 
         $decoder->stderr->on('data', function ($data) use ($ss) {
@@ -1324,6 +1333,7 @@ class VoiceClient extends EventEmitter
             $this->deferred->reject($e);
         })
         ->once('close', function () {
+            $this->leave();
             $this->bot->getLogger()->warning('voice client closed');
             unset($this->manager->clients[$this->channel->guild_id]);
         })

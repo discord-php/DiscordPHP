@@ -237,7 +237,7 @@ class Packet
                 $this->log->warning('Failed to decode voice packet.', ['ssrc' => $this->ssrc]);
             }
             // Check if the message contains an extension and remove it
-            elseif (substr($message, 12, 2) === "\xbe\xde") {
+            elseif (substr($message, 12, 2) === "\xBE\xDE") {
                 // Reads the 2 bytes after the extension identifier to get the extension length
                 $extLengthData = substr($message, 14, 2);
                 $headerExtensionLength = unpack('n', $extLengthData)[1];
