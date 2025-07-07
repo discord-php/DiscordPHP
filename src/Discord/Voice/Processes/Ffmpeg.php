@@ -88,6 +88,23 @@ final class Ffmpeg extends ProcessAbstract
         );
     }
 
+    /**
+     * Decodes an Opus audio stream to OGG format using FFmpeg.
+     *
+     * TODO: Add support for Windows, currently only tested and ran on WSL2
+     *
+     * @param mixed $filename If there's no name, it will output to stdout
+     *                        (pipe:1). If a name is given, it will save the file
+     *                        with the given name. If the name does not end with
+     *                        .ogg, it will append .ogg to the name.
+     *                        If null, it will use 'pipe:1' as the filename.
+     * @param int|float $volume Default: 0
+     * @param int $bitrate Default: 128000
+     * @param int $channels Default: 2
+     * @param null|int $frameSize
+     * @param null|array $preArgs
+     * @return Process
+     */
     public static function decode(
         ?string $filename = null,
         int|float $volume = 0,
@@ -111,7 +128,7 @@ final class Ffmpeg extends ProcessAbstract
         }
 
         $flags = [
-            '-loglevel', 'warning', // Set log level to warning to reduce output noise
+            '-loglevel', 'error', // Set log level to warning to reduce output noise
             '-channel_layout', 'stereo',
             '-ac', $channels,
             '-ar', '48000',
@@ -131,12 +148,6 @@ final class Ffmpeg extends ProcessAbstract
 
         $flags = implode(' ', $flags);
 
-        return new Process(self::$exec . " {$flags}",
-            fds: str_contains(PHP_OS, 'Win') ? [
-                ['socket'],
-                ['socket'],
-                ['socket'],
-            ] : []
-        );
+        return new Process(self::$exec . " {$flags}");
     }
 }
