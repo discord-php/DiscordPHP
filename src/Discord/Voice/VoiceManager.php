@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace Discord\Voice;
 
 use Discord\Discord;
+use Discord\Exceptions\Voice\CantJoinMoreThanOneChannelException;
+use Discord\Exceptions\Voice\CantSpeakInChannelException;
+use Discord\Exceptions\Voice\ChannelMustAllowVoiceException;
+use Discord\Exceptions\Voice\ClientMustAllowVoiceException;
+use Discord\Exceptions\Voice\EnterChannelDeniedException;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Op;
@@ -33,7 +38,7 @@ final class VoiceManager
      * @param \Discord\Discord $discord
      * @param bool $mute
      * @param bool $deaf
-     * @return \React\Promise\PromiseInterface<T>
+     * @return \React\Promise\PromiseInterface
      */
     public function createClientAndJoinChannel(
         Channel $channel,
@@ -45,19 +50,19 @@ final class VoiceManager
 
         try {
             if (! $channel->isVoiceBased()) {
-                throw new \RuntimeException('Channel must allow voice.');
+                throw new ChannelMustAllowVoiceException();
             }
 
             if (! $channel->canJoin()) {
-                throw new \RuntimeException('The bot must have proper permissions to join this channel.');
+                throw new EnterChannelDeniedException();
             }
 
             if (! $channel->canSpeak() && ! $mute) {
-                throw new \RuntimeException('The bot must have permission to speak in this channel.');
+                throw new CantSpeakInChannelException();
             }
 
             if (isset($this->clients[$channel->guild_id])) {
-                throw new \RuntimeException('You cannot join more than one voice channel per guild.');
+                throw new CantJoinMoreThanOneChannelException();
             }
         } catch (\Throwable $th) {
             $deferred->reject($th);

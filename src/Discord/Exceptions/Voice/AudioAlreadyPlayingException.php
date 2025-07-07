@@ -16,7 +16,7 @@ namespace Discord\Exceptions\Voice;
  *
  * @since 10.0.0
  */
-class AudioAlreadyPlayingException extends \RuntimeException
+final class AudioAlreadyPlayingException extends \RuntimeException
 {
     public function __construct(?string $message = null)
     {

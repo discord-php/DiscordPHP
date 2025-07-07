@@ -12,14 +12,14 @@
 namespace Discord\Exceptions\Voice;
 
 /**
- * Thrown when the Voice Client is not ready.
+ * Thrown when the selected Channel does not allow voice.
  *
  * @since 10.0.0
  */
-final class ClientNotReadyException extends \RuntimeException
+final class CantJoinMoreThanOneChannelException extends \RuntimeException
 {
     public function __construct(?string $message = null)
     {
-        parent::__construct($message ?? 'Voice Client is not ready.');
+        parent::__construct($message ?? 'You cannot join more than one voice channel per guild/server.');
     }
 }
