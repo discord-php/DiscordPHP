@@ -13,15 +13,18 @@ final class OpusFfi
         // Load libopus and define needed functions/types
         $ffi = FFI::cdef('
         typedef struct OpusDecoder OpusDecoder;
-        OpusDecoder *opus_decoder_create(int Fs, int channels, int *error);
-        int opus_decode(OpusDecoder *st, const unsigned char *data, int len, short *pcm, int frame_size, int decode_fec);
+        typedef short opus_int16;
+        typedef int opus_int32;
+
+        OpusDecoder *opus_decoder_create(opus_int32 Fs, int channels, int *error);
+        int opus_decode(OpusDecoder *st, const unsigned char *data, opus_int32 len, opus_int16 *pcm, int frame_size, int decode_fec);
         void opus_decoder_destroy(OpusDecoder *st);
         ', 'libopus.so.0');
 
         // Parameters
         $sample_rate = 48000;
         $channels = 2;
-        $frame_size = 920; // 20ms at 48kHz
+        $frame_size = 960; // 20ms at 48kHz
 
         // Create decoder
         $error = $ffi->new('int');
@@ -36,9 +39,9 @@ final class OpusFfi
         }
 
         // Prepare output buffer for PCM samples
-        $pcm = $ffi->new("short[". ($frame_size * $channels) ."]");
+        $pcm = $ffi->new("opus_int16[". ($frame_size * $channels) ."]");
 
-        $data_buf = $ffi->new("uint8_t[$data_len]", false);
+        $data_buf = $ffi->new("const unsigned char[$data_len]", false);
         FFI::memcpy($data_buf, $data, $data_len);
 
         // Decode
@@ -46,6 +49,7 @@ final class OpusFfi
 
         if ($ret < 0) {
             $ffi->opus_decoder_destroy($decoder);
+            // TODO: Handle decoding error
             return ''; // Or handle error
         }
 
