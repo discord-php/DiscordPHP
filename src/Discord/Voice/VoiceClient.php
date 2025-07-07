@@ -59,7 +59,7 @@ class VoiceClient extends EventEmitter
      *
      * @var bool Whether the voice client is ready.
      */
-    public $ready = false;
+    public bool $ready = false;
 
     /**
      * The voice WebSocket instance.
@@ -73,84 +73,84 @@ class VoiceClient extends EventEmitter
      *
      * @var null|Socket|\Discord\Voice\Client\UDP
      */
-    public null|UDP $udp;
+    public ?UDP $udp;
 
     /**
      * The Voice WebSocket endpoint.
      *
      * @var string|null The endpoint the Voice WebSocket and UDP client will connect to.
      */
-    public $endpoint;
+    public ?string $endpoint;
 
     /**
      * The UDP heartbeat interval.
      *
      * @var int|null How often we send a heartbeat packet.
      */
-    public $heartbeatInterval;
+    public ?int $heartbeatInterval;
 
     /**
      * The Voice WebSocket heartbeat timer.
      *
      * @var TimerInterface|null The heartbeat periodic timer.
      */
-    public $heartbeat;
+    public ?TimerInterface $heartbeat;
 
     /**
      * The SSRC value.
      *
      * @var int|null The SSRC value used for RTP.
      */
-    public $ssrc;
+    public ?int $ssrc;
 
     /**
      * The sequence of audio packets being sent.
      *
      * @var int The sequence of audio packets.
      */
-    public $seq = 0;
+    public ?int $seq = 0;
 
     /**
      * The timestamp of the last packet.
      *
      * @var int The timestamp the last packet was constructed.
      */
-    public $timestamp = 0;
+    public ?int $timestamp = 0;
 
     /**
-     * Are we currently set as speaking?
+     * Are we currently speaking?
      *
-     * @var bool Whether we are speaking or not.
+     * @var bool
      */
-    public $speaking = false;
+    public bool $speaking = false;
 
     /**
      * Whether the voice client is currently paused.
      *
-     * @var bool Whether the voice client is currently paused.
+     * @var bool
      */
-    public $paused = false;
+    public bool $paused = false;
 
     /**
      * Have we sent the login frame yet?
      *
      * @var bool Whether we have sent the login frame.
      */
-    public $sentLoginFrame = false;
+    public bool $sentLoginFrame = false;
 
     /**
      * The time we started sending packets.
      *
      * @var float|int|null The time we started sending packets.
      */
-    public $startTime;
+    public null|float|int $startTime;
 
     /**
      * The size of audio frames, in milliseconds.
      *
      * @var int The size of audio frames.
      */
-    public $frameSize = 20;
+    public int $frameSize = 20;
 
     /**
      * Collection of the status of people speaking.
@@ -173,21 +173,21 @@ class VoiceClient extends EventEmitter
      *
      * @var array<ReceiveStream>|null Voice audio recieve streams.
      */
-    public $recieveStreams;
+    public ?array $recieveStreams;
 
     /**
      * Voice audio receive streams.
      *
      * @var array<ReceiveStream>|null Voice audio recieve streams.
      */
-    public $receiveStreams;
+    public ?array $receiveStreams;
 
     /**
      * The volume the audio will be encoded with.
      *
      * @var int The volume that the audio will be encoded in.
      */
-    protected $volume = 100;
+    protected int $volume = 100;
 
     /**
      * The audio application to encode with.
@@ -196,49 +196,49 @@ class VoiceClient extends EventEmitter
      *
      * @var string The audio application.
      */
-    protected $audioApplication = 'audio';
+    protected string $audioApplication = 'audio';
 
     /**
      * The bitrate to encode with.
      *
      * @var int Encoding bitrate.
      */
-    protected $bitrate = 128000;
+    protected int $bitrate = 128000;
 
     /**
      * Is the voice client reconnecting?
      *
      * @var bool Whether the voice client is reconnecting.
      */
-    public $reconnecting = false;
+    public bool $reconnecting = false;
 
     /**
      * Is the voice client being closed by user?
      *
      * @var bool Whether the voice client is being closed by user.
      */
-    public $userClose = false;
+    public bool $userClose = false;
 
     /**
      * The Config for DNS Resolver.
      *
      * @var Config|string|null
      */
-    public $dnsConfig;
+    public null|string|Config $dnsConfig;
 
     /**
      * readopus Timer.
      *
      * @var TimerInterface Timer
      */
-    public $readOpusTimer;
+    public TimerInterface $readOpusTimer;
 
     /**
      * Audio Buffer.
      *
      * @var RealBuffer|null The Audio Buffer
      */
-    public $buffer;
+    public null|RealBuffer $buffer;
 
     /**
      * Current clients connected to the voice chat
@@ -247,7 +247,9 @@ class VoiceClient extends EventEmitter
      */
     public array $clientsConnected = [];
 
-    /** @var TimerInterface */
+    /**
+     * @var TimerInterface
+     */
     public $monitorProcessTimer;
 
     /**
@@ -257,7 +259,19 @@ class VoiceClient extends EventEmitter
      */
     public array $users;
 
-    public $streamTime = 0;
+    /**
+     * Time in which the streaming started.
+     *
+     * @var int
+     */
+    public int $streamTime = 0;
+
+    /**
+     * Whether the current voice client is enabled to record audio.
+     *
+     * @var bool
+     */
+    protected bool $shouldRecord = false;
 
     /**
      * Constructs the Voice client instance
@@ -450,7 +464,7 @@ class VoiceClient extends EventEmitter
 
         $loops = 0;
 
-        #$this->setSpeaking(true);
+        $this->setSpeaking(true);
 
         OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($deferred, &$ogg, &$loops) {
             $ogg = $os;
@@ -509,7 +523,7 @@ class VoiceClient extends EventEmitter
             $delay = $nextTime - microtime(true);
 
             $this->readOpusTimer = $this->bot->loop->addTimer($delay, fn () => $this->readOggOpus($deferred, $ogg, $loops));
-        }, function ($e) use ($deferred) {
+        }, function () use ($deferred) {
             $this->reset();
             $deferred->resolve(null);
         });
@@ -569,7 +583,7 @@ class VoiceClient extends EventEmitter
             $this->buffer->write($d);
         });
 
-        #$this->setSpeaking(true);
+        $this->setSpeaking(true);
 
         // Read magic byte header
         $this->buffer->read(4)->then(function ($mb) {
@@ -651,7 +665,7 @@ class VoiceClient extends EventEmitter
             $this->readOpusTimer = null;
         }
 
-        #$this->setSpeaking(false);
+        $this->setSpeaking(false);
         $this->streamTime = 0;
         $this->startTime = 0;
         $this->paused = false;
@@ -982,16 +996,6 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Checks if we are paused.
-     *
-     * @return bool Whether we are paused.
-     */
-    public function isPaused(): bool
-    {
-        return $this->paused;
-    }
-
-    /**
      * Handles a voice state update.
      * NOTE: This object contains the data as the VoiceStateUpdate Part.
      * @see \Discord\Parts\WebSockets\VoiceStateUpdate
@@ -1076,18 +1080,20 @@ class VoiceClient extends EventEmitter
     /**
      * Handles raw opus data from the UDP server.
      *
-     * @param string $message The data from the UDP server.
+     * @param Packet $voicePacket The data from the UDP server.
      */
     public function handleAudioData(Packet $voicePacket): void
     {
+        if (! $this->shouldRecord) {
+            // If we are not recording, we don't need to handle audio data.
+            return;
+        }
+
         $message = $voicePacket?->decryptedAudio ?? null;
 
-        if (! $message) {
-            if (! $this->speakingStatus->get('ssrc', $voicePacket->getSSRC())) {
-                // We don't have a speaking status for this SSRC
-                // Probably a "ping" to the udp socket
-                return;
-            }
+        if (! $message || ! $this->speakingStatus->get('ssrc', $voicePacket->getSSRC())) {
+            // We don't have a speaking status for this SSRC
+            // Probably a "ping" to the udp socket
             // There's no message or the message threw an error inside the decrypt function
             $this->bot->logger->warning('No audio data.', ['voicePacket' => $voicePacket]);
             return;
@@ -1270,7 +1276,7 @@ class VoiceClient extends EventEmitter
     /**
      * Boots the voice client and sets up event listeners.
      *
-     * @return void
+     * @return bool
      */
     public function boot(): bool
     {
@@ -1294,5 +1300,38 @@ class VoiceClient extends EventEmitter
             unset($this->manager->clients[$this->channel->guild_id]);
         })
         ->start();
+    }
+
+    public function record(): void
+    {
+        if ($this->shouldRecord) {
+            throw new \RuntimeException('Already recording audio.');
+        }
+
+        $this->shouldRecord = true;
+        $this->bot->getLogger()->info('Started recording audio.');
+
+        $this->udp->on('message', [$this, 'handleAudioData']);
+    }
+
+    public function stopRecording(): void
+    {
+        if (! $this->shouldRecord) {
+            throw new \RuntimeException('Not recording audio.');
+        }
+
+        $this->shouldRecord = false;
+        $this->bot->getLogger()->info('Stopped recording audio.');
+
+        $this->udp->removeListener('message', [$this, 'handleAudioData']);
+        $this->reset();
+
+        foreach ($this->voiceDecoders as $decoder) {
+            $decoder->close();
+        }
+
+        $this->voiceDecoders = [];
+        $this->receiveStreams = [];
+        $this->speakingStatus = Collection::for(VoiceSpeaking::class, 'ssrc');
     }
 }
