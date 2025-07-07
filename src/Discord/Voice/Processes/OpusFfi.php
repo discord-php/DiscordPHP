@@ -8,9 +8,19 @@ use FFI;
 
 final class OpusFfi
 {
+    /**
+     * Creates a FFI instance (code in C) to decode Opus audio data.
+     * By using the libopus library, this function decodes Opus-encoded audio data
+     * into PCM samples.
+     * This is useful for processing audio data in Discord voice channels.
+     * @param string|mixed $data
+     *
+     * @return string Returns the decoded PCM audio data as a string/binary.
+     */
     public static function decode($data): string
     {
         // Load libopus and define needed functions/types
+        // TODO: Move this to a separate file or class if needed.
         $ffi = FFI::cdef('
         typedef struct OpusDecoder OpusDecoder;
         typedef short opus_int16;
@@ -25,34 +35,34 @@ final class OpusFfi
         ', 'libopus.so.0');
 
         // Parameters
-        $sample_rate = 48000;
+        $sampleRate = 48000;
         $channels = 2;
 
-        $data_len = strlen($data);
+        $dataLength = strlen($data);
 
-        $data_buf = $ffi->new("const unsigned char[$data_len]", false);
-        FFI::memcpy($data_buf, $data, $data_len);
+        $dataBuffer = $ffi->new("const unsigned char[$dataLength]", false);
+        FFI::memcpy($dataBuffer, $data, $dataLength);
 
-        $frames = $ffi->opus_packet_get_nb_frames($data_buf, $data_len);
-        $samples_per_frame = $ffi->opus_packet_get_samples_per_frame($data_buf, $sample_rate);
-        $frame_size = $frames * $samples_per_frame;
+        $frames = $ffi->opus_packet_get_nb_frames($dataBuffer, $dataLength);
+        $samplesPerFrame = $ffi->opus_packet_get_samples_per_frame($dataBuffer, $sampleRate);
+        $frameSize = $frames * $samplesPerFrame;
 
         // Create decoder
         $error = $ffi->new('int');
-        $decoder = $ffi->opus_decoder_create($sample_rate, $channels, FFI::addr($error));
+        $decoder = $ffi->opus_decoder_create($sampleRate, $channels, FFI::addr($error));
 
         // Prepare input data (Opus-encoded)
 
-        if ($data_len < 0) {
+        if ($dataLength < 0) {
             $ffi->opus_decoder_destroy($decoder);
             return '';
         }
 
         // Prepare output buffer for PCM samples
-        $pcm = $ffi->new("opus_int16[" . $frame_size * $channels * 2 . "]", false);
+        $pcm = $ffi->new("opus_int16[" . $frameSize * $channels * 2 . "]", false);
 
         // Decode
-        $ret = $ffi->opus_decode($decoder, $data_buf, $data_len, $pcm, $frame_size, 0);
+        $ret = $ffi->opus_decode($decoder, $dataBuffer, $dataLength, $pcm, $frameSize, 0);
 
         if ($ret < 0) {
             $ffi->opus_decoder_destroy($decoder);

@@ -425,7 +425,13 @@ class Discord
         }
     }
 
-    # BETA - still testing if it works
+    /**
+     * Resolves the called methods through the already created Discord instance.
+     *
+     * @param  array $options Array of options.
+     *
+     * @return mixed
+     */
     public static function __callStatic($method, $args)
     {
         if (method_exists(self::class, $method)) {
@@ -434,8 +440,6 @@ class Discord
 
         throw new \BadMethodCallException("Method {$method} does not exist in " . __CLASS__);
     }
-
-
 
     /**
      * Handles `RESUME` packets.
