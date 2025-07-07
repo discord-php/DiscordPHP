@@ -71,7 +71,7 @@ final class UDP extends Socket
         return $this->on('message', function (string $message) use ($secret) {
 
             if (strlen($message) <= 8) {
-                return;
+                return null;
             }
 
             return $this->ws->vc->handleAudioData(new Packet($message, key: $secret));
