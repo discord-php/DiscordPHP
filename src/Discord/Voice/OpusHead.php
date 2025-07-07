@@ -85,7 +85,7 @@ class OpusHead
     /**
      * The total number of streams encoded in each Ogg packet.
      *
-     * @var null|int
+     * @var int|null
      */
     public ?int $streamCount = null;
 
@@ -93,7 +93,7 @@ class OpusHead
      * The number of streams whose decoders are to be configured to produce two
      * channels (stereo).
      *
-     * @var null|int
+     * @var int|null
      */
     public ?int $twoChannelStreamCount = null;
 

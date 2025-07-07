@@ -20,6 +20,7 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Psr\Log\LoggerInterface;
 use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
@@ -333,6 +334,21 @@ function nowait(PromiseInterface $promiseInterface)
     });
 
     return $resolved;
+}
+
+function discord(): Discord
+{
+    return Discord::getInstance();
+}
+
+function logger(): LoggerInterface
+{
+    return Discord::getInstance()->getLogger();
+}
+
+function loop(): LoopInterface
+{
+    return Discord::getInstance()->getLoop();
 }
 
 /**
