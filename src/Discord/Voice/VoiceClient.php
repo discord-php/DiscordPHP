@@ -50,7 +50,7 @@ use function Discord\loop;
 /**
  * The Discord voice client.
  *
- * @since 3.2.0
+ * @since 10.19.0
  */
 class VoiceClient extends EventEmitter
 {

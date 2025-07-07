@@ -6,6 +6,13 @@ namespace Discord\Voice\Processes;
 
 use React\ChildProcess\Process;
 
+/**
+ * Abstract class for handling audio processing in Discord voice.
+ *
+ * This class provides methods to encode and decode audio streams using different processes.
+ *
+ * @since 10.19.0
+ */
 abstract class ProcessAbstract
 {
     abstract public static function encode(

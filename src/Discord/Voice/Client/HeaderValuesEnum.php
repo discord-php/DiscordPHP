@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Discord\Voice\Client;
 
+/**
+ * Enum for header values used in Discord voice client.
+ *
+ * @since 10.19.0
+ */
 enum HeaderValuesEnum: int
 {
     case RTP_HEADER_OR_NONCE_LENGTH = 12;

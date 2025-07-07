@@ -16,8 +16,7 @@ namespace Discord\Voice;
 /**
  * Handles recieving audio from Discord.
  *
- * @since 10.5.0 The class was renamed to ReceiveStream.
- * @since 3.2.0
+ * @since 10.19.0 The class was renamed to ReceiveStream.
  */
 class ReceiveStream extends RecieveStream
 {

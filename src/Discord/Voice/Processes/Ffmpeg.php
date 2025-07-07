@@ -7,6 +7,11 @@ namespace Discord\Voice\Processes;
 use Discord\Exceptions\FFmpegNotFoundException;
 use React\ChildProcess\Process;
 
+/**
+ * Handles the decoding and encoding of audio streams using FFmpeg.
+ *
+ * @since 10.19.0
+ */
 final class Ffmpeg extends ProcessAbstract
 {
     protected static string $exec = '/usr/bin/ffmpeg';

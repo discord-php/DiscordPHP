@@ -6,6 +6,11 @@ namespace Discord\Voice\Processes;
 
 use React\ChildProcess\Process;
 
+/**
+ * Handles the encoding and decoding of audio streams using DCA format.
+ *
+ * @since 10.19.0
+ */
 final class DCA extends ProcessAbstract
 {
     /**

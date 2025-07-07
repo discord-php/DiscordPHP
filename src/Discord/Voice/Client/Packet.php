@@ -26,7 +26,7 @@ use function Discord\logger;
  * packets. Check out their repo:
  * https://github.com/DV8FromTheWorld/JDA
  *
- * @since 3.2.0
+ * @since 10.19.0
  */
 class Packet
 {

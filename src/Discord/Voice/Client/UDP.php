@@ -12,6 +12,13 @@ use React\Datagram\Socket;
 use function Discord\logger;
 use function Discord\loop;
 
+/**
+ * Handles the UDP connection & events for Discord voice.
+ * This class manages the UDP socket for sending and receiving audio data,
+ * handling heartbeats, and managing the voice connection state.
+ *
+ * @since 10.19.0
+ */
 final class UDP extends Socket
 {
     /**

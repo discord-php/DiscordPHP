@@ -6,6 +6,11 @@ namespace Discord\Voice\Processes;
 
 use FFI;
 
+/**
+ * Handles the decoding of Opus audio data using FFI (Foreign Function Interface).
+ *
+ * @since 10.19.0
+ */
 final class OpusFfi
 {
     /**

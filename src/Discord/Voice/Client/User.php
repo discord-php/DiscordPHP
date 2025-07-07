@@ -10,6 +10,9 @@ use Discord\Voice\ReceiveStream;
 use Discord\Voice\VoiceClient;
 use React\ChildProcess\Process;
 
+/**
+ * @since 10.19.0
+ */
 final class User
 {
     public function __construct(

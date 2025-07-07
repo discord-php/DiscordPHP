@@ -22,6 +22,8 @@ use React\Promise\Deferred;
  *
  * @requires libopus - Linux | NOT TESTED - WINDOWS
  * @requires FFMPEG - Linux | NOT TESTED - WINDOWS
+ *
+ * @since 10.19.0
  */
 final class VoiceManager
 {

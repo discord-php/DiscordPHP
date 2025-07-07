@@ -17,6 +17,14 @@ use Ratchet\RFC6455\Messaging\Message;
 use React\EventLoop\TimerInterface;
 use React\Promise\PromiseInterface;
 
+/**
+ * Handles the Discord voice WebSocket connection.
+ *
+ * This class manages the WebSocket connection to the Discord voice gateway,
+ * handling events, sending messages, and managing the voice connection state.
+ *
+ * @since 10.19.0
+ */
 final class WS
 {
     protected WebSocket $socket;
