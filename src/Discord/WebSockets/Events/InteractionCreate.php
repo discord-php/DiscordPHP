@@ -28,7 +28,7 @@ use Discord\WebSockets\Event;
 class InteractionCreate extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {
@@ -66,7 +66,7 @@ class InteractionCreate extends Event
         }
 
         if (isset($interaction->entitlements)) {
-            foreach($interaction->entitlements as $entitlement) {
+            foreach ($interaction->entitlements as $entitlement) {
                 if ($entitlementPart = $this->discord->application->entitlements->get('id', $entitlement->id)) {
                     $entitlementPart->fill((array) $entitlement);
                 } else {
@@ -93,8 +93,8 @@ class InteractionCreate extends Event
     /**
      * Recursively checks and handles command options for an interaction.
      *
-     * @param RegisteredCommand                          $command    The command or subcommand to check.
-     * @param ExCollectionInterface|RequestOption[]|null $options    The list of options to process.
+     * @param RegisteredCommand                          $command     The command or subcommand to check.
+     * @param ExCollectionInterface|RequestOption[]|null $options     The list of options to process.
      * @param Interaction                                $interaction The interaction instance from Discord.
      *
      * @return bool Returns true if a suggestion was triggered, otherwise false.
@@ -119,7 +119,7 @@ class InteractionCreate extends Event
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function cacheMember(MemberRepository $members, array $memberdata): void
     {

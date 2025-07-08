@@ -31,7 +31,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SubscriptionRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::SKU_SUBSCRIPTIONS,
@@ -39,7 +39,7 @@ class SubscriptionRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Subscription::class;
 

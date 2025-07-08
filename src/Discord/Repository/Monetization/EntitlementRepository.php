@@ -42,7 +42,7 @@ class EntitlementRepository extends AbstractRepository
         'all' => Endpoint::APPLICATION_ENTITLEMENTS,
         'get' => Endpoint::APPLICATION_ENTITLEMENT,
         'create' => Endpoint::APPLICATION_ENTITLEMENTS,
-        'delete' => Endpoint::APPLICATION_ENTITLEMENT
+        'delete' => Endpoint::APPLICATION_ENTITLEMENT,
     ];
 
     /**
@@ -86,16 +86,16 @@ class EntitlementRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
      *
-     * @param array                         $options                    Array of options.
-     * @param Application|string|int|null   $options['application_id']  Application ID to look up entitlements for. Defaults to the bot's application ID.
-     * @param Member|User|string|int|null   $options['user_id']         User ID to look up entitlements for.
-     * @param array|string|int|null         $options['sku_ids']         Optional list of SKU IDs to check entitlements for.
-     * @param Entitlement|string|int|null   $options['before']          Retrieve entitlements before this entitlement ID.
-     * @param Entitlement|string|int|null   $options['after']           Retrieve entitlements after this entitlement ID.
-     * @param int|null                      $options['limit']           Number of entitlements to return, 1-100, default 100.
-     * @param Guild|string|int|null         $options['guild_id']        Guild ID to look up entitlements for.
-     * @param bool|null                     $options['exclude_ended']   Whether ended entitlements should be omitted. Defaults to false.
-     * @param bool|null                     $options['exclude_deleted'] Whether deleted entitlements should be omitted. Defaults to true.
+     * @param array                       $options                    Array of options.
+     * @param Application|string|int|null $options['application_id']  Application ID to look up entitlements for. Defaults to the bot's application ID.
+     * @param Member|User|string|int|null $options['user_id']         User ID to look up entitlements for.
+     * @param array|string|int|null       $options['sku_ids']         Optional list of SKU IDs to check entitlements for.
+     * @param Entitlement|string|int|null $options['before']          Retrieve entitlements before this entitlement ID.
+     * @param Entitlement|string|int|null $options['after']           Retrieve entitlements after this entitlement ID.
+     * @param int|null                    $options['limit']           Number of entitlements to return, 1-100, default 100.
+     * @param Guild|string|int|null       $options['guild_id']        Guild ID to look up entitlements for.
+     * @param bool|null                   $options['exclude_ended']   Whether ended entitlements should be omitted. Defaults to false.
+     * @param bool|null                   $options['exclude_deleted'] Whether deleted entitlements should be omitted. Defaults to true.
      *
      * @throws \RangeException
      *
@@ -178,13 +178,13 @@ class EntitlementRepository extends AbstractRepository
      */
     public function createTestEntitlement(array $data): PromiseInterface
     {
-        if (!isset($data['sku_id'], $data['owner_id'], $data['owner_type'])) {
+        if (! isset($data['sku_id'], $data['owner_id'], $data['owner_type'])) {
             throw new \DomainException('sku_id, owner_id, and owner_type are required to create a test entitlement.');
         }
 
         $payload = [
-            'sku_id'     => $data['sku_id'],
-            'owner_id'   => $data['owner_id'],
+            'sku_id' => $data['sku_id'],
+            'owner_id' => $data['owner_id'],
             'owner_type' => $data['owner_type'],
         ];
 
@@ -192,6 +192,7 @@ class EntitlementRepository extends AbstractRepository
             ->post(Endpoint::bind(Endpoint::APPLICATION_ENTITLEMENTS, $this->vars['application_id']), $payload)
             ->then(function ($response) {
                 $part = $this->create((array) $response, true);
+
                 return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
             });
     }

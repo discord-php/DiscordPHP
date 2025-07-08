@@ -53,7 +53,7 @@ use React\Promise\PromiseInterface;
 class Client extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'verified',
@@ -74,7 +74,7 @@ class Client extends Part
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $repositories = [
         'emojis' => EmojiRepository::class,
@@ -188,7 +188,7 @@ class Client extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/user#modify-current-user-json-params
      */
@@ -206,7 +206,7 @@ class Client extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

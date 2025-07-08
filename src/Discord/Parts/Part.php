@@ -123,6 +123,7 @@ abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
             $vars['fillable'],
             $vars['scriptData']
         );
+
         return $vars;
     }
 }

@@ -36,6 +36,7 @@ class GuildSoundboardSoundUpdate extends Event
         if (! $guild instanceof Guild) {
             /** @var Sound */
             $newPart = $this->factory->part(Sound::class, (array) $data, true);
+
             return [$newPart, $oldPart];
         }
 

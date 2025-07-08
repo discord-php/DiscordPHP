@@ -46,7 +46,7 @@ class Entitlement extends Part
     public const APPLICATION_SUBSCRIPTION = 8;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'id',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -49,12 +51,12 @@ class MediaGallery extends Content implements Contracts\ComponentV2
     /**
      * Adds a media item to the gallery.
      *
-     * @param MediaGalleryItem|string $item         Media gallery item or URL of the media item.
-     * @param string|null             $description  Description for the media item (max 1024 characters).
+     * @param MediaGalleryItem|string $item        Media gallery item or URL of the media item.
+     * @param string|null             $description Description for the media item (max 1024 characters).
      * @param bool                    $spoiler     Whether the media item is a spoiler.
      *
      * @throws \OverflowException Gallery exceeds 10 items.
-     * @throws \LengthException  Description exceeds 1024 characters.
+     * @throws \LengthException   Description exceeds 1024 characters.
      *
      * @return $this
      */

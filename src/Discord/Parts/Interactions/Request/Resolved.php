@@ -40,7 +40,7 @@ use Discord\Parts\User\User;
  * @property ExCollectionInterface|Attachment[]|null       $attachments The ids and partial Attachment objects.
  *
  * @property      string|null $guild_id ID of the guild internally passed from Interaction.
- * @property-read ?Guild|null $guild The guild the interaction was sent in.
+ * @property-read ?Guild|null $guild    The guild the interaction was sent in.
  */
 class Resolved extends Part
 {

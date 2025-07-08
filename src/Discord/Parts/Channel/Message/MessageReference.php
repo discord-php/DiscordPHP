@@ -25,15 +25,15 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/resources/message#message-reference-structure
  *
- * @property int|null    $type                Type of reference (0 = DEFAULT, 1 = FORWARD).
- * @property string|null $message_id          ID of the originating message.
- * @property string|null $channel_id          ID of the originating message's channel.
- * @property string|null $guild_id            ID of the originating message's guild.
- * @property bool|null   $fail_if_not_exists  Whether to error if the referenced message doesn't exist (default true).
+ * @property int|null    $type               Type of reference (0 = DEFAULT, 1 = FORWARD).
+ * @property string|null $message_id         ID of the originating message.
+ * @property string|null $channel_id         ID of the originating message's channel.
+ * @property string|null $guild_id           ID of the originating message's guild.
+ * @property bool|null   $fail_if_not_exists Whether to error if the referenced message doesn't exist (default true).
  *
- * @property-read Message|null        $message  The originating message.
- * @property-read Channel|Thread|null $channel  The originating message's channel.
- * @property-read Guild|null          $guild    The originating message's guild.
+ * @property-read Message|null        $message The originating message.
+ * @property-read Channel|Thread|null $channel The originating message's channel.
+ * @property-read Guild|null          $guild   The originating message's guild.
  */
 class MessageReference extends Part
 {
@@ -58,7 +58,7 @@ class MessageReference extends Part
      */
     protected function getMessageAttribute(): ?Message
     {
-        if (!$this->message_id) {
+        if (! $this->message_id) {
             return null;
         }
 
@@ -80,7 +80,7 @@ class MessageReference extends Part
      */
     protected function getChannelAttribute(): ?Part
     {
-        if (!$this->channel_id) {
+        if (! $this->channel_id) {
             return null;
         }
 

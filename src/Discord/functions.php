@@ -111,6 +111,7 @@ function getColor(int|string $color = 0): int
 
     if (preg_match('/^([a-z]+)$/ui', $color, $match)) {
         $colorName = strtolower($match[1]);
+
         return COLORTABLE[$colorName] ?? 0;
     }
 

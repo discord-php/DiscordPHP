@@ -54,7 +54,7 @@ class ActivityLocation extends Part
      */
     protected function getChannelAttribute(): ?Channel
     {
-        if (!isset($this->attributes['channel_id'])) {
+        if (! isset($this->attributes['channel_id'])) {
             return null;
         }
 
@@ -81,7 +81,7 @@ class ActivityLocation extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        if (!isset($this->attributes['guild_id'])) {
+        if (! isset($this->attributes['guild_id'])) {
             return null;
         }
 

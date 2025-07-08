@@ -22,10 +22,10 @@ namespace Discord\Parts\Channel\Message;
  *
  * @since 10.11.0
  *
- * @property int          $type    14 for separator component.
- * @property string|null  $id      Optional identifier for component.
- * @property bool|null    $divider Whether a visual divider should be displayed in the component. Defaults to true.
- * @property integer|null $spacing Size of separator padding—1 for small padding, 2 for large padding. Defaults to 1
+ * @property int         $type    14 for separator component.
+ * @property string|null $id      Optional identifier for component.
+ * @property bool|null   $divider Whether a visual divider should be displayed in the component. Defaults to true.
+ * @property int|null    $spacing Size of separator padding—1 for small padding, 2 for large padding. Defaults to 1
  */
 class Separator extends Layout
 {

@@ -29,20 +29,20 @@ use React\Promise\PromiseInterface;
  *
  * @since 10.0.0
  *
- * @property PollMedia              $question            The question of the poll. Only text is supported.
- * @property PollAnswerRepository   $answers             Each of the answers available in the poll.
- * @property Carbon|null            $expiry	             The time when the poll ends.
- * @property bool                   $allow_multiselect   Whether a user can select multiple answers.
- * @property int                    $layout_type         The layout type of the poll.
- * @property PollResults|null       $results             The results of the poll.
+ * @property PollMedia            $question          The question of the poll. Only text is supported.
+ * @property PollAnswerRepository $answers           Each of the answers available in the poll.
+ * @property Carbon|null          $expiry            The time when the poll ends.
+ * @property bool                 $allow_multiselect Whether a user can select multiple answers.
+ * @property int                  $layout_type       The layout type of the poll.
+ * @property PollResults|null     $results           The results of the poll.
  *
- * @property string                 $channel_id          The ID of the channel the poll is in.
- * @property string                 $message_id          The ID of the message the poll is in.
+ * @property string $channel_id The ID of the channel the poll is in.
+ * @property string $message_id The ID of the message the poll is in.
  */
 class Poll extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'question',
@@ -60,7 +60,7 @@ class Poll extends Part
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $repositories = [
         'answers' => PollAnswerRepository::class,

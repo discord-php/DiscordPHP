@@ -28,19 +28,19 @@ use Discord\Parts\OAuth\ActivityInstance;
 class ActivityInstanceRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'get' => Endpoint::APPLICATION_ACTIVITY_INSTANCE,
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = ActivityInstance::class;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __construct(Discord $discord, array $vars = [])
     {

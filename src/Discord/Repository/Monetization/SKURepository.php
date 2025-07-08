@@ -33,19 +33,19 @@ use Discord\Repository\AbstractRepository;
 class SKURepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
-        'all' => Endpoint::APPLICATION_SKUS
+        'all' => Endpoint::APPLICATION_SKUS,
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = SKU::class;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __construct(Discord $discord, array $vars = [])
     {

@@ -57,7 +57,6 @@ use function React\Promise\resolve;
  * @property bool              $is_private Whether the channel is a private channel.
  * @property MemberRepository  $members    Voice channel only - members in the channel or thread.
  * @property MessageRepository $messages   Text channel only - messages sent in the channel or thread.
- *
  */
 trait ChannelTrait
 {
@@ -153,7 +152,6 @@ trait ChannelTrait
             Channel::TYPE_GUILD_STAGE_VOICE,
         ]);
     }
-
 
     /**
      * Returns if allow text.
@@ -356,7 +354,7 @@ trait ChannelTrait
      * @return PromiseInterface<Collection<MessagePinData>
      *
      * @since 10.19.0 Added $options parameter to allow for pagination.
-    */
+     */
     public function getPinnedMessages(array $options = []): PromiseInterface
     {
         if ($this->guild_id && $botperms = $this->getBotPermissions()) {
@@ -659,5 +657,4 @@ trait ChannelTrait
 
         return $deferred->promise();
     }
-
 }

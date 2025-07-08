@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Helpers;
 
 use Discord\Discord;
-use Discord\Helpers\Collection;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Request\Option;
 

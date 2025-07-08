@@ -64,6 +64,7 @@ class Payload implements JsonSerializable
         if (isset($this->t)) {
             $data['t'] = $this->t;
         }
+
         return $data;
     }
 

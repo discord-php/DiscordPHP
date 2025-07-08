@@ -45,29 +45,29 @@ use function React\Promise\reject;
  *
  * @since 2.0.0
  *
- * @property      User|null           $user                         The user part of the member.
- * @property-read string|null         $username                     The username of the member.
- * @property      ?string|null        $nick                         The nickname of the member.
- * @property-read string              $displayname                  The nickname or display name with optional discriminator of the member.
- * @property      ?string|null        $avatar                       The avatar URL of the member or null if member has no guild avatar.
- * @property      ?string|null        $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
- * @property      ExCollectionInterface|Role[]   $roles                        A collection of Roles that the member has.
- * @property      Carbon|null         $joined_at                    A timestamp of when the member joined the guild.
- * @property      Carbon|null         $premium_since                When the user started boosting the server.
- * @property      bool                $deaf                         Whether the member is deaf.
- * @property      bool                $mute                         Whether the member is mute.
- * @property      bool|null           $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
- * @property      RolePermission|null $permissions                  Total permissions of the member in the channel, including overwrites, returned when in the interaction object.
- * @property      Carbon|null         $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
- * @property      int                 $flags                        Guild member flags represented as a bit set, defaults to `0`.
- * @property      string|null         $guild_id                     The unique identifier of the guild that the member belongs to.
- * @property-read Guild|null          $guild                        The guild that the member belongs to.
+ * @property      User|null                    $user                         The user part of the member.
+ * @property-read string|null                  $username                     The username of the member.
+ * @property      ?string|null                 $nick                         The nickname of the member.
+ * @property-read string                       $displayname                  The nickname or display name with optional discriminator of the member.
+ * @property      ?string|null                 $avatar                       The avatar URL of the member or null if member has no guild avatar.
+ * @property      ?string|null                 $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
+ * @property      ExCollectionInterface|Role[] $roles                        A collection of Roles that the member has.
+ * @property      Carbon|null                  $joined_at                    A timestamp of when the member joined the guild.
+ * @property      Carbon|null                  $premium_since                When the user started boosting the server.
+ * @property      bool                         $deaf                         Whether the member is deaf.
+ * @property      bool                         $mute                         Whether the member is mute.
+ * @property      bool|null                    $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
+ * @property      RolePermission|null          $permissions                  Total permissions of the member in the channel, including overwrites, returned when in the interaction object.
+ * @property      Carbon|null                  $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
+ * @property      int                          $flags                        Guild member flags represented as a bit set, defaults to `0`.
+ * @property      string|null                  $guild_id                     The unique identifier of the guild that the member belongs to.
+ * @property-read Guild|null                   $guild                        The guild that the member belongs to.
  *
- * @property      string                $id            The unique identifier of the member.
- * @property      string                $status        The status of the member.
- * @property-read Activity              $game          The game the member is playing.
+ * @property      string                           $id            The unique identifier of the member.
+ * @property      string                           $status        The status of the member.
+ * @property-read Activity                         $game          The game the member is playing.
  * @property      ExCollectionInterface|Activity[] $activities    User's current activities.
- * @property      object                $client_status Current client status.
+ * @property      object                           $client_status Current client status.
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
@@ -337,7 +337,7 @@ class Member extends Part implements Stringable
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-member
      *
      * @param ExCollectionInterface|Role[]|string[] $roles  The roles to set to the member.
-     * @param string|null                         $reason Reason for Audit Log.
+     * @param string|null                           $reason Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *

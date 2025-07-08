@@ -15,7 +15,6 @@ namespace Discord\Parts\Channel\Message;
 
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
-
 use JsonSerializable;
 
 /**
@@ -82,9 +81,9 @@ class AllowedMentions implements JsonSerializable
     {
         $self = new static();
         $self->disallowAllMentions();
+
         return $self;
     }
-
 
     /**
      * Sets the list of current allowed mention types to a new, empty ExCollectionInterface instance.
@@ -135,20 +134,20 @@ class AllowedMentions implements JsonSerializable
         static $allowed = [self::TYPE_ROLE, self::TYPE_USER, self::TYPE_EVERYONE];
 
         foreach ($items as &$item) {
-            if (!is_string($item)) {
+            if (! is_string($item)) {
                 throw new \InvalidArgumentException('Allowed mention type must be a string.');
             }
-            if (!in_array($item, $allowed, true)) {
+            if (! in_array($item, $allowed, true)) {
                 throw new \InvalidArgumentException('Allowed mention type must be one of: roles, users, everyone');
             }
         }
 
-        if (!isset($this->parse)) {
+        if (! isset($this->parse)) {
             $this->parse = new Collection();
         }
 
         foreach ($items as $item) {
-            if (!in_array($item, $this->parse->values(), true)) {
+            if (! in_array($item, $this->parse->values(), true)) {
                 $this->parse->pushItem($item);
             }
         }
@@ -159,7 +158,7 @@ class AllowedMentions implements JsonSerializable
     /**
      * Removes a specific type from the list of allowed mentioned types.
      *
-     * @param string $parse
+     * @param  string $parse
      * @return self
      */
     public function removeParse(...$parse): self
@@ -227,18 +226,18 @@ class AllowedMentions implements JsonSerializable
     public function addRole(...$items): self
     {
         foreach ($items as &$item) {
-            if (!is_numeric($item)) {
+            if (! is_numeric($item)) {
                 throw new \InvalidArgumentException('Allowed mention role must be a numeric snowflake.');
             }
             $item = (string) $item;
         }
 
-        if (!isset($this->roles)) {
+        if (! isset($this->roles)) {
             $this->roles = new Collection();
         }
 
         foreach ($items as $item) {
-            if (!in_array($item, $this->roles->values(), true)) {
+            if (! in_array($item, $this->roles->values(), true)) {
                 $this->roles->pushItem($item);
             }
         }
@@ -249,7 +248,7 @@ class AllowedMentions implements JsonSerializable
     /**
      * Removes a specific role from the list of allowed mentioned roles.
      *
-     * @param string $roles
+     * @param  string $roles
      * @return self
      */
     public function removeRoles(...$roles): self
@@ -317,18 +316,18 @@ class AllowedMentions implements JsonSerializable
     public function addUser(...$items): self
     {
         foreach ($items as &$item) {
-            if (!is_numeric($item)) {
+            if (! is_numeric($item)) {
                 throw new \InvalidArgumentException('Allowed mention user must be a numeric snowflake.');
             }
             $item = (string) $item;
         }
 
-        if (!isset($this->users)) {
+        if (! isset($this->users)) {
             $this->users = new Collection();
         }
 
         foreach ($items as $item) {
-            if (!in_array($item, $this->users->values(), true)) {
+            if (! in_array($item, $this->users->values(), true)) {
                 $this->users->pushItem($item);
             }
         }
@@ -339,7 +338,7 @@ class AllowedMentions implements JsonSerializable
     /**
      * Removes a specific user from the list of allowed mentioned users.
      *
-     * @param string $users
+     * @param  string $users
      * @return self
      */
     public function removeUser(...$users): self
@@ -378,7 +377,7 @@ class AllowedMentions implements JsonSerializable
     /**
      * Sets whether to mention the author of the message being replied to (default false).
      *
-     * @param bool $replied_user
+     * @param  bool $replied_user
      * @return self
      */
     public function setRepliedUser(bool $replied_user = true): self

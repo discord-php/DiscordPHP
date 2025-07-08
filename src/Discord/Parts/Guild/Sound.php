@@ -24,15 +24,15 @@ use Stringable;
  *
  * @since 10.0.0
  *
- * @property string            $name        The name of this sound.
- * @property ?string           $sound_id    The identifier for this sound.
- * @property double            $volume      The volume of this sound, from 0 to 1.
- * @property ?string           $emoji_id    The identifier for this sound's custom emoji.
- * @property ?string           $emoji_name  The unicode character of this sound's standard emoji.
- * @property ?string           $guild_id    The identifier of the guild this sound is in.
- * @property bool              $available   Whether this sound can be used, may be false due to loss of Server Boosts.
- * @property User|null         $user        The user who created this sound.
- * @property-read Guild|null   $guild       The guild that owns the sound.
+ * @property      string     $name       The name of this sound.
+ * @property      ?string    $sound_id   The identifier for this sound.
+ * @property      float      $volume     The volume of this sound, from 0 to 1.
+ * @property      ?string    $emoji_id   The identifier for this sound's custom emoji.
+ * @property      ?string    $emoji_name The unicode character of this sound's standard emoji.
+ * @property      ?string    $guild_id   The identifier of the guild this sound is in.
+ * @property      bool       $available  Whether this sound can be used, may be false due to loss of Server Boosts.
+ * @property      User|null  $user       The user who created this sound.
+ * @property-read Guild|null $guild      The guild that owns the sound.
  */
 class Sound extends Part implements Stringable
 {

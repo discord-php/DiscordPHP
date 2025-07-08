@@ -18,9 +18,9 @@ trait CollectionTrait
     /**
      * Create a new Collection.
      *
-     * @param array       $items
-     * @param ?string     $discrim
-     * @param ?string     $class
+     * @param array   $items
+     * @param ?string $discrim
+     * @param ?string $class
      */
     public function __construct(array $items = [], ?string $discrim = 'id', ?string $class = null)
     {
@@ -32,9 +32,9 @@ trait CollectionTrait
     /**
      * Creates a collection from an array.
      *
-     * @param array       $items
-     * @param ?string     $discrim
-     * @param ?string     $class
+     * @param array   $items
+     * @param ?string $discrim
+     * @param ?string $class
      *
      * @return ExCollectionInterface
      */
@@ -341,6 +341,7 @@ trait CollectionTrait
                 return $key;
             }
         }
+
         return null;
     }
 
@@ -358,6 +359,7 @@ trait CollectionTrait
                 return true;
             }
         }
+
         return false;
     }
 
@@ -375,6 +377,7 @@ trait CollectionTrait
                 return false;
             }
         }
+
         return true;
     }
 
@@ -445,7 +448,7 @@ trait CollectionTrait
      * Otherwise, it uses `array_diff`.
      *
      * @param ExCollectionInterface|array $array
-     * @param ?callable                 $callback
+     * @param ?callable                   $callback
      *
      * @return ExCollectionInterface
      */
@@ -469,7 +472,7 @@ trait CollectionTrait
      * Otherwise, it uses `array_intersect`.
      *
      * @param ExCollectionInterface|array $array
-     * @param ?callable                 $callback
+     * @param ?callable                   $callback
      *
      * @return ExCollectionInterface
      */
@@ -538,7 +541,7 @@ trait CollectionTrait
     /**
      * Returns unique items.
      *
-     * @param int   $flags
+     * @param int $flags
      *
      * @return ExCollectionInterface
      */

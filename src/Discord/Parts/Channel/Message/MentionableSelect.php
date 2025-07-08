@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
-
 /**
  * A Mentionable Select is an interactive component that allows users to select one or more mentionables in a message. Options are automatically populated based on available mentionables in the server.
  *

@@ -38,9 +38,10 @@ class Collectibles extends Part
      */
     protected function getNameplateAttribute(): ?Nameplate
     {
-        if (!isset($this->attributes['nameplate'])) {
+        if (! isset($this->attributes['nameplate'])) {
             return null;
         }
+
         return $this->factory->part(Nameplate::class, (array) $this->attributes['nameplate'], true);
     }
 }

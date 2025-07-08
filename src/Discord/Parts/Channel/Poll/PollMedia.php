@@ -23,8 +23,8 @@ use Discord\Parts\Guild\Emoji;
  *
  * @since 10.0.0
  *
- * @property string|null        $text   The text of the field. Text should always be non-null for both questions and answers, but please do not depend on that in the future. The maximum length of text is 300 for the question, and 55 for any answer.
- * @property Emoji|string|null  $emoji  The emoji of the field. When creating a poll answer with an emoji, one only needs to send either the id (custom emoji) or name (default emoji) as the only field.
+ * @property string|null       $text  The text of the field. Text should always be non-null for both questions and answers, but please do not depend on that in the future. The maximum length of text is 300 for the question, and 55 for any answer.
+ * @property Emoji|string|null $emoji The emoji of the field. When creating a poll answer with an emoji, one only needs to send either the id (custom emoji) or name (default emoji) as the only field.
  */
 class PollMedia extends Part
 {

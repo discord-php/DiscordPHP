@@ -473,7 +473,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @param ComponentObject $component
      *
-     * @throws \OverflowException If more than 5 components are added.
+     * @throws \OverflowException        If more than 5 components are added.
      * @throws \InvalidArgumentException If a component is not an ActionRow or is not properly wrapped.
      */
     protected function enforceV1Limits(Component $component): void
@@ -497,7 +497,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     public function countTotalComponents(): int
     {
         return (int) array_sum(array_map(
-            fn($component) => (is_array($component) && isset($component['components']) && is_array($component['components']))
+            fn ($component) => (is_array($component) && isset($component['components']) && is_array($component['components']))
                 ? 1 + $this->countTotalComponents($component['components'])
                 : 1,
             $this->components ?? []

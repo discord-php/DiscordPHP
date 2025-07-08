@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is a part of the DiscordPHP project.
  *
@@ -93,7 +95,6 @@ class Separator extends Layout implements Contracts\ComponentV2
 
         return $this;
     }
-
 
     /**
      * Returns whether the separator is a divider.
