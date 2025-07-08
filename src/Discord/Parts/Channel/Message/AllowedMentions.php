@@ -15,7 +15,6 @@ namespace Discord\Parts\Channel\Message;
 
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
-
 use JsonSerializable;
 
 /**
