@@ -33,8 +33,8 @@ use function Discord\normalizePartId;
  *
  * @since 10.0.0
  *
- * @property int        $answer_id   The ID of the answer. Only sent as part of responses from Discord's API/Gateway.
- * @property PollMedia  $poll_media  The data of the answer
+ * @property int       $answer_id  The ID of the answer. Only sent as part of responses from Discord's API/Gateway.
+ * @property PollMedia $poll_media The data of the answer
  *
  * @property      string         $user_id    The user ID that voted for the answer.
  * @property-read User           $user       The user that voted for the answer.

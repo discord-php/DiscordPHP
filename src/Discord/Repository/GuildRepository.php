@@ -34,7 +34,7 @@ use React\Promise\PromiseInterface;
 class GuildRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::USER_CURRENT_GUILDS,
@@ -47,7 +47,7 @@ class GuildRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Guild::class;
 

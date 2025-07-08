@@ -94,7 +94,6 @@ class Separator extends Layout implements Contracts\ComponentV2
         return $this;
     }
 
-
     /**
      * Returns whether the separator is a divider.
      *

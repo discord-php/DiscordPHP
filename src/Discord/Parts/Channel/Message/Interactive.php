@@ -32,6 +32,6 @@ abstract class Interactive extends Component
     protected $fillable = [
         'type',
         'id',
-        'custom_id'
+        'custom_id',
     ];
 }

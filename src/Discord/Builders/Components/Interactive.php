@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Discord\Builders\Components;
 
 /**
-  * @since 10.9.0
-  */
+ * @since 10.9.0
+ */
 abstract class Interactive extends ComponentObject
 {
     /**
@@ -25,12 +25,9 @@ abstract class Interactive extends ComponentObject
      */
     protected $custom_id;
 
-
     /**
      * Retrieves the ID associated with the interactive component.
      * Always returns null as this component does not have an ID.
-     *
-     * @return null
      */
     protected function getId()
     {

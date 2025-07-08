@@ -24,7 +24,7 @@ use Discord\Parts\Part;
  *
  * @since 7.0.0
  *
- * @property ?string                     $description      The server description shown in the welcome screen.
+ * @property ?string                                $description      The server description shown in the welcome screen.
  * @property ExCollectionInterface|WelcomeChannel[] $welcome_channels The channels shown in the welcome screen, up to 5.
  */
 class WelcomeScreen extends Part

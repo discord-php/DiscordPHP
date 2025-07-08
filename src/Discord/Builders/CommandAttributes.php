@@ -279,7 +279,6 @@ trait CommandAttributes
         return $this;
     }
 
-
     /**
      * Sets the guild ID of the command.
      *
@@ -309,7 +308,7 @@ trait CommandAttributes
     }
 
     /**
-     * Adds an integration type to the command. (Only for globally-scoped commands)
+     * Adds an integration type to the command. (Only for globally-scoped commands).
      *
      * @param int $integration_type The integration type to add. Must be one of GUILD_INSTALL (0) or USER_INSTALL (1).
      *
@@ -340,7 +339,7 @@ trait CommandAttributes
     }
 
     /**
-     * Removes an integration type from the command. (Only for globally-scoped commands)
+     * Removes an integration type from the command. (Only for globally-scoped commands).
      *
      * @param int $integration_type The integration type to remove.
      *
@@ -361,9 +360,8 @@ trait CommandAttributes
         return $this;
     }
 
-
     /**
-     * Adds a context to the command. (Only for globally-scoped commands)
+     * Adds a context to the command. (Only for globally-scoped commands).
      *
      * @param int $context Context to add.
      *
@@ -397,7 +395,7 @@ trait CommandAttributes
     }
 
     /**
-     * Removes a context from the command. (Only for globally-scoped commands)
+     * Removes a context from the command. (Only for globally-scoped commands).
      *
      * @param int $context Context to remove.
      *
@@ -421,7 +419,7 @@ trait CommandAttributes
     }
 
     /**
-     * Sets the contexts of the command. (Only for globally-scoped commands)
+     * Sets the contexts of the command. (Only for globally-scoped commands).
      *
      * @param array|null $contexts Interaction contexts where the command can be used.
      *

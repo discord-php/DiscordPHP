@@ -23,13 +23,13 @@ use Discord\Parts\Part;
  *
  * @since 10.10.1
  *
- * @property string  $identity_guild_id The id of the user's primary clan.
- * @property bool    $identity_enabled  Whether the user is displaying their clan tag.
- * @property string  $tag               The text of the user's clan tag (max 4 characters).
- * @property string  $badge             The clan badge hash.
+ * @property string $identity_guild_id The id of the user's primary clan.
+ * @property bool   $identity_enabled  Whether the user is displaying their clan tag.
+ * @property string $tag               The text of the user's clan tag (max 4 characters).
+ * @property string $badge             The clan badge hash.
  *
- * @property-read ?string|null $id   The identifier of the primary guild.
- * @property-read ?Guild|null $guild The primary guild, if available.
+ * @property-read ?string|null $id    The identifier of the primary guild.
+ * @property-read ?Guild|null  $guild The primary guild, if available.
  */
 class PrimaryGuild extends Part
 {

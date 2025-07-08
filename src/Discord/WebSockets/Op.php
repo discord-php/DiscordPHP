@@ -59,7 +59,6 @@ class Op
     /** Request soundboard sounds. */
     public const REQUEST_SOUNDBOARD_SOUNDS = 31;
 
-
     /**
      * Voice Opcodes.
      *

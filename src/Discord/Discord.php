@@ -67,23 +67,22 @@ use function React\Promise\all;
  *
  * @version 10.0.0
  *
- * @property string                     $id               The unique identifier of the client.
- * @property string                     $username         The username of the client.
- * @property string                     $password         The password of the client (if they have provided it).
- * @property string                     $email            The email of the client.
- * @property bool                       $verified         Whether the client has verified their email.
- * @property string                     $avatar           The avatar URL of the client.
- * @property string                     $avatar_hash      The avatar hash of the client.
- * @property string                     $discriminator    The unique discriminator of the client.
- * @property bool                       $bot              Whether the client is a bot.
- * @property User                       $user             The user instance of the client.
- * @property Application                $application      The OAuth2 application of the bot.
- * @property EmojiRepository            $emojis
- * @property GuildRepository            $guilds
- * @property PrivateChannelRepository   $private_channels
- * @property SoundRepository            $sounds
- * @property UserRepository             $users
-
+ * @property string                   $id               The unique identifier of the client.
+ * @property string                   $username         The username of the client.
+ * @property string                   $password         The password of the client (if they have provided it).
+ * @property string                   $email            The email of the client.
+ * @property bool                     $verified         Whether the client has verified their email.
+ * @property string                   $avatar           The avatar URL of the client.
+ * @property string                   $avatar_hash      The avatar hash of the client.
+ * @property string                   $discriminator    The unique discriminator of the client.
+ * @property bool                     $bot              Whether the client is a bot.
+ * @property User                     $user             The user instance of the client.
+ * @property Application              $application      The OAuth2 application of the bot.
+ * @property EmojiRepository          $emojis
+ * @property GuildRepository          $guilds
+ * @property PrivateChannelRepository $private_channels
+ * @property SoundRepository          $sounds
+ * @property UserRepository           $users
  */
 class Discord
 {
@@ -366,7 +365,7 @@ class Discord
     /**
      * Creates a Discord client instance.
      *
-     * @param  array           $options Array of options.
+     * @param  array             $options Array of options.
      * @throws IntentException
      * @throws \RuntimeException
      */
@@ -384,7 +383,7 @@ class Discord
         $this->loop = $options['loop'];
         $this->logger = $options['logger'];
 
-        if (!in_array(php_sapi_name(), ['cli', 'micro'])) {
+        if (! in_array(php_sapi_name(), ['cli', 'micro'])) {
             $this->logger->critical('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.');
         }
 
@@ -676,6 +675,7 @@ class Discord
     {
         if (! $data = json_decode($data)) {
             $this->logger->warning('failed to decode websocket message', ['payload' => $data]);
+
             // @todo: handle invalid payload (reconnect), throw exception, or ignore?
             return;
         }
@@ -807,7 +807,6 @@ class Discord
             } elseif (isset($handlers[$data->t])) {
                 $this->{$handlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
             }
-
 
             return;
         }
@@ -1148,7 +1147,7 @@ class Discord
         $payload = Payload::new(
             Op::REQUEST_SOUNDBOARD_SOUNDS,
             [
-                'guild_ids' => $guildIds
+                'guild_ids' => $guildIds,
             ],
         );
 
@@ -1405,8 +1404,6 @@ class Discord
      * @param Deferred          $deferred The deferred object to resolve with the gateway and session data.
      * @param string            $gateway  The base gateway URL to connect to.
      * @param SessionStartLimit $session  Optional session information. If null, a default session is used.
-     *
-     * @return void
      */
     protected function buildParams(Deferred $deferred, string $gateway, ?SessionStartLimit $session = null): void
     {

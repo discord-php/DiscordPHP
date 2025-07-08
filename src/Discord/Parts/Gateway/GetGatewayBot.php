@@ -32,7 +32,7 @@ use Discord\Parts\Part;
 class GetGatewayBot extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'url',

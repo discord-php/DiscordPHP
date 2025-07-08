@@ -248,10 +248,12 @@ trait AbstractRepositoryTrait
                 case 'patch': // Update old part
                     $part->fill((array) $response);
                     $part->created = true;
+
                     return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
                 default: // Create new part
                     $newPart = $this->factory->create($this->class, (array) $response, true);
                     $newPart->created = true;
+
                     return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
             }
         });
@@ -797,8 +799,8 @@ trait AbstractRepositoryTrait
      * Previously, this class utilized `parent::method` to call methods from the parent class.
      * This was changed to use the `__Collection__method` naming convention to avoid conflicts
      *
-     * @param string $name The name of the method being called.
-     * @param array $arguments The arguments passed to the method.
+     * @param string $name      The name of the method being called.
+     * @param array  $arguments The arguments passed to the method.
      *
      * @return mixed The result of the called method.
      *

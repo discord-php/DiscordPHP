@@ -37,7 +37,7 @@ class MessagePinData extends Part
         'has_more',
     ];
 
-     /** @return ExCollectionInterface<MessagePin> */
+    /** @return ExCollectionInterface<MessagePin> */
     protected function getItemsAttribute(): ExCollectionInterface
     {
         $collection = Collection::for(MessagePin::class);

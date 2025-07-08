@@ -450,7 +450,7 @@ class Button extends Interactive
      * @param ?callable      $callback Callback to call when the button is pressed. Will be called with the interaction object.
      * @param Discord        $discord  Discord client.
      * @param bool           $oneOff   Whether the listener should be removed after the button is pressed for the first time.
-     * @param int|float|null $timeout Optional timeout in seconds after which the listener will be removed.
+     * @param int|float|null $timeout  Optional timeout in seconds after which the listener will be removed.
      *
      * @throws \LogicException
      *
@@ -651,6 +651,7 @@ class Button extends Interactive
         if (isset($vars['listener'])) {
             $vars['listener'] = 'object(Closure)';
         }
+
         return $vars;
     }
 }

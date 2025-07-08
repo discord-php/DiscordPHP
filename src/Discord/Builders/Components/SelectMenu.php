@@ -52,14 +52,14 @@ abstract class SelectMenu extends Interactive
     protected $custom_id;
 
     /**
-     * Specified choices in a select menu (only required and available for string selects (type 3); max 25
+     * Specified choices in a select menu (only required and available for string selects (type 3); max 25.
      *
      * @var array|null
      */
     protected $options;
 
     /**
-     * List of channel types to include in the channel select component (type 8)
+     * List of channel types to include in the channel select component (type 8).
      *
      * @var array|null
      */
@@ -74,7 +74,7 @@ abstract class SelectMenu extends Interactive
 
     /**
      * List of default values for auto-populated select menu components;
-     * number of default values must be in the range defined by min_values and max_values
+     * number of default values must be in the range defined by min_values and max_values.
      *
      * @var array|null
      */
@@ -141,7 +141,7 @@ abstract class SelectMenu extends Interactive
 
     /**
      * Sets the type for the select menu.
-     * (text: 3, user: 5, role: 6, mentionable: 7, channels: 8)
+     * (text: 3, user: 5, role: 6, mentionable: 7, channels: 8).
      *
      * @param int $type
      *
@@ -182,7 +182,7 @@ abstract class SelectMenu extends Interactive
     }
 
     /**
-     * Specified choices in a select menu (only required and available for string selects (type 3); max 25
+     * Specified choices in a select menu (only required and available for string selects (type 3); max 25.
      *
      * @param array $options
      *
@@ -361,8 +361,8 @@ abstract class SelectMenu extends Interactive
      * Creates a listener callback for handling select menu interactions.
      *
      * @param callable       $callback The callback to execute when the interaction is received.
-     *                                   If the select menu has options, the callback receives
-     *                                   ($interaction, $options), otherwise just ($interaction).
+     *                                 If the select menu has options, the callback receives
+     *                                 ($interaction, $options), otherwise just ($interaction).
      * @param bool           $oneOff   Whether the listener should be removed after being triggered once.
      * @param int|float|null $timeout  Optional timeout in seconds after which the listener will be removed.
      *
@@ -372,7 +372,7 @@ abstract class SelectMenu extends Interactive
     {
         $timer = null;
 
-        $listener = function(Interaction $interaction) use ($callback, $oneOff, &$timer) {
+        $listener = function (Interaction $interaction) use ($callback, $oneOff, &$timer) {
             if ($interaction->data->component_type == $this->type &&
                 $interaction->data->custom_id == $this->custom_id) {
                 if (empty($this->options)) {

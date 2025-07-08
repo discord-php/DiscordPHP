@@ -70,7 +70,7 @@ class MessageInteractionMetadata extends Part
      */
     protected $hidden = [
         'guild_id',
-        'channel_id'
+        'channel_id',
     ];
 
     /**
@@ -90,7 +90,7 @@ class MessageInteractionMetadata extends Part
      */
     protected function getTargetUserAttribute(): ?User
     {
-        if (!isset($this->attributes['target_user'])) {
+        if (! isset($this->attributes['target_user'])) {
             return null;
         }
 
@@ -104,7 +104,7 @@ class MessageInteractionMetadata extends Part
      */
     protected function getTriggeringInteractionMetadataAttribute(): ?MessageInteractionMetadata
     {
-        if (!isset($this->attributes['triggering_interaction_metadata'])) {
+        if (! isset($this->attributes['triggering_interaction_metadata'])) {
             return null;
         }
 
@@ -118,7 +118,7 @@ class MessageInteractionMetadata extends Part
      */
     protected function getOriginalResponseMessageAttribute(): ?Message
     {
-        if (!isset($this->attributes['original_response_message_id'])) {
+        if (! isset($this->attributes['original_response_message_id'])) {
             return null;
         }
 
@@ -136,7 +136,7 @@ class MessageInteractionMetadata extends Part
      */
     protected function getTargetMessageAttribute(): ?Message
     {
-        if (!isset($this->attributes['target_message_id'])) {
+        if (! isset($this->attributes['target_message_id'])) {
             return null;
         }
 
@@ -154,7 +154,7 @@ class MessageInteractionMetadata extends Part
      */
     protected function getInteractedMessageAttribute(): ?Message
     {
-        if (!isset($this->attributes['interacted_message_id'])) {
+        if (! isset($this->attributes['interacted_message_id'])) {
             return null;
         }
 
@@ -167,7 +167,7 @@ class MessageInteractionMetadata extends Part
 
     protected function getGuildAttribute(): ?Guild
     {
-        if (!isset($this->attributes['guild_id'])) {
+        if (! isset($this->attributes['guild_id'])) {
             return null;
         }
 
@@ -176,7 +176,7 @@ class MessageInteractionMetadata extends Part
 
     protected function getChannelAttribute(): ?Channel
     {
-        if (!isset($this->attributes['channel_id'])) {
+        if (! isset($this->attributes['channel_id'])) {
             return null;
         }
 

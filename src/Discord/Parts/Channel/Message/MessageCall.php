@@ -24,15 +24,15 @@ use Discord\Parts\User\User;
  *
  * @link https://discord.com/developers/docs/resources/message#message-call-object
  *
- * @property array        $participants      Array of user object IDs that participated in the call.
- * @property ?Carbon|null $ended_timestamp   Time when the call ended (ISO8601 timestamp), or null if ongoing.
+ * @property array        $participants    Array of user object IDs that participated in the call.
+ * @property ?Carbon|null $ended_timestamp Time when the call ended (ISO8601 timestamp), or null if ongoing.
  *
- * @property-read User[]  $users Array of user objects that participated in the call.
+ * @property-read User[] $users Array of user objects that participated in the call.
  */
 class MessageCall extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'participants',
@@ -46,7 +46,7 @@ class MessageCall extends Part
      */
     protected function getEndedTimestampAttribute(): ?Carbon
     {
-        if (!isset($this->attributes['ended_timestamp'])) {
+        if (! isset($this->attributes['ended_timestamp'])) {
             return null;
         }
 
@@ -61,7 +61,7 @@ class MessageCall extends Part
     protected function getUsersAttribute(): array
     {
         return array_map(
-            fn($userData) => $this->discord->users->get('id', $userData) ?? $this->factory->part(User::class, ['id' => $userData], true),
+            fn ($userData) => $this->discord->users->get('id', $userData) ?? $this->factory->part(User::class, ['id' => $userData], true),
             $this->attributes['participants']
         );
     }

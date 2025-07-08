@@ -34,7 +34,7 @@ use Discord\Parts\Part;
 class Option extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'name',
@@ -65,7 +65,7 @@ class Option extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

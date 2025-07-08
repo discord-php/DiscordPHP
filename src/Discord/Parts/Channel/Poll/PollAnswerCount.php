@@ -22,9 +22,9 @@ use Discord\Parts\Part;
  *
  * @since 10.0.0
  *
- * @property int    $id         The answer_id
- * @property int    $count      The number of votes for this answer
- * @property bool   $me_voted 	Whether the current user voted for this answer
+ * @property int  $id       The answer_id
+ * @property int  $count    The number of votes for this answer
+ * @property bool $me_voted Whether the current user voted for this answer
  */
 class PollAnswerCount extends Part
 {

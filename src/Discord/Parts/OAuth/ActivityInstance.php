@@ -48,7 +48,7 @@ class ActivityInstance extends Part
      */
     protected function getLocationAttribute(): ?ActivityLocation
     {
-        if (!isset($this->attributes['location'])) {
+        if (! isset($this->attributes['location'])) {
             return null;
         }
 

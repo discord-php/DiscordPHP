@@ -46,7 +46,7 @@ use Stringable;
 class Role extends Part implements Stringable
 {
     // Flags
-    const IN_PROMPT	= 1 << 0; // Role can be selected by members in an onboarding prompt.
+    public const IN_PROMPT = 1 << 0; // Role can be selected by members in an onboarding prompt.
 
     /**
      * {@inheritDoc}
@@ -133,8 +133,12 @@ class Role extends Part implements Stringable
     public function setColors(int $primary = 0, ?int $secondary = null, ?int $tertiary = null): void
     {
         $colors = ['primary_color' => $primary];
-        if ($secondary !== null) $colors['secondary_color'] = $secondary;
-        if ($tertiary !== null) $colors['tertiary_color'] = $tertiary;
+        if ($secondary !== null) {
+            $colors['secondary_color'] = $secondary;
+        }
+        if ($tertiary !== null) {
+            $colors['tertiary_color'] = $tertiary;
+        }
 
         $this->color = $primary;
         $this->colors = $this->createOf(Colors::class, $colors);

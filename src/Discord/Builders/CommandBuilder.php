@@ -110,7 +110,7 @@ class CommandBuilder extends Builder implements JsonSerializable
             'nsfw',
             'integration_types',
             'contexts',
-            'handler'
+            'handler',
         ];
 
         foreach ($optionals as $optional) {
@@ -127,7 +127,7 @@ class CommandBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {

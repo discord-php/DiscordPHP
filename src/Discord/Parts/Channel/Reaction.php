@@ -51,7 +51,7 @@ use function React\Promise\resolve;
 class Reaction extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id', // internal
@@ -66,7 +66,7 @@ class Reaction extends Part
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function isPartial(): bool
     {
@@ -74,7 +74,7 @@ class Reaction extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function fetch(): PromiseInterface
     {
@@ -196,7 +196,7 @@ class Reaction extends Part
      * Recursively retrieves users who reacted, handling pagination.
      *
      * @param ExCollectionInterface $response The collection to accumulate users into.
-     * @param mixed|null $after The user ID to paginate after, or null to start from the beginning.
+     * @param mixed|null            $after    The user ID to paginate after, or null to start from the beginning.
      *
      * @return PromiseInterface Resolves with the collection of users who reacted.
      */
@@ -295,7 +295,7 @@ class Reaction extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

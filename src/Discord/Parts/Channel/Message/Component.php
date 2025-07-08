@@ -40,22 +40,22 @@ class Component extends Part
      * @var array<int, string>
      */
     public const TYPES = [
-        0                                         => Component::class, // Fallback for unknown types
-        ComponentBuilder::TYPE_ACTION_ROW         => ActionRow::class,
-        ComponentBuilder::TYPE_BUTTON             => Button::class,
-        ComponentBuilder::TYPE_STRING_SELECT      => StringSelect::class,
-        ComponentBuilder::TYPE_TEXT_INPUT         => TextInput::class,
-        ComponentBuilder::TYPE_USER_SELECT        => UserSelect::class,
-        ComponentBuilder::TYPE_ROLE_SELECT        => RoleSelect::class,
+        0 => Component::class, // Fallback for unknown types
+        ComponentBuilder::TYPE_ACTION_ROW => ActionRow::class,
+        ComponentBuilder::TYPE_BUTTON => Button::class,
+        ComponentBuilder::TYPE_STRING_SELECT => StringSelect::class,
+        ComponentBuilder::TYPE_TEXT_INPUT => TextInput::class,
+        ComponentBuilder::TYPE_USER_SELECT => UserSelect::class,
+        ComponentBuilder::TYPE_ROLE_SELECT => RoleSelect::class,
         ComponentBuilder::TYPE_MENTIONABLE_SELECT => MentionableSelect::class,
-        ComponentBuilder::TYPE_CHANNEL_SELECT     => ChannelSelect::class,
-        ComponentBuilder::TYPE_SECTION            => Section::class,
-        ComponentBuilder::TYPE_TEXT_DISPLAY       => TextDisplay::class,
-        ComponentBuilder::TYPE_THUMBNAIL          => Thumbnail::class,
-        ComponentBuilder::TYPE_MEDIA_GALLERY      => MediaGallery::class,
-        ComponentBuilder::TYPE_FILE               => File::class,
-        ComponentBuilder::TYPE_SEPARATOR          => Separator::class,
-        ComponentBuilder::TYPE_CONTAINER          => Container::class
+        ComponentBuilder::TYPE_CHANNEL_SELECT => ChannelSelect::class,
+        ComponentBuilder::TYPE_SECTION => Section::class,
+        ComponentBuilder::TYPE_TEXT_DISPLAY => TextDisplay::class,
+        ComponentBuilder::TYPE_THUMBNAIL => Thumbnail::class,
+        ComponentBuilder::TYPE_MEDIA_GALLERY => MediaGallery::class,
+        ComponentBuilder::TYPE_FILE => File::class,
+        ComponentBuilder::TYPE_SEPARATOR => Separator::class,
+        ComponentBuilder::TYPE_CONTAINER => Container::class,
     ];
 
     /**
@@ -63,7 +63,7 @@ class Component extends Part
      */
     protected $fillable = [
         'type',
-        'id'
+        'id',
     ];
 
     /**

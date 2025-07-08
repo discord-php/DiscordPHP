@@ -568,17 +568,16 @@ class Channel extends Part implements Stringable
     /**
      * Sends a soundboard sound to the voice channel.
      *
-     * @param string      $sound_id         The ID of the soundboard sound to play.
-     * @param string|null $source_guild_id  The ID of the guild where the sound originates, if using an external sound.
+     * @param string      $sound_id        The ID of the soundboard sound to play.
+     * @param string|null $source_guild_id The ID of the guild where the sound originates, if using an external sound.
      *
-     * @throws \RuntimeException       If the channel is not voice-based, the bot is not connected to the correct voice channel,
-     *                                 or the bot is deafened, self-deafened, muted, or suppressed.
-     * @throws NoPermissionsException  If the bot lacks the required permissions to send soundboard sounds or use external sounds.
+     * @throws \RuntimeException      If the channel is not voice-based, the bot is not connected to the correct voice channel,
+     *                                or the bot is deafened, self-deafened, muted, or suppressed.
+     * @throws NoPermissionsException If the bot lacks the required permissions to send soundboard sounds or use external sounds.
      *
      * @return PromiseInterface
      *
      * @since 10.11.3
-     *
      */
     public function sendSoundboardSound(string $sound_id, ?string $source_guild_id = null): PromiseInterface
     {
@@ -600,7 +599,7 @@ class Channel extends Part implements Stringable
                 if (! $voiceChannel->id === $this->id) {
                     return reject(new \RuntimeException("Bot must be connected to the voice channel {$this->id} to send it soundboard sounds."));
                 }
-                if ( $member->deaf || $member->mute) { // Member can also not be self-muted or suppressed
+                if ($member->deaf || $member->mute) { // Member can also not be self-muted or suppressed
                     return reject(new \RuntimeException('Bot must be connected to the voice channel and not deafened, muted, or suppressed to send soundboard sounds.'));
                 }
             }
@@ -718,7 +717,6 @@ class Channel extends Part implements Stringable
 
         return $this->getMessageHistory(['limit' => $value, 'cache' => false])->then(fn ($messages) => $this->deleteMessages($messages, $reason));
     }
-
 
     /**
      * Sets the permission overwrites attribute.

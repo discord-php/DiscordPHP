@@ -339,7 +339,7 @@ class Interaction extends Part
         }
 
         if ($this->hasAttachmentsExceedingLimit($builder)) {
-            return reject(New AttachmentSizeException());
+            return reject(new AttachmentSizeException());
         }
 
         return $this->respond([
@@ -389,7 +389,7 @@ class Interaction extends Part
         }
 
         if ($this->hasAttachmentsExceedingLimit($builder)) {
-            return reject(New AttachmentSizeException());
+            return reject(new AttachmentSizeException());
         }
 
         return (function () use ($builder): PromiseInterface {
@@ -449,7 +449,7 @@ class Interaction extends Part
         }
 
         if ($this->hasAttachmentsExceedingLimit($builder)) {
-            return reject(New AttachmentSizeException());
+            return reject(new AttachmentSizeException());
         }
 
         if ($ephemeral) {
@@ -490,7 +490,7 @@ class Interaction extends Part
         }
 
         if ($this->hasAttachmentsExceedingLimit($builder)) {
-            return reject(New AttachmentSizeException());
+            return reject(new AttachmentSizeException());
         }
 
         if ($ephemeral) {
@@ -560,7 +560,7 @@ class Interaction extends Part
         }
 
         if ($this->hasAttachmentsExceedingLimit($builder)) {
-            return reject(New AttachmentSizeException());
+            return reject(new AttachmentSizeException());
         }
 
         return (function () use ($message_id, $builder): PromiseInterface {
@@ -647,10 +647,10 @@ class Interaction extends Part
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
-     * @param string                        $title      The title of the popup modal, max 45 characters
-     * @param string                        $custom_id  Developer-defined identifier for the component, max 100 characters
-     * @param array|ComponentObject[]       $components Between 1 and 5 (inclusive) components that make up the modal contained in Action Row
-     * @param callable|null                 $submit     The function to call once modal is submitted.
+     * @param string                  $title      The title of the popup modal, max 45 characters
+     * @param string                  $custom_id  Developer-defined identifier for the component, max 100 characters
+     * @param array|ComponentObject[] $components Between 1 and 5 (inclusive) components that make up the modal contained in Action Row
+     * @param callable|null           $submit     The function to call once modal is submitted.
      *
      * @throws \LogicException  Interaction is Ping or Modal Submit.
      * @throws \LengthException Modal title is longer than 45 characters.
@@ -676,7 +676,7 @@ class Interaction extends Part
             ],
         ])->then(function ($response) use ($custom_id, $submit) {
             if ($submit) {
-                $listener = $this->createListener($custom_id, $submit, 60*15);
+                $listener = $this->createListener($custom_id, $submit, 60 * 15);
                 $this->discord->on(Event::INTERACTION_CREATE, $listener);
             }
 
@@ -739,6 +739,7 @@ class Interaction extends Part
                 return true;
             }
         }
+
         return false;
     }
 }

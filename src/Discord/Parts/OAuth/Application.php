@@ -157,7 +157,7 @@ class Application extends Part
      */
     public function getActivityInstance($instance_id): PromiseInterface
     {
-        if (!isset($instance_id)) {
+        if (! isset($instance_id)) {
             return reject(new \DomainException('You must provide an instance ID to get an activity instance.'));
         }
 
@@ -170,6 +170,7 @@ class Application extends Part
                 if (empty($response)) {
                     return null;
                 }
+
                 return $this->factory->part(ActivityInstance::class, (array) $response, true);
             });
     }

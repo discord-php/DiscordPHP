@@ -35,7 +35,7 @@ use Discord\Parts\Part;
 class Colors extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'primary_color',

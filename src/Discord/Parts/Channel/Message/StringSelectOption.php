@@ -15,10 +15,9 @@ namespace Discord\Parts\Channel\Message;
 
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
-use Discord\Repository\Guild\EmojiRepository;
 
 /**
- * Specified choices in a string select menu; max 25
+ * Specified choices in a string select menu; max 25.
  *
  * @link https://discord.com/developers/docs/components/reference#string-select-select-option-structure
  *

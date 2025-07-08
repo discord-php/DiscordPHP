@@ -61,7 +61,7 @@ class Section extends Layout implements Contracts\ComponentV2
      * @param TextDisplay|string $component Text display component to add.
      *
      * @throws \InvalidArgumentException Component is not a TextDisplay.
-     * @throws \OverflowException Section exceeds 3 text components.
+     * @throws \OverflowException        Section exceeds 3 text components.
      *
      * @return $this
      */

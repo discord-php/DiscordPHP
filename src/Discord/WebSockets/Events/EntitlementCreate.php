@@ -22,7 +22,7 @@ use Discord\Parts\Monetization\Entitlement;
 class EntitlementCreate extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

@@ -106,7 +106,7 @@ class Container extends Layout implements Contracts\ComponentV2
             $component = ActionRow::new()->addComponent($component);
         }
 
-        if (! ( $component instanceof ActionRow || $component instanceof Section || $component instanceof TextDisplay || $component instanceof MediaGallery || $component instanceof File || $component instanceof Separator )) {
+        if (! ($component instanceof ActionRow || $component instanceof Section || $component instanceof TextDisplay || $component instanceof MediaGallery || $component instanceof File || $component instanceof Separator)) {
             throw new \InvalidArgumentException('Invalid component type.');
         }
 

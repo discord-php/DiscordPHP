@@ -24,11 +24,11 @@ use function Discord\poly_strlen;
  *
  * @since 10.0.0
  *
- * @property PollMedia         $question            The question of the poll. Only text is supported.
- * @property PollAnswer[]      $answers             Each of the answers available in the poll, up to 10.
- * @property int|null          $duration            Number of hours the poll should be open for, up to 32 days. Defaults to 24.
- * @property bool|null         $allow_multiselect   Whether a user can select multiple answers. Defaults to false.
- * @property int|null          $layout_type?	    The layout type of the poll. Defaults to... DEFAULT!
+ * @property PollMedia    $question          The question of the poll. Only text is supported.
+ * @property PollAnswer[] $answers           Each of the answers available in the poll, up to 10.
+ * @property int|null     $duration          Number of hours the poll should be open for, up to 32 days. Defaults to 24.
+ * @property bool|null    $allow_multiselect Whether a user can select multiple answers. Defaults to false.
+ * @property int|null     $layout_type?      The layout type of the poll. Defaults to... DEFAULT!
  */
 class Poll extends Part
 {

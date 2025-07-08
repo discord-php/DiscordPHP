@@ -24,16 +24,16 @@ namespace Discord\Parts\Channel\Message;
  *
  * @since 10.11.0
  *
- * @property int         $type         4 for a text input.
- * @property string|null $id           Optional identifier for component.
- * @property string      $custom_id    Developer-defined identifier for the input; max 100 characters.
- * @property int         $style        The Text Input Style.
- * @property string      $label        Label for this component; max 45 characters.
- * @property int|null    $min_length   Minimum input length for a text input; min 0, max 4000.
- * @property int|null    $max_length   Maximum input length for a text input; min 1, max 4000.
- * @property bool|null   $required     Whether this component is required to be filled (defaults to true).
- * @property string|null $value        Pre-filled value for this component; max 4000 characters.
- * @property string|null $placeholder  Custom placeholder text if the input is empty; max 100 characters.
+ * @property int         $type        4 for a text input.
+ * @property string|null $id          Optional identifier for component.
+ * @property string      $custom_id   Developer-defined identifier for the input; max 100 characters.
+ * @property int         $style       The Text Input Style.
+ * @property string      $label       Label for this component; max 45 characters.
+ * @property int|null    $min_length  Minimum input length for a text input; min 0, max 4000.
+ * @property int|null    $max_length  Maximum input length for a text input; min 1, max 4000.
+ * @property bool|null   $required    Whether this component is required to be filled (defaults to true).
+ * @property string|null $value       Pre-filled value for this component; max 4000 characters.
+ * @property string|null $placeholder Custom placeholder text if the input is empty; max 100 characters.
  */
 class TextInput extends Interactive
 {
