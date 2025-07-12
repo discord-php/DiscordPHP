@@ -83,27 +83,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AaddIntegrationType\u0028\u0029",
             "name": "addIntegrationType",
-            "summary": "Adds\u0020an\u0020integration\u0020type\u0020to\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029",
+            "summary": "Adds\u0020an\u0020integration\u0020type\u0020to\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029.",
             "url": "classes/Discord-Builders-CommandAttributes.html#method_addIntegrationType"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AremoveIntegrationType\u0028\u0029",
             "name": "removeIntegrationType",
-            "summary": "Removes\u0020an\u0020integration\u0020type\u0020from\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029",
+            "summary": "Removes\u0020an\u0020integration\u0020type\u0020from\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029.",
             "url": "classes/Discord-Builders-CommandAttributes.html#method_removeIntegrationType"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AaddContext\u0028\u0029",
             "name": "addContext",
-            "summary": "Adds\u0020a\u0020context\u0020to\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029",
+            "summary": "Adds\u0020a\u0020context\u0020to\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029.",
             "url": "classes/Discord-Builders-CommandAttributes.html#method_addContext"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AremoveContext\u0028\u0029",
             "name": "removeContext",
-            "summary": "Removes\u0020a\u0020context\u0020from\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029",
+            "summary": "Removes\u0020a\u0020context\u0020from\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029.",
             "url": "classes/Discord-Builders-CommandAttributes.html#method_removeContext"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetContext\u0028\u0029",
             "name": "setContext",
-            "summary": "Sets\u0020the\u0020contexts\u0020of\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029",
+            "summary": "Sets\u0020the\u0020contexts\u0020of\u0020the\u0020command.\u0020\u0028Only\u0020for\u0020globally\u002Dscoped\u0020commands\u0029.",
             "url": "classes/Discord-Builders-CommandAttributes.html#method_setContext"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetHandler\u0028\u0029",
@@ -133,7 +133,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-CommandBuilder.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024type",
@@ -1063,7 +1063,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AsetOptions\u0028\u0029",
             "name": "setOptions",
-            "summary": "Specified\u0020choices\u0020in\u0020a\u0020select\u0020menu\u0020\u0028only\u0020required\u0020and\u0020available\u0020for\u0020string\u0020selects\u0020\u0028type\u00203\u0029\u003B\u0020max\u002025",
+            "summary": "Specified\u0020choices\u0020in\u0020a\u0020select\u0020menu\u0020\u0028only\u0020required\u0020and\u0020available\u0020for\u0020string\u0020selects\u0020\u0028type\u00203\u0029\u003B\u0020max\u002025.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#method_setOptions"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AsetChannelTypes\u0028\u0029",
@@ -1173,12 +1173,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003A\u0024options",
             "name": "options",
-            "summary": "Specified\u0020choices\u0020in\u0020a\u0020select\u0020menu\u0020\u0028only\u0020required\u0020and\u0020available\u0020for\u0020string\u0020selects\u0020\u0028type\u00203\u0029\u003B\u0020max\u002025",
+            "summary": "Specified\u0020choices\u0020in\u0020a\u0020select\u0020menu\u0020\u0028only\u0020required\u0020and\u0020available\u0020for\u0020string\u0020selects\u0020\u0028type\u00203\u0029\u003B\u0020max\u002025.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#property_options"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003A\u0024channel_types",
             "name": "channel_types",
-            "summary": "List\u0020of\u0020channel\u0020types\u0020to\u0020include\u0020in\u0020the\u0020channel\u0020select\u0020component\u0020\u0028type\u00208\u0029",
+            "summary": "List\u0020of\u0020channel\u0020types\u0020to\u0020include\u0020in\u0020the\u0020channel\u0020select\u0020component\u0020\u0028type\u00208\u0029.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#property_channel_types"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003A\u0024placeholder",
@@ -1188,7 +1188,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003A\u0024default_values",
             "name": "default_values",
-            "summary": "List\u0020of\u0020default\u0020values\u0020for\u0020auto\u002Dpopulated\u0020select\u0020menu\u0020components\u003B\nnumber\u0020of\u0020default\u0020values\u0020must\u0020be\u0020in\u0020the\u0020range\u0020defined\u0020by\u0020min_values\u0020and\u0020max_values",
+            "summary": "List\u0020of\u0020default\u0020values\u0020for\u0020auto\u002Dpopulated\u0020select\u0020menu\u0020components\u003B\nnumber\u0020of\u0020default\u0020values\u0020must\u0020be\u0020in\u0020the\u0020range\u0020defined\u0020by\u0020min_values\u0020and\u0020max_values.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#property_default_values"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003A\u0024min_values",
@@ -4483,7 +4483,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\DefaultValue",
             "name": "DefaultValue",
-            "summary": "List\u0020of\u0020default\u0020values\u0020for\u0020auto\u002Dpopulated\u0020select\u0020menu\u0020components\u003B\u0020number\u0020of\u0020default\u0020values\u0020must\u0020be\u0020in\u0020the\u0020range\u0020defined\u0020by\u0020min_values\u0020and\u0020max_values",
+            "summary": "List\u0020of\u0020default\u0020values\u0020for\u0020auto\u002Dpopulated\u0020select\u0020menu\u0020components\u003B\u0020number\u0020of\u0020default\u0020values\u0020must\u0020be\u0020in\u0020the\u0020range\u0020defined\u0020by\u0020min_values\u0020and\u0020max_values.",
             "url": "classes/Discord-Parts-Channel-Message-DefaultValue.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\DefaultValue\u003A\u003A\u0024fillable",
@@ -4768,7 +4768,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\StringSelectOption",
             "name": "StringSelectOption",
-            "summary": "Specified\u0020choices\u0020in\u0020a\u0020string\u0020select\u0020menu\u003B\u0020max\u002025",
+            "summary": "Specified\u0020choices\u0020in\u0020a\u0020string\u0020select\u0020menu\u003B\u0020max\u002025.",
             "url": "classes/Discord-Parts-Channel-Message-StringSelectOption.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\StringSelectOption\u003A\u003AgetEmojiAttribute\u0028\u0029",
@@ -9283,7 +9283,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AsetInvitableAttribute\u0028\u0029",
             "name": "setInvitableAttribute",
-            "summary": "Sets\u0020whether\u0020members\u0020without\u0020\u0060MANAGE_THREADS\u0060\u0020can\u0020invite\u0020other\u0020members\u0020without\u0020\u0060MANAGE_THREADS\u0060\nAlways\u0020\u0060null\u0060\u0020in\u0020public\u0020threads",
+            "summary": "Sets\u0020whether\u0020members\u0020without\u0020\u0060MANAGE_THREADS\u0060\u0020can\u0020invite\u0020other\u0020members\u0020without\u0020\u0060MANAGE_THREADS\u0060\nAlways\u0020\u0060null\u0060\u0020in\u0020public\u0020threads.",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_setInvitableAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AsetAutoArchiveDurationAttribute\u0028\u0029",
@@ -10638,7 +10638,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\ActivityInstanceRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-ActivityInstanceRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\ActivityInstanceRepository\u003A\u003A\u0024class",
@@ -10673,7 +10673,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\MessageRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Channel-MessageRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\MessageRepository\u003A\u003A\u0024class",
@@ -10908,7 +10908,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\ChannelRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-ChannelRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\ChannelRepository\u003A\u003A\u0024class",
@@ -11143,7 +11143,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-GuildRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003A\u0024class",
@@ -11218,7 +11218,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\SKURepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Monetization-SKURepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\SKURepository\u003A\u003A\u0024class",
@@ -11238,7 +11238,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\SubscriptionRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Monetization-SubscriptionRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\SubscriptionRepository\u003A\u003A\u0024class",
