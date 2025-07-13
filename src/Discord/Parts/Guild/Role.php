@@ -37,7 +37,7 @@ use Stringable;
  * @property      RolePermission $permissions   Permission bit set.
  * @property      bool           $managed       Whether this role is managed by an integration.
  * @property      bool           $mentionable   Whether the role is mentionable.
- * @property      object|null    $tags          The tags this role has (`bot_id`, `integration_id`, `premium_subscriber`, `subscription_listing_id`, `available_for_purchase`, and `guild_connections`).
+ * @property      RoleTags|null  $tags          The tags this role has (`bot_id`, `integration_id`, `premium_subscriber`, `subscription_listing_id`, `available_for_purchase`, and `guild_connections`).
  * @property      int            $flags         Role flags combined as a bitfield.
  *
  * @property      string|null $guild_id The unique identifier of the guild that the role belongs to.
@@ -175,6 +175,22 @@ class Role extends Part implements Stringable
     protected function getIconHashAttribute(): ?string
     {
         return $this->attributes['icon'] ?? null;
+    }
+
+    /**
+     * Gets the role's tags.
+     *
+     * @return RoleTags|null The role's tags or null.
+     *
+     * @since 10.19.0
+     */
+    protected function getTagsAttribute(): ?RoleTags
+    {
+        if (! isset($this->attributes['tags'])) {
+            return null;
+        }
+
+        return $this->createOf(RoleTags::class, $this->attributes['tags']);
     }
 
     /**
