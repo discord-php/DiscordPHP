@@ -20,7 +20,6 @@ use Stringable;
  * Role tags for a Discord role.
  *
  * Tags with type null represent booleans. They will be present and set to null if they are "true", and will be not present if they are "false".
- * The library currently overrides this behavior to return true if the property is present at all.
  *
  * @link https://discord.com/developers/docs/topics/permissions#role-object-role-tags-structure
  *
@@ -28,10 +27,10 @@ use Stringable;
  *
  * @property ?string|null $bot_id                  The id of the bot this role belongs to.
  * @property ?string|null $integration_id          The id of the integration this role belongs to.
- * @property bool         $premium_subscriber      Whether this is the guild's Booster role.
+ * @property ?true|null   $premium_subscriber      Whether this is the guild's Booster role.
  * @property ?string|null $subscription_listing_id The id of this role's subscription sku and listing.
- * @property bool         $available_for_purchase  Whether this role is available for purchase.
- * @property bool         $guild_connections       Whether this role is a guild's linked role.
+ * @property ?true|null   $available_for_purchase  Whether this role is available for purchase.
+ * @property ?true|null   $guild_connections       Whether this role is a guild's linked role.
  */
 class RoleTags extends Part implements Stringable
 {
