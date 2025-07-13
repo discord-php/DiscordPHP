@@ -20,7 +20,7 @@ use Stringable;
  * Role tags for a Discord role.
  *
  * Tags with type null represent booleans. They will be present and set to null if they are "true", and will be not present if they are "false".
- * The library currently overrides this behavior to return a boolean if the tag is present at all.
+ * The library currently overrides this behavior to return true if the property is present at all.
  *
  * @link https://discord.com/developers/docs/topics/permissions#role-object-role-tags-structure
  *
