@@ -7486,6 +7486,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020role\u0020icon\u0020hash.",
             "url": "classes/Discord-Parts-Guild-Role.html#method_getIconHashAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003AgetTagsAttribute\u0028\u0029",
+            "name": "getTagsAttribute",
+            "summary": "Gets\u0020the\u0020role\u0027s\u0020tags.",
+            "url": "classes/Discord-Parts-Guild-Role.html#method_getTagsAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003AgetCreatableAttributes\u0028\u0029",
             "name": "getCreatableAttributes",
             "summary": "",
@@ -7515,6 +7520,31 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-Role.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\RoleTags",
+            "name": "RoleTags",
+            "summary": "Role\u0020tags\u0020for\u0020a\u0020Discord\u0020role.",
+            "url": "classes/Discord-Parts-Guild-RoleTags.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\RoleTags\u003A\u003AgetPremiumSubscriberAttribute\u0028\u0029",
+            "name": "getPremiumSubscriberAttribute",
+            "summary": "Gets\u0020the\u0020premium\u0020subscriber\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-RoleTags.html#method_getPremiumSubscriberAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\RoleTags\u003A\u003AgetAvailableForPurchaseAttribute\u0028\u0029",
+            "name": "getAvailableForPurchaseAttribute",
+            "summary": "Gets\u0020the\u0020available\u0020for\u0020purchase\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-RoleTags.html#method_getAvailableForPurchaseAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\RoleTags\u003A\u003AgetGuildConnectionsAttribute\u0028\u0029",
+            "name": "getGuildConnectionsAttribute",
+            "summary": "Gets\u0020the\u0020guild\u0020connections\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-RoleTags.html#method_getGuildConnectionsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\RoleTags\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-RoleTags.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent",
             "name": "ScheduledEvent",
