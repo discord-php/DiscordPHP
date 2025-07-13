@@ -48,7 +48,7 @@ class RoleTags extends Part implements Stringable
     ];
 
     /**
-     * Gets the Premium Subscriber attribute.
+     * Gets the premium subscriber attribute.
      *
      * @return bool
      */
@@ -58,7 +58,7 @@ class RoleTags extends Part implements Stringable
     }
 
     /**
-     * Gets the Available For Purchase attribute.
+     * Gets the available for purchase attribute.
      *
      * @return bool
      */
@@ -68,7 +68,7 @@ class RoleTags extends Part implements Stringable
     }
 
     /**
-     * Gets the Guild Connections attribute.
+     * Gets the guild connections attribute.
      *
      * @return bool
      */
