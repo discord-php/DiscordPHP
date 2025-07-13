@@ -178,9 +178,9 @@ class Role extends Part implements Stringable
     }
 
     /**
-     * Gets the Role Tags attribute.
+     * Gets the role's tags.
      *
-     * @return RoleTags|null The role's tags.
+     * @return RoleTags|null The role's tags or null.
      *
      * @since 10.19.0
      */
