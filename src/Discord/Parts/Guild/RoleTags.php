@@ -26,12 +26,12 @@ use Stringable;
  *
  * @since 10.19.0
  *
- * @property string $bot_id                  The id of the bot this role belongs to.
- * @property string $integration_id          The id of the integration this role belongs to.
- * @property bool   $premium_subscriber      Whether this is the guild's Booster role.
- * @property string $subscription_listing_id The id of this role's subscription sku and listing.
- * @property bool   $available_for_purchase  Whether this role is available for purchase.
- * @property bool   $guild_connections       Whether this role is a guild's linked role.
+ * @property ?string|null $bot_id                  The id of the bot this role belongs to.
+ * @property ?string|null $integration_id          The id of the integration this role belongs to.
+ * @property bool         $premium_subscriber      Whether this is the guild's Booster role.
+ * @property ?string|null $subscription_listing_id The id of this role's subscription sku and listing.
+ * @property bool         $available_for_purchase  Whether this role is available for purchase.
+ * @property bool         $guild_connections       Whether this role is a guild's linked role.
  */
 class RoleTags extends Part implements Stringable
 {
@@ -50,30 +50,30 @@ class RoleTags extends Part implements Stringable
     /**
      * Gets the premium subscriber attribute.
      *
-     * @return bool
+     * @return true|null
      */
-    protected function getPremiumSubscriberAttribute(): bool
+    protected function getPremiumSubscriberAttribute(): ?true
     {
-        return array_key_exists('premium_subscriber', $this->attributes);
+        return array_key_exists('premium_subscriber', $this->attributes) ?: null;
     }
 
     /**
      * Gets the available for purchase attribute.
      *
-     * @return bool
+     * @return true|null
      */
-    protected function getAvailableForPurchaseAttribute(): bool
+    protected function getAvailableForPurchaseAttribute(): ?true
     {
-        return array_key_exists('available_for_purchase', $this->attributes);
+        return array_key_exists('available_for_purchase', $this->attributes) ?: null;
     }
 
     /**
      * Gets the guild connections attribute.
      *
-     * @return bool
+     * @return true|null
      */
-    protected function getGuildConnectionsAttribute(): bool
+    protected function getGuildConnectionsAttribute(): ?true
     {
-        return array_key_exists('guild_connections', $this->attributes);
+        return array_key_exists('guild_connections', $this->attributes) ?: null;
     }
 }
