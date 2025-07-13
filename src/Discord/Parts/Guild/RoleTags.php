@@ -47,16 +47,31 @@ class RoleTags extends Part implements Stringable
         'guild_connections',
     ];
 
+    /**
+     * Gets the Premium Subscriber attribute.
+     *
+     * @return bool
+     */
     protected function getPremiumSubscriberAttribute(): bool
     {
         return array_key_exists('premium_subscriber', $this->attributes);
     }
 
+    /**
+     * Gets the Available For Purchase attribute.
+     *
+     * @return bool
+     */
     protected function getAvailableForPurchaseAttribute(): bool
     {
         return array_key_exists('available_for_purchase', $this->attributes);
     }
 
+    /**
+     * Gets the Guild Connections attribute.
+     *
+     * @return bool
+     */
     protected function getGuildConnectionsAttribute(): bool
     {
         return array_key_exists('guild_connections', $this->attributes);
