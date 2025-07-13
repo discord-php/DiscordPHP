@@ -178,13 +178,13 @@ class Role extends Part implements Stringable
     }
 
     /**
-     * Gets the Role Tag attribute.
+     * Gets the Role Tags attribute.
      *
      * @return RoleTags|null The role's tags.
      *
      * @since 10.19.0
      */
-    protected function getRoleTagsAttribute(): ?RoleTags
+    protected function getTagsAttribute(): ?RoleTags
     {
         if (! isset($this->attributes['tags'])) {
             return null;
