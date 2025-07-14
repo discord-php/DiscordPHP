@@ -355,11 +355,11 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @link https://discord.com/developers/docs/resources/channel#allowed-mentions-object
      *
-     * @param AllowedMentions|array $allowed_mentions
+     * @param AllowedMentions|array|null $allowed_mentions
      *
      * @return $this
      */
-    public function setAllowedMentions(AllowedMentions|array $allowed_mentions): self
+    public function setAllowedMentions(AllowedMentions|array|null $allowed_mentions = null): self
     {
         $this->allowed_mentions = $allowed_mentions;
 
