@@ -511,6 +511,14 @@ trait ChannelTrait
             return reject(new \RuntimeException('You can only send messages to text channels.'));
         }
 
+        if (is_string($message)) {
+            $message = MessageBuilder::new()->setContent($message);
+            $message->setTts($tts);
+            if ($embed) $message->addEmbed($embed);
+            $message->setAllowedMentions($allowed_mentions);
+            $message->setReplyTo($replyTo);
+        }
+
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->send_messages) {
                 return reject(new NoPermissionsException("You do not have permission to send messages in the channel {$this->id}."));
