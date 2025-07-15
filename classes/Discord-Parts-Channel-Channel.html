@@ -958,7 +958,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getPinnedMessages">getPinnedMessages()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-MessagePinData.html"><abbr title="\Discord\Parts\Channel\Message\MessagePinData">MessagePinData</abbr></a>|null&gt;    </span>
 </dt>
 <dd>Returns the channels pinned messages.</dd>
 
@@ -4314,7 +4314,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">598</span>
+    <span class="phpdocumentor-element-found-in__line">606</span>
 
     </aside>
 
@@ -4502,7 +4502,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">617</span>
+    <span class="phpdocumentor-element-found-in__line">625</span>
 
     </aside>
 
@@ -5081,7 +5081,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getPinnedMessages</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|<abbr title="\Carbon\Carbon">Carbon</abbr>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">getPinnedMessages</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|<abbr title="\Carbon\Carbon">Carbon</abbr>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-MessagePinData.html"><abbr title="\Discord\Parts\Channel\Message\MessagePinData">MessagePinData</abbr></a>|null&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -5115,21 +5115,12 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
                     
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@return</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>PromiseInterface&lt;Collection&lt;MessagePinData&gt;</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>Added $options parameter to allow for pagination.</p>
+                                                 <section class="phpdocumentor-description"><p>Added $options parameter to allow for pagination. Returns MessagePinData or null instead of Collection.</p>
 </section>
 
                                     </dd>
@@ -5139,7 +5130,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-MessagePinData.html"><abbr title="\Discord\Parts\Channel\Message\MessagePinData">MessagePinData</abbr></a>|null&gt;</span>
             </section>
 
 </article>
@@ -6157,7 +6148,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">556</span>
+    <span class="phpdocumentor-element-found-in__line">564</span>
 
     </aside>
 
@@ -6230,7 +6221,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/ChannelTrait.php"><a href="files/src-discord-parts-channel-channeltrait.html"><abbr title="src/Discord/Parts/Channel/ChannelTrait.php">ChannelTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">576</span>
+    <span class="phpdocumentor-element-found-in__line">584</span>
 
     </aside>
 
