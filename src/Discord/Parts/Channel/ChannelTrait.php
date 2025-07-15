@@ -351,9 +351,9 @@ trait ChannelTrait
      * @param int                   $options['limit']  The amount of messages to retrieve.
      * @param Message|Carbon|string $options['before'] A message or timestamp to get messages before.
      *
-     * @return PromiseInterface<Collection<MessagePinData>
+     * @return PromiseInterface<?MessagePinData>
      *
-     * @since 10.19.0 Added $options parameter to allow for pagination.
+     * @since 10.19.0 Added $options parameter to allow for pagination. Returns MessagePinData or null instead of Collection.
      */
     public function getPinnedMessages(array $options = []): PromiseInterface
     {
@@ -363,7 +363,7 @@ trait ChannelTrait
             }
             //  If the user is missing the READ_MESSAGE_HISTORY permission in the channel, then no pins will be returned.
             if (! $botperms->read_message_history) {
-                return resolve(Collection::for(Message::class));
+                return resolve(null);
             }
         }
 
