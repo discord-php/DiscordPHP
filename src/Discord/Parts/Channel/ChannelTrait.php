@@ -353,7 +353,7 @@ trait ChannelTrait
      *
      * @return PromiseInterface<?MessagePinData>
      *
-     * @since 10.19.0 Added $options parameter to allow for pagination. Returns MessagePinData or null instead of Collection.
+     * @since 10.19.0 Added $options parameter to allow for pagination. Returns MessagePinData or null instead of Collection. Use `MessagePinData?->items` instead.
      */
     public function getPinnedMessages(array $options = []): PromiseInterface
     {
