@@ -48,4 +48,31 @@ class MessagePinData extends Part
 
         return $collection;
     }
+
+    /**
+     * Returns an iterator for the collection.
+     *
+     * @return \Traversable
+     */
+    public function getIterator(): \Traversable
+    {
+        return new \ArrayIterator($this->items);
+    }
+
+    /**
+     * Handles dynamic calls to the collection.
+     *
+     * @param string $name   Function name.
+     * @param array  $params Function parameters.
+     *
+     * @return mixed
+     */
+    public function __call($name, $arguments)
+    {
+        if (method_exists($this->items, $name)) {
+            return $this->items->{$name}(...$arguments);
+        }
+
+        throw new \BadMethodCallException("Method $name does not exist.");
+    }
 }
