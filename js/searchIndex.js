@@ -4666,6 +4666,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-MessagePinData.html#method_getItemsAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessagePinData\u003A\u003AgetIterator\u0028\u0029",
+            "name": "getIterator",
+            "summary": "Returns\u0020an\u0020iterator\u0020for\u0020the\u0020collection.",
+            "url": "classes/Discord-Parts-Channel-Message-MessagePinData.html#method_getIterator"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessagePinData\u003A\u003A__call\u0028\u0029",
+            "name": "__call",
+            "summary": "Handles\u0020dynamic\u0020calls\u0020to\u0020the\u0020collection.",
+            "url": "classes/Discord-Parts-Channel-Message-MessagePinData.html#method___call"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessagePinData\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
