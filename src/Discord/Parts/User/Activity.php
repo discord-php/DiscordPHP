@@ -40,7 +40,7 @@ use Stringable;
  * @property Emoji|null    $emoji               The emoji used for a custom status.
  * @property Party|null    $party               Information for the current party of the player.
  * @property Assets|null   $assets              Images for the presence and their hover texts.
- * @property object|null   $secrets             Secrets for Rich Presence joining and spectating.
+ * @property Secrets|null  $secrets             Secrets for Rich Presence joining and spectating.
  * @property bool|null     $instance            Whether or not the activity is an instanced game session.
  * @property int|null      $flags               Activity flags `OR`d together, describes what the payload includes.
  * @property object[]|null $buttons             The custom buttons shown in the Rich Presence (max 2).
