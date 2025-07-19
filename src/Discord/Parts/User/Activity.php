@@ -39,7 +39,7 @@ use Stringable;
  * @property ?string|null  $state_url           URL that is linked when clicking on the state text.
  * @property Emoji|null    $emoji               The emoji used for a custom status.
  * @property Party|null    $party               Information for the current party of the player.
- * @property object|null   $assets              Images for the presence and their hover texts.
+ * @property Assets|null   $assets              Images for the presence and their hover texts.
  * @property object|null   $secrets             Secrets for Rich Presence joining and spectating.
  * @property bool|null     $instance            Whether or not the activity is an instanced game session.
  * @property int|null      $flags               Activity flags `OR`d together, describes what the payload includes.
@@ -153,6 +153,20 @@ class Activity extends Part implements Stringable
         }
 
         return $this->factory->part(Party::class, (array) $this->attributes['party'], true);
+    }
+
+    /**
+     * Gets the assets object of the activity.
+     *
+     * @return Assets|null
+     */
+    protected function getAssetsAttribute(): ?Assets
+    {
+        if (! isset($this->attributes['assets'])) {
+            return null;
+        }
+
+        return $this->factory->part(Assets::class, (array) $this->attributes['assets'], true);
     }
 
     /**
