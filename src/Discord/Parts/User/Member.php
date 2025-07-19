@@ -67,7 +67,7 @@ use function React\Promise\reject;
  * @property      string                           $status        The status of the member.
  * @property-read Activity                         $game          The game the member is playing.
  * @property      ExCollectionInterface|Activity[] $activities    User's current activities.
- * @property      object                           $client_status Current client status.
+ * @property      ClientStatus                     $client_status Current client status.
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
@@ -632,6 +632,20 @@ class Member extends Part implements Stringable
         }
 
         return $activities;
+    }
+
+    /**
+     * Gets the client status attribute.
+     *
+     * @return ClientStatus
+     */
+    protected function getClientStatusAttribute(): ClientStatus
+    {
+        if (! isset($this->attributes['client_status'])) {
+            return $this->factory->part(ClientStatus::class, [], true);
+        }
+
+        return $this->factory->part(ClientStatus::class, (array) $this->attributes['client_status'], true);
     }
 
     /**
