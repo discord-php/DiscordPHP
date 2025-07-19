@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Parts\User;
 
 use Discord\Parts\Part;
-use Stringable;
 
 /**
  * Information for the current party of the player.
