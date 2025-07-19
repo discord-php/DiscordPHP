@@ -26,21 +26,24 @@ use Stringable;
  * @since 5.0.0 Renamed from Game to Activity
  * @since 3.2.2
  *
- * @property string        $name           The activity's name.
- * @property int           $type           Activity type.
- * @property ?string|null  $url            Stream url, is validated when type is 1.
- * @property Carbon|null   $created_at     Timestamp of when the activity was added to the user's session.
- * @property object|null   $timestamps     Unix timestamps for start and/or end of the game.
- * @property string|null   $application_id Application id for the game.
- * @property ?string|null  $details        What the player is currently doing.
- * @property ?string|null  $state          The user's current party status, or text used for a custom status.
- * @property Emoji|null    $emoji          The emoji used for a custom status.
- * @property object|null   $party          Information for the current party of the player.
- * @property object|null   $assets         Images for the presence and their hover texts.
- * @property object|null   $secrets        Secrets for Rich Presence joining and spectating.
- * @property bool|null     $instance       Whether or not the activity is an instanced game session.
- * @property int|null      $flags          Activity flags `OR`d together, describes what the payload includes.
- * @property object[]|null $buttons        The custom buttons shown in the Rich Presence (max 2).
+ * @property string        $name                The activity's name.
+ * @property int           $type                Activity type.
+ * @property ?string|null  $url                 Stream url, is validated when type is 1.
+ * @property Carbon|null   $created_at          Timestamp of when the activity was added to the user's session.
+ * @property object|null   $timestamps          Unix timestamps for start and/or end of the game.
+ * @property string|null   $application_id      Application id for the game.
+ * @property ?integer|null $status_display_type Status display type; controls which field is displayed in the user's status text in the member list.
+ * @property ?string|null  $details             What the player is currently doing.
+ * @property ?string|null  $details_url         URL that is linked when clicking on the details text
+ * @property ?string|null  $state               The user's current party status, or text used for a custom status.
+ * @property ?string|null  $state_url           URL that is linked when clicking on the state text.
+ * @property Emoji|null    $emoji               The emoji used for a custom status.
+ * @property Party|null    $party               Information for the current party of the player.
+ * @property Assets|null   $assets              Images for the presence and their hover texts.
+ * @property Secrets|null  $secrets             Secrets for Rich Presence joining and spectating.
+ * @property bool|null     $instance            Whether or not the activity is an instanced game session.
+ * @property int|null      $flags               Activity flags `OR`d together, describes what the payload includes.
+ * @property object[]|null $buttons             The custom buttons shown in the Rich Presence (max 2).
  */
 class Activity extends Part implements Stringable
 {
@@ -80,6 +83,10 @@ class Activity extends Part implements Stringable
     public const STATUS_DND = 'dnd';
     public const STATUS_INVISIBLE = 'invisible';
 
+    public const STATUS_DISPLAY_TYPE_NAME = 0;
+    public const STATUS_DISPLAY_TYPE_STATE = 1;
+    public const STATUS_DISPLAY_TYPE_DETAILS = 2;
+
     /**
      * {@inheritDoc}
      */
@@ -90,8 +97,11 @@ class Activity extends Part implements Stringable
         'created_at',
         'timestamps',
         'application_id',
+        'status_display_type',
         'details',
+        'details_url',
         'state',
+        'state_url',
         'emoji',
         'party',
         'assets',
@@ -129,6 +139,34 @@ class Activity extends Part implements Stringable
         }
 
         return $this->factory->part(Emoji::class, (array) $this->attributes['emoji'], true);
+    }
+
+    /**
+     * Gets the party object of the activity.
+     *
+     * @return Party|null
+     */
+    protected function getPartyAttribute(): ?Party
+    {
+        if (! isset($this->attributes['party'])) {
+            return null;
+        }
+
+        return $this->factory->part(Party::class, (array) $this->attributes['party'], true);
+    }
+
+    /**
+     * Gets the assets object of the activity.
+     *
+     * @return Assets|null
+     */
+    protected function getAssetsAttribute(): ?Assets
+    {
+        if (! isset($this->attributes['assets'])) {
+            return null;
+        }
+
+        return $this->factory->part(Assets::class, (array) $this->attributes['assets'], true);
     }
 
     /**
