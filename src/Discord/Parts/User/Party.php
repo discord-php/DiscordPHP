@@ -26,7 +26,7 @@ use Stringable;
  * @property string        $id   ID of the party
  * @property object|array  $size Array of two integers (current_size, max_size). Used to show the party's current and maximum size.
  */
-class Party extends Part implements Stringable
+class Party extends Part
 {
     /**
      * {@inheritDoc}
