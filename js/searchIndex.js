@@ -9446,6 +9446,16 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020emoji\u0020object\u0020of\u0020the\u0020activity.",
             "url": "classes/Discord-Parts-User-Activity.html#method_getEmojiAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003AgetPartyAttribute\u0028\u0029",
+            "name": "getPartyAttribute",
+            "summary": "Gets\u0020the\u0020party\u0020object\u0020of\u0020the\u0020activity.",
+            "url": "classes/Discord-Parts-User-Activity.html#method_getPartyAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003AgetAssetsAttribute\u0028\u0029",
+            "name": "getAssetsAttribute",
+            "summary": "Gets\u0020the\u0020assets\u0020object\u0020of\u0020the\u0020activity.",
+            "url": "classes/Discord-Parts-User-Activity.html#method_getAssetsAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
             "summary": "Converts\u0020the\u0020activity\u0020to\u0020a\u0020string.",
@@ -9551,10 +9561,35 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_INVISIBLE"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ASTATUS_DISPLAY_TYPE_NAME",
+            "name": "STATUS_DISPLAY_TYPE_NAME",
+            "summary": "",
+            "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_NAME"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ASTATUS_DISPLAY_TYPE_STATE",
+            "name": "STATUS_DISPLAY_TYPE_STATE",
+            "summary": "",
+            "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_STATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ASTATUS_DISPLAY_TYPE_DETAILS",
+            "name": "STATUS_DISPLAY_TYPE_DETAILS",
+            "summary": "",
+            "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_DETAILS"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-User-Activity.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Assets",
+            "name": "Assets",
+            "summary": "Images\u0020for\u0020the\u0020presence\u0020and\u0020their\u0020hover\u0020texts.",
+            "url": "classes/Discord-Parts-User-Assets.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Assets\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-Assets.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\AvatarDecorationData",
             "name": "AvatarDecorationData",
@@ -9630,6 +9665,16 @@ Search.appendIndex(
             "name": "repositories",
             "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
             "url": "classes/Discord-Parts-User-Client.html#property_repositories"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\ClientStatus",
+            "name": "ClientStatus",
+            "summary": "User\u0027s\u0020platform\u002Ddependent\u0020status.",
+            "url": "classes/Discord-Parts-User-ClientStatus.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\ClientStatus\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-ClientStatus.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Collectibles",
             "name": "Collectibles",
@@ -9720,6 +9765,11 @@ Search.appendIndex(
             "name": "getActivitiesAttribute",
             "summary": "Gets\u0020the\u0020activities\u0020attribute.",
             "url": "classes/Discord-Parts-User-Member.html#method_getActivitiesAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetClientStatusAttribute\u0028\u0029",
+            "name": "getClientStatusAttribute",
+            "summary": "Gets\u0020the\u0020client\u0020status\u0020attribute.",
+            "url": "classes/Discord-Parts-User-Member.html#method_getClientStatusAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetIdAttribute\u0028\u0029",
             "name": "getIdAttribute",
@@ -9841,6 +9891,16 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-User-Nameplate.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Party",
+            "name": "Party",
+            "summary": "Information\u0020for\u0020the\u0020current\u0020party\u0020of\u0020the\u0020player.",
+            "url": "classes/Discord-Parts-User-Party.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Party\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-Party.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\PrimaryGuild",
             "name": "PrimaryGuild",
             "summary": "Represents\u0020a\u0020user\u0027s\u0020primary\u0020guild\u0020\u0028clan\u0029\u0020information.",
@@ -9860,6 +9920,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-User-PrimaryGuild.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Secrets",
+            "name": "Secrets",
+            "summary": "Secrets\u0020for\u0020Rich\u0020Presence\u0020joining\u0020and\u0020spectating.",
+            "url": "classes/Discord-Parts-User-Secrets.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Secrets\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-Secrets.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User",
             "name": "User",
@@ -10210,6 +10280,11 @@ Search.appendIndex(
             "name": "getGameAttribute",
             "summary": "Gets\u0020the\u0020game\u0020attribute.",
             "url": "classes/Discord-Parts-WebSockets-PresenceUpdate.html#method_getGameAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\PresenceUpdate\u003A\u003AgetClientStatusAttribute\u0028\u0029",
+            "name": "getClientStatusAttribute",
+            "summary": "Gets\u0020the\u0020client\u0020status\u0020attribute.",
+            "url": "classes/Discord-Parts-WebSockets-PresenceUpdate.html#method_getClientStatusAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\PresenceUpdate\u003A\u003AgetDesktopStatusAttribute\u0028\u0029",
             "name": "getDesktopStatusAttribute",

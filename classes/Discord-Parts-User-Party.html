@@ -241,7 +241,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Activity
+    Party
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
@@ -254,9 +254,6 @@
                             </ul>
         </div>
     
-            <span class="phpdocumentor-element__implements">
-            implements
-                            <abbr title="\Stringable">Stringable</abbr>                    </span>
     
     </h2>
 
@@ -266,20 +263,20 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Party.php"><a href="files/src-discord-parts-user-party.html"><abbr title="src/Discord/Parts/User/Party.php">Party.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">The Activity part describes activities the member is undertaking.</p>
+            <p class="phpdocumentor-summary">Information for the current party of the player.</p>
 
 
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-User-Activity.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-User-Party.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -287,80 +284,16 @@
                     <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/topics/gateway-events#activity-object"> https://discord.com/developers/docs/topics/gateway-events#activity-object </a>
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/events/gateway-events#activity-object-activity-party"> https://discord.com/developers/docs/events/gateway-events#activity-object-activity-party </a>
                     
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">5.0.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Renamed from Game to Activity</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">3.2.2</span>
+                                            <span class="phpdocumentor-tag-link">10.19.0</span>
                                                                                 
                                              
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>?string|null  $url                 Stream url, is validated when type is 1.</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>?integer|null $status_display_type Status display type; controls which field is displayed in the user's status text in the member list.</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>?string|null  $details             What the player is currently doing.</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>?string|null  $details_url         URL that is linked when clicking on the details text</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>?string|null  $state               The user's current party status, or text used for a custom status.</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>?string|null  $state_url           URL that is linked when clicking on the state text.</p>
-</section>
-
                                     </dd>
                                             </dl>
 
@@ -370,200 +303,24 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Parts-User-Activity.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-User-Party.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
 
 
-    <h4 id="toc-interfaces">
-        Interfaces
-        <a href="classes/Discord-Parts-User-Activity.html#toc-interfaces" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -interface"><abbr title="\Stringable">Stringable</abbr></dt>    </dl>
 
 
 
 
-<h4 id="toc-constants">
-    Constants
-    <a href="classes/Discord-Parts-User-Activity.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-</h4>
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_FLAG_EMBEDDED">FLAG_EMBEDDED</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 8                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_FLAG_INSTANCE">FLAG_INSTANCE</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 0                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_FLAG_JOIN">FLAG_JOIN</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 1                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_FLAG_JOIN_REQUEST">FLAG_JOIN_REQUEST</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 3                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_FLAG_PARTY_PRIVACY_FRIENDS">FLAG_PARTY_PRIVACY_FRIENDS</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 6                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_FLAG_PARTY_PRIVACY_VOICE_CHANNEL">FLAG_PARTY_PRIVACY_VOICE_CHANNEL</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 7                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_FLAG_PLAY">FLAG_PLAY</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 5                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_FLAG_SPECTATE">FLAG_SPECTATE</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 2                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_FLAG_SYNC">FLAG_SYNC</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 4                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_DETAILS">STATUS_DISPLAY_TYPE_DETAILS</a>
-    <span>
-        &nbsp;= 2                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_NAME">STATUS_DISPLAY_TYPE_NAME</a>
-    <span>
-        &nbsp;= 0                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_STATE">STATUS_DISPLAY_TYPE_STATE</a>
-    <span>
-        &nbsp;= 1                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_STATUS_DND">STATUS_DND</a>
-    <span>
-        &nbsp;= &#039;dnd&#039;                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_STATUS_IDLE">STATUS_IDLE</a>
-    <span>
-        &nbsp;= &#039;idle&#039;                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_STATUS_INVISIBLE">STATUS_INVISIBLE</a>
-    <span>
-        &nbsp;= &#039;invisible&#039;                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_STATUS_ONLINE">STATUS_ONLINE</a>
-    <span>
-        &nbsp;= &#039;online&#039;                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_TYPE_COMPETING">TYPE_COMPETING</a>
-    <span>
-        &nbsp;= 5                            </span>
-</dt>
-<dd>Competing in {name}</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_TYPE_CUSTOM">TYPE_CUSTOM</a>
-    <span>
-        &nbsp;= 4                            </span>
-</dt>
-<dd>{emoji} {name}</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_TYPE_GAME">TYPE_GAME</a>
-    <span>
-        &nbsp;= 0                            </span>
-</dt>
-<dd>Playing {name}</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_TYPE_LISTENING">TYPE_LISTENING</a>
-    <span>
-        &nbsp;= 2                            </span>
-</dt>
-<dd>Listening to {name}</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="-deprecated" href="classes/Discord-Parts-User-Activity.html#constant_TYPE_PLAYING">TYPE_PLAYING</a>
-    <span>
-        &nbsp;= self::TYPE_GAME                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_TYPE_STREAMING">TYPE_STREAMING</a>
-    <span>
-        &nbsp;= 1                            </span>
-</dt>
-<dd>Streaming {details}</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#constant_TYPE_WATCHING">TYPE_WATCHING</a>
-    <span>
-        &nbsp;= 3                            </span>
-</dt>
-<dd>Watching {name}</dd>
-
-    </dl>
 
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-Parts-User-Activity.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-User-Party.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_application_id">$application_id</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_assets">$assets</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-Assets.html"><abbr title="\Discord\Parts\User\Assets">Assets</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_buttons">$buttons</a>
-    <span>
-                        &nbsp;: array&lt;string|int, object&gt;|null            </span>
-</dt>
-
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Part.html#property_created">$created</a>
     <span>
@@ -572,39 +329,9 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_created_at">$created_at</a>
-    <span>
-                        &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_emoji">$emoji</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_flags">$flags</a>
-    <span>
-                        &nbsp;: int|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_instance">$instance</a>
-    <span>
-                        &nbsp;: bool|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_name">$name</a>
+    <a class="" href="classes/Discord-Parts-User-Party.html#property_id">$id</a>
     <span>
                         &nbsp;: string            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_party">$party</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-Party.html"><abbr title="\Discord\Parts\User\Party">Party</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -615,21 +342,9 @@
 <dd>Custom script data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_secrets">$secrets</a>
+    <a class="" href="classes/Discord-Parts-User-Party.html#property_size">$size</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-Secrets.html"><abbr title="\Discord\Parts\User\Secrets">Secrets</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_timestamps">$timestamps</a>
-    <span>
-                        &nbsp;: object|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_type">$type</a>
-    <span>
-                        &nbsp;: int            </span>
+                        &nbsp;: object|array&lt;string|int, mixed&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
@@ -654,7 +369,7 @@
 <dd>The factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#property_fillable">$fillable</a>
+    <a class="" href="classes/Discord-Parts-User-Party.html#property_fillable">$fillable</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -699,7 +414,7 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Parts-User-Activity.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-User-Party.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -737,11 +452,11 @@
 <dd>Handles dynamic set calls onto the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#method___toString">__toString()</a>
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method___toString">__toString()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Converts the activity to a string.</dd>
+<dd>Converts the part to a string.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method___unserialize">__unserialize()</a>
@@ -871,34 +586,6 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Called after the part has been constructed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#method_getAssetsAttribute">getAssetsAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-User-Assets.html"><abbr title="\Discord\Parts\User\Assets">Assets</abbr></a>|null    </span>
-</dt>
-<dd>Gets the assets object of the activity.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#method_getCreatedAtAttribute">getCreatedAtAttribute()</a>
-    <span>
-                                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null    </span>
-</dt>
-<dd>Gets the created at timestamp.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#method_getEmojiAttribute">getEmojiAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|null    </span>
-</dt>
-<dd>Gets the emoji object of the activity.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-User-Activity.html#method_getPartyAttribute">getPartyAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-User-Party.html"><abbr title="\Discord\Parts\User\Party">Party</abbr></a>|null    </span>
-</dt>
-<dd>Gets the party object of the activity.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -945,867 +632,14 @@ JSON. Used for JsonSerializable.</dd>
 
 
         
-    <section class="phpdocumentor-constants">
-        <h3 class="phpdocumentor-elements__header" id="constants">
-            Constants
-            <a href="classes/Discord-Parts-User-Activity.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h3>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_EMBEDDED">
-        FLAG_EMBEDDED
-        <a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_EMBEDDED" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">79</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_EMBEDDED</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 8</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_INSTANCE">
-        FLAG_INSTANCE
-        <a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_INSTANCE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">71</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_INSTANCE</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 0</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_JOIN">
-        FLAG_JOIN
-        <a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_JOIN" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">72</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_JOIN</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 1</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_JOIN_REQUEST">
-        FLAG_JOIN_REQUEST
-        <a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_JOIN_REQUEST" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">74</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_JOIN_REQUEST</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 3</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_PARTY_PRIVACY_FRIENDS">
-        FLAG_PARTY_PRIVACY_FRIENDS
-        <a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_PARTY_PRIVACY_FRIENDS" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">77</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_PARTY_PRIVACY_FRIENDS</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 6</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_PARTY_PRIVACY_VOICE_CHANNEL">
-        FLAG_PARTY_PRIVACY_VOICE_CHANNEL
-        <a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_PARTY_PRIVACY_VOICE_CHANNEL" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">78</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_PARTY_PRIVACY_VOICE_CHANNEL</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 7</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_PLAY">
-        FLAG_PLAY
-        <a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_PLAY" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">76</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_PLAY</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 5</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_SPECTATE">
-        FLAG_SPECTATE
-        <a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_SPECTATE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">73</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_SPECTATE</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 2</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_SYNC">
-        FLAG_SYNC
-        <a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_SYNC" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">75</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_SYNC</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 4</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STATUS_DISPLAY_TYPE_DETAILS">
-        STATUS_DISPLAY_TYPE_DETAILS
-        <a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_DETAILS" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">88</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STATUS_DISPLAY_TYPE_DETAILS</span>
-    = <span class="phpdocumentor-signature__default-value">2</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STATUS_DISPLAY_TYPE_NAME">
-        STATUS_DISPLAY_TYPE_NAME
-        <a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_NAME" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">86</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STATUS_DISPLAY_TYPE_NAME</span>
-    = <span class="phpdocumentor-signature__default-value">0</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STATUS_DISPLAY_TYPE_STATE">
-        STATUS_DISPLAY_TYPE_STATE
-        <a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_STATE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">87</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STATUS_DISPLAY_TYPE_STATE</span>
-    = <span class="phpdocumentor-signature__default-value">1</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STATUS_DND">
-        STATUS_DND
-        <a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_DND" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">83</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STATUS_DND</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;dnd&#039;</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STATUS_IDLE">
-        STATUS_IDLE
-        <a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_IDLE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">82</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STATUS_IDLE</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;idle&#039;</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STATUS_INVISIBLE">
-        STATUS_INVISIBLE
-        <a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_INVISIBLE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">84</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STATUS_INVISIBLE</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;invisible&#039;</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_STATUS_ONLINE">
-        STATUS_ONLINE
-        <a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_ONLINE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">81</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">STATUS_ONLINE</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;online&#039;</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_COMPETING">
-        TYPE_COMPETING
-        <a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_COMPETING" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">66</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Competing in {name}</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_COMPETING</span>
-    = <span class="phpdocumentor-signature__default-value">5</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_CUSTOM">
-        TYPE_CUSTOM
-        <a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_CUSTOM" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">63</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">{emoji} {name}</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_CUSTOM</span>
-    = <span class="phpdocumentor-signature__default-value">4</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_GAME">
-        TYPE_GAME
-        <a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_GAME" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">51</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Playing {name}</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_GAME</span>
-    = <span class="phpdocumentor-signature__default-value">0</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_LISTENING">
-        TYPE_LISTENING
-        <a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_LISTENING" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">57</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Listening to {name}</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_LISTENING</span>
-    = <span class="phpdocumentor-signature__default-value">2</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public -deprecated">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_PLAYING">
-        TYPE_PLAYING
-        <a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_PLAYING" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">69</span>
-
-    </aside>
-
-    
-                <div class="phpdocumentor-admonition">
-        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-            <article>
-                <p>Use <code class="prettyprint">Activity::TYPE_GAME</code></p>
-
-            </article>
-        </div>
-    
-    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_PLAYING</span>
-    = <span class="phpdocumentor-signature__default-value">self::TYPE_GAME</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_STREAMING">
-        TYPE_STREAMING
-        <a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_STREAMING" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">54</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Streaming {details}</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_STREAMING</span>
-    = <span class="phpdocumentor-signature__default-value">1</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_WATCHING">
-        TYPE_WATCHING
-        <a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_WATCHING" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">60</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Watching {name}</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_WATCHING</span>
-    = <span class="phpdocumentor-signature__default-value">3</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-            </section>
 
         
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-User-Activity.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-User-Party.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_application_id">
-        $application_id
-        <a href="classes/Discord-Parts-User-Activity.html#property_application_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$application_id</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Application id for the game.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_assets">
-        $assets
-        <a href="classes/Discord-Parts-User-Activity.html#property_assets" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-Assets.html"><abbr title="\Discord\Parts\User\Assets">Assets</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$assets</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Images for the presence and their hover texts.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_buttons">
-        $buttons
-        <a href="classes/Discord-Parts-User-Activity.html#property_buttons" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">array&lt;string|int, object&gt;|null</span>
-    <span class="phpdocumentor-signature__name">$buttons</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The custom buttons shown in the Rich Presence (max 2).</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
                     <article
         class="
             phpdocumentor-element
@@ -1854,175 +688,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_created_at">
-        $created_at
-        <a href="classes/Discord-Parts-User-Activity.html#property_created_at" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_id">
+        $id
+        <a href="classes/Discord-Parts-User-Party.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-    <span class="phpdocumentor-signature__name">$created_at</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Timestamp of when the activity was added to the user's session.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_emoji">
-        $emoji
-        <a href="classes/Discord-Parts-User-Activity.html#property_emoji" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$emoji</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The emoji used for a custom status.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_flags">
-        $flags
-        <a href="classes/Discord-Parts-User-Activity.html#property_flags" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$flags</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Activity flags <code class="prettyprint">OR</code>d together, describes what the payload includes.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_instance">
-        $instance
-        <a href="classes/Discord-Parts-User-Activity.html#property_instance" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">bool|null</span>
-    <span class="phpdocumentor-signature__name">$instance</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Whether or not the activity is an instanced game session.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_name">
-        $name
-        <a href="classes/Discord-Parts-User-Activity.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Party.php"><a href="files/src-discord-parts-user-party.html"><abbr title="src/Discord/Parts/User/Party.php">Party.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -2033,50 +707,10 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$name</span>
+    <span class="phpdocumentor-signature__name">$id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The activity's name.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_party">
-        $party
-        <a href="classes/Discord-Parts-User-Activity.html#property_party" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-Party.html"><abbr title="\Discord\Parts\User\Party">Party</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$party</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Information for the current party of the player.</p>
+        <section class="phpdocumentor-description"><p>ID of the party</p>
 </section>
 
     
@@ -2142,15 +776,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_secrets">
-        $secrets
-        <a href="classes/Discord-Parts-User-Activity.html#property_secrets" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_size">
+        $size
+        <a href="classes/Discord-Parts-User-Party.html#property_size" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Party.php"><a href="files/src-discord-parts-user-party.html"><abbr title="src/Discord/Parts/User/Party.php">Party.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -2160,91 +794,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-Secrets.html"><abbr title="\Discord\Parts\User\Secrets">Secrets</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$secrets</span>
+            <span class="phpdocumentor-signature__type">object|array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$size</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Secrets for Rich Presence joining and spectating.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_timestamps">
-        $timestamps
-        <a href="classes/Discord-Parts-User-Activity.html#property_timestamps" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">object|null</span>
-    <span class="phpdocumentor-signature__name">$timestamps</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Unix timestamps for start and/or end of the game.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_type">
-        $type
-        <a href="classes/Discord-Parts-User-Activity.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$type</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Activity type.</p>
+        <section class="phpdocumentor-description"><p>Array of two integers (current_size, max_size). Used to show the party's current and maximum size.</p>
 </section>
 
     
@@ -2387,15 +941,15 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_fillable">
         $fillable
-        <a href="classes/Discord-Parts-User-Activity.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-User-Party.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Party.php"><a href="files/src-discord-parts-user-party.html"><abbr title="src/Discord/Parts/User/Party.php">Party.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
@@ -2406,7 +960,7 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;name&#039;, &#039;url&#039;, &#039;type&#039;, &#039;created_at&#039;, &#039;timestamps&#039;, &#039;application_id&#039;, &#039;status_display_type&#039;, &#039;details&#039;, &#039;details_url&#039;, &#039;state&#039;, &#039;state_url&#039;, &#039;emoji&#039;, &#039;party&#039;, &#039;assets&#039;, &#039;secrets&#039;, &#039;instance&#039;, &#039;flags&#039;, &#039;buttons&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;size&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -2625,7 +1179,7 @@ JSON. Used for JsonSerializable.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-User-Activity.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-User-Party.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -2930,17 +1484,17 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method___toString">
         __toString()
-        <a href="classes/Discord-Parts-User-Activity.html#method___toString" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method___toString" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">177</span>
+    <span class="phpdocumentor-element-found-in__line">451</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Converts the activity to a string.</p>
+        <p class="phpdocumentor-summary">Converts the part to a string.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -2952,12 +1506,41 @@ JSON. Used for JsonSerializable.</dd>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-PartTrait.html#method___toString#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\Part::getPublicAttributes()">Part::getPublicAttributes()</abbr></span>
+                                        
+                                                 <section class="phpdocumentor-description"><p>This function encodes getPublicAttributes into JSON.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
     
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>A JSON string of attributes.</p>
+</section>
+
             </section>
 
 </article>
@@ -3901,177 +2484,6 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getAssetsAttribute">
-        getAssetsAttribute()
-        <a href="classes/Discord-Parts-User-Activity.html#method_getAssetsAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">163</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Gets the assets object of the activity.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getAssetsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-Assets.html"><abbr title="\Discord\Parts\User\Assets">Assets</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-Assets.html"><abbr title="\Discord\Parts\User\Assets">Assets</abbr></a>|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getCreatedAtAttribute">
-        getCreatedAtAttribute()
-        <a href="classes/Discord-Parts-User-Activity.html#method_getCreatedAtAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">121</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Gets the created at timestamp.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getCreatedAtAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-User-Activity.html#method_getCreatedAtAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getEmojiAttribute">
-        getEmojiAttribute()
-        <a href="classes/Discord-Parts-User-Activity.html#method_getEmojiAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">135</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Gets the emoji object of the activity.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getEmojiAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getPartyAttribute">
-        getPartyAttribute()
-        <a href="classes/Discord-Parts-User-Activity.html#method_getPartyAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Activity.php"><a href="files/src-discord-parts-user-activity.html"><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">149</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Gets the party object of the activity.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getPartyAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-Party.html"><abbr title="\Discord\Parts\User\Party">Party</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-Party.html"><abbr title="\Discord\Parts\User\Party">Party</abbr></a>|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_makeOptionalAttributes">
         makeOptionalAttributes()
         <a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes" class="headerlink"><i class="fas fa-link"></i></a>
@@ -4466,7 +2878,7 @@ static as we may move it outside this class in future.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/User/Activity.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/User/Party.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -4565,61 +2977,22 @@ static as we may move it outside this class in future.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                        <li><a href="classes/Discord-Parts-User-Activity.html#toc-constants">Constants</a></li>
-                                                            <li><a href="classes/Discord-Parts-User-Activity.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-Parts-User-Activity.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Discord-Parts-User-Party.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-Parts-User-Party.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
-                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_EMBEDDED">FLAG_EMBEDDED</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_INSTANCE">FLAG_INSTANCE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_JOIN">FLAG_JOIN</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_JOIN_REQUEST">FLAG_JOIN_REQUEST</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_PARTY_PRIVACY_FRIENDS">FLAG_PARTY_PRIVACY_FRIENDS</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_PARTY_PRIVACY_VOICE_CHANNEL">FLAG_PARTY_PRIVACY_VOICE_CHANNEL</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_PLAY">FLAG_PLAY</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_SPECTATE">FLAG_SPECTATE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_FLAG_SYNC">FLAG_SYNC</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_DETAILS">STATUS_DISPLAY_TYPE_DETAILS</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_NAME">STATUS_DISPLAY_TYPE_NAME</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_STATE">STATUS_DISPLAY_TYPE_STATE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_DND">STATUS_DND</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_IDLE">STATUS_IDLE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_INVISIBLE">STATUS_INVISIBLE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_STATUS_ONLINE">STATUS_ONLINE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_COMPETING">TYPE_COMPETING</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_CUSTOM">TYPE_CUSTOM</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_GAME">TYPE_GAME</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_LISTENING">TYPE_LISTENING</a></li>
-                                                    <li class="-deprecated"><a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_PLAYING">TYPE_PLAYING</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_STREAMING">TYPE_STREAMING</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_WATCHING">TYPE_WATCHING</a></li>
-                                            </ul>
-                </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_application_id">$application_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_assets">$assets</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_buttons">$buttons</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_created_at">$created_at</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_emoji">$emoji</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_flags">$flags</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_instance">$instance</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_name">$name</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_party">$party</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-Party.html#property_id">$id</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_secrets">$secrets</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_timestamps">$timestamps</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_type">$type</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-Party.html#property_size">$size</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Activity.html#property_fillable">$fillable</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-Party.html#property_fillable">$fillable</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_http">$http</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories">$repositories</a></li>
@@ -4636,7 +3009,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___get">__get()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___serialize">__serialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___set">__set()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-User-Activity.html#method___toString">__toString()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___toString">__toString()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___unserialize">__unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
@@ -4655,10 +3028,6 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_serialize">serialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_unserialize">unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_afterConstruct">afterConstruct()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-User-Activity.html#method_getAssetsAttribute">getAssetsAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-User-Activity.html#method_getCreatedAtAttribute">getCreatedAtAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-User-Activity.html#method_getEmojiAttribute">getEmojiAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-User-Activity.html#method_getPartyAttribute">getPartyAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
@@ -4684,7 +3053,7 @@ static as we may move it outside this class in future.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Parts-User-Activity.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Parts-User-Party.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
