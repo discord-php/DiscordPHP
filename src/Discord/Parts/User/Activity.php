@@ -38,7 +38,7 @@ use Stringable;
  * @property ?string|null  $state               The user's current party status, or text used for a custom status.
  * @property ?string|null  $state_url           URL that is linked when clicking on the state text.
  * @property Emoji|null    $emoji               The emoji used for a custom status.
- * @property object|null   $party               Information for the current party of the player.
+ * @property Party|null    $party               Information for the current party of the player.
  * @property object|null   $assets              Images for the presence and their hover texts.
  * @property object|null   $secrets             Secrets for Rich Presence joining and spectating.
  * @property bool|null     $instance            Whether or not the activity is an instanced game session.
@@ -139,6 +139,20 @@ class Activity extends Part implements Stringable
         }
 
         return $this->factory->part(Emoji::class, (array) $this->attributes['emoji'], true);
+    }
+
+    /**
+     * Gets the party object of the activity.
+     *
+     * @return Party|null
+     */
+    protected function getPartyAttribute(): ?Party
+    {
+        if (! isset($this->attributes['party'])) {
+            return null;
+        }
+
+        return $this->factory->part(Party::class, (array) $this->attributes['party'], true);
     }
 
     /**
