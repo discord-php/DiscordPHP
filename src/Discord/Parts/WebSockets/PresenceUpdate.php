@@ -21,6 +21,7 @@ use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\Activity;
 use Discord\Parts\User\User;
+use Discord\Parts\User\ClientStatus;
 
 /**
  * A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on
@@ -37,7 +38,7 @@ use Discord\Parts\User\User;
  * @property      string                           $status         The updated status of the user.
  * @property      ExCollectionInterface|Activity[] $activities     The activities of the user.
  * @property-read Activity                         $game           The updated game of the user.
- * @property      object                           $client_status  Status of the client.
+ * @property      ClientStatus                     $client_status  Status of the client.
  * @property      string|null                      $desktop_status Status of the user on their desktop client. Null if they are not active on desktop.
  * @property      string|null                      $mobile_status  Status of the user on their mobile client. Null if they are not active on mobile.
  * @property      string|null                      $web_status     Status of the user on their web client. Null if they are not active on web.
@@ -117,6 +118,16 @@ class PresenceUpdate extends Part
     protected function getGameAttribute(): ?Activity
     {
         return $this->activities->get('type', Activity::TYPE_GAME);
+    }
+
+    /**
+     * Gets the client status attribute.
+     *
+     * @return ClientStatus The client status of the user.
+     */
+    protected function getClientStatusAttribute(): ClientStatus
+    {
+        return $this->factory->part(ClientStatus::class, (array) ($this->attributes['client_status'] ?? []), true);
     }
 
     /**
