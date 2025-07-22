@@ -405,6 +405,7 @@ class Button extends Interactive
      * @param string|null $url
      *
      * @throws \LogicException
+     * @throws \LengthException URL exceeds 512 characters.
      *
      * @return $this
      */
@@ -412,6 +413,10 @@ class Button extends Interactive
     {
         if ($this->style != Button::STYLE_LINK) {
             throw new \LogicException('You cannot set the URL of a non-link button.');
+        }
+
+        if (isset($url) && poly_strlen($url) > 512) {
+            throw new \LengthException('URL cannot exceed 512 characters.');
         }
 
         $this->url = $url;
