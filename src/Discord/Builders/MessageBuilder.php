@@ -875,7 +875,7 @@ class MessageBuilder extends Builder implements JsonSerializable
 
     /**
      * Sets the flags of the message.
-     * Only `SUPPRESS_EMBEDS`, `SUPPRESS_NOTIFICATIONS`, `IS_VOICE_MESSAGE`, and `IS_COMPONENTS_V2` can be set for the MessageCreate endpoint.
+     * Only `SUPPRESS_EMBEDS`, `SUPPRESS_NOTIFICATIONS`, `IS_VOICE_MESSAGE`, and `IS_COMPONENTS_V2` can be set for the Create Message endpoint.
      *
      * @param int $flags
      *
