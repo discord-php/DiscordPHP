@@ -111,7 +111,7 @@ class Role extends Part implements Stringable
      * @param int $green The green value in RGB.
      * @param int $blue  The blue value in RGB.
      *
-     * @deprecated 10.18.2 Use `Role::setColors()`
+     * @deprecated 10.18.2 Use `Role::setColors()`. Color will still be returned by the API, but using the colors field is recommended when doing requests.
      */
     public function setColor(int $red = 0, int $green = 0, int $blue = 0): void
     {
