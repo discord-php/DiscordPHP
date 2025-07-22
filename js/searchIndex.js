@@ -1906,10 +1906,30 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020poll\u0020of\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_getPoll"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetSuppressEmbedsFlag\u0028\u0029",
+            "name": "setSuppressEmbedsFlag",
+            "summary": "Sets\u0020or\u0020unsets\u0020the\u0020SUPPRESS_EMBEDS\u0020flag\u0020for\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_setSuppressEmbedsFlag"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetSuppressNotificationsFlag\u0028\u0029",
+            "name": "setSuppressNotificationsFlag",
+            "summary": "Sets\u0020or\u0020unsets\u0020the\u0020SUPPRESS_NOTIFICATIONS\u0020flag\u0020for\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_setSuppressNotificationsFlag"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetIsVoiceMessageFlag\u0028\u0029",
+            "name": "setIsVoiceMessageFlag",
+            "summary": "Sets\u0020or\u0020unsets\u0020the\u0020IS_VOICE_MESSAGE\u0020flag\u0020for\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_setIsVoiceMessageFlag"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetV2Flag\u0028\u0029",
             "name": "setV2Flag",
-            "summary": "Sets\u0020or\u0020unsets\u0020the\u0020V2\u0020components\u0020flag\u0020for\u0020the\u0020message.",
+            "summary": "Sets\u0020or\u0020unsets\u0020the\u0020IS_COMPONENTS_V2\u0020flag\u0020for\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_setV2Flag"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetIsComponentsV2Flag\u0028\u0029",
+            "name": "setIsComponentsV2Flag",
+            "summary": "Sets\u0020or\u0020unsets\u0020the\u0020IS_COMPONENTS_V2\u0020flag\u0020for\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_setIsComponentsV2Flag"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetFlags\u0028\u0029",
             "name": "setFlags",
@@ -5413,12 +5433,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_CROSSPOSTED",
             "name": "FLAG_CROSSPOSTED",
-            "summary": "",
+            "summary": "This\u0020message\u0020has\u0020been\u0020published\u0020to\u0020subscribed\u0020channels\u0020\u0028via\u0020Channel\u0020Following\u0029.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_CROSSPOSTED"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_IS_CROSSPOST",
             "name": "FLAG_IS_CROSSPOST",
-            "summary": "",
+            "summary": "This\u0020message\u0020originated\u0020from\u0020a\u0020message\u0020in\u0020another\u0020channel\u0020\u0028via\u0020Channel\u0020Following\u0029.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_IS_CROSSPOST"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_SUPPRESS_EMBED",
@@ -5426,55 +5446,65 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_SUPPRESS_EMBED"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_SUPPRESS_EMBEDS",
+            "name": "FLAG_SUPPRESS_EMBEDS",
+            "summary": "Do\u0020not\u0020include\u0020any\u0020embeds\u0020when\u0020serializing\u0020this\u0020message.",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_SUPPRESS_EMBEDS"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_SOURCE_MESSAGE_DELETED",
             "name": "FLAG_SOURCE_MESSAGE_DELETED",
-            "summary": "",
+            "summary": "The\u0020source\u0020message\u0020for\u0020this\u0020crosspost\u0020has\u0020been\u0020deleted\u0020\u0028via\u0020Channel\u0020Following\u0029.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_SOURCE_MESSAGE_DELETED"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_URGENT",
             "name": "FLAG_URGENT",
-            "summary": "",
+            "summary": "This\u0020message\u0020came\u0020from\u0020the\u0020urgent\u0020message\u0020system.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_URGENT"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_HAS_THREAD",
             "name": "FLAG_HAS_THREAD",
-            "summary": "",
+            "summary": "This\u0020message\u0020has\u0020an\u0020associated\u0020thread,\u0020with\u0020the\u0020same\u0020id\u0020as\u0020the\u0020message.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_HAS_THREAD"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_EPHEMERAL",
             "name": "FLAG_EPHEMERAL",
-            "summary": "",
+            "summary": "This\u0020message\u0020is\u0020only\u0020visible\u0020to\u0020the\u0020user\u0020who\u0020invoked\u0020the\u0020Interaction.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_EPHEMERAL"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_LOADING",
             "name": "FLAG_LOADING",
-            "summary": "",
+            "summary": "This\u0020message\u0020is\u0020an\u0020Interaction\u0020Response\u0020and\u0020the\u0020bot\u0020is\u0020\u0022thinking\u0022.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_LOADING"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD",
             "name": "FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD",
-            "summary": "",
+            "summary": "This\u0020message\u0020failed\u0020to\u0020mention\u0020some\u0020roles\u0020and\u0020add\u0020their\u0020members\u0020to\u0020the\u0020thread.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_SUPPRESS_NOTIFICATIONS",
             "name": "FLAG_SUPPRESS_NOTIFICATIONS",
-            "summary": "",
+            "summary": "This\u0020message\u0020will\u0020not\u0020trigger\u0020push\u0020and\u0020desktop\u0020notifications.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_SUPPRESS_NOTIFICATIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_IS_VOICE_MESSAGE",
             "name": "FLAG_IS_VOICE_MESSAGE",
-            "summary": "",
+            "summary": "This\u0020message\u0020is\u0020a\u0020voice\u0020message.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_IS_VOICE_MESSAGE"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_HAS_SNAPSHOT",
             "name": "FLAG_HAS_SNAPSHOT",
-            "summary": "",
+            "summary": "This\u0020message\u0020has\u0020a\u0020snapshot\u0020\u0028via\u0020Message\u0020Forwarding\u0029.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_HAS_SNAPSHOT"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_IS_V2_COMPONENTS",
             "name": "FLAG_IS_V2_COMPONENTS",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_IS_V2_COMPONENTS"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_IS_COMPONENTS_V2",
+            "name": "FLAG_IS_COMPONENTS_V2",
+            "summary": "Allows\u0020you\u0020to\u0020create\u0020fully\u0020component\u002Ddriven\u0020messages.",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_IS_COMPONENTS_V2"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003A\u0024fillable",
             "name": "fillable",

@@ -746,6 +746,20 @@ be sent via multipart request, i.e. contains files.</dd>
 <dd>Sets this message as a forward of another message. Only used for sending message.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_setIsComponentsV2Flag">setIsComponentsV2Flag()</a>
+    <span>
+                                &nbsp;: self    </span>
+</dt>
+<dd>Sets or unsets the IS_COMPONENTS_V2 flag for the message.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_setIsVoiceMessageFlag">setIsVoiceMessageFlag()</a>
+    <span>
+                                &nbsp;: self    </span>
+</dt>
+<dd>Sets or unsets the IS_VOICE_MESSAGE flag for the message.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_setNonce">setNonce()</a>
     <span>
                                 &nbsp;: $this    </span>
@@ -774,6 +788,20 @@ be sent via multipart request, i.e. contains files.</dd>
 <dd>Sets the stickers of the builder. Removes the existing stickers in the process.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_setSuppressEmbedsFlag">setSuppressEmbedsFlag()</a>
+    <span>
+                                &nbsp;: self    </span>
+</dt>
+<dd>Sets or unsets the SUPPRESS_EMBEDS flag for the message.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_setSuppressNotificationsFlag">setSuppressNotificationsFlag()</a>
+    <span>
+                                &nbsp;: self    </span>
+</dt>
+<dd>Sets or unsets the SUPPRESS_NOTIFICATIONS flag for the message.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_setTts">setTts()</a>
     <span>
                                 &nbsp;: $this    </span>
@@ -788,11 +816,11 @@ be sent via multipart request, i.e. contains files.</dd>
 <dd>Override the default username of the webhook. Only used for executing webhook.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_setV2Flag">setV2Flag()</a>
+    <a class="-deprecated" href="classes/Discord-Builders-MessageBuilder.html#method_setV2Flag">setV2Flag()</a>
     <span>
                                 &nbsp;: self    </span>
 </dt>
-<dd>Sets or unsets the V2 components flag for the message.</dd>
+<dd>Sets or unsets the IS_COMPONENTS_V2 flag for the message.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Builders-MessageBuilder.html#method_enforceV1Limits">enforceV1Limits()</a>
@@ -1467,7 +1495,7 @@ be sent via multipart request, i.e. contains files.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">826</span>
+    <span class="phpdocumentor-element-found-in__line">906</span>
 
     </aside>
 
@@ -2308,7 +2336,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">852</span>
+    <span class="phpdocumentor-element-found-in__line">932</span>
 
     </aside>
 
@@ -2386,7 +2414,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">818</span>
+    <span class="phpdocumentor-element-found-in__line">898</span>
 
     </aside>
 
@@ -2698,7 +2726,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">909</span>
+    <span class="phpdocumentor-element-found-in__line">989</span>
 
     </aside>
 
@@ -2917,7 +2945,7 @@ asynchronously and use the <code class="prettyprint">addFileFromContent</code> f
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">865</span>
+    <span class="phpdocumentor-element-found-in__line">945</span>
 
     </aside>
 
@@ -3239,7 +3267,7 @@ be sent via multipart request, i.e. contains files.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">840</span>
+    <span class="phpdocumentor-element-found-in__line">920</span>
 
     </aside>
 
@@ -3342,7 +3370,7 @@ that message will be returned and no new message will be created.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">806</span>
+    <span class="phpdocumentor-element-found-in__line">886</span>
 
     </aside>
 
@@ -3355,7 +3383,7 @@ that message will be returned and no new message will be created.</p>
     <div class="phpdocumentor-label-line">
         </div>
     
-        <section class="phpdocumentor-description"><p>Only works for some message types and some message flags.</p>
+        <section class="phpdocumentor-description"><p>Only <code class="prettyprint">SUPPRESS_EMBEDS</code>, <code class="prettyprint">SUPPRESS_NOTIFICATIONS</code>, <code class="prettyprint">IS_VOICE_MESSAGE</code>, and <code class="prettyprint">IS_COMPONENTS_V2</code> can be set for the Create Message endpoint.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -3440,6 +3468,136 @@ that message will be returned and no new message will be created.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">$this</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setIsComponentsV2Flag">
+        setIsComponentsV2Flag()
+        <a href="classes/Discord-Builders-MessageBuilder.html#method_setIsComponentsV2Flag" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">863</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets or unsets the IS_COMPONENTS_V2 flag for the message.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setIsComponentsV2Flag</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$enable</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Once a message has been sent with this flag, it can't be removed from that message.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$enable</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-MessageBuilder.html#method_setIsComponentsV2Flag#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.19.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">self</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setIsVoiceMessageFlag">
+        setIsVoiceMessageFlag()
+        <a href="classes/Discord-Builders-MessageBuilder.html#method_setIsVoiceMessageFlag" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">827</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets or unsets the IS_VOICE_MESSAGE flag for the message.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setIsVoiceMessageFlag</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$enable</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$enable</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-MessageBuilder.html#method_setIsVoiceMessageFlag#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.19.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -3666,6 +3824,134 @@ that message will be returned and no new message will be created.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setSuppressEmbedsFlag">
+        setSuppressEmbedsFlag()
+        <a href="classes/Discord-Builders-MessageBuilder.html#method_setSuppressEmbedsFlag" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">785</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets or unsets the SUPPRESS_EMBEDS flag for the message.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setSuppressEmbedsFlag</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$enable</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$enable</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-MessageBuilder.html#method_setSuppressEmbedsFlag#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.19.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">self</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setSuppressNotificationsFlag">
+        setSuppressNotificationsFlag()
+        <a href="classes/Discord-Builders-MessageBuilder.html#method_setSuppressNotificationsFlag" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">806</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets or unsets the SUPPRESS_NOTIFICATIONS flag for the message.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setSuppressNotificationsFlag</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$enable</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$enable</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-MessageBuilder.html#method_setSuppressNotificationsFlag#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.19.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">self</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setTts">
         setTts()
         <a href="classes/Discord-Builders-MessageBuilder.html#method_setTts" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3781,7 +4067,7 @@ that message will be returned and no new message will be created.</p>
         class="phpdocumentor-element
             -method
             -public
-                                                        "
+            -deprecated                                            "
 >
     <h4 class="phpdocumentor-element__name" id="method_setV2Flag">
         setV2Flag()
@@ -3791,20 +4077,29 @@ that message will be returned and no new message will be created.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/MessageBuilder.php"><a href="files/src-discord-builders-messagebuilder.html"><abbr title="src/Discord/Builders/MessageBuilder.php">MessageBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">783</span>
+    <span class="phpdocumentor-element-found-in__line">849</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Sets or unsets the V2 components flag for the message.</p>
+        <p class="phpdocumentor-summary">Sets or unsets the IS_COMPONENTS_V2 flag for the message.</p>
 
-    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setV2Flag</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$enable</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>use <code class="prettyprint">MessageBuilder::setIsComponentsV2Flag()</code> instead.</p>
+
+            </article>
+        </div>
     
-    
+        <section class="phpdocumentor-description"><p>Once a message has been sent with this flag, it can't be removed from that message.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -3988,6 +4283,8 @@ that message will be returned and no new message will be created.</p>
                         if (xhr.status < 400 && xhr.responseText) {
                             code.textContent = xhr.responseText;
                             Prism.highlightElement(code);
+                            d=document.getElementsByClassName("line-numbers");
+                            d[0].scrollTop = d[0].children[1].offsetTop;
                             return;
                         }
 
@@ -4127,13 +4424,17 @@ that message will be returned and no new message will be created.</p>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setFiles">setFiles()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setFlags">setFlags()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setForward">setForward()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setIsComponentsV2Flag">setIsComponentsV2Flag()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setIsVoiceMessageFlag">setIsVoiceMessageFlag()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setNonce">setNonce()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setPoll">setPoll()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setReplyTo">setReplyTo()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setStickers">setStickers()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setSuppressEmbedsFlag">setSuppressEmbedsFlag()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setSuppressNotificationsFlag">setSuppressNotificationsFlag()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setTts">setTts()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setUsername">setUsername()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_setV2Flag">setV2Flag()</a></li>
+                                            <li class="-deprecated"><a href="classes/Discord-Builders-MessageBuilder.html#method_setV2Flag">setV2Flag()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_enforceV1Limits">enforceV1Limits()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-MessageBuilder.html#method_enforceV2Limits">enforceV2Limits()</a></li>
                                     </ul>
