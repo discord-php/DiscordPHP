@@ -121,6 +121,8 @@ class Role extends Part implements Stringable
     /**
      * Sets the colors for a role.
      *
+     * Roles without colors (Role::colors->primary_color === 0) do not count towards the final computed color in the user list.
+     *
      * When sending tertiary_color the API enforces the role color to be a holographic style with values of:
      * primary_color = 11127295, secondary_color = 16759788, and tertiary_color = 16761760.
      *
