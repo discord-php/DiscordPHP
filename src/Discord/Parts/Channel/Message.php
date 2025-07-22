@@ -185,7 +185,9 @@ class Message extends Part
 
     public const FLAG_CROSSPOSTED = (1 << 0);
     public const FLAG_IS_CROSSPOST = (1 << 1);
+    /** @deprecated Use `Message::FLAG_SUPPRESS_EMBEDS` instead. */
     public const FLAG_SUPPRESS_EMBED = (1 << 2);
+    public const FLAG_SUPPRESS_EMBEDS = (1 << 2);
     public const FLAG_SOURCE_MESSAGE_DELETED = (1 << 3);
     public const FLAG_URGENT = (1 << 4);
     public const FLAG_HAS_THREAD = (1 << 5);
@@ -195,7 +197,9 @@ class Message extends Part
     public const FLAG_SUPPRESS_NOTIFICATIONS = (1 << 12);
     public const FLAG_IS_VOICE_MESSAGE = (1 << 13);
     public const FLAG_HAS_SNAPSHOT = (1 << 14);
+    /** @deprecated Use `Message::FLAG_IS_COMPONENTS_V2` instead. */
     public const FLAG_IS_V2_COMPONENTS = (1 << 15);
+    public const FLAG_IS_COMPONENTS_V2 = (1 << 15);
 
     /**
      * {@inheritDoc}
@@ -276,7 +280,7 @@ class Message extends Part
      */
     protected function getSuppressEmbedsAttribute(): bool
     {
-        return (bool) ($this->flags & self::FLAG_SUPPRESS_EMBED);
+        return (bool) ($this->flags & self::FLAG_SUPPRESS_EMBEDS);
     }
 
     /**
