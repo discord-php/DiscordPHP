@@ -777,6 +777,8 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets or unsets the SUPPRESS_EMBEDS flag for the message.
      *
+     * @since 10.19.0
+     *
      * @param  bool $enable
      * @return self
      */
@@ -795,6 +797,8 @@ class MessageBuilder extends Builder implements JsonSerializable
 
     /**
      * Sets or unsets the SUPPRESS_NOTIFICATIONS flag for the message.
+     *
+     * @since 10.19.0
      *
      * @param  bool $enable
      * @return self
@@ -815,6 +819,8 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets or unsets the IS_VOICE_MESSAGE flag for the message.
      *
+     * @since 10.19.0
+     *
      * @param  bool $enable
      * @return self
      */
@@ -833,6 +839,7 @@ class MessageBuilder extends Builder implements JsonSerializable
 
     /**
      * Sets or unsets the IS_COMPONENTS_V2 flag for the message.
+     * Once a message has been sent with this flag, it can't be removed from that message.
      *
      * @deprecated 10.19.0 use `MessageBuilder::setIsComponentsV2Flag()` instead.
      *
@@ -847,6 +854,8 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets or unsets the IS_COMPONENTS_V2 flag for the message.
      * Once a message has been sent with this flag, it can't be removed from that message.
+     *
+     * @since 10.19.0
      *
      * @param  bool $enable
      * @return self
