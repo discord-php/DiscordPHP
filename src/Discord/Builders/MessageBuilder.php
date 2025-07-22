@@ -443,7 +443,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             $component = ActionRow::new()->addComponent($component);
         }
 
-        if ($this->flags & Message::FLAG_IS_V2_COMPONENTS) {
+        if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
             $this->enforceV2Limits();
         } else {
             $this->enforceV1Limits($component);
@@ -775,19 +775,99 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * Sets or unsets the V2 components flag for the message.
+     * Sets or unsets the SUPPRESS_EMBEDS flag for the message.
+     *
+     * @since 10.19.0
+     *
+     * @param  bool $enable
+     * @return self
+     */
+    public function setSuppressEmbedsFlag(bool $enable = true): self
+    {
+        if ($enable) {
+            if (! ($this->flags & Message::FLAG_SUPPRESS_EMBEDS)) {
+                $this->flags |= Message::FLAG_SUPPRESS_EMBEDS;
+            }
+        } elseif ($this->flags & Message::FLAG_SUPPRESS_EMBEDS) {
+            $this->flags &= ~Message::FLAG_SUPPRESS_EMBEDS;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Sets or unsets the SUPPRESS_NOTIFICATIONS flag for the message.
+     *
+     * @since 10.19.0
+     *
+     * @param  bool $enable
+     * @return self
+     */
+    public function setSuppressNotificationsFlag(bool $enable = true): self
+    {
+        if ($enable) {
+            if (! ($this->flags & Message::FLAG_SUPPRESS_NOTIFICATIONS)) {
+                $this->flags |= Message::FLAG_SUPPRESS_NOTIFICATIONS;
+            }
+        } elseif ($this->flags & Message::FLAG_SUPPRESS_NOTIFICATIONS) {
+            $this->flags &= ~Message::FLAG_SUPPRESS_NOTIFICATIONS;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Sets or unsets the IS_VOICE_MESSAGE flag for the message.
+     *
+     * @since 10.19.0
+     *
+     * @param  bool $enable
+     * @return self
+     */
+    public function setIsVoiceMessageFlag(bool $enable = true): self
+    {
+        if ($enable) {
+            if (! ($this->flags & Message::FLAG_IS_VOICE_MESSAGE)) {
+                $this->flags |= Message::FLAG_IS_VOICE_MESSAGE;
+            }
+        } elseif ($this->flags & Message::FLAG_IS_VOICE_MESSAGE) {
+            $this->flags &= ~Message::FLAG_IS_VOICE_MESSAGE;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Sets or unsets the IS_COMPONENTS_V2 flag for the message.
+     * Once a message has been sent with this flag, it can't be removed from that message.
+     *
+     * @deprecated 10.19.0 use `MessageBuilder::setIsComponentsV2Flag()` instead.
      *
      * @param  bool $enable
      * @return self
      */
     public function setV2Flag(bool $enable = true): self
     {
+        return $this->setIsComponentsV2Flag($enable);
+    }
+
+    /**
+     * Sets or unsets the IS_COMPONENTS_V2 flag for the message.
+     * Once a message has been sent with this flag, it can't be removed from that message.
+     *
+     * @since 10.19.0
+     *
+     * @param  bool $enable
+     * @return self
+     */
+    public function setIsComponentsV2Flag(bool $enable = true): self
+    {
         if ($enable) {
-            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
-                $this->flags |= Message::FLAG_IS_V2_COMPONENTS;
+            if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2)) {
+                $this->flags |= Message::FLAG_IS_COMPONENTS_V2 ;
             }
-        } elseif ($this->flags & Message::FLAG_IS_V2_COMPONENTS) {
-            $this->flags &= ~Message::FLAG_IS_V2_COMPONENTS;
+        } elseif ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
+            $this->flags &= ~Message::FLAG_IS_COMPONENTS_V2;
         }
 
         return $this;
@@ -795,7 +875,7 @@ class MessageBuilder extends Builder implements JsonSerializable
 
     /**
      * Sets the flags of the message.
-     * Only works for some message types and some message flags.
+     * Only `SUPPRESS_EMBEDS`, `SUPPRESS_NOTIFICATIONS`, `IS_VOICE_MESSAGE`, and `IS_COMPONENTS_V2` can be set for the Create Message endpoint.
      *
      * @param int $flags
      *
@@ -912,7 +992,7 @@ class MessageBuilder extends Builder implements JsonSerializable
         $body = [];
 
         if (isset($this->content)) {
-            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+            if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2)) {
                 $body['content'] = $this->content;
                 $empty = false;
             }
@@ -935,7 +1015,7 @@ class MessageBuilder extends Builder implements JsonSerializable
         }
 
         if (isset($this->embeds)) {
-            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+            if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2)) {
                 $body['embeds'] = $this->embeds;
                 $empty = false;
             }
@@ -968,14 +1048,14 @@ class MessageBuilder extends Builder implements JsonSerializable
         }
 
         if ($this->sticker_ids) {
-            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+            if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2)) {
                 $body['sticker_ids'] = $this->sticker_ids;
                 $empty = false;
             }
         }
 
         if (! empty($this->files)) {
-            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+            if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2)) {
                 $empty = false;
             }
         }
@@ -986,7 +1066,7 @@ class MessageBuilder extends Builder implements JsonSerializable
         }
 
         if (isset($this->poll)) {
-            if (! ($this->flags & Message::FLAG_IS_V2_COMPONENTS)) {
+            if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2)) {
                 $body['poll'] = $this->poll;
                 $empty = false;
             }
