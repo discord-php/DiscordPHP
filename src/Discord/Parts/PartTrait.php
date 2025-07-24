@@ -441,6 +441,23 @@ trait PartTrait
     }
 
     /**
+     * Returns an array of constant names and their values.
+     *
+     * @return array<int, string>
+     *
+     * @since 10.19.0
+     */
+    public function getConstArray(): array
+    {
+        $reflection = new \ReflectionClass($this::class);
+        $map = [];
+        foreach ($reflection->getConstants() as $name => $value) {
+            $map[$value] = $name;
+        }
+        return $map;
+    }
+
+    /**
      * Converts the part to a string.
      *
      * @return string A JSON string of attributes.
