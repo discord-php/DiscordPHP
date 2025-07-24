@@ -73,10 +73,26 @@ use function React\Promise\reject;
  */
 class Member extends Part implements Stringable
 {
+    /** Member has left and rejoined the guild. */
     public const FLAGS_DID_REJOIN = (1 << 0);
+    /** Member has completed onboarding. */
     public const FLAGS_COMPLETED_ONBOARDING = (1 << 1);
+    /** Member is exempt from guild verification requirements. */
     public const FLAGS_BYPASSES_VERIFICATION = (1 << 2);
+    /** Member has started onboarding, */
     public const FLAGS_STARTED_ONBOARDING = (1 << 3);
+    /** Member is a guest and can only access the voice channel they were invited to. */
+    public const FLAGS_IS_GUEST = (1 << 4);
+    /** Member has started Server Guide new member actions. */
+    public const FLAGS_STARTED_HOME_ACTIONS = (1 << 5);
+    /** Member has completed Server Guide new member actions. */
+    public const FLAGS_COMPLETED_HOME_ACTIONS = (1 << 6);
+    /** Member's username, display name, or nickname is blocked by AutoMod. */
+    public const FLAGS_AUTOMOD_QUARANTINED_USERNAME = (1 << 7);
+    /** Member has dismissed the DM settings upsell. */
+    public const DM_SETTINGS_UPSELL_ACKNOWLEDGED  = (1 << 9);
+    /** Member's guild tag is blocked by AutoMod. */
+    public const AUTOMOD_QUARANTINED_GUILD_TAG = (1 << 10);
 
     /**
      * {@inheritDoc}
