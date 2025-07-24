@@ -443,7 +443,7 @@ trait PartTrait
     /**
      * Returns an array of constant names and their values.
      *
-     * @return array An associative array where keys are constant values and values are constant names.
+     * @return array An associative array where keys are constant names and values are their values.
      *
      * @since 10.19.0
      */
@@ -452,7 +452,7 @@ trait PartTrait
         $reflection = new \ReflectionClass($this::class);
         $map = [];
         foreach ($reflection->getConstants() as $name => $value) {
-            $map[$value] = $name;
+            $map[$name] = $value;
         }
         return $map;
     }
