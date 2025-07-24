@@ -443,7 +443,7 @@ trait PartTrait
     /**
      * Returns an array of constant names and their values.
      *
-     * @return array<int, string>
+     * @return array An associative array where keys are constant values and values are constant names.
      *
      * @since 10.19.0
      */
