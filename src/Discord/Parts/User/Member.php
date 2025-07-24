@@ -90,9 +90,9 @@ class Member extends Part implements Stringable
     /** Member's username, display name, or nickname is blocked by AutoMod. */
     public const FLAGS_AUTOMOD_QUARANTINED_USERNAME = (1 << 7);
     /** Member has dismissed the DM settings upsell. */
-    public const DM_SETTINGS_UPSELL_ACKNOWLEDGED  = (1 << 9);
+    public const FLAGS_DM_SETTINGS_UPSELL_ACKNOWLEDGED  = (1 << 9);
     /** Member's guild tag is blocked by AutoMod. */
-    public const AUTOMOD_QUARANTINED_GUILD_TAG = (1 << 10);
+    public const FLAGS_AUTOMOD_QUARANTINED_GUILD_TAG = (1 << 10);
 
     /**
      * {@inheritDoc}
