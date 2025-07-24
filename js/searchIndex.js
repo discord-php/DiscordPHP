@@ -9231,6 +9231,11 @@ Search.appendIndex(
             "summary": "Converts\u0020a\u0020string\u0020to\u0020studlyCase.",
             "url": "classes/Discord-Parts-PartTrait.html#method_studly"
         },                {
+            "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AgetConstArray\u0028\u0029",
+            "name": "getConstArray",
+            "summary": "Returns\u0020an\u0020array\u0020of\u0020constant\u0020names\u0020and\u0020their\u0020values.",
+            "url": "classes/Discord-Parts-PartTrait.html#method_getConstArray"
+        },                {
             "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
             "summary": "Converts\u0020the\u0020part\u0020to\u0020a\u0020string.",
@@ -9976,15 +9981,15 @@ Search.appendIndex(
             "summary": "Member\u0027s\u0020username,\u0020display\u0020name,\u0020or\u0020nickname\u0020is\u0020blocked\u0020by\u0020AutoMod.",
             "url": "classes/Discord-Parts-User-Member.html#constant_FLAGS_AUTOMOD_QUARANTINED_USERNAME"
         },                {
-            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003ADM_SETTINGS_UPSELL_ACKNOWLEDGED",
-            "name": "DM_SETTINGS_UPSELL_ACKNOWLEDGED",
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AFLAGS_DM_SETTINGS_UPSELL_ACKNOWLEDGED",
+            "name": "FLAGS_DM_SETTINGS_UPSELL_ACKNOWLEDGED",
             "summary": "Member\u0020has\u0020dismissed\u0020the\u0020DM\u0020settings\u0020upsell.",
-            "url": "classes/Discord-Parts-User-Member.html#constant_DM_SETTINGS_UPSELL_ACKNOWLEDGED"
+            "url": "classes/Discord-Parts-User-Member.html#constant_FLAGS_DM_SETTINGS_UPSELL_ACKNOWLEDGED"
         },                {
-            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AAUTOMOD_QUARANTINED_GUILD_TAG",
-            "name": "AUTOMOD_QUARANTINED_GUILD_TAG",
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AFLAGS_AUTOMOD_QUARANTINED_GUILD_TAG",
+            "name": "FLAGS_AUTOMOD_QUARANTINED_GUILD_TAG",
             "summary": "Member\u0027s\u0020guild\u0020tag\u0020is\u0020blocked\u0020by\u0020AutoMod.",
-            "url": "classes/Discord-Parts-User-Member.html#constant_AUTOMOD_QUARANTINED_GUILD_TAG"
+            "url": "classes/Discord-Parts-User-Member.html#constant_FLAGS_AUTOMOD_QUARANTINED_GUILD_TAG"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003A\u0024fillable",
             "name": "fillable",

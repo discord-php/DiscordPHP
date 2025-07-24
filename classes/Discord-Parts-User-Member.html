@@ -357,18 +357,11 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Member.html#constant_AUTOMOD_QUARANTINED_GUILD_TAG">AUTOMOD_QUARANTINED_GUILD_TAG</a>
+    <a class="" href="classes/Discord-Parts-User-Member.html#constant_FLAGS_AUTOMOD_QUARANTINED_GUILD_TAG">FLAGS_AUTOMOD_QUARANTINED_GUILD_TAG</a>
     <span>
         &nbsp;= 1 &lt;&lt; 10                            </span>
 </dt>
 <dd>Member&#039;s guild tag is blocked by AutoMod.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-Member.html#constant_DM_SETTINGS_UPSELL_ACKNOWLEDGED">DM_SETTINGS_UPSELL_ACKNOWLEDGED</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 9                            </span>
-</dt>
-<dd>Member has dismissed the DM settings upsell.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-User-Member.html#constant_FLAGS_AUTOMOD_QUARANTINED_USERNAME">FLAGS_AUTOMOD_QUARANTINED_USERNAME</a>
@@ -404,6 +397,13 @@
         &nbsp;= 1 &lt;&lt; 0                            </span>
 </dt>
 <dd>Member has left and rejoined the guild.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-User-Member.html#constant_FLAGS_DM_SETTINGS_UPSELL_ACKNOWLEDGED">FLAGS_DM_SETTINGS_UPSELL_ACKNOWLEDGED</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 9                            </span>
+</dt>
+<dd>Member has dismissed the DM settings upsell.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-User-Member.html#constant_FLAGS_IS_GUEST">FLAGS_IS_GUEST</a>
@@ -714,6 +714,13 @@
                                 &nbsp;: string|null    </span>
 </dt>
 <dd>Returns the guild avatar URL for the member.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method_getConstArray">getConstArray()</a>
+    <span>
+                                &nbsp;: array&lt;int, string&gt;    </span>
+</dt>
+<dd>Returns an array of constant names and their values.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_getCreatableAttributes">getCreatableAttributes()</a>
@@ -1049,9 +1056,9 @@ JSON. Used for JsonSerializable.</dd>
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_AUTOMOD_QUARANTINED_GUILD_TAG">
-        AUTOMOD_QUARANTINED_GUILD_TAG
-        <a href="classes/Discord-Parts-User-Member.html#constant_AUTOMOD_QUARANTINED_GUILD_TAG" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_FLAGS_AUTOMOD_QUARANTINED_GUILD_TAG">
+        FLAGS_AUTOMOD_QUARANTINED_GUILD_TAG
+        <a href="classes/Discord-Parts-User-Member.html#constant_FLAGS_AUTOMOD_QUARANTINED_GUILD_TAG" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
@@ -1068,40 +1075,8 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">AUTOMOD_QUARANTINED_GUILD_TAG</span>
+    <span class="phpdocumentor-signature__name">FLAGS_AUTOMOD_QUARANTINED_GUILD_TAG</span>
     = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 10</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_DM_SETTINGS_UPSELL_ACKNOWLEDGED">
-        DM_SETTINGS_UPSELL_ACKNOWLEDGED
-        <a href="classes/Discord-Parts-User-Member.html#constant_DM_SETTINGS_UPSELL_ACKNOWLEDGED" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">93</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Member has dismissed the DM settings upsell.</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">DM_SETTINGS_UPSELL_ACKNOWLEDGED</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 9</span>
 </code>
 
 
@@ -1262,6 +1237,38 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">FLAGS_DID_REJOIN</span>
     = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 0</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAGS_DM_SETTINGS_UPSELL_ACKNOWLEDGED">
+        FLAGS_DM_SETTINGS_UPSELL_ACKNOWLEDGED
+        <a href="classes/Discord-Parts-User-Member.html#constant_FLAGS_DM_SETTINGS_UPSELL_ACKNOWLEDGED" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">93</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Member has dismissed the DM settings upsell.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAGS_DM_SETTINGS_UPSELL_ACKNOWLEDGED</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 9</span>
 </code>
 
 
@@ -2736,7 +2743,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">479</span>
+    <span class="phpdocumentor-element-found-in__line">496</span>
 
     </aside>
 
@@ -2854,7 +2861,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">492</span>
+    <span class="phpdocumentor-element-found-in__line">509</span>
 
     </aside>
 
@@ -3362,6 +3369,60 @@ JSON. Used for JsonSerializable.</dd>
                 <section class="phpdocumentor-description"><p>The URL to the member avatar or null.</p>
 </section>
 
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getConstArray">
+        getConstArray()
+        <a href="classes/Discord-Parts-PartTrait.html#method_getConstArray" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">450</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns an array of constant names and their values.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getConstArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, string&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-PartTrait.html#method_getConstArray#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.19.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;int, string&gt;</span>
             </section>
 
 </article>
@@ -6127,13 +6188,13 @@ static as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-User-Member.html#constant_AUTOMOD_QUARANTINED_GUILD_TAG">AUTOMOD_QUARANTINED_GUILD_TAG</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Member.html#constant_DM_SETTINGS_UPSELL_ACKNOWLEDGED">DM_SETTINGS_UPSELL_ACKNOWLEDGED</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-Member.html#constant_FLAGS_AUTOMOD_QUARANTINED_GUILD_TAG">FLAGS_AUTOMOD_QUARANTINED_GUILD_TAG</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#constant_FLAGS_AUTOMOD_QUARANTINED_USERNAME">FLAGS_AUTOMOD_QUARANTINED_USERNAME</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#constant_FLAGS_BYPASSES_VERIFICATION">FLAGS_BYPASSES_VERIFICATION</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#constant_FLAGS_COMPLETED_HOME_ACTIONS">FLAGS_COMPLETED_HOME_ACTIONS</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#constant_FLAGS_COMPLETED_ONBOARDING">FLAGS_COMPLETED_ONBOARDING</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#constant_FLAGS_DID_REJOIN">FLAGS_DID_REJOIN</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-Member.html#constant_FLAGS_DM_SETTINGS_UPSELL_ACKNOWLEDGED">FLAGS_DM_SETTINGS_UPSELL_ACKNOWLEDGED</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#constant_FLAGS_IS_GUEST">FLAGS_IS_GUEST</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#constant_FLAGS_STARTED_HOME_ACTIONS">FLAGS_STARTED_HOME_ACTIONS</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#constant_FLAGS_STARTED_ONBOARDING">FLAGS_STARTED_ONBOARDING</a></li>
@@ -6191,6 +6252,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-User-Member.html#method_getAvatarAttribute">getAvatarAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getConstArray">getConstArray()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getCreatableAttributes">getCreatableAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getDiscord">getDiscord()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-User-Member.html#method_getPermissions">getPermissions()</a></li>
