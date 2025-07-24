@@ -447,9 +447,9 @@ trait PartTrait
      *
      * @since 10.19.0
      */
-    public static function getConstArray(): array
+    public function getConstArray(): array
     {
-        $reflection = new \ReflectionClass(self::class);
+        $reflection = new \ReflectionClass($this::class);
         $map = [];
         foreach ($reflection->getConstants() as $name => $value) {
             $map[$value] = $name;
