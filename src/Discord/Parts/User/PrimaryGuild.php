@@ -23,10 +23,10 @@ use Discord\Parts\Part;
  *
  * @since 10.10.1
  *
- * @property string $identity_guild_id The id of the user's primary clan.
- * @property bool   $identity_enabled  Whether the user is displaying their clan tag.
- * @property string $tag               The text of the user's clan tag (max 4 characters).
- * @property string $badge             The clan badge hash.
+ * @property string     $identity_guild_id The id of the user's primary clan.
+ * @property ?bool|null $identity_enabled  Whether the user is displaying their clan tag. This can be `null` if the system clears the identity, e.g. the server no longer supports tags. This will be `false` if the user manually removes their tag.
+ * @property string     $tag               The text of the user's clan tag (max 4 characters).
+ * @property string     $badge             The clan badge hash.
  *
  * @property-read ?string|null $id    The identifier of the primary guild.
  * @property-read ?Guild|null  $guild The primary guild, if available.
