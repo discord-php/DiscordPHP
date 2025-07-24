@@ -2192,7 +2192,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">247</span>
+    <span class="phpdocumentor-element-found-in__line">249</span>
 
     </aside>
 
@@ -2397,7 +2397,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">201</span>
+    <span class="phpdocumentor-element-found-in__line">203</span>
 
     </aside>
 
@@ -2488,7 +2488,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">155</span>
+    <span class="phpdocumentor-element-found-in__line">157</span>
 
     </aside>
 
@@ -2653,7 +2653,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">235</span>
+    <span class="phpdocumentor-element-found-in__line">237</span>
 
     </aside>
 
@@ -2691,7 +2691,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">219</span>
+    <span class="phpdocumentor-element-found-in__line">221</span>
 
     </aside>
 
@@ -3168,7 +3168,7 @@ JSON. Used for JsonSerializable.</p>
                 <div class="phpdocumentor-admonition">
         <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
             <article>
-                <p>Use <code class="prettyprint">Role::setColors()</code></p>
+                <p>Use <code class="prettyprint">Role::setColors()</code>. Color will still be returned by the API, but using the colors field is recommended when doing requests.</p>
 
             </article>
         </div>
@@ -3225,7 +3225,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">135</span>
 
     </aside>
 
@@ -3238,7 +3238,8 @@ JSON. Used for JsonSerializable.</p>
     <div class="phpdocumentor-label-line">
         </div>
     
-        <section class="phpdocumentor-description"><p>When sending tertiary_color the API enforces the role color to be a holographic style with values of:
+        <section class="phpdocumentor-description"><p>Roles without colors (Role::colors-&gt;primary_color === 0) do not count towards the final computed color in the user list.</p>
+<p>When sending tertiary_color the API enforces the role color to be a holographic style with values of:
 primary_color = 11127295, secondary_color = 16759788, and tertiary_color = 16761760.</p>
 </section>
 
@@ -3508,7 +3509,7 @@ primary_color = 11127295, secondary_color = 16759788, and tertiary_color = 16761
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">175</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
@@ -3611,7 +3612,7 @@ primary_color = 11127295, secondary_color = 16759788, and tertiary_color = 16761
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">187</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 

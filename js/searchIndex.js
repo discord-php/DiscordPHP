@@ -6258,283 +6258,338 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AGUILD_UPDATE",
             "name": "GUILD_UPDATE",
-            "summary": "",
+            "summary": "Server\u0020settings\u0020were\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_GUILD_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ACHANNEL_CREATE",
             "name": "CHANNEL_CREATE",
-            "summary": "",
+            "summary": "Channel\u0020was\u0020created.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_CHANNEL_CREATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ACHANNEL_UPDATE",
             "name": "CHANNEL_UPDATE",
-            "summary": "",
+            "summary": "Channel\u0020settings\u0020were\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_CHANNEL_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ACHANNEL_DELETE",
             "name": "CHANNEL_DELETE",
-            "summary": "",
+            "summary": "Channel\u0020was\u0020deleted.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_CHANNEL_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ACHANNEL_OVERWRITE_CREATE",
             "name": "CHANNEL_OVERWRITE_CREATE",
-            "summary": "",
+            "summary": "Permission\u0020overwrite\u0020was\u0020added\u0020to\u0020a\u0020channel.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_CHANNEL_OVERWRITE_CREATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ACHANNEL_OVERWRITE_UPDATE",
             "name": "CHANNEL_OVERWRITE_UPDATE",
-            "summary": "",
+            "summary": "Permission\u0020overwrite\u0020was\u0020updated\u0020for\u0020a\u0020channel.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_CHANNEL_OVERWRITE_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ACHANNEL_OVERWRITE_DELETE",
             "name": "CHANNEL_OVERWRITE_DELETE",
-            "summary": "",
+            "summary": "Permission\u0020overwrite\u0020was\u0020deleted\u0020from\u0020a\u0020channel.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_CHANNEL_OVERWRITE_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMEMBER_KICK",
             "name": "MEMBER_KICK",
-            "summary": "",
+            "summary": "Member\u0020was\u0020removed\u0020from\u0020server.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_MEMBER_KICK"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMEMBER_PRUNE",
             "name": "MEMBER_PRUNE",
-            "summary": "",
+            "summary": "Members\u0020were\u0020pruned\u0020from\u0020server.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_MEMBER_PRUNE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMEMBER_BAN_ADD",
             "name": "MEMBER_BAN_ADD",
-            "summary": "",
+            "summary": "Member\u0020was\u0020banned\u0020from\u0020server.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_MEMBER_BAN_ADD"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMEMBER_BAN_REMOVE",
             "name": "MEMBER_BAN_REMOVE",
-            "summary": "",
+            "summary": "Server\u0020ban\u0020was\u0020lifted\u0020for\u0020a\u0020member.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_MEMBER_BAN_REMOVE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMEMBER_UPDATE",
             "name": "MEMBER_UPDATE",
-            "summary": "",
+            "summary": "Member\u0020was\u0020updated\u0020in\u0020server.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_MEMBER_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMEMBER_ROLE_UPDATE",
             "name": "MEMBER_ROLE_UPDATE",
-            "summary": "",
+            "summary": "Member\u0020was\u0020added\u0020or\u0020removed\u0020from\u0020a\u0020role.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_MEMBER_ROLE_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMEMBER_MOVE",
             "name": "MEMBER_MOVE",
-            "summary": "",
+            "summary": "Member\u0020was\u0020moved\u0020to\u0020a\u0020different\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_MEMBER_MOVE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMEMBER_DISCONNECT",
             "name": "MEMBER_DISCONNECT",
-            "summary": "",
+            "summary": "Member\u0020was\u0020disconnected\u0020from\u0020a\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_MEMBER_DISCONNECT"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ABOT_ADD",
             "name": "BOT_ADD",
-            "summary": "",
+            "summary": "Bot\u0020user\u0020was\u0020added\u0020to\u0020server.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_BOT_ADD"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AROLE_CREATE",
             "name": "ROLE_CREATE",
-            "summary": "",
+            "summary": "Role\u0020was\u0020created.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_ROLE_CREATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AROLE_UPDATE",
             "name": "ROLE_UPDATE",
-            "summary": "",
+            "summary": "Role\u0020was\u0020edited.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_ROLE_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AROLE_DELETE",
             "name": "ROLE_DELETE",
-            "summary": "",
+            "summary": "Role\u0020was\u0020deleted.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_ROLE_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AINVITE_CREATE",
             "name": "INVITE_CREATE",
-            "summary": "",
+            "summary": "Server\u0020invite\u0020was\u0020created.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_INVITE_CREATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AINVITE_UPDATE",
             "name": "INVITE_UPDATE",
-            "summary": "",
+            "summary": "Server\u0020invite\u0020was\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_INVITE_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AINVITE_DELETE",
             "name": "INVITE_DELETE",
-            "summary": "",
+            "summary": "Server\u0020invite\u0020was\u0020deleted.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_INVITE_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AWEBHOOK_CREATE",
             "name": "WEBHOOK_CREATE",
-            "summary": "",
+            "summary": "Webhook\u0020was\u0020created.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_WEBHOOK_CREATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AWEBHOOK_UPDATE",
             "name": "WEBHOOK_UPDATE",
-            "summary": "",
+            "summary": "Webhook\u0020properties\u0020or\u0020channel\u0020were\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_WEBHOOK_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AWEBHOOK_DELETE",
             "name": "WEBHOOK_DELETE",
-            "summary": "",
+            "summary": "Webhook\u0020was\u0020deleted.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_WEBHOOK_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AEMOJI_CREATE",
             "name": "EMOJI_CREATE",
-            "summary": "",
+            "summary": "Emoji\u0020was\u0020created.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_EMOJI_CREATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AEMOJI_UPDATE",
             "name": "EMOJI_UPDATE",
-            "summary": "",
+            "summary": "Emoji\u0020name\u0020was\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_EMOJI_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AEMOJI_DELETE",
             "name": "EMOJI_DELETE",
-            "summary": "",
+            "summary": "Emoji\u0020was\u0020deleted.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_EMOJI_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMESSAGE_DELETE",
             "name": "MESSAGE_DELETE",
-            "summary": "",
+            "summary": "Single\u0020message\u0020was\u0020deleted.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_MESSAGE_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMESSAGE_BULK_DELETE",
             "name": "MESSAGE_BULK_DELETE",
-            "summary": "",
+            "summary": "Multiple\u0020messages\u0020were\u0020deleted.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_MESSAGE_BULK_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMESSAGE_PIN",
             "name": "MESSAGE_PIN",
-            "summary": "",
+            "summary": "Message\u0020was\u0020pinned\u0020to\u0020a\u0020channel.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_MESSAGE_PIN"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AMESSAGE_UNPIN",
             "name": "MESSAGE_UNPIN",
-            "summary": "",
+            "summary": "Message\u0020was\u0020unpinned\u0020from\u0020a\u0020channel.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_MESSAGE_UNPIN"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AINTEGRATION_CREATE",
             "name": "INTEGRATION_CREATE",
-            "summary": "",
+            "summary": "App\u0020was\u0020added\u0020to\u0020server.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_INTEGRATION_CREATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AINTEGRATION_UPDATE",
             "name": "INTEGRATION_UPDATE",
-            "summary": "",
+            "summary": "App\u0020was\u0020updated\u0020\u0028as\u0020an\u0020example,\u0020its\u0020scopes\u0020were\u0020updated\u0029.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_INTEGRATION_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AINTEGRATION_DELETE",
             "name": "INTEGRATION_DELETE",
-            "summary": "",
+            "summary": "App\u0020was\u0020removed\u0020from\u0020server.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_INTEGRATION_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ASTAGE_INSTANCE_CREATE",
             "name": "STAGE_INSTANCE_CREATE",
-            "summary": "",
+            "summary": "Stage\u0020instance\u0020was\u0020created\u0020\u0028stage\u0020channel\u0020becomes\u0020live\u0029.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_STAGE_INSTANCE_CREATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ASTAGE_INSTANCE_UPDATE",
             "name": "STAGE_INSTANCE_UPDATE",
-            "summary": "",
+            "summary": "Stage\u0020instance\u0020details\u0020were\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_STAGE_INSTANCE_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ASTAGE_INSTANCE_DELETE",
             "name": "STAGE_INSTANCE_DELETE",
-            "summary": "",
+            "summary": "Stage\u0020instance\u0020was\u0020deleted\u0020\u0028stage\u0020channel\u0020no\u0020longer\u0020live\u0029.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_STAGE_INSTANCE_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ASTICKER_CREATE",
             "name": "STICKER_CREATE",
-            "summary": "",
+            "summary": "Sticker\u0020was\u0020created.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_STICKER_CREATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ASTICKER_UPDATE",
             "name": "STICKER_UPDATE",
-            "summary": "",
+            "summary": "Sticker\u0020details\u0020were\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_STICKER_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ASTICKER_DELETE",
             "name": "STICKER_DELETE",
-            "summary": "",
+            "summary": "Sticker\u0020was\u0020deleted.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_STICKER_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AGUILD_SCHEDULED_EVENT_CREATE",
             "name": "GUILD_SCHEDULED_EVENT_CREATE",
-            "summary": "",
+            "summary": "Event\u0020was\u0020created.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_GUILD_SCHEDULED_EVENT_CREATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AGUILD_SCHEDULED_EVENT_UPDATE",
             "name": "GUILD_SCHEDULED_EVENT_UPDATE",
-            "summary": "",
+            "summary": "Event\u0020was\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_GUILD_SCHEDULED_EVENT_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AGUILD_SCHEDULED_EVENT_DELETE",
             "name": "GUILD_SCHEDULED_EVENT_DELETE",
-            "summary": "",
+            "summary": "Event\u0020was\u0020cancelled.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_GUILD_SCHEDULED_EVENT_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ATHREAD_CREATE",
             "name": "THREAD_CREATE",
-            "summary": "",
+            "summary": "Thread\u0020was\u0020created\u0020in\u0020a\u0020channel.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_THREAD_CREATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ATHREAD_UPDATE",
             "name": "THREAD_UPDATE",
-            "summary": "",
+            "summary": "Thread\u0020was\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_THREAD_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ATHREAD_DELETE",
             "name": "THREAD_DELETE",
-            "summary": "",
+            "summary": "Thread\u0020was\u0020deleted.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_THREAD_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAPPLICATION_COMMAND_PERMISSION_UPDATE",
             "name": "APPLICATION_COMMAND_PERMISSION_UPDATE",
-            "summary": "",
+            "summary": "Permissions\u0020were\u0020updated\u0020for\u0020a\u0020command.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_APPLICATION_COMMAND_PERMISSION_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ASOUNDBOARD_SOUND_CREATE",
+            "name": "SOUNDBOARD_SOUND_CREATE",
+            "summary": "Soundboard\u0020sound\u0020was\u0020created.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_SOUNDBOARD_SOUND_CREATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ASOUNDBOARD_SOUND_UPDATE",
+            "name": "SOUNDBOARD_SOUND_UPDATE",
+            "summary": "Soundboard\u0020sound\u0020was\u0020updated.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_SOUNDBOARD_SOUND_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ASOUNDBOARD_SOUND_DELETE",
+            "name": "SOUNDBOARD_SOUND_DELETE",
+            "summary": "Soundboard\u0020sound\u0020was\u0020deleted.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_SOUNDBOARD_SOUND_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAUTO_MODERATION_RULE_CREATE",
             "name": "AUTO_MODERATION_RULE_CREATE",
-            "summary": "",
+            "summary": "Auto\u0020Moderation\u0020rule\u0020was\u0020created.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_AUTO_MODERATION_RULE_CREATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAUTO_MODERATION_RULE_UPDATE",
             "name": "AUTO_MODERATION_RULE_UPDATE",
-            "summary": "",
+            "summary": "Auto\u0020Moderation\u0020rule\u0020was\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_AUTO_MODERATION_RULE_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAUTO_MODERATION_RULE_DELETE",
             "name": "AUTO_MODERATION_RULE_DELETE",
-            "summary": "",
+            "summary": "Auto\u0020Moderation\u0020rule\u0020was\u0020deleted.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_AUTO_MODERATION_RULE_DELETE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAUTO_MODERATION_BLOCK_MESSAGE",
             "name": "AUTO_MODERATION_BLOCK_MESSAGE",
-            "summary": "",
+            "summary": "Message\u0020was\u0020blocked\u0020by\u0020Auto\u0020Moderation.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_AUTO_MODERATION_BLOCK_MESSAGE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAUTO_MODERATION_FLAG_TO_CHANNEL",
             "name": "AUTO_MODERATION_FLAG_TO_CHANNEL",
-            "summary": "",
+            "summary": "Message\u0020was\u0020flagged\u0020by\u0020Auto\u0020Moderation.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_AUTO_MODERATION_FLAG_TO_CHANNEL"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAUTO_MODERATION_USER_COMMUNICATION_DISABLED",
             "name": "AUTO_MODERATION_USER_COMMUNICATION_DISABLED",
-            "summary": "",
+            "summary": "Member\u0020was\u0020timed\u0020out\u0020by\u0020Auto\u0020Moderation.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_AUTO_MODERATION_USER_COMMUNICATION_DISABLED"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAUTO_MODERATION_QUARANTINE_USER",
+            "name": "AUTO_MODERATION_QUARANTINE_USER",
+            "summary": "Member\u0020was\u0020quarantined\u0020by\u0020Auto\u0020Moderation.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_AUTO_MODERATION_QUARANTINE_USER"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ACREATOR_MONETIZATION_REQUEST_CREATED",
             "name": "CREATOR_MONETIZATION_REQUEST_CREATED",
-            "summary": "",
+            "summary": "Creator\u0020monetization\u0020request\u0020was\u0020created.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_CREATOR_MONETIZATION_REQUEST_CREATED"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003ACREATOR_MONETIZATION_TERMS_ACCEPTED",
             "name": "CREATOR_MONETIZATION_TERMS_ACCEPTED",
-            "summary": "",
+            "summary": "Creator\u0020monetization\u0020terms\u0020were\u0020accepted.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_CREATOR_MONETIZATION_TERMS_ACCEPTED"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AONBOARDING_PROMPT_CREATE",
+            "name": "ONBOARDING_PROMPT_CREATE",
+            "summary": "Guild\u0020Onboarding\u0020Question\u0020was\u0020created.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_ONBOARDING_PROMPT_CREATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AONBOARDING_PROMPT_UPDATE",
+            "name": "ONBOARDING_PROMPT_UPDATE",
+            "summary": "Guild\u0020Onboarding\u0020Question\u0020was\u0020updated.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_ONBOARDING_PROMPT_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AONBOARDING_PROMPT_DELETE",
+            "name": "ONBOARDING_PROMPT_DELETE",
+            "summary": "Guild\u0020Onboarding\u0020Question\u0020was\u0020deleted.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_ONBOARDING_PROMPT_DELETE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AONBOARDING_CREATE",
+            "name": "ONBOARDING_CREATE",
+            "summary": "Guild\u0020Onboarding\u0020was\u0020created.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_ONBOARDING_CREATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AONBOARDING_UPDATE",
+            "name": "ONBOARDING_UPDATE",
+            "summary": "Guild\u0020Onboarding\u0020was\u0020updated.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_ONBOARDING_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AHOME_SETTINGS_CREATE",
+            "name": "HOME_SETTINGS_CREATE",
+            "summary": "Guild\u0020Server\u0020Guide\u0020was\u0020created.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_HOME_SETTINGS_CREATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AHOME_SETTINGS_UPDATE",
+            "name": "HOME_SETTINGS_UPDATE",
+            "summary": "Guild\u0020Server\u0020Guide\u0020was\u0020updated.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_HOME_SETTINGS_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -9883,23 +9938,53 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AFLAGS_DID_REJOIN",
             "name": "FLAGS_DID_REJOIN",
-            "summary": "",
+            "summary": "Member\u0020has\u0020left\u0020and\u0020rejoined\u0020the\u0020guild.",
             "url": "classes/Discord-Parts-User-Member.html#constant_FLAGS_DID_REJOIN"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AFLAGS_COMPLETED_ONBOARDING",
             "name": "FLAGS_COMPLETED_ONBOARDING",
-            "summary": "",
+            "summary": "Member\u0020has\u0020completed\u0020onboarding.",
             "url": "classes/Discord-Parts-User-Member.html#constant_FLAGS_COMPLETED_ONBOARDING"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AFLAGS_BYPASSES_VERIFICATION",
             "name": "FLAGS_BYPASSES_VERIFICATION",
-            "summary": "",
+            "summary": "Member\u0020is\u0020exempt\u0020from\u0020guild\u0020verification\u0020requirements.",
             "url": "classes/Discord-Parts-User-Member.html#constant_FLAGS_BYPASSES_VERIFICATION"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AFLAGS_STARTED_ONBOARDING",
             "name": "FLAGS_STARTED_ONBOARDING",
-            "summary": "",
+            "summary": "Member\u0020has\u0020started\u0020onboarding,",
             "url": "classes/Discord-Parts-User-Member.html#constant_FLAGS_STARTED_ONBOARDING"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AFLAGS_IS_GUEST",
+            "name": "FLAGS_IS_GUEST",
+            "summary": "Member\u0020is\u0020a\u0020guest\u0020and\u0020can\u0020only\u0020access\u0020the\u0020voice\u0020channel\u0020they\u0020were\u0020invited\u0020to.",
+            "url": "classes/Discord-Parts-User-Member.html#constant_FLAGS_IS_GUEST"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AFLAGS_STARTED_HOME_ACTIONS",
+            "name": "FLAGS_STARTED_HOME_ACTIONS",
+            "summary": "Member\u0020has\u0020started\u0020Server\u0020Guide\u0020new\u0020member\u0020actions.",
+            "url": "classes/Discord-Parts-User-Member.html#constant_FLAGS_STARTED_HOME_ACTIONS"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AFLAGS_COMPLETED_HOME_ACTIONS",
+            "name": "FLAGS_COMPLETED_HOME_ACTIONS",
+            "summary": "Member\u0020has\u0020completed\u0020Server\u0020Guide\u0020new\u0020member\u0020actions.",
+            "url": "classes/Discord-Parts-User-Member.html#constant_FLAGS_COMPLETED_HOME_ACTIONS"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AFLAGS_AUTOMOD_QUARANTINED_USERNAME",
+            "name": "FLAGS_AUTOMOD_QUARANTINED_USERNAME",
+            "summary": "Member\u0027s\u0020username,\u0020display\u0020name,\u0020or\u0020nickname\u0020is\u0020blocked\u0020by\u0020AutoMod.",
+            "url": "classes/Discord-Parts-User-Member.html#constant_FLAGS_AUTOMOD_QUARANTINED_USERNAME"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003ADM_SETTINGS_UPSELL_ACKNOWLEDGED",
+            "name": "DM_SETTINGS_UPSELL_ACKNOWLEDGED",
+            "summary": "Member\u0020has\u0020dismissed\u0020the\u0020DM\u0020settings\u0020upsell.",
+            "url": "classes/Discord-Parts-User-Member.html#constant_DM_SETTINGS_UPSELL_ACKNOWLEDGED"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AAUTOMOD_QUARANTINED_GUILD_TAG",
+            "name": "AUTOMOD_QUARANTINED_GUILD_TAG",
+            "summary": "Member\u0027s\u0020guild\u0020tag\u0020is\u0020blocked\u0020by\u0020AutoMod.",
+            "url": "classes/Discord-Parts-User-Member.html#constant_AUTOMOD_QUARANTINED_GUILD_TAG"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003A\u0024fillable",
             "name": "fillable",
