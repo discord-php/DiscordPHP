@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Guild;
 
-use Discord\Discord;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\CommandPermissions;
 use Discord\Repository\AbstractRepository;
@@ -51,8 +50,10 @@ class CommandPermissionsRepository extends AbstractRepository
 
     /**
      * {@inheritDoc}
+     *
+     * @param Discord $discord
      */
-    public function __construct(Discord $discord, array $vars = [])
+    public function __construct($discord, array $vars = [])
     {
         $vars['application_id'] = $discord->application->id; // For the bot's Application Guild Commands
 
