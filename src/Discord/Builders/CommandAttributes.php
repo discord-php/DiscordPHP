@@ -437,7 +437,7 @@ trait CommandAttributes
         }
 
         if (is_array($contexts)) {
-            $contexts = new Collection($contexts);
+            $contexts = Collection::for('int', 'value', $contexts);
         }
 
         $this->contexts = $contexts;
