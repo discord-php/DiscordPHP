@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Builders;
 
+use Discord\Builders\Command\Option as OptionBuilder;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Command;
@@ -30,20 +31,20 @@ use function Discord\poly_strlen;
  *
  * @since 7.1.0
  *
- * @property int                                 $type                       The type of the command, defaults 1 if not set.
- * @property string                              $name                       1-32 character name of the command.
- * @property ?string[]|null                      $name_localizations         Localization dictionary for the name field. Values follow the same restrictions as name.
- * @property ?string                             $description                1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
- * @property ?string[]|null                      $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
- * @property ExCollectionInterface|Option[]|null $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
- * @property ?string                             $default_member_permissions Set of permissions represented as a bit set.
- * @property bool|null                           $dm_permission              Deprecated (use contexts instead); Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
- * @property ?bool                               $default_permission         Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
- * @property ?int                                $guild_id                   The optional guild ID this command is for. If not set, the command is global.
- * @property bool|null                           $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
- * @property ExCollectionInterface|null          $integration_types          Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts
- * @property ExCollectionInterface|null          $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.
- * @property int|null                            $handler                    Determines whether the interaction is handled by the app's interactions handler or by Discord
+ * @property int                                                 $type                       The type of the command, defaults 1 if not set.
+ * @property string                                              $name                       1-32 character name of the command.
+ * @property ?string[]|null                                      $name_localizations         Localization dictionary for the name field. Values follow the same restrictions as name.
+ * @property ?string                                             $description                1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
+ * @property ?string[]|null                                      $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
+ * @property ExCollectionInterface|OptionBuilder[]|Option[]|null $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
+ * @property ?string                                             $default_member_permissions Set of permissions represented as a bit set.
+ * @property bool|null                                           $dm_permission              Deprecated (use contexts instead); Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
+ * @property ?bool                                               $default_permission         Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
+ * @property ?int                                                $guild_id                   The optional guild ID this command is for. If not set, the command is global.
+ * @property bool|null                                           $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
+ * @property ExCollectionInterface|null                          $integration_types          Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts
+ * @property ExCollectionInterface|Int[]|null                    $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.
+ * @property int|null                                            $handler                    Determines whether the interaction is handled by the app's interactions handler or by Discord
  */
 trait CommandAttributes
 {
@@ -177,14 +178,14 @@ trait CommandAttributes
     /**
      * Adds an option to the command.
      *
-     * @param Option $option The option.
+     * @param OptionBuilder|Option $option The option.
      *
      * @throws \DomainException   Command type is not CHAT_INPUT (1).
      * @throws \OverflowException Command exceeds maximum 25 options.
      *
      * @return $this
      */
-    public function addOption(Option $option): self
+    public function addOption($option): self
     {
         if (isset($this->type) && $this->type != Command::CHAT_INPUT) {
             throw new \DomainException('Only CHAT_INPUT Command type can have option.');
@@ -194,9 +195,9 @@ trait CommandAttributes
             throw new \OverflowException('Command can only have a maximum of 25 options.');
         }
 
-        $this->options ??= Collection::for(Option::class, 'name');
+        $this->options ??= new Collection([], 'name');
 
-        $this->options->push($option);
+        $this->options->pushItem($option);
 
         return $this;
     }
@@ -204,13 +205,13 @@ trait CommandAttributes
     /**
      * Removes an option from the command.
      *
-     * @param Option $option Option to remove.
+     * @param OptionBuilder|Option $option Option to remove.
      *
      * @throws \DomainException Command type is not CHAT_INPUT (1).
      *
      * @return $this
      */
-    public function removeOption(Option $option): self
+    public function removeOption($option): self
     {
         if (isset($this->type) && $this->type != Command::CHAT_INPUT) {
             throw new \DomainException('Only CHAT_INPUT Command type can have option.');
@@ -421,7 +422,7 @@ trait CommandAttributes
     /**
      * Sets the contexts of the command. (Only for globally-scoped commands).
      *
-     * @param array|null $contexts Interaction contexts where the command can be used.
+     * @param ExCollectionInterface|Int[]|null $contexts Interaction contexts where the command can be used.
      *
      * @throws \DomainException If the command is not globally-scoped.
      *
@@ -429,10 +430,14 @@ trait CommandAttributes
      *
      * @since 10.18.0
      */
-    public function setContext(?array $contexts): self
+    public function setContext($contexts): self
     {
         if (isset($this->guild_id)) {
             throw new \DomainException('Only globally-scopped commands can have contexts.');
+        }
+
+        if (is_array($contexts)) {
+            $contexts = Collection::for('int', 'value', $contexts);
         }
 
         $this->contexts = $contexts;
