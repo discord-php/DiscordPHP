@@ -49,4 +49,22 @@ abstract class AbstractRepository extends Collection implements AbstractReposito
      * @var string
      */
     protected $class;
+
+    /**
+     * AbstractRepository constructor.
+     *
+     * @param Discord $discord
+     * @param array   $vars    An array of variables used for the endpoint.
+     */
+    public function __construct(protected Discord $discord, array $vars = [])
+    {
+        $this->http = $discord->getHttpClient();
+        $this->factory = $discord->getFactory();
+        $this->vars = $vars;
+        if ($cacheConfig = $discord->getCacheConfig(static::class)) {
+            $this->cache = new CacheWrapper($discord, $cacheConfig, $this->items, $this->class, $this->vars);
+        } else {
+            $this->cache = new LegacyCacheWrapper($discord, $this->items, $this->class);
+        }
+    }
 }

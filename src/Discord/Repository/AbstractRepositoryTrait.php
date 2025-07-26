@@ -13,13 +13,11 @@ declare(strict_types=1);
 
 namespace Discord\Repository;
 
-use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\CollectionTrait;
-use Discord\Helpers\LegacyCacheWrapper;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
@@ -114,24 +112,6 @@ trait AbstractRepositoryTrait
      * @var CacheWrapper
      */
     protected $cache;
-
-    /**
-     * AbstractRepository constructor.
-     *
-     * @param Discord $discord
-     * @param array   $vars    An array of variables used for the endpoint.
-     */
-    public function __construct(protected Discord $discord, array $vars = [])
-    {
-        $this->http = $discord->getHttpClient();
-        $this->factory = $discord->getFactory();
-        $this->vars = $vars;
-        if ($cacheConfig = $discord->getCacheConfig(static::class)) {
-            $this->cache = new CacheWrapper($discord, $cacheConfig, $this->items, $this->class, $this->vars);
-        } else {
-            $this->cache = new LegacyCacheWrapper($discord, $this->items, $this->class);
-        }
-    }
 
     /**
      * Freshens the repository cache.

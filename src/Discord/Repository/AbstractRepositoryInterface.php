@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Repository;
 
-use Discord\Discord;
 use Discord\Helpers\CollectionInterface;
 use Discord\Parts\Part;
 use React\Promise\PromiseInterface;
@@ -21,7 +20,7 @@ use Traversable;
 
 interface AbstractRepositoryInterface extends CollectionInterface
 {
-    public function __construct(Discord $discord, array $vars = []);
+    public function __construct($discord, array $vars = []);
     public function freshen(array $queryparams = []): PromiseInterface;
     public function create(array|object $attributes = [], bool $created = false): Part;
     public function save(Part $part, ?string $reason = null): PromiseInterface;
