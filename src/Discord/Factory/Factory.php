@@ -57,7 +57,11 @@ class Factory
             $data = (array) $data;
         }
 
-        if (strpos($class, 'Discord\\Parts') !== false) {
+        if (is_subclass_of($class, Part::class)) {
+            $object = $this->part($class, $data, $created);
+        } elseif (is_subclass_of($class, AbstractRepository::class)) {
+            $object = $this->repository($class, $data);
+        } elseif (strpos($class, 'Discord\\Parts') !== false) {
             $object = $this->part($class, $data, $created);
         } elseif (strpos($class, 'Discord\\Repository') !== false) {
             $object = $this->repository($class, $data);
