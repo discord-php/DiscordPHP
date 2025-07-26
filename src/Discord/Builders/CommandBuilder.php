@@ -58,6 +58,13 @@ class CommandBuilder extends Builder implements JsonSerializable
     protected $default_permission = true;
 
     /**
+     * Interaction context(s) where the command can be used, only for globally-scoped commands.
+     *
+     * @var CollectionInterface|array[int]|null
+     */
+    protected $contexts = null;
+
+    /**
      * The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
      *
      * @var ExCollectionInterface<Option|Option[]|null
