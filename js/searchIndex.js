@@ -10531,6 +10531,11 @@ Search.appendIndex(
             "summary": "Repositories\u0020provide\u0020a\u0020way\u0020to\u0020store\u0020and\u0020update\u0020parts\u0020on\u0020the\u0020Discord\u0020server.",
             "url": "classes/Discord-Repository-AbstractRepository.html"
         },                {
+            "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "AbstractRepository\u0020constructor.",
+            "url": "classes/Discord-Repository-AbstractRepository.html#method___construct"
+        },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003A\u0024discrim",
             "name": "discrim",
             "summary": "The\u0020collection\u0020discriminator.",
@@ -10545,6 +10550,11 @@ Search.appendIndex(
             "name": "class",
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-AbstractRepository.html#property_class"
+        },                {
+            "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003A\u0024discord",
+            "name": "discord",
+            "summary": "",
+            "url": "classes/Discord-Repository-AbstractRepository.html#property_discord"
         },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepositoryInterface",
             "name": "AbstractRepositoryInterface",
@@ -10700,11 +10710,6 @@ Search.appendIndex(
             "name": "AbstractRepositoryTrait",
             "summary": "",
             "url": "classes/Discord-Repository-AbstractRepositoryTrait.html"
-        },                {
-            "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "AbstractRepository\u0020constructor.",
-            "url": "classes/Discord-Repository-AbstractRepositoryTrait.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait\u003A\u003Afreshen\u0028\u0029",
             "name": "freshen",
@@ -10878,7 +10883,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\ActivityInstanceRepository\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "AbstractRepository\u0020constructor.",
             "url": "classes/Discord-Repository-ActivityInstanceRepository.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Repository\\ActivityInstanceRepository\u003A\u003A\u0024endpoints",
@@ -10913,7 +10918,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\MessageRepository\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "AbstractRepository\u0020constructor.",
             "url": "classes/Discord-Repository-Channel-MessageRepository.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\MessageRepository\u003A\u003A\u0024endpoints",
@@ -11083,7 +11088,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\EmojiRepository\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "AbstractRepository\u0020constructor.",
             "url": "classes/Discord-Repository-EmojiRepository.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Repository\\EmojiRepository\u003A\u003AcacheFreshen\u0028\u0029",
@@ -11168,7 +11173,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\CommandPermissionsRepository\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "AbstractRepository\u0020constructor.",
             "url": "classes/Discord-Repository-Guild-CommandPermissionsRepository.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\CommandPermissionsRepository\u003A\u003A\u0024endpoints",
@@ -11203,7 +11208,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\GuildCommandRepository\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "AbstractRepository\u0020constructor.",
             "url": "classes/Discord-Repository-Guild-GuildCommandRepository.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\GuildCommandRepository\u003A\u003A\u0024endpoints",
@@ -11418,7 +11423,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "AbstractRepository\u0020constructor.",
             "url": "classes/Discord-Repository-Monetization-EntitlementRepository.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003Aconsume\u0028\u0029",
@@ -11458,7 +11463,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\SKURepository\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "AbstractRepository\u0020constructor.",
             "url": "classes/Discord-Repository-Monetization-SKURepository.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\SKURepository\u003A\u003A\u0024endpoints",
@@ -11533,7 +11538,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Thread\\MemberRepository\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "AbstractRepository\u0020constructor.",
             "url": "classes/Discord-Repository-Thread-MemberRepository.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Repository\\Thread\\MemberRepository\u003A\u003A\u0024discrim",
