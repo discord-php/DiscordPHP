@@ -42,7 +42,7 @@ class ActivityInstanceRepository extends AbstractRepository
     /**
      * @inheritDoc
      */
-    public function __construct(Discord $discord, array $vars = [])
+    public function __construct($discord, array $vars = [])
     {
         $vars['application_id'] = $discord->application->id;
 

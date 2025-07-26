@@ -55,7 +55,7 @@ class MemberRepository extends AbstractRepository
     /**
      * {@inheritDoc}
      */
-    public function __construct(Discord $discord, array $vars = [])
+    public function __construct($discord, array $vars = [])
     {
         unset($vars['channel_id']); // For thread
         parent::__construct($discord, $vars);
