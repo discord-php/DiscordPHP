@@ -430,6 +430,13 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Discord-Discord.html#property_application_commands">$application_commands</a>
+    <span>
+                        &nbsp;: array&lt;string|int, <a href="classes/Discord-Helpers-RegisteredCommand.html"><abbr title="\Discord\Helpers\RegisteredCommand">RegisteredCommand</abbr></a>&gt;            </span>
+</dt>
+<dd>An array of registered slash commands.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Discord.html#property_cacheConfig">$cacheConfig</a>
     <span>
                         &nbsp;: array&lt;string|int, <a href="classes/Discord-Helpers-CacheConfig.html"><abbr title="\Discord\Helpers\CacheConfig">CacheConfig</abbr></a>&gt;            </span>
@@ -681,13 +688,6 @@ not received in 5 seconds.</dd>
                         &nbsp;: <abbr title="\InflateContext">InflateContext</abbr>|false            </span>
 </dt>
 <dd>zlib decompressor.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a class="" href="classes/Discord-Discord.html#property_application_commands">$application_commands</a>
-    <span>
-                        &nbsp;: array&lt;string|int, <a href="classes/Discord-Helpers-RegisteredCommand.html"><abbr title="\Discord\Helpers\RegisteredCommand">RegisteredCommand</abbr></a>&gt;            </span>
-</dt>
-<dd>An array of registered slash commands.</dd>
 
     </dl>
 
@@ -1744,6 +1744,45 @@ object.</dd>
         <section class="phpdocumentor-description"><p>Whether the client has verified their email.</p>
 </section>
 
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_application_commands">
+        $application_commands
+        <a href="classes/Discord-Discord.html#property_application_commands" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">349</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">An array of registered slash commands.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/Discord-Helpers-RegisteredCommand.html"><abbr title="\Discord\Helpers\RegisteredCommand">RegisteredCommand</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$application_commands</span>
+    </code>
+
+    
     
     
 
@@ -3210,45 +3249,6 @@ not received in 5 seconds.</p>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type"><abbr title="\InflateContext">InflateContext</abbr>|false</span>
     <span class="phpdocumentor-signature__name">$zlibDecompressor</span>
-    </code>
-
-    
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_application_commands">
-        $application_commands
-        <a href="classes/Discord-Discord.html#property_application_commands" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Discord.php"><a href="files/src-discord-discord.html"><abbr title="src/Discord/Discord.php">Discord.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">349</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">An array of registered slash commands.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
-            <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/Discord-Helpers-RegisteredCommand.html"><abbr title="\Discord\Helpers\RegisteredCommand">RegisteredCommand</abbr></a>&gt;</span>
-    <span class="phpdocumentor-signature__name">$application_commands</span>
     </code>
 
     
@@ -5909,6 +5909,7 @@ online, dnd, idle, invisible, offline</p>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_username">$username</a></li>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_users">$users</a></li>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_verified">$verified</a></li>
+                                                    <li class=""><a href="classes/Discord-Discord.html#property_application_commands">$application_commands</a></li>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_cacheConfig">$cacheConfig</a></li>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_client">$client</a></li>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_closing">$closing</a></li>
@@ -5945,7 +5946,6 @@ online, dnd, idle, invisible, offline</p>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_ws">$ws</a></li>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_wsFactory">$wsFactory</a></li>
                                                     <li class=""><a href="classes/Discord-Discord.html#property_zlibDecompressor">$zlibDecompressor</a></li>
-                                                    <li class=""><a href="classes/Discord-Discord.html#property_application_commands">$application_commands</a></li>
                                             </ul>
                 </li>
             
