@@ -346,7 +346,7 @@ class Discord
      *
      * @var RegisteredCommand[]
      */
-    private $application_commands;
+    protected $application_commands;
 
     /**
      * The transport compression setting.
