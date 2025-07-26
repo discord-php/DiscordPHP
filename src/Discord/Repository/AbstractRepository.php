@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace Discord\Repository;
 
+use Discord\Discord;
+use Discord\Helpers\CacheWrapper;
 use Discord\Helpers\Collection;
+use Discord\Helpers\LegacyCacheWrapper;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.
@@ -56,7 +59,7 @@ abstract class AbstractRepository extends Collection implements AbstractReposito
      * @param Discord $discord
      * @param array   $vars    An array of variables used for the endpoint.
      */
-    public function __construct(protected Discord $discord, array $vars = [])
+    public function __construct(protected $discord, array $vars = [])
     {
         $this->http = $discord->getHttpClient();
         $this->factory = $discord->getFactory();
