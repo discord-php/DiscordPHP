@@ -51,16 +51,23 @@ class CommandBuilder extends Builder implements JsonSerializable
     protected ?string $description = null;
 
     /**
-     * The default permission of the command. If true the command is enabled when the app is added to the guild.
+     * The default permission of the command. If true the command is enabled when the app is added to the guild. SOON DEPRECATED.
      *
-     * @var bool
+     * @var bool|null
      */
-    protected $default_permission = true;
+    protected ?bool $default_permission = null;
 
     /**
      * Interaction context(s) where the command can be used, only for globally-scoped commands.
      *
-     * @var CollectionInterface|array[int]|null
+     * @var Int[]|null
+     */
+    protected $integration_types = null;
+
+    /**
+     * Interaction context(s) where the command can be used, only for globally-scoped commands.
+     *
+     * @var ExCollectionInterface|Int[]|null
      */
     protected $contexts = null;
 
@@ -121,7 +128,7 @@ class CommandBuilder extends Builder implements JsonSerializable
         ];
 
         foreach ($optionals as $optional) {
-            if (property_exists($this, $optional)) {
+            if (property_exists($this, $optional) && $this->$optional !== null) {
                 $arrCommand[$optional] = $this->$optional;
             }
         }
