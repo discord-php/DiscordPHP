@@ -338,16 +338,16 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-CommandBuilder.html#property_contexts">$contexts</a>
     <span>
-                        &nbsp;: <abbr title="\Discord\Builders\CollectionInterface">CollectionInterface</abbr>|mixed|null            </span>
+                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, int&gt;|null            </span>
 </dt>
 <dd>Interaction context(s) where the command can be used, only for globally-scoped commands.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-CommandBuilder.html#property_default_permission">$default_permission</a>
     <span>
-                        &nbsp;: bool            </span>
+                        &nbsp;: bool|null            </span>
 </dt>
-<dd>The default permission of the command. If true the command is enabled when the app is added to the guild.</dd>
+<dd>The default permission of the command. If true the command is enabled when the app is added to the guild. SOON DEPRECATED.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-CommandBuilder.html#property_description">$description</a>
@@ -355,6 +355,13 @@
                         &nbsp;: string|null            </span>
 </dt>
 <dd>Description of the command. should be empty if the type is not CHAT_INPUT.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Discord-Builders-CommandBuilder.html#property_integration_types">$integration_types</a>
+    <span>
+                        &nbsp;: array&lt;string|int, int&gt;|null            </span>
+</dt>
+<dd>Interaction context(s) where the command can be used, only for globally-scoped commands.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-CommandBuilder.html#property_name">$name</a>
@@ -582,7 +589,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandBuilder.php"><a href="files/src-discord-builders-commandbuilder.html"><abbr title="src/Discord/Builders/CommandBuilder.php">CommandBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
@@ -591,7 +598,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Discord\Builders\CollectionInterface">CollectionInterface</abbr>|mixed|null</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, int&gt;|null</span>
     <span class="phpdocumentor-signature__name">$contexts</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
@@ -625,14 +632,14 @@
 
     </aside>
 
-        <p class="phpdocumentor-summary">The default permission of the command. If true the command is enabled when the app is added to the guild.</p>
+        <p class="phpdocumentor-summary">The default permission of the command. If true the command is enabled when the app is added to the guild. SOON DEPRECATED.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">bool</span>
+            <span class="phpdocumentor-signature__type">bool|null</span>
     <span class="phpdocumentor-signature__name">$default_permission</span>
-     = <span class="phpdocumentor-signature__default-value">true</span></code>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
     
@@ -671,6 +678,45 @@
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">string|null</span>
     <span class="phpdocumentor-signature__name">$description</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_integration_types">
+        $integration_types
+        <a href="classes/Discord-Builders-CommandBuilder.html#property_integration_types" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandBuilder.php"><a href="files/src-discord-builders-commandbuilder.html"><abbr title="src/Discord/Builders/CommandBuilder.php">CommandBuilder.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">65</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Interaction context(s) where the command can be used, only for globally-scoped commands.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, int&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$integration_types</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
@@ -738,7 +784,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandBuilder.php"><a href="files/src-discord-builders-commandbuilder.html"><abbr title="src/Discord/Builders/CommandBuilder.php">CommandBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
@@ -1147,7 +1193,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandBuilder.php"><a href="files/src-discord-builders-commandbuilder.html"><abbr title="src/Discord/Builders/CommandBuilder.php">CommandBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
@@ -1186,7 +1232,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandBuilder.php"><a href="files/src-discord-builders-commandbuilder.html"><abbr title="src/Discord/Builders/CommandBuilder.php">CommandBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">139</span>
+    <span class="phpdocumentor-element-found-in__line">146</span>
 
     </aside>
 
@@ -1238,7 +1284,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandBuilder.php"><a href="files/src-discord-builders-commandbuilder.html"><abbr title="src/Discord/Builders/CommandBuilder.php">CommandBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
@@ -2273,7 +2319,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandBuilder.php"><a href="files/src-discord-builders-commandbuilder.html"><abbr title="src/Discord/Builders/CommandBuilder.php">CommandBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">109</span>
 
     </aside>
 
@@ -2439,6 +2485,7 @@
                                                     <li class=""><a href="classes/Discord-Builders-CommandBuilder.html#property_contexts">$contexts</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-CommandBuilder.html#property_default_permission">$default_permission</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-CommandBuilder.html#property_description">$description</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-CommandBuilder.html#property_integration_types">$integration_types</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-CommandBuilder.html#property_name">$name</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-CommandBuilder.html#property_options">$options</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-CommandBuilder.html#property_type">$type</a></li>

@@ -153,8 +153,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024default_permission",
             "name": "default_permission",
-            "summary": "The\u0020default\u0020permission\u0020of\u0020the\u0020command.\u0020If\u0020true\u0020the\u0020command\u0020is\u0020enabled\u0020when\u0020the\u0020app\u0020is\u0020added\u0020to\u0020the\u0020guild.",
+            "summary": "The\u0020default\u0020permission\u0020of\u0020the\u0020command.\u0020If\u0020true\u0020the\u0020command\u0020is\u0020enabled\u0020when\u0020the\u0020app\u0020is\u0020added\u0020to\u0020the\u0020guild.\u0020SOON\u0020DEPRECATED.",
             "url": "classes/Discord-Builders-CommandBuilder.html#property_default_permission"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024integration_types",
+            "name": "integration_types",
+            "summary": "Interaction\u0020context\u0028s\u0029\u0020where\u0020the\u0020command\u0020can\u0020be\u0020used,\u0020only\u0020for\u0020globally\u002Dscoped\u0020commands.",
+            "url": "classes/Discord-Builders-CommandBuilder.html#property_integration_types"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024contexts",
             "name": "contexts",
