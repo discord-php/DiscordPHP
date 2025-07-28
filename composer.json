@@ -60,6 +60,7 @@
     "scripts": {
         "pint": ["./vendor/bin/pint --config ./pint.json ./src"],
         "cs": ["./vendor/bin/php-cs-fixer fix"],
+        "cs-unsupported": ["./vendor/bin/php-cs-fixer fix --allow-unsupported-php-version yes"],
         "unit": ["./vendor/bin/phpunit --testdox"],
         "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage --testdox"],
         "php8.0": ["docker-compose run php8.0 sh"],
