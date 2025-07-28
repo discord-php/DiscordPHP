@@ -30,7 +30,7 @@ use Discord\Parts\Part;
 class MessagePinData extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'items',

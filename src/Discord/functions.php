@@ -140,15 +140,16 @@ function contains(string $string, array $matches): bool
 /**
  * Converts a string to studlyCase.
  *
- * @param string $string The string to convert.
+ * @param string $string  The string to convert.
+ * @param bool   $ucfirst The function to apply to each word (default: ucfirst).
  *
  * @return string
  *
  * @since 5.0.12
  */
-function studly(string $string): string
+function studly(string $string, bool $ucfirst = true): string
 {
-    return implode('', array_map('ucfirst', array_map('strtolower', preg_split('/[^a-z0-9]+/i', $string))));
+    return implode('', array_map($ucfirst ? 'ucfirst' : null, array_map('strtolower', preg_split('/[^a-z0-9]+/i', $string))));
 }
 
 /**

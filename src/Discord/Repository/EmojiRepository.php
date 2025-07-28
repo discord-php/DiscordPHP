@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Repository;
 
-use Discord\Discord;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
 use React\Promise\PromiseInterface;
@@ -37,7 +36,7 @@ use function React\Promise\resolve;
 class EmojiRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::APPLICATION_EMOJIS,
@@ -48,12 +47,12 @@ class EmojiRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Emoji::class;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __construct($discord, array $vars = [])
     {

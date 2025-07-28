@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Thread;
 
-use Discord\Discord;
 use Discord\Http\Endpoint;
 use Discord\Parts\Thread\Member;
 use Discord\Repository\AbstractRepository;
@@ -35,12 +34,12 @@ use Discord\Repository\AbstractRepository;
 class MemberRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $discrim = 'user_id';
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::THREAD_MEMBERS,
@@ -48,12 +47,12 @@ class MemberRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Member::class;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __construct($discord, array $vars = [])
     {

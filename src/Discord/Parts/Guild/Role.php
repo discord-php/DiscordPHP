@@ -49,7 +49,7 @@ class Role extends Part implements Stringable
     public const IN_PROMPT = 1 << 0; // Role can be selected by members in an onboarding prompt.
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -196,7 +196,7 @@ class Role extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-role-json-params
      */
@@ -214,7 +214,7 @@ class Role extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-json-params
      */
@@ -232,7 +232,7 @@ class Role extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

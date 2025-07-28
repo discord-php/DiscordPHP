@@ -864,7 +864,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     {
         if ($enable) {
             if (! ($this->flags & Message::FLAG_IS_COMPONENTS_V2)) {
-                $this->flags |= Message::FLAG_IS_COMPONENTS_V2 ;
+                $this->flags |= Message::FLAG_IS_COMPONENTS_V2;
             }
         } elseif ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
             $this->flags &= ~Message::FLAG_IS_COMPONENTS_V2;

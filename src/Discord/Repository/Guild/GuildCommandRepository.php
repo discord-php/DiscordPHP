@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Guild;
 
-use Discord\Discord;
 use Discord\Http\Endpoint;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Repository\AbstractRepository;
@@ -35,7 +34,7 @@ use Discord\Repository\AbstractRepository;
 class GuildCommandRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_APPLICATION_COMMANDS,
@@ -46,12 +45,12 @@ class GuildCommandRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Command::class;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __construct($discord, array $vars = [])
     {

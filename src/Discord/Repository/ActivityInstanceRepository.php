@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Repository;
 
-use Discord\Discord;
 use Discord\Http\Endpoint;
 use Discord\Parts\OAuth\ActivityInstance;
 

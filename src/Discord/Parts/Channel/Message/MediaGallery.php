@@ -32,7 +32,7 @@ use Discord\Helpers\ExCollectionInterface;
 class MediaGallery extends Content
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',

@@ -514,7 +514,9 @@ trait ChannelTrait
         if (is_string($message)) {
             $message = MessageBuilder::new()->setContent($message);
             $message->setTts($tts);
-            if ($embed) $message->addEmbed($embed);
+            if ($embed) {
+                $message->addEmbed($embed);
+            }
             $message->setAllowedMentions($allowed_mentions);
             $message->setReplyTo($replyTo);
         }

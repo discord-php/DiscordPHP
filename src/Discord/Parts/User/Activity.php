@@ -32,7 +32,7 @@ use Stringable;
  * @property Carbon|null   $created_at          Timestamp of when the activity was added to the user's session.
  * @property object|null   $timestamps          Unix timestamps for start and/or end of the game.
  * @property string|null   $application_id      Application id for the game.
- * @property ?integer|null $status_display_type Status display type; controls which field is displayed in the user's status text in the member list.
+ * @property ?int|null     $status_display_type Status display type; controls which field is displayed in the user's status text in the member list.
  * @property ?string|null  $details             What the player is currently doing.
  * @property ?string|null  $details_url         URL that is linked when clicking on the details text
  * @property ?string|null  $state               The user's current party status, or text used for a custom status.

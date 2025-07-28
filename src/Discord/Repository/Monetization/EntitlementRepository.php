@@ -36,7 +36,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class EntitlementRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::APPLICATION_ENTITLEMENTS,
@@ -46,12 +46,12 @@ class EntitlementRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Entitlement::class;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __construct($discord, array $vars = [])
     {
