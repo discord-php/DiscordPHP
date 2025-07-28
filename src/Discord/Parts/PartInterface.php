@@ -51,7 +51,7 @@ interface PartInterface
     //protected function makeOptionalAttributes(array $attributes): array;
     public function getDiscord(): Discord;
     public function createOf(string $class, array|object $data): self;
-    //private static function studly(string $string, bool $ucfirst = true): string;
+    //private static function studly(string $string): string;
     public function __toString(): string;
     public function __debugInfo(): array;
     public function __get(string $key);

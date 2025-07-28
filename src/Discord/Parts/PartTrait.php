@@ -419,14 +419,13 @@ trait PartTrait
      * do not want to introduce BC by replacing it. This method is private
      * static as we may move it outside this class in future.
      *
-     * @param string $string  The string to convert.
-     * @param bool   $ucfirst Whether to uppercase the first character.
+     * @param string $string The string to convert.
      *
      * @return string
      *
      * @since 10.0.0
      */
-    private static function studly(string $string, bool $ucfirst = true): string
+    private static function studly(string $string): string
     {
         static $studlyCache = [];
 
@@ -436,7 +435,7 @@ trait PartTrait
 
         $words = explode(' ', str_replace(['-', '_'], ' ', $string));
 
-        $studlyWords = array_map($ucfirst ? 'ucfirst' : null, $words);
+        $studlyWords = array_map('ucfirst', $words);
 
         return $studlyCache[$string] = implode($studlyWords);
     }
