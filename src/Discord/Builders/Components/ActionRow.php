@@ -58,6 +58,8 @@ class ActionRow extends Layout
      * @throws \InvalidArgumentException
      * @throws \OverflowException
      *
+     * @since 10.19.0
+     *
      * @return $this
      */
     public function addComponent(ComponentObject $component): self
