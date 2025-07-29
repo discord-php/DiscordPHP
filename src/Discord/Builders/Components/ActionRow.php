@@ -84,6 +84,24 @@ class ActionRow extends Layout
     }
 
     /**
+     * Add a group of components to the action row.
+     *
+     * @param ComponentObject[] $components Components to add.
+     *
+     * @throws \InvalidArgumentException Component is not a valid type.
+     *
+     * @return $this
+     */
+    public function addComponents($components): self
+    {
+        foreach ($components as $component) {
+            $this->addComponent($component);
+        }
+
+        return $this;
+    }
+
+    /**
      * Removes a component from the action row.
      *
      * @param ComponentObject $component Component to remove.

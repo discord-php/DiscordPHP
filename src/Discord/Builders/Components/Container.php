@@ -130,7 +130,7 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function addComponents(array $components): self
+    public function addComponents($components): self
     {
         foreach ($components as $component) {
             $this->addComponent($component);
