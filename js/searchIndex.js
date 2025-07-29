@@ -186,6 +186,11 @@ Search.appendIndex(
             "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020action\u0020row.",
             "url": "classes/Discord-Builders-Components-ActionRow.html#method_addComponent"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AaddComponents\u0028\u0029",
+            "name": "addComponents",
+            "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020action\u0020row.",
+            "url": "classes/Discord-Builders-Components-ActionRow.html#method_addComponents"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AremoveComponent\u0028\u0029",
             "name": "removeComponent",
             "summary": "Removes\u0020a\u0020component\u0020from\u0020the\u0020action\u0020row.",
@@ -348,7 +353,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-Button.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003A__debugInfo\u0028\u0029",
@@ -4573,7 +4578,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\MediaGallery\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-MediaGallery.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\MediaGalleryItem",
@@ -11108,7 +11113,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\EmojiRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-EmojiRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\EmojiRepository\u003A\u003A\u0024class",
@@ -11188,7 +11193,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\CommandPermissionsRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-CommandPermissionsRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\CommandPermissionsRepository\u003A\u003A\u0024class",
@@ -11223,7 +11228,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\GuildCommandRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-GuildCommandRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\GuildCommandRepository\u003A\u003A\u0024class",
@@ -11458,7 +11463,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Monetization-EntitlementRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003A\u0024class",
@@ -11558,7 +11563,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Thread\\MemberRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Thread-MemberRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Thread\\MemberRepository\u003A\u003A\u0024class",
