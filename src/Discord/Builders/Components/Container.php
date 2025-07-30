@@ -104,11 +104,7 @@ class Container extends Layout implements Contracts\ComponentV2
      */
     public function addComponent(ComponentObject $component): self
     {
-        if ($component instanceof SelectMenu) {
-            $component = ActionRow::new()->addComponent($component);
-        }
-
-        if ($component instanceof Button) {
+        if ($component instanceof Interactive) {
             $component = ActionRow::new()->addComponent($component);
         }
 
