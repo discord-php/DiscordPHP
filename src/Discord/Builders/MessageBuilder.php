@@ -14,9 +14,11 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Builders\Components\ActionRow;
+use Discord\Builders\Components\Button;
 use Discord\Builders\Components\Component;
 use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\Contracts\ComponentV2;
+use Discord\Builders\Components\Interactive;
 use Discord\Builders\Components\SelectMenu;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
@@ -439,7 +441,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             $this->setV2Flag();
         }
 
-        if ($component instanceof SelectMenu) {
+        if ($component instanceof Interactive) {
             $component = ActionRow::new()->addComponent($component);
         }
 
