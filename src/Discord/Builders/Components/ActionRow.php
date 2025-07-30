@@ -142,7 +142,7 @@ class ActionRow extends Layout
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {

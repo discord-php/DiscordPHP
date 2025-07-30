@@ -455,6 +455,25 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
+     * Add a group of components to the builder.
+     *
+     * @param ComponentObject[] $components Components to add.
+     *
+     * @throws \InvalidArgumentException Component is not a valid type.
+     * @throws \OverflowException        Builder exceeds component limits.
+     *
+     * @return $this
+     */
+    public function addComponents($components): self
+    {
+        foreach ($components as $component) {
+            $this->addComponent($component);
+        }
+
+        return $this;
+    }
+
+    /**
      * Validates the total number of components added to the message.
      *
      * @throws \OverflowException If the total number of components is 40 or more.
@@ -984,7 +1003,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
