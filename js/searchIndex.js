@@ -151,6 +151,11 @@ Search.appendIndex(
             "summary": "Description\u0020of\u0020the\u0020command.\u0020should\u0020be\u0020empty\u0020if\u0020the\u0020type\u0020is\u0020not\u0020CHAT_INPUT.",
             "url": "classes/Discord-Builders-CommandBuilder.html#property_description"
         },                {
+            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024default_member_permissions",
+            "name": "default_member_permissions",
+            "summary": "Set\u0020of\u0020permissions\u0020represented\u0020as\u0020a\u0020bit\u0020set.",
+            "url": "classes/Discord-Builders-CommandBuilder.html#property_default_member_permissions"
+        },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024default_permission",
             "name": "default_permission",
             "summary": "The\u0020default\u0020permission\u0020of\u0020the\u0020command.\u0020If\u0020true\u0020the\u0020command\u0020is\u0020enabled\u0020when\u0020the\u0020app\u0020is\u0020added\u0020to\u0020the\u0020guild.\u0020SOON\u0020DEPRECATED.",
