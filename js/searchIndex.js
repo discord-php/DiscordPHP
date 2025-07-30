@@ -208,7 +208,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-ActionRow.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AUSAGE",
@@ -663,7 +663,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-Container.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AUSAGE",
@@ -1816,6 +1816,11 @@ Search.appendIndex(
             "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020builder.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_addComponent"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AaddComponents\u0028\u0029",
+            "name": "addComponents",
+            "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020builder.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_addComponents"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AenforceV2Limits\u0028\u0029",
             "name": "enforceV2Limits",
             "summary": "Validates\u0020the\u0020total\u0020number\u0020of\u0020components\u0020added\u0020to\u0020the\u0020message.",
@@ -1978,7 +1983,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A\u0024content",
