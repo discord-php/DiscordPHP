@@ -463,6 +463,8 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @throws \OverflowException        Builder exceeds component limits.
      *
      * @return $this
+     *
+     * @since 10.19.0
      */
     public function addComponents($components): self
     {
