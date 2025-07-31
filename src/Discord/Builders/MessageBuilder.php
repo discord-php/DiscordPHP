@@ -14,12 +14,10 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Builders\Components\ActionRow;
-use Discord\Builders\Components\Button;
 use Discord\Builders\Components\Component;
 use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\Interactive;
-use Discord\Builders\Components\SelectMenu;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;

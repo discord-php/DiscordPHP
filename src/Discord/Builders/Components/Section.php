@@ -58,7 +58,7 @@ class Section extends Layout implements Contracts\ComponentV2
     /**
      * Adds a text display component to the section.
      * Text displays can only be used within sections.
-     *  Use setAccessory() instead for Thumbnail or Button.
+     * Use setAccessory() instead for Thumbnail or Button.
      *
      * @param TextDisplay|string $component Text display component to add.
      *
@@ -82,6 +82,25 @@ class Section extends Layout implements Contracts\ComponentV2
         }
 
         $this->components[] = $component;
+
+        return $this;
+    }
+
+    /**
+     * Add a group of components to the section.
+     *
+     * @param TextDisplay[]|string[] $components Components to add.
+     *
+     * @throws \InvalidArgumentException Component is not a TextDisplay.
+     * @throws \OverflowException        Section exceeds 3 text components.
+     *
+     * @return $this
+     */
+    public function addComponents($components): self
+    {
+        foreach ($components as $component) {
+            $this->addComponent($component);
+        }
 
         return $this;
     }
@@ -127,7 +146,7 @@ class Section extends Layout implements Contracts\ComponentV2
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
