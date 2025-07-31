@@ -95,6 +95,8 @@ class Section extends Layout implements Contracts\ComponentV2
      * @throws \OverflowException        Section exceeds 3 text components.
      *
      * @return $this
+     *
+     * @since 10.19.0
      */
     public function addComponents($components): self
     {
