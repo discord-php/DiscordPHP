@@ -1016,6 +1016,11 @@ Search.appendIndex(
             "summary": "Adds\u0020a\u0020text\u0020display\u0020component\u0020to\u0020the\u0020section.",
             "url": "classes/Discord-Builders-Components-Section.html#method_addComponent"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AaddComponents\u0028\u0029",
+            "name": "addComponents",
+            "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020section.",
+            "url": "classes/Discord-Builders-Components-Section.html#method_addComponents"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AsetAccessory\u0028\u0029",
             "name": "setAccessory",
             "summary": "Sets\u0020the\u0020accessory\u0020component\u0020of\u0020the\u0020section.",
@@ -1033,7 +1038,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-Section.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AUSAGE",
