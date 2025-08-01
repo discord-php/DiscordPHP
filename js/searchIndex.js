@@ -9261,10 +9261,10 @@ Search.appendIndex(
             "summary": "Converts\u0020a\u0020string\u0020to\u0020studlyCase.",
             "url": "classes/Discord-Parts-PartTrait.html#method_studly"
         },                {
-            "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AgetConstArray\u0028\u0029",
-            "name": "getConstArray",
+            "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AgetConstants\u0028\u0029",
+            "name": "getConstants",
             "summary": "Returns\u0020an\u0020array\u0020of\u0020constant\u0020names\u0020and\u0020their\u0020values.",
-            "url": "classes/Discord-Parts-PartTrait.html#method_getConstArray"
+            "url": "classes/Discord-Parts-PartTrait.html#method_getConstants"
         },                {
             "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
