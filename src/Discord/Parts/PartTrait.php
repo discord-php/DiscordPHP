@@ -450,12 +450,8 @@ trait PartTrait
     public function getConstArray(): array
     {
         $reflection = new \ReflectionClass($this::class);
-        $map = [];
-        foreach ($reflection->getConstants() as $name => $value) {
-            $map[$name] = $value;
-        }
 
-        return $map;
+        return $reflection->getConstants();
     }
 
     /**
