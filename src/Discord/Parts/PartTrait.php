@@ -447,7 +447,7 @@ trait PartTrait
      *
      * @since 10.19.0
      */
-    public function getConstArray(): array
+    public function getConstants(): array
     {
         $reflection = new \ReflectionClass($this::class);
 
