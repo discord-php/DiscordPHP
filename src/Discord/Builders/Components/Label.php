@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
-use Discord\Builders\Components\StringSelect;
-
 /**
  * A Label is a top-level component.
  *
@@ -63,11 +61,11 @@ class Label extends ComponentObject
      */
     protected $component;
 
-     /**
+    /**
      * Creates a new label component.
      *
-     * @param string                 $label The text for the label.
-     * @param StringSelect|TextInput $component The component associated with the label.
+     * @param string                 $label       The text for the label.
+     * @param StringSelect|TextInput $component   The component associated with the label.
      * @param string|null            $description Optional description for the label.
      *
      * @return self
@@ -125,14 +123,14 @@ class Label extends ComponentObject
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
         $data = [
             'type' => $this->type,
             'label' => $this->label,
-            'component' => $this->component
+            'component' => $this->component,
         ];
 
         if (isset($this->description)) {

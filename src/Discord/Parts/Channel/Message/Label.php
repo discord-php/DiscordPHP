@@ -31,7 +31,7 @@ namespace Discord\Parts\Channel\Message;
 class Label extends Component
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -43,7 +43,7 @@ class Label extends Component
 
     public function getComponentAttribute(): StringSelect|TextInput|null
     {
-        if (!isset($this->attributes['component'])) {
+        if (! isset($this->attributes['component'])) {
             return null;
         }
 

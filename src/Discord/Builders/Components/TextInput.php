@@ -320,7 +320,7 @@ class TextInput extends Interactive
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {

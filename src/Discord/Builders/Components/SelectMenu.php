@@ -104,7 +104,7 @@ abstract class SelectMenu extends Interactive
     protected $disabled;
 
     /**
-     * Whether the select menu is required. (Modal only)
+     * Whether the select menu is required. (Modal only).
      *
      * @var bool|null
      */
@@ -316,8 +316,8 @@ abstract class SelectMenu extends Interactive
         return $this;
     }
 
-     /**
-     * Sets whether the select menu is required. (Modal only)
+    /**
+     * Sets whether the select menu is required. (Modal only).
      *
      * @param bool|null $required
      *
@@ -526,7 +526,7 @@ abstract class SelectMenu extends Interactive
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {

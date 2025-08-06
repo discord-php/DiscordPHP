@@ -60,7 +60,7 @@ class Component extends Part
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',
