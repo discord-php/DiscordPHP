@@ -104,6 +104,13 @@ abstract class SelectMenu extends Interactive
     protected $disabled;
 
     /**
+     * Whether the select menu is required. (Modal only)
+     *
+     * @var bool|null
+     */
+    protected $required;
+
+    /**
      * Callback used to listen for `INTERACTION_CREATE` events.
      *
      * @var callable|null
@@ -305,6 +312,20 @@ abstract class SelectMenu extends Interactive
     public function setDisabled(bool $disabled = true): self
     {
         $this->disabled = $disabled;
+
+        return $this;
+    }
+
+     /**
+     * Sets whether the select menu is required. (Modal only)
+     *
+     * @param bool|null $required
+     *
+     * @return $this
+     */
+    public function setRequired(?bool $required = false): self
+    {
+        $this->required = $required;
 
         return $this;
     }
@@ -538,7 +559,7 @@ abstract class SelectMenu extends Interactive
             $content['min_values'] = $this->min_values;
         }
 
-        if ($this->max_values) {
+        if (isset($this->max_values) && $this->max_values) {
             if (isset($this->options) && $this->max_values > count($this->options)) {
                 throw new \OutOfBoundsException('There are less options than the maximum number of options to be selected.');
             }
@@ -546,8 +567,12 @@ abstract class SelectMenu extends Interactive
             $content['max_values'] = $this->max_values;
         }
 
-        if ($this->disabled) {
+        if (isset($this->disabled) && $this->disabled) {
             $content['disabled'] = true;
+        }
+
+        if (isset($this->required)) {
+            $content['required'] = true;
         }
 
         return $content;
