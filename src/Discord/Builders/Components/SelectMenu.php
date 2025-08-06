@@ -35,7 +35,7 @@ use function Discord\poly_strlen;
  */
 abstract class SelectMenu extends Interactive
 {
-    public const USAGE = ['Message'];
+    public const USAGE = ['Message', 'Modal'];
 
     /**
      * Component type.

@@ -23,7 +23,7 @@ namespace Discord\Builders\Components;
  */
 class StringSelect extends SelectMenu
 {
-    public const USAGE = ['Message'];
+    public const USAGE = ['Message', 'Modal'];
 
     /**
      * Component type.
