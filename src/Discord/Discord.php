@@ -1150,7 +1150,10 @@ class Discord
     public function requestGuildMembers($guild_id, array $options = [])
     {
         if (! isset($options['query']) && ! isset($options['user_ids'])) {
-            throw new \InvalidArgumentException('Either query or user_ids must be set.');
+            if (! isset($options['limit'])) {
+                $options['limit'] = 0;
+            }
+            $options['query'] = '';
         }
 
         if (! is_string($guild_id)) {
