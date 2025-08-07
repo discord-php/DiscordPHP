@@ -41,12 +41,8 @@ class Label extends Component
         'component',
     ];
 
-    public function getComponentAttribute(): StringSelect|TextInput|null
+    public function getComponentAttribute(): StringSelect|TextInput
     {
-        if (! isset($this->attributes['component'])) {
-            return null;
-        }
-
         return $this->createOf(Component::TYPES[$this->attributes['component']->type ?? 0], $this->attributes['component']);
     }
 }
