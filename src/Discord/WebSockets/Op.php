@@ -57,7 +57,7 @@ class Op
     /** Used to acknowledge heartbeats. */
     public const OP_HEARTBEAT_ACK = 11;
     /** Request soundboard sounds. */
-    public const REQUEST_SOUNDBOARD_SOUNDS = 31;
+    public const OP_REQUEST_SOUNDBOARD_SOUNDS = 31;
 
     /**
      * Voice Opcodes.

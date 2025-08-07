@@ -1145,7 +1145,7 @@ class Discord
     public function requestSoundboardSounds(array $guildIds): void
     {
         $payload = Payload::new(
-            Op::REQUEST_SOUNDBOARD_SOUNDS,
+            Op::OP_REQUEST_SOUNDBOARD_SOUNDS,
             [
                 'guild_ids' => $guildIds,
             ],
