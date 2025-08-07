@@ -39,7 +39,9 @@ class Op
     /** Used for client handshake. */
     public const OP_IDENTIFY = 2;
     /** Used to update the client presence. */
-    public const OP_PRESENCE_UPDATE = 3;
+    public const OP_UPDATE_PRESENCE = 3;
+    /** @deprecated 10.18.31 Use `OP_UPDATE_PRESENCE` */
+    public const OP_PRESENCE_UPDATE = self::OP_UPDATE_PRESENCE;
     /** Used to join/move/leave voice channels. */
     public const OP_UPDATE_VOICE_STATE = 4;
     /** @deprecated 10.18.31 Use `OP_UPDATE_VOICE_STATE` */
