@@ -1262,6 +1262,8 @@ class Discord
      * @param Channel|string|null $channel_id ID of the voice channel to join, or null to disconnect.
      * @param bool                $self_mute  Whether the client is muted.
      * @param bool                $self_deaf  Whether the client is deafened.
+     *
+     * @since 10.19.0
      */
     public function updateVoiceState($guild_id, $channel_id = null, bool $self_mute = false, bool $self_deaf = false): void
     {
