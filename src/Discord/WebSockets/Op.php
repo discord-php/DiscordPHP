@@ -50,7 +50,7 @@ class Op
     public const OP_RECONNECT = 7;
     /** Used to request member chunks. */
     public const OP_REQUEST_GUILD_MEMBERS = 8;
-    /** @deprecated use OP_REQUEST_GUILD_MEMBERS */
+    /** @deprecated 10.18.31 Use `OP_REQUEST_GUILD_MEMBERS` */
     public const OP_GUILD_MEMBER_CHUNK = self::OP_REQUEST_GUILD_MEMBERS;
     /** Used to notify clients when they have an invalid session. */
     public const OP_INVALID_SESSION = 9;
