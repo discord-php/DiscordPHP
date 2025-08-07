@@ -16,6 +16,7 @@ namespace Discord\Parts\Interactions;
 use Discord\Builders\Components\Component;
 use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\MessageBuilder;
+use Discord\Builders\ModalBuilder;
 use Discord\Exceptions\AttachmentSizeException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Multipart;
@@ -69,7 +70,7 @@ use function React\Promise\reject;
 class Interaction extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -647,9 +648,9 @@ class Interaction extends Part
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
-     * @param string                  $title      The title of the popup modal, max 45 characters
-     * @param string                  $custom_id  Developer-defined identifier for the component, max 100 characters
-     * @param array|ComponentObject[] $components Between 1 and 5 (inclusive) components that make up the modal contained in Action Row
+     * @param string                  $title      The title of the popup modal, max 45 characters.
+     * @param string                  $custom_id  Developer-defined identifier for the component, max 100 characters.
+     * @param array|ComponentObject[] $components Between 1 and 5 (inclusive) components that make up the modal.
      * @param callable|null           $submit     The function to call once modal is submitted.
      *
      * @throws \LogicException  Interaction is Ping or Modal Submit.
@@ -677,6 +678,32 @@ class Interaction extends Part
         ])->then(function ($response) use ($custom_id, $submit) {
             if ($submit) {
                 $listener = $this->createListener($custom_id, $submit, 60 * 15);
+                $this->discord->on(Event::INTERACTION_CREATE, $listener);
+            }
+
+            return $response;
+        });
+    }
+
+    /**
+     * Responds to the interaction with a popup modal.
+     *
+     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
+     *
+     * @param ModalBuilder  $modal  The modal.
+     * @param callable|null $submit The function to call once modal is submitted.
+     *
+     * @return PromiseInterface
+     */
+    public function respondWithModal($modal, ?callable $submit = null): PromiseInterface
+    {
+        if ($submit) {
+            $this->discord->on(Event::INTERACTION_CREATE, $this->createListener($modal->getCustomId(), $submit, 60 * 15));
+        }
+
+        return $this->respond($modal->jsonSerialize())->then(function ($response) use ($modal, $submit) {
+            if ($submit) {
+                $listener = $this->createListener($modal->getCustomId(), $submit, 60 * 15);
                 $this->discord->on(Event::INTERACTION_CREATE, $listener);
             }
 
