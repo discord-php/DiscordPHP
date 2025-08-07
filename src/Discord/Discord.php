@@ -1146,8 +1146,10 @@ class Discord
      * @param ?string|null       $options['nonce']     Nonce to identify the Guild Members Chunk response.
      *
      * @throws \InvalidArgumentException Either query or user_ids must be set.
+     *
+     * @since v10.19.0
      */
-    public function requestGuildMembers($guild_id, array $options = [])
+    public function requestGuildMembers($guild_id, array $options = []): void
     {
         if (! isset($options['query']) && ! isset($options['user_ids'])) {
             if (! isset($options['limit'])) {
