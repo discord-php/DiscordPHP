@@ -81,7 +81,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    protected function setTitle(string $title): self
+    public function setTitle(string $title): self
     {
         if (poly_strlen($title) > 45) {
             throw new \LengthException('Modal title can not be longer than 45 characters');
@@ -97,7 +97,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @return string
      */
-    protected function getTitle(): string
+    public function getTitle(): string
     {
         return $this->title;
     }
