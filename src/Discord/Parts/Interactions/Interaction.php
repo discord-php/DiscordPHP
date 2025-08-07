@@ -697,10 +697,6 @@ class Interaction extends Part
      */
     public function respondWithModal($modal, ?callable $submit = null): PromiseInterface
     {
-        if ($submit) {
-            $this->discord->on(Event::INTERACTION_CREATE, $this->createListener($modal->getCustomId(), $submit, 60 * 15));
-        }
-
         return $this->respond($modal->jsonSerialize())->then(function ($response) use ($modal, $submit) {
             if ($submit) {
                 $listener = $this->createListener($modal->getCustomId(), $submit, 60 * 15);
