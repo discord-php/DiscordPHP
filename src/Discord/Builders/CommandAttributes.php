@@ -41,7 +41,7 @@ use function Discord\poly_strlen;
  * @property ?bool                               $default_permission         Whether the command is enabled by default when the app is added to a guild, defaults to true. SOON DEPRECATED.
  * @property ?int                                $guild_id                   The optional guild ID this command is for. If not set, the command is global.
  * @property bool|null                           $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
- * @property ExCollectionInterface|null          $integration_types          Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts
+ * @property array                               $integration_types          Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts
  * @property ExCollectionInterface|null          $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.
  * @property int|null                            $handler                    Determines whether the interaction is handled by the app's interactions handler or by Discord
  */
@@ -331,9 +331,9 @@ trait CommandAttributes
             throw new \DomainException('Invalid integration type provided.');
         }
 
-        $this->integration_types ??= new Collection();
+        $this->integration_types ??= [];
 
-        $this->integration_types->push($integration_type);
+        $this->integration_types[] = $integration_type;
 
         return $this;
     }
@@ -353,8 +353,8 @@ trait CommandAttributes
             throw new \DomainException('Only globally-scopped commands can have an integration type.');
         }
 
-        if (isset($this->integration_types) && ($idx = $this->integration_types->search($integration_type)) !== false) {
-            $this->integration_types->splice($idx, 1);
+        if (isset($this->integration_types) && ($idx = array_search($integration_type, $this->integration_types, true)) !== false) {
+            array_splice($this->integration_types, $idx, 1);
         }
 
         return $this;
