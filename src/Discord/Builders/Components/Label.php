@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use function Discord\poly_strlen;
+
 /**
  * A Label is a top-level component.
  *
@@ -25,7 +27,7 @@ namespace Discord\Builders\Components;
  * @since 10.19.0
  *
  * @property int                    $type        18 for label component.
- * @property string                 $label       The text for the label.
+ * @property string                 $label       The text for the label. Must be between 1 and 100 characters.
  * @property string|null            $description Optional description for the label.
  * @property StringSelect|TextInput $component   The component associated with the label.
  */
@@ -84,12 +86,16 @@ class Label extends ComponentObject
     /**
      * Sets the label text.
      *
-     * @param string $label The text for the label.
+     * @param string $label The text for the label. Must be between 1 and 100 characters.
      *
      * @return self
      */
     public function setLabel(string $label): self
     {
+        if (poly_strlen($label) === 0 || poly_strlen($label) > 100) {
+            throw new \LengthException('Label must be between 1 and 100 in length.');
+        }
+
         $this->label = $label;
 
         return $this;
