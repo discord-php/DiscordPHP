@@ -1256,6 +1256,37 @@ class Discord
     }
 
     /**
+     * Updates the client's voice state in a guild.
+     *
+     * @param Guild|string        $guild_id   ID of the guild.
+     * @param Channel|string|null $channel_id ID of the voice channel to join, or null to disconnect.
+     * @param bool                $self_mute  Whether the client is muted.
+     * @param bool                $self_deaf  Whether the client is deafened.
+     */
+    public function updateVoiceState($guild_id, $channel_id = null, bool $self_mute = false, bool $self_deaf = false): void
+    {
+        if (! is_string($guild_id)) {
+            $guild_id = $guild_id->id;
+        }
+
+        if (isset($channel_id) && ! is_string($channel_id)) {
+            $channel_id = $channel_id->id;
+        }
+
+        $payload = Payload::new(
+            Op::OP_UPDATE_VOICE_STATE,
+            [
+                'guild_id' => $guild_id,
+                'channel_id' => $channel_id,
+                'self_mute' => $self_mute,
+                'self_deaf' => $self_deaf,
+            ]
+        );
+
+        $this->send($payload);
+    }
+
+    /**
      * Updates the clients presence.
      *
      * @param Activity|null $activity The current client activity, or null.
@@ -1287,7 +1318,7 @@ class Discord
         }
 
         $payload = Payload::new(
-            Op::OP_PRESENCE_UPDATE,
+            Op::OP_UPDATE_PRESENCE,
             [
                 'since' => $idle,
                 'activities' => [$activity],
