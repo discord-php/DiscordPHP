@@ -24,6 +24,7 @@ namespace Discord\Builders\Components;
  */
 class ActionRow extends Layout
 {
+    /** Usage of ActionRow in Modal is deprecated. Use `Component::Label` as the top-level container. */
     public const USAGE = ['Message', 'Modal'];
 
     /**
