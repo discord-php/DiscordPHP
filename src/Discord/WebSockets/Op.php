@@ -41,7 +41,9 @@ class Op
     /** Used to update the client presence. */
     public const OP_PRESENCE_UPDATE = 3;
     /** Used to join/move/leave voice channels. */
-    public const OP_VOICE_STATE_UPDATE = 4;
+    public const OP_UPDATE_VOICE_STATE = 4;
+    /** @deprecated 10.18.31 Use `OP_UPDATE_VOICE_STATE` */
+    public const OP_VOICE_STATE_UPDATE = self::OP_UPDATE_VOICE_STATE;
     /** Used for voice ping checking. */
     public const OP_VOICE_SERVER_PING = 5;
     /** Used to resume a closed connection. */
