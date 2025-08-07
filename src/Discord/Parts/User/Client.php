@@ -90,7 +90,7 @@ class Client extends Part
     public function afterConstruct(): void
     {
         $this->application = $this->factory->part(Application::class, [], true);
-        $this->getCurrentApplication();
+        $this->getCurrentApplication()->then(fn (Application $application) => $this->discord->emit('application-init', [$this->discord]));
     }
 
     /**
