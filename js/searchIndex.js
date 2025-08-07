@@ -2076,6 +2076,81 @@ Search.appendIndex(
             "summary": "Whether\u0020to\u0020enforce\u0020the\u0020nonce.",
             "url": "classes/Discord-Builders-MessageBuilder.html#property_enforce_nonce"
         },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder",
+            "name": "ModalBuilder",
+            "summary": "Helper\u0020class\u0020used\u0020to\u0020build\u0020messages.",
+            "url": "classes/Discord-Builders-ModalBuilder.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020message\u0020builder.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AsetTitle\u0028\u0029",
+            "name": "setTitle",
+            "summary": "Set\u0020the\u0020title\u0020of\u0020the\u0020modal.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#method_setTitle"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AgetTitle\u0028\u0029",
+            "name": "getTitle",
+            "summary": "Returns\u0020the\u0020title\u0020of\u0020the\u0020modal.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#method_getTitle"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AsetCustomId\u0028\u0029",
+            "name": "setCustomId",
+            "summary": "Sets\u0020the\u0020custom\u0020ID\u0020of\u0020the\u0020modal.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#method_setCustomId"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AgetCustomId\u0028\u0029",
+            "name": "getCustomId",
+            "summary": "Returns\u0020the\u0020custom\u0020ID\u0020of\u0020the\u0020modal.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#method_getCustomId"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AsetComponents\u0028\u0029",
+            "name": "setComponents",
+            "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020modal.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#method_setComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AaddComponent\u0028\u0029",
+            "name": "addComponent",
+            "summary": "Add\u0020a\u0020component\u0020to\u0020the\u0020modal.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#method_addComponent"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AremoveComponent\u0028\u0029",
+            "name": "removeComponent",
+            "summary": "Removes\u0020a\u0020component\u0020from\u0020the\u0020builder.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#method_removeComponent"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AgetComponents\u0028\u0029",
+            "name": "getComponents",
+            "summary": "Returns\u0020the\u0020components\u0020of\u0020the\u0020modal.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#method_getComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Builders-ModalBuilder.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Interaction\u0020type.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003A\u0024title",
+            "name": "title",
+            "summary": "The\u0020title\u0020of\u0020the\u0020popup\u0020modal,\u0020max\u002045\u0020characters.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#property_title"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003A\u0024custom_id",
+            "name": "custom_id",
+            "summary": "Developer\u002Ddefined\u0020identifier\u0020for\u0020the\u0020component,\u0020max\u0020100\u0020characters.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#property_custom_id"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003A\u0024components",
+            "name": "components",
+            "summary": "Between\u00201\u0020and\u00205\u0020\u0028inclusive\u0029\u0020components\u0020that\u0020make\u0020up\u0020the\u0020modal\u0020contained\u0020in\u0020Action\u0020Row.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#property_components"
+        },                {
             "fqsen": "\\Discord\\CommandClient\\Command",
             "name": "Command",
             "summary": "A\u0020message\u0020based\u0020command\u0020that\u0020the\u0020Command\u0020Client\u0020will\u0020listen\u0020for.",
@@ -8385,6 +8460,11 @@ Search.appendIndex(
             "name": "showModal",
             "summary": "Responds\u0020to\u0020the\u0020interaction\u0020with\u0020a\u0020popup\u0020modal.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#method_showModal"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ArespondWithModal\u0028\u0029",
+            "name": "respondWithModal",
+            "summary": "Responds\u0020to\u0020the\u0020interaction\u0020with\u0020a\u0020popup\u0020modal.",
+            "url": "classes/Discord-Parts-Interactions-Interaction.html#method_respondWithModal"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003AcreateListener\u0028\u0029",
             "name": "createListener",
