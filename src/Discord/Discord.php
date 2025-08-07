@@ -1711,6 +1711,16 @@ class Discord
     }
 
     /**
+     * Sets the client instance.
+     *
+     * @param Client $client The client instance.
+     */
+    public function setClient(Client $client): void
+    {
+        $this->client = $client;
+    }
+
+    /**
      * Gets a cached channel.
      *
      * @param string|int $channel_id ID of the channel.
