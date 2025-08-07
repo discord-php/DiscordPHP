@@ -331,9 +331,9 @@ trait CommandAttributes
             throw new \DomainException('Invalid integration type provided.');
         }
 
-        $this->integration_type ??= new Collection();
+        $this->integration_types ??= new Collection();
 
-        $this->integration_type->push($integration_type);
+        $this->integration_types->push($integration_type);
 
         return $this;
     }
