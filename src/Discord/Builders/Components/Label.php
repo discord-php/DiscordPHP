@@ -117,10 +117,6 @@ class Label extends ComponentObject
      */
     public function setComponent($component): self
     {
-        if (!in_array($component->type, [Component::TYPE_STRING_SELECT, Component::TYPE_TEXT_INPUT], true)) {
-            throw new \InvalidArgumentException('Component must be a StringSelect or TextInput.');
-        }
-
         $this->component = $component;
 
         return $this;
