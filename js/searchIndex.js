@@ -2486,6 +2486,11 @@ Search.appendIndex(
             "summary": "Handles\u0020dynamic\u0020set\u0020calls\u0020to\u0020the\u0020client.",
             "url": "classes/Discord-Discord.html#method___set"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AsetClient\u0028\u0029",
+            "name": "setClient",
+            "summary": "Sets\u0020the\u0020client\u0020instance.",
+            "url": "classes/Discord-Discord.html#method_setClient"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AgetChannel\u0028\u0029",
             "name": "getChannel",
             "summary": "Gets\u0020a\u0020cached\u0020channel.",
