@@ -70,7 +70,7 @@ class Label extends ComponentObject
      *
      * @return self
      */
-    public static function new(string $label, StringSelect|TextInput $component, ?string $description = null): self
+    public static function new(string $label, $component, ?string $description = null): self
     {
         $label_component = new self();
 
@@ -102,7 +102,7 @@ class Label extends ComponentObject
      *
      * @return self
      */
-    public function setDescription(string|null $description): self
+    public function setDescription(?string $description = null): self
     {
         $this->description = $description;
 
@@ -115,8 +115,12 @@ class Label extends ComponentObject
      *
      * @return self
      */
-    public function setComponent(StringSelect|TextInput $component): self
+    public function setComponent($component): self
     {
+        if (!in_array($component->type, [Component::TYPE_STRING_SELECT, Component::TYPE_TEXT_INPUT], true)) {
+            throw new \InvalidArgumentException('Component must be a StringSelect or TextInput.');
+        }
+
         $this->component = $component;
 
         return $this;
