@@ -69,7 +69,7 @@ use function React\Promise\reject;
 class Interaction extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -700,9 +700,11 @@ class Interaction extends Part
         $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener, &$timer) {
             if ($interaction->type == self::TYPE_MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
                 $components = Collection::for(RequestComponent::class, 'custom_id');
-                foreach ($interaction->data->components as $actionrow) {
-                    if ($actionrow->type == Component::TYPE_ACTION_ROW) {
-                        foreach ($actionrow->components as $component) {
+                foreach ($interaction->data->components as $container) {
+                    if ($container->type == Component::TYPE_LABEL) {
+                        $components->pushItem($container->component);
+                    } elseif ($container->type == Component::TYPE_ACTION_ROW) {
+                        foreach ($container->components as $component) {
                             $components->pushItem($component);
                         }
                     }
