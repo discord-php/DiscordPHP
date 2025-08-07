@@ -1070,16 +1070,13 @@ class Discord
                 $this->logger->debug('sending chunk with '.count($chunk).' large guilds');
 
                 foreach ($chunk as $guild_id) {
-                    $payload = Payload::new(
-                        Op::OP_GUILD_MEMBER_CHUNK,
+                    $this->requestGuildMembers(
+                        $guild_id,
                         [
-                            'guild_id' => $guild_id,
                             'query' => '',
                             'limit' => 0,
-                        ],
+                        ]
                     );
-
-                    $this->send($payload);
                 }
                 $this->loop->addTimer(1, $sendChunks);
             };
@@ -1135,6 +1132,60 @@ class Discord
             $promise = ($this->wsFactory)($this->gateway);
             $promise->then([$this, 'handleWsConnection'], [$this, 'handleWsConnectionFailed']);
         });
+    }
+
+    /**
+     * Requests guild members from the Discord gateway.
+     *
+     * @param Guild|string       $guild_id             ID of the guild or Guild object. Required.
+     * @param array              $options
+     * @param string             $options['query']     String that username starts with, or an empty string to return all members. Required when not including user_ids.
+     * @param int                $options['limit']     Maximum number of members to send matching the query. 0 with empty query returns all. Required when including a query.
+     * @param ?bool|null         $options['presences'] Whether to include presences of matched members.
+     * @param ?string|array|null $options['user_ids']  Snowflake or array of snowflakes to specify which users to fetch. Required when not including a query.
+     * @param ?string|null       $options['nonce']     Nonce to identify the Guild Members Chunk response.
+     *
+     * @throws \InvalidArgumentException Either query or user_ids must be set.
+     */
+    public function requestGuildMembers($guild_id, array $options = [])
+    {
+        if (! isset($options['query']) && ! isset($options['user_ids'])) {
+            throw new \InvalidArgumentException('Either query or user_ids must be set.');
+        }
+
+        if (! is_string($guild_id)) {
+            $guild_id = $guild_id->id;
+        }
+
+        $payloadData = [
+            'guild_id' => $guild_id,
+        ];
+
+        if (isset($options['user_ids'])) {
+            // If user_ids is set, query and limit must NOT be set
+            $payloadData['user_ids'] = is_array($options['user_ids'])
+                ? array_values($options['user_ids'])
+                : [$options['user_ids']];
+        } else {
+            // If user_ids is not set, query and limit are required
+            $payloadData['query'] = $options['query'] ?? '';
+            $payloadData['limit'] = $options['limit'] ?? 0;
+        }
+
+        if (array_key_exists('presences', $options)) {
+            $payloadData['presences'] = (bool) $options['presences'];
+        }
+
+        if (isset($options['nonce'])) {
+            $payloadData['nonce'] = (string) $options['nonce'];
+        }
+
+        $payload = Payload::new(
+            Op::OP_GUILD_MEMBER_CHUNK,
+            $payloadData,
+        );
+
+        $this->send($payload);
     }
 
     /**
