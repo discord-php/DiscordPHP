@@ -1178,7 +1178,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AUSAGE",
@@ -2381,6 +2381,11 @@ Search.appendIndex(
             "summary": "Initializes\u0020the\u0020connection\u0020with\u0020the\u0020Discord\u0020gateway.",
             "url": "classes/Discord-Discord.html#method_connectWs"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003ArequestGuildMembers\u0028\u0029",
+            "name": "requestGuildMembers",
+            "summary": "Requests\u0020guild\u0020members\u0020from\u0020the\u0020Discord\u0020gateway.",
+            "url": "classes/Discord-Discord.html#method_requestGuildMembers"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003ArequestSoundboardSounds\u0028\u0029",
             "name": "requestSoundboardSounds",
             "summary": "Requests\u0020soundboard\u0020sounds\u0020for\u0020the\u0020specified\u0020guilds.",
@@ -2395,6 +2400,11 @@ Search.appendIndex(
             "name": "ready",
             "summary": "Emits\u0020init\u0020if\u0020it\u0020has\u0020not\u0020been\u0020emitted\u0020already.",
             "url": "classes/Discord-Discord.html#method_ready"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AupdateVoiceState\u0028\u0029",
+            "name": "updateVoiceState",
+            "summary": "Updates\u0020the\u0020client\u0027s\u0020voice\u0020state\u0020in\u0020a\u0020guild.",
+            "url": "classes/Discord-Discord.html#method_updateVoiceState"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AupdatePresence\u0028\u0029",
             "name": "updatePresence",
@@ -13806,14 +13816,24 @@ Search.appendIndex(
             "summary": "Used\u0020for\u0020client\u0020handshake.",
             "url": "classes/Discord-WebSockets-Op.html#constant_OP_IDENTIFY"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AOP_UPDATE_PRESENCE",
+            "name": "OP_UPDATE_PRESENCE",
+            "summary": "Used\u0020to\u0020update\u0020the\u0020client\u0020presence.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_OP_UPDATE_PRESENCE"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AOP_PRESENCE_UPDATE",
             "name": "OP_PRESENCE_UPDATE",
-            "summary": "Used\u0020to\u0020update\u0020the\u0020client\u0020presence.",
+            "summary": "",
             "url": "classes/Discord-WebSockets-Op.html#constant_OP_PRESENCE_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AOP_UPDATE_VOICE_STATE",
+            "name": "OP_UPDATE_VOICE_STATE",
+            "summary": "Used\u0020to\u0020join\/move\/leave\u0020voice\u0020channels.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_OP_UPDATE_VOICE_STATE"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AOP_VOICE_STATE_UPDATE",
             "name": "OP_VOICE_STATE_UPDATE",
-            "summary": "Used\u0020to\u0020join\/move\/leave\u0020voice\u0020channels.",
+            "summary": "",
             "url": "classes/Discord-WebSockets-Op.html#constant_OP_VOICE_STATE_UPDATE"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AOP_VOICE_SERVER_PING",
@@ -13831,9 +13851,14 @@ Search.appendIndex(
             "summary": "Used\u0020to\u0020redirect\u0020clients\u0020to\u0020a\u0020new\u0020gateway.",
             "url": "classes/Discord-WebSockets-Op.html#constant_OP_RECONNECT"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AOP_REQUEST_GUILD_MEMBERS",
+            "name": "OP_REQUEST_GUILD_MEMBERS",
+            "summary": "Used\u0020to\u0020request\u0020member\u0020chunks.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_OP_REQUEST_GUILD_MEMBERS"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AOP_GUILD_MEMBER_CHUNK",
             "name": "OP_GUILD_MEMBER_CHUNK",
-            "summary": "Used\u0020to\u0020request\u0020member\u0020chunks.",
+            "summary": "",
             "url": "classes/Discord-WebSockets-Op.html#constant_OP_GUILD_MEMBER_CHUNK"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AOP_INVALID_SESSION",
@@ -13851,10 +13876,10 @@ Search.appendIndex(
             "summary": "Used\u0020to\u0020acknowledge\u0020heartbeats.",
             "url": "classes/Discord-WebSockets-Op.html#constant_OP_HEARTBEAT_ACK"
         },                {
-            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AREQUEST_SOUNDBOARD_SOUNDS",
-            "name": "REQUEST_SOUNDBOARD_SOUNDS",
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AOP_REQUEST_SOUNDBOARD_SOUNDS",
+            "name": "OP_REQUEST_SOUNDBOARD_SOUNDS",
             "summary": "Request\u0020soundboard\u0020sounds.",
-            "url": "classes/Discord-WebSockets-Op.html#constant_REQUEST_SOUNDBOARD_SOUNDS"
+            "url": "classes/Discord-WebSockets-Op.html#constant_OP_REQUEST_SOUNDBOARD_SOUNDS"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_IDENTIFY",
             "name": "VOICE_IDENTIFY",
