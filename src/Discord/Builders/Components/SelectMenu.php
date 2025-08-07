@@ -507,7 +507,7 @@ abstract class SelectMenu extends Interactive
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
