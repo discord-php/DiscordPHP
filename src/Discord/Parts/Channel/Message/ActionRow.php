@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 /**
- * An Action Row is a top-level layout component used in messages and modals.
+ * An Action Row is a top-level layout component used in messages.
+ *
+ * Using ActionRows in modals is now deprecated - use Component::Label as the top level component!
  *
  * Action Rows can contain:
-
+ *
  * Up to 5 contextually grouped buttons
  * A single text input
  * A single select component (string select, user select, role select, mentionable select, or channel select)
