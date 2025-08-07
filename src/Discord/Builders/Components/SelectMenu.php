@@ -317,20 +317,6 @@ abstract class SelectMenu extends Interactive
     }
 
     /**
-     * Sets whether the select menu is required. (Modal only).
-     *
-     * @param bool|null $required
-     *
-     * @return $this
-     */
-    public function setRequired(?bool $required = false): self
-    {
-        $this->required = $required;
-
-        return $this;
-    }
-
-    /**
      * Sets the callable listener for the select menu. The `$callback` function
      * will be called when the selection of the menu is changed.
      *

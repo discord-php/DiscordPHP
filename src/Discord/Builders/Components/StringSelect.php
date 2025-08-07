@@ -40,6 +40,20 @@ class StringSelect extends SelectMenu
     protected $options = [];
 
     /**
+     * Sets whether the select menu is required. (Modal only).
+     *
+     * @param bool|null $required
+     *
+     * @return $this
+     */
+    public function setRequired(?bool $required = false): self
+    {
+        $this->required = $required;
+
+        return $this;
+    }
+
+    /**
      * Adds an option to the select menu. Maximum 25 options.
      *
      * @param Option $option Option to add.
