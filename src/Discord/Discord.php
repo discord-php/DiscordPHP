@@ -1033,60 +1033,70 @@ class Discord
             return $this->ready();
         }
 
-        $checkForChunks = function () {
-            if ((count($this->largeGuilds) < 1) && (count($this->largeSent) < 1)) {
-                $this->ready();
-
-                return;
-            }
-
-            if (count($this->largeGuilds) < 1) {
-                $this->logger->debug('unprocessed chunks', $this->largeSent);
-
-                return;
-            }
-
-            if (is_array($this->options['loadAllMembers'])) {
-                foreach ($this->largeGuilds as $key => $guild) {
-                    if (! in_array($guild, $this->options['loadAllMembers'])) {
-                        $this->logger->debug('not fetching members for guild ID '.$guild);
-                        unset($this->largeGuilds[$key]);
-                    }
-                }
-            }
-
-            $chunks = array_chunk($this->largeGuilds, 50);
-            $this->logger->debug('sending '.count($chunks).' chunks with '.count($this->largeGuilds).' large guilds overall');
-            $this->largeSent = array_merge($this->largeGuilds, $this->largeSent);
-            $this->largeGuilds = [];
-
-            $sendChunks = function () use (&$sendChunks, &$chunks) {
-                $chunk = array_pop($chunks);
-
-                if (null === $chunk) {
-                    return;
-                }
-
-                $this->logger->debug('sending chunk with '.count($chunk).' large guilds');
-
-                foreach ($chunk as $guild_id) {
-                    $this->requestGuildMembers(
-                        $guild_id,
-                        [
-                            'query' => '',
-                            'limit' => 0,
-                        ]
-                    );
-                }
-                $this->loop->addTimer(1, $sendChunks);
-            };
-
-            $sendChunks();
-        };
-
-        $this->loop->addPeriodicTimer(5, $checkForChunks);
+        $this->loop->addPeriodicTimer(5, fn () => $this->checkForChunks);
         $this->logger->info('set up chunking, checking for chunks every 5 seconds');
-        $checkForChunks();
+        $this->checkForChunks();
+    }
+
+    /**
+     * Checks for any large guilds that need to be chunked.
+     */
+    protected function checkForChunks(): void
+    {
+        if ((count($this->largeGuilds) < 1) && (count($this->largeSent) < 1)) {
+            $this->ready();
+
+            return;
+        }
+
+        if (count($this->largeGuilds) < 1) {
+            $this->logger->debug('unprocessed chunks', $this->largeSent);
+
+            return;
+        }
+
+        if (is_array($this->options['loadAllMembers'])) {
+            foreach ($this->largeGuilds as $key => $guild) {
+                if (! in_array($guild, $this->options['loadAllMembers'])) {
+                    $this->logger->debug('not fetching members for guild ID '.$guild);
+                    unset($this->largeGuilds[$key]);
+                }
+            }
+        }
+
+        $chunks = array_chunk($this->largeGuilds, 50);
+        $this->logger->debug('sending '.count($chunks).' chunks with '.count($this->largeGuilds).' large guilds overall');
+        $this->largeSent = array_merge($this->largeGuilds, $this->largeSent);
+        $this->largeGuilds = [];
+
+        $this->sendChunks($chunks);
+    }
+
+    /**
+     * Sends chunks of guild member requests.
+     *
+     * @param &array $chunks
+     */
+    protected function sendChunks(array &$chunks = []): void
+    {
+        $chunk = array_pop($chunks);
+
+        if (null === $chunk) {
+            return;
+        }
+
+        $this->logger->debug('sending chunk with '.count($chunk).' large guilds');
+
+        foreach ($chunk as $guild_id) {
+            $this->requestGuildMembers(
+                $guild_id,
+                [
+                    'query' => '',
+                    'limit' => 0,
+                ]
+            );
+        }
+        $this->loop->addTimer(1, fn () => $this->sendChunks($chunks));
     }
 
     /**
