@@ -2371,6 +2371,16 @@ Search.appendIndex(
             "summary": "Sets\u0020guild\u0020member\u0020chunking\u0020up.",
             "url": "classes/Discord-Discord.html#method_setupChunking"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AcheckForChunks\u0028\u0029",
+            "name": "checkForChunks",
+            "summary": "Checks\u0020for\u0020any\u0020large\u0020guilds\u0020that\u0020need\u0020to\u0020be\u0020chunked.",
+            "url": "classes/Discord-Discord.html#method_checkForChunks"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AsendChunks\u0028\u0029",
+            "name": "sendChunks",
+            "summary": "Sends\u0020chunks\u0020of\u0020guild\u0020member\u0020requests.",
+            "url": "classes/Discord-Discord.html#method_sendChunks"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AsetupHeartbeat\u0028\u0029",
             "name": "setupHeartbeat",
             "summary": "Sets\u0020the\u0020heartbeat\u0020timer\u0020up.",
