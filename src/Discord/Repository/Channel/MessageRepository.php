@@ -37,7 +37,7 @@ class MessageRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $endpoints = [
-        'get' => Endpoint::CHANNEL_MESSAGE,
+        'get' => Endpoint::CHANNEL_MESSAGE, // Messages returned are in order from newest to oldest.
         'update' => Endpoint::CHANNEL_MESSAGE,
         'delete' => Endpoint::CHANNEL_MESSAGE,
     ];
