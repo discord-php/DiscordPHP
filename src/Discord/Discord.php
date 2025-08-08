@@ -1002,6 +1002,8 @@ class Discord
 
     /**
      * Used to replay missed events when a disconnected client resumes.
+     *
+     * @since 10.19.0
      */
     public function resume(string $token, string $session_id, int $seq):void
     {
