@@ -951,23 +951,32 @@ class Discord
      */
     public function identify(): void
     {
+        $data = [
+            'token' => $this->token,
+            'properties' => [
+                'os' => PHP_OS,
+                'browser' => $this->http->getUserAgent(),
+                'device' => $this->http->getUserAgent(),
+                'referrer' => self::REFERRER,
+                'referring_domain' => self::REFERRER,
+            ],
+            'compress' => $this->usePayloadCompression,
+            'intents' => $this->options['intents'],
+        ];
+
+        if (isset($this->options['large_threshold'])) {
+            $data['large_threshold'] = $this->options['large_threshold'];
+        }
+        if (isset($this->options['shard'])) {
+            $data['shard'] = $this->options['shard'];
+        }
+        if (isset($this->options['presence'])) {
+            $data['presence'] = $this->options['presence'];
+        }
+
         $payload = Payload::new(
             Op::OP_IDENTIFY,
-            [
-                'token' => $this->token,
-                'properties' => [
-                    'os' => PHP_OS,
-                    'browser' => $this->http->getUserAgent(),
-                    'device' => $this->http->getUserAgent(),
-                    'referrer' => self::REFERRER,
-                    'referring_domain' => self::REFERRER,
-                ],
-                'compress' => $this->usePayloadCompression,
-                'large_threshold' => $this->options['largeThreshold'] ?? null,
-                'shard' => $this->options['shard'] ?? null,
-                'presence' => $this->options['presence'] ?? null,
-                'intents' => $this->options['intents'],
-            ],
+            $data,
         );
 
         if (
