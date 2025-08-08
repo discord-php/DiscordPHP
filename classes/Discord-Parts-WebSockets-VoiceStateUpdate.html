@@ -300,7 +300,52 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null $channel_id                 Channel ID that the voice state came from, or null if the user is leaving a channel.</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null  $guild_id                   Guild ID that the voice state came from, or null if it is for a DM channel.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?string|null  $channel_id                 Channel ID that the voice state came from, or null if the user is leaving a channel.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Member|null  $member                     Member object the voice state is for, null if the voice state is for a DM channel or the member object is not cached.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?bool|null    $self_stream                Whether this user is streaming using &quot;Go Live&quot;.</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property-read</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Guild|null   $guild                      Guild that the voice state came from, or null if it is for a DM channel.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property-read</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Channel|null $channel                    Channel that the voice state came from, or null if the user is leaving a channel.</p>
 </section>
 
                                     </dd>
@@ -331,12 +376,6 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_channel">$channel</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Part.html#property_created">$created</a>
     <span>
                         &nbsp;: bool            </span>
@@ -347,24 +386,6 @@
     <a class="" href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_deaf">$deaf</a>
     <span>
                         &nbsp;: bool            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_guild">$guild</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_guild_id">$guild_id</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_member">$member</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -396,12 +417,6 @@
     <a class="" href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_mute">$self_mute</a>
     <span>
                         &nbsp;: bool            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_stream">$self_stream</a>
-    <span>
-                        &nbsp;: bool|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -774,46 +789,6 @@ JSON. Used for JsonSerializable.</dd>
             phpdocumentor-element
             -property
             -public
-                                                -read-only                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_channel">
-        $channel
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_channel" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$channel</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Channel that the voice state came from, or null if the user is leaving a channel.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_created">
@@ -880,126 +855,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Whether this user is deafened by the server.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                -read-only                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_guild">
-        $guild
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$guild</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Guild that the voice state came from, or null if it is for a DM channel.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_guild_id">
-        $guild_id
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$guild_id</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Guild ID that the voice state came from, or null if it is for a DM channel.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_member">
-        $member
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_member" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$member</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Member object the voice state is for, null if the voice state is for a DM channel or the member object is not cached.</p>
 </section>
 
     
@@ -1208,46 +1063,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Whether this user is locally muted.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_self_stream">
-        $self_stream
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_stream" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">bool|null</span>
-    <span class="phpdocumentor-signature__name">$self_stream</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Whether this user is streaming using &quot;Go Live&quot;.</p>
 </section>
 
     
@@ -1616,6 +1431,20 @@ JSON. Used for JsonSerializable.</dd>
 </section>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 
@@ -3920,18 +3749,13 @@ static as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_channel">$channel</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_deaf">$deaf</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_guild">$guild</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_guild_id">$guild_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_member">$member</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_mute">$mute</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_request_to_speak_timestamp">$request_to_speak_timestamp</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_deaf">$self_deaf</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_mute">$self_mute</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_stream">$self_stream</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_video">$self_video</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_session_id">$session_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_suppress">$suppress</a></li>

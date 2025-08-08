@@ -2286,10 +2286,20 @@ Search.appendIndex(
             "summary": "Handles\u0020\u0060READY\u0060\u0020packets.",
             "url": "classes/Discord-Discord.html#method_handleReady"
         },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003AhandleGuildMembersChunk\u0028\u0029",
-            "name": "handleGuildMembersChunk",
-            "summary": "Handles\u0020\u0060GUILD_MEMBERS_CHUNK\u0060\u0020packets.",
-            "url": "classes/Discord-Discord.html#method_handleGuildMembersChunk"
+            "fqsen": "\\Discord\\Discord\u003A\u003AsetupChunking\u0028\u0029",
+            "name": "setupChunking",
+            "summary": "Sets\u0020guild\u0020member\u0020chunking\u0020up.",
+            "url": "classes/Discord-Discord.html#method_setupChunking"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AcheckForChunks\u0028\u0029",
+            "name": "checkForChunks",
+            "summary": "Checks\u0020for\u0020any\u0020large\u0020guilds\u0020that\u0020need\u0020to\u0020be\u0020chunked.",
+            "url": "classes/Discord-Discord.html#method_checkForChunks"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AsendChunks\u0028\u0029",
+            "name": "sendChunks",
+            "summary": "Sends\u0020chunks\u0020of\u0020guild\u0020member\u0020requests.",
+            "url": "classes/Discord-Discord.html#method_sendChunks"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AhandleVoiceStateUpdate\u0028\u0029",
             "name": "handleVoiceStateUpdate",
@@ -2331,15 +2341,15 @@ Search.appendIndex(
             "summary": "Handles\u0020dispatch\u0020events\u0020received\u0020by\u0020the\u0020WebSocket.",
             "url": "classes/Discord-Discord.html#method_handleDispatch"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AhandleGuildMembersChunk\u0028\u0029",
+            "name": "handleGuildMembersChunk",
+            "summary": "Handles\u0020\u0060GUILD_MEMBERS_CHUNK\u0060\u0020packets.",
+            "url": "classes/Discord-Discord.html#method_handleGuildMembersChunk"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AhandleHeartbeat\u0028\u0029",
             "name": "handleHeartbeat",
             "summary": "Handles\u0020heartbeat\u0020packets\u0020received\u0020by\u0020the\u0020client.",
             "url": "classes/Discord-Discord.html#method_handleHeartbeat"
-        },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003AhandleHeartbeatAck\u0028\u0029",
-            "name": "handleHeartbeatAck",
-            "summary": "Handles\u0020heartbeat\u0020ACK\u0020packets\u0020received\u0020by\u0020the\u0020client.",
-            "url": "classes/Discord-Discord.html#method_handleHeartbeatAck"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AhandleReconnect\u0028\u0029",
             "name": "handleReconnect",
@@ -2356,40 +2366,25 @@ Search.appendIndex(
             "summary": "Handles\u0020HELLO\u0020packets\u0020received\u0020by\u0020the\u0020websocket.",
             "url": "classes/Discord-Discord.html#method_handleHello"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AhandleHeartbeatAck\u0028\u0029",
+            "name": "handleHeartbeatAck",
+            "summary": "Handles\u0020heartbeat\u0020ACK\u0020packets\u0020received\u0020by\u0020the\u0020client.",
+            "url": "classes/Discord-Discord.html#method_handleHeartbeatAck"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003Aidentify\u0028\u0029",
             "name": "identify",
-            "summary": "Identifies\u0020with\u0020the\u0020Discord\u0020gateway\u0020with\u0020\u0060IDENTIFY\u0060\u0020or\u0020\u0060RESUME\u0060\u0020packets.",
+            "summary": "Used\u0020to\u0020trigger\u0020the\u0020initial\u0020handshake\u0020with\u0020the\u0020gateway.",
             "url": "classes/Discord-Discord.html#method_identify"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003Aresume\u0028\u0029",
+            "name": "resume",
+            "summary": "Used\u0020to\u0020replay\u0020missed\u0020events\u0020when\u0020a\u0020disconnected\u0020client\u0020resumes.",
+            "url": "classes/Discord-Discord.html#method_resume"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003Aheartbeat\u0028\u0029",
             "name": "heartbeat",
             "summary": "Sends\u0020a\u0020heartbeat\u0020packet\u0020to\u0020the\u0020Discord\u0020gateway.",
             "url": "classes/Discord-Discord.html#method_heartbeat"
-        },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003AsetupChunking\u0028\u0029",
-            "name": "setupChunking",
-            "summary": "Sets\u0020guild\u0020member\u0020chunking\u0020up.",
-            "url": "classes/Discord-Discord.html#method_setupChunking"
-        },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003AcheckForChunks\u0028\u0029",
-            "name": "checkForChunks",
-            "summary": "Checks\u0020for\u0020any\u0020large\u0020guilds\u0020that\u0020need\u0020to\u0020be\u0020chunked.",
-            "url": "classes/Discord-Discord.html#method_checkForChunks"
-        },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003AsendChunks\u0028\u0029",
-            "name": "sendChunks",
-            "summary": "Sends\u0020chunks\u0020of\u0020guild\u0020member\u0020requests.",
-            "url": "classes/Discord-Discord.html#method_sendChunks"
-        },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003AsetupHeartbeat\u0028\u0029",
-            "name": "setupHeartbeat",
-            "summary": "Sets\u0020the\u0020heartbeat\u0020timer\u0020up.",
-            "url": "classes/Discord-Discord.html#method_setupHeartbeat"
-        },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003AconnectWs\u0028\u0029",
-            "name": "connectWs",
-            "summary": "Initializes\u0020the\u0020connection\u0020with\u0020the\u0020Discord\u0020gateway.",
-            "url": "classes/Discord-Discord.html#method_connectWs"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003ArequestGuildMembers\u0028\u0029",
             "name": "requestGuildMembers",
@@ -2401,16 +2396,6 @@ Search.appendIndex(
             "summary": "Requests\u0020soundboard\u0020sounds\u0020for\u0020the\u0020specified\u0020guilds.",
             "url": "classes/Discord-Discord.html#method_requestSoundboardSounds"
         },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003Asend\u0028\u0029",
-            "name": "send",
-            "summary": "Sends\u0020a\u0020packet\u0020to\u0020the\u0020Discord\u0020gateway.",
-            "url": "classes/Discord-Discord.html#method_send"
-        },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003Aready\u0028\u0029",
-            "name": "ready",
-            "summary": "Emits\u0020init\u0020if\u0020it\u0020has\u0020not\u0020been\u0020emitted\u0020already.",
-            "url": "classes/Discord-Discord.html#method_ready"
-        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AupdateVoiceState\u0028\u0029",
             "name": "updateVoiceState",
             "summary": "Updates\u0020the\u0020client\u0027s\u0020voice\u0020state\u0020in\u0020a\u0020guild.",
@@ -2420,6 +2405,26 @@ Search.appendIndex(
             "name": "updatePresence",
             "summary": "Updates\u0020the\u0020clients\u0020presence.",
             "url": "classes/Discord-Discord.html#method_updatePresence"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AsetupHeartbeat\u0028\u0029",
+            "name": "setupHeartbeat",
+            "summary": "Sets\u0020the\u0020heartbeat\u0020timer\u0020up.",
+            "url": "classes/Discord-Discord.html#method_setupHeartbeat"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AconnectWs\u0028\u0029",
+            "name": "connectWs",
+            "summary": "Initializes\u0020the\u0020connection\u0020with\u0020the\u0020Discord\u0020gateway.",
+            "url": "classes/Discord-Discord.html#method_connectWs"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003Asend\u0028\u0029",
+            "name": "send",
+            "summary": "Sends\u0020a\u0020packet\u0020to\u0020the\u0020Discord\u0020gateway.",
+            "url": "classes/Discord-Discord.html#method_send"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003Aready\u0028\u0029",
+            "name": "ready",
+            "summary": "Emits\u0020init\u0020if\u0020it\u0020has\u0020not\u0020been\u0020emitted\u0020already.",
+            "url": "classes/Discord-Discord.html#method_ready"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AgetVoiceClient\u0028\u0029",
             "name": "getVoiceClient",
@@ -2540,6 +2545,11 @@ Search.appendIndex(
             "name": "VERSION",
             "summary": "The\u0020client\u0020version.",
             "url": "classes/Discord-Discord.html#constant_VERSION"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AREFERRER",
+            "name": "REFERRER",
+            "summary": "",
+            "url": "classes/Discord-Discord.html#constant_REFERRER"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024logger",
             "name": "logger",
