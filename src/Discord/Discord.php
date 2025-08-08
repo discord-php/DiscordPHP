@@ -102,6 +102,8 @@ class Discord
      */
     public const VERSION = 'v10.18.31';
 
+    public const REFERRER = 'https://github.com/discord-php/DiscordPHP';
+
     /**
      * The logger.
      *
@@ -922,7 +924,13 @@ class Discord
         $this->logger->warning('invalid session, re-identifying', ['resumable' => $data->d]);
 
         $this->loop->addTimer(2, function () use ($data) {
-            $this->identify($data->d);
+            $data->d
+                ? $this->resume(
+                    $this->token,
+                    $this->sessionId,
+                    $this->seq
+                )
+                : $this->identify();
         });
     }
 
@@ -939,59 +947,76 @@ class Discord
     }
 
     /**
-     * Identifies with the Discord gateway with `IDENTIFY` or `RESUME` packets.
-     *
-     * @param  bool $resume Whether resume should be enabled.
-     * @return bool
+     * Used to trigger the initial handshake with the gateway.
      */
-    protected function identify(bool $resume = true): bool
+    public function identify(): void
     {
-        if ($resume && $this->reconnecting && null !== $this->sessionId) {
-            $payload = Payload::new(
-                Op::OP_RESUME,
-                [
-                    'session_id' => $this->sessionId,
-                    'seq' => $this->seq,
-                    'token' => $this->token,
-                ],
-            );
+        $data = [
+            'token' => $this->token,
+            'properties' => [
+                'os' => PHP_OS,
+                'browser' => $this->http->getUserAgent(),
+                'device' => $this->http->getUserAgent(),
+                'referrer' => self::REFERRER,
+                'referring_domain' => self::REFERRER,
+            ],
+            'compress' => $this->usePayloadCompression,
+            'intents' => $this->options['intents'],
+        ];
 
-            $reason = 'resuming connection';
-        } else {
-            $payload = Payload::new(
-                Op::OP_IDENTIFY,
-                [
-                    'token' => $this->token,
-                    'properties' => [
-                        'os' => PHP_OS,
-                        'browser' => $this->http->getUserAgent(),
-                        'device' => $this->http->getUserAgent(),
-                        'referrer' => 'https://github.com/discord-php/DiscordPHP',
-                        'referring_domain' => 'https://github.com/discord-php/DiscordPHP',
-                    ],
-                    'compress' => $this->usePayloadCompression,
-                    'intents' => $this->options['intents'],
-                ],
-            );
-
-            if (
-                array_key_exists('shardId', $this->options) &&
-                array_key_exists('shardCount', $this->options)
-            ) {
-                $payload->d['shard'] = [
-                    (int) $this->options['shardId'],
-                    (int) $this->options['shardCount'],
-                ];
-            }
-
-            $reason = 'identifying';
+        if (isset($this->options['large_threshold'])) {
+            $data['large_threshold'] = $this->options['large_threshold'];
         }
 
-        $this->logger->info($reason, ['payload' => $payload->__debugInfo()]);
+        if (isset($this->options['shard'])) {
+            $data['shard'] = $this->options['shard'];
+        } elseif (isset($this->options['shard_id'], $this->options['num_shards'])) {
+            $data['shard'] = [
+                (int) $this->options['shard_id'],
+                (int) $this->options['num_shards'],
+            ];
+        } elseif (isset($this->options['shardId'], $this->options['shardCount'])) {
+            $data['shard'] = [
+                (int) $this->options['shardId'], // shard_id
+                (int) $this->options['shardCount'], // num_shards
+            ];
+        }
+
+        if (isset($this->options['presence'])) {
+            $data['presence'] = $this->options['presence'];
+        }
+
+
+
+        $payload = Payload::new(
+            Op::OP_IDENTIFY,
+            $data,
+        );
+
+
+
+        $this->logger->info('identifying', ['payload' => $payload->__debugInfo()]);
 
         $this->send($payload);
+    }
 
-        return $payload->op === Op::OP_RESUME;
+    /**
+     * Used to replay missed events when a disconnected client resumes.
+     */
+    public function resume(string $token, string $session_id, int $seq):void
+    {
+        $payload = Payload::new(
+            Op::OP_RESUME,
+            [
+                'session_id' => $session_id,
+                'seq' => $seq,
+                'token' => $token,
+            ],
+        );
+
+        $this->logger->info('resuming connection', ['payload' => $payload->__debugInfo()]);
+
+        $this->send($payload);
     }
 
     /**
@@ -1548,14 +1573,19 @@ class Discord
             ->setRequired('token')
             ->setDefined([
                 'token',
-                'shardId',
-                'shardCount',
                 'loop',
                 'logger',
                 'loadAllMembers',
                 'disabledEvents',
                 'storeMessages',
                 'retrieveBans',
+                'large_threshold',
+                'shard',
+                'shard_id',
+                'num_shards',
+                'shardId',
+                'shardCount',
+                'presence',
                 'intents',
                 'socket_options',
                 'dnsConfig',
@@ -1569,6 +1599,13 @@ class Discord
                 'disabledEvents' => [],
                 'storeMessages' => false,
                 'retrieveBans' => false,
+                'large_threshold' => null,
+                'shard' => null,
+                'shard_id' => null,
+                'num_shards' => null,
+                'shardId' => null,
+                'shardCount' => null,
+                'presence' => null,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
                 'cache' => [AbstractRepository::class => null], // use LegacyCacheWrapper
@@ -1582,6 +1619,13 @@ class Discord
             ->setAllowedTypes('disabledEvents', 'array')
             ->setAllowedTypes('storeMessages', 'bool')
             ->setAllowedTypes('retrieveBans', ['bool', 'array'])
+            ->setAllowedTypes('large_threshold', ['null', 'int'])
+            ->setAllowedTypes('shard', ['null', 'array'])
+            ->setAllowedTypes('shard_id', ['null', 'int'])
+            ->setAllowedTypes('num_shards', ['null', 'int'])
+            ->setAllowedTypes('shardId', ['null', 'int'])
+            ->setAllowedTypes('shardCount', ['null', 'int'])
+            ->setAllowedTypes('presence', ['null', 'array'])
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
