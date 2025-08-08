@@ -43,6 +43,7 @@ abstract class Component implements JsonSerializable
     public const TYPE_SEPARATOR = 14;
     public const TYPE_CONTENT_INVENTORY_ENTRY = 16; // Not documented
     public const TYPE_CONTAINER = 17;
+    public const TYPE_LABEL = 18;
 
     /** @deprecated 7.4.0 Use `Component::TYPE_STRING_SELECT` */
     public const TYPE_SELECT_MENU = 3;

@@ -46,7 +46,10 @@ class TextInput extends Interactive
     /**
      * Label for the text input.
      *
-     * @var string
+     * Deprecated for use with modals. Use a top-level Component::Label.
+     *
+     * @var string|null
+     *
      */
     private $label;
 
@@ -92,7 +95,7 @@ class TextInput extends Interactive
      * @param int         $style     The style of the text input.
      * @param string|null $custom_id The custom ID of the text input. If not given, a UUID will be used
      */
-    public function __construct(string $label, int $style, ?string $custom_id = null)
+    public function __construct(?string $label = null, int $style, ?string $custom_id = null)
     {
         $this->setLabel($label);
         $this->setStyle($style);
@@ -108,7 +111,7 @@ class TextInput extends Interactive
      *
      * @return self
      */
-    public static function new(string $label, int $style, ?string $custom_id = null): self
+    public static function new(?string $label = null, int $style, ?string $custom_id = null): self
     {
         return new self($label, $style, $custom_id);
     }
@@ -156,15 +159,15 @@ class TextInput extends Interactive
     /**
      * Sets the label of the text input.
      *
-     * @param string $label Label of the text input. Maximum 45 characters.
+     * @param string|null $label Label of the text input. Maximum 45 characters.
      *
      * @throws \LengthException
      *
      * @return $this
      */
-    public function setLabel(string $label): self
+    public function setLabel(?string $label = null): self
     {
-        if (poly_strlen($label) > 45) {
+        if (isset($label) && poly_strlen($label) > 45) {
             throw new \LengthException('Label must be maximum 45 characters.');
         }
 
@@ -318,7 +321,7 @@ class TextInput extends Interactive
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
@@ -326,8 +329,11 @@ class TextInput extends Interactive
             'type' => $this->type,
             'custom_id' => $this->custom_id,
             'style' => $this->style,
-            'label' => $this->label,
         ];
+
+        if (isset($this->label)) {
+            $content['label'] = $this->label;
+        }
 
         if (isset($this->min_length)) {
             $content['min_length'] = $this->min_length;
