@@ -967,27 +967,33 @@ class Discord
         if (isset($this->options['large_threshold'])) {
             $data['large_threshold'] = $this->options['large_threshold'];
         }
+
         if (isset($this->options['shard'])) {
             $data['shard'] = $this->options['shard'];
+        } elseif (isset($this->options['shard_id'], $this->options['num_shards'])) {
+            $data['shard'] = [
+                (int) $this->options['shard_id'],
+                (int) $this->options['num_shards'],
+            ];
+        } elseif (isset($this->options['shardId'], $this->options['shardCount'])) {
+            $data['shard'] = [
+                (int) $this->options['shardId'], // shard_id
+                (int) $this->options['shardCount'], // num_shards
+            ];
         }
+
         if (isset($this->options['presence'])) {
             $data['presence'] = $this->options['presence'];
         }
+
+
 
         $payload = Payload::new(
             Op::OP_IDENTIFY,
             $data,
         );
 
-        if (
-            array_key_exists('shardId', $this->options) &&
-            array_key_exists('shardCount', $this->options)
-        ) {
-            $payload->d['shard'] = [
-                (int) $this->options['shardId'],
-                (int) $this->options['shardCount'],
-            ];
-        }
+
 
         $this->logger->info('identifying', ['payload' => $payload->__debugInfo()]);
 
@@ -1567,8 +1573,6 @@ class Discord
             ->setRequired('token')
             ->setDefined([
                 'token',
-                'shardId',
-                'shardCount',
                 'loop',
                 'logger',
                 'loadAllMembers',
@@ -1577,6 +1581,10 @@ class Discord
                 'retrieveBans',
                 'large_threshold',
                 'shard',
+                'shard_id',
+                'num_shards',
+                'shardId',
+                'shardCount',
                 'presence',
                 'intents',
                 'socket_options',
@@ -1593,6 +1601,10 @@ class Discord
                 'retrieveBans' => false,
                 'large_threshold' => null,
                 'shard' => null,
+                'shard_id' => null,
+                'num_shards' => null,
+                'shardId' => null,
+                'shardCount' => null,
                 'presence' => null,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
@@ -1609,6 +1621,10 @@ class Discord
             ->setAllowedTypes('retrieveBans', ['bool', 'array'])
             ->setAllowedTypes('large_threshold', ['null', 'int'])
             ->setAllowedTypes('shard', ['null', 'array'])
+            ->setAllowedTypes('shard_id', ['null', 'int'])
+            ->setAllowedTypes('num_shards', ['null', 'int'])
+            ->setAllowedTypes('shardId', ['null', 'int'])
+            ->setAllowedTypes('shardCount', ['null', 'int'])
             ->setAllowedTypes('presence', ['null', 'array'])
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
