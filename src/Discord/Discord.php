@@ -1496,6 +1496,7 @@ class Discord
             $this->http->get(Endpoint::GATEWAY_BOT)->then(function ($response) use ($deferred) {
                 /** @var GetGatewayBot $part */
                 $part = $this->factory->part(GetGatewayBot::class, (array) $response);
+                $this->emit('gateway', [$part, $this]);
                 if ($part->shards > 1) {
                     $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interested in assisting us with sharding support development.');
                 }
