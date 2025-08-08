@@ -549,55 +549,82 @@ class Discord
     }
 
     /**
-     * Handles `GUILD_MEMBERS_CHUNK` packets.
+     * Sets guild member chunking up.
      *
-     * @param  object     $data Packet data.
-     * @throws \Exception
+     * @return false|void
      */
-    protected function handleGuildMembersChunk(Payload $data): void
+    protected function setupChunking()
     {
-        if (! $guild = $this->guilds->get('id', $data->d->guild_id)) {
-            $this->logger->warning('not chunking member, Guild is not cached.', ['guild_id' => $data->d->guild_id]);
+        if ($this->options['loadAllMembers'] === false) {
+            $this->logger->info('loadAllMembers option is disabled, not setting chunking up');
+
+            return $this->ready();
+        }
+
+        $this->loop->addPeriodicTimer(5, fn () => $this->checkForChunks);
+        $this->logger->info('set up chunking, checking for chunks every 5 seconds');
+        $this->checkForChunks();
+    }
+
+    /**
+     * Checks for any large guilds that need to be chunked.
+     */
+    protected function checkForChunks(): void
+    {
+        if ((count($this->largeGuilds) < 1) && (count($this->largeSent) < 1)) {
+            $this->ready();
 
             return;
         }
 
-        $this->logger->debug('received guild member chunk', ['guild_id' => $data->d->guild_id, 'guild_name' => $guild->name, 'chunk_count' => count($data->d->members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count, 'progress' => [$data->d->chunk_index + 1, $data->d->chunk_count]]);
+        if (count($this->largeGuilds) < 1) {
+            $this->logger->debug('unprocessed chunks', $this->largeSent);
 
-        $count = $skipped = 0;
-        $await = [];
-        foreach ($data->d->members as $member) {
-            $userId = $member->user->id;
-            if ($guild->members->offsetExists($userId)) {
-                continue;
-            }
-
-            $member = (array) $member;
-            $member['guild_id'] = $data->d->guild_id;
-            $member['status'] = 'offline';
-            $await[] = $guild->members->cache->set($userId, $this->factory->part(Member::class, $member, true));
-
-            if (! $this->users->offsetExists($userId)) {
-                $await[] = $this->users->cache->set($userId, $this->users->create($member['user'], true));
-            }
-
-            ++$count;
+            return;
         }
 
-        all($await)->then(function () use ($guild, $count, $skipped) {
-            $membersCount = $guild->members->count();
-            $this->logger->debug('parsed '.$count.' members (skipped '.$skipped.')', ['repository_count' => $membersCount, 'actual_count' => $guild->member_count]);
-
-            if ($membersCount >= $guild->member_count) {
-                $this->largeSent = array_diff($this->largeSent, [$guild->id]);
-
-                $this->logger->debug('all users have been loaded', ['guild' => $guild->id, 'member_collection' => $membersCount, 'member_count' => $guild->member_count]);
+        if (is_array($this->options['loadAllMembers'])) {
+            foreach ($this->largeGuilds as $key => $guild) {
+                if (! in_array($guild, $this->options['loadAllMembers'])) {
+                    $this->logger->debug('not fetching members for guild ID '.$guild);
+                    unset($this->largeGuilds[$key]);
+                }
             }
+        }
 
-            if (count($this->largeSent) < 1) {
-                $this->ready();
-            }
-        });
+        $chunks = array_chunk($this->largeGuilds, 50);
+        $this->logger->debug('sending '.count($chunks).' chunks with '.count($this->largeGuilds).' large guilds overall');
+        $this->largeSent = array_merge($this->largeGuilds, $this->largeSent);
+        $this->largeGuilds = [];
+
+        $this->sendChunks($chunks);
+    }
+
+    /**
+     * Sends chunks of guild member requests.
+     *
+     * @param &array $chunks
+     */
+    protected function sendChunks(array &$chunks = []): void
+    {
+        $chunk = array_pop($chunks);
+
+        if (null === $chunk) {
+            return;
+        }
+
+        $this->logger->debug('sending chunk with '.count($chunk).' large guilds');
+
+        foreach ($chunk as $guild_id) {
+            $this->requestGuildMembers(
+                $guild_id,
+                [
+                    'query' => '',
+                    'limit' => 0,
+                ]
+            );
+        }
+        $this->loop->addTimer(1, fn () => $this->sendChunks($chunks));
     }
 
     /**
@@ -863,6 +890,58 @@ class Discord
     }
 
     /**
+     * Handles `GUILD_MEMBERS_CHUNK` packets.
+     *
+     * @param  object     $data Packet data.
+     * @throws \Exception
+     */
+    protected function handleGuildMembersChunk(Payload $data): void
+    {
+        if (! $guild = $this->guilds->get('id', $data->d->guild_id)) {
+            $this->logger->warning('not chunking member, Guild is not cached.', ['guild_id' => $data->d->guild_id]);
+
+            return;
+        }
+
+        $this->logger->debug('received guild member chunk', ['guild_id' => $data->d->guild_id, 'guild_name' => $guild->name, 'chunk_count' => count($data->d->members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count, 'progress' => [$data->d->chunk_index + 1, $data->d->chunk_count]]);
+
+        $count = $skipped = 0;
+        $await = [];
+        foreach ($data->d->members as $member) {
+            $userId = $member->user->id;
+            if ($guild->members->offsetExists($userId)) {
+                continue;
+            }
+
+            $member = (array) $member;
+            $member['guild_id'] = $data->d->guild_id;
+            $member['status'] = 'offline';
+            $await[] = $guild->members->cache->set($userId, $this->factory->part(Member::class, $member, true));
+
+            if (! $this->users->offsetExists($userId)) {
+                $await[] = $this->users->cache->set($userId, $this->users->create($member['user'], true));
+            }
+
+            ++$count;
+        }
+
+        all($await)->then(function () use ($guild, $count, $skipped) {
+            $membersCount = $guild->members->count();
+            $this->logger->debug('parsed '.$count.' members (skipped '.$skipped.')', ['repository_count' => $membersCount, 'actual_count' => $guild->member_count]);
+
+            if ($membersCount >= $guild->member_count) {
+                $this->largeSent = array_diff($this->largeSent, [$guild->id]);
+
+                $this->logger->debug('all users have been loaded', ['guild' => $guild->id, 'member_collection' => $membersCount, 'member_count' => $guild->member_count]);
+            }
+
+            if (count($this->largeSent) < 1) {
+                $this->ready();
+            }
+        });
+    }
+
+    /**
      * Handles heartbeat packets received by the client.
      *
      * @param object $data Packet data.
@@ -877,26 +956,6 @@ class Discord
         );
 
         $this->send($payload);
-    }
-
-    /**
-     * Handles heartbeat ACK packets received by the client.
-     *
-     * @param object $data Packet data.
-     */
-    protected function handleHeartbeatAck(object $data): void
-    {
-        $received = microtime(true);
-        $diff = $received - $this->heartbeatTime;
-        $time = $diff * 1000;
-
-        if (null !== $this->heartbeatAckTimer) {
-            $this->loop->cancelTimer($this->heartbeatAckTimer);
-            $this->heartbeatAckTimer = null;
-        }
-
-        $this->emit('heartbeat-ack', [$time, $this]);
-        $this->logger->debug('received heartbeat ack', ['response_time' => $time]);
     }
 
     /**
@@ -947,6 +1006,26 @@ class Discord
     }
 
     /**
+     * Handles heartbeat ACK packets received by the client.
+     *
+     * @param object $data Packet data.
+     */
+    protected function handleHeartbeatAck(object $data): void
+    {
+        $received = microtime(true);
+        $diff = $received - $this->heartbeatTime;
+        $time = $diff * 1000;
+
+        if (null !== $this->heartbeatAckTimer) {
+            $this->loop->cancelTimer($this->heartbeatAckTimer);
+            $this->heartbeatAckTimer = null;
+        }
+
+        $this->emit('heartbeat-ack', [$time, $this]);
+        $this->logger->debug('received heartbeat ack', ['response_time' => $time]);
+    }
+
+    /**
      * Used to trigger the initial handshake with the gateway.
      */
     public function identify(): void
@@ -986,14 +1065,10 @@ class Discord
             $data['presence'] = $this->options['presence'];
         }
 
-
-
         $payload = Payload::new(
             Op::OP_IDENTIFY,
             $data,
         );
-
-
 
         $this->logger->info('identifying', ['payload' => $payload->__debugInfo()]);
 
@@ -1044,130 +1119,6 @@ class Discord
 
             $this->logger->warning('did not receive heartbeat ACK within heartbeat interval, closing connection');
             $this->ws->close(1001, 'did not receive heartbeat ack');
-        });
-    }
-
-    /**
-     * Sets guild member chunking up.
-     *
-     * @return false|void
-     */
-    protected function setupChunking()
-    {
-        if ($this->options['loadAllMembers'] === false) {
-            $this->logger->info('loadAllMembers option is disabled, not setting chunking up');
-
-            return $this->ready();
-        }
-
-        $this->loop->addPeriodicTimer(5, fn () => $this->checkForChunks);
-        $this->logger->info('set up chunking, checking for chunks every 5 seconds');
-        $this->checkForChunks();
-    }
-
-    /**
-     * Checks for any large guilds that need to be chunked.
-     */
-    protected function checkForChunks(): void
-    {
-        if ((count($this->largeGuilds) < 1) && (count($this->largeSent) < 1)) {
-            $this->ready();
-
-            return;
-        }
-
-        if (count($this->largeGuilds) < 1) {
-            $this->logger->debug('unprocessed chunks', $this->largeSent);
-
-            return;
-        }
-
-        if (is_array($this->options['loadAllMembers'])) {
-            foreach ($this->largeGuilds as $key => $guild) {
-                if (! in_array($guild, $this->options['loadAllMembers'])) {
-                    $this->logger->debug('not fetching members for guild ID '.$guild);
-                    unset($this->largeGuilds[$key]);
-                }
-            }
-        }
-
-        $chunks = array_chunk($this->largeGuilds, 50);
-        $this->logger->debug('sending '.count($chunks).' chunks with '.count($this->largeGuilds).' large guilds overall');
-        $this->largeSent = array_merge($this->largeGuilds, $this->largeSent);
-        $this->largeGuilds = [];
-
-        $this->sendChunks($chunks);
-    }
-
-    /**
-     * Sends chunks of guild member requests.
-     *
-     * @param &array $chunks
-     */
-    protected function sendChunks(array &$chunks = []): void
-    {
-        $chunk = array_pop($chunks);
-
-        if (null === $chunk) {
-            return;
-        }
-
-        $this->logger->debug('sending chunk with '.count($chunk).' large guilds');
-
-        foreach ($chunk as $guild_id) {
-            $this->requestGuildMembers(
-                $guild_id,
-                [
-                    'query' => '',
-                    'limit' => 0,
-                ]
-            );
-        }
-        $this->loop->addTimer(1, fn () => $this->sendChunks($chunks));
-    }
-
-    /**
-     * Sets the heartbeat timer up.
-     *
-     * @param int $interval The heartbeat interval in milliseconds.
-     */
-    protected function setupHeartbeat(int $interval): void
-    {
-        $this->heartbeatInterval = $interval;
-        if (isset($this->heartbeatTimer)) {
-            $this->loop->cancelTimer($this->heartbeatTimer);
-        }
-
-        $interval = $interval / 1000;
-        $this->heartbeatTimer = $this->loop->addPeriodicTimer($interval, [$this, 'heartbeat']);
-        $this->heartbeat();
-
-        $this->logger->info('heartbeat timer initialized', ['interval' => $interval * 1000]);
-    }
-
-    /**
-     * Initializes the connection with the Discord gateway.
-     */
-    public function connectWs(): void
-    {
-        $this->setGateway()->then(function ($gateway) {
-            if (isset($gateway['session']) && $session = $gateway['session']) {
-                $this->logger->debug('session data received', ['session' => $session]);
-                if ($session['remaining'] < 2) {
-                    $this->logger->error('exceeded number of reconnects allowed, waiting before attempting reconnect', $session);
-                    $this->loop->addTimer($session['reset_after'] / 1000, function () {
-                        $this->connectWs();
-                    });
-
-                    return;
-                }
-            }
-
-            $this->logger->info('starting connection to websocket', ['gateway' => $this->gateway]);
-
-            /** @var PromiseInterface */
-            $promise = ($this->wsFactory)($this->gateway);
-            $promise->then([$this, 'handleWsConnection'], [$this, 'handleWsConnectionFailed']);
         });
     }
 
@@ -1248,51 +1199,6 @@ class Discord
     }
 
     /**
-     * Sends a packet to the Discord gateway.
-     *
-     * @param Payload|array $data Packet data.
-     */
-    protected function send(Payload|array $data, bool $force = false): void
-    {
-        // Wait until payload count has been reset
-        // Keep 5 payloads for heartbeats as required
-        if ($this->payloadCount >= 115 && ! $force) {
-            $this->logger->debug('payload not sent, waiting', ['payload' => $data]);
-            $this->once('payload_count_reset', function () use ($data) {
-                $this->send($data);
-            });
-        } else {
-            ++$this->payloadCount;
-            $data = json_encode($data);
-            $this->ws->send($data);
-        }
-    }
-
-    /**
-     * Emits init if it has not been emitted already.
-     * @return false|void
-     */
-    protected function ready()
-    {
-        if ($this->emittedInit) {
-            return false;
-        }
-        $this->emittedInit = true;
-
-        $this->logger->info('client is ready');
-        $this->emit('init', [$this]);
-
-        if (count($this->listeners('ready'))) {
-            $this->logger->info("The 'ready' event is deprecated and will be removed in a future version of DiscordPHP. Please use 'init' instead.");
-            $this->emit('ready', [$this]); // deprecated
-        }
-
-        foreach ($this->unparsedPackets as $parser) {
-            $parser();
-        }
-    }
-
-    /**
      * Updates the client's voice state in a guild.
      *
      * @param Guild|string        $guild_id   ID of the guild.
@@ -1367,6 +1273,96 @@ class Discord
         );
 
         $this->send($payload);
+    }
+
+    /**
+     * Sets the heartbeat timer up.
+     *
+     * @param int $interval The heartbeat interval in milliseconds.
+     */
+    protected function setupHeartbeat(int $interval): void
+    {
+        $this->heartbeatInterval = $interval;
+        if (isset($this->heartbeatTimer)) {
+            $this->loop->cancelTimer($this->heartbeatTimer);
+        }
+
+        $interval = $interval / 1000;
+        $this->heartbeatTimer = $this->loop->addPeriodicTimer($interval, [$this, 'heartbeat']);
+        $this->heartbeat();
+
+        $this->logger->info('heartbeat timer initialized', ['interval' => $interval * 1000]);
+    }
+
+    /**
+     * Initializes the connection with the Discord gateway.
+     */
+    public function connectWs(): void
+    {
+        $this->setGateway()->then(function ($gateway) {
+            if (isset($gateway['session']) && $session = $gateway['session']) {
+                $this->logger->debug('session data received', ['session' => $session]);
+                if ($session['remaining'] < 2) {
+                    $this->logger->error('exceeded number of reconnects allowed, waiting before attempting reconnect', $session);
+                    $this->loop->addTimer($session['reset_after'] / 1000, function () {
+                        $this->connectWs();
+                    });
+
+                    return;
+                }
+            }
+
+            $this->logger->info('starting connection to websocket', ['gateway' => $this->gateway]);
+
+            /** @var PromiseInterface */
+            $promise = ($this->wsFactory)($this->gateway);
+            $promise->then([$this, 'handleWsConnection'], [$this, 'handleWsConnectionFailed']);
+        });
+    }
+
+    /**
+     * Sends a packet to the Discord gateway.
+     *
+     * @param Payload|array $data Packet data.
+     */
+    protected function send(Payload|array $data, bool $force = false): void
+    {
+        // Wait until payload count has been reset
+        // Keep 5 payloads for heartbeats as required
+        if ($this->payloadCount >= 115 && ! $force) {
+            $this->logger->debug('payload not sent, waiting', ['payload' => $data]);
+            $this->once('payload_count_reset', function () use ($data) {
+                $this->send($data);
+            });
+        } else {
+            ++$this->payloadCount;
+            $data = json_encode($data);
+            $this->ws->send($data);
+        }
+    }
+
+    /**
+     * Emits init if it has not been emitted already.
+     * @return false|void
+     */
+    protected function ready()
+    {
+        if ($this->emittedInit) {
+            return false;
+        }
+        $this->emittedInit = true;
+
+        $this->logger->info('client is ready');
+        $this->emit('init', [$this]);
+
+        if (count($this->listeners('ready'))) {
+            $this->logger->info("The 'ready' event is deprecated and will be removed in a future version of DiscordPHP. Please use 'init' instead.");
+            $this->emit('ready', [$this]); // deprecated
+        }
+
+        foreach ($this->unparsedPackets as $parser) {
+            $parser();
+        }
     }
 
     /**
