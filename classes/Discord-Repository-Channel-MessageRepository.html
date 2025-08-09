@@ -997,7 +997,12 @@ based on the response of the callback.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$endpoints</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;get&#039; =&gt; \Discord\Http\Endpoint::CHANNEL_MESSAGE, &#039;update&#039; =&gt; \Discord\Http\Endpoint::CHANNEL_MESSAGE, &#039;delete&#039; =&gt; \Discord\Http\Endpoint::CHANNEL_MESSAGE]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[
+    &#039;get&#039; =&gt; \Discord\Http\Endpoint::CHANNEL_MESSAGE,
+    // Messages returned are in order from newest to oldest.
+    &#039;update&#039; =&gt; \Discord\Http\Endpoint::CHANNEL_MESSAGE,
+    &#039;delete&#039; =&gt; \Discord\Http\Endpoint::CHANNEL_MESSAGE,
+]</span></code>
 
     
     
