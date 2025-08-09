@@ -55,7 +55,7 @@ class CommandBuilder extends Builder implements JsonSerializable
      *
      * @var string|null
      */
-    protected ?bool $default_member_permissions = null;
+    protected ?string $default_member_permissions = null;
 
     /**
      * The default permission of the command. If true the command is enabled when the app is added to the guild. SOON DEPRECATED.
