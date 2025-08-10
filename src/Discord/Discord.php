@@ -1411,57 +1411,8 @@ class Discord
             'mute' => $mute,
         ];
 
-        $voiceStateUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceStateUpdate) {
-            if ($vs->guild_id != $channel->guild_id) {
-                return; // This voice state update isn't for our guild.
-            }
-
-            $data['session'] = $vs->session_id;
-            $this->logger->info('received session id for voice session', ['guild' => $channel->guild_id, 'session_id' => $vs->session_id]);
-            $this->removeListener(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
-        };
-
-        $voiceServerUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceServerUpdate, $deferred, $logger) {
-            if ($vs->guild_id != $channel->guild_id) {
-                return; // This voice server update isn't for our guild.
-            }
-
-            $data['token'] = $vs->token;
-            $data['endpoint'] = $vs->endpoint;
-            $data['dnsConfig'] = $discord->options['dnsConfig'];
-            $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
-
-            if (null === $logger) {
-                $logger = $this->logger;
-            }
-
-            $vc = new VoiceClient($this->ws, $this->loop, $channel, $logger, $data);
-
-            $vc->once('ready', function () use ($vc, $deferred, $channel, $logger) {
-                $logger->info('voice client is ready');
-                $this->voiceClients[$channel->guild_id] = $vc;
-
-                $vc->setBitrate($channel->bitrate);
-                $logger->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
-                $deferred->resolve($vc);
-            });
-            $vc->once('error', function ($e) use ($deferred, $logger) {
-                $logger->error('error initializing voice client', ['e' => $e->getMessage()]);
-                $deferred->reject($e);
-            });
-            $vc->once('close', function () use ($channel, $logger) {
-                $logger->warning('voice client closed');
-                unset($this->voiceClients[$channel->guild_id]);
-            });
-
-            $vc->start();
-
-            $this->voiceLoggers[$channel->guild_id] = $logger;
-            $this->removeListener(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
-        };
-
-        $this->on(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
-        $this->on(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
+        $this->on(Event::VOICE_STATE_UPDATE, fn($vs, $discord) => $this->voiceStateUpdate($vs, $channel, $data));
+        $this->on(Event::VOICE_SERVER_UPDATE, fn($vs, $discord) => $this->voiceServerUpdate($vs, $channel, $data, $deferred, $logger));
 
         $payload = Payload::new(
             Op::OP_VOICE_STATE_UPDATE,
@@ -1476,6 +1427,55 @@ class Discord
         $this->send($payload);
 
         return $deferred->promise();
+    }
+
+    protected function voiceStateUpdate($vs, $channel, &$data)
+    {
+        if ($vs->guild_id != $channel->guild_id) {
+            return; // This voice state update isn't for our guild.
+        }
+
+        $data['session'] = $vs->session_id;
+        $this->logger->info('received session id for voice session', ['guild' => $channel->guild_id, 'session_id' => $vs->session_id]);
+        $this->removeListener(Event::VOICE_STATE_UPDATE, fn() => $this->voiceStateUpdate($vs, $channel, $data));
+    }
+
+    protected function voiceServerUpdate(VoiceStateUpdatePart $vs, Channel $channel, array &$data, Deferred &$deferred, ?LoggerInterface $logger)
+    {
+        if ($vs->guild_id != $channel->guild_id) {
+            return; // This voice server update isn't for our guild.
+        }
+
+        $logger ??= $this->logger;
+
+        $data['token'] = $vs->token;
+        $data['endpoint'] = $vs->endpoint;
+        $data['dnsConfig'] = $this->options['dnsConfig'];
+        $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
+
+        $vc = new VoiceClient($this->ws, $this->loop, $channel, $this->logger, $data);
+
+        $vc->once('ready', function () use ($vc, $deferred, $channel) {
+            $this->logger->info('voice client is ready');
+            $this->voiceClients[$channel->guild_id] = $vc;
+
+            $vc->setBitrate($channel->bitrate);
+            $this->logger->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
+            $deferred->resolve($vc);
+        });
+        $vc->once('error', function ($e) use ($deferred) {
+            $this->logger->error('error initializing voice client', ['e' => $e->getMessage()]);
+            $deferred->reject($e);
+        });
+        $vc->once('close', function () use ($channel) {
+            $this->logger->warning('voice client closed');
+            unset($this->voiceClients[$channel->guild_id]);
+        });
+
+        $vc->start();
+
+        $this->voiceLoggers[$channel->guild_id] = $this->logger;
+        $this->removeListener(Event::VOICE_SERVER_UPDATE, fn() => $this->voiceServerUpdate($vs, $channel, $data, $deferred, $logger));
     }
 
     /**
