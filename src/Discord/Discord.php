@@ -198,7 +198,7 @@ class Discord
     /**
      * An array of voice clients that are currently connected.
      *
-     * @var array Voice Clients.
+     * @var array<VoiceClient> Voice Clients.
      */
     protected $voiceClients = [];
 
@@ -634,15 +634,12 @@ class Discord
      */
     protected function handleVoiceStateUpdate(Payload $data): void
     {
-        if (isset($this->voiceClients[$data->d->guild_id])) {
-            $this->logger->debug('voice state update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
-            if ($voiceClient = $this->voiceClients[$data->d->guild_id] ?? null) {
-                /** @var VoiceClient $voiceClient */
-                $voiceClient->handleVoiceStateUpdate($data);
-            } else {
-                $this->logger->warning('voice client not found', ['guild' => $data->d->guild_id]);
-            }
+        $this->logger->debug('voice state update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
+        if (! isset($this->voiceClients[$data->d->guild_id])) {
+            $this->logger->warning('voice client not found', ['guild' => $data->d->guild_id]);
+            return;
         }
+        $this->voiceClients[$data->d->guild_id]->handleVoiceStateUpdate($data);
     }
 
     /**
