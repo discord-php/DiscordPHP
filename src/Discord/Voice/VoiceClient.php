@@ -1388,7 +1388,7 @@ class VoiceClient extends EventEmitter
      * @see \Discord\Parts\WebSockets\VoiceStateUpdate
      *
      *
-     * @param object $data The WebSocket data.
+     * @param Payload $data The WebSocket data.
      */
     public function handleVoiceStateUpdate(object $data): void
     {
@@ -1404,13 +1404,13 @@ class VoiceClient extends EventEmitter
             unset($this->speakingStatus[$ss->ssrc]);
         };
 
-        $ss = $this->speakingStatus->get('user_id', $data->user_id);
+        $ss = $this->speakingStatus->get('user_id', $data->d->user_id ?? null);
 
         if (null === $ss) {
             return; // not in our channel
         }
 
-        if ($data->channel_id == $this->channel->id) {
+        if (isset($data->d->channel_id) && $data->d->channel_id == $this->channel->id) {
             return; // ignore, just a mute/deaf change
         }
 
