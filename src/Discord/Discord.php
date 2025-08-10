@@ -636,7 +636,7 @@ class Discord
     {
         if (isset($this->voiceClients[$data->d->guild_id])) {
             $this->logger->debug('voice state update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
-            $this->voiceClients[$data->d->guild_id]->handleVoiceStateUpdate($data->d);
+            $this->voiceClients[$data->d->guild_id]->handleVoiceStateUpdate($data);
         }
     }
 
