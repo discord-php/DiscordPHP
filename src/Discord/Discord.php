@@ -636,8 +636,8 @@ class Discord
     {
         if (isset($this->voiceClients[$data->d->guild_id])) {
             $this->logger->debug('voice state update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
-            /** @var VoiceClient $voiceClient */
             if ($voiceClient = $this->voiceClients[$data->d->guild_id] ?? null) {
+                /** @var VoiceClient $voiceClient */
                 $voiceClient->handleVoiceStateUpdate($data);
             } else {
                 $this->logger->warning('voice client not found', ['guild' => $data->d->guild_id]);
