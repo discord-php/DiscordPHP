@@ -820,20 +820,15 @@ class Discord
         $hData = $this->handlers->getHandler($data->t);
 
         if (null === $hData) {
-            $voiceStateHandlers = [
-                Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
-            ];
             $handlers = [
+                Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
                 Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
                 Event::RESUMED => 'handleResume',
                 Event::READY => 'handleReady',
                 Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
             ];
 
-            if (isset($voiceStateHandlers[$data->t])) {
-                // @todo: this event is probably completely broken
-                $this->{$voiceStateHandlers[$data->t]}($data);
-            } elseif (isset($handlers[$data->t])) {
+            if (isset($handlers[$data->t])) {
                 $this->{$handlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
             }
 
