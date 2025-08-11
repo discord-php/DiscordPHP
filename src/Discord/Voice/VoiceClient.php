@@ -137,6 +137,13 @@ class VoiceClient extends EventEmitter
     protected $endpoint;
 
     /**
+     * The Voice connection protocol.
+     *
+     * @var string The protocol to use for the voice connection.
+     */
+    protected $protocol = 'udp';
+
+    /**
      * The IP the UDP client will use.
      *
      * @var string The IP that the UDP client will connect to.
@@ -209,7 +216,7 @@ class VoiceClient extends EventEmitter
     /**
      * The Voice WebSocket mode.
      *
-     * @var string The voice mode.
+     * @var string The transport encryption mode.
      */
     protected $mode = 'xsalsa20_poly1305';
 
@@ -503,13 +510,19 @@ class VoiceClient extends EventEmitter
      *
      * @param string $ip   The IP address to use for the voice connection.
      * @param int    $port The port number to use for the voice connection.
+     *
+     * @throws \DomainException
      */
     protected function selectProtocol($ip, $port): void
     {
+        if (! in_array($this->mode, $this->supportedModes)) {
+            throw new \DomainException("{$this->mode} is not a valid transport encryption connection mode. Valid modes are: " . implode(', ', $this->supportedModes));
+        }
+
         $payload = Payload::new(
             Op::VOICE_SELECT_PROTOCOL,
             [
-                'protocol' => 'udp',
+                'protocol' => $this->protocol,
                 'data' => [
                     'address' => $ip,
                     'port' => (int) $port,
