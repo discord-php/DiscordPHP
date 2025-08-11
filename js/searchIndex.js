@@ -2436,6 +2436,16 @@ Search.appendIndex(
             "summary": "Joins\u0020a\u0020voice\u0020channel.",
             "url": "classes/Discord-Discord.html#method_joinVoiceChannel"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AvoiceStateUpdate\u0028\u0029",
+            "name": "voiceStateUpdate",
+            "summary": "",
+            "url": "classes/Discord-Discord.html#method_voiceStateUpdate"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AvoiceServerUpdate\u0028\u0029",
+            "name": "voiceServerUpdate",
+            "summary": "",
+            "url": "classes/Discord-Discord.html#method_voiceServerUpdate"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AsetGateway\u0028\u0029",
             "name": "setGateway",
             "summary": "Retrieves\u0020and\u0020sets\u0020the\u0020gateway\u0020URL\u0020for\u0020the\u0020client.",
@@ -2620,6 +2630,11 @@ Search.appendIndex(
             "name": "voiceClients",
             "summary": "An\u0020array\u0020of\u0020voice\u0020clients\u0020that\u0020are\u0020currently\u0020connected.",
             "url": "classes/Discord-Discord.html#property_voiceClients"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024voiceSessions",
+            "name": "voiceSessions",
+            "summary": "",
+            "url": "classes/Discord-Discord.html#property_voiceSessions"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024largeGuilds",
             "name": "largeGuilds",
@@ -12220,6 +12235,11 @@ Search.appendIndex(
             "name": "ffmpeg",
             "summary": "The\u0020FFmpeg\u0020binary\u0020location.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_ffmpeg"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024voiceSessions",
+            "name": "voiceSessions",
+            "summary": "The\u0020voice\u0020sessions.",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_voiceSessions"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024loop",
             "name": "loop",
