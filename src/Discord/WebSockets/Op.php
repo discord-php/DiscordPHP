@@ -76,7 +76,9 @@ class Op
     /** Used to begin a voice WebSocket connection. */
     public const VOICE_IDENTIFY = 0;
     /** Used to select the voice protocol. */
-    public const VOICE_SELECT_PROTO = 1;
+    public const VOICE_SELECT_PROTOCOL = 1;
+    /** @deprecated use VOICE_SELECT_PROTOCOL */
+    public const VOICE_SELECT_PROTO = self::VOICE_SELECT_PROTOCOL;
     /** Used to complete the WebSocket handshake. */
     public const VOICE_READY = 2;
     /** Used to keep the WebSocket connection alive. */

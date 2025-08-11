@@ -419,6 +419,8 @@ class VoiceClient extends EventEmitter
     /**
      * Sends an identify payload to the voice gateway to authenticate the client.
      *
+     * @link https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-websocket-connection-example-voice-identify-payload
+     *
      * @since 10.19.0
      */
     protected function identify(): void
@@ -442,21 +444,53 @@ class VoiceClient extends EventEmitter
         $this->send($payload);
     }
 
+    /**
+     * Sends a heartbeat payload to the voice server to maintain the connection.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#heartbeating
+     *
+     * @since 10.19.0
+     */
     protected function heartbeat(): void
     {
-        $data = [
-            't' => (int) microtime(true),
-            'seq_ack' => $this->data['seq'] ?? -1,
-        ];
-
-        $this->logger->debug('sending heartbeat', ['data' => $data]);
-
-        $this->send(Payload::new(
+        $payload = Payload::new(
             Op::VOICE_HEARTBEAT,
-            $data
-        ));
+            [
+                't' => (int) microtime(true),
+                'seq_ack' => $this->data['seq'] ?? -1,
+            ]
+        );
+
+        $this->logger->debug('sending heartbeat', ['packet' => $payload]);
+
+        $this->send($payload);
 
         $this->emit('ws-heartbeat', []);
+    }
+
+    /**
+     * Selects the UDP protocol for the voice connection and sends the selection payload.
+     *
+     * @param string $ip   The IP address to use for the voice connection.
+     * @param int    $port The port number to use for the voice connection.
+     */
+    protected function selectProtocol($ip, $port): void
+    {
+        $payload = Payload::new(
+            Op::VOICE_SELECT_PROTOCOL,
+            [
+                'protocol' => 'udp',
+                'data' => [
+                    'address' => $ip,
+                    'port' => (int) $port,
+                    'mode' => $this->mode,
+                ],
+            ]
+        );
+
+        $this->logger->debug('sending voice select protocol', ['packet' => $payload]);
+
+        $this->send($payload);
     }
 
     /**
@@ -470,16 +504,14 @@ class VoiceClient extends EventEmitter
             return;
         }
 
-        $data = [
-            'server_id' => $this->channel->guild_id,
-            'session_id' => $this->voiceSessions[$this->channel->guild_id],
-            'token' => $this->data['token'],
-            'seq_ack' => $this->data['seq'],
-        ];
-
         $payload = Payload::new(
             Op::VOICE_RESUME,
-            $data
+            [
+                'server_id' => $this->channel->guild_id,
+                'session_id' => $this->voiceSessions[$this->channel->guild_id],
+                'token' => $this->data['token'],
+                'seq_ack' => $this->data['seq'],
+            ]
         );
 
         $this->logger->debug('sending identify', ['packet' => $payload]);
@@ -504,92 +536,10 @@ class VoiceClient extends EventEmitter
         $firstPack = true;
         $ip = $port = '';
 
-        $discoverUdp = function ($message) use (&$ws, &$discoverUdp, $udpfac, &$firstPack, &$ip, &$port) {
-            $data = json_decode($message->getPayload());
-
-            if ($data->op == Op::VOICE_READY) {
-                $ws->removeListener('message', $discoverUdp);
-
-                $this->udpPort = $data->d->port;
-                $this->ssrc = $data->d->ssrc;
-
-                $this->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
-
-                $buffer = new Buffer(74);
-                $buffer[1] = "\x01";
-                $buffer[3] = "\x46";
-                $buffer->writeUInt32BE($this->ssrc, 4);
-                /** @var PromiseInterface */
-                $promise = $udpfac->createClient("{$data->d->ip}:{$this->udpPort}");
-
-                $promise->then(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
-                    $this->logger->debug('connected to voice UDP');
-                    $this->client = $client;
-
-                    $this->loop->addTimer(0.1, function () use (&$client, $buffer) {
-                        $client->send((string) $buffer);
-                    });
-
-                    $this->udpHeartbeat = $this->loop->addPeriodicTimer(5, function () use ($client) {
-                        $buffer = new Buffer(9);
-                        $buffer[0] = "\xC9";
-                        $buffer->writeUInt64LE($this->heartbeatSeq, 1);
-                        ++$this->heartbeatSeq;
-
-                        $client->send((string) $buffer);
-                        $this->emit('udp-heartbeat', []);
-                    });
-
-                    $client->on('error', function ($e) {
-                        $this->emit('udp-error', [$e]);
-                    });
-
-                    $decodeUDP = function ($message) use (&$decodeUDP, $client, &$ip, &$port) {
-                        $message = (string) $message;
-                        // let's get our IP
-                        $ip_start = 8;
-                        $ip = substr($message, $ip_start);
-                        $ip_end = strpos($ip, "\x00");
-                        $ip = substr($ip, 0, $ip_end);
-
-                        // now the port!
-                        $port = substr($message, strlen($message) - 2);
-                        $port = unpack('v', $port)[1];
-
-                        $this->logger->debug('received our IP and port', ['ip' => $ip, 'port' => $port]);
-
-                        $payload = Payload::new(
-                            Op::VOICE_SELECT_PROTO,
-                            [
-                                'protocol' => 'udp',
-                                'data' => [
-                                    'address' => $ip,
-                                    'port' => (int) $port,
-                                    'mode' => $this->mode,
-                                ],
-                            ]
-                        );
-
-                        $this->send($payload);
-
-                        $client->removeListener('message', $decodeUDP);
-
-                        if (! $this->deaf) {
-                            $client->on('message', [$this, 'handleAudioData']);
-                        }
-                    };
-
-                    $client->on('message', $decodeUDP);
-                }, function ($e) {
-                    $this->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
-                    $this->emit('error', [$e]);
-                });
-            }
-        };
-
-        $ws->on('message', $discoverUdp);
+        $ws->on('message', fn ($message) => $this->discoverUdp($message, $ws, $udpfac, $firstPack, $ip, $port));
         $ws->on('message', function ($message) {
             $data = json_decode($message->getPayload());
+            $data = Payload::new($data->op, $data->d, $data->s, $data->t);
 
             $this->emit('ws-message', [$message, $this]);
 
@@ -680,6 +630,97 @@ class VoiceClient extends EventEmitter
             $this->sentLoginFrame = true;
         }
     }
+
+    /**
+     * Handles the UDP discovery process for the Discord voice client.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-websocket-connection-example-voice-ready-payload
+     *
+     * @since 10.19.0
+     *
+     * @param mixed            $message   The incoming WebSocket message containing the payload.
+     * @param WebSocket        $ws        Reference to the WebSocket connection.
+     * @param DatagramFactory  $udpfac    Factory for creating UDP client connections.
+     * @param bool             $firstPack Reference to a flag indicating if this is the first UDP packet.
+     * @param string           $ip        Reference to the discovered IP address.
+     * @param string           $port      Reference to the discovered port.
+     */
+    protected function discoverUdp($message, WebSocket &$ws, DatagramFactory $udpfac, bool &$firstPack, string &$ip, string &$port)
+    {
+        $data = json_decode($message->getPayload());
+        $data = Payload::new($data->op, $data->d, $data->s, $data->t);
+
+        if ($data->op != Op::VOICE_READY) {
+            return;
+        }
+
+        $ws->removeListener('message', fn ($message) => $this->discoverUdp($message, $ws, $udpfac, $firstPack, $ip, $port));
+
+        $this->udpPort = $data->d->port;
+        $this->ssrc = $data->d->ssrc;
+
+        $this->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
+
+        $buffer = new Buffer(74);
+        $buffer[1] = "\x01";
+        $buffer[3] = "\x46";
+        $buffer->writeUInt32BE($this->ssrc, 4);
+        /** @var PromiseInterface */
+        $promise = $udpfac->createClient("{$data->d->ip}:{$this->udpPort}");
+
+        $promise->then(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
+            $this->logger->debug('connected to voice UDP');
+            $this->client = $client;
+
+            $this->loop->addTimer(0.1, function () use (&$client, $buffer) {
+                $client->send((string) $buffer);
+            });
+
+            $this->udpHeartbeat = $this->loop->addPeriodicTimer(5, function () use ($client) {
+                $buffer = new Buffer(9);
+                $buffer[0] = "\xC9";
+                $buffer->writeUInt64LE($this->heartbeatSeq, 1);
+                ++$this->heartbeatSeq;
+
+                $client->send((string) $buffer);
+                $this->emit('udp-heartbeat', []);
+            });
+
+            $client->on('error', function ($e) {
+                $this->emit('udp-error', [$e]);
+            });
+
+            $client->on('message', fn ($message) => $this->decodeUDP($message, $client, $ip, $port));
+        }, function ($e) {
+            $this->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
+            $this->emit('error', [$e]);
+        });
+    }
+
+    protected function decodeUDP($message, Socket $client, string &$ip, string &$port): void
+    {
+        $message = (string) $message;
+        // let's get our IP
+        $ip_start = 8;
+        $ip = substr($message, $ip_start);
+        $ip_end = strpos($ip, "\x00");
+        $ip = substr($ip, 0, $ip_end);
+
+        // now the port!
+        $port = substr($message, strlen($message) - 2);
+        $port = unpack('v', $port)[1];
+
+        $this->logger->debug('received our IP and port', ['ip' => $ip, 'port' => $port]);
+
+        $this->selectProtocol($ip, $port);
+
+        $client->removeListener('message', fn ($message) => $this->decodeUDP($message, $client, $ip, $port));
+
+        if (! $this->deaf) {
+            $client->on('message', [$this, 'handleAudioData']);
+        }
+    }
+
     /**
      * Handles a WebSocket error.
      *
@@ -1165,7 +1206,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->mainSend(Payload::new(
-            Op::OP_VOICE_STATE_UPDATE,
+            Op::OP_UPDATE_VOICE_STATE,
             [
                 'guild_id' => $channel->guild_id,
                 'channel_id' => $channel->id,
@@ -1282,7 +1323,7 @@ class VoiceClient extends EventEmitter
         $this->deaf = $deaf;
 
         $this->mainSend(Payload::new(
-            Op::OP_VOICE_STATE_UPDATE,
+            Op::OP_UPDATE_VOICE_STATE,
             [
                 'guild_id' => $this->channel->guild_id,
                 'channel_id' => $this->channel->id,
@@ -1371,7 +1412,7 @@ class VoiceClient extends EventEmitter
         $this->ready = false;
 
         $this->mainSend(Payload::new(
-            Op::OP_VOICE_STATE_UPDATE,
+            Op::OP_UPDATE_VOICE_STATE,
             [
                 'guild_id' => $this->channel->guild_id,
                 'channel_id' => null,
