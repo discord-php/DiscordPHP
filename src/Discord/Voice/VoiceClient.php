@@ -81,6 +81,13 @@ class VoiceClient extends EventEmitter
     protected $ffmpeg;
 
     /**
+     * The voice sessions.
+     *
+     * @var array The voice sessions.
+     */
+    protected $voiceSessions;
+
+    /**
      * The ReactPHP event loop.
      *
      * @var LoopInterface The ReactPHP event loop that will run everything.
@@ -325,7 +332,7 @@ class VoiceClient extends EventEmitter
      *
      * @var int Voice version.
      */
-    protected $version = 4;
+    protected $version = 8;
 
     /**
      * The Config for DNS Resolver.
@@ -358,14 +365,16 @@ class VoiceClient extends EventEmitter
     /**
      * Constructs the Voice Client instance.
      *
-     * @param WebSocket       $websocket The main WebSocket client.
-     * @param LoopInterface   $loop      The ReactPHP event loop.
-     * @param Channel         $channel   The channel we are connecting to.
-     * @param LoggerInterface $logger    The logger.
-     * @param array           $data      More information related to the voice client.
+     * @param WebSocket       $websocket     The main WebSocket client.
+     * @param LoopInterface   $loop          The ReactPHP event loop.
+     * @param Channel         $channel       The channel we are connecting to.
+     * @param LoggerInterface $logger        The logger.
+     * @param array           $data          More information related to the voice client.
+     * @param array           $voiceSessions The voice sessions.
      */
-    public function __construct(WebSocket $websocket, LoopInterface $loop, Channel $channel, LoggerInterface $logger, array $data)
+    public function __construct(WebSocket $websocket, LoopInterface $loop, Channel $channel, LoggerInterface $logger, array $data, array &$voiceSessions)
     {
+        $this->voiceSessions = &$voiceSessions;
         $this->loop = $loop;
         $this->mainWebsocket = $websocket;
         $this->channel = $channel;
@@ -516,7 +525,7 @@ class VoiceClient extends EventEmitter
             switch ($data->op) {
                 case Op::VOICE_HEARTBEAT_ACK: // keepalive response
                     $end = microtime(true);
-                    $start = $data->d;
+                    $start = $data->d->t;
                     $diff = ($end - $start) * 1000;
 
                     $this->logger->debug('received heartbeat ack', ['response_time' => $diff]);
@@ -609,14 +618,17 @@ class VoiceClient extends EventEmitter
         $ws->on('close', [$this, 'handleWebSocketClose']);
 
         if (! $this->sentLoginFrame) {
+            $data = [
+                'server_id' => $this->channel->guild_id,
+                'user_id' => $this->data['user_id'],
+                'token' => $this->data['token'],
+            ];
+            if (isset($this->voiceSessions[$this->channel->guild_id])) {
+                $data['session_id'] = $this->voiceSessions[$this->channel->guild_id];
+            }
             $payload = Payload::new(
                 Op::VOICE_IDENTIFY,
-                [
-                    'server_id' => $this->channel->guild_id,
-                    'user_id' => $this->data['user_id'],
-                    'session_id' => $this->data['session'],
-                    'token' => $this->data['token'],
-                ],
+                $data
             );
 
             $this->logger->debug('sending identify', ['packet' => $payload]);
