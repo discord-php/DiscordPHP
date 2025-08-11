@@ -789,6 +789,13 @@ class VoiceClient extends EventEmitter
             $this->client->close();
         }
 
+        // Remove voice session when leaving.
+        if ($op == Op::CLOSE_VOICE_DISCONNECTED) {
+            $this->logger->info('voice client disconnected from channel', ['channel_id' => $this->channel->id]);
+            $this->voiceSessions[$this->channel->guild_id] = null;
+            return;
+        }
+
         // Don't reconnect on a critical opcode or if closed by user.
         if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this->userClose) {
             $this->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
