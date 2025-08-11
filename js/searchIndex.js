@@ -11966,10 +11966,45 @@ Search.appendIndex(
             "summary": "Initilizes\u0020the\u0020WebSocket\u0020and\u0020UDP\u0020socket.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_initSockets"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003Aidentify\u0028\u0029",
+            "name": "identify",
+            "summary": "Sends\u0020an\u0020identify\u0020payload\u0020to\u0020the\u0020voice\u0020gateway\u0020to\u0020authenticate\u0020the\u0020client.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_identify"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024heartbeat",
+            "name": "heartbeat",
+            "summary": "The\u0020Voice\u0020WebSocket\u0020heartbeat\u0020timer.",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_heartbeat"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AheartbeatAck\u0028\u0029",
+            "name": "heartbeatAck",
+            "summary": "Handles\u0020the\u0020heartbeat\u0020acknowledgement\u0020from\u0020the\u0020voice\u0020WebSocket\u0020connection.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_heartbeatAck"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AselectProtocol\u0028\u0029",
+            "name": "selectProtocol",
+            "summary": "Selects\u0020the\u0020UDP\u0020protocol\u0020for\u0020the\u0020voice\u0020connection\u0020and\u0020sends\u0020the\u0020selection\u0020payload.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_selectProtocol"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003Aresume\u0028\u0029",
+            "name": "resume",
+            "summary": "Resumes\u0020a\u0020previously\u0020established\u0020voice\u0020connection.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_resume"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleWebSocketConnection\u0028\u0029",
             "name": "handleWebSocketConnection",
             "summary": "Handles\u0020a\u0020WebSocket\u0020connection.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_handleWebSocketConnection"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AdiscoverUdp\u0028\u0029",
+            "name": "discoverUdp",
+            "summary": "Handles\u0020the\u0020UDP\u0020discovery\u0020process\u0020for\u0020the\u0020Discord\u0020voice\u0020client.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_discoverUdp"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AdecodeUDP\u0028\u0029",
+            "name": "decodeUDP",
+            "summary": "Decodes\u0020a\u0020UDP\u0020message\u0020to\u0020extract\u0020the\u0020IP\u0020address\u0020and\u0020port,\u0020then\u0020selects\u0020the\u0020protocol\u0020for\u0020voice\u0020communication.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_decodeUDP"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleWebSocketError\u0028\u0029",
             "name": "handleWebSocketError",
@@ -12285,11 +12320,6 @@ Search.appendIndex(
             "name": "heartbeat_interval",
             "summary": "The\u0020UDP\u0020heartbeat\u0020interval.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_heartbeat_interval"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024heartbeat",
-            "name": "heartbeat",
-            "summary": "The\u0020Voice\u0020WebSocket\u0020heartbeat\u0020timer.",
-            "url": "classes/Discord-Voice-VoiceClient.html#property_heartbeat"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024udpHeartbeat",
             "name": "udpHeartbeat",
@@ -13926,9 +13956,14 @@ Search.appendIndex(
             "summary": "Used\u0020to\u0020begin\u0020a\u0020voice\u0020WebSocket\u0020connection.",
             "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_IDENTIFY"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_SELECT_PROTOCOL",
+            "name": "VOICE_SELECT_PROTOCOL",
+            "summary": "Used\u0020to\u0020select\u0020the\u0020voice\u0020protocol.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTOCOL"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_SELECT_PROTO",
             "name": "VOICE_SELECT_PROTO",
-            "summary": "Used\u0020to\u0020select\u0020the\u0020voice\u0020protocol.",
+            "summary": "",
             "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTO"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_READY",
@@ -13941,9 +13976,14 @@ Search.appendIndex(
             "summary": "Used\u0020to\u0020keep\u0020the\u0020WebSocket\u0020connection\u0020alive.",
             "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_HEARTBEAT"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_SESSION_DESCRIPTION",
+            "name": "VOICE_SESSION_DESCRIPTION",
+            "summary": "Used\u0020to\u0020describe\u0020the\u0020session.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_SESSION_DESCRIPTION"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_DESCRIPTION",
             "name": "VOICE_DESCRIPTION",
-            "summary": "Used\u0020to\u0020describe\u0020the\u0020session.",
+            "summary": "",
             "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_DESCRIPTION"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_SPEAKING",

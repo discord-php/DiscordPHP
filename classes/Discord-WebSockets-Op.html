@@ -670,11 +670,10 @@
 <dd>Acknowledge readiness previously announced transition.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-WebSockets-Op.html#constant_VOICE_DESCRIPTION">VOICE_DESCRIPTION</a>
+    <a class="-deprecated" href="classes/Discord-WebSockets-Op.html#constant_VOICE_DESCRIPTION">VOICE_DESCRIPTION</a>
     <span>
-        &nbsp;= 4                            </span>
+        &nbsp;= self::VOICE_SESSION_DESCRIPTION                            </span>
 </dt>
-<dd>Used to describe the session.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-WebSockets-Op.html#constant_VOICE_HEARTBEAT">VOICE_HEARTBEAT</a>
@@ -726,11 +725,24 @@
 <dd>Acknowledge a successful session resume.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTO">VOICE_SELECT_PROTO</a>
+    <a class="-deprecated" href="classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTO">VOICE_SELECT_PROTO</a>
+    <span>
+        &nbsp;= self::VOICE_SELECT_PROTOCOL                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTOCOL">VOICE_SELECT_PROTOCOL</a>
     <span>
         &nbsp;= 1                            </span>
 </dt>
 <dd>Used to select the voice protocol.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-WebSockets-Op.html#constant_VOICE_SESSION_DESCRIPTION">VOICE_SESSION_DESCRIPTION</a>
+    <span>
+        &nbsp;= 4                            </span>
+</dt>
+<dd>Used to describe the session.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-WebSockets-Op.html#constant_VOICE_SPEAKING">VOICE_SPEAKING</a>
@@ -784,7 +796,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">138</span>
+    <span class="phpdocumentor-element-found-in__line">142</span>
 
     </aside>
 
@@ -816,7 +828,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">168</span>
+    <span class="phpdocumentor-element-found-in__line">172</span>
 
     </aside>
 
@@ -848,7 +860,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">166</span>
+    <span class="phpdocumentor-element-found-in__line">170</span>
 
     </aside>
 
@@ -880,7 +892,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">148</span>
 
     </aside>
 
@@ -912,7 +924,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">142</span>
+    <span class="phpdocumentor-element-found-in__line">146</span>
 
     </aside>
 
@@ -944,7 +956,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">158</span>
 
     </aside>
 
@@ -976,7 +988,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">152</span>
+    <span class="phpdocumentor-element-found-in__line">156</span>
 
     </aside>
 
@@ -1008,7 +1020,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">160</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
@@ -1040,7 +1052,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">148</span>
+    <span class="phpdocumentor-element-found-in__line">152</span>
 
     </aside>
 
@@ -1072,7 +1084,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">164</span>
+    <span class="phpdocumentor-element-found-in__line">168</span>
 
     </aside>
 
@@ -1104,7 +1116,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">136</span>
+    <span class="phpdocumentor-element-found-in__line">140</span>
 
     </aside>
 
@@ -1136,7 +1148,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">146</span>
+    <span class="phpdocumentor-element-found-in__line">150</span>
 
     </aside>
 
@@ -1168,7 +1180,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">158</span>
+    <span class="phpdocumentor-element-found-in__line">162</span>
 
     </aside>
 
@@ -1200,7 +1212,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">162</span>
+    <span class="phpdocumentor-element-found-in__line">166</span>
 
     </aside>
 
@@ -1232,7 +1244,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">156</span>
+    <span class="phpdocumentor-element-found-in__line">160</span>
 
     </aside>
 
@@ -1264,7 +1276,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">144</span>
 
     </aside>
 
@@ -1296,7 +1308,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">185</span>
 
     </aside>
 
@@ -1328,7 +1340,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">183</span>
+    <span class="phpdocumentor-element-found-in__line">187</span>
 
     </aside>
 
@@ -1360,7 +1372,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">177</span>
+    <span class="phpdocumentor-element-found-in__line">181</span>
 
     </aside>
 
@@ -1392,7 +1404,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">185</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 
@@ -1424,7 +1436,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">179</span>
+    <span class="phpdocumentor-element-found-in__line">183</span>
 
     </aside>
 
@@ -1456,7 +1468,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">150</span>
+    <span class="phpdocumentor-element-found-in__line">154</span>
 
     </aside>
 
@@ -2018,7 +2030,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 
     </aside>
 
@@ -2050,7 +2062,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">99</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -2082,7 +2094,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
@@ -2114,7 +2126,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">121</span>
 
     </aside>
 
@@ -2146,7 +2158,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">115</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -2178,7 +2190,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">109</span>
+    <span class="phpdocumentor-element-found-in__line">113</span>
 
     </aside>
 
@@ -2210,7 +2222,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">121</span>
+    <span class="phpdocumentor-element-found-in__line">125</span>
 
     </aside>
 
@@ -2242,7 +2254,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">111</span>
+    <span class="phpdocumentor-element-found-in__line">115</span>
 
     </aside>
 
@@ -2274,7 +2286,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -2306,7 +2318,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -2338,7 +2350,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">111</span>
 
     </aside>
 
@@ -2370,7 +2382,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">101</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
@@ -2402,7 +2414,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">105</span>
+    <span class="phpdocumentor-element-found-in__line">109</span>
 
     </aside>
 
@@ -2424,7 +2436,7 @@
     
 
 </article>
-                    <article class="phpdocumentor-element -constant -public ">
+                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_VOICE_DESCRIPTION">
         VOICE_DESCRIPTION
         <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_DESCRIPTION" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2434,18 +2446,24 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Used to describe the session.</p>
-
     
-    <code class="phpdocumentor-signature phpdocumentor-code ">
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>use VOICE_SESSION_DESCRIPTION</p>
+
+            </article>
+        </div>
+    
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">VOICE_DESCRIPTION</span>
-    = <span class="phpdocumentor-signature__default-value">4</span>
+    = <span class="phpdocumentor-signature__default-value">self::VOICE_SESSION_DESCRIPTION</span>
 </code>
 
 
@@ -2466,7 +2484,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
@@ -2498,7 +2516,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -2530,7 +2548,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -2594,7 +2612,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -2626,7 +2644,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">91</span>
+    <span class="phpdocumentor-element-found-in__line">95</span>
 
     </aside>
 
@@ -2658,7 +2676,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -2680,10 +2698,48 @@
     
 
 </article>
-                    <article class="phpdocumentor-element -constant -public ">
+                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_VOICE_SELECT_PROTO">
         VOICE_SELECT_PROTO
         <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTO" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">81</span>
+
+    </aside>
+
+    
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>use VOICE_SELECT_PROTOCOL</p>
+
+            </article>
+        </div>
+    
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">VOICE_SELECT_PROTO</span>
+    = <span class="phpdocumentor-signature__default-value">self::VOICE_SELECT_PROTOCOL</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_VOICE_SELECT_PROTOCOL">
+        VOICE_SELECT_PROTOCOL
+        <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTOCOL" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
@@ -2700,8 +2756,40 @@
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">VOICE_SELECT_PROTO</span>
+    <span class="phpdocumentor-signature__name">VOICE_SELECT_PROTOCOL</span>
     = <span class="phpdocumentor-signature__default-value">1</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_VOICE_SESSION_DESCRIPTION">
+        VOICE_SESSION_DESCRIPTION
+        <a href="classes/Discord-WebSockets-Op.html#constant_VOICE_SESSION_DESCRIPTION" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">87</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Used to describe the session.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">VOICE_SESSION_DESCRIPTION</span>
+    = <span class="phpdocumentor-signature__default-value">4</span>
 </code>
 
 
@@ -2722,7 +2810,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">87</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -2768,7 +2856,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">192</span>
+    <span class="phpdocumentor-element-found-in__line">196</span>
 
     </aside>
 
@@ -2807,7 +2895,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">209</span>
+    <span class="phpdocumentor-element-found-in__line">213</span>
 
     </aside>
 
@@ -2997,7 +3085,7 @@
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_DAVE_PREPARE_EPOCH">VOICE_DAVE_PREPARE_EPOCH</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_DAVE_PREPARE_TRANSITION">VOICE_DAVE_PREPARE_TRANSITION</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_DAVE_TRANSITION_READY">VOICE_DAVE_TRANSITION_READY</a></li>
-                                                    <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_DESCRIPTION">VOICE_DESCRIPTION</a></li>
+                                                    <li class="-deprecated"><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_DESCRIPTION">VOICE_DESCRIPTION</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_HEARTBEAT">VOICE_HEARTBEAT</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_HEARTBEAT_ACK">VOICE_HEARTBEAT_ACK</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_HELLO">VOICE_HELLO</a></li>
@@ -3005,7 +3093,9 @@
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_READY">VOICE_READY</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_RESUME">VOICE_RESUME</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_RESUMED">VOICE_RESUMED</a></li>
-                                                    <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTO">VOICE_SELECT_PROTO</a></li>
+                                                    <li class="-deprecated"><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTO">VOICE_SELECT_PROTO</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTOCOL">VOICE_SELECT_PROTOCOL</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_SESSION_DESCRIPTION">VOICE_SESSION_DESCRIPTION</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_VOICE_SPEAKING">VOICE_SPEAKING</a></li>
                                             </ul>
                 </li>
