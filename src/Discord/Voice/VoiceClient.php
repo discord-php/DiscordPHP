@@ -534,6 +534,8 @@ class VoiceClient extends EventEmitter
      * Handles the heartbeat acknowledgement from the voice WebSocket connection.
      *
      * @param Payload $data The data object received from the WebSocket, expected to contain the heartbeat timestamp in $data->d->t.
+     *
+     * @since 10.19.0
      */
     protected function heartbeatAck($data): void
     {
@@ -551,6 +553,8 @@ class VoiceClient extends EventEmitter
      *
      * @param string $ip   The IP address to use for the voice connection.
      * @param int    $port The port number to use for the voice connection.
+     *
+     * @since 10.19.0
      */
     protected function selectProtocol($ip, $port): void
     {
@@ -578,6 +582,17 @@ class VoiceClient extends EventEmitter
         $this->send($payload);
     }
 
+    /**
+     * Handles the "ready" event for the voice client, initializing UDP connection and heartbeat.
+     *
+     * @param Payload $data The data object containing voice server connection details:
+     *                     - $data->d->ssrc: The synchronization source identifier.
+     *                     - $data->d->ip: The IP address for the UDP connection.
+     *                     - $data->d->port: The port for the UDP connection.
+     *                     - $data->d->modes: Supported encryption modes.
+     *
+     * @since 10.19.0
+     */
     protected function ready($data)
     {
         $this->ssrc = $data->d->ssrc;
