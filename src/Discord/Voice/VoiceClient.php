@@ -59,6 +59,22 @@ class VoiceClient extends EventEmitter
      */
     public const SILENCE_FRAME = "\xF8\xFF\xFE";
 
+    public const SUPPORTED_MODES = [
+        'aead_aes256_gcm_rtpsize',
+        'aead_xchacha20_poly1305_rtpsize',
+    ];
+
+    public const DEPRECATED_MODES = [
+        'xsalsa20_poly1305',
+    ];
+
+    public const UNSUPPORTED_MODES = [
+        'xsalsa20_poly1305_lite_rtpsize',
+        'aead_aes256_gcm',
+        'xsalsa20_poly1305_suffix',
+        'xsalsa20_poly1305_lite',
+    ];
+
     /**
      * Is the voice client ready?
      *
@@ -409,13 +425,28 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Sets the transport encryption mode for the client.
+     * Sets the transport encryption mode for the voice client.
      *
      * @param string $mode The transport encryption mode to set for the voice client.
+     *
+     * @throws \InvalidArgumentException If the provided mode is not supported.
      */
     public function setMode(string $mode): void
     {
-        $this->mode = $mode;
+        if (in_array($mode, self::SUPPORTED_MODES)) {
+            $this->mode = $mode;
+            return;
+        }
+
+        if (in_array($mode, self::DEPRECATED_MODES)) {
+            $this->logger->warning("{$mode} is a deprecated transport encryption connection mode. Please use a supported mode: " . implode(', ', self::SUPPORTED_MODES));
+            $this->mode = $mode;
+            return;
+        }
+
+        $this->logger->error("{$mode} is not a supported transport encryption connection mode.");
+
+        throw new \InvalidArgumentException("Invalid transport encryption mode: {$mode}");
     }
 
     /**
@@ -1713,7 +1744,7 @@ class VoiceClient extends EventEmitter
             return;
         }
 
-        $this->logger->debug('received voice data', ['message' => $message]); // Never calls
+        $this->logger->debug('received voice data', ['message' => $message]);
 
         $voicePacket = VoicePacket::make($message);
 
