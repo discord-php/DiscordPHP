@@ -618,14 +618,17 @@ class VoiceClient extends EventEmitter
         $ws->on('close', [$this, 'handleWebSocketClose']);
 
         if (! $this->sentLoginFrame) {
-            $payload = Payload::new(
-                Op::VOICE_IDENTIFY,
-                [
+            $data = [
                     'server_id' => $this->channel->guild_id,
                     'user_id' => $this->data['user_id'],
-                    'session_id' => $this->voiceSessions[$this->channel->guild_id] ?? null,
                     'token' => $this->data['token'],
-                ],
+            ];
+            if (isset($this->voiceSessions[$this->channel->guild_id])) {
+                $data['session_id'] = $this->voiceSessions[$this->channel->guild_id];
+            }
+            $payload = Payload::new(
+                Op::VOICE_IDENTIFY,
+                $data
             );
 
             $this->logger->debug('sending identify', ['packet' => $payload]);
