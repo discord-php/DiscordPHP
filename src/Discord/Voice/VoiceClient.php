@@ -218,7 +218,7 @@ class VoiceClient extends EventEmitter
      *
      * @var string The transport encryption mode.
      */
-    protected $mode = 'xsalsa20_poly1305';
+    protected $mode = 'aead_aes256_gcm_rtpsize';
 
     /**
      * The secret key used for encrypting voice.
@@ -406,6 +406,18 @@ class VoiceClient extends EventEmitter
         $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
         $this->speakingStatus = new Collection([], 'ssrc');
         $this->dnsConfig = $data['dnsConfig'];
+    }
+
+    /**
+     * Sets the transport encryption mode for the client.
+     *
+     * @param string $mode The transport encryption mode to set for the voice client.
+     *
+     * @return void
+     */
+    public function setMode(string $mode): void
+    {
+        $this->mode = $mode;
     }
 
     /**
@@ -1724,18 +1736,17 @@ class VoiceClient extends EventEmitter
     protected function handleAudioData(string $message): void
     {
         $voicePacket = VoicePacket::make($message);
-        $nonce = new Buffer(24);
-        $nonce->write($voicePacket->getHeader(), 0);
-        $message = \sodium_crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
 
-        if ($message === false) {
+        $decrypted = $this->decryptVoicePacket($voicePacket);
+
+        if ($decrypted === false) {
             // if we can't decode the message, drop it silently.
             return;
         }
 
-        $this->emit('raw', [$message, $this]);
+        $this->emit('raw', [$decrypted, $this]);
 
-        $vp = VoicePacket::make($voicePacket->getHeader().$message);
+        $vp = VoicePacket::make($voicePacket->getHeader() . $decrypted);
         $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
         $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
 
@@ -1789,6 +1800,47 @@ class VoiceClient extends EventEmitter
         $buff->write($vp->getData(), 2);
 
         $decoder->stdin->write((string) $buff);
+    }
+
+    protected function decryptVoicePacket(VoicePacket $voicePacket): string|false
+    {
+        // AEAD modes use a nonce that is a 32-bit integer appended to the payload.
+        if (strpos($this->mode, 'aead') !== false) {
+            $data = $voicePacket->getData();
+            $nonce = str_repeat("\x00", 12); // 12-byte nonce for AES-GCM
+            // The last 4 bytes of the payload are the nonce (32-bit LE integer)
+            if (strlen($data) < 4) {
+                return false;
+            }
+            $ciphertext = substr($data, 0, -4);
+            $nonceInt = unpack('V', substr($data, -4))[1];
+            $nonce = str_pad(pack('V', $nonceInt), 12, "\x00", STR_PAD_RIGHT);
+        } else {
+            $nonce = new Buffer(24);
+            $nonce->write($voicePacket->getHeader(), 0);
+        }
+
+        switch($this->mode) {
+            case 'aead_aes256_gcm_rtpsize': // preferred
+                return \sodium_crypto_aead_aes256gcm_decrypt(
+                    $ciphertext,
+                    '', // no additional data
+                    $nonce,
+                    $this->secret_key
+                );
+            case 'aead_xchacha20_poly1305_rtpsize': // required
+                return \sodium_crypto_aead_xchacha20poly1305_ietf_decrypt(
+                    $ciphertext,
+                    '', // no additional data
+                    $nonce,
+                    $this->secret_key
+                );
+            // deprecated
+            case 'xsalsa20_poly1305':
+                return \sodium_crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
+        }
+
+        return false;
     }
 
     protected function generateKeyPackage()
