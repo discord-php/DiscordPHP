@@ -11063,7 +11063,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\InviteRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Channel-InviteRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\InviteRepository\u003A\u003A\u0024class",
