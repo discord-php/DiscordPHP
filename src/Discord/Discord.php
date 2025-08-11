@@ -1174,7 +1174,7 @@ class Discord
         }
 
         $payload = Payload::new(
-            Op::OP_GUILD_MEMBER_CHUNK,
+            Op::OP_REQUEST_GUILD_MEMBERS,
             $payloadData,
         );
 
@@ -1418,7 +1418,7 @@ class Discord
         $this->on(Event::VOICE_SERVER_UPDATE, fn($vs, $discord) => $this->voiceServerUpdate($vs, $channel, $data, $deferred, $logger));
 
         $payload = Payload::new(
-            Op::OP_VOICE_STATE_UPDATE,
+            Op::OP_UPDATE_VOICE_STATE,
             [
                 'guild_id' => $channel->guild_id,
                 'channel_id' => $channel->id,
