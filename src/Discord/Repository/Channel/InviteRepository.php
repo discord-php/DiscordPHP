@@ -30,11 +30,17 @@ use Discord\Repository\AbstractRepository;
  * @method Invite|null first()
  * @method Invite|null last()
  * @method Invite|null find(callable $callback)
+ *
+ * @method Invite|null freshen(array $queryparams = [])
+ * Optional Query Parameters:
+ * - with_counts? (boolean): Whether the invite should contain approximate member counts.
+ * - with_expiration? (boolean): Whether the invite should contain the expiration date.
+ * - guild_scheduled_event_id? (snowflake): The guild scheduled event to include with the invite.
  */
 class InviteRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::CHANNEL_INVITES,
@@ -44,7 +50,7 @@ class InviteRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Invite::class;
 }
