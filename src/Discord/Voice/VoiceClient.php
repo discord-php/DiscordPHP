@@ -555,7 +555,7 @@ class VoiceClient extends EventEmitter
         $ws->on('message', fn ($message) => $this->discoverUdp($message, $ws, $udpfac, $firstPack, $ip, $port));
         $ws->on('message', function ($message) {
             $data = json_decode($message->getPayload());
-            $data = Payload::new($data->op, $data->d, $data->s, $data->t);
+            $data = Payload::new($data->op, $data->d ?? null, $data->s ?? null, $data->t ?? null);
 
             $this->emit('ws-message', [$message, $this]);
 
