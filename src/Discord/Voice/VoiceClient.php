@@ -412,8 +412,6 @@ class VoiceClient extends EventEmitter
      * Sets the transport encryption mode for the client.
      *
      * @param string $mode The transport encryption mode to set for the voice client.
-     *
-     * @return void
      */
     public function setMode(string $mode): void
     {
@@ -526,9 +524,9 @@ class VoiceClient extends EventEmitter
     protected function selectProtocol($ip, $port): void
     {
         if (! in_array($this->mode, $this->supportedModes)) {
-            $this->logger->warning("{$this->mode} is not a valid transport encryption connection mode. Valid modes are: " . implode(', ', $this->supportedModes));
+            $this->logger->warning("{$this->mode} is not a valid transport encryption connection mode. Valid modes are: ".implode(', ', $this->supportedModes));
             $fallback = $this->supportedModes[0];
-            $this->logger->info('Switching voice transport encryption mode to: ' . $fallback);
+            $this->logger->info('Switching voice transport encryption mode to: '.$fallback);
             $this->mode = $fallback;
         }
 
@@ -559,7 +557,7 @@ class VoiceClient extends EventEmitter
         $this->logger->debug('received voice ready packet', ['data' => $data]);
 
         $udpfac = new DatagramFactory($this->loop, (new DNSFactory())->createCached($this->dnsConfig, $this->loop));
-        $udpfac->createClient("{$this->udpIp}:" . $this->udpPort)->then(function (Socket $client): void {
+        $udpfac->createClient("{$this->udpIp}:".$this->udpPort)->then(function (Socket $client): void {
             $this->client = $client;
             //
             $buffer = new Buffer(74);
@@ -855,9 +853,9 @@ class VoiceClient extends EventEmitter
     /**
      * Decodes a UDP message to extract the IP address and port, then selects the protocol for voice communication.
      *
-     * @param mixed    $message The raw UDP message received from the server.
-     * @param string   &$ip     Reference to a variable where the extracted IP address will be stored.
-     * @param string   &$port   Reference to a variable where the extracted port number will be stored.
+     * @param mixed  $message The raw UDP message received from the server.
+     * @param string &$ip     Reference to a variable where the extracted IP address will be stored.
+     * @param string &$port   Reference to a variable where the extracted port number will be stored.
      */
     protected function decodeUDP($message): void
     {
@@ -874,7 +872,7 @@ class VoiceClient extends EventEmitter
          * @see https://www.php.net/manual/en/function.unpack.php
          * @see https://www.php.net/manual/en/function.pack.php For the formats
          */
-        $unpackedMessageArray = \unpack("C2Type/nLength/ISSRC/A64Address/nPort", (string) $message);
+        $unpackedMessageArray = \unpack('C2Type/nLength/ISSRC/A64Address/nPort', (string) $message);
         $this->ssrc = $unpackedMessageArray['SSRC'] ?? -1;
         $ip = $unpackedMessageArray['Address'];
         $port = $unpackedMessageArray['Port'];
@@ -928,6 +926,7 @@ class VoiceClient extends EventEmitter
         if ($op == Op::CLOSE_VOICE_DISCONNECTED) {
             $this->logger->info('voice client disconnected from channel', ['channel_id' => $this->channel->id]);
             $this->voiceSessions[$this->channel->guild_id] = null;
+
             return;
         }
 
@@ -1710,6 +1709,7 @@ class VoiceClient extends EventEmitter
     {
         if ($this->deaf) {
             $this->logger->debug('ignoring voice data, client is deafened');
+
             return;
         }
 
@@ -1726,7 +1726,7 @@ class VoiceClient extends EventEmitter
 
         $this->emit('raw', [$decrypted, $this]);
 
-        $vp = VoicePacket::make($voicePacket->getHeader() . $decrypted);
+        $vp = VoicePacket::make($voicePacket->getHeader().$decrypted);
         $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
         $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
 
@@ -1815,7 +1815,7 @@ class VoiceClient extends EventEmitter
                     $nonce,
                     $this->secret_key
                 );
-            // deprecated
+                // deprecated
             case 'xsalsa20_poly1305':
                 return \sodium_crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
         }

@@ -640,6 +640,7 @@ class Discord
         $this->logger->debug('voice state update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
         if (! isset($this->voiceClients[$data->d->guild_id])) {
             $this->logger->warning('voice client not found', ['guild' => $data->d->guild_id]);
+
             return;
         }
         $this->voiceClients[$data->d->guild_id]->handleVoiceStateUpdate($data);
@@ -1414,8 +1415,8 @@ class Discord
             'mute' => $mute,
         ];
 
-        $this->on(Event::VOICE_STATE_UPDATE, fn($vs, $discord) => $this->voiceStateUpdate($vs, $channel, $data));
-        $this->on(Event::VOICE_SERVER_UPDATE, fn($vs, $discord) => $this->voiceServerUpdate($vs, $channel, $data, $deferred, $logger));
+        $this->on(Event::VOICE_STATE_UPDATE, fn ($vs, $discord) => $this->voiceStateUpdate($vs, $channel, $data));
+        $this->on(Event::VOICE_SERVER_UPDATE, fn ($vs, $discord) => $this->voiceServerUpdate($vs, $channel, $data, $deferred, $logger));
 
         $payload = Payload::new(
             Op::OP_UPDATE_VOICE_STATE,
@@ -1438,7 +1439,7 @@ class Discord
             return; // This voice state update isn't for our guild.
         }
         $this->voiceSessions[$channel->guild_id] = $vs->session_id;
-        $this->removeListener(Event::VOICE_STATE_UPDATE, fn() => $this->voiceStateUpdate($vs, $channel, $data));
+        $this->removeListener(Event::VOICE_STATE_UPDATE, fn () => $this->voiceStateUpdate($vs, $channel, $data));
     }
 
     protected function voiceServerUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data, Deferred &$deferred, ?LoggerInterface $logger)
@@ -1476,7 +1477,7 @@ class Discord
         $vc->start();
 
         $this->voiceLoggers[$channel->guild_id] = $this->logger;
-        $this->removeListener(Event::VOICE_SERVER_UPDATE, fn() => $this->voiceServerUpdate($vs, $channel, $data, $deferred, $logger));
+        $this->removeListener(Event::VOICE_SERVER_UPDATE, fn () => $this->voiceServerUpdate($vs, $channel, $data, $deferred, $logger));
     }
 
     /**
