@@ -697,6 +697,14 @@ class VoiceClient extends EventEmitter
         });
     }
 
+    /**
+     * Decodes a UDP message to extract the IP address and port, then selects the protocol for voice communication.
+     *
+     * @param mixed    $message The raw UDP message received from the server.
+     * @param Socket   $client  The socket client instance handling the connection.
+     * @param string   &$ip     Reference to a variable where the extracted IP address will be stored.
+     * @param string   &$port   Reference to a variable where the extracted port number will be stored.
+     */
     protected function decodeUDP($message, Socket $client, string &$ip, string &$port): void
     {
         $message = (string) $message;
