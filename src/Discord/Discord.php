@@ -31,6 +31,7 @@ use Discord\Parts\User\Activity;
 use Discord\Parts\User\Client;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Parts\WebSockets\VoiceServerUpdate;
 use Discord\Repository\AbstractRepository;
 use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
@@ -1440,7 +1441,7 @@ class Discord
         $this->removeListener(Event::VOICE_STATE_UPDATE, fn() => $this->voiceStateUpdate($vs, $channel, $data));
     }
 
-    protected function voiceServerUpdate(VoiceStateUpdatePart $vs, Channel $channel, array &$data, Deferred &$deferred, ?LoggerInterface $logger)
+    protected function voiceServerUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data, Deferred &$deferred, ?LoggerInterface $logger)
     {
         if ($vs->guild_id != $channel->guild_id) {
             return; // This voice server update isn't for our guild.
