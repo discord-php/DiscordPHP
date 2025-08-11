@@ -11958,7 +11958,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AsetMode\u0028\u0029",
             "name": "setMode",
-            "summary": "Sets\u0020the\u0020transport\u0020encryption\u0020mode\u0020for\u0020the\u0020client.",
+            "summary": "Sets\u0020the\u0020transport\u0020encryption\u0020mode\u0020for\u0020the\u0020voice\u0020client.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_setMode"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003Astart\u0028\u0029",
@@ -12270,6 +12270,21 @@ Search.appendIndex(
             "name": "SILENCE_FRAME",
             "summary": "The\u0020Opus\u0020Silence\u0020Frame.",
             "url": "classes/Discord-Voice-VoiceClient.html#constant_SILENCE_FRAME"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ASUPPORTED_MODES",
+            "name": "SUPPORTED_MODES",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#constant_SUPPORTED_MODES"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ADEPRECATED_MODES",
+            "name": "DEPRECATED_MODES",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#constant_DEPRECATED_MODES"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AUNSUPPORTED_MODES",
+            "name": "UNSUPPORTED_MODES",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#constant_UNSUPPORTED_MODES"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024dca",
             "name": "dca",
