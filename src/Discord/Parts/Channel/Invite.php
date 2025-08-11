@@ -41,7 +41,7 @@ use Stringable;
  * @property Application|null    $target_application         The partial embedded application to open for this voice channel embedded application invite.
  * @property int|null            $approximate_presence_count Approximate count of online members, returned from the GET /invites/<code> endpoint when with_counts is true.
  * @property int|null            $approximate_member_count   Approximate count of total members, returned from the GET /invites/<code> endpoint when with_counts is true.
- * @property Carbon|null         $expires_at                 The expiration date of this invite, returned from the GET /invites/<code> endpoint when with_expiration is true.
+ * @property Carbon              $expires_at                 The expiration date of this invite.
  * @property ScheduledEvent|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
  * @property int                 $flags                      Guild invite flags for guild invites.
  *
@@ -60,7 +60,7 @@ class Invite extends Part implements Stringable
     public const TYPE_FRIEND = 2;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',
@@ -309,7 +309,7 @@ class Invite extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {
