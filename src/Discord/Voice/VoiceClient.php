@@ -650,6 +650,15 @@ class VoiceClient extends EventEmitter
         if (! $this->sentLoginFrame) {
             $this->identify();
             $this->sentLoginFrame = true;
+        } elseif (isset(
+            $this->data['token'],
+            $this->data['seq'],
+            $this->voiceSessions[$this->channel->guild_id]
+        )) {
+            $this->resume();
+        } else {
+            $this->logger->debug('existing voice session or data not found, re-sending identify', ['guild_id' => $this->channel->guild_id]);
+            $this->identify();
         }
     }
 
