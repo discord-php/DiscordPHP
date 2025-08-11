@@ -525,7 +525,7 @@ class VoiceClient extends EventEmitter
             switch ($data->op) {
                 case Op::VOICE_HEARTBEAT_ACK: // keepalive response
                     $end = microtime(true);
-                    $start = $data->d;
+                    $start = $data->d->t;
                     $diff = ($end - $start) * 1000;
 
                     $this->logger->debug('received heartbeat ack', ['response_time' => $diff]);
