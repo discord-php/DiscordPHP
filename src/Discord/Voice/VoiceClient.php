@@ -332,7 +332,7 @@ class VoiceClient extends EventEmitter
      *
      * @var int Voice version.
      */
-    protected $version = 4;
+    protected $version = 8;
 
     /**
      * The Config for DNS Resolver.
