@@ -469,6 +469,22 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Handles the heartbeat acknowledgement from the voice WebSocket connection.
+     *
+     * @param Payload $data The data object received from the WebSocket, expected to contain the heartbeat timestamp in $data->d->t.
+     */
+    protected function heartbeatAck($data): void
+    {
+        $end = microtime(true);
+        $start = $data->d->t;
+        $diff = ($end - $start) * 1000;
+
+        $this->logger->debug('received heartbeat ack', ['response_time' => $diff]);
+        $this->emit('ws-ping', [$diff]);
+        $this->emit('ws-heartbeat-ack', [$data->d]);
+    }
+
+    /**
      * Selects the UDP protocol for the voice connection and sends the selection payload.
      *
      * @param string $ip   The IP address to use for the voice connection.
@@ -544,16 +560,7 @@ class VoiceClient extends EventEmitter
             $this->emit('ws-message', [$message, $this]);
 
             switch ($data->op) {
-                case Op::VOICE_HEARTBEAT_ACK: // keepalive response
-                    $end = microtime(true);
-                    $start = $data->d->t;
-                    $diff = ($end - $start) * 1000;
-
-                    $this->logger->debug('received heartbeat ack', ['response_time' => $diff]);
-                    $this->emit('ws-ping', [$diff]);
-                    $this->emit('ws-heartbeat-ack', [$data->d]);
-                    break;
-                case Op::VOICE_DESCRIPTION: // ready
+                case Op::VOICE_SESSION_DESCRIPTION: // ready
                     $this->ready = true;
                     $this->mode = $data->d->mode;
                     $this->secret_key = '';
@@ -577,10 +584,25 @@ class VoiceClient extends EventEmitter
                     $this->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this]);
                     $this->speakingStatus[$data->d->ssrc] = $data->d;
                     break;
+                case Op::VOICE_HEARTBEAT_ACK: // keepalive response
+                    $this->heartbeatAck($data);
+                    break;
                 case Op::VOICE_HELLO:
                     $this->heartbeat_interval = $data->d->heartbeat_interval;
                     $this->heartbeat();
                     $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, fn () => $this->heartbeat());
+                    break;
+                case Op::VOICE_RESUMED:
+                    /** @todo Implement VOICE_RESUMED handling */
+                    $this->logger->debug('received resumed packet', ['data' => $data]);
+                    break;
+                case Op::VOICE_CLIENT_CONNECT:
+                    /** @todo Implement VOICE_CLIENT_CONNECT handling */
+                    $this->logger->debug('received client connect packet', ['data' => $data]);
+                    break;
+                case Op::VOICE_CLIENT_DISCONNECT:
+                    /** @todo Implement VOICE_CLIENT_DISCONNECT handling */
+                    $this->logger->debug('received client disconnect packet', ['data' => $data]);
                     break;
                 case Op::VOICE_DAVE_PREPARE_TRANSITION:
                     $this->handleDavePrepareTransition($data);

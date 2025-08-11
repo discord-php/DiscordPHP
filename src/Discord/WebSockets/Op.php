@@ -84,7 +84,9 @@ class Op
     /** Used to keep the WebSocket connection alive. */
     public const VOICE_HEARTBEAT = 3;
     /** Used to describe the session. */
-    public const VOICE_DESCRIPTION = 4;
+    public const VOICE_SESSION_DESCRIPTION = 4;
+    /** @deprecated use VOICE_SESSION_DESCRIPTION */
+    public const VOICE_DESCRIPTION = self::VOICE_SESSION_DESCRIPTION;
     /** Used to identify which users are speaking. */
     public const VOICE_SPEAKING = 5;
     /** Sent by the Discord servers to acknowledge heartbeat */
