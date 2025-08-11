@@ -417,6 +417,77 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Sends an identify payload to the voice gateway to authenticate the client.
+     *
+     * @since 10.19.0
+     */
+    protected function identify(): void
+    {
+        $data = [
+            'server_id' => $this->channel->guild_id,
+            'user_id' => $this->data['user_id'],
+            'token' => $this->data['token'],
+        ];
+        if (isset($this->voiceSessions[$this->channel->guild_id])) {
+            $data['session_id'] = $this->voiceSessions[$this->channel->guild_id];
+        }
+
+        $payload = Payload::new(
+            Op::VOICE_IDENTIFY,
+            $data
+        );
+
+        $this->logger->debug('sending identify', ['packet' => $payload]);
+
+        $this->send($payload);
+    }
+
+    protected function heartbeat(): void
+    {
+        $data = [
+            't' => (int) microtime(true),
+            'seq_ack' => $this->data['seq'] ?? -1,
+        ];
+
+        $this->logger->debug('sending heartbeat', ['data' => $data]);
+
+        $this->send(Payload::new(
+            Op::VOICE_HEARTBEAT,
+            $data
+        ));
+
+        $this->emit('ws-heartbeat', []);
+    }
+
+    /**
+     * Resumes a previously established voice connection.
+     *
+     * @since 10.19.0
+     */
+    protected function resume(): void
+    {
+        if (! isset($this->voiceSessions[$this->channel->guild_id])) {
+            return;
+        }
+
+        $data = [
+            'server_id' => $this->channel->guild_id,
+            'session_id' => $this->voiceSessions[$this->channel->guild_id],
+            'token' => $this->data['token'],
+            'seq_ack' => $this->data['seq'],
+        ];
+
+        $payload = Payload::new(
+            Op::VOICE_RESUME,
+            $data
+        );
+
+        $this->logger->debug('sending identify', ['packet' => $payload]);
+
+        $this->send($payload);
+    }
+
+    /**
      * Handles a WebSocket connection.
      *
      * @param WebSocket $ws The WebSocket instance.
@@ -558,21 +629,8 @@ class VoiceClient extends EventEmitter
                     break;
                 case Op::VOICE_HELLO:
                     $this->heartbeat_interval = $data->d->heartbeat_interval;
-
-                    $sendHeartbeat = function () {
-                        $this->send(Payload::new(
-                            Op::VOICE_HEARTBEAT,
-                            [
-                                't' => (int) microtime(true),
-                                'seq_ack' => 10,
-                            ]
-                        ));
-                        $this->logger->debug('sending heartbeat');
-                        $this->emit('ws-heartbeat', []);
-                    };
-
-                    $sendHeartbeat();
-                    $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, $sendHeartbeat);
+                    $this->heartbeat();
+                    $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, fn () => $this->heartbeat());
                     break;
                 case Op::VOICE_DAVE_PREPARE_TRANSITION:
                     $this->handleDavePrepareTransition($data);
@@ -618,26 +676,10 @@ class VoiceClient extends EventEmitter
         $ws->on('close', [$this, 'handleWebSocketClose']);
 
         if (! $this->sentLoginFrame) {
-            $data = [
-                'server_id' => $this->channel->guild_id,
-                'user_id' => $this->data['user_id'],
-                'token' => $this->data['token'],
-            ];
-            if (isset($this->voiceSessions[$this->channel->guild_id])) {
-                $data['session_id'] = $this->voiceSessions[$this->channel->guild_id];
-            }
-            $payload = Payload::new(
-                Op::VOICE_IDENTIFY,
-                $data
-            );
-
-            $this->logger->debug('sending identify', ['packet' => $payload]);
-
-            $this->send($payload);
+            $this->identify();
             $this->sentLoginFrame = true;
         }
     }
-
     /**
      * Handles a WebSocket error.
      *
