@@ -11,11 +11,14 @@ use Discord\Exceptions\Voice\ChannelMustAllowVoiceException;
 use Discord\Exceptions\Voice\ClientMustAllowVoiceException;
 use Discord\Exceptions\Voice\EnterChannelDeniedException;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\WebSockets\VoiceServerUpdate;
+use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Op;
 use Discord\WebSockets\VoicePayload;
 use Evenement\EventEmitterTrait;
 use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 
 /**
  * Manages voice clients for the Discord bot.
@@ -46,14 +49,16 @@ final class VoiceManager
      * @param \Discord\Discord $discord
      * @param bool $mute
      * @param bool $deaf
+     *
+     * @throws \Discord\Exceptions\Voice\ChannelMustAllowVoiceException
+     * @throws \Discord\Exceptions\Voice\EnterChannelDeniedException
+     * @throws \Discord\Exceptions\Voice\CantJoinMoreThanOneChannelException
+     * @throws \Discord\Exceptions\Voice\CantSpeakInChannelException
+     *
      * @return \React\Promise\PromiseInterface
      */
-    public function createClientAndJoinChannel(
-        Channel $channel,
-        Discord $discord,
-        bool $mute = false,
-        bool $deaf = true,
-    ) {
+    public function joinChannel(Channel $channel, Discord $discord, bool $mute = false, bool $deaf = true): PromiseInterface
+    {
         $deferred = new Deferred();
 
         try {
@@ -69,6 +74,7 @@ final class VoiceManager
                 throw new CantSpeakInChannelException();
             }
 
+            // TODO: Make this an option for the user instead of being forced
             if (isset($this->clients[$channel->guild_id])) {
                 throw new CantJoinMoreThanOneChannelException();
             }
@@ -77,16 +83,21 @@ final class VoiceManager
             return $deferred->promise();
         }
 
-        $this->clients[$channel->guild_id] = ['data' => []];
-        $this->clients[$channel->guild_id]['data'] = [
-            'user_id' => $this->bot->id,
-            'deaf' => $deaf,
-            'mute' => $mute,
-        ];
+        // The same as new VoiceClient(...)
+        $this->clients[$channel->guild_id] = VoiceClient::make(
+            $this->bot,
+            $channel,
+            ['dnsConfig' => $discord->options['dnsConfig']],
+            $deaf,
+            $mute,
+            $deferred,
+            $this,
+            false
+        );
 
-        $discord->once(Event::VOICE_STATE_UPDATE, fn ($state) => $this->stateUpdate($state, $channel));
+        $discord->on(Event::VOICE_STATE_UPDATE, fn ($state) => $this->stateUpdate($state, $channel));
         // Creates Voice Client and waits for the voice server update.
-        $discord->once(Event::VOICE_SERVER_UPDATE, fn ($state, Discord $discord) => $this->serverUpdate($state, $channel, $discord, $deferred));
+        $discord->on(Event::VOICE_SERVER_UPDATE, fn ($state, Discord $discord) => $this->serverUpdate($state, $channel, $discord, $deferred));
 
         $discord->send(VoicePayload::new(
             Op::OP_VOICE_STATE_UPDATE,
@@ -101,37 +112,61 @@ final class VoiceManager
         return $deferred->promise();
     }
 
-    public function getClient(string|int $guildId): ?VoiceClient
+    /**
+     * Retrieves the voice client for a specific guild.
+     *
+     * @param string|int $guildId
+     *
+     * @return \Discord\Voice\VoiceClient|null
+     */
+    public function getClient(string|int|Channel $guildChannelOrId): ?VoiceClient
     {
-        if (! isset($this->clients[$guildId])) {
+        if ($guildChannelOrId instanceof Channel) {
+            $guildChannelOrId = $guildChannelOrId->guild_id;
+        }
+
+        if (! isset($this->clients[$guildChannelOrId])) {
             return null;
         }
 
-        return $this->clients[$guildId];
+        return $this->clients[$guildChannelOrId];
     }
 
-    protected function stateUpdate($state, Channel $channel): void
+    /**
+     * Handles the voice state update event to update session information for the voice client.
+     *
+     * @param \Discord\Parts\WebSockets\VoiceStateUpdate $state
+     * @param \Discord\Parts\Channel\Channel $channel
+     *
+     * @return void
+     */
+    protected function stateUpdate(VoiceStateUpdate $state, Channel $channel): void
     {
         if ($state->guild_id != $channel->guild_id) {
             return; // This voice state update isn't for our guild.
         }
 
-        $this->clients[$channel->guild_id]['data']['session'] = $state->session_id;
+        $this->getClient($channel)
+            ->setData(['session' => $state->session_id, 'deaf' => $state->deaf, 'mute' => $state->mute]);
+
         $this->bot->getLogger()->info('received session id for voice session', ['guild' => $channel->guild_id, 'session_id' => $state->session_id]);
     }
 
-    protected function serverUpdate($state, Channel $channel, Discord $discord, Deferred $deferred): void
+    /**
+     * Handles the voice server update event to create a new voice client with the provided state.
+     *
+     * @param \Discord\Parts\WebSockets\VoiceServerUpdate $state
+     * @param \Discord\Parts\Channel\Channel $channel
+     * @param \Discord\Discord $discord
+     * @param \React\Promise\Deferred $deferred
+     *
+     * @return void
+     */
+    protected function serverUpdate(VoiceServerUpdate $state, Channel $channel, Discord $discord, Deferred $deferred): void
     {
         if ($state->guild_id !== $channel->guild_id) {
             return; // This voice server update isn't for our guild.
         }
-
-        $data = $this->clients[$channel->guild_id]['data'];
-        unset($this->clients[$channel->guild_id]['data']);
-
-        $data['token'] = $state->token;
-        $data['endpoint'] = $state->endpoint;
-        $data['dnsConfig'] = $discord->options['dnsConfig'];
 
         $this->bot->getLogger()->info('received token and endpoint for voice session', [
             'guild' => $channel->guild_id,
@@ -139,7 +174,17 @@ final class VoiceManager
             'endpoint' => $state->endpoint
         ]);
 
-        VoiceClient::make($discord, $channel, $data, deferred: $deferred, manager: $this);
+        $client = $this->getClient($channel);
+
+        $client->setData(array_merge(
+            $client->data,
+            [
+                'token' => $state->token,
+                'endpoint' => $state->endpoint,
+                'session' => $client->data['session'] ?? null,
+            ],
+            ['dnsConfig' => $discord->options['dnsConfig']])
+        );
     }
 
 }

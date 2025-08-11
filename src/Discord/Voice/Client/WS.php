@@ -27,14 +27,15 @@ use React\Promise\PromiseInterface;
  */
 final class WS
 {
+    /**
+     * The WebSocket instance for the voice connection.
+     */
     protected WebSocket $socket;
 
     /**
      * The Discord voice gateway version.
      *
      * @see https://discord.com/developers/docs/topics/voice-connections#voice-gateway-versioning-gateway-versions
-     *
-     * @var int Voice Gateway version.
      */
     protected static $version = 8;
 
@@ -47,28 +48,46 @@ final class WS
 
     /**
      * The secret key used for encrypting voice.
-     *
-     * @var string|null The secret key.
      */
-    public $secretKey;
+    public ?string $secretKey;
 
     /**
      * The raw secret key.
-     *
-     * @var array|null The raw secret key.
      */
-    public $rawKey;
+    public ?array $rawKey;
 
-    public $ssrc;
+    /**
+     * The SSRC identifier for the voice connection client.
+     */
+    public null|string|int $ssrc;
 
+    /**
+     * Indicates whether the login frame has been sent.
+     */
     private bool $sentLoginFrame = false;
 
+    /**
+     * The heartbeat timer for the voice connection.
+     */
     protected TimerInterface $heartbeat;
 
+    /**
+     * The heartbeat interval for the voice connection.
+     */
     protected $hbInterval;
 
+    /**
+     * The heartbeat sequence number.
+     *
+     * This is used to track the sequence of heartbeat messages sent to the voice gateway.
+     */
     protected int $hbSequence = 0;
 
+    /**
+     * The WebSocket connection for the voice client.
+     *
+     * This is used to send and receive messages over the WebSocket connection.
+     */
     public function __construct(
         public VoiceClient $vc,
         protected ?Discord $bot = null,
@@ -76,6 +95,10 @@ final class WS
     ) {
         $this->data ??= $this->vc->data;
         $this->bot ??= $this->vc->bot;
+
+        if (! isset($this->data['endpoint'])) {
+            throw new \InvalidArgumentException('Endpoint is required for the voice WebSocket connection.');
+        }
 
         $f = new Connector($this->bot->loop);
 
@@ -90,6 +113,15 @@ final class WS
             );
     }
 
+    /**
+     * Creates a new instance of the WS class.
+     *
+     * @param \Discord\Voice\VoiceClient $vc
+     * @param null|\Discord\Discord $bot
+     * @param null|array $data
+     *
+     * @return \Discord\Voice\Client\WS
+     */
     public static function make(VoiceClient $vc, ?Discord $bot = null, ?array $data = null): self
     {
         return new self($vc, $bot, $data);
@@ -97,8 +129,6 @@ final class WS
 
     /**
      * Handles a WebSocket connection.
-     *
-     * @param WebSocket $ws The WebSocket instance.
      */
     public function handleConnection(WebSocket $ws): void
     {
@@ -252,8 +282,6 @@ final class WS
 
     /**
      * Sends a message to the voice websocket.
-     *
-     * @param VoicePayload|array $data The data to send to the voice WebSocket.
      */
     public function send(VoicePayload|array $data): void
     {
@@ -353,6 +381,9 @@ final class WS
         ));
     }
 
+    /**
+     * Sends a heartbeat to the voice WebSocket.
+     */
     public function sendHeartbeat(): void
     {
         $this->send(VoicePayload::new(
@@ -366,6 +397,12 @@ final class WS
         $this->vc->emit('ws-heartbeat', []);
     }
 
+    /**
+     * Handles the close event of the WebSocket connection.
+     *
+     * @param int $op The opcode of the close event.
+     * @param string $reason The reason for closing the connection.
+     */
     public function handleClose(int $op, string $reason): void
     {
         $this->bot->logger->warning('voice websocket closed', ['op' => $op, 'reason' => $reason]);
@@ -390,6 +427,7 @@ final class WS
         // Don't reconnect on a critical opcode or if closed by user.
         if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this?->vc->userClose) {
             $this->bot->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
+            $this->vc->close();
             $this->vc->emit('close');
 
             return;
@@ -403,10 +441,16 @@ final class WS
             $this->vc->sentLoginFrame = false;
             $this->sentLoginFrame = false;
 
-            $this->vc->start();
+            $this->vc->boot();
         });
     }
 
+    /**
+     * Handles sending the login frame to the voice WebSocket.
+     *
+     * This method sends the initial identification payload to the voice gateway
+     * to establish the voice connection.
+     */
     public function handleSendingOfLoginFrame(): void
     {
         if ($this->sentLoginFrame) {

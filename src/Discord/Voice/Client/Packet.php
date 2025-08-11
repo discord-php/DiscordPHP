@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Voice\Client;
 
+use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Helpers\ByteBuffer\Buffer;
 use Discord\Helpers\FormatPackEnum;
 use Monolog\Logger;
@@ -28,72 +29,54 @@ use function Discord\logger;
  *
  * @since 10.19.0
  */
-class Packet
+final class Packet
 {
     /**
      * The audio header, in binary, containing the version, flags, sequence, timestamp, and SSRC.
-     *
-     * @var string
      */
-    protected $header;
+    protected string $header;
 
     /**
      * The buffer containing the voice packet.
      *
      * @deprecated
-     *
-     * @var Buffer
      */
-    protected $buffer;
+    protected Buffer $buffer;
 
     /**
      * The version and flags.
-     *
-     * @var string|null The version and flags.
      */
-    public $versionPlusFlags;
+    public ?string $versionPlusFlags;
 
     /**
      * The payload type.
-     *
-     * @var string|null The payload type.
      */
-    public $payloadType;
+    public ?string $payloadType;
 
     /**
      * The encrypted audio.
-     *
-     * @var string|null The encrypted audio.
      */
-    public $encryptedAudio;
+    public ?string $encryptedAudio;
 
     /**
      * The dencrypted audio.
-     *
-     * @var string|false|null
      */
-    public $decryptedAudio;
+    public null|false|string $decryptedAudio;
 
     /**
      * The secret key.
-     *
-     * @var string|null The secret key.
      */
-    public $secretKey;
+    public ?string $secretKey;
 
     /**
      * The raw data
-     *
-     * @var string
      */
-    protected $rawData;
+    protected string $rawData;
 
     /**
      * Current packet header size. May differ depending on the RTP header.
-     *
-     * @var int
      */
-    protected $headerSize;
+    protected int $headerSize;
 
     /**
      * Constructs the voice packet.
@@ -124,7 +107,7 @@ class Packet
             $this->decrypt();
         }
 
-        if (!$log) {
+        if (! $log) {
             $this->log = logger();
         }
     }
@@ -142,10 +125,6 @@ class Packet
      * @see https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure
      * @see https://www.php.net/manual/en/function.unpack.php
      * @see https://www.php.net/manual/en/function.pack.php For the formats
-     *
-     * @param string $message The voice message to unpack.
-     *
-     * @return self The unpacked voice packet.
      */
     public function unpack(string $message): self
     {
@@ -184,10 +163,6 @@ class Packet
 
     /**
      * Decrypts the voice message.
-     *
-     * @param string|null $message The message to decrypt.
-     *
-     * @return string|false|null
      */
     public function decrypt(?string $message = null): string|false|null
     {
@@ -262,8 +237,6 @@ class Packet
      * Initilizes the buffer with no encryption.
      *
      * @deprecated
-     *
-     * @param string $data The Opus data to encode.
      */
     protected function initBufferNoEncryption(string $data): void
     {
@@ -277,9 +250,6 @@ class Packet
 
     /**
      * Initilizes the buffer with encryption.
-     *
-     * @param string $data The Opus data to encode.
-     * @param string $key  The encryption key.
      */
     protected function initBufferEncryption(string $data, string $key): void
     {
@@ -297,8 +267,6 @@ class Packet
 
     /**
      * Builds the header.
-     *
-     * @return Buffer The header.
      */
     protected function buildHeader(): Buffer
     {
@@ -310,6 +278,10 @@ class Packet
             ->writeUInt($this->ssrc, HeaderValuesEnum::SSRC_INDEX->value);
     }
 
+    /**
+     * Sets the header.
+     * If no message is provided, it will use the raw data of the packet.
+     */
     public function setHeader(?string $message = null): ?string
     {
         if (null === $message) {
@@ -330,6 +302,9 @@ class Packet
         return substr($message, 0, $this->headerSize);
     }
 
+    /**
+     * Returns the header.
+     */
     public function getHeader(): ?string
     {
         return $this?->header ?? null;
@@ -337,8 +312,6 @@ class Packet
 
     /**
      * Returns the sequence.
-     *
-     * @return int The packet sequence.
      */
     public function getSequence(): int
     {
@@ -347,8 +320,6 @@ class Packet
 
     /**
      * Returns the timestamp.
-     *
-     * @return int The packet timestamp.
      */
     public function getTimestamp(): int
     {
@@ -357,8 +328,6 @@ class Packet
 
     /**
      * Returns the SSRC.
-     *
-     * @return int The packet SSRC.
      */
     public function getSSRC(): int
     {
@@ -367,8 +336,6 @@ class Packet
 
     /**
      * Returns the data.
-     *
-     * @return string The packet data.
      */
     public function getData(): string
     {
@@ -380,10 +347,6 @@ class Packet
 
     /**
      * Creates a voice packet from data sent from Discord.
-     *
-     * @param string $data Data from Discord.
-     *
-     * @return self A voice packet.
      */
     public static function make(string $data): self
     {
@@ -397,10 +360,6 @@ class Packet
 
     /**
      * Sets the buffer.
-     *
-     * @param Buffer $buffer The buffer to set.
-     *
-     * @return $this
      */
     public function setBuffer(Buffer $buffer): self
     {
@@ -415,8 +374,6 @@ class Packet
 
     /**
      * Handles to string casting of object.
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -426,8 +383,6 @@ class Packet
     /**
      * Retrieves the decrypted audio data.
      * Will return null if the audio data is not decrypted and false on error.
-     *
-     * @return string|false|null
      */
     public function getAudioData(): string|false|null
     {

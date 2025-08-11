@@ -16,8 +16,8 @@ final class Ffmpeg extends ProcessAbstract
 {
     protected static string $exec = '/usr/bin/ffmpeg';
 
-    public function __construct(
-    ) {
+    public function __construct()
+    {
         if (!$this->checkForFFmpeg()) {
             throw new FFmpegNotFoundException('FFmpeg binary not found.');
         }
@@ -66,7 +66,7 @@ final class Ffmpeg extends ProcessAbstract
             '-map_metadata', '-1',
             '-f', 'opus',
             '-c:a', 'libopus',
-            '-ar', '48000',
+            '-ar', parent::DEFAULT_KHZ,
             '-af', "volume={$volume}dB",
             '-ac', '2',
             '-b:a', $bitrate,
@@ -133,12 +133,12 @@ final class Ffmpeg extends ProcessAbstract
             '-loglevel', 'error', // Set log level to warning to reduce output noise
             '-channel_layout', 'stereo',
             '-ac', $channels,
-            '-ar', '48000',
+            '-ar', parent::DEFAULT_KHZ,
             '-f', 's16le',
             '-i', 'pipe:0',
             '-acodec', 'libopus',
             '-f', 'ogg',
-            '-ar', '48000',
+            '-ar', parent::DEFAULT_KHZ,
             '-ac', $channels,
             '-b:a', $bitrate,
             $filename

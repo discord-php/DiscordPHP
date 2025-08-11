@@ -1297,7 +1297,7 @@ class Discord
      */
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null): PromiseInterface
     {
-        return $this->voice->createClientAndJoinChannel($channel, $this, $mute, $deaf);
+        return $this->voice->joinChannel($channel, $this, $mute, $deaf);
     }
 
     /**

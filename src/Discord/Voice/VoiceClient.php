@@ -87,14 +87,14 @@ class VoiceClient extends EventEmitter
      *
      * @var int|null How often we send a heartbeat packet.
      */
-    public ?int $heartbeatInterval;
+    public ?int $heartbeatInterval = null;
 
     /**
      * The Voice WebSocket heartbeat timer.
      *
      * @var TimerInterface|null The heartbeat periodic timer.
      */
-    public ?TimerInterface $heartbeat;
+    public ?TimerInterface $heartbeat = null;
 
     /**
      * The SSRC value.
@@ -287,19 +287,26 @@ class VoiceClient extends EventEmitter
     public function __construct(
         public Discord $bot,
         public Channel $channel,
-        public array $data,
+        public array $data = [],
         public bool $deaf = false,
         public bool $mute = false,
         protected ?Deferred $deferred = null,
         protected ?VoiceManager &$manager = null,
+        protected bool $shouldBoot = true
     ) {
         $this->deaf = $this->data['deaf'] ?? false;
         $this->mute = $this->data['mute'] ?? false;
-        $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
-        $this->speakingStatus = Collection::for(VoiceSpeaking::class, 'ssrc');
-        $this->dnsConfig = $data['dnsConfig'];
 
-        $this->boot();
+        $this->data = [
+            'user_id' => $this->bot->id,
+            'deaf' => $this->deaf,
+            'mute' => $this->mute,
+            'session' => $this->data['session'] ?? null,
+        ];
+
+        if ($this->shouldBoot) {
+            $this->boot();
+        }
     }
 
     /**
@@ -929,19 +936,19 @@ class VoiceClient extends EventEmitter
         $this->ready = false;
 
         // Close processes for audio encoding
-        if (count($this->voiceDecoders) > 0) {
+        if (count($this?->voiceDecoders ?? []) > 0) {
             foreach ($this->voiceDecoders as $decoder) {
                 $decoder->close();
             }
         }
 
-        if (count($this->receiveStreams) > 0) {
+        if (count($this?->receiveStreams ?? []) > 0) {
             foreach ($this->receiveStreams as $stream) {
                 $stream->close();
             }
         }
 
-        if (count($this->speakingStatus) > 0) {
+        if (count($this?->speakingStatus ?? []) > 0) {
             foreach ($this->speakingStatus as $ss) {
                 $this->removeDecoder($ss);
             }
@@ -1239,16 +1246,6 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Returns the connected channel.
-     *
-     * @return Channel The connected channel.
-     */
-    public function getChannel(): Channel
-    {
-        return $this->channel;
-    }
-
-    /**
      * Creates a new voice client instance statically
      *
      * @param \Discord\Discord $bot
@@ -1256,21 +1253,15 @@ class VoiceClient extends EventEmitter
      * @param array $data
      * @param bool $deaf
      * @param bool $mute
-     * @param mixed $deferred
-     * @param mixed $manager
-     * @param array $
+     * @param null|Deferred $deferred
+     * @param null|VoiceManager $manager
+     * @param bool $shouldBoot Whether the client should boot immediately.
+     *
      * @return \Discord\Voice\VoiceClient
      */
-    public static function make(
-        Discord $bot,
-        Channel $channel,
-        array $data,
-        bool $deaf = false,
-        bool $mute = false,
-        ?Deferred $deferred = null,
-        ?VoiceManager &$manager = null,
-    ): self {
-        return new static($bot, $channel, $data, $deaf, $mute, $deferred, $manager);
+    public static function make(): self
+    {
+        return new static(...func_get_args());
     }
 
     /**
@@ -1282,6 +1273,10 @@ class VoiceClient extends EventEmitter
     {
         return $this->once('ready', function () {
             $this->bot->getLogger()->info('voice client is ready');
+            if (isset($this->manager->clients[$this->channel->guild_id])) {
+                $this->disconnect();
+            }
+
             $this->manager->clients[$this->channel->guild_id] = $this;
 
             $this->setBitrate($this->channel->bitrate);
@@ -1333,5 +1328,19 @@ class VoiceClient extends EventEmitter
         $this->voiceDecoders = [];
         $this->receiveStreams = [];
         $this->speakingStatus = Collection::for(VoiceSpeaking::class, 'ssrc');
+    }
+
+    public function setData(array $data): self
+    {
+        $this->data = $data;
+
+        if (isset($this->data['token'], $this->data['endpoint'], $this->data['session'], $this->data['dnsConfig'])) {
+            $this->endpoint = str_replace([':80', ':443'], '', $this->data['endpoint']);
+            $this->dnsConfig = $this->data['dnsConfig'];
+            $this->data['user_id'] ??= $this->bot->id;
+            $this->boot();
+        }
+
+        return $this;
     }
 }

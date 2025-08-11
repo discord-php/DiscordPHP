@@ -23,42 +23,34 @@ final class UDP extends Socket
 {
     /**
      * The Parent Voice WebSocket Client.
-     *
-     * @var WS
      */
     protected WS $ws;
 
     /**
      * Silence Frame Remain Count.
-     *
-     * @var int Amount of silence frames remaining.
      */
     public int $silenceRemaining = 5;
 
     /**
      * The Opus Silence Frame.
-     *
-     * @var string The silence frame.
      */
     public const string SILENCE_FRAME = "\0xF8\0xFF\0xFE";
 
     /**
      * The stream time of the last packet.
-     *
-     * @var int The time we sent the last packet.
      */
     public int $streamTime = 0;
 
     /**
      * Current heartbeat timer.
      */
-    public ?TimerInterface $heartbeat;
+    public ?TimerInterface $heartbeat = null;
 
     /**
      * Heartbeat interval in milliseconds.
      * The interval at which the heartbeat is sent.
      */
-    public int $hbInterval;
+    public ?int $hbInterval = null;
 
     /**
      * Heartbeat sequence number.
@@ -68,25 +60,19 @@ final class UDP extends Socket
 
     /**
      * The IP address of the UDP server.
-     *
-     * @var string The IP address we are connected to.
      */
     public string $ip;
 
     /**
      * The port of the UDP server.
-     *
-     * @var int The port we are connected to.
      */
     public int $port;
 
     /**
-     * The SSRC (Synchronization Source) identifier.
+     * The SSRC identifier.
      * This is used to identify the source of the audio stream.
-     *
-     * @var int The SSRC we are using for the voice connection.
      */
-    public int $ssrc;
+    public null|string|int $ssrc;
 
     /**
      * @param \React\EventLoop\LoopInterface $loop
@@ -111,10 +97,6 @@ final class UDP extends Socket
     /**
      * Handles incoming messages from the UDP server.
      * This is where we handle the audio data received from the server.
-     *
-     * @param string $secret The secret key used to decrypt the audio data.
-     *
-     * @return UDP
      */
     public function handleMessages(string $secret): self
     {
@@ -135,8 +117,6 @@ final class UDP extends Socket
     /**
      * Handles the sending of the SSRC to the server.
      * This is necessary for the server to know which SSRC we are using.
-     *
-     * @return UDP
      */
     public function handleSsrcSending(): self
     {
@@ -152,8 +132,6 @@ final class UDP extends Socket
     /**
      * Handles the heartbeat for the UDP client.
      * To keep the connection open and responsive.
-     *
-     * @return UDP
      */
     public function handleHeartbeat(): self
     {
@@ -189,8 +167,6 @@ final class UDP extends Socket
      * To discover which IP and port we should connect to.
      *
      * @see https://discord.com/developers/docs/topics/voice-connections#ip-discovery
-     *
-     * @return UDP
      */
     public function decodeOnce(): self
     {
@@ -231,9 +207,7 @@ final class UDP extends Socket
     }
 
     /**
-     * * Handles errors that occur during UDP communication.
-     *
-     * @return UDP
+     * Handles errors that occur during UDP communication.
      */
     public function handleErrors(): self
     {
@@ -257,8 +231,6 @@ final class UDP extends Socket
 
     /**
      * Sends a buffer to the UDP socket.
-     *
-     * @param string $data The data to send to the UDP server.
      */
     public function sendBuffer(string $data): void
     {
@@ -283,8 +255,6 @@ final class UDP extends Socket
 
     /**
      * Closes the UDP client and cancels the heartbeat timer.
-     *
-     * @return void
      */
     public function close(): void
     {
@@ -296,6 +266,9 @@ final class UDP extends Socket
         parent::close();
     }
 
+    /**
+     * Refreshes the silence frames.
+     */
     public function refreshSilenceFrames(): void
     {
         if (! $this->ws->vc->paused) {

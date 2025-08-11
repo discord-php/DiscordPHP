@@ -15,13 +15,16 @@ use React\ChildProcess\Process;
  */
 abstract class ProcessAbstract
 {
-    abstract public static function encode(
-        ?string $filename = null,
-        int|float $volume = 0,
-        int $bitrate = 128000,
-        ?array $preArgs = null,
-    ): Process;
+    /**
+     * Encodes audio to a specific format.
+     */
+    abstract public static function encode(?string $filename = null, int|float $volume = 0, int $bitrate = 128000, ?array $preArgs = null): Process;
 
+    public const int DEFAULT_KHZ = 48000;
+
+    /**
+     * Decodes audio from a specific format.
+     */
     abstract public static function decode(
         ?string $filename = null,
         int|float $volume = 0,
@@ -31,6 +34,9 @@ abstract class ProcessAbstract
         ?array $preArgs = null,
     ): Process;
 
+    /**
+     * Checks if the specified executable is available on the system.
+     */
     public static function checkForExecutable(string $exec): ?string
     {
         $systemOs = substr(PHP_OS, 0, 3);
