@@ -158,9 +158,9 @@ class VoiceClient extends EventEmitter
     protected $udpPort;
 
     /**
-     * The supported encryption modes the voice server expects.
+     * The supported transport encryption modes the voice server expects.
      *
-     * @var array<string> The supported encryption modes.
+     * @var array<string> The supported transport encryption modes.
      */
     protected $supportedModes;
 
