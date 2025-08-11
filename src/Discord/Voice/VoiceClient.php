@@ -808,6 +808,7 @@ class VoiceClient extends EventEmitter
         // Don't reconnect on a critical opcode or if closed by user.
         if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this->userClose) {
             $this->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
+            $this->voiceSessions[$this->channel->guild_id] = null;
             $this->emit('close');
         } else {
             $this->logger->warning('reconnecting in 2 seconds');
