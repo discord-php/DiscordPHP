@@ -11956,6 +11956,11 @@ Search.appendIndex(
             "summary": "Constructs\u0020the\u0020Voice\u0020Client\u0020instance.",
             "url": "classes/Discord-Voice-VoiceClient.html#method___construct"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AsetMode\u0028\u0029",
+            "name": "setMode",
+            "summary": "Sets\u0020the\u0020transport\u0020encryption\u0020mode\u0020for\u0020the\u0020client.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_setMode"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003Astart\u0028\u0029",
             "name": "start",
             "summary": "Starts\u0020the\u0020voice\u0020client.",
@@ -11986,6 +11991,71 @@ Search.appendIndex(
             "summary": "Selects\u0020the\u0020UDP\u0020protocol\u0020for\u0020the\u0020voice\u0020connection\u0020and\u0020sends\u0020the\u0020selection\u0020payload.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_selectProtocol"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024ready",
+            "name": "ready",
+            "summary": "Is\u0020the\u0020voice\u0020client\u0020ready\u003F",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_ready"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDavePrepareTransition\u0028\u0029",
+            "name": "handleDavePrepareTransition",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDavePrepareTransition"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveExecuteTransition\u0028\u0029",
+            "name": "handleDaveExecuteTransition",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveExecuteTransition"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveTransitionReady\u0028\u0029",
+            "name": "handleDaveTransitionReady",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveTransitionReady"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDavePrepareEpoch\u0028\u0029",
+            "name": "handleDavePrepareEpoch",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDavePrepareEpoch"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsExternalSender\u0028\u0029",
+            "name": "handleDaveMlsExternalSender",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsExternalSender"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsKeyPackage\u0028\u0029",
+            "name": "handleDaveMlsKeyPackage",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsKeyPackage"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsProposals\u0028\u0029",
+            "name": "handleDaveMlsProposals",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsProposals"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsCommitWelcome\u0028\u0029",
+            "name": "handleDaveMlsCommitWelcome",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsCommitWelcome"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsAnnounceCommitTransition\u0028\u0029",
+            "name": "handleDaveMlsAnnounceCommitTransition",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsAnnounceCommitTransition"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsWelcome\u0028\u0029",
+            "name": "handleDaveMlsWelcome",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsWelcome"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsInvalidCommitWelcome\u0028\u0029",
+            "name": "handleDaveMlsInvalidCommitWelcome",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsInvalidCommitWelcome"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleSpeaking\u0028\u0029",
+            "name": "handleSpeaking",
+            "summary": "Handles\u0020the\u0020speaking\u0020state\u0020of\u0020a\u0020user.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleSpeaking"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003Aresume\u0028\u0029",
             "name": "resume",
             "summary": "Resumes\u0020a\u0020previously\u0020established\u0020voice\u0020connection.",
@@ -11995,11 +12065,6 @@ Search.appendIndex(
             "name": "handleWebSocketConnection",
             "summary": "Handles\u0020a\u0020WebSocket\u0020connection.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_handleWebSocketConnection"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AdiscoverUdp\u0028\u0029",
-            "name": "discoverUdp",
-            "summary": "Handles\u0020the\u0020UDP\u0020discovery\u0020process\u0020for\u0020the\u0020Discord\u0020voice\u0020client.",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_discoverUdp"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AdecodeUDP\u0028\u0029",
             "name": "decodeUDP",
@@ -12136,60 +12201,10 @@ Search.appendIndex(
             "summary": "Handles\u0020raw\u0020opus\u0020data\u0020from\u0020the\u0020UDP\u0020server.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_handleAudioData"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDavePrepareTransition\u0028\u0029",
-            "name": "handleDavePrepareTransition",
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AdecryptVoicePacket\u0028\u0029",
+            "name": "decryptVoicePacket",
             "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDavePrepareTransition"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveExecuteTransition\u0028\u0029",
-            "name": "handleDaveExecuteTransition",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveExecuteTransition"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveTransitionReady\u0028\u0029",
-            "name": "handleDaveTransitionReady",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveTransitionReady"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDavePrepareEpoch\u0028\u0029",
-            "name": "handleDavePrepareEpoch",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDavePrepareEpoch"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsExternalSender\u0028\u0029",
-            "name": "handleDaveMlsExternalSender",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsExternalSender"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsKeyPackage\u0028\u0029",
-            "name": "handleDaveMlsKeyPackage",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsKeyPackage"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsProposals\u0028\u0029",
-            "name": "handleDaveMlsProposals",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsProposals"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsCommitWelcome\u0028\u0029",
-            "name": "handleDaveMlsCommitWelcome",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsCommitWelcome"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsAnnounceCommitTransition\u0028\u0029",
-            "name": "handleDaveMlsAnnounceCommitTransition",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsAnnounceCommitTransition"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsWelcome\u0028\u0029",
-            "name": "handleDaveMlsWelcome",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsWelcome"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDaveMlsInvalidCommitWelcome\u0028\u0029",
-            "name": "handleDaveMlsInvalidCommitWelcome",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_handleDaveMlsInvalidCommitWelcome"
+            "url": "classes/Discord-Voice-VoiceClient.html#method_decryptVoicePacket"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AgenerateKeyPackage\u0028\u0029",
             "name": "generateKeyPackage",
@@ -12256,11 +12271,6 @@ Search.appendIndex(
             "summary": "The\u0020Opus\u0020Silence\u0020Frame.",
             "url": "classes/Discord-Voice-VoiceClient.html#constant_SILENCE_FRAME"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024ready",
-            "name": "ready",
-            "summary": "Is\u0020the\u0020voice\u0020client\u0020ready\u003F",
-            "url": "classes/Discord-Voice-VoiceClient.html#property_ready"
-        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024dca",
             "name": "dca",
             "summary": "The\u0020DCA\u0020binary\u0020name\u0020that\u0020we\u0020will\u0020use.",
@@ -12311,10 +12321,25 @@ Search.appendIndex(
             "summary": "The\u0020Voice\u0020WebSocket\u0020endpoint.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_endpoint"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024protocol",
+            "name": "protocol",
+            "summary": "The\u0020Voice\u0020connection\u0020protocol.",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_protocol"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024udpIp",
+            "name": "udpIp",
+            "summary": "The\u0020IP\u0020the\u0020UDP\u0020client\u0020will\u0020use.",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_udpIp"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024udpPort",
             "name": "udpPort",
             "summary": "The\u0020port\u0020the\u0020UDP\u0020client\u0020will\u0020use.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_udpPort"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024supportedModes",
+            "name": "supportedModes",
+            "summary": "The\u0020supported\u0020transport\u0020encryption\u0020modes\u0020the\u0020voice\u0020server\u0020expects.",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_supportedModes"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024heartbeat_interval",
             "name": "heartbeat_interval",
