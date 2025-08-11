@@ -510,6 +510,180 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Handles the UDP discovery process for the Discord voice client.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-websocket-connection-example-voice-ready-payload
+     * @link https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-udp-connection
+     * @link https://discord.com/developers/docs/topics/voice-connections#ip-discovery
+     *
+     * @since 10.19.0
+     *
+     * @param mixed            $message   The incoming WebSocket message containing the payload.
+     * @param WebSocket        $ws        Reference to the WebSocket connection.
+     * @param DatagramFactory  $udpfac    Factory for creating UDP client connections.
+     * @param bool             $firstPack Reference to a flag indicating if this is the first UDP packet.
+     * @param string           $ip        Reference to the discovered IP address.
+     * @param string           $port      Reference to the discovered port.
+     */
+    protected function discoverUdp($message, WebSocket &$ws, DatagramFactory $udpfac, bool &$firstPack, string &$ip, string &$port)
+    {
+        $data = json_decode($message->getPayload());
+        $data = Payload::new($data->op, $data->d ?? null, $data->s ?? null, $data->t ?? null);
+
+        if ($data->op != Op::VOICE_READY) {
+            return;
+        }
+
+        $ws->removeListener('message', fn ($message) => $this->discoverUdp($message, $ws, $udpfac, $firstPack, $ip, $port));
+
+        $this->udpPort = $data->d->port;
+        $this->ssrc = $data->d->ssrc;
+
+        $this->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
+
+        $buffer = new Buffer(74);
+        $buffer[1] = "\x01";
+        $buffer[3] = "\x46";
+        $buffer->writeUInt32BE($this->ssrc, 4);
+        /** @var PromiseInterface */
+        $promise = $udpfac->createClient("{$data->d->ip}:{$this->udpPort}");
+
+        $promise->then(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
+            $this->logger->debug('connected to voice UDP');
+            $this->client = $client;
+
+            $this->loop->addTimer(0.1, function () use (&$client, $buffer) {
+                $client->send((string) $buffer);
+            });
+
+            $this->udpHeartbeat = $this->loop->addPeriodicTimer(5, function () use ($client) {
+                $buffer = new Buffer(9);
+                $buffer[0] = "\xC9";
+                $buffer->writeUInt64LE($this->heartbeatSeq, 1);
+                ++$this->heartbeatSeq;
+
+                $client->send((string) $buffer);
+                $this->emit('udp-heartbeat', []);
+            });
+
+            $client->on('error', function ($e) {
+                $this->emit('udp-error', [$e]);
+            });
+
+            $client->on('message', fn ($message) => $this->decodeUDP($message, $client, $ip, $port));
+        }, function ($e) {
+            $this->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
+            $this->emit('error', [$e]);
+        });
+    }
+
+    protected function handleDavePrepareTransition($data)
+    {
+        $this->logger->debug('DAVE Prepare Transition', ['data' => $data]);
+        // Prepare local state necessary to perform the transition
+        $this->send(Payload::new(
+            Op::VOICE_DAVE_TRANSITION_READY,
+            [
+                'transition_id' => $data->d->transition_id,
+            ],
+        ));
+    }
+
+    protected function handleDaveExecuteTransition($data)
+    {
+        $this->logger->debug('DAVE Execute Transition', ['data' => $data]);
+        // Execute the transition
+        // Update local state to reflect the new protocol context
+    }
+
+    protected function handleDaveTransitionReady($data)
+    {
+        $this->logger->debug('DAVE Transition Ready', ['data' => $data]);
+        // Handle transition ready state
+    }
+
+    protected function handleDavePrepareEpoch($data)
+    {
+        $this->logger->debug('DAVE Prepare Epoch', ['data' => $data]);
+        // Prepare local MLS group with parameters appropriate for the DAVE protocol version
+        $this->send(Payload::new(
+            Op::VOICE_DAVE_MLS_KEY_PACKAGE,
+            [
+                'epoch_id' => $data->d->epoch_id,
+                'key_package' => $this->generateKeyPackage(),
+            ],
+        ));
+    }
+
+    protected function handleDaveMlsExternalSender($data)
+    {
+        $this->logger->debug('DAVE MLS External Sender', ['data' => $data]);
+        // Handle external sender public key and credential
+    }
+
+    protected function handleDaveMlsKeyPackage($data)
+    {
+        $this->logger->debug('DAVE MLS Key Package', ['data' => $data]);
+        // Handle MLS key package
+    }
+
+    protected function handleDaveMlsProposals($data)
+    {
+        $this->logger->debug('DAVE MLS Proposals', ['data' => $data]);
+        // Handle MLS proposals
+        $this->send(Payload::new(
+            Op::VOICE_DAVE_MLS_COMMIT_WELCOME,
+            [
+                'commit' => $this->generateCommit(),
+                'welcome' => $this->generateWelcome(),
+            ],
+        ));
+    }
+
+    protected function handleDaveMlsCommitWelcome($data)
+    {
+        $this->logger->debug('DAVE MLS Commit Welcome', ['data' => $data]);
+        // Handle MLS commit and welcome messages
+    }
+
+    protected function handleDaveMlsAnnounceCommitTransition($data)
+    {
+        // Handle MLS announce commit transition
+        $this->logger->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
+    }
+
+    protected function handleDaveMlsWelcome($data)
+    {
+        // Handle MLS welcome message
+        $this->logger->debug('DAVE MLS Welcome', ['data' => $data]);
+    }
+
+    protected function handleDaveMlsInvalidCommitWelcome($data)
+    {
+        $this->logger->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
+        // Handle invalid commit or welcome message
+        // Reset local group state and generate a new key package
+        $this->send(Payload::new(
+            Op::VOICE_DAVE_MLS_KEY_PACKAGE,
+            [
+                'key_package' => $this->generateKeyPackage(),
+            ],
+        ));
+    }
+
+    /**
+     * Handles the speaking state of a user.
+     *
+     * @param Payload $data The data object received from the WebSocket.
+     */
+    protected function speaking($data): void
+    {
+        $this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
+        $this->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this]);
+        $this->speakingStatus[$data->d->ssrc] = $data->d;
+    }
+
+    /**
      * Resumes a previously established voice connection.
      *
      * @since 10.19.0
@@ -580,9 +754,7 @@ class VoiceClient extends EventEmitter
 
                     break;
                 case Op::VOICE_SPEAKING: // user started speaking
-                    $this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
-                    $this->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this]);
-                    $this->speakingStatus[$data->d->ssrc] = $data->d;
+                    $this->speaking($data);
                     break;
                 case Op::VOICE_HEARTBEAT_ACK: // keepalive response
                     $this->heartbeatAck($data);
@@ -660,72 +832,6 @@ class VoiceClient extends EventEmitter
             $this->logger->debug('existing voice session or data not found, re-sending identify', ['guild_id' => $this->channel->guild_id]);
             $this->identify();
         }
-    }
-
-    /**
-     * Handles the UDP discovery process for the Discord voice client.
-     *
-     * @link https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-websocket-connection-example-voice-ready-payload
-     *
-     * @since 10.19.0
-     *
-     * @param mixed            $message   The incoming WebSocket message containing the payload.
-     * @param WebSocket        $ws        Reference to the WebSocket connection.
-     * @param DatagramFactory  $udpfac    Factory for creating UDP client connections.
-     * @param bool             $firstPack Reference to a flag indicating if this is the first UDP packet.
-     * @param string           $ip        Reference to the discovered IP address.
-     * @param string           $port      Reference to the discovered port.
-     */
-    protected function discoverUdp($message, WebSocket &$ws, DatagramFactory $udpfac, bool &$firstPack, string &$ip, string &$port)
-    {
-        $data = json_decode($message->getPayload());
-        $data = Payload::new($data->op, $data->d ?? null, $data->s ?? null, $data->t ?? null);
-
-        if ($data->op != Op::VOICE_READY) {
-            return;
-        }
-
-        $ws->removeListener('message', fn ($message) => $this->discoverUdp($message, $ws, $udpfac, $firstPack, $ip, $port));
-
-        $this->udpPort = $data->d->port;
-        $this->ssrc = $data->d->ssrc;
-
-        $this->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
-
-        $buffer = new Buffer(74);
-        $buffer[1] = "\x01";
-        $buffer[3] = "\x46";
-        $buffer->writeUInt32BE($this->ssrc, 4);
-        /** @var PromiseInterface */
-        $promise = $udpfac->createClient("{$data->d->ip}:{$this->udpPort}");
-
-        $promise->then(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
-            $this->logger->debug('connected to voice UDP');
-            $this->client = $client;
-
-            $this->loop->addTimer(0.1, function () use (&$client, $buffer) {
-                $client->send((string) $buffer);
-            });
-
-            $this->udpHeartbeat = $this->loop->addPeriodicTimer(5, function () use ($client) {
-                $buffer = new Buffer(9);
-                $buffer[0] = "\xC9";
-                $buffer->writeUInt64LE($this->heartbeatSeq, 1);
-                ++$this->heartbeatSeq;
-
-                $client->send((string) $buffer);
-                $this->emit('udp-heartbeat', []);
-            });
-
-            $client->on('error', function ($e) {
-                $this->emit('udp-error', [$e]);
-            });
-
-            $client->on('message', fn ($message) => $this->decodeUDP($message, $client, $ip, $port));
-        }, function ($e) {
-            $this->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
-            $this->emit('error', [$e]);
-        });
     }
 
     /**
@@ -1178,7 +1284,7 @@ class VoiceClient extends EventEmitter
     /**
      * Resets the voice client.
      */
-    private function reset(): void
+    protected function reset(): void
     {
         if ($this->readOpusTimer) {
             $this->loop->cancelTimer($this->readOpusTimer);
@@ -1197,7 +1303,7 @@ class VoiceClient extends EventEmitter
      *
      * @param string $data The data to send to the UDP server.
      */
-    private function sendBuffer(string $data): void
+    protected function sendBuffer(string $data): void
     {
         if (! $this->ready) {
             return;
@@ -1335,7 +1441,7 @@ class VoiceClient extends EventEmitter
      *
      * @param Payload|array $data The data to send to the voice WebSocket.
      */
-    private function send(Payload|array $data): void
+    protected function send(Payload|array $data): void
     {
         $json = json_encode($data);
         $this->voiceWebsocket->send($json);
@@ -1346,7 +1452,7 @@ class VoiceClient extends EventEmitter
      *
      * @param Payload $data The data to send to the main WebSocket.
      */
-    private function mainSend(Payload $data): void
+    protected function mainSend(Payload $data): void
     {
         $json = json_encode($data);
         $this->mainWebsocket->send($json);
@@ -1656,111 +1762,17 @@ class VoiceClient extends EventEmitter
         $decoder->stdin->write((string) $buff);
     }
 
-    private function handleDavePrepareTransition($data)
-    {
-        $this->logger->debug('DAVE Prepare Transition', ['data' => $data]);
-        // Prepare local state necessary to perform the transition
-        $this->send(Payload::new(
-            Op::VOICE_DAVE_TRANSITION_READY,
-            [
-                'transition_id' => $data->d->transition_id,
-            ],
-        ));
-    }
-
-    private function handleDaveExecuteTransition($data)
-    {
-        $this->logger->debug('DAVE Execute Transition', ['data' => $data]);
-        // Execute the transition
-        // Update local state to reflect the new protocol context
-    }
-
-    private function handleDaveTransitionReady($data)
-    {
-        $this->logger->debug('DAVE Transition Ready', ['data' => $data]);
-        // Handle transition ready state
-    }
-
-    private function handleDavePrepareEpoch($data)
-    {
-        $this->logger->debug('DAVE Prepare Epoch', ['data' => $data]);
-        // Prepare local MLS group with parameters appropriate for the DAVE protocol version
-        $this->send(Payload::new(
-            Op::VOICE_DAVE_MLS_KEY_PACKAGE,
-            [
-                'epoch_id' => $data->d->epoch_id,
-                'key_package' => $this->generateKeyPackage(),
-            ],
-        ));
-    }
-
-    private function handleDaveMlsExternalSender($data)
-    {
-        $this->logger->debug('DAVE MLS External Sender', ['data' => $data]);
-        // Handle external sender public key and credential
-    }
-
-    private function handleDaveMlsKeyPackage($data)
-    {
-        $this->logger->debug('DAVE MLS Key Package', ['data' => $data]);
-        // Handle MLS key package
-    }
-
-    private function handleDaveMlsProposals($data)
-    {
-        $this->logger->debug('DAVE MLS Proposals', ['data' => $data]);
-        // Handle MLS proposals
-        $this->send(Payload::new(
-            Op::VOICE_DAVE_MLS_COMMIT_WELCOME,
-            [
-                'commit' => $this->generateCommit(),
-                'welcome' => $this->generateWelcome(),
-            ],
-        ));
-    }
-
-    private function handleDaveMlsCommitWelcome($data)
-    {
-        $this->logger->debug('DAVE MLS Commit Welcome', ['data' => $data]);
-        // Handle MLS commit and welcome messages
-    }
-
-    private function handleDaveMlsAnnounceCommitTransition($data)
-    {
-        // Handle MLS announce commit transition
-        $this->logger->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
-    }
-
-    private function handleDaveMlsWelcome($data)
-    {
-        // Handle MLS welcome message
-        $this->logger->debug('DAVE MLS Welcome', ['data' => $data]);
-    }
-
-    private function handleDaveMlsInvalidCommitWelcome($data)
-    {
-        $this->logger->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
-        // Handle invalid commit or welcome message
-        // Reset local group state and generate a new key package
-        $this->send(Payload::new(
-            Op::VOICE_DAVE_MLS_KEY_PACKAGE,
-            [
-                'key_package' => $this->generateKeyPackage(),
-            ],
-        ));
-    }
-
-    private function generateKeyPackage()
+    protected function generateKeyPackage()
     {
         // Generate and return a new MLS key package
     }
 
-    private function generateCommit()
+    protected function generateCommit()
     {
         // Generate and return an MLS commit message
     }
 
-    private function generateWelcome()
+    protected function generateWelcome()
     {
         // Generate and return an MLS welcome message
     }
@@ -1780,7 +1792,7 @@ class VoiceClient extends EventEmitter
      *
      * @return bool Whether FFmpeg is installed or not.
      */
-    private function checkForFFmpeg(): bool
+    protected function checkForFFmpeg(): bool
     {
         $binaries = [
             'ffmpeg',
@@ -1806,7 +1818,7 @@ class VoiceClient extends EventEmitter
      *
      * @return bool
      */
-    private function checkForLibsodium(): bool
+    protected function checkForLibsodium(): bool
     {
         if (! function_exists('sodium_crypto_secretbox')) {
             $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
@@ -1823,7 +1835,7 @@ class VoiceClient extends EventEmitter
      * @param  string      $executable
      * @return string|null
      */
-    private static function checkForExecutable(string $executable): ?string
+    protected static function checkForExecutable(string $executable): ?string
     {
         $which = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'where' : 'command -v';
         $executable = rtrim((string) explode(PHP_EOL, shell_exec("{$which} {$executable}"))[0]);
@@ -1925,7 +1937,7 @@ class VoiceClient extends EventEmitter
      *
      * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
      */
-    private function insertSilence(): void
+    protected function insertSilence(): void
     {
         while (--$this->silenceRemaining > 0) {
             $this->sendBuffer(self::SILENCE_FRAME);
