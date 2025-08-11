@@ -203,6 +203,8 @@ class Discord
      */
     protected $voiceClients = [];
 
+    protected $voiceSessions = [];
+
     /**
      * An array of large guilds that need to be requested for members.
      *
@@ -1435,8 +1437,7 @@ class Discord
         if ($vs->guild_id != $channel->guild_id) {
             return; // This voice state update isn't for our guild.
         }
-
-        $data['session'] = $vs->session_id;
+        $this->voiceSessions[$channel->guild_id] = $data['session_id'];
         $this->logger->info('received session id for voice session', ['guild' => $channel->guild_id, 'session_id' => $vs->session_id]);
         $this->removeListener(Event::VOICE_STATE_UPDATE, fn() => $this->voiceStateUpdate($vs, $channel, $data));
     }
@@ -1448,6 +1449,8 @@ class Discord
         }
 
         $logger ??= $this->logger;
+
+        $data['session_id'] = $this->voiceSessions[$channel->guild_id] ?? null;
 
         $data['token'] = $vs->token;
         $data['endpoint'] = $vs->endpoint;

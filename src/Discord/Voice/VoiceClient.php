@@ -614,7 +614,7 @@ class VoiceClient extends EventEmitter
                 [
                     'server_id' => $this->channel->guild_id,
                     'user_id' => $this->data['user_id'],
-                    'session_id' => $this->data['session'],
+                    'session_id' => $this->data['session_id'] ?? null,
                     'token' => $this->data['token'],
                 ],
             );
