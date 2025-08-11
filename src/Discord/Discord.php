@@ -203,7 +203,7 @@ class Discord
      */
     protected $voiceClients = [];
 
-    protected $voiceSessions = [];
+    public $voiceSessions = [];
 
     /**
      * An array of large guilds that need to be requested for members.
@@ -1457,7 +1457,7 @@ class Discord
         $data['dnsConfig'] = $this->options['dnsConfig'];
         $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-        $vc = new VoiceClient($this->ws, $this->loop, $channel, $this->logger, $data);
+        $vc = new VoiceClient($this->ws, $this->loop, $channel, $this->logger, $data, $this->voiceSessions);
 
         $vc->once('ready', function () use ($vc, $deferred, $channel) {
             $this->logger->info('voice client is ready');
