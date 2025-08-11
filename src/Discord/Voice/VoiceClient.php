@@ -218,7 +218,7 @@ class VoiceClient extends EventEmitter
      *
      * @var string The transport encryption mode.
      */
-    protected $mode = 'xsalsa20_poly1305';
+    protected $mode = 'aead_aes256_gcm_rtpsize';
 
     /**
      * The secret key used for encrypting voice.
