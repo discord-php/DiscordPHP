@@ -522,13 +522,14 @@ class VoiceClient extends EventEmitter
      *
      * @param string $ip   The IP address to use for the voice connection.
      * @param int    $port The port number to use for the voice connection.
-     *
-     * @throws \DomainException
      */
     protected function selectProtocol($ip, $port): void
     {
         if (! in_array($this->mode, $this->supportedModes)) {
-            throw new \DomainException("{$this->mode} is not a valid transport encryption connection mode. Valid modes are: " . implode(', ', $this->supportedModes));
+            $this->logger->warning("{$this->mode} is not a valid transport encryption connection mode. Valid modes are: " . implode(', ', $this->supportedModes));
+            $fallback = $this->supportedModes[0];
+            $this->logger->info('Switching voice transport encryption mode to: ' . $fallback);
+            $this->mode = $fallback;
         }
 
         $payload = Payload::new(
