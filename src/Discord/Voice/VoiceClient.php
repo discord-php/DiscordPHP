@@ -137,11 +137,25 @@ class VoiceClient extends EventEmitter
     protected $endpoint;
 
     /**
+     * The IP the UDP client will use.
+     *
+     * @var string The IP that the UDP client will connect to.
+     */
+    protected $udpIp;
+
+    /**
      * The port the UDP client will use.
      *
      * @var int The port that the UDP client will connect to.
      */
     protected $udpPort;
+
+    /**
+     * The supported encryption modes the voice server expects.
+     *
+     * @var array<string> The supported encryption modes.
+     */
+    protected $supportedModes;
 
     /**
      * The UDP heartbeat interval.
@@ -536,17 +550,19 @@ class VoiceClient extends EventEmitter
 
         $ws->removeListener('message', fn ($message) => $this->discoverUdp($message, $ws, $udpfac, $firstPack, $ip, $port));
 
-        $this->udpPort = $data->d->port;
         $this->ssrc = $data->d->ssrc;
+        $this->udpIp = $data->d->ip;
+        $this->udpPort = $data->d->port;
+        $this->supportedModes = $data->d->modes;
 
-        $this->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
+        $this->logger->debug('received voice ready packet', ['data' => $data]);
 
         $buffer = new Buffer(74);
         $buffer[1] = "\x01";
         $buffer[3] = "\x46";
         $buffer->writeUInt32BE($this->ssrc, 4);
         /** @var PromiseInterface */
-        $promise = $udpfac->createClient("{$data->d->ip}:{$this->udpPort}");
+        $promise = $udpfac->createClient("{$this->udpIp}:{$this->udpPort}");
 
         $promise->then(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
             $this->logger->debug('connected to voice UDP');
@@ -743,7 +759,7 @@ class VoiceClient extends EventEmitter
                         $this->secret_key .= pack('C*', $part);
                     }
 
-                    $this->logger->debug('received description packet, vc ready', ['data' => json_decode(json_encode($data->d), true)]);
+                    $this->logger->debug('received description packet, vc ready', ['data' => $data]);
 
                     if (! $this->reconnecting) {
                         $this->emit('ready', [$this]);
