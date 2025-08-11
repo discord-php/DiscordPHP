@@ -72,9 +72,12 @@ class Payload implements JsonSerializable
     {
         $array = $this->jsonSerialize();
 
-        if (isset($array['d']['token'])) {
-            $array['d']['token'] = 'xxxxx';
-        }
+        if (isset($array['d']))
+        is_array($array['d'])
+            ? $array['d']['token'] = 'xxxxx'
+            : (isset($array['d']->token)
+                ? $array['d']->token = 'xxxxx'
+                : null);
 
         return $array;
     }
