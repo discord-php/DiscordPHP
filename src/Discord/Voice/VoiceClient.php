@@ -619,9 +619,9 @@ class VoiceClient extends EventEmitter
 
         if (! $this->sentLoginFrame) {
             $data = [
-                    'server_id' => $this->channel->guild_id,
-                    'user_id' => $this->data['user_id'],
-                    'token' => $this->data['token'],
+                'server_id' => $this->channel->guild_id,
+                'user_id' => $this->data['user_id'],
+                'token' => $this->data['token'],
             ];
             if (isset($this->voiceSessions[$this->channel->guild_id])) {
                 $data['session_id'] = $this->voiceSessions[$this->channel->guild_id];
