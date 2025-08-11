@@ -982,10 +982,8 @@ class Discord
     {
         $this->logger->warning('invalid session, re-identifying', ['resumable' => $data->d]);
 
-        $this->voiceSessions[$this->channel->guild_id] = null;
-
         $this->loop->addTimer(2, function () use ($data) {
-            (isset($this->voiceSessions[$this->channel->guild_id]) && $data->d)
+            $data->d
                 ? $this->resume(
                     $this->token,
                     $this->sessionId,
