@@ -30,6 +30,8 @@ use Discord\Repository\AbstractRepository;
  * @method Message|null first()
  * @method Message|null last()
  * @method Message|null find(callable $callback)
+ *
+ * @method Message|null freshen(array $queryparams = []) Messages returned are in order from newest to oldest.
  */
 class MessageRepository extends AbstractRepository
 {
@@ -37,7 +39,7 @@ class MessageRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $endpoints = [
-        'get' => Endpoint::CHANNEL_MESSAGE, // Messages returned are in order from newest to oldest.
+        'get' => Endpoint::CHANNEL_MESSAGE,
         'update' => Endpoint::CHANNEL_MESSAGE,
         'delete' => Endpoint::CHANNEL_MESSAGE,
     ];
