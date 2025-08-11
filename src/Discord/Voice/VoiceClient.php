@@ -670,7 +670,7 @@ class VoiceClient extends EventEmitter
     protected function discoverUdp($message, WebSocket &$ws, DatagramFactory $udpfac, bool &$firstPack, string &$ip, string &$port)
     {
         $data = json_decode($message->getPayload());
-        $data = Payload::new($data->op, $data->d, $data->s, $data->t);
+        $data = Payload::new($data->op, $data->d ?? null, $data->s ?? null, $data->t ?? null);
 
         if ($data->op != Op::VOICE_READY) {
             return;
