@@ -51,7 +51,7 @@ class RoleTags extends Part implements Stringable
      *
      * @return true|null
      */
-    protected function getPremiumSubscriberAttribute(): ?true
+    protected function getPremiumSubscriberAttribute(): ?bool
     {
         return array_key_exists('premium_subscriber', $this->attributes) ?: null;
     }
@@ -61,7 +61,7 @@ class RoleTags extends Part implements Stringable
      *
      * @return true|null
      */
-    protected function getAvailableForPurchaseAttribute(): ?true
+    protected function getAvailableForPurchaseAttribute(): ?bool
     {
         return array_key_exists('available_for_purchase', $this->attributes) ?: null;
     }
@@ -71,7 +71,7 @@ class RoleTags extends Part implements Stringable
      *
      * @return true|null
      */
-    protected function getGuildConnectionsAttribute(): ?true
+    protected function getGuildConnectionsAttribute(): ?bool
     {
         return array_key_exists('guild_connections', $this->attributes) ?: null;
     }
