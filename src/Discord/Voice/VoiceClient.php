@@ -752,10 +752,6 @@ class VoiceClient extends EventEmitter
      */
     protected function resume(): void
     {
-        if (! isset($this->voiceSessions[$this->channel->guild_id])) {
-            return;
-        }
-
         $payload = Payload::new(
             Op::VOICE_RESUME,
             [
