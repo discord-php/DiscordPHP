@@ -1881,8 +1881,7 @@ class VoiceClient extends EventEmitter
                     $nonce,
                     $this->secret_key
                 );
-                // deprecated
-            case 'xsalsa20_poly1305':
+            case 'xsalsa20_poly1305': // deprecated
                 return \sodium_crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
         }
 
