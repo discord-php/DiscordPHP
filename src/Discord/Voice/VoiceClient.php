@@ -602,7 +602,7 @@ class VoiceClient extends EventEmitter
 
         $this->logger->debug('received voice ready packet', ['data' => $data]);
 
-        $udpfac = new DatagramFactory($this->loop, (new DNSFactory())->createCached($this->dnsConfig, $this->loop));
+        $udpfac = new DatagramFactory(null, (new DNSFactory())->createCached($this->dnsConfig, $this->loop));
         $udpfac->createClient("{$this->udpIp}:".$this->udpPort)->then(function (Socket $client): void {
             $this->client = $client;
             //
