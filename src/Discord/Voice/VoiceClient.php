@@ -778,9 +778,6 @@ class VoiceClient extends EventEmitter
 
         $this->voiceWebsocket = $ws;
 
-        $firstPack = true;
-        $ip = $port = '';
-
         $ws->on('message', function ($message) {
             $data = json_decode($message->getPayload());
             $data = Payload::new($data->op, $data->d ?? null, $data->s ?? null, $data->t ?? null);
