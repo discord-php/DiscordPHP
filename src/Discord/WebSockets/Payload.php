@@ -54,6 +54,16 @@ class Payload implements JsonSerializable
         return new self($op, $d, $s, $t);
     }
 
+    public static function fromArray(array $data): self
+    {
+        $op = $data['op'] ?? 0;
+        $d = $data['d'] ?? null;
+        $s = $data['s'] ?? null;
+        $t = $data['t'] ?? null;
+
+        return new self($op, $d, $s, $t);
+    }
+
     public function jsonSerialize(): array
     {
         $data['op'] = $this->op;
