@@ -533,7 +533,7 @@ class VoiceClient extends EventEmitter
     /**
      * Handles the heartbeat acknowledgement from the voice WebSocket connection.
      *
-     * @param Payload $data The data object received from the WebSocket, expected to contain the heartbeat timestamp in $data->d->t.
+     * @param Payload $data
      *
      * @since 10.19.0
      */
@@ -546,6 +546,20 @@ class VoiceClient extends EventEmitter
         $this->logger->debug('received heartbeat ack', ['response_time' => $diff]);
         $this->emit('ws-ping', [$diff]);
         $this->emit('ws-heartbeat-ack', [$data->d]);
+    }
+
+    /**
+     * Handles the "Hello" event from the Discord voice server.
+     *
+     * @param Payload $data
+     *
+     * @since 10.19.0
+     */
+    protected function handleHello($data): void
+    {
+        $this->heartbeat_interval = $data->d->heartbeat_interval;
+        $this->heartbeat();
+        $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, fn () => $this->heartbeat());
     }
 
     /**
@@ -593,7 +607,7 @@ class VoiceClient extends EventEmitter
      *
      * @since 10.19.0
      */
-    protected function ready($data)
+    protected function handleReady($data): void
     {
         $this->ssrc = $data->d->ssrc;
         $this->udpIp = $data->d->ip;
@@ -636,7 +650,70 @@ class VoiceClient extends EventEmitter
         });
     }
 
-    protected function handleDavePrepareTransition($data)
+    /**
+     * Handles the session description packet received from the Discord voice server.
+     *
+     * @param Payload $data
+     *
+     * @since 10.19.0
+     */
+    protected function handleSessionDescription($data): void
+    {
+        $this->ready = true;
+        $this->mode = $data->d->mode;
+        $this->secret_key = '';
+
+        foreach ($data->d->secret_key as $part) {
+            $this->secret_key .= pack('C*', $part);
+        }
+
+        $this->logger->debug('received description packet, vc ready', ['data' => $data]);
+
+        if (! $this->reconnecting) {
+            $this->emit('ready', [$this]);
+        } else {
+            $this->reconnecting = false;
+            $this->emit('resumed', [$this]);
+        }
+    }
+
+    /**
+     * Handles the 'resumed' event for the voice client.
+     *
+     * @param Payload $data
+     *
+     * Data associated with the resumed event.
+     */
+    protected function handleResumed($data): void
+    {
+        $this->logger->debug('received resumed packet', ['data' => $data]);
+    }
+
+    /**
+     * Handles the event when a client connects to the voice server.
+     *
+     * @param Payload $data
+     *
+     * @since 10.19.0
+     */
+    protected function handleClientConnect($data): void
+    {
+        $this->logger->debug('received client connect packet', ['data' => $data]);
+    }
+
+    /**
+     * Handles the event when a client disconnects from the voice server.
+     *
+     * @param Payload $data
+     *
+     * @since 10.19.0
+     */
+    protected function handleClientDisconnect($data): void
+    {
+        $this->logger->debug('received client disconnect packet', ['data' => $data]);
+    }
+
+    protected function handleDavePrepareTransition($data): void
     {
         $this->logger->debug('DAVE Prepare Transition', ['data' => $data]);
         // Prepare local state necessary to perform the transition
@@ -648,20 +725,20 @@ class VoiceClient extends EventEmitter
         ));
     }
 
-    protected function handleDaveExecuteTransition($data)
+    protected function handleDaveExecuteTransition($data): void
     {
         $this->logger->debug('DAVE Execute Transition', ['data' => $data]);
         // Execute the transition
         // Update local state to reflect the new protocol context
     }
 
-    protected function handleDaveTransitionReady($data)
+    protected function handleDaveTransitionReady($data): void
     {
         $this->logger->debug('DAVE Transition Ready', ['data' => $data]);
         // Handle transition ready state
     }
 
-    protected function handleDavePrepareEpoch($data)
+    protected function handleDavePrepareEpoch($data): void
     {
         $this->logger->debug('DAVE Prepare Epoch', ['data' => $data]);
         // Prepare local MLS group with parameters appropriate for the DAVE protocol version
@@ -680,13 +757,13 @@ class VoiceClient extends EventEmitter
         // Handle external sender public key and credential
     }
 
-    protected function handleDaveMlsKeyPackage($data)
+    protected function handleDaveMlsKeyPackage($data): void
     {
         $this->logger->debug('DAVE MLS Key Package', ['data' => $data]);
         // Handle MLS key package
     }
 
-    protected function handleDaveMlsProposals($data)
+    protected function handleDaveMlsProposals($data): void
     {
         $this->logger->debug('DAVE MLS Proposals', ['data' => $data]);
         // Handle MLS proposals
@@ -699,25 +776,25 @@ class VoiceClient extends EventEmitter
         ));
     }
 
-    protected function handleDaveMlsCommitWelcome($data)
+    protected function handleDaveMlsCommitWelcome($data): void
     {
         $this->logger->debug('DAVE MLS Commit Welcome', ['data' => $data]);
         // Handle MLS commit and welcome messages
     }
 
-    protected function handleDaveMlsAnnounceCommitTransition($data)
+    protected function handleDaveMlsAnnounceCommitTransition($data): void
     {
         // Handle MLS announce commit transition
         $this->logger->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
     }
 
-    protected function handleDaveMlsWelcome($data)
+    protected function handleDaveMlsWelcome($data): void
     {
         // Handle MLS welcome message
         $this->logger->debug('DAVE MLS Welcome', ['data' => $data]);
     }
 
-    protected function handleDaveMlsInvalidCommitWelcome($data)
+    protected function handleDaveMlsInvalidCommitWelcome($data): void
     {
         $this->logger->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
         // Handle invalid commit or welcome message
@@ -779,34 +856,20 @@ class VoiceClient extends EventEmitter
         $this->voiceWebsocket = $ws;
 
         $ws->on('message', function ($message) {
-            $data = json_decode($message->getPayload());
-            $data = Payload::new($data->op, $data->d ?? null, $data->s ?? null, $data->t ?? null);
+            if (! $data = json_decode($message->getPayload(), true)) {
+                return;
+            }
+            $data = Payload::fromArray($data);
 
             $this->emit('ws-message', [$message, $this]);
 
             $this->logger->debug('received voice op', ['op' => $data->op]);
             switch ($data->op) {
                 case Op::VOICE_READY:
-                    $this->ready($data);
+                    $this->handleReady($data);
                     break;
                 case Op::VOICE_SESSION_DESCRIPTION: // ready
-                    $this->ready = true;
-                    $this->mode = $data->d->mode;
-                    $this->secret_key = '';
-
-                    foreach ($data->d->secret_key as $part) {
-                        $this->secret_key .= pack('C*', $part);
-                    }
-
-                    $this->logger->debug('received description packet, vc ready', ['data' => $data]);
-
-                    if (! $this->reconnecting) {
-                        $this->emit('ready', [$this]);
-                    } else {
-                        $this->reconnecting = false;
-                        $this->emit('resumed', [$this]);
-                    }
-
+                    $this->handleSessionDescription($data);
                     break;
                 case Op::VOICE_SPEAKING: // user started speaking
                     $this->handleSpeaking($data);
@@ -815,21 +878,16 @@ class VoiceClient extends EventEmitter
                     $this->heartbeatAck($data);
                     break;
                 case Op::VOICE_HELLO:
-                    $this->heartbeat_interval = $data->d->heartbeat_interval;
-                    $this->heartbeat();
-                    $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, fn () => $this->heartbeat());
+                    $this->handleHello($data);
                     break;
                 case Op::VOICE_RESUMED:
-                    /** @todo Implement VOICE_RESUMED handling */
-                    $this->logger->debug('received resumed packet', ['data' => $data]);
+                    $this->handleResumed($data);
                     break;
                 case Op::VOICE_CLIENT_CONNECT:
-                    /** @todo Implement VOICE_CLIENT_CONNECT handling */
-                    $this->logger->debug('received client connect packet', ['data' => $data]);
+                    $this->handleClientConnect($data);
                     break;
                 case Op::VOICE_CLIENT_DISCONNECT:
-                    /** @todo Implement VOICE_CLIENT_DISCONNECT handling */
-                    $this->logger->debug('received client disconnect packet', ['data' => $data]);
+                    $this->handleClientDisconnect($data);
                     break;
                 case Op::VOICE_DAVE_PREPARE_TRANSITION:
                     $this->handleDavePrepareTransition($data);
