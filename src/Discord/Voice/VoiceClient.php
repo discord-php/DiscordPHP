@@ -75,6 +75,28 @@ class VoiceClient extends EventEmitter
         'xsalsa20_poly1305_lite',
     ];
 
+    public const VOICE_OP_HANDLERS = [
+        Op::VOICE_READY => 'handleReady',
+        Op::VOICE_SESSION_DESCRIPTION => 'handleSessionDescription',
+        Op::VOICE_SPEAKING => 'handleSpeaking',
+        Op::VOICE_HEARTBEAT_ACK => 'heartbeatAck',
+        Op::VOICE_HELLO => 'handleHello',
+        Op::VOICE_RESUMED => 'handleResumed',
+        Op::VOICE_CLIENT_CONNECT => 'handleClientConnect',
+        Op::VOICE_CLIENT_DISCONNECT => 'handleClientDisconnect',
+        Op::VOICE_DAVE_PREPARE_TRANSITION => 'handleDavePrepareTransition',
+        Op::VOICE_DAVE_EXECUTE_TRANSITION => 'handleDaveExecuteTransition',
+        Op::VOICE_DAVE_TRANSITION_READY => 'handleDaveTransitionReady',
+        Op::VOICE_DAVE_PREPARE_EPOCH => 'handleDavePrepareEpoch',
+        Op::VOICE_DAVE_MLS_EXTERNAL_SENDER => 'handleDaveMlsExternalSender',
+        Op::VOICE_DAVE_MLS_KEY_PACKAGE => 'handleDaveMlsKeyPackage',
+        Op::VOICE_DAVE_MLS_PROPOSALS => 'handleDaveMlsProposals',
+        Op::VOICE_DAVE_MLS_COMMIT_WELCOME => 'handleDaveMlsCommitWelcome',
+        Op::VOICE_DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION => 'handleDaveMlsAnnounceCommitTransition',
+        Op::VOICE_DAVE_MLS_WELCOME => 'handleDaveMlsWelcome',
+        Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME => 'handleDaveMlsInvalidCommitWelcome',
+    ];
+
     /**
      * Is the voice client ready?
      *
@@ -864,64 +886,11 @@ class VoiceClient extends EventEmitter
             $this->emit('ws-message', [$message, $this]);
 
             $this->logger->debug('received voice op', ['op' => $data->op]);
-            switch ($data->op) {
-                case Op::VOICE_READY:
-                    $this->handleReady($data);
-                    break;
-                case Op::VOICE_SESSION_DESCRIPTION: // ready
-                    $this->handleSessionDescription($data);
-                    break;
-                case Op::VOICE_SPEAKING: // user started speaking
-                    $this->handleSpeaking($data);
-                    break;
-                case Op::VOICE_HEARTBEAT_ACK: // keepalive response
-                    $this->heartbeatAck($data);
-                    break;
-                case Op::VOICE_HELLO:
-                    $this->handleHello($data);
-                    break;
-                case Op::VOICE_RESUMED:
-                    $this->handleResumed($data);
-                    break;
-                case Op::VOICE_CLIENT_CONNECT:
-                    $this->handleClientConnect($data);
-                    break;
-                case Op::VOICE_CLIENT_DISCONNECT:
-                    $this->handleClientDisconnect($data);
-                    break;
-                case Op::VOICE_DAVE_PREPARE_TRANSITION:
-                    $this->handleDavePrepareTransition($data);
-                    break;
-                case Op::VOICE_DAVE_EXECUTE_TRANSITION:
-                    $this->handleDaveExecuteTransition($data);
-                    break;
-                case Op::VOICE_DAVE_TRANSITION_READY:
-                    $this->handleDaveTransitionReady($data);
-                    break;
-                case Op::VOICE_DAVE_PREPARE_EPOCH:
-                    $this->handleDavePrepareEpoch($data);
-                    break;
-                case Op::VOICE_DAVE_MLS_EXTERNAL_SENDER:
-                    $this->handleDaveMlsExternalSender($data);
-                    break;
-                case Op::VOICE_DAVE_MLS_KEY_PACKAGE:
-                    $this->handleDaveMlsKeyPackage($data);
-                    break;
-                case Op::VOICE_DAVE_MLS_PROPOSALS:
-                    $this->handleDaveMlsProposals($data);
-                    break;
-                case Op::VOICE_DAVE_MLS_COMMIT_WELCOME:
-                    $this->handleDaveMlsCommitWelcome($data);
-                    break;
-                case Op::VOICE_DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION:
-                    $this->handleDaveMlsAnnounceCommitTransition($data);
-                    break;
-                case Op::VOICE_DAVE_MLS_WELCOME:
-                    $this->handleDaveMlsWelcome($data);
-                    break;
-                case Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME:
-                    $this->handleDaveMlsInvalidCommitWelcome($data);
-                    break;
+            if (isset(self::VOICE_OP_HANDLERS[$data->op])) {
+                $handler = self::VOICE_OP_HANDLERS[$data->op];
+                $this->$handler($data);
+            } else {
+                $this->logger->warning('unknown voice op', ['op' => $data->op]);
             }
         });
 
