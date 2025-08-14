@@ -27,8 +27,8 @@ use function Discord\poly_strlen;
  * @since 10.19.0
  *
  * @property int                    $type        18 for label component.
- * @property string                 $label       The text for the label. Must be between 1 and 100 characters.
- * @property string|null            $description Optional description for the label.
+ * @property string                 $label       The text for the label. Must be between 1 and 45 characters.
+ * @property string|null            $description Optional description for the label. Max 100 characters.
  * @property StringSelect|TextInput $component   The component associated with the label.
  */
 class Label extends ComponentObject
@@ -86,14 +86,14 @@ class Label extends ComponentObject
     /**
      * Sets the label text.
      *
-     * @param string $label The text for the label. Must be between 1 and 100 characters.
+     * @param string $label The text for the label. Must be between 1 and 45 characters.
      *
      * @return self
      */
     public function setLabel(string $label): self
     {
-        if (poly_strlen($label) === 0 || poly_strlen($label) > 100) {
-            throw new \LengthException('Label must be between 1 and 100 in length.');
+        if (poly_strlen($label) === 0 || poly_strlen($label) > 45) {
+            throw new \LengthException('Label must be between 1 and 45 in length.');
         }
 
         $this->label = $label;
@@ -104,12 +104,20 @@ class Label extends ComponentObject
     /**
      * Sets the description text.
      *
-     * @param string|null $description The description for the label.
+     * @param string|null $description The description for the label. Max 100 characters.
      *
      * @return self
      */
     public function setDescription(?string $description = null): self
     {
+        if (poly_strlen($description) === 0) {
+            $description = null;
+        }
+
+        if (poly_strlen($description) > 100) {
+            throw new \LengthException('Description must be between 0 and 100 in length.');
+        }
+
         $this->description = $description;
 
         return $this;

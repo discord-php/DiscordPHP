@@ -104,7 +104,7 @@ abstract class SelectMenu extends Interactive
     protected $disabled;
 
     /**
-     * Whether the select menu is required. (Modal only).
+     * Whether the select menu is required. Defaults to true. (Modal only).
      *
      * @var bool|null
      */
@@ -303,7 +303,7 @@ abstract class SelectMenu extends Interactive
     }
 
     /**
-     * Sets the select menus disabled state.
+     * Sets the select menus disabled state. (Message only)
      *
      * @param bool $disabled
      *
@@ -539,7 +539,7 @@ abstract class SelectMenu extends Interactive
 
         if (isset($this->min_values)) {
             if (isset($this->options) && $this->min_values > count($this->options)) {
-                throw new \OutOfBoundsException('There are less options than the minimum number of options to be selected.');
+                throw new \DomainException('There are less options than the minimum number of options to be selected.');
             }
 
             $content['min_values'] = $this->min_values;
@@ -547,7 +547,7 @@ abstract class SelectMenu extends Interactive
 
         if (isset($this->max_values) && $this->max_values) {
             if (isset($this->options) && $this->max_values > count($this->options)) {
-                throw new \OutOfBoundsException('There are less options than the maximum number of options to be selected.');
+                throw new \DomainException('There are less options than the maximum number of options to be selected.');
             }
 
             $content['max_values'] = $this->max_values;
@@ -559,6 +559,9 @@ abstract class SelectMenu extends Interactive
 
         if (isset($this->required)) {
             $content['required'] = true;
+            if ($this->min_values === null || $this->min_values === 0) {
+                throw new \LengthException('Required select menus must have a minimum value greater than 0.');
+            }
         }
 
         return $content;
