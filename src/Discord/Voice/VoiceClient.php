@@ -629,7 +629,7 @@ class VoiceClient extends EventEmitter
      *
      * @since 10.19.0
      */
-    protected function handleReady($data): void
+    protected function handleReady(object $data): void
     {
         $this->ssrc = $data->d->ssrc;
         $this->udpIp = $data->d->ip;
@@ -679,7 +679,7 @@ class VoiceClient extends EventEmitter
      *
      * @since 10.19.0
      */
-    protected function handleSessionDescription($data): void
+    protected function handleSessionDescription(object $data): void
     {
         $this->ready = true;
         $this->mode = $data->d->mode;
@@ -706,7 +706,7 @@ class VoiceClient extends EventEmitter
      *
      * Data associated with the resumed event.
      */
-    protected function handleResumed($data): void
+    protected function handleResumed(object $data): void
     {
         $this->logger->debug('received resumed packet', ['data' => $data]);
     }
@@ -718,7 +718,7 @@ class VoiceClient extends EventEmitter
      *
      * @since 10.19.0
      */
-    protected function handleClientConnect($data): void
+    protected function handleClientConnect(object $data): void
     {
         $this->logger->debug('received client connect packet', ['data' => $data]);
     }
@@ -730,12 +730,12 @@ class VoiceClient extends EventEmitter
      *
      * @since 10.19.0
      */
-    protected function handleClientDisconnect($data): void
+    protected function handleClientDisconnect(object $data): void
     {
         $this->logger->debug('received client disconnect packet', ['data' => $data]);
     }
 
-    protected function handleDavePrepareTransition($data): void
+    protected function handleDavePrepareTransition(object $data): void
     {
         $this->logger->debug('DAVE Prepare Transition', ['data' => $data]);
         // Prepare local state necessary to perform the transition
@@ -747,20 +747,20 @@ class VoiceClient extends EventEmitter
         ));
     }
 
-    protected function handleDaveExecuteTransition($data): void
+    protected function handleDaveExecuteTransition(object $data): void
     {
         $this->logger->debug('DAVE Execute Transition', ['data' => $data]);
         // Execute the transition
         // Update local state to reflect the new protocol context
     }
 
-    protected function handleDaveTransitionReady($data): void
+    protected function handleDaveTransitionReady(object $data): void
     {
         $this->logger->debug('DAVE Transition Ready', ['data' => $data]);
         // Handle transition ready state
     }
 
-    protected function handleDavePrepareEpoch($data): void
+    protected function handleDavePrepareEpoch(object $data): void
     {
         $this->logger->debug('DAVE Prepare Epoch', ['data' => $data]);
         // Prepare local MLS group with parameters appropriate for the DAVE protocol version
@@ -773,19 +773,19 @@ class VoiceClient extends EventEmitter
         ));
     }
 
-    protected function handleDaveMlsExternalSender($data)
+    protected function handleDaveMlsExternalSender(object $data)
     {
         $this->logger->debug('DAVE MLS External Sender', ['data' => $data]);
         // Handle external sender public key and credential
     }
 
-    protected function handleDaveMlsKeyPackage($data): void
+    protected function handleDaveMlsKeyPackage(object $data): void
     {
         $this->logger->debug('DAVE MLS Key Package', ['data' => $data]);
         // Handle MLS key package
     }
 
-    protected function handleDaveMlsProposals($data): void
+    protected function handleDaveMlsProposals(object $data): void
     {
         $this->logger->debug('DAVE MLS Proposals', ['data' => $data]);
         // Handle MLS proposals
@@ -798,25 +798,25 @@ class VoiceClient extends EventEmitter
         ));
     }
 
-    protected function handleDaveMlsCommitWelcome($data): void
+    protected function handleDaveMlsCommitWelcome(object $data): void
     {
         $this->logger->debug('DAVE MLS Commit Welcome', ['data' => $data]);
         // Handle MLS commit and welcome messages
     }
 
-    protected function handleDaveMlsAnnounceCommitTransition($data): void
+    protected function handleDaveMlsAnnounceCommitTransition(object $data): void
     {
         // Handle MLS announce commit transition
         $this->logger->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
     }
 
-    protected function handleDaveMlsWelcome($data): void
+    protected function handleDaveMlsWelcome(object $data): void
     {
         // Handle MLS welcome message
         $this->logger->debug('DAVE MLS Welcome', ['data' => $data]);
     }
 
-    protected function handleDaveMlsInvalidCommitWelcome($data): void
+    protected function handleDaveMlsInvalidCommitWelcome(object $data): void
     {
         $this->logger->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
         // Handle invalid commit or welcome message
@@ -834,7 +834,7 @@ class VoiceClient extends EventEmitter
      *
      * @param Payload $data The data object received from the WebSocket.
      */
-    protected function handleSpeaking($data): void
+    protected function handleSpeaking(object $data): void
     {
         $this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
         $this->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this]);
@@ -919,11 +919,11 @@ class VoiceClient extends EventEmitter
     /**
      * Decodes a UDP message to extract the IP address and port, then selects the protocol for voice communication.
      *
-     * @param mixed  $message The raw UDP message received from the server.
+     * @param string $message The raw UDP message received from the server.
      * @param string &$ip     Reference to a variable where the extracted IP address will be stored.
      * @param string &$port   Reference to a variable where the extracted port number will be stored.
      */
-    protected function decodeUDP($message): void
+    protected function decodeUDP(string $message): void
     {
         /**
          * Unpacks the message into an array.
