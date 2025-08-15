@@ -1125,6 +1125,7 @@ class Discord
 
     /**
      * Requests guild members from the Discord gateway.
+     * Ratelimited, once every 30 seconds per guild.
      *
      * @param Guild|string       $guild_id             ID of the guild or Guild object. Required.
      * @param array              $options
