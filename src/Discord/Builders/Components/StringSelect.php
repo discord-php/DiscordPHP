@@ -23,7 +23,7 @@ namespace Discord\Builders\Components;
  */
 class StringSelect extends SelectMenu
 {
-    public const USAGE = ['Message'];
+    public const USAGE = ['Message', 'Modal'];
 
     /**
      * Component type.
@@ -38,6 +38,20 @@ class StringSelect extends SelectMenu
      * @var Option[]
      */
     protected $options = [];
+
+    /**
+     * Sets whether the select menu is required. (Modal only).
+     *
+     * @param bool|null $required
+     *
+     * @return $this
+     */
+    public function setRequired(?bool $required = false): self
+    {
+        $this->required = $required;
+
+        return $this;
+    }
 
     /**
      * Adds an option to the select menu. Maximum 25 options.

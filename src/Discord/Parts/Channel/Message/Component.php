@@ -56,10 +56,11 @@ class Component extends Part
         ComponentBuilder::TYPE_FILE => File::class,
         ComponentBuilder::TYPE_SEPARATOR => Separator::class,
         ComponentBuilder::TYPE_CONTAINER => Container::class,
+        ComponentBuilder::TYPE_LABEL => Label::class,
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',
