@@ -63,6 +63,7 @@ abstract class Permission extends Part
         'create_public_threads' => 35,
         'create_private_threads' => 36,
         'send_messages_in_threads' => 38,
+        'pin_messages' => 51,
     ];
 
     /**
@@ -133,7 +134,6 @@ abstract class Permission extends Part
         'use_application_commands' => 31,
         'use_external_stickers' => 37,
         'send_voice_messages' => 46,
-        'pin_messages' => 51,
     ];
 
     /**
