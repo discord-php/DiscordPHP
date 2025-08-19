@@ -149,7 +149,6 @@ abstract class Permission extends Part
     /** Allows pinning and unpinning messages. */
     public const PIN_MESSAGES = 51;
 
-
     /**
      * Array of permissions that only apply to text channels.
      * i.e. indicated T in documentation.
