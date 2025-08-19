@@ -24,6 +24,7 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/topics/permissions
  *
+ * @since 10.19.0 Added constants for all permissions.
  * @since 2.1.3 Namespace moved from Guild to Permissions
  * @since 2.0.0
  *
