@@ -48,6 +48,58 @@ use Discord\Parts\Part;
  */
 abstract class Permission extends Part
 {
+    public const CREATE_INSTANT_INVITE = 0;
+    public const KICK_MEMBERS = 1;
+    public const BAN_MEMBERS = 2;
+    public const ADMINISTRATOR = 3;
+    public const MANAGE_CHANNELS = 4;
+    public const MANAGE_GUILD = 5;
+    public const ADD_REACTIONS = 6;
+    public const VIEW_AUDIT_LOG = 7;
+    public const PRIORITY_SPEAKER = 8;
+    public const STREAM = 9;
+    public const VIEW_CHANNEL = 10;
+    public const SEND_MESSAGES = 11;
+    public const SEND_TTS_MESSAGES = 12;
+    public const MANAGE_MESSAGES = 13;
+    public const EMBED_LINKS = 14;
+    public const ATTACH_FILES = 15;
+    public const READ_MESSAGE_HISTORY = 16;
+    public const MENTION_EVERYONE = 17;
+    public const USE_EXTERNAL_EMOJIS = 18;
+    public const VIEW_GUILD_INSIGHTS = 19;
+    public const CONNECT = 20;
+    public const SPEAK = 21;
+    public const MUTE_MEMBERS = 22;
+    public const DEAFEN_MEMBERS = 23;
+    public const MOVE_MEMBERS = 24;
+    public const USE_VAD = 25;
+    public const CHANGE_NICKNAME = 26;
+    public const MANAGE_NICKNAMES = 27;
+    public const MANAGE_ROLES = 28;
+    public const MANAGE_WEBHOOKS = 29;
+    public const MANAGE_GUILD_EXPRESSIONS = 30;
+    public const USE_APPLICATION_COMMANDS = 31;
+    public const REQUEST_TO_SPEAK = 32;
+    public const MANAGE_EVENTS = 33;
+    public const MANAGE_THREADS = 34;
+    public const CREATE_PUBLIC_THREADS = 35;
+    public const CREATE_PRIVATE_THREADS = 36;
+    public const USE_EXTERNAL_STICKERS = 37;
+    public const SEND_MESSAGES_IN_THREADS = 38;
+    public const USE_EMBEDDED_ACTIVITIES = 39;
+    public const MODERATE_MEMBERS = 40;
+    public const VIEW_CREATOR_MONETIZATION_ANALYTICS = 41;
+    public const USE_SOUNDBOARD = 42;
+    public const CREATE_GUILD_EXPRESSIONS = 43;
+    public const CREATE_EVENTS = 44;
+    public const USE_EXTERNAL_SOUNDS = 45;
+    public const SEND_VOICE_MESSAGES = 46;
+    public const SEND_POLLS = 49;
+    public const USE_EXTERNAL_APPS = 50;
+    public const PIN_MESSAGES = 51;
+
+
     /**
      * Array of permissions that only apply to text channels.
      * i.e. indicated T in documentation.
@@ -59,11 +111,11 @@ abstract class Permission extends Part
      * @var array
      */
     public const TEXT_PERMISSIONS = [
-        'manage_threads' => 34,
-        'create_public_threads' => 35,
-        'create_private_threads' => 36,
-        'send_messages_in_threads' => 38,
-        'pin_messages' => 51,
+        'manage_threads' => self::MANAGE_THREADS,
+        'create_public_threads' => self::CREATE_PUBLIC_THREADS,
+        'create_private_threads' => self::CREATE_PRIVATE_THREADS,
+        'send_messages_in_threads' => self::SEND_MESSAGES_IN_THREADS,
+        'pin_messages' => self::PIN_MESSAGES,
     ];
 
     /**
@@ -75,21 +127,21 @@ abstract class Permission extends Part
      * @var array
      */
     public const VOICE_PERMISSIONS = [
-        'priority_speaker' => 8,
-        'stream' => 9,
-        'connect' => 20,
-        'speak' => 21,
-        'mute_members' => 22,
-        'deafen_members' => 23,
-        'move_members' => 24,
-        'use_vad' => 25,
-        'manage_events' => 33,
-        'use_embedded_activities' => 39,
-        'use_soundboard' => 42,
-        'create_events' => 44,
-        'use_external_sounds' => 45,
-        'send_voice_messages' => 46,
-        'send_polls' => 49,
+        'priority_speaker' => self::PRIORITY_SPEAKER,
+        'stream' => self::STREAM,
+        'connect' => self::CONNECT,
+        'speak' => self::SPEAK,
+        'mute_members' => self::MUTE_MEMBERS,
+        'deafen_members' => self::DEAFEN_MEMBERS,
+        'move_members' => self::MOVE_MEMBERS,
+        'use_vad' => self::USE_VAD,
+        'manage_events' => self::MANAGE_EVENTS,
+        'use_embedded_activities' => self::USE_EMBEDDED_ACTIVITIES,
+        'use_soundboard' => self::USE_SOUNDBOARD,
+        'create_events' => self::CREATE_EVENTS,
+        'use_external_sounds' => self::USE_EXTERNAL_SOUNDS,
+        'send_voice_messages' => self::SEND_VOICE_MESSAGES,
+        'send_polls' => self::SEND_POLLS,
     ];
 
     /**
@@ -101,13 +153,13 @@ abstract class Permission extends Part
      * @var array
      */
     public const STAGE_PERMISSIONS = [
-        'stream' => 9,
-        'connect' => 20,
-        'mute_members' => 22,
-        'move_members' => 24,
-        'request_to_speak' => 32,
-        'manage_events' => 33,
-        'create_events' => 44,
+        'stream' => self::STREAM,
+        'connect' => self::CONNECT,
+        'mute_members' => self::MUTE_MEMBERS,
+        'move_members' => self::MOVE_MEMBERS,
+        'request_to_speak' => self::REQUEST_TO_SPEAK,
+        'manage_events' => self::MANAGE_EVENTS,
+        'create_events' => self::CREATE_EVENTS,
     ];
 
     /**
@@ -117,23 +169,23 @@ abstract class Permission extends Part
      * @var array
      */
     public const ALL_PERMISSIONS = [
-        'create_instant_invite' => 0,
-        'manage_channels' => 4,
-        'add_reactions' => 6,
-        'view_channel' => 10,
-        'send_messages' => 11,
-        'send_tts_messages' => 12,
-        'manage_messages' => 13,
-        'embed_links' => 14,
-        'attach_files' => 15,
-        'read_message_history' => 16,
-        'mention_everyone' => 17,
-        'use_external_emojis' => 18,
-        'manage_roles' => 28,
-        'manage_webhooks' => 29,
-        'use_application_commands' => 31,
-        'use_external_stickers' => 37,
-        'send_voice_messages' => 46,
+        'create_instant_invite' => self::CREATE_INSTANT_INVITE,
+        'manage_channels' => self::MANAGE_CHANNELS,
+        'add_reactions' => self::ADD_REACTIONS,
+        'view_channel' => self::VIEW_CHANNEL,
+        'send_messages' => self::SEND_MESSAGES,
+        'send_tts_messages' => self::SEND_TTS_MESSAGES,
+        'manage_messages' => self::MANAGE_MESSAGES,
+        'embed_links' => self::EMBED_LINKS,
+        'attach_files' => self::ATTACH_FILES,
+        'read_message_history' => self::READ_MESSAGE_HISTORY,
+        'mention_everyone' => self::MENTION_EVERYONE,
+        'use_external_emojis' => self::USE_EXTERNAL_EMOJIS,
+        'manage_roles' => self::MANAGE_ROLES,
+        'manage_webhooks' => self::MANAGE_WEBHOOKS,
+        'use_application_commands' => self::USE_APPLICATION_COMMANDS,
+        'use_external_stickers' => self::USE_EXTERNAL_STICKERS,
+        'send_voice_messages' => self::SEND_VOICE_MESSAGES,
     ];
 
     /**
@@ -145,17 +197,17 @@ abstract class Permission extends Part
      * @var array
      */
     public const ROLE_PERMISSIONS = [
-        'kick_members' => 1,
-        'ban_members' => 2,
-        'administrator' => 3,
-        'manage_guild' => 5,
-        'view_audit_log' => 7,
-        'view_guild_insights' => 19,
-        'change_nickname' => 26,
-        'manage_nicknames' => 27,
-        'manage_guild_expressions' => 30,
-        'moderate_members' => 40,
-        'view_creator_monetization_analytics' => 41,
+        'kick_members' => self::KICK_MEMBERS,
+        'ban_members' => self::BAN_MEMBERS,
+        'administrator' => self::ADMINISTRATOR,
+        'manage_guild' => self::MANAGE_GUILD,
+        'view_audit_log' => self::VIEW_AUDIT_LOG,
+        'view_guild_insights' => self::VIEW_GUILD_INSIGHTS,
+        'change_nickname' => self::CHANGE_NICKNAME,
+        'manage_nicknames' => self::MANAGE_NICKNAMES,
+        'manage_guild_expressions' => self::MANAGE_GUILD_EXPRESSIONS,
+        'moderate_members' => self::MODERATE_MEMBERS,
+        'view_creator_monetization_analytics' => self::VIEW_CREATOR_MONETIZATION_ANALYTICS,
     ];
 
     /**
