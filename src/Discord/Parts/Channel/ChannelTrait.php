@@ -407,17 +407,19 @@ trait ChannelTrait
      * @param string|null $reason  Reason for Audit Log.
      * @param array       $options Additional options.
      *
-     * @throws NoPermissionsException Missing manage_messages permission.
+     * @throws NoPermissionsException Missing pin_messages or manage_messages permission.
      * @throws \RuntimeException
      *
      * @return PromiseInterface<Message>
+     *
+     * @todo Remove manage_messages permission check on January 12, 2026.
      *
      * @since 10.19.0 Updated endpoint to use the new pin message endpoint.
      */
     public function pinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
-            if (! $botperms->pin_messages) {
+            if (! $botperms->pin_messages && ! $botperms->manage_messages) {
                 return reject(new NoPermissionsException("You do not have permission to pin messages in the channel {$this->id}."));
             }
         }
@@ -450,17 +452,19 @@ trait ChannelTrait
      * @param Message     $message The message to un-pin.
      * @param string|null $reason  Reason for Audit Log.
      *
-     * @throws NoPermissionsException Missing manage_messages permission.
+     * @throws NoPermissionsException Missing pin_messages or manage_messages permission.
      * @throws \RuntimeException
      *
      * @return PromiseInterface
+     *
+     * @todo Remove manage_messages permission check on January 12, 2026.
      *
      * @since 10.19.0 Updated endpoint to use the new unpin message endpoint.
      */
     public function unpinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
-            if (! $botperms->pin_messages) {
+            if (! $botperms->pin_messages && ! $botperms->manage_messages) {
                 return reject(new NoPermissionsException("You do not have permission to unpin messages in the channel {$this->id}."));
             }
         }
