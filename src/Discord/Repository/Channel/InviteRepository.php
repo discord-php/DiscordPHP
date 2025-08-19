@@ -32,10 +32,10 @@ use Discord\Repository\AbstractRepository;
  * @method Invite|null find(callable $callback)
  *
  * @method Invite|null freshen(array $queryparams = [])
- * Optional Query Parameters:
- * - with_counts? (boolean): Whether the invite should contain approximate member counts.
- * - with_expiration? (boolean): Whether the invite should contain the expiration date.
- * - guild_scheduled_event_id? (snowflake): The guild scheduled event to include with the invite.
+ *                                                      Optional Query Parameters:
+ *                                                      - with_counts? (boolean): Whether the invite should contain approximate member counts.
+ *                                                      - with_expiration? (boolean): Whether the invite should contain the expiration date.
+ *                                                      - guild_scheduled_event_id? (snowflake): The guild scheduled event to include with the invite.
  */
 class InviteRepository extends AbstractRepository
 {

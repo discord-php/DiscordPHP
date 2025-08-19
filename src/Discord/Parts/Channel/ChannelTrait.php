@@ -417,7 +417,7 @@ trait ChannelTrait
     public function pinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
-            if (! $botperms->manage_messages) {
+            if (! $botperms->pin_messages) {
                 return reject(new NoPermissionsException("You do not have permission to pin messages in the channel {$this->id}."));
             }
         }
@@ -460,7 +460,7 @@ trait ChannelTrait
     public function unpinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
-            if (! $botperms->manage_messages) {
+            if (! $botperms->pin_messages) {
                 return reject(new NoPermissionsException("You do not have permission to unpin messages in the channel {$this->id}."));
             }
         }

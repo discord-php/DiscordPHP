@@ -457,12 +457,14 @@ class VoiceClient extends EventEmitter
     {
         if (in_array($mode, self::SUPPORTED_MODES)) {
             $this->mode = $mode;
+
             return;
         }
 
         if (in_array($mode, self::DEPRECATED_MODES)) {
-            $this->logger->warning("{$mode} is a deprecated transport encryption connection mode. Please use a supported mode: " . implode(', ', self::SUPPORTED_MODES));
+            $this->logger->warning("{$mode} is a deprecated transport encryption connection mode. Please use a supported mode: ".implode(', ', self::SUPPORTED_MODES));
             $this->mode = $mode;
+
             return;
         }
 
@@ -622,10 +624,10 @@ class VoiceClient extends EventEmitter
      * Handles the "ready" event for the voice client, initializing UDP connection and heartbeat.
      *
      * @param Payload $data The data object containing voice server connection details:
-     *                     - $data->d->ssrc: The synchronization source identifier.
-     *                     - $data->d->ip: The IP address for the UDP connection.
-     *                     - $data->d->port: The port for the UDP connection.
-     *                     - $data->d->modes: Supported encryption modes.
+     *                      - $data->d->ssrc: The synchronization source identifier.
+     *                      - $data->d->ip: The IP address for the UDP connection.
+     *                      - $data->d->port: The port for the UDP connection.
+     *                      - $data->d->modes: Supported encryption modes.
      *
      * @since 10.19.0
      */

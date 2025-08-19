@@ -134,7 +134,7 @@ class Channel extends Part implements Stringable
     public const FORUM_LAYOUT_GRID_VIEW = 2;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -174,7 +174,7 @@ class Channel extends Part implements Stringable
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $repositories = [
         'overwrites' => OverwriteRepository::class,
@@ -187,7 +187,7 @@ class Channel extends Part implements Stringable
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function afterConstruct(): void
     {
@@ -963,7 +963,7 @@ class Channel extends Part implements Stringable
         });
     }
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-channel-json-params
      */
@@ -1052,7 +1052,7 @@ class Channel extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-guild-channel
      */
@@ -1134,7 +1134,7 @@ class Channel extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {
