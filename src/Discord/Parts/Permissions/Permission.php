@@ -133,6 +133,7 @@ abstract class Permission extends Part
         'use_application_commands' => 31,
         'use_external_stickers' => 37,
         'send_voice_messages' => 46,
+        'pin_messages' => 51,
     ];
 
     /**
