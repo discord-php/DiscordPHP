@@ -3903,7 +3903,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AafterConstruct\u0028\u0029",
             "name": "afterConstruct",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_afterConstruct"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetRecipientAttribute\u0028\u0029",
@@ -9468,252 +9468,252 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ACREATE_INSTANT_INVITE",
             "name": "CREATE_INSTANT_INVITE",
-            "summary": "",
+            "summary": "Allows\u0020creation\u0020of\u0020instant\u0020invites.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_CREATE_INSTANT_INVITE"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AKICK_MEMBERS",
             "name": "KICK_MEMBERS",
-            "summary": "",
+            "summary": "Allows\u0020kicking\u0020members.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_KICK_MEMBERS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ABAN_MEMBERS",
             "name": "BAN_MEMBERS",
-            "summary": "",
+            "summary": "Allows\u0020banning\u0020members.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_BAN_MEMBERS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AADMINISTRATOR",
             "name": "ADMINISTRATOR",
-            "summary": "",
+            "summary": "Allows\u0020all\u0020permissions\u0020and\u0020bypasses\u0020channel\u0020permission\u0020overwrites.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_ADMINISTRATOR"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMANAGE_CHANNELS",
             "name": "MANAGE_CHANNELS",
-            "summary": "",
+            "summary": "Allows\u0020management\u0020and\u0020editing\u0020of\u0020channels.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_CHANNELS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMANAGE_GUILD",
             "name": "MANAGE_GUILD",
-            "summary": "",
+            "summary": "Allows\u0020management\u0020and\u0020editing\u0020of\u0020the\u0020guild.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_GUILD"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AADD_REACTIONS",
             "name": "ADD_REACTIONS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020adding\u0020new\u0020reactions\u0020to\u0020messages.\u0020This\u0020permission\u0020does\u0020not\u0020apply\u0020to\u0020reacting\u0020with\u0020an\u0020existing\u0020reaction\u0020on\u0020a\u0020message.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_ADD_REACTIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AVIEW_AUDIT_LOG",
             "name": "VIEW_AUDIT_LOG",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020viewing\u0020of\u0020audit\u0020logs.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_VIEW_AUDIT_LOG"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003APRIORITY_SPEAKER",
             "name": "PRIORITY_SPEAKER",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020using\u0020priority\u0020speaker\u0020in\u0020a\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_PRIORITY_SPEAKER"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ASTREAM",
             "name": "STREAM",
-            "summary": "",
+            "summary": "Allows\u0020the\u0020user\u0020to\u0020go\u0020live.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_STREAM"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AVIEW_CHANNEL",
             "name": "VIEW_CHANNEL",
-            "summary": "",
+            "summary": "Allows\u0020guild\u0020members\u0020to\u0020view\u0020a\u0020channel,\u0020which\u0020includes\u0020reading\u0020messages\u0020in\u0020text\u0020channels\u0020and\u0020joining\u0020voice\u0020channels.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_VIEW_CHANNEL"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ASEND_MESSAGES",
             "name": "SEND_MESSAGES",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020sending\u0020messages\u0020in\u0020a\u0020channel\u0020and\u0020creating\u0020threads\u0020in\u0020a\u0020forum\u0020\u0028does\u0020not\u0020allow\u0020sending\u0020messages\u0020in\u0020threads\u0029.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_SEND_MESSAGES"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ASEND_TTS_MESSAGES",
             "name": "SEND_TTS_MESSAGES",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020sending\u0020of\u0020\u0060\/tts\u0060\u0020messages.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_SEND_TTS_MESSAGES"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMANAGE_MESSAGES",
             "name": "MANAGE_MESSAGES",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020deletion\u0020of\u0020other\u0020users\u0020messages.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_MESSAGES"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AEMBED_LINKS",
             "name": "EMBED_LINKS",
-            "summary": "",
+            "summary": "Links\u0020sent\u0020by\u0020users\u0020with\u0020this\u0020permission\u0020will\u0020be\u0020auto\u002Dembedded.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_EMBED_LINKS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AATTACH_FILES",
             "name": "ATTACH_FILES",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020uploading\u0020images\u0020and\u0020files.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_ATTACH_FILES"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AREAD_MESSAGE_HISTORY",
             "name": "READ_MESSAGE_HISTORY",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020reading\u0020of\u0020message\u0020history.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_READ_MESSAGE_HISTORY"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMENTION_EVERYONE",
             "name": "MENTION_EVERYONE",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020using\u0020the\u0020\u0060\u0040everyone\u0060\u0020tag\u0020to\u0020notify\u0020all\u0020users\u0020in\u0020a\u0020channel,\u0020and\u0020the\u0020\u0060\u0040here\u0060\u0020tag\u0020to\u0020notify\u0020all\u0020online\u0020users\u0020in\u0020a\u0020channel.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MENTION_EVERYONE"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AUSE_EXTERNAL_EMOJIS",
             "name": "USE_EXTERNAL_EMOJIS",
-            "summary": "",
+            "summary": "Allows\u0020the\u0020usage\u0020of\u0020custom\u0020emojis\u0020from\u0020other\u0020servers.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_USE_EXTERNAL_EMOJIS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AVIEW_GUILD_INSIGHTS",
             "name": "VIEW_GUILD_INSIGHTS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020viewing\u0020guild\u0020insights.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_VIEW_GUILD_INSIGHTS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ACONNECT",
             "name": "CONNECT",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020joining\u0020of\u0020a\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_CONNECT"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ASPEAK",
             "name": "SPEAK",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020speaking\u0020in\u0020a\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_SPEAK"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMUTE_MEMBERS",
             "name": "MUTE_MEMBERS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020muting\u0020members\u0020in\u0020a\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MUTE_MEMBERS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ADEAFEN_MEMBERS",
             "name": "DEAFEN_MEMBERS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020deafening\u0020of\u0020members\u0020in\u0020a\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_DEAFEN_MEMBERS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMOVE_MEMBERS",
             "name": "MOVE_MEMBERS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020moving\u0020of\u0020members\u0020between\u0020voice\u0020channels.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MOVE_MEMBERS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AUSE_VAD",
             "name": "USE_VAD",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020using\u0020voice\u002Dactivity\u002Ddetection\u0020in\u0020a\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_USE_VAD"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ACHANGE_NICKNAME",
             "name": "CHANGE_NICKNAME",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020modification\u0020of\u0020own\u0020nickname.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_CHANGE_NICKNAME"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMANAGE_NICKNAMES",
             "name": "MANAGE_NICKNAMES",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020modification\u0020of\u0020other\u0020users\u0020nicknames.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_NICKNAMES"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMANAGE_ROLES",
             "name": "MANAGE_ROLES",
-            "summary": "",
+            "summary": "Allows\u0020management\u0020and\u0020editing\u0020of\u0020roles.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_ROLES"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMANAGE_WEBHOOKS",
             "name": "MANAGE_WEBHOOKS",
-            "summary": "",
+            "summary": "Allows\u0020management\u0020and\u0020editing\u0020of\u0020webhooks.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_WEBHOOKS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMANAGE_GUILD_EXPRESSIONS",
             "name": "MANAGE_GUILD_EXPRESSIONS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020editing\u0020and\u0020deleting\u0020emojis,\u0020stickers,\u0020and\u0020soundboard\u0020sounds\u0020created\u0020by\u0020all\u0020users.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_GUILD_EXPRESSIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AUSE_APPLICATION_COMMANDS",
             "name": "USE_APPLICATION_COMMANDS",
-            "summary": "",
+            "summary": "Allows\u0020members\u0020to\u0020use\u0020application\u0020commands,\u0020including\u0020slash\u0020commands\u0020and\u0020context\u0020menu\u0020commands.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_USE_APPLICATION_COMMANDS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AREQUEST_TO_SPEAK",
             "name": "REQUEST_TO_SPEAK",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020requesting\u0020to\u0020speak\u0020in\u0020stage\u0020channels.\u0020\u0028This\u0020permission\u0020is\u0020under\u0020active\u0020development\u0020and\u0020may\u0020be\u0020changed\u0020or\u0020removed.\u0029",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_REQUEST_TO_SPEAK"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMANAGE_EVENTS",
             "name": "MANAGE_EVENTS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020editing\u0020and\u0020deleting\u0020scheduled\u0020events\u0020created\u0020by\u0020all\u0020users.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_EVENTS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMANAGE_THREADS",
             "name": "MANAGE_THREADS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020deleting\u0020and\u0020archiving\u0020threads,\u0020and\u0020viewing\u0020all\u0020private\u0020threads.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MANAGE_THREADS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ACREATE_PUBLIC_THREADS",
             "name": "CREATE_PUBLIC_THREADS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020creating\u0020public\u0020and\u0020announcement\u0020threads.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_CREATE_PUBLIC_THREADS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ACREATE_PRIVATE_THREADS",
             "name": "CREATE_PRIVATE_THREADS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020creating\u0020private\u0020threads.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_CREATE_PRIVATE_THREADS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AUSE_EXTERNAL_STICKERS",
             "name": "USE_EXTERNAL_STICKERS",
-            "summary": "",
+            "summary": "Allows\u0020the\u0020usage\u0020of\u0020custom\u0020stickers\u0020from\u0020other\u0020servers.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_USE_EXTERNAL_STICKERS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ASEND_MESSAGES_IN_THREADS",
             "name": "SEND_MESSAGES_IN_THREADS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020sending\u0020messages\u0020in\u0020threads.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_SEND_MESSAGES_IN_THREADS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AUSE_EMBEDDED_ACTIVITIES",
             "name": "USE_EMBEDDED_ACTIVITIES",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020using\u0020Activities\u0020\u0028applications\u0020with\u0020the\u0020EMBEDDED\u0020flag\u0029.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_USE_EMBEDDED_ACTIVITIES"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AMODERATE_MEMBERS",
             "name": "MODERATE_MEMBERS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020timing\u0020out\u0020users\u0020to\u0020prevent\u0020them\u0020from\u0020sending\u0020or\u0020reacting\u0020to\u0020messages\u0020in\u0020chat\u0020and\u0020threads,\u0020and\u0020from\u0020speaking\u0020in\u0020voice\u0020and\u0020stage\u0020channels.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_MODERATE_MEMBERS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AVIEW_CREATOR_MONETIZATION_ANALYTICS",
             "name": "VIEW_CREATOR_MONETIZATION_ANALYTICS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020viewing\u0020role\u0020subscription\u0020insights.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_VIEW_CREATOR_MONETIZATION_ANALYTICS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AUSE_SOUNDBOARD",
             "name": "USE_SOUNDBOARD",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020using\u0020soundboard\u0020in\u0020a\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_USE_SOUNDBOARD"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ACREATE_GUILD_EXPRESSIONS",
             "name": "CREATE_GUILD_EXPRESSIONS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020creating\u0020emojis,\u0020stickers,\u0020and\u0020soundboard\u0020sounds,\u0020and\u0020editing\u0020and\u0020deleting\u0020those\u0020created\u0020by\u0020the\u0020current\u0020user.\u0020Not\u0020yet\u0020available\u0020to\u0020developers.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_CREATE_GUILD_EXPRESSIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ACREATE_EVENTS",
             "name": "CREATE_EVENTS",
-            "summary": "",
+            "summary": "Allows\u0020for\u0020creating\u0020scheduled\u0020events,\u0020and\u0020editing\u0020and\u0020deleting\u0020those\u0020created\u0020by\u0020the\u0020current\u0020user.\u0020Not\u0020yet\u0020available\u0020to\u0020developers.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_CREATE_EVENTS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AUSE_EXTERNAL_SOUNDS",
             "name": "USE_EXTERNAL_SOUNDS",
-            "summary": "",
+            "summary": "Allows\u0020the\u0020usage\u0020of\u0020custom\u0020soundboard\u0020sounds\u0020from\u0020other\u0020servers.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_USE_EXTERNAL_SOUNDS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ASEND_VOICE_MESSAGES",
             "name": "SEND_VOICE_MESSAGES",
-            "summary": "",
+            "summary": "Allows\u0020sending\u0020voice\u0020messages.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_SEND_VOICE_MESSAGES"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ASEND_POLLS",
             "name": "SEND_POLLS",
-            "summary": "",
+            "summary": "Allows\u0020sending\u0020polls.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_SEND_POLLS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AUSE_EXTERNAL_APPS",
             "name": "USE_EXTERNAL_APPS",
-            "summary": "",
+            "summary": "Allows\u0020user\u002Dinstalled\u0020apps\u0020to\u0020send\u0020public\u0020responses.\u0020When\u0020disabled,\u0020users\u0020will\u0020still\u0020be\u0020allowed\u0020to\u0020use\u0020their\u0020apps\u0020but\u0020the\u0020responses\u0020will\u0020be\u0020ephemeral.\u0020This\u0020only\u0020applies\u0020to\u0020apps\u0020not\u0020also\u0020installed\u0020to\u0020the\u0020server.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_USE_EXTERNAL_APPS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003APIN_MESSAGES",
             "name": "PIN_MESSAGES",
-            "summary": "",
+            "summary": "Allows\u0020pinning\u0020and\u0020unpinning\u0020messages.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_PIN_MESSAGES"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ATEXT_PERMISSIONS",
