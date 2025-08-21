@@ -40,7 +40,7 @@ use React\Promise\PromiseInterface;
  *                                                                   - sort_order: Sorting order. See SortingOrder schema.
  *                                                                   - content: Message content to search for (string, max 1024 chars).
  *                                                                   - slop: Integer, minimum 0, maximum 100.
- *                                                                   - contents: Message contents (string|null, max 1024 chars each, up to 100 items).
+ *                                                                   - contents: Array of message contents to search for (string|null, max 1024 chars each, up to 100 items).
  *                                                                   - author_id: Author ID (SnowflakeType|null, up to 1521 unique items).
  *                                                                   - author_type: Author type (AuthorType, up to 1521 unique items).
  *                                                                   - mentions: Mentioned user ID (SnowflakeType|null, up to 1521 unique items).
