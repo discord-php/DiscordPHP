@@ -15,6 +15,7 @@ namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Guild\GuildSearch;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 
@@ -67,6 +68,13 @@ use React\Promise\PromiseInterface;
 class MessageRepository extends AbstractRepository
 {
     /**
+     * The collection discriminator.
+     *
+     * @var string Discriminator.
+     */
+    protected $discrim = 'analytics_id';
+
+    /**
      * @inheritDoc
      */
     protected $endpoints = [
@@ -76,7 +84,5 @@ class MessageRepository extends AbstractRepository
     /**
      * @inheritDoc
      */
-    //protected $class = Message::class;
-
-
+    protected $class = GuildSearch::class;
 }
