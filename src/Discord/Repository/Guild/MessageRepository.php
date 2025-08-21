@@ -26,8 +26,7 @@ use function React\Promise\reject;
  *
  * All bots with the message content intent can use it, but it's not considered stable yet, and Discord might make changes or remove bot access if necessary.
  *
- * @see Message
- * @see \Discord\Parts\Channel\Channel
+ * @see \Discord\Parts\Guild\GuildSearch
  *
  * @since 10.19.0
  *
