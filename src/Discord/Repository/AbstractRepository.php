@@ -51,7 +51,7 @@ abstract class AbstractRepository extends Collection implements AbstractReposito
      *
      * @var string
      */
-    protected $class;
+    protected $class = \stdClass::class;
 
     /**
      * AbstractRepository constructor.
