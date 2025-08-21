@@ -19,6 +19,8 @@ use Discord\Parts\Guild\GuildSearch;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 
+use function React\Promise\reject;
+
 /**
  * Used only to search messages sent in a guild.
  *
@@ -92,10 +94,15 @@ class MessageRepository extends AbstractRepository
      *
      * @return PromiseInterface<static>
      *
+     * @throws \InvalidArgumentException If no query parameters are provided.
      * @throws \Exception
      */
     public function freshen(array $queryparams = []): PromiseInterface
     {
+        if (empty($queryparams)) {
+            return reject(new \InvalidArgumentException('Query parameters must be provided to search messages.'));
+        }
+
         $endpoint = new Endpoint($this->endpoints['all']);
         $endpoint->bindAssoc($this->vars);
 
@@ -104,9 +111,18 @@ class MessageRepository extends AbstractRepository
         }
 
         return $this->http->get($endpoint)->then(function ($response) {
-            $part = $this->factory->create($this->class, $response, true);
-
+            $part = $this->factory->create($this->class, (array) $response, true);
             return $this->cacheFreshen($part);
         });
+    }
+
+    /**
+     * @param object $response
+     *
+     * @return PromiseInterface<static>
+     */
+    protected function cacheFreshen($response): PromiseInterface
+    {
+        return $this->cache->set($response->{$this->discrim}, (array) $response)->then(fn ($success) => $this);
     }
 }
