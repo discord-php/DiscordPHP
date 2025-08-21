@@ -36,7 +36,6 @@ use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
 use Discord\Parts\Permissions\RolePermission;
-use Discord\Repository\Guild\MessageRepository;
 use Discord\Repository\Guild\AutoModerationRuleRepository;
 use Discord\Repository\Guild\CommandPermissionsRepository;
 use Discord\Repository\Guild\GuildCommandRepository;
@@ -45,6 +44,7 @@ use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
+use Discord\Repository\Guild\MessageRepository;
 use React\Promise\PromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -155,6 +155,7 @@ use function React\Promise\resolve;
  * @property CommandPermissionsRepository $command_permissions
  * @property IntegrationRepository        $integrations
  * @property InviteRepository             $invites
+ * @property MessageRepository            $messages
  * @property SoundRepository              $sounds
  * @property GuildTemplateRepository      $templates
  */
@@ -202,7 +203,7 @@ class Guild extends Part
     public const HUB_TYPE_COLLEGE = 2;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'id',
@@ -257,7 +258,7 @@ class Guild extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $visible = [
         'feature_animated_banner',
@@ -300,7 +301,7 @@ class Guild extends Part
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected $repositories = [
         'roles' => RoleRepository::class,
@@ -316,10 +317,9 @@ class Guild extends Part
         'command_permissions' => CommandPermissionsRepository::class,
         'integrations' => IntegrationRepository::class,
         'invites' => InviteRepository::class,
+        'messages' => MessageRepository::class,
         'sounds' => SoundRepository::class,
         'templates' => GuildTemplateRepository::class,
-
-        'messages' => MessageRepository::class,
     ];
 
     /**
@@ -330,7 +330,7 @@ class Guild extends Part
     protected $regions;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function setChannelsAttribute(?array $channels): void
     {
@@ -1398,7 +1398,7 @@ class Guild extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-json-params
      */
@@ -1425,7 +1425,7 @@ class Guild extends Part
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-json-params
      */
