@@ -62,13 +62,13 @@ class GuildSearch extends Part
         $collection = Collection::for(Message::class);
 
         foreach ($this->attributes['messages'] as $snowflake => $message) {
-            if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
+            if ($guild = $this->discord->guilds->get('id', $message->guild_id)) {
                 if ($channel = $guild->channels->get('id', $message->channel_id)) {
                     $messagePart = $channel->messages->get('id', $snowflake);
                 }
             }
 
-            $collection->pushItem($messagePart ?? $this->factory->part(Message::class, (array) $message + ['guild_id' => $this->guild_id], true));
+            $collection->pushItem($messagePart ?? $this->factory->part(Message::class, (array) $message, true));
         }
 
         return $collection;
@@ -84,7 +84,7 @@ class GuildSearch extends Part
         $collection = Collection::for(Member::class);
 
         foreach ($this->attributes['members'] ?? [] as $snowflake => $member) {
-            if ($guild_id = $member->guild_id ?? null) {
+            if ($guild_id = $member->guild_id) {
                 if ($guild = $this->discord->guilds->get('id', $guild_id)) {
                     $memberPart = $guild->members->get('id', $snowflake);
                 }
@@ -92,7 +92,7 @@ class GuildSearch extends Part
 
             if (! isset($memberPart)) {
                 $member->user = $this->attributes['users']->$snowflake;
-                $memberPart = $this->factory->part(Member::class, (array) $member + ['guild_id' => $this->guild_id], true);
+                $memberPart = $this->factory->part(Member::class, (array) $member, true);
             }
 
             $collection->pushItem($memberPart);
