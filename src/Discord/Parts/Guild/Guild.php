@@ -44,6 +44,7 @@ use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
+use Discord\Repository\Guild\MessageRepository;
 use React\Promise\PromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -154,6 +155,7 @@ use function React\Promise\resolve;
  * @property CommandPermissionsRepository $command_permissions
  * @property IntegrationRepository        $integrations
  * @property InviteRepository             $invites
+ * @property MessageRepository            $messages
  * @property SoundRepository              $sounds
  * @property GuildTemplateRepository      $templates
  */
@@ -315,6 +317,7 @@ class Guild extends Part
         'command_permissions' => CommandPermissionsRepository::class,
         'integrations' => IntegrationRepository::class,
         'invites' => InviteRepository::class,
+        'messages' => MessageRepository::class,
         'sounds' => SoundRepository::class,
         'templates' => GuildTemplateRepository::class,
     ];
