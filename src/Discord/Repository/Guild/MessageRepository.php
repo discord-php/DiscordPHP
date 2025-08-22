@@ -109,7 +109,9 @@ class MessageRepository extends AbstractRepository
 
         return $this->http->get($endpoint)->then(function ($response) {
             $part = $this->factory->create($this->class, (array) $response, true);
-            return $this->cacheFreshen($part);
+            $promise = $this->cacheFreshen($part);
+            $this->discord->emit('GuildSearch', [$part]);
+            return $promise;
         });
     }
 
