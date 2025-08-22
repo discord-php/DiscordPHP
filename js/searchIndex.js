@@ -7396,6 +7396,31 @@ Search.appendIndex(
             "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
             "url": "classes/Discord-Parts-Guild-GuildPreview.html#property_repositories"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildSearch",
+            "name": "GuildSearch",
+            "summary": "TODO.",
+            "url": "classes/Discord-Parts-Guild-GuildSearch.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildSearch\u003A\u003AgetMessagesAttribute\u0028\u0029",
+            "name": "getMessagesAttribute",
+            "summary": "Returns\u0020a\u0020collection\u0020of\u0020messages\u0020found\u0020in\u0020the\u0020search.",
+            "url": "classes/Discord-Parts-Guild-GuildSearch.html#method_getMessagesAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildSearch\u003A\u003AgetMembersAttribute\u0028\u0029",
+            "name": "getMembersAttribute",
+            "summary": "Returns\u0020a\u0020collection\u0020of\u0020members\u0020found\u0020in\u0020the\u0020search.",
+            "url": "classes/Discord-Parts-Guild-GuildSearch.html#method_getMembersAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildSearch\u003A\u003AgetThreadsAttribute\u0028\u0029",
+            "name": "getThreadsAttribute",
+            "summary": "Returns\u0020a\u0020collection\u0020of\u0020threads\u0020found\u0020in\u0020the\u0020search.",
+            "url": "classes/Discord-Parts-Guild-GuildSearch.html#method_getThreadsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildSearch\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-GuildSearch.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildTemplate",
             "name": "GuildTemplate",
             "summary": "A\u0020Guild\u0020Template\u0020is\u0020a\u0020code\u0020that\u0020when\u0020used,\u0020creates\u0020a\u0020guild\u0020based\u0020on\u0020a\nsnapshot\u0020of\u0020an\u0020existing\u0020guild.",
@@ -10946,6 +10971,11 @@ Search.appendIndex(
             "summary": "AbstractRepository\u0020constructor.",
             "url": "classes/Discord-Repository-AbstractRepository.html#method___construct"
         },                {
+            "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003A__debugInfo\u0028\u0029",
+            "name": "__debugInfo",
+            "summary": "",
+            "url": "classes/Discord-Repository-AbstractRepository.html#method___debugInfo"
+        },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003A\u0024discrim",
             "name": "discrim",
             "summary": "The\u0020collection\u0020discriminator.",
@@ -11710,6 +11740,36 @@ Search.appendIndex(
             "name": "class",
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-Guild-MemberRepository.html#property_class"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\MessageRepository",
+            "name": "MessageRepository",
+            "summary": "Used\u0020only\u0020to\u0020search\u0020messages\u0020sent\u0020in\u0020a\u0020guild.",
+            "url": "classes/Discord-Repository-Guild-MessageRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\MessageRepository\u003A\u003Afreshen\u0028\u0029",
+            "name": "freshen",
+            "summary": "Freshens\u0020the\u0020repository\u0020cache.",
+            "url": "classes/Discord-Repository-Guild-MessageRepository.html#method_freshen"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\MessageRepository\u003A\u003AcacheFreshen\u0028\u0029",
+            "name": "cacheFreshen",
+            "summary": "",
+            "url": "classes/Discord-Repository-Guild-MessageRepository.html#method_cacheFreshen"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\MessageRepository\u003A\u003A\u0024discrim",
+            "name": "discrim",
+            "summary": "The\u0020collection\u0020discriminator.",
+            "url": "classes/Discord-Repository-Guild-MessageRepository.html#property_discrim"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\MessageRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "",
+            "url": "classes/Discord-Repository-Guild-MessageRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\MessageRepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
+            "url": "classes/Discord-Repository-Guild-MessageRepository.html#property_class"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\RoleRepository",
             "name": "RoleRepository",
