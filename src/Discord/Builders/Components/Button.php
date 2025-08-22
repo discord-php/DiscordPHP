@@ -652,6 +652,7 @@ class Button extends Interactive
     public function __debugInfo(): array
     {
         $vars = get_object_vars($this);
+        $vars['class'] = $this::class;
         unset($vars['discord']);
         if (isset($vars['listener'])) {
             $vars['listener'] = 'object(Closure)';

@@ -112,6 +112,7 @@ abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
     public function __debugInfo(): array
     {
         $vars = get_object_vars($this);
+        $vars['class'] = $this::class;
         unset(
             $vars['http'],
             $vars['factory'],

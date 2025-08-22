@@ -70,4 +70,24 @@ abstract class AbstractRepository extends Collection implements AbstractReposito
             $this->cache = new LegacyCacheWrapper($discord, $this->items, $this->class);
         }
     }
+
+    /** @return array */
+    public function __debugInfo(): array
+    {
+        $vars = get_object_vars($this);
+        $vars['class'] = $this::class;
+        unset(
+            $vars['http'],
+            $vars['factory'],
+            $vars['discord'],
+            $vars['visible'],
+            $vars['hidden'],
+            $vars['repositories'],
+            $vars['repositories_cache'],
+            $vars['fillable'],
+            $vars['scriptData']
+        );
+
+        return $vars;
+    }
 }
