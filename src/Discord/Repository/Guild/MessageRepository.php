@@ -19,7 +19,7 @@ use Discord\Parts\Guild\GuildSearch;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 
-use function React\Promise\resolve;
+use function React\Promise\reject;
 
 /**
  * Used only to search messages sent in a guild.
@@ -97,7 +97,7 @@ class MessageRepository extends AbstractRepository
     public function freshen(array $queryparams = []): PromiseInterface
     {
         if (empty($queryparams)) {
-            return resolve($this);
+            return reject(new \InvalidArgumentException('Query parameters are required.'));
         }
 
         $endpoint = new Endpoint($this->endpoints['all']);
