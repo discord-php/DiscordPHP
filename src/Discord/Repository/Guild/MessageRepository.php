@@ -122,6 +122,6 @@ class MessageRepository extends AbstractRepository
      */
     protected function cacheFreshen($response): PromiseInterface
     {
-        return $this->cache->set($response->{$this->discrim}, (array) $response)->then(fn ($success) => $this);
+        return $this->cache->set($response->{$this->discrim}, $response)->then(fn ($success) => $this);
     }
 }
