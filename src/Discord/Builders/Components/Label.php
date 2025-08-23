@@ -125,7 +125,7 @@ class Label extends ComponentObject
 
     /** Sets the component associated with the label.
      *
-     * @param StringSelect|TextInput $component The component associated with the label.
+     * @param RoleSelect|UserSelect|MentionableSelect|StringSelect|TextInput $component The component associated with the label.
      *
      * @return self
      */
