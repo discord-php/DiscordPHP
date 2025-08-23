@@ -198,8 +198,8 @@ class ModalBuilder extends Builder implements JsonSerializable
         return [
             'type' => $this->type,
             'data' => [
-                'title' => $this->title,
                 'custom_id' => $this->custom_id,
+                'title' => $this->title,
                 'components' => $this->components,
             ],
         ];
