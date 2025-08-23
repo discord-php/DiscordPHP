@@ -49,7 +49,6 @@ class TextInput extends Interactive
      * Deprecated for use with modals. Use a top-level Component::Label.
      *
      * @var string|null
-     *
      */
     private $label;
 

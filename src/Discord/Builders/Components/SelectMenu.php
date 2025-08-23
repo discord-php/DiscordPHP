@@ -305,7 +305,7 @@ abstract class SelectMenu extends Interactive
     }
 
     /**
-     * Sets the select menus disabled state. (Message only)
+     * Sets the select menus disabled state. (Message only).
      *
      * @param bool $disabled
      *
