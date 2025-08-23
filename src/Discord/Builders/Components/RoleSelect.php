@@ -30,4 +30,18 @@ class RoleSelect extends SelectMenu
      * @var int
      */
     protected $type = Component::TYPE_ROLE_SELECT;
+
+    /**
+     * Set if this component is required to be filled, default false. (Modal only)
+     *
+     * @param bool $required
+     *
+     * @return $this
+     */
+    public function setRequired(bool $required): self
+    {
+        $this->required = $required;
+
+        return $this;
+    }
 }
