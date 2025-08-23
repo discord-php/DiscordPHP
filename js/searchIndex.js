@@ -218,7 +218,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AUSAGE",
             "name": "USAGE",
-            "summary": "",
+            "summary": "Usage\u0020of\u0020ActionRow\u0020in\u0020Modal\u0020is\u0020deprecated.\u0020Use\u0020\u0060Component\u003A\u003ALabel\u0060\u0020as\u0020the\u0020top\u002Dlevel\u0020container.",
             "url": "classes/Discord-Builders-Components-ActionRow.html#constant_USAGE"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003A\u0024type",
@@ -581,6 +581,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_CONTAINER"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_LABEL",
+            "name": "TYPE_LABEL",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_LABEL"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_SELECT_MENU",
             "name": "TYPE_SELECT_MENU",
             "summary": "",
@@ -776,6 +781,61 @@ Search.appendIndex(
             "summary": "Custom\u0020ID\u0020to\u0020send\u0020with\u0020interactive\u0020component.",
             "url": "classes/Discord-Builders-Components-Interactive.html#property_custom_id"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Label",
+            "name": "Label",
+            "summary": "A\u0020Label\u0020is\u0020a\u0020top\u002Dlevel\u0020component.",
+            "url": "classes/Discord-Builders-Components-Label.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020label\u0020component.",
+            "url": "classes/Discord-Builders-Components-Label.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003AsetLabel\u0028\u0029",
+            "name": "setLabel",
+            "summary": "Sets\u0020the\u0020label\u0020text.",
+            "url": "classes/Discord-Builders-Components-Label.html#method_setLabel"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003AsetDescription\u0028\u0029",
+            "name": "setDescription",
+            "summary": "Sets\u0020the\u0020description\u0020text.",
+            "url": "classes/Discord-Builders-Components-Label.html#method_setDescription"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003AsetComponent\u0028\u0029",
+            "name": "setComponent",
+            "summary": "Sets\u0020the\u0020component\u0020associated\u0020with\u0020the\u0020label.",
+            "url": "classes/Discord-Builders-Components-Label.html#method_setComponent"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Label.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Label.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Component\u0020type.",
+            "url": "classes/Discord-Builders-Components-Label.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003A\u0024label",
+            "name": "label",
+            "summary": "The\u0020text\u0020for\u0020the\u0020label.",
+            "url": "classes/Discord-Builders-Components-Label.html#property_label"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003A\u0024description",
+            "name": "description",
+            "summary": "Optional\u0020description\u0020for\u0020the\u0020label.",
+            "url": "classes/Discord-Builders-Components-Label.html#property_description"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003A\u0024component",
+            "name": "component",
+            "summary": "The\u0020component\u0020associated\u0020with\u0020the\u0020label.",
+            "url": "classes/Discord-Builders-Components-Label.html#property_component"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Layout",
             "name": "Layout",
             "summary": "Components\u0020allow\u0020you\u0020to\u0020style\u0020and\u0020structure\u0020your\u0020messages,\u0020modals,\u0020and\u0020interactions.",
@@ -891,6 +951,11 @@ Search.appendIndex(
             "summary": "Select\u0020menu\u0020for\u0020mentionables\u0020\u0028users\u0020and\u0020roles\u0029.",
             "url": "classes/Discord-Builders-Components-MentionableSelect.html"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\MentionableSelect\u003A\u003AsetRequired\u0028\u0029",
+            "name": "setRequired",
+            "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled,\u0020default\u0020false.\u0020\u0028Modal\u0020only\u0029.",
+            "url": "classes/Discord-Builders-Components-MentionableSelect.html#method_setRequired"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\MentionableSelect\u003A\u003AUSAGE",
             "name": "USAGE",
             "summary": "",
@@ -990,6 +1055,11 @@ Search.appendIndex(
             "name": "RoleSelect",
             "summary": "Select\u0020menu\u0020for\u0020roles.",
             "url": "classes/Discord-Builders-Components-RoleSelect.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\RoleSelect\u003A\u003AsetRequired\u0028\u0029",
+            "name": "setRequired",
+            "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled,\u0020default\u0020false.\u0020\u0028Modal\u0020only\u0029.",
+            "url": "classes/Discord-Builders-Components-RoleSelect.html#method_setRequired"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\RoleSelect\u003A\u003AUSAGE",
             "name": "USAGE",
@@ -1118,7 +1188,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AsetDisabled\u0028\u0029",
             "name": "setDisabled",
-            "summary": "Sets\u0020the\u0020select\u0020menus\u0020disabled\u0020state.",
+            "summary": "Sets\u0020the\u0020select\u0020menus\u0020disabled\u0020state.\u0020\u0028Message\u0020only\u0029.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#method_setDisabled"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AsetListener\u0028\u0029",
@@ -1231,6 +1301,11 @@ Search.appendIndex(
             "summary": "Whether\u0020the\u0020select\u0020menu\u0020should\u0020be\u0020disabled.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#property_disabled"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003A\u0024required",
+            "name": "required",
+            "summary": "Whether\u0020the\u0020select\u0020menu\u0020is\u0020required.\u0020Defaults\u0020to\u0020true.\u0020\u0028Modal\u0020only\u0029.",
+            "url": "classes/Discord-Builders-Components-SelectMenu.html#property_required"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003A\u0024listener",
             "name": "listener",
             "summary": "Callback\u0020used\u0020to\u0020listen\u0020for\u0020\u0060INTERACTION_CREATE\u0060\u0020events.",
@@ -1310,6 +1385,11 @@ Search.appendIndex(
             "name": "StringSelect",
             "summary": "Select\u0020menu\u0020for\u0020picking\u0020from\u0020defined\u0020text\u0020options.",
             "url": "classes/Discord-Builders-Components-StringSelect.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\StringSelect\u003A\u003AsetRequired\u0028\u0029",
+            "name": "setRequired",
+            "summary": "Sets\u0020whether\u0020the\u0020select\u0020menu\u0020is\u0020required.\u0020\u0028Modal\u0020only\u0029.",
+            "url": "classes/Discord-Builders-Components-StringSelect.html#method_setRequired"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\StringSelect\u003A\u003AaddOption\u0028\u0029",
             "name": "addOption",
@@ -1463,7 +1543,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-TextInput.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003AUSAGE",
@@ -1705,6 +1785,11 @@ Search.appendIndex(
             "name": "UserSelect",
             "summary": "Select\u0020menu\u0020for\u0020users.",
             "url": "classes/Discord-Builders-Components-UserSelect.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\UserSelect\u003A\u003AsetRequired\u0028\u0029",
+            "name": "setRequired",
+            "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled,\u0020default\u0020false.\u0020\u0028Modal\u0020only\u0029.",
+            "url": "classes/Discord-Builders-Components-UserSelect.html#method_setRequired"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\UserSelect\u003A\u003AUSAGE",
             "name": "USAGE",
@@ -4448,7 +4533,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\ActionRow",
             "name": "ActionRow",
-            "summary": "An\u0020Action\u0020Row\u0020is\u0020a\u0020top\u002Dlevel\u0020layout\u0020component\u0020used\u0020in\u0020messages\u0020and\u0020modals.",
+            "summary": "An\u0020Action\u0020Row\u0020is\u0020a\u0020top\u002Dlevel\u0020layout\u0020component\u0020used\u0020in\u0020messages.",
             "url": "classes/Discord-Parts-Channel-Message-ActionRow.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\ActionRow\u003A\u003A\u0024fillable",
@@ -4690,6 +4775,21 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Channel-Message-Interactive.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Label",
+            "name": "Label",
+            "summary": "A\u0020Label\u0020is\u0020a\u0020top\u002Dlevel\u0020component.",
+            "url": "classes/Discord-Parts-Channel-Message-Label.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Label\u003A\u003AgetComponentAttribute\u0028\u0029",
+            "name": "getComponentAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-Label.html#method_getComponentAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Label\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-Label.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Layout",
             "name": "Layout",
