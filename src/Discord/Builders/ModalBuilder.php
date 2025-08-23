@@ -22,6 +22,8 @@ use function Discord\poly_strlen;
 /**
  * Helper class used to build messages.
  *
+ * @link https://discord.com/developers/docs/components/using-modal-components
+ *
  * @since 10.19.0
  *
  * @author David Cole <david.cole1340@gmail.com>
