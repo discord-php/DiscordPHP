@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions;
 
-use Discord\Parts\Interactions\Request\InteractionData;
+use Discord\Parts\Interactions\Request\ApplicationCommandData;
 
 /**
  * @since 10.19.0
  *
- * @property InteractionData $data Data associated with the interaction.
+ * @property ApplicationCommandData $data Data associated with the interaction.
  */
 class ApplicationCommandAutocomplete extends Interaction
 {
@@ -30,17 +30,24 @@ class ApplicationCommandAutocomplete extends Interaction
     protected $type = Interaction::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE;
 
     /**
+     * The data for the application command interaction.
+     *
+     * @var ApplicationCommandData
+     */
+    protected $data;
+
+    /**
      * Returns the data associated with the interaction. (This can be partial).
      *
-     * @return InteractionData
+     * @return ApplicationCommandData
      */
-    protected function getDataAttribute(): InteractionData
+    protected function getDataAttribute(): ApplicationCommandData
     {
         $adata = $this->attributes['data'];
         if (! isset($adata->guild_id) && isset($this->attributes['guild_id'])) {
             $adata->guild_id = $this->guild_id;
         }
 
-        return $this->createOf(InteractionData::class, $adata);
+        return $this->createOf(ApplicationCommandData::class, $adata);
     }
 }
