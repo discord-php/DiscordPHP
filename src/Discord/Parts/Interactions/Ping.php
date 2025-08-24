@@ -21,4 +21,14 @@ class Ping extends Interaction
      * @var int
      */
     protected $type = Interaction::TYPE_PING;
+
+    /**
+     * Returns the data associated with the interaction.
+     *
+     * @return null
+     */
+    protected function getDataAttribute(): null
+    {
+        return null;
+    }
 }

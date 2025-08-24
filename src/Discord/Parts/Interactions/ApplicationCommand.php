@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions;
 
+use Discord\Parts\Interactions\Request\InteractionData;
+
 class ApplicationCommand extends Interaction
 {
     /**
@@ -21,4 +23,21 @@ class ApplicationCommand extends Interaction
      * @var int
      */
     protected $type = Interaction::TYPE_APPLICATION_COMMAND;
+
+    /**
+     * The data for the application command interaction.
+     *
+     * @var InteractionData
+     */
+    protected $data;
+
+    /**
+     * Returns the data associated with the interaction.
+     *
+     * @return InteractionData
+     */
+    protected function getDataAttribute(): InteractionData
+    {
+        return $this->data;
+    }
 }

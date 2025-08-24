@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions;
 
+use Discord\Parts\Interactions\Request\InteractionData;
+
 class MessageComponent extends Interaction
 {
     /**
@@ -21,4 +23,14 @@ class MessageComponent extends Interaction
      * @var int
      */
     protected $type = Interaction::TYPE_MESSAGE_COMPONENT;
+
+    /**
+     * Returns the data associated with the interaction.
+     *
+     * @return InteractionData
+     */
+    protected function getDataAttribute(): InteractionData
+    {
+        return $this->data;
+    }
 }
