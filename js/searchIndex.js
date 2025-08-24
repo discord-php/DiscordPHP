@@ -461,6 +461,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020array\u0020of\u0020channel\u0020types\u0020that\u0020the\u0020select\u0020menu\u0020has.",
             "url": "classes/Discord-Builders-Components-ChannelSelect.html#method_getChannelTypes"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ChannelSelect\u003A\u003AsetRequired\u0028\u0029",
+            "name": "setRequired",
+            "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled,\u0020default\u0020false.\u0020\u0028Modal\u0020only\u0029.",
+            "url": "classes/Discord-Builders-Components-ChannelSelect.html#method_setRequired"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\ChannelSelect\u003A\u003AUSAGE",
             "name": "USAGE",
             "summary": "",
@@ -8236,6 +8241,41 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-Widget.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\ApplicationCommand",
+            "name": "ApplicationCommand",
+            "summary": "Represents\u0020an\u0020interaction\u0020from\u0020Discord.",
+            "url": "classes/Discord-Parts-Interactions-ApplicationCommand.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\ApplicationCommand\u003A\u003AgetDataAttribute\u0028\u0029",
+            "name": "getDataAttribute",
+            "summary": "Returns\u0020the\u0020data\u0020associated\u0020with\u0020the\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-ApplicationCommand.html#method_getDataAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\ApplicationCommand\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Type\u0020of\u0020the\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-ApplicationCommand.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\ApplicationCommand\u003A\u003A\u0024data",
+            "name": "data",
+            "summary": "The\u0020data\u0020for\u0020the\u0020application\u0020command\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-ApplicationCommand.html#property_data"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\ApplicationCommandAutocomplete",
+            "name": "ApplicationCommandAutocomplete",
+            "summary": "Represents\u0020an\u0020interaction\u0020from\u0020Discord.",
+            "url": "classes/Discord-Parts-Interactions-ApplicationCommandAutocomplete.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\ApplicationCommandAutocomplete\u003A\u003AgetDataAttribute\u0028\u0029",
+            "name": "getDataAttribute",
+            "summary": "Returns\u0020the\u0020data\u0020associated\u0020with\u0020the\u0020interaction.\u0020\u0028This\u0020can\u0020be\u0020partial\u0029.",
+            "url": "classes/Discord-Parts-Interactions-ApplicationCommandAutocomplete.html#method_getDataAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\ApplicationCommandAutocomplete\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Type\u0020of\u0020the\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-ApplicationCommandAutocomplete.html#property_type"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Choice",
             "name": "Choice",
             "summary": "Choice\u0020represents\u0020a\u0020choice\u0020that\u0020can\u0020be\u0020given\u0020to\u0020a\u0020command.",
@@ -8651,6 +8691,11 @@ Search.appendIndex(
             "summary": "Checks\u0020if\u0020any\u0020attachments\u0020in\u0020the\u0020MessageBuilder\u0020exceed\u0020the\u0020attachment\u0020size\u0020limit.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#method_hasAttachmentsExceedingLimit"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ATYPES",
+            "name": "TYPES",
+            "summary": "Available\u0020components\u0020and\u0020their\u0020respective\u0020classes.",
+            "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_TYPES"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ATYPE_PING",
             "name": "TYPE_PING",
             "summary": "",
@@ -8745,6 +8790,51 @@ Search.appendIndex(
             "name": "responded",
             "summary": "Whether\u0020we\u0020have\u0020responded\u0020to\u0020the\u0020interaction\u0020yet.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#property_responded"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\MessageComponent",
+            "name": "MessageComponent",
+            "summary": "Represents\u0020an\u0020interaction\u0020from\u0020Discord.",
+            "url": "classes/Discord-Parts-Interactions-MessageComponent.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\MessageComponent\u003A\u003AgetDataAttribute\u0028\u0029",
+            "name": "getDataAttribute",
+            "summary": "Returns\u0020the\u0020data\u0020associated\u0020with\u0020the\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-MessageComponent.html#method_getDataAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\MessageComponent\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Type\u0020of\u0020the\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-MessageComponent.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\ModalSubmit",
+            "name": "ModalSubmit",
+            "summary": "Represents\u0020an\u0020interaction\u0020from\u0020Discord.",
+            "url": "classes/Discord-Parts-Interactions-ModalSubmit.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\ModalSubmit\u003A\u003AgetDataAttribute\u0028\u0029",
+            "name": "getDataAttribute",
+            "summary": "Returns\u0020the\u0020data\u0020associated\u0020with\u0020the\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-ModalSubmit.html#method_getDataAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\ModalSubmit\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Type\u0020of\u0020the\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-ModalSubmit.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Ping",
+            "name": "Ping",
+            "summary": "Represents\u0020an\u0020interaction\u0020from\u0020Discord.",
+            "url": "classes/Discord-Parts-Interactions-Ping.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Ping\u003A\u003AgetDataAttribute\u0028\u0029",
+            "name": "getDataAttribute",
+            "summary": "Returns\u0020the\u0020data\u0020associated\u0020with\u0020the\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-Ping.html#method_getDataAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Ping\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Type\u0020of\u0020the\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-Ping.html#property_type"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Request\\Component",
             "name": "Component",
@@ -14811,15 +14901,15 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/discord-parts-guild.html"
         },                {
-            "fqsen": "\\Discord\\Parts\\Interactions\\Command",
-            "name": "Command",
-            "summary": "",
-            "url": "namespaces/discord-parts-interactions-command.html"
-        },                {
             "fqsen": "\\Discord\\Parts\\Interactions",
             "name": "Interactions",
             "summary": "",
             "url": "namespaces/discord-parts-interactions.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command",
+            "name": "Command",
+            "summary": "",
+            "url": "namespaces/discord-parts-interactions-command.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Request",
             "name": "Request",

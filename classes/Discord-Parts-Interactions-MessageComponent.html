@@ -241,10 +241,10 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Interaction
+    MessageComponent
 
         <span class="phpdocumentor-element__extends">
-        extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
+        extends <a href="classes/Discord-Parts-Interactions-Interaction.html"><abbr title="\Discord\Parts\Interactions\Interaction">Interaction</abbr></a>
     </span>
     
             <div class="phpdocumentor-element__package">
@@ -263,9 +263,9 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/MessageComponent.php"><a href="files/src-discord-parts-interactions-messagecomponent.html"><abbr title="src/Discord/Parts/Interactions/MessageComponent.php">MessageComponent.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
     </aside>
 
@@ -276,22 +276,15 @@
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Interactions-Interaction.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Interactions-MessageComponent.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object"> https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.0.0</span>
+                                            <span class="phpdocumentor-tag-link">10.19.0</span>
                                                                                 
                                              
                                     </dd>
@@ -303,7 +296,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Parts-Interactions-Interaction.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Interactions-MessageComponent.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -315,7 +308,7 @@
 
 <h4 id="toc-constants">
     Constants
-    <a href="classes/Discord-Parts-Interactions-Interaction.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Interactions-MessageComponent.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -441,7 +434,7 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-Parts-Interactions-Interaction.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Interactions-MessageComponent.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -495,9 +488,9 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Interactions-Interaction.html#property_data">$data</a>
+    <a class="" href="classes/Discord-Parts-Interactions-MessageComponent.html#property_data">$data</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html"><abbr title="\Discord\Parts\Interactions\Request\InteractionData">InteractionData</abbr></a>|null            </span>
+                        &nbsp;: <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html"><abbr title="\Discord\Parts\Interactions\Request\InteractionData">InteractionData</abbr></a>            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -559,12 +552,6 @@
     <a class="" href="classes/Discord-Parts-Interactions-Interaction.html#property_token">$token</a>
     <span>
                         &nbsp;: string            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Interactions-Interaction.html#property_type">$type</a>
-    <span>
-                        &nbsp;: int            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -643,6 +630,13 @@
 <dd>Whether we have responded to the interaction yet.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Discord-Parts-Interactions-MessageComponent.html#property_type">$type</a>
+    <span>
+                        &nbsp;: int            </span>
+</dt>
+<dd>Type of the interaction.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Parts-Part.html#property_visible">$visible</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
@@ -653,7 +647,7 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Parts-Interactions-Interaction.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Interactions-MessageComponent.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -959,9 +953,9 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Returns the channel the interaction was invoked from.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Interactions-Interaction.html#method_getDataAttribute">getDataAttribute()</a>
+    <a class="" href="classes/Discord-Parts-Interactions-MessageComponent.html#method_getDataAttribute">getDataAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html"><abbr title="\Discord\Parts\Interactions\Request\InteractionData">InteractionData</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html"><abbr title="\Discord\Parts\Interactions\Request\InteractionData">InteractionData</abbr></a>    </span>
 </dt>
 <dd>Returns the data associated with the interaction.</dd>
 
@@ -1057,7 +1051,7 @@ JSON. Used for JsonSerializable.</dd>
     <section class="phpdocumentor-constants">
         <h3 class="phpdocumentor-elements__header" id="constants">
             Constants
-            <a href="classes/Discord-Parts-Interactions-Interaction.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Interactions-MessageComponent.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
@@ -1633,7 +1627,7 @@ JSON. Used for JsonSerializable.</dd>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-Interactions-Interaction.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Interactions-MessageComponent.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -1966,13 +1960,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_data">
         $data
-        <a href="classes/Discord-Parts-Interactions-Interaction.html#property_data" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Interactions-MessageComponent.html#property_data" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/MessageComponent.php"><a href="files/src-discord-parts-interactions-messagecomponent.html"><abbr title="src/Discord/Parts/Interactions/MessageComponent.php">MessageComponent.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1982,7 +1976,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html"><abbr title="\Discord\Parts\Interactions\Request\InteractionData">InteractionData</abbr></a>|null</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html"><abbr title="\Discord\Parts\Interactions\Request\InteractionData">InteractionData</abbr></a></span>
     <span class="phpdocumentor-signature__name">$data</span>
     </code>
 
@@ -2395,46 +2389,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Continuation token for responding to the interaction.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_type">
-        $type
-        <a href="classes/Discord-Parts-Interactions-Interaction.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$type</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Type of interaction.</p>
 </section>
 
     
@@ -2911,6 +2865,45 @@ JSON. Used for JsonSerializable.</dd>
             -protected
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_type">
+        $type
+        <a href="classes/Discord-Parts-Interactions-MessageComponent.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/MessageComponent.php"><a href="files/src-discord-parts-interactions-messagecomponent.html"><abbr title="src/Discord/Parts/Interactions/MessageComponent.php">MessageComponent.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">30</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Type of the interaction.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$type</span>
+     = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Interactions\Interaction::TYPE_MESSAGE_COMPONENT</span></code>
+
+    
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_visible">
         $visible
         <a href="classes/Discord-Parts-Part.html#property_visible" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2948,7 +2941,7 @@ JSON. Used for JsonSerializable.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-Interactions-Interaction.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Interactions-MessageComponent.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -5597,13 +5590,13 @@ This behavior is deprecated, and you should use the Edit Original Interaction Re
 >
     <h4 class="phpdocumentor-element__name" id="method_getDataAttribute">
         getDataAttribute()
-        <a href="classes/Discord-Parts-Interactions-Interaction.html#method_getDataAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Interactions-MessageComponent.html#method_getDataAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/MessageComponent.php"><a href="files/src-discord-parts-interactions-messagecomponent.html"><abbr title="src/Discord/Parts/Interactions/MessageComponent.php">MessageComponent.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -5611,7 +5604,7 @@ This behavior is deprecated, and you should use the Edit Original Interaction Re
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getDataAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html"><abbr title="\Discord\Parts\Interactions\Request\InteractionData">InteractionData</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getDataAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html"><abbr title="\Discord\Parts\Interactions\Request\InteractionData">InteractionData</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -5624,7 +5617,7 @@ This behavior is deprecated, and you should use the Edit Original Interaction Re
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html"><abbr title="\Discord\Parts\Interactions\Request\InteractionData">InteractionData</abbr></a>|null</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html"><abbr title="\Discord\Parts\Interactions\Request\InteractionData">InteractionData</abbr></a></span>
             </section>
 
 </article>
@@ -6330,7 +6323,7 @@ static as we may move it outside this class in future.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Interactions/Interaction.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Interactions/MessageComponent.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -6431,9 +6424,9 @@ static as we may move it outside this class in future.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                        <li><a href="classes/Discord-Parts-Interactions-Interaction.html#toc-constants">Constants</a></li>
-                                                            <li><a href="classes/Discord-Parts-Interactions-Interaction.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-Parts-Interactions-Interaction.html#toc-methods">Methods</a></li>
+                                        <li><a href="classes/Discord-Parts-Interactions-MessageComponent.html#toc-constants">Constants</a></li>
+                                                            <li><a href="classes/Discord-Parts-Interactions-MessageComponent.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-Parts-Interactions-MessageComponent.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
@@ -6471,7 +6464,7 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#property_channel_id">$channel_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#property_context">$context</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#property_data">$data</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-MessageComponent.html#property_data">$data</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#property_entitlements">$entitlements</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#property_guild">$guild</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#property_guild_id">$guild_id</a></li>
@@ -6482,7 +6475,6 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#property_message">$message</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#property_token">$token</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#property_type">$type</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#property_user">$user</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#property_version">$version</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
@@ -6494,6 +6486,7 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories">$repositories</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories_cache">$repositories_cache</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#property_responded">$responded</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-MessageComponent.html#property_type">$type</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_visible">$visible</a></li>
                                             </ul>
                 </li>
@@ -6544,7 +6537,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#method_createListener">createListener()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#method_getAppPermissionsAttribute">getAppPermissionsAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#method_getChannelAttribute">getChannelAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#method_getDataAttribute">getDataAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Interactions-MessageComponent.html#method_getDataAttribute">getDataAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#method_getGuildAttribute">getGuildAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#method_getMemberAttribute">getMemberAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Interactions-Interaction.html#method_getMessageAttribute">getMessageAttribute()</a></li>
@@ -6576,7 +6569,7 @@ static as we may move it outside this class in future.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Parts-Interactions-Interaction.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Parts-Interactions-MessageComponent.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
