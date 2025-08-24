@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions;
 
+use Discord\Parts\Interactions\Request\InteractionData;
+
 class ApplicationCommandAutocomplete extends Interaction
 {
     /**
@@ -21,4 +23,14 @@ class ApplicationCommandAutocomplete extends Interaction
      * @var int
      */
     protected $type = Interaction::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE;
+
+    /**
+     * Returns the data associated with the interaction. (This can be partial).
+     *
+     * @return InteractionData
+     */
+    protected function getDataAttribute(): InteractionData
+    {
+        return $this->data;
+    }
 }
