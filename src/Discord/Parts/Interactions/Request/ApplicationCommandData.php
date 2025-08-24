@@ -13,11 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Request;
 
-use Discord\Helpers\Collection;
-use Discord\Helpers\ExCollectionInterface;
-use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Interactions\Command\Command;
-use Discord\Parts\Part;
 
 /**
  * Represents the data associated with an interaction.
@@ -26,13 +22,13 @@ use Discord\Parts\Part;
  *
  * @since 10.19.0
  *
- * @property string          $id         ID of the invoked command.
- * @property string          $name       Name of the invoked command.
- * @property int             $type       Type of the invoked command.
- * @property ?Resolved|null  $resolved   Converted users, roles, channels, attachments.
- * @property ?array|null     $options    Params and values from the user.
- * @property ?string|null    $guild_id   ID of the guild the command is registered to.
- * @property ?string|null    $target_id  ID of the user or message targeted by a user or message command.
+ * @property string         $id        ID of the invoked command.
+ * @property string         $name      Name of the invoked command.
+ * @property int            $type      Type of the invoked command.
+ * @property ?Resolved|null $resolved  Converted users, roles, channels, attachments.
+ * @property ?array|null    $options   Params and values from the user.
+ * @property ?string|null   $guild_id  ID of the guild the command is registered to.
+ * @property ?string|null   $target_id ID of the user or message targeted by a user or message command.
  */
 class ApplicationCommandData extends InteractionData
 {

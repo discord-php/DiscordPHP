@@ -13,11 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Request;
 
-use Discord\Helpers\Collection;
-use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message\Component;
-use Discord\Parts\Interactions\Command\Command;
-use Discord\Parts\Part;
 
 /**
  * Represents the data associated with an interaction.

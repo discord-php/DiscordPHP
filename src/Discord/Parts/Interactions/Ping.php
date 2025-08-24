@@ -36,8 +36,6 @@ class Ping extends Interaction
 
     /**
      * Returns the data associated with the interaction.
-     *
-     * @return null
      */
     protected function getDataAttribute(): null
     {
