@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Request;
 
-use Discord\Parts\Interactions\Command\Command;
-
 /**
  * Represents the data associated with an interaction.
  *

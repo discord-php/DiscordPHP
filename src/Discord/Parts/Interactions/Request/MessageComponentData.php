@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Request;
 
-use Discord\Parts\Channel\Message\Component;
-
 /**
  * Represents the data associated with an interaction.
  *
