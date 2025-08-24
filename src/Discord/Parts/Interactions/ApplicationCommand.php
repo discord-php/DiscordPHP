@@ -27,7 +27,7 @@ class ApplicationCommand extends Interaction
     /**
      * The data for the application command interaction.
      *
-     * @var InteractionData
+     * @var InteractionData|null
      */
     protected $data;
 
@@ -38,6 +38,11 @@ class ApplicationCommand extends Interaction
      */
     protected function getDataAttribute(): InteractionData
     {
-        return $this->data;
+        $adata = $this->attributes['data'];
+        if (! isset($adata->guild_id) && isset($this->attributes['guild_id'])) {
+            $adata->guild_id = $this->guild_id;
+        }
+
+        return $this->createOf(InteractionData::class, $adata);
     }
 }

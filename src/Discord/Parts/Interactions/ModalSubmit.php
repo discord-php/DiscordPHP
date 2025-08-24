@@ -31,6 +31,11 @@ class ModalSubmit extends Interaction
      */
     protected function getDataAttribute(): InteractionData
     {
-        return $this->data;
+        $adata = $this->attributes['data'];
+        if (! isset($adata->guild_id) && isset($this->attributes['guild_id'])) {
+            $adata->guild_id = $this->guild_id;
+        }
+
+        return $this->createOf(InteractionData::class, $adata);
     }
 }
