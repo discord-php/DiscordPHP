@@ -61,4 +61,18 @@ class ChannelSelect extends SelectMenu
     {
         return $this->channel_types;
     }
+
+    /**
+     * Set if this component is required to be filled, default false. (Modal only).
+     *
+     * @param bool $required
+     *
+     * @return $this
+     */
+    public function setRequired(bool $required): self
+    {
+        $this->required = $required;
+
+        return $this;
+    }
 }
