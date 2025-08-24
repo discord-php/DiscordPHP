@@ -29,7 +29,7 @@ use function Discord\poly_strlen;
  * @property int                    $type        18 for label component.
  * @property string                 $label       The text for the label. Must be between 1 and 45 characters.
  * @property string|null            $description Optional description for the label. Max 100 characters.
- * @property StringSelect|TextInput $component   The component associated with the label.
+ * @property SelectMenu             $component   The component associated with the label.
  */
 class Label extends ComponentObject
 {
@@ -59,7 +59,7 @@ class Label extends ComponentObject
     /**
      * The component associated with the label.
      *
-     * @var RoleSelect|UserSelect|MentionableSelect|StringSelect|TextInput
+     * @var SelectMenu|TextInput
      */
     protected $component;
 
@@ -67,7 +67,7 @@ class Label extends ComponentObject
      * Creates a new label component.
      *
      * @param string                                                         $label       The text for the label.
-     * @param RoleSelect|UserSelect|MentionableSelect|StringSelect|TextInput $component   The component associated with the label.
+     * @param SelectMenu                                                     $component   The component associated with the label.
      * @param string|null                                                    $description Optional description for the label.
      *
      * @return self
@@ -125,7 +125,7 @@ class Label extends ComponentObject
 
     /** Sets the component associated with the label.
      *
-     * @param RoleSelect|UserSelect|MentionableSelect|StringSelect|TextInput $component The component associated with the label.
+     * @param SelectMenu $component The component associated with the label.
      *
      * @return self
      */

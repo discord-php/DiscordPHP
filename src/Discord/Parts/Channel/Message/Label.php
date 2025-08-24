@@ -26,7 +26,7 @@ namespace Discord\Parts\Channel\Message;
  * @property int                    $type        18 for label component.
  * @property string                 $label       The text for the label.
  * @property string|null            $description Optional description for the label.
- * @property StringSelect|TextInput $component   The component associated with the label.
+ * @property SelectMenu|TextInput   $component   The component associated with the label.
  */
 class Label extends Component
 {
@@ -41,7 +41,7 @@ class Label extends Component
         'component',
     ];
 
-    public function getComponentAttribute(): StringSelect|TextInput
+    public function getComponentAttribute(): Component
     {
         return $this->createOf(Component::TYPES[$this->attributes['component']->type ?? 0], $this->attributes['component']);
     }
