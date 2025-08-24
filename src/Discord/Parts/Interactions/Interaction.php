@@ -70,6 +70,20 @@ use function React\Promise\reject;
 class Interaction extends Part
 {
     /**
+     * Available components and their respective classes.
+     *
+     * @var array<int, string>
+     */
+    public const TYPES = [
+        0 => Interaction::class, // Fallback for unknown types
+        Interaction::TYPE_PING => Ping::class,
+        Interaction::TYPE_APPLICATION_COMMAND => ApplicationCommand::class,
+        Interaction::TYPE_MESSAGE_COMPONENT => MessageComponent::class,
+        Interaction::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE => ApplicationCommandAutocomplete::class,
+        Interaction::TYPE_MODAL_SUBMIT => ModalSubmit::class,
+    ];
+
+    /**
      * @inheritDoc
      */
     protected $fillable = [

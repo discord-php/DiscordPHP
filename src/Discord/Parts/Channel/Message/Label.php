@@ -23,10 +23,10 @@ namespace Discord\Parts\Channel\Message;
  *
  * @since 10.19.0
  *
- * @property int                    $type        18 for label component.
- * @property string                 $label       The text for the label.
- * @property string|null            $description Optional description for the label.
- * @property SelectMenu|TextInput   $component   The component associated with the label.
+ * @property int                  $type        18 for label component.
+ * @property string               $label       The text for the label.
+ * @property string|null          $description Optional description for the label.
+ * @property SelectMenu|TextInput $component   The component associated with the label.
  */
 class Label extends Component
 {

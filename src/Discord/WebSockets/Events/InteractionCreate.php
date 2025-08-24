@@ -33,7 +33,7 @@ class InteractionCreate extends Event
     public function handle($data)
     {
         /** @var Interaction */
-        $interaction = $this->factory->part(Interaction::class, (array) $data, true);
+        $interaction = $this->factory->part(Interaction::TYPES[$data->type ?? 0], (array) $data, true);
 
         foreach ($interaction->data->resolved->users ?? [] as $snowflake => $user) {
             if ($userPart = $this->discord->users->get('id', $snowflake)) {
