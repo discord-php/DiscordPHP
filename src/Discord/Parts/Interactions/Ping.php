@@ -13,6 +13,11 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions;
 
+/**
+ *
+ *
+ * @property null $data Data associated with the interaction.
+ */
 class Ping extends Interaction
 {
     /**

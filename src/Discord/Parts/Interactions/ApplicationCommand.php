@@ -15,6 +15,11 @@ namespace Discord\Parts\Interactions;
 
 use Discord\Parts\Interactions\Request\InteractionData;
 
+/**
+ *
+ *
+ * @property InteractionData $data Data associated with the interaction.
+ */
 class ApplicationCommand extends Interaction
 {
     /**
