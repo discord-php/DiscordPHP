@@ -62,7 +62,9 @@ class InteractionCreate extends Event
             }
 
             // User caching from member
-            $this->cacheUser($interaction->member->user);
+            if ($interaction->member->user) {
+                $this->cacheUser($interaction->member->user);
+            }
         }
 
         if ($interaction->user) {
