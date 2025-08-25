@@ -15,6 +15,8 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Helpers\RegisteredCommand;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Interactions\ApplicationCommand;
+use Discord\Parts\Interactions\ApplicationCommandAutocomplete;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Request\Option as RequestOption;
 use Discord\Repository\Guild\MemberRepository;
@@ -75,12 +77,12 @@ class InteractionCreate extends Event
             }
         }
 
-        if ($interaction->type == Interaction::TYPE_APPLICATION_COMMAND) {
+        if ($interaction instanceof ApplicationCommand) {
             $command = $interaction->data;
             if (isset($this->discord->application_commands[$command->name])) {
                 $this->discord->application_commands[$command->name]->execute($command->options ?? [], $interaction);
             }
-        } elseif ($interaction->type == Interaction::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE) {
+        } elseif ($interaction instanceof ApplicationCommandAutocomplete) {
             $command = $interaction->data;
             if (isset($this->discord->application_commands[$command->name])) {
                 $this->checkCommand($this->discord->application_commands[$command->name], $command->options, $interaction);
@@ -93,9 +95,9 @@ class InteractionCreate extends Event
     /**
      * Recursively checks and handles command options for an interaction.
      *
-     * @param RegisteredCommand                          $command     The command or subcommand to check.
-     * @param ExCollectionInterface|RequestOption[]|null $options     The list of options to process.
-     * @param Interaction                                $interaction The interaction instance from Discord.
+     * @param RegisteredCommand                                 $command     The command or subcommand to check.
+     * @param ExCollectionInterface|RequestOption[]|null        $options     The list of options to process.
+     * @param ApplicationCommand|ApplicationCommandAutocomplete $interaction The interaction instance from Discord.
      *
      * @return bool Returns true if a suggestion was triggered, otherwise false.
      */
