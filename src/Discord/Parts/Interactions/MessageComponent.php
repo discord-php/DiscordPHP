@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions;
 
-use Discord\Parts\Interactions\Request\InteractionData;
+use Discord\Parts\Interactions\Request\MessageComponentData;
 
 /**
  * @since 10.19.0
  *
- * @property InteractionData $data Data associated with the interaction.
+ * @property MessageComponentData $data Data associated with the interaction.
  */
 class MessageComponent extends Interaction
 {
@@ -30,17 +30,24 @@ class MessageComponent extends Interaction
     protected $type = Interaction::TYPE_MESSAGE_COMPONENT;
 
     /**
+     * The data for the application command interaction.
+     *
+     * @var MessageComponentData
+     */
+    protected $data;
+
+    /**
      * Returns the data associated with the interaction.
      *
-     * @return InteractionData
+     * @return MessageComponentData
      */
-    protected function getDataAttribute(): InteractionData
+    protected function getDataAttribute(): MessageComponentData
     {
         $adata = $this->attributes['data'];
         if (! isset($adata->guild_id) && isset($this->attributes['guild_id'])) {
             $adata->guild_id = $this->guild_id;
         }
 
-        return $this->createOf(InteractionData::class, $adata);
+        return $this->createOf(MessageComponentData::class, $adata);
     }
 }

@@ -66,6 +66,8 @@ use function React\Promise\reject;
  * @property      array                  $authorizing_integration_owners Mapping of installation contexts that the interaction was authorized for to related user or guild IDs.
  * @property      int|null               $context                        Context where the interaction was triggered from.
  * @property      int                    $attachment_size_limit          Attachment size limit in bytes.
+ *
+ * @deprecated 10.19.0 Use either `Ping`, `ApplicationCommand`, `MessageComponent`, `ApplicationCommandAutocomplete`, or `ModalSubmit`
  */
 class Interaction extends Part
 {

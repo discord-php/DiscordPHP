@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions;
 
-use Discord\Parts\Interactions\Request\InteractionData;
+use Discord\Parts\Interactions\Request\ModalSubmitData;
 
 /**
  * @since 10.19.0
  *
- * @property InteractionData $data Data associated with the interaction.
+ * @property ModalSubmitData $data Data associated with the interaction.
  */
 class ModalSubmit extends Interaction
 {
@@ -30,17 +30,24 @@ class ModalSubmit extends Interaction
     protected $type = Interaction::TYPE_MODAL_SUBMIT;
 
     /**
+     * The data for the application command interaction.
+     *
+     * @var ModalSubmitData
+     */
+    protected $data;
+
+    /**
      * Returns the data associated with the interaction.
      *
-     * @return InteractionData
+     * @return ModalSubmitData
      */
-    protected function getDataAttribute(): InteractionData
+    protected function getDataAttribute(): ModalSubmitData
     {
         $adata = $this->attributes['data'];
         if (! isset($adata->guild_id) && isset($this->attributes['guild_id'])) {
             $adata->guild_id = $this->guild_id;
         }
 
-        return $this->createOf(InteractionData::class, $adata);
+        return $this->createOf(ModalSubmitData::class, $adata);
     }
 }
