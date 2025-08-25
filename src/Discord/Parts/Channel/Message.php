@@ -138,6 +138,12 @@ class Message extends Part
     public const TYPE_STAGE_SPEAKER = 29;
     public const TYPE_STAGE_TOPIC = 31;
     public const TYPE_GUILD_APPLICATION_PREMIUM_SUBSCRIPTION = 32;
+    public const TYPE_GUILD_INCIDENT_ALERT_MODE_ENABLED = 36;
+    public const TYPE_GUILD_INCIDENT_ALERT_MODE_DISABLED = 37;
+    public const TYPE_GUILD_INCIDENT_REPORT_RAID = 38;
+    public const TYPE_GUILD_INCIDENT_REPORT_FALSE_ALARM = 39;
+    public const TYPE_PURCHASE_NOTIFICATION = 44;
+    public const TYPE_POLL_RESULT = 46;
 
     /** @deprecated 7.1.0 Use `Message::TYPE_USER_JOIN` */
     public const GUILD_MEMBER_JOIN = self::TYPE_USER_JOIN;
