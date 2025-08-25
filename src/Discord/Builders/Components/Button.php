@@ -503,24 +503,24 @@ class Button extends Interactive
         $timer = null;
 
         $listener = function (Interaction $interaction) use ($callback, $oneOff, &$timer) {
-            if ($interaction->data->component_type == Component::TYPE_BUTTON && $interaction->data->custom_id == $this->custom_id) {
-                $response = $callback($interaction);
-                $ack = static fn () => $interaction->isResponded() ?: $interaction->acknowledge();
+            if ($interaction->data->component_type != Component::TYPE_BUTTON || $interaction->data->custom_id != $this->custom_id) {
+                return;
+            }
 
-                if ($response instanceof PromiseInterface) {
-                    $response->then($ack);
-                } else {
-                    $ack();
-                }
+            $response = $callback($interaction);
+            $ack = static fn () => $interaction->isResponded() ?: $interaction->acknowledge();
 
-                if ($oneOff) {
-                    $this->removeListener();
-                }
+            $response instanceof PromiseInterface
+                ? $response->then($ack)
+                : $ack();
 
-                /** @var ?TimerInterface $timer */
-                if ($timer) {
-                    $this->discord->getLoop()->cancelTimer($timer);
-                }
+            if ($oneOff) {
+                $this->removeListener();
+            }
+
+            /** @var ?TimerInterface $timer */
+            if ($timer) {
+                $this->discord->getLoop()->cancelTimer($timer);
             }
         };
 
