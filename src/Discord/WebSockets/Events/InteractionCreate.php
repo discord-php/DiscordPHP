@@ -15,7 +15,10 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Helpers\RegisteredCommand;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Interactions\ApplicationCommand;
+use Discord\Parts\Interactions\ApplicationCommandAutocomplete;
 use Discord\Parts\Interactions\Interaction;
+use Discord\Parts\Interactions\Request\ApplicationCommandData;
 use Discord\Parts\Interactions\Request\Option as RequestOption;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\WebSockets\Event;
@@ -43,7 +46,7 @@ class InteractionCreate extends Event
             }
         }
 
-        if (isset($interaction->member)) {
+        if ($interaction->member) {
             // Do not load guild from cache as it may delay interaction codes.
             /** @var ?Guild */
             if ($guild = $this->discord->guilds->offsetGet($interaction->guild_id)) {
@@ -60,12 +63,12 @@ class InteractionCreate extends Event
             $this->cacheUser($interaction->member->user);
         }
 
-        if (isset($interaction->user)) {
+        if ($interaction->user) {
             // User caching from user dm
             $this->cacheUser($interaction->user);
         }
 
-        if (isset($interaction->entitlements)) {
+        if ($interaction->entitlements) {
             foreach ($interaction->entitlements as $entitlement) {
                 if ($entitlementPart = $this->discord->application->entitlements->get('id', $entitlement->id)) {
                     $entitlementPart->fill((array) $entitlement);
@@ -75,15 +78,13 @@ class InteractionCreate extends Event
             }
         }
 
-        if ($interaction->type == Interaction::TYPE_APPLICATION_COMMAND) {
+        if ($interaction instanceof ApplicationCommand || $interaction instanceof ApplicationCommandAutocomplete) {
+            /** @var ApplicationCommandData $command */
             $command = $interaction->data;
             if (isset($this->discord->application_commands[$command->name])) {
-                $this->discord->application_commands[$command->name]->execute($command->options ?? [], $interaction);
-            }
-        } elseif ($interaction->type == Interaction::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE) {
-            $command = $interaction->data;
-            if (isset($this->discord->application_commands[$command->name])) {
-                $this->checkCommand($this->discord->application_commands[$command->name], $command->options, $interaction);
+                $interaction instanceof ApplicationCommand
+                    ? $this->discord->application_commands[$command->name]->execute($command->options ?? [], $interaction)
+                    : $this->checkCommand($this->discord->application_commands[$command->name], $command->options, $interaction);
             }
         }
 
@@ -93,9 +94,9 @@ class InteractionCreate extends Event
     /**
      * Recursively checks and handles command options for an interaction.
      *
-     * @param RegisteredCommand                          $command     The command or subcommand to check.
-     * @param ExCollectionInterface|RequestOption[]|null $options     The list of options to process.
-     * @param Interaction                                $interaction The interaction instance from Discord.
+     * @param RegisteredCommand                                 $command     The command or subcommand to check.
+     * @param ExCollectionInterface|RequestOption[]|null        $options     The list of options to process.
+     * @param ApplicationCommand|ApplicationCommandAutocomplete $interaction The interaction instance from Discord.
      *
      * @return bool Returns true if a suggestion was triggered, otherwise false.
      */

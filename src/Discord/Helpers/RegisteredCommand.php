@@ -116,7 +116,7 @@ class RegisteredCommand
      * Executes the command. Will search for a sub-command if given, otherwise
      * executes the callback, if given.
      *
-     * @param Interaction $interaction
+     * @param ApplicationCommand|ApplicationCommandAutocomplete $interaction
      *
      * @return bool Whether the command successfully executed.
      */
