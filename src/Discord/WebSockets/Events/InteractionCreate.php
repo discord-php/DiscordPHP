@@ -20,6 +20,7 @@ use Discord\Parts\Interactions\ApplicationCommandAutocomplete;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Request\ApplicationCommandData;
 use Discord\Parts\Interactions\Request\Option as RequestOption;
+use Discord\Parts\User\Member as UserMember;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\WebSockets\Event;
 
@@ -48,8 +49,9 @@ class InteractionCreate extends Event
 
         if ($interaction->member) {
             // Do not load guild from cache as it may delay interaction codes.
-            /** @var ?Guild */
+            /** @var ?Guild $guild */
             if ($guild = $this->discord->guilds->offsetGet($interaction->guild_id)) {
+                /** @var Guild $guild */
                 $members = $guild->members;
 
                 foreach ($interaction->data->resolved->members ?? [] as $snowflake => $member) {
@@ -125,8 +127,9 @@ class InteractionCreate extends Event
     protected function cacheMember(MemberRepository $members, array $memberdata): void
     {
         // Do not load members from cache as it may delay interaction codes.
-        if ($member = $members->offsetGet($memberdata['user']->id)) {
-            $member->fill($memberdata);
+        $id = $memberdata['user']->id ?? $memberdata['id'] ?? null;
+        if ($id && $member = $members->offsetGet($id)) {
+            $member->fill(['user' => $memberdata]);
         } else {
             $members->pushItem($members->create($memberdata, true));
         }
