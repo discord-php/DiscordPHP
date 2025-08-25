@@ -46,7 +46,7 @@ class InteractionCreate extends Event
             }
         }
 
-        if (isset($interaction->member)) {
+        if ($interaction->member) {
             // Do not load guild from cache as it may delay interaction codes.
             /** @var ?Guild */
             if ($guild = $this->discord->guilds->offsetGet($interaction->guild_id)) {
@@ -63,12 +63,12 @@ class InteractionCreate extends Event
             $this->cacheUser($interaction->member->user);
         }
 
-        if (isset($interaction->user)) {
+        if ($interaction->user) {
             // User caching from user dm
             $this->cacheUser($interaction->user);
         }
 
-        if (isset($interaction->entitlements)) {
+        if ($interaction->entitlements) {
             foreach ($interaction->entitlements as $entitlement) {
                 if ($entitlementPart = $this->discord->application->entitlements->get('id', $entitlement->id)) {
                     $entitlementPart->fill((array) $entitlement);
