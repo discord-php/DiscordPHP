@@ -18,6 +18,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\ApplicationCommand;
 use Discord\Parts\Interactions\ApplicationCommandAutocomplete;
 use Discord\Parts\Interactions\Interaction;
+use Discord\Parts\Interactions\Request\ApplicationCommandData;
 use Discord\Parts\Interactions\Request\Option as RequestOption;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\WebSockets\Event;
@@ -77,15 +78,13 @@ class InteractionCreate extends Event
             }
         }
 
-        if ($interaction instanceof ApplicationCommand) {
+        if ($interaction instanceof ApplicationCommand || $interaction instanceof ApplicationCommandAutocomplete) {
+            /** @var ApplicationCommandData $command */
             $command = $interaction->data;
             if (isset($this->discord->application_commands[$command->name])) {
-                $this->discord->application_commands[$command->name]->execute($command->options ?? [], $interaction);
-            }
-        } elseif ($interaction instanceof ApplicationCommandAutocomplete) {
-            $command = $interaction->data;
-            if (isset($this->discord->application_commands[$command->name])) {
-                $this->checkCommand($this->discord->application_commands[$command->name], $command->options, $interaction);
+                $interaction instanceof ApplicationCommand
+                    ? $this->discord->application_commands[$command->name]->execute($command->options ?? [], $interaction)
+                    : $this->checkCommand($this->discord->application_commands[$command->name], $command->options, $interaction);
             }
         }
 
