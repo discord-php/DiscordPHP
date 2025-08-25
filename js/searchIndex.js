@@ -5566,6 +5566,36 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_APPLICATION_PREMIUM_SUBSCRIPTION"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003ATYPE_GUILD_INCIDENT_ALERT_MODE_ENABLED",
+            "name": "TYPE_GUILD_INCIDENT_ALERT_MODE_ENABLED",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_INCIDENT_ALERT_MODE_ENABLED"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003ATYPE_GUILD_INCIDENT_ALERT_MODE_DISABLED",
+            "name": "TYPE_GUILD_INCIDENT_ALERT_MODE_DISABLED",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_INCIDENT_ALERT_MODE_DISABLED"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003ATYPE_GUILD_INCIDENT_REPORT_RAID",
+            "name": "TYPE_GUILD_INCIDENT_REPORT_RAID",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_INCIDENT_REPORT_RAID"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003ATYPE_GUILD_INCIDENT_REPORT_FALSE_ALARM",
+            "name": "TYPE_GUILD_INCIDENT_REPORT_FALSE_ALARM",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_INCIDENT_REPORT_FALSE_ALARM"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003ATYPE_PURCHASE_NOTIFICATION",
+            "name": "TYPE_PURCHASE_NOTIFICATION",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_PURCHASE_NOTIFICATION"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003ATYPE_POLL_RESULT",
+            "name": "TYPE_POLL_RESULT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_POLL_RESULT"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AGUILD_MEMBER_JOIN",
             "name": "GUILD_MEMBER_JOIN",
             "summary": "",
