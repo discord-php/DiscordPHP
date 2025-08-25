@@ -242,10 +242,10 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    InteractionData
+    ApplicationCommandData
 
         <span class="phpdocumentor-element__extends">
-        extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
+        extends <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html"><abbr title="\Discord\Parts\Interactions\Request\InteractionData">InteractionData</abbr></a>
     </span>
     
             <div class="phpdocumentor-element__package">
@@ -264,27 +264,20 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/ApplicationCommandData.php"><a href="files/src-discord-parts-interactions-request-applicationcommanddata.html"><abbr title="src/Discord/Parts/Interactions/Request/ApplicationCommandData.php">ApplicationCommandData.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
             <p class="phpdocumentor-summary">Represents the data associated with an interaction.</p>
 
-            <div class="phpdocumentor-admonition">
-        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-            <article>
-                <p>Use either <code class="prettyprint">ApplicationCommandData</code>,<code class="prettyprint">MessageComponentData</code>, or <code class="prettyprint">ModalSubmitData</code></p>
 
-            </article>
-        </div>
-    
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -292,16 +285,52 @@
                     <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data"> https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data </a>
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-data-structure"> https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-data-structure </a>
                     
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.0.0</span>
+                                            <span class="phpdocumentor-tag-link">10.19.0</span>
                                                                                 
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Resolved|null $resolved  Converted users, roles, channels, attachments.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?array|null    $options   Params and values from the user.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?string|null   $guild_id  ID of the guild the command is registered to.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?string|null   $target_id ID of the user or message targeted by a user or message command.</p>
+</section>
+
                                     </dd>
                                             </dl>
 
@@ -311,7 +340,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -325,7 +354,7 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -361,13 +390,13 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_id">$id</a>
+    <a class="" href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_id">$id</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_name">$name</a>
+    <a class="" href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_name">$name</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
@@ -398,7 +427,7 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_type">$type</a>
+    <a class="" href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_type">$type</a>
     <span>
                         &nbsp;: int            </span>
 </dt>
@@ -431,7 +460,7 @@
 <dd>The factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_fillable">$fillable</a>
+    <a class="" href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_fillable">$fillable</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -476,7 +505,7 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -727,7 +756,7 @@ JSON. Used for JsonSerializable.</dd>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -940,13 +969,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_id">
         $id
-        <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/ApplicationCommandData.php"><a href="files/src-discord-parts-interactions-request-applicationcommanddata.html"><abbr title="src/Discord/Parts/Interactions/Request/ApplicationCommandData.php">ApplicationCommandData.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -980,13 +1009,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_name">
         $name
-        <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/ApplicationCommandData.php"><a href="files/src-discord-parts-interactions-request-applicationcommanddata.html"><abbr title="src/Discord/Parts/Interactions/Request/ApplicationCommandData.php">ApplicationCommandData.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1188,13 +1217,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_type">
         $type
-        <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/ApplicationCommandData.php"><a href="files/src-discord-parts-interactions-request-applicationcommanddata.html"><abbr title="src/Discord/Parts/Interactions/Request/ApplicationCommandData.php">ApplicationCommandData.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1208,7 +1237,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$type</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The type of the invoked command.</p>
+        <section class="phpdocumentor-description"><p>Type of the invoked command.</p>
 </section>
 
     
@@ -1391,15 +1420,15 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_fillable">
         $fillable
-        <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/ApplicationCommandData.php"><a href="files/src-discord-parts-interactions-request-applicationcommanddata.html"><abbr title="src/Discord/Parts/Interactions/Request/ApplicationCommandData.php">ApplicationCommandData.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
@@ -1410,41 +1439,13 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[
-    &#039;id&#039;,
-    &#039;name&#039;,
-    &#039;type&#039;,
-    &#039;resolved&#039;,
-    &#039;options&#039;,
-    &#039;guild_id&#039;,
-    &#039;target_id&#039;,
-    // message components
-    &#039;custom_id&#039;,
-    &#039;component_type&#039;,
-    &#039;values&#039;,
-    // modal components
-    &#039;components&#039;,
-]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;name&#039;, &#039;type&#039;, &#039;resolved&#039;, &#039;options&#039;, &#039;guild_id&#039;, &#039;target_id&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
 </section>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritDoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
 
     
 
@@ -1657,7 +1658,7 @@ JSON. Used for JsonSerializable.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -3539,7 +3540,7 @@ static as we may move it outside this class in future.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Interactions/Request/InteractionData.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Interactions/Request/ApplicationCommandData.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -3640,8 +3641,8 @@ static as we may move it outside this class in future.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
@@ -3653,18 +3654,18 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_custom_id">$custom_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_guild_id">$guild_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_id">$id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_name">$name</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_name">$name</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_options">$options</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_resolved">$resolved</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_target_id">$target_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_type">$type</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_type">$type</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_values">$values</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_fillable">$fillable</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_fillable">$fillable</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_http">$http</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories">$repositories</a></li>
@@ -3729,7 +3730,7 @@ static as we may move it outside this class in future.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

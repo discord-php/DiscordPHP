@@ -8276,6 +8276,11 @@ Search.appendIndex(
             "summary": "Type\u0020of\u0020the\u0020interaction.",
             "url": "classes/Discord-Parts-Interactions-ApplicationCommandAutocomplete.html#property_type"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\ApplicationCommandAutocomplete\u003A\u003A\u0024data",
+            "name": "data",
+            "summary": "The\u0020data\u0020for\u0020the\u0020application\u0020command\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-ApplicationCommandAutocomplete.html#property_data"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Choice",
             "name": "Choice",
             "summary": "Choice\u0020represents\u0020a\u0020choice\u0020that\u0020can\u0020be\u0020given\u0020to\u0020a\u0020command.",
@@ -8806,6 +8811,11 @@ Search.appendIndex(
             "summary": "Type\u0020of\u0020the\u0020interaction.",
             "url": "classes/Discord-Parts-Interactions-MessageComponent.html#property_type"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\MessageComponent\u003A\u003A\u0024data",
+            "name": "data",
+            "summary": "The\u0020data\u0020for\u0020the\u0020application\u0020command\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-MessageComponent.html#property_data"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\ModalSubmit",
             "name": "ModalSubmit",
             "summary": "Represents\u0020an\u0020interaction\u0020from\u0020Discord.",
@@ -8821,6 +8831,11 @@ Search.appendIndex(
             "summary": "Type\u0020of\u0020the\u0020interaction.",
             "url": "classes/Discord-Parts-Interactions-ModalSubmit.html#property_type"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\ModalSubmit\u003A\u003A\u0024data",
+            "name": "data",
+            "summary": "The\u0020data\u0020for\u0020the\u0020application\u0020command\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-ModalSubmit.html#property_data"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Ping",
             "name": "Ping",
             "summary": "Represents\u0020an\u0020interaction\u0020from\u0020Discord.",
@@ -8835,6 +8850,31 @@ Search.appendIndex(
             "name": "type",
             "summary": "Type\u0020of\u0020the\u0020interaction.",
             "url": "classes/Discord-Parts-Interactions-Ping.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Ping\u003A\u003A\u0024data",
+            "name": "data",
+            "summary": "The\u0020data\u0020for\u0020the\u0020application\u0020command\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-Ping.html#property_data"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Request\\ApplicationCommandData",
+            "name": "ApplicationCommandData",
+            "summary": "Represents\u0020the\u0020data\u0020associated\u0020with\u0020an\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Request\\ApplicationCommandData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Interactions-Request-ApplicationCommandData.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Request\\ApplicationCommandInteractionDataOption",
+            "name": "ApplicationCommandInteractionDataOption",
+            "summary": "Represents\u0020the\u0020data\u0020associated\u0020with\u0020an\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-Request-ApplicationCommandInteractionDataOption.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Request\\ApplicationCommandInteractionDataOption\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Interactions-Request-ApplicationCommandInteractionDataOption.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Request\\Component",
             "name": "Component",
@@ -8885,6 +8925,26 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Interactions-Request-InteractionData.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Request\\MessageComponentData",
+            "name": "MessageComponentData",
+            "summary": "Represents\u0020the\u0020data\u0020associated\u0020with\u0020an\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-Request-MessageComponentData.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Request\\MessageComponentData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Interactions-Request-MessageComponentData.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Request\\ModalSubmitData",
+            "name": "ModalSubmitData",
+            "summary": "Represents\u0020the\u0020data\u0020associated\u0020with\u0020an\u0020interaction.",
+            "url": "classes/Discord-Parts-Interactions-Request-ModalSubmitData.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Request\\ModalSubmitData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Interactions-Request-ModalSubmitData.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Request\\Option",
             "name": "Option",
