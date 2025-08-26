@@ -20,7 +20,6 @@ use Discord\Parts\Interactions\ApplicationCommandAutocomplete;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\Interactions\Request\ApplicationCommandData;
 use Discord\Parts\Interactions\Request\Option as RequestOption;
-use Discord\Parts\User\Member as UserMember;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\WebSockets\Event;
 
