@@ -19,6 +19,16 @@ namespace Discord\Builders\Components;
  * @link https://discord.com/developers/docs/interactions/message-components#select-menus
  *
  * @since 10.0.0
+ *
+ * @property int           $type            8 for a channel select.
+ * @property ?int|null     $id              Optional identifier for component.
+ * @property string        $custom_id       ID for the select menu; max 100 characters.
+ * @property ?int[]|null   $channel_types   List of channel types to include in the channel select component.
+ * @property ?string|null  $placeholder     Placeholder text if nothing is selected; max 150 characters.
+ * @property ?array|null   $default_values  List of default values for auto-populated select menu components.
+ * @property ?int|null     $min_values      Minimum number of items that must be chosen (defaults to 1); min 0, max 25.
+ * @property ?int|null     $max_values      Maximum number of items that can be chosen (defaults to 1); max 25.
+ * @property ?bool|null    $disabled        Whether select menu is disabled (defaults to false).
  */
 class ChannelSelect extends SelectMenu
 {
@@ -39,11 +49,13 @@ class ChannelSelect extends SelectMenu
     /**
      * Set the channel types of the select menu.
      *
-     * @param int[] $channel_types Array of channel types.
+     * @link https://discord.com/developers/docs/resources/channel#channel-object-channel-types
+     *
+     * @param ?int[] $channel_types Array of channel types.
      *
      * @return $this
      */
-    public function setChannelTypes(array $channel_types): self
+    public function setChannelTypes(?array $channel_types = null): self
     {
         $this->channel_types = $channel_types;
 
