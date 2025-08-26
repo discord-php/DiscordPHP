@@ -265,7 +265,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UserSelect.php"><a href="files/src-discord-builders-components-userselect.html"><abbr title="src/Discord/Builders/Components/UserSelect.php">UserSelect.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
@@ -294,6 +294,51 @@
                                             <span class="phpdocumentor-tag-link">10.0.0</span>
                                                                                 
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?string|null $placeholder    Placeholder text if nothing is selected; max 150 characters.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?array|null  $default_values List of default values for auto-populated select menu components; number of default values must be in the range defined by min_values and max_values.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?int|null    $min_values     Minimum number of items that must be chosen (defaults to 1); min 0, max 25.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?int|null    $max_values     Maximum number of items that can be chosen (defaults to 1); max 25.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?bool|null   $disabled       Whether select menu is disabled (defaults to false).</p>
+</section>
+
                                     </dd>
                                             </dl>
 
@@ -428,9 +473,9 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Builders-Components-UserSelect.html#constant_USAGE">USAGE</a>
+    <a class="" href="classes/Discord-Builders-Components-SelectMenu.html#constant_USAGE">USAGE</a>
     <span>
-        &nbsp;= [&#039;Message&#039;]                            </span>
+        &nbsp;= [&#039;Message&#039;, &#039;Modal&#039;]                            </span>
 </dt>
 
     </dl>
@@ -442,19 +487,19 @@
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Builders-Components-UserSelect.html#property_custom_id">$custom_id</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+<dd>Custom ID to identify the select menu.</dd>
+
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-Components-SelectMenu.html#property_channel_types">$channel_types</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;|null            </span>
 </dt>
 <dd>List of channel types to include in the channel select component (type 8).</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Builders-Components-SelectMenu.html#property_custom_id">$custom_id</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>Custom ID to identify the select menu.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-Components-SelectMenu.html#property_default_values">$default_values</a>
@@ -730,6 +775,13 @@ will be called when the selection of the menu is changed.</dd>
 </dt>
 <dd>Retrieves the ID associated with the interactive component.</dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#method_setId">setId()</a>
+    <span>
+                                &nbsp;: self    </span>
+</dt>
+<dd>The id field is optional and is used to identify components in the response from an interaction. The id must be unique within the message and is generated sequentially if left empty. Generation of ids won&#039;t use another id that exists in the message if you have one defined for another component. Sending components with an id of 0 is allowed but will be treated as empty and replaced by the API. 	32 bit integer used as an optional identifier for component.</dd>
+
     </dl>
 
 
@@ -844,7 +896,7 @@ will be called when the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -875,7 +927,7 @@ will be called when the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -906,7 +958,7 @@ will be called when the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 
@@ -937,7 +989,7 @@ will be called when the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -968,7 +1020,7 @@ will be called when the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -1061,7 +1113,7 @@ will be called when the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -1092,7 +1144,7 @@ will be called when the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -1130,7 +1182,7 @@ will be called when the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -1192,7 +1244,7 @@ will be called when the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -1254,7 +1306,7 @@ will be called when the selection of the menu is changed.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -1309,14 +1361,14 @@ will be called when the selection of the menu is changed.</dd>
                     <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_USAGE">
         USAGE
-        <a href="classes/Discord-Builders-Components-UserSelect.html#constant_USAGE" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Builders-Components-SelectMenu.html#constant_USAGE" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UserSelect.php"><a href="files/src-discord-builders-components-userselect.html"><abbr title="src/Discord/Builders/Components/UserSelect.php">UserSelect.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -1326,7 +1378,7 @@ will be called when the selection of the menu is changed.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">USAGE</span>
-    = <span class="phpdocumentor-signature__default-value">[&#039;Message&#039;]</span>
+    = <span class="phpdocumentor-signature__default-value">[&#039;Message&#039;, &#039;Modal&#039;]</span>
 </code>
 
 
@@ -1346,6 +1398,47 @@ will be called when the selection of the menu is changed.</dd>
             <a href="classes/Discord-Builders-Components-UserSelect.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_custom_id">
+        $custom_id
+        <a href="classes/Discord-Builders-Components-UserSelect.html#property_custom_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UserSelect.php"><a href="files/src-discord-builders-components-userselect.html"><abbr title="src/Discord/Builders/Components/UserSelect.php">UserSelect.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Custom ID to identify the select menu.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$custom_id</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>ID for the select menu; max 100 characters.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
                     <article
         class="
             phpdocumentor-element
@@ -1374,45 +1467,6 @@ will be called when the selection of the menu is changed.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;|null</span>
     <span class="phpdocumentor-signature__name">$channel_types</span>
-    </code>
-
-    
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_custom_id">
-        $custom_id
-        <a href="classes/Discord-Builders-Components-SelectMenu.html#property_custom_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/SelectMenu.php"><a href="files/src-discord-builders-components-selectmenu.html"><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">54</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Custom ID to identify the select menu.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$custom_id</span>
     </code>
 
     
@@ -1836,7 +1890,7 @@ number of default values must be in the range defined by min_values and max_valu
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UserSelect.php"><a href="files/src-discord-builders-components-userselect.html"><abbr title="src/Discord/Builders/Components/UserSelect.php">UserSelect.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -2611,7 +2665,7 @@ If the select menu type is not <code class="prettyprint">TYPE_CHANNEL_SELECT</co
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setDisabled</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$disabled</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setDisabled</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$disabled</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2621,7 +2675,7 @@ If the select menu type is not <code class="prettyprint">TYPE_CHANNEL_SELECT</co
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$disabled</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
@@ -3023,7 +3077,7 @@ the selection is changed. To remove the listener, you can pass
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UserSelect.php"><a href="files/src-discord-builders-components-userselect.html"><abbr title="src/Discord/Builders/Components/UserSelect.php">UserSelect.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -3031,7 +3085,7 @@ the selection is changed. To remove the listener, you can pass
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setRequired</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$required</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setRequired</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$required</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3041,8 +3095,8 @@ the selection is changed. To remove the listener, you can pass
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$required</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
-                            </dt>
+                : <span class="phpdocumentor-signature__argument__return-type">bool|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
@@ -3213,7 +3267,7 @@ If the select menu has options, the callback receives
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
@@ -3276,6 +3330,57 @@ If the select menu has options, the callback receives
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">int|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setId">
+        setId()
+        <a href="classes/Discord-Builders-Components-ComponentObject.html#method_setId" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">60</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The id field is optional and is used to identify components in the response from an interaction. The id must be unique within the message and is generated sequentially if left empty. Generation of ids won&#039;t use another id that exists in the message if you have one defined for another component. Sending components with an id of 0 is allowed but will be treated as empty and replaced by the API. 	32 bit integer used as an optional identifier for component.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">setId</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>32 bit integer used as an optional identifier for component.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -3412,15 +3517,15 @@ If the select menu has options, the callback receives
                                                     <li class=""><a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_TEXT_INPUT">TYPE_TEXT_INPUT</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_THUMBNAIL">TYPE_THUMBNAIL</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_USER_SELECT">TYPE_USER_SELECT</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-UserSelect.html#constant_USAGE">USAGE</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#constant_USAGE">USAGE</a></li>
                                             </ul>
                 </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Builders-Components-UserSelect.html#property_custom_id">$custom_id</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_channel_types">$channel_types</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_custom_id">$custom_id</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_default_values">$default_values</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_disabled">$disabled</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#property_discord">$discord</a></li>
@@ -3465,6 +3570,7 @@ If the select menu has options, the callback receives
                                             <li class=""><a href="classes/Discord-Builders-Components-SelectMenu.html#method_createListener">createListener()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Component.html#method_generateUuid">generateUuid()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Interactive.html#method_getId">getId()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#method_setId">setId()</a></li>
                                     </ul>
             </li>
                     </ul>

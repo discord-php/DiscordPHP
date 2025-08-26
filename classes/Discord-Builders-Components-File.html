@@ -268,7 +268,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/File.php"><a href="files/src-discord-builders-components-file.html"><abbr title="src/Discord/Builders/Components/File.php">File.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
@@ -297,6 +297,24 @@
                                             <span class="phpdocumentor-tag-link">10.5.0</span>
                                                                                 
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?int|null  $id      Optional identifier for component</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?bool|null $spoiler Whether the media should be a spoiler (blurred out). Defaults to false</p>
+</section>
+
                                     </dd>
                                             </dl>
 
@@ -453,6 +471,13 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Discord-Builders-Components-File.html#property_file">$file</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+<dd>The file to be displayed.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#property_id">$id</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -460,25 +485,18 @@
 <dd>32 bit integer used as an optional identifier for component.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Discord-Builders-Components-File.html#property_spoiler">$spoiler</a>
+    <span>
+                        &nbsp;: bool|null            </span>
+</dt>
+<dd>Whether the file is a spoiler.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-Components-File.html#property_type">$type</a>
     <span>
                         &nbsp;: int            </span>
 </dt>
 <dd>Component type.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a class="" href="classes/Discord-Builders-Components-File.html#property_file">$file</a>
-    <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
-</dt>
-<dd>The file to be displayed.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a class="" href="classes/Discord-Builders-Components-File.html#property_spoiler">$spoiler</a>
-    <span>
-                        &nbsp;: bool            </span>
-</dt>
-<dd>Whether the file is a spoiler.</dd>
 
     </dl>
 
@@ -521,7 +539,6 @@
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
-<dd>{@inheritDoc}</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-Components-File.html#method_new">new()</a>
@@ -557,6 +574,13 @@
                                 &nbsp;: int|null    </span>
 </dt>
 <dd>The id field is optional and is used to identify components in the response from an interaction that aren&#039;t interactive components.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#method_setId">setId()</a>
+    <span>
+                                &nbsp;: self    </span>
+</dt>
+<dd>The id field is optional and is used to identify components in the response from an interaction. The id must be unique within the message and is generated sequentially if left empty. Generation of ids won&#039;t use another id that exists in the message if you have one defined for another component. Sending components with an id of 0 is allowed but will be treated as empty and replaced by the API. 	32 bit integer used as an optional identifier for component.</dd>
 
     </dl>
 
@@ -672,7 +696,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -703,7 +727,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -734,7 +758,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 
@@ -765,7 +789,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -796,7 +820,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -889,7 +913,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -920,7 +944,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -958,7 +982,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -1020,7 +1044,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -1082,7 +1106,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -1144,7 +1168,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/File.php"><a href="files/src-discord-builders-components-file.html"><abbr title="src/Discord/Builders/Components/File.php">File.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
@@ -1174,6 +1198,45 @@
             <a href="classes/Discord-Builders-Components-File.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_file">
+        $file
+        <a href="classes/Discord-Builders-Components-File.html#property_file" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/File.php"><a href="files/src-discord-builders-components-file.html"><abbr title="src/Discord/Builders/Components/File.php">File.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">46</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The file to be displayed.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$file</span>
+    </code>
+
+    
+    
+    
+
+    
+
+    
+
+</article>
                     <article
         class="
             phpdocumentor-element
@@ -1220,9 +1283,9 @@
             -protected
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_type">
-        $type
-        <a href="classes/Discord-Builders-Components-File.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_spoiler">
+        $spoiler
+        <a href="classes/Discord-Builders-Components-File.html#property_spoiler" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
@@ -1230,56 +1293,17 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/File.php"><a href="files/src-discord-builders-components-file.html"><abbr title="src/Discord/Builders/Components/File.php">File.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Component type.</p>
+        <p class="phpdocumentor-summary">Whether the file is a spoiler.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$type</span>
-     = <span class="phpdocumentor-signature__default-value">\Discord\Builders\Components\Component::TYPE_FILE</span></code>
-
-    
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_file">
-        $file
-        <a href="classes/Discord-Builders-Components-File.html#property_file" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/File.php"><a href="files/src-discord-builders-components-file.html"><abbr title="src/Discord/Builders/Components/File.php">File.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">41</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The file to be displayed.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
-            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
-    <span class="phpdocumentor-signature__name">$file</span>
+            <span class="phpdocumentor-signature__type">bool|null</span>
+    <span class="phpdocumentor-signature__name">$spoiler</span>
     </code>
 
     
@@ -1295,12 +1319,12 @@
         class="
             phpdocumentor-element
             -property
-            -private
+            -protected
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_spoiler">
-        $spoiler
-        <a href="classes/Discord-Builders-Components-File.html#property_spoiler" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_type">
+        $type
+        <a href="classes/Discord-Builders-Components-File.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
@@ -1308,18 +1332,18 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/File.php"><a href="files/src-discord-builders-components-file.html"><abbr title="src/Discord/Builders/Components/File.php">File.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Whether the file is a spoiler.</p>
+        <p class="phpdocumentor-summary">Component type.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
-            <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$spoiler</span>
-     = <span class="phpdocumentor-signature__default-value">false</span></code>
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$type</span>
+     = <span class="phpdocumentor-signature__default-value">\Discord\Builders\Components\Component::TYPE_FILE</span></code>
 
     
     
@@ -1352,7 +1376,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">91</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -1391,7 +1415,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/File.php"><a href="files/src-discord-builders-components-file.html"><abbr title="src/Discord/Builders/Components/File.php">File.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">105</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
@@ -1469,7 +1493,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/File.php"><a href="files/src-discord-builders-components-file.html"><abbr title="src/Discord/Builders/Components/File.php">File.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">115</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
@@ -1508,12 +1532,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/File.php"><a href="files/src-discord-builders-components-file.html"><abbr title="src/Discord/Builders/Components/File.php">File.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">{@inheritDoc}</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">jsonSerialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -1524,6 +1547,20 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-Components-File.html#method_jsonSerialize#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 
@@ -1547,7 +1584,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/File.php"><a href="files/src-discord-builders-components-file.html"><abbr title="src/Discord/Builders/Components/File.php">File.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -1598,7 +1635,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/File.php"><a href="files/src-discord-builders-components-file.html"><abbr title="src/Discord/Builders/Components/File.php">File.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
@@ -1606,7 +1643,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setFile</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|<a href="classes/Discord-Parts-Channel-Attachment.html"><abbr title="\Discord\Parts\Channel\Attachment">Attachment</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filename</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setFile</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Attachment.html"><abbr title="\Discord\Parts\Channel\Attachment">Attachment</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filename</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1616,7 +1653,7 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$filename</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|<a href="classes/Discord-Parts-Channel-Attachment.html"><abbr title="\Discord\Parts\Channel\Attachment">Attachment</abbr></a></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Attachment.html"><abbr title="\Discord\Parts\Channel\Attachment">Attachment</abbr></a>|string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The filename or attachment to reference.</p>
@@ -1649,7 +1686,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/File.php"><a href="files/src-discord-builders-components-file.html"><abbr title="src/Discord/Builders/Components/File.php">File.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">98</span>
 
     </aside>
 
@@ -1657,7 +1694,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setSpoiler</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$spoiler</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setSpoiler</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$spoiler</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1667,7 +1704,7 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$spoiler</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>Whether the file is a spoiler.</p>
@@ -1700,7 +1737,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
@@ -1739,7 +1776,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/Component.php"><a href="files/src-discord-builders-components-component.html"><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -1764,6 +1801,57 @@ Generation of ids won't use another id that exists in the message if you have on
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">int|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setId">
+        setId()
+        <a href="classes/Discord-Builders-Components-ComponentObject.html#method_setId" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">60</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The id field is optional and is used to identify components in the response from an interaction. The id must be unique within the message and is generated sequentially if left empty. Generation of ids won&#039;t use another id that exists in the message if you have one defined for another component. Sending components with an id of 0 is allowed but will be treated as empty and replaced by the API. 	32 bit integer used as an optional identifier for component.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">setId</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$id</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>32 bit integer used as an optional identifier for component.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">self</span>
             </section>
 
 </article>
@@ -1907,10 +1995,10 @@ Generation of ids won't use another id that exists in the message if you have on
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#property_id">$id</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-File.html#property_type">$type</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-File.html#property_file">$file</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-File.html#property_spoiler">$spoiler</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-File.html#property_type">$type</a></li>
                                             </ul>
                 </li>
             
@@ -1927,6 +2015,7 @@ Generation of ids won't use another id that exists in the message if you have on
                                             <li class=""><a href="classes/Discord-Builders-Components-File.html#method_setSpoiler">setSpoiler()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Component.html#method_generateUuid">generateUuid()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Component.html#method_getId">getId()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#method_setId">setId()</a></li>
                                     </ul>
             </li>
                     </ul>

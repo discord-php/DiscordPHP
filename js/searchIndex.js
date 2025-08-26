@@ -466,11 +466,6 @@ Search.appendIndex(
             "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled,\u0020default\u0020false.\u0020\u0028Modal\u0020only\u0029.",
             "url": "classes/Discord-Builders-Components-ChannelSelect.html#method_setRequired"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\ChannelSelect\u003A\u003AUSAGE",
-            "name": "USAGE",
-            "summary": "",
-            "url": "classes/Discord-Builders-Components-ChannelSelect.html#constant_USAGE"
-        },                {
             "fqsen": "\\Discord\\Builders\\Components\\ChannelSelect\u003A\u003A\u0024type",
             "name": "type",
             "summary": "Component\u0020type.",
@@ -605,6 +600,11 @@ Search.appendIndex(
             "name": "getType",
             "summary": "Retrieves\u0020the\u0020type\u0020of\u0020the\u0020component.",
             "url": "classes/Discord-Builders-Components-ComponentObject.html#method_getType"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003AsetId\u0028\u0029",
+            "name": "setId",
+            "summary": "The\u0020id\u0020field\u0020is\u0020optional\u0020and\u0020is\u0020used\u0020to\u0020identify\u0020components\u0020in\u0020the\u0020response\u0020from\u0020an\u0020interaction.\u0020The\u0020id\u0020must\u0020be\u0020unique\u0020within\u0020the\u0020message\u0020and\u0020is\u0020generated\u0020sequentially\u0020if\u0020left\u0020empty.\u0020Generation\u0020of\u0020ids\u0020won\u0027t\u0020use\u0020another\u0020id\u0020that\u0020exists\u0020in\u0020the\u0020message\u0020if\u0020you\u0020have\u0020one\u0020defined\u0020for\u0020another\u0020component.\u0020Sending\u0020components\u0020with\u0020an\u0020id\u0020of\u00200\u0020is\u0020allowed\u0020but\u0020will\u0020be\u0020treated\u0020as\u0020empty\u0020and\u0020replaced\u0020by\u0020the\u0020API.\u0020\t32\u0020bit\u0020integer\u0020used\u0020as\u0020an\u0020optional\u0020identifier\u0020for\u0020component.",
+            "url": "classes/Discord-Builders-Components-ComponentObject.html#method_setId"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003AUSAGE",
             "name": "USAGE",
@@ -748,7 +748,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-File.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\File\u003A\u003AUSAGE",
@@ -868,7 +868,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\MediaGallery\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-MediaGallery.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\MediaGallery\u003A\u003AUSAGE",
@@ -960,11 +960,6 @@ Search.appendIndex(
             "name": "setRequired",
             "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled,\u0020default\u0020false.\u0020\u0028Modal\u0020only\u0029.",
             "url": "classes/Discord-Builders-Components-MentionableSelect.html#method_setRequired"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\MentionableSelect\u003A\u003AUSAGE",
-            "name": "USAGE",
-            "summary": "",
-            "url": "classes/Discord-Builders-Components-MentionableSelect.html#constant_USAGE"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\MentionableSelect\u003A\u003A\u0024type",
             "name": "type",
@@ -1065,11 +1060,6 @@ Search.appendIndex(
             "name": "setRequired",
             "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled,\u0020default\u0020false.\u0020\u0028Modal\u0020only\u0029.",
             "url": "classes/Discord-Builders-Components-RoleSelect.html#method_setRequired"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\RoleSelect\u003A\u003AUSAGE",
-            "name": "USAGE",
-            "summary": "",
-            "url": "classes/Discord-Builders-Components-RoleSelect.html#constant_USAGE"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\RoleSelect\u003A\u003A\u0024type",
             "name": "type",
@@ -1353,7 +1343,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-Separator.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Separator\u003A\u003AUSAGE",
@@ -1411,11 +1401,6 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020array\u0020of\u0020options\u0020that\u0020the\u0020select\u0020menu\u0020has.",
             "url": "classes/Discord-Builders-Components-StringSelect.html#method_getOptions"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\StringSelect\u003A\u003AUSAGE",
-            "name": "USAGE",
-            "summary": "",
-            "url": "classes/Discord-Builders-Components-StringSelect.html#constant_USAGE"
-        },                {
             "fqsen": "\\Discord\\Builders\\Components\\StringSelect\u003A\u003A\u0024type",
             "name": "type",
             "summary": "Component\u0020type.",
@@ -1448,7 +1433,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextDisplay\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-TextDisplay.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextDisplay\u003A\u003AUSAGE",
@@ -1513,7 +1498,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003AsetRequired\u0028\u0029",
             "name": "setRequired",
-            "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled,\u0020default\u0020false.",
+            "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled\u0020\u0028defaults\u0020to\u0020true\u0029.",
             "url": "classes/Discord-Builders-Components-TextInput.html#method_setRequired"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003AsetValue\u0028\u0029",
@@ -1648,7 +1633,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-Thumbnail.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Thumbnail\u003A\u003AUSAGE",
@@ -1701,90 +1686,15 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020URL\u0020of\u0020the\u0020media\u0020item.",
             "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_getUrl"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AsetResolvedData\u0028\u0029",
-            "name": "setResolvedData",
-            "summary": "Sets\u0020the\u0020resolved\u0020data\u0020for\u0020the\u0020media\u0020item.",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_setResolvedData"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AisResolved\u0028\u0029",
-            "name": "isResolved",
-            "summary": "Returns\u0020whether\u0020the\u0020media\u0020item\u0020has\u0020been\u0020resolved.",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isResolved"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AisLoaded\u0028\u0029",
-            "name": "isLoaded",
-            "summary": "Returns\u0020whether\u0020the\u0020media\u0020item\u0020was\u0020successfully\u0020loaded.",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isLoaded"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AisNotFound\u0028\u0029",
-            "name": "isNotFound",
-            "summary": "Returns\u0020whether\u0020the\u0020media\u0020item\u0020failed\u0020to\u0020load.",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isNotFound"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AisLoading\u0028\u0029",
-            "name": "isLoading",
-            "summary": "Returns\u0020whether\u0020the\u0020media\u0020item\u0020is\u0020still\u0020loading.",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isLoading"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AisUnknown\u0028\u0029",
-            "name": "isUnknown",
-            "summary": "Returns\u0020whether\u0020the\u0020media\u0020item\u0027s\u0020loading\u0020state\u0020is\u0020unknown.",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isUnknown"
-        },                {
             "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#method_jsonSerialize"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003ALOADING_STATE_UNKNOWN",
-            "name": "LOADING_STATE_UNKNOWN",
-            "summary": "Loading\u0020states\u0020for\u0020unfurled\u0020media\u0020items.",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_UNKNOWN"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003ALOADING_STATE_LOADING",
-            "name": "LOADING_STATE_LOADING",
-            "summary": "",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADING"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003ALOADING_STATE_LOADED_SUCCESS",
-            "name": "LOADING_STATE_LOADED_SUCCESS",
-            "summary": "",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADED_SUCCESS"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003ALOADING_STATE_LOADED_NOT_FOUND",
-            "name": "LOADING_STATE_LOADED_NOT_FOUND",
-            "summary": "",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADED_NOT_FOUND"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003A\u0024url",
             "name": "url",
             "summary": "Source\u0020URL\u0020of\u0020media\u0020item\u0020\u0028only\u0020supports\u0020http\u0028s\u0029\u0020and\u0020attachments\u0029.",
             "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#property_url"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003A\u0024proxy_url",
-            "name": "proxy_url",
-            "summary": "A\u0020proxied\u0020URL\u0020of\u0020the\u0020media\u0020item.",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#property_proxy_url"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003A\u0024height",
-            "name": "height",
-            "summary": "Height\u0020of\u0020media\u0020item.",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#property_height"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003A\u0024width",
-            "name": "width",
-            "summary": "Width\u0020of\u0020media\u0020item.",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#property_width"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003A\u0024content_type",
-            "name": "content_type",
-            "summary": "The\u0020media\u0020item\u0027s\u0020media\u0020type.",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#property_content_type"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UnfurledMediaItem\u003A\u003A\u0024loading_state",
-            "name": "loading_state",
-            "summary": "Loading\u0020state\u0020of\u0020the\u0020media\u0020item.",
-            "url": "classes/Discord-Builders-Components-UnfurledMediaItem.html#property_loading_state"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\UserSelect",
             "name": "UserSelect",
@@ -1795,11 +1705,6 @@ Search.appendIndex(
             "name": "setRequired",
             "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled,\u0020default\u0020false.\u0020\u0028Modal\u0020only\u0029.",
             "url": "classes/Discord-Builders-Components-UserSelect.html#method_setRequired"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\UserSelect\u003A\u003AUSAGE",
-            "name": "USAGE",
-            "summary": "",
-            "url": "classes/Discord-Builders-Components-UserSelect.html#constant_USAGE"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\UserSelect\u003A\u003A\u0024type",
             "name": "type",

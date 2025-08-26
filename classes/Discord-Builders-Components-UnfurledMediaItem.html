@@ -265,7 +265,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 
     </aside>
 
@@ -322,38 +322,6 @@
 
 
 
-<h4 id="toc-constants">
-    Constants
-    <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-</h4>
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADED_NOT_FOUND">LOADING_STATE_LOADED_NOT_FOUND</a>
-    <span>
-        &nbsp;= 3                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADED_SUCCESS">LOADING_STATE_LOADED_SUCCESS</a>
-    <span>
-        &nbsp;= 2                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADING">LOADING_STATE_LOADING</a>
-    <span>
-        &nbsp;= 1                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_UNKNOWN">LOADING_STATE_UNKNOWN</a>
-    <span>
-        &nbsp;= 0                            </span>
-</dt>
-<dd>Loading states for unfurled media items.</dd>
-
-    </dl>
 
 
 <h4 id="toc-properties">
@@ -362,47 +330,12 @@
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_content_type">$content_type</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-<dd>The media item&#039;s media type.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_height">$height</a>
-    <span>
-                        &nbsp;: int|null            </span>
-</dt>
-<dd>Height of media item.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_loading_state">$loading_state</a>
-    <span>
-                        &nbsp;: int|null            </span>
-</dt>
-<dd>Loading state of the media item.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_proxy_url">$proxy_url</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-<dd>A proxied URL of the media item.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_url">$url</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>Source URL of media item (only supports http(s) and attachments).</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_width">$width</a>
-    <span>
-                        &nbsp;: int|null            </span>
-</dt>
-<dd>Width of media item.</dd>
 
     </dl>
 
@@ -422,51 +355,15 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_getUrl">getUrl()</a>
     <span>
-                                &nbsp;: string    </span>
+                                &nbsp;: string|null    </span>
 </dt>
 <dd>Returns the URL of the media item.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isLoaded">isLoaded()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Returns whether the media item was successfully loaded.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isLoading">isLoading()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Returns whether the media item is still loading.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isNotFound">isNotFound()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Returns whether the media item failed to load.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isResolved">isResolved()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Returns whether the media item has been resolved.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isUnknown">isUnknown()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Returns whether the media item&#039;s loading state is unknown.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_jsonSerialize">jsonSerialize()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
-<dd>{@inheritDoc}</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_new">new()</a>
@@ -474,13 +371,6 @@
                                 &nbsp;: self    </span>
 </dt>
 <dd>Creates a new unfurled media item.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_setResolvedData">setResolvedData()</a>
-    <span>
-                                &nbsp;: $this    </span>
-</dt>
-<dd>Sets the resolved data for the media item.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_setUrl">setUrl()</a>
@@ -494,138 +384,6 @@
 
 
         
-    <section class="phpdocumentor-constants">
-        <h3 class="phpdocumentor-elements__header" id="constants">
-            Constants
-            <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h3>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_LOADING_STATE_LOADED_NOT_FOUND">
-        LOADING_STATE_LOADED_NOT_FOUND
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADED_NOT_FOUND" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">35</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">LOADING_STATE_LOADED_NOT_FOUND</span>
-    = <span class="phpdocumentor-signature__default-value">3</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_LOADING_STATE_LOADED_SUCCESS">
-        LOADING_STATE_LOADED_SUCCESS
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADED_SUCCESS" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">34</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">LOADING_STATE_LOADED_SUCCESS</span>
-    = <span class="phpdocumentor-signature__default-value">2</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_LOADING_STATE_LOADING">
-        LOADING_STATE_LOADING
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADING" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">33</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">LOADING_STATE_LOADING</span>
-    = <span class="phpdocumentor-signature__default-value">1</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_LOADING_STATE_UNKNOWN">
-        LOADING_STATE_UNKNOWN
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_UNKNOWN" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">32</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Loading states for unfurled media items.</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">LOADING_STATE_UNKNOWN</span>
-    = <span class="phpdocumentor-signature__default-value">0</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-            </section>
 
         
     <section class="phpdocumentor-properties">
@@ -638,163 +396,7 @@
         class="
             phpdocumentor-element
             -property
-            -private
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_content_type">
-        $content_type
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_content_type" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">70</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The media item&#039;s media type.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$content_type</span>
-    </code>
-
-    
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_height">
-        $height
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_height" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">56</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Height of media item.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$height</span>
-    </code>
-
-    
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_loading_state">
-        $loading_state
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_loading_state" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">77</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Loading state of the media item.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$loading_state</span>
-    </code>
-
-    
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_proxy_url">
-        $proxy_url
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_proxy_url" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">49</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">A proxied URL of the media item.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$proxy_url</span>
-    </code>
-
-    
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
+            -protected
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_url">
@@ -807,7 +409,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
@@ -815,48 +417,9 @@
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$url</span>
-    </code>
-
-    
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_width">
-        $width
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_width" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">63</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Width of media item.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$width</span>
     </code>
 
     
@@ -890,7 +453,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">101</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -941,7 +504,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">88</span>
 
     </aside>
 
@@ -949,7 +512,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getUrl</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">getUrl</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -962,202 +525,7 @@
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_isLoaded">
-        isLoaded()
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isLoaded" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">168</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns whether the media item was successfully loaded.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">isLoaded</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_isLoading">
-        isLoading()
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isLoading" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">188</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns whether the media item is still loading.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">isLoading</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_isNotFound">
-        isNotFound()
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isNotFound" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">178</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns whether the media item failed to load.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">isNotFound</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_isResolved">
-        isResolved()
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isResolved" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">158</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns whether the media item has been resolved.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">isResolved</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_isUnknown">
-        isUnknown()
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isUnknown" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">198</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns whether the media item&#039;s loading state is unknown.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">isUnknown</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
+        <span class="phpdocumentor-signature__response_type">string|null</span>
             </section>
 
 </article>
@@ -1175,12 +543,11 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">206</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">{@inheritDoc}</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">jsonSerialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -1191,6 +558,20 @@
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_jsonSerialize#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 
@@ -1214,7 +595,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -1257,59 +638,6 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_setResolvedData">
-        setResolvedData()
-        <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_setResolvedData" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">142</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Sets the resolved data for the media item.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setResolvedData</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-        <section class="phpdocumentor-description"><p>This is typically set by Discord after the media is resolved.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$data</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Resolved data from Discord.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_setUrl">
         setUrl()
         <a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_setUrl" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1318,7 +646,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/UnfurledMediaItem.php"><a href="files/src-discord-builders-components-unfurledmediaitem.html"><abbr title="src/Discord/Builders/Components/UnfurledMediaItem.php">UnfurledMediaItem.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -1462,30 +790,15 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                        <li><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#toc-constants">Constants</a></li>
                                                             <li><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#toc-properties">Properties</a></li>
                                                             <li><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
-                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADED_NOT_FOUND">LOADING_STATE_LOADED_NOT_FOUND</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADED_SUCCESS">LOADING_STATE_LOADED_SUCCESS</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_LOADING">LOADING_STATE_LOADING</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#constant_LOADING_STATE_UNKNOWN">LOADING_STATE_UNKNOWN</a></li>
-                                            </ul>
-                </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_content_type">$content_type</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_height">$height</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_loading_state">$loading_state</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_proxy_url">$proxy_url</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_url">$url</a></li>
-                                                    <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#property_width">$width</a></li>
                                             </ul>
                 </li>
             
@@ -1494,14 +807,8 @@
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_fromAttachment">fromAttachment()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_getUrl">getUrl()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isLoaded">isLoaded()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isLoading">isLoading()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isNotFound">isNotFound()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isResolved">isResolved()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_isUnknown">isUnknown()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_jsonSerialize">jsonSerialize()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_new">new()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_setResolvedData">setResolvedData()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-UnfurledMediaItem.html#method_setUrl">setUrl()</a></li>
                                     </ul>
             </li>
