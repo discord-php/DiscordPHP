@@ -307,11 +307,11 @@ abstract class SelectMenu extends Interactive
     /**
      * Sets the select menus disabled state. (Message only).
      *
-     * @param bool $disabled
+     * @param bool|null $disabled
      *
      * @return $this
      */
-    public function setDisabled(bool $disabled = true): self
+    public function setDisabled(?bool $disabled = true): self
     {
         $this->disabled = $disabled;
 
