@@ -29,13 +29,8 @@ trait BuilderTrait
      */
     public function fill(array $properties): void
     {
-        foreach ($properties as $key) {
-            if (property_exists($this, $key)) {
-                // This is like setProperty() but without in_array() checks on fillable
-                ($str = $this->checkForSetMutator($key))
-                    ? $this->{$str}($properties[$key])
-                    : $this->{$key} = $properties[$key];
-            }
+        foreach ($properties as $key => $value) {
+            $this->setProperty($key, $value);
         }
     }
 
@@ -89,14 +84,6 @@ trait BuilderTrait
      */
     protected function getProperty(string $key)
     {
-        if (isset($this->repositories[$key])) {
-            if (! isset($this->repositories_cache[$key])) {
-                $this->repositories_cache[$key] = $this->factory->create($this->repositories[$key], $this->getRepositoryProperties());
-            }
-
-            return $this->repositories_cache[$key];
-        }
-
         if ($str = $this->checkForGetMutator($key)) {
             return $this->{$str}();
         }
@@ -122,7 +109,7 @@ trait BuilderTrait
             return;
         }
 
-        if (in_array($key, $this->fillable)) {
+        if (property_exists($this, $key)) {
             $this->{$key} = $value;
         }
     }
