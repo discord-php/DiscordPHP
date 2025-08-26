@@ -210,7 +210,7 @@ trait BuilderTrait
      *
      * This is a port of updated Laravel's implementation, a non-regex with
      * static cache. The Discord\studly() is kept due to unintended bug and we
-     * do not want to introduce BC by replacing it. This method is protected
+     * do not want to introduce BC by replacing it. This method is private
      * static as we may move it outside this class in future.
      *
      * @param string $string The string to convert.
@@ -219,7 +219,7 @@ trait BuilderTrait
      *
      * @since 10.0.0
      */
-    protected static function studly(string $string): string
+    private static function studly(string $string): string
     {
         static $studlyCache = [];
 
