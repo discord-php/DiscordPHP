@@ -52,7 +52,7 @@ class StringSelect extends SelectMenu
      *
      * @return $this
      */
-    public function setRequired(?bool $required = false): self
+    public function setRequired(?bool $required = null): self
     {
         $this->required = $required;
 

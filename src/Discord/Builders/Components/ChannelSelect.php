@@ -63,11 +63,11 @@ class ChannelSelect extends SelectMenu
     /**
      * Set if this component is required to be filled, default false. (Modal only).
      *
-     * @param bool $required
+     * @param ?bool $required
      *
      * @return $this
      */
-    public function setRequired(bool $required): self
+    public function setRequired(?bool $required = null): self
     {
         $this->required = $required;
 
