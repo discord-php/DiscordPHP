@@ -11,11 +11,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts;
-
-use Carbon\Carbon;
-use Discord\Discord;
-use React\Promise\PromiseInterface;
+namespace Discord\Builders;
 
 /**
  * TODO
