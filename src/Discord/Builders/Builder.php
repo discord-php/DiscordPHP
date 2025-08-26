@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Builders;
 
+use Discord\Parts\BuilderTrait;
 use Discord\Parts\Part;
 
 /**
