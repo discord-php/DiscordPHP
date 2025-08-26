@@ -19,6 +19,10 @@ namespace Discord\Builders\Components;
  * @link https://discord.com/developers/docs/interactions/message-components#text-display
  *
  * @since 10.5.0
+ *
+ * @property int       $type    10 for text display component.
+ * @property ?int|null $id      Optional identifier for component.
+ * @property string    $content Text that will be displayed similar to a message.
  */
 class TextDisplay extends Content implements Contracts\ComponentV2
 {
@@ -78,13 +82,19 @@ class TextDisplay extends Content implements Contracts\ComponentV2
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
-        return [
+        $data = [
             'type' => $this->type,
             'content' => $this->content,
         ];
+
+        if (isset($this->id)) {
+            $data['id'] = $this->id;
+        }
+
+        return $data;
     }
 }

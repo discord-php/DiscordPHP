@@ -20,10 +20,10 @@ namespace Discord\Builders\Components;
  *
  * @since 10.5.0
  *
- * @property int                 $type       9 for a section component.
- * @property ?int|null           $id         Optional identifier for the component.
- * @property TextDisplay[]       $components One to three text display components.
- * @property Thumbnail|Button    $accessory  A thumbnail or button component.
+ * @property int              $type       9 for a section component.
+ * @property ?int|null        $id         Optional identifier for the component.
+ * @property TextDisplay[]    $components One to three text display components.
+ * @property Thumbnail|Button $accessory  A thumbnail or button component.
  */
 class Section extends Layout implements Contracts\ComponentV2
 {
