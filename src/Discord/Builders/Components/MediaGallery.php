@@ -19,6 +19,10 @@ namespace Discord\Builders\Components;
  * @link https://discord.com/developers/docs/interactions/message-components#media-gallery
  *
  * @since 10.5.0
+ *
+ * @property int                $type  12 for media gallery component.
+ * @property ?int|null          $id    Optional identifier for component.
+ * @property MediaGalleryItem[] $items 1 to 10 media gallery items.
  */
 class MediaGallery extends Content implements Contracts\ComponentV2
 {
@@ -36,7 +40,7 @@ class MediaGallery extends Content implements Contracts\ComponentV2
      *
      * @var MediaGalleryItem[]
      */
-    private $items = [];
+    protected $items = [];
 
     /**
      * Creates a new media gallery.
@@ -86,7 +90,7 @@ class MediaGallery extends Content implements Contracts\ComponentV2
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
