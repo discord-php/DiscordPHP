@@ -131,6 +131,11 @@ class Label extends ComponentObject
      */
     public function setComponent($component): self
     {
+        // The disabled field on String Selects is not currently allowed in modals, and will trigger an error if used.
+        if ($component instanceof StringSelect) {
+            $component->setDisabled(null);
+        }
+
         // The label field on the Text Input is not allowed in favor of label on the Label component.
         if ($component instanceof TextInput) {
             $component->setLabel(null);
