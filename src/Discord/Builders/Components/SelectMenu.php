@@ -523,6 +523,10 @@ abstract class SelectMenu extends Interactive
             'custom_id' => $this->custom_id,
         ];
 
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
+        }
+
         if (isset($this->options)) {
             $content['options'] = $this->options;
         }
