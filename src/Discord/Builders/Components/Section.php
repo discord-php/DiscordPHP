@@ -19,6 +19,11 @@ namespace Discord\Builders\Components;
  * @link https://discord.com/developers/docs/interactions/message-components#section
  *
  * @since 10.5.0
+ *
+ * @property int                 $type       9 for a section component.
+ * @property ?int|null           $id         Optional identifier for the component.
+ * @property TextDisplay[]       $components One to three text display components.
+ * @property Thumbnail|Button    $accessory  A thumbnail or button component.
  */
 class Section extends Layout implements Contracts\ComponentV2
 {
@@ -156,6 +161,10 @@ class Section extends Layout implements Contracts\ComponentV2
             'type' => $this->type,
             'components' => $this->components,
         ];
+
+        if (isset($this->id)) {
+            $data['id'] = $this->id;
+        }
 
         if (! isset($this->accessory)) {
             throw new \DomainException('Section must have an accessory component set.');
