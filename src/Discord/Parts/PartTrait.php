@@ -17,33 +17,8 @@ use Carbon\Carbon;
 use Discord\Discord;
 use React\Promise\PromiseInterface;
 
-/**
- * This class is the base of all objects that are returned. All "Parts" extend
- * off this base class.
- *
- * @since 2.0.0
- */
 trait PartTrait
 {
-    /**
-     * Create a new part instance.
-     *
-     * @param Discord $discord    The Discord client.
-     * @param array   $attributes An array of attributes to build the part.
-     * @param bool    $created    Whether the part has already been created.
-     */
-    public function __construct(Discord $discord, array $attributes = [], bool $created = false)
-    {
-        $this->discord = $discord;
-        $this->http = $discord->getHttpClient();
-        $this->factory = $discord->getFactory();
-
-        $this->created = $created;
-        $this->fill($attributes);
-
-        $this->afterConstruct();
-    }
-
     /**
      * Called after the part has been constructed.
      */
