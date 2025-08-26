@@ -32,7 +32,7 @@ use Discord\Parts\Part;
 class UnfurledMediaItem extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'url',
