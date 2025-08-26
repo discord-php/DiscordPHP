@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 /**
- * TODO
+ * Trait providing helper methods for builder classes.
  *
  * @since 10.19.0
  */
