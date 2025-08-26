@@ -30,6 +30,16 @@ use function Discord\poly_strlen;
  * @link https://discord.com/developers/docs/interactions/message-components#buttons
  *
  * @since 7.0.0
+ *
+ * @property int          $type      2 for a button.
+ * @property ?int|null    $id        Optional identifier for component.
+ * @property int          $style     A button style.
+ * @property ?string|null $label     Text that appears on the button; max 80 characters.
+ * @property ?array|null  $emoji     Partial emoji: name, id, and animated.
+ * @property string|null  $custom_id Developer-defined identifier for the button; max 100 characters.
+ * @property ?string|null $sku_id    Identifier for a purchasable SKU, only available when using premium-style buttons.
+ * @property ?string|null $url       URL for link-style buttons; max 512 characters.
+ * @property ?bool|null   $disabled  Whether the button is disabled (defaults to false).
  */
 class Button extends Interactive
 {
@@ -54,56 +64,56 @@ class Button extends Interactive
      *
      * @var int
      */
-    private $style = 1;
+    protected $style = 1;
 
     /**
      * Label for the button.
      *
      * @var string|null
      */
-    private $label;
+    protected $label;
 
     /**
      * Emoji to display on the button.
      *
      * @var array|null
      */
-    private $emoji;
+    protected $emoji;
 
     /**
      * 	Identifier for a purchasable SKU, only available when using premium-style buttons.
      *
      * @var string|null
      */
-    private $sku_id;
+    protected $sku_id;
 
     /**
      * URL to send as the button. Only for link buttons.
      *
      * @var string|null
      */
-    private $url;
+    protected $url;
 
     /**
      * Whether the button is disabled.
      *
-     * @var bool
+     * @var bool|null
      */
-    private $disabled = false;
+    protected $disabled;
 
     /**
      * Listener for when the button is pressed.
      *
      * @var callable|null
      */
-    private $listener;
+    protected $listener;
 
     /**
      * Discord instance when the listener is set.
      *
      * @var Discord|null
      */
-    private $discord;
+    protected $discord;
 
     /**
      * Creates a new button.
@@ -427,11 +437,11 @@ class Button extends Interactive
     /**
      * Sets the button as disabled/not disabled.
      *
-     * @param bool $disabled
+     * @param bool|null $disabled
      *
      * @return $this
      */
-    public function setDisabled(bool $disabled): self
+    public function setDisabled(?bool $disabled): self
     {
         $this->disabled = $disabled;
 
@@ -642,8 +652,8 @@ class Button extends Interactive
             $content['sku_id'] = $this->sku_id;
         }
 
-        if ($this->disabled) {
-            $content['disabled'] = true;
+        if (isset($this->disabled)) {
+            $content['disabled'] = $this->disabled;
         }
 
         return $content;
