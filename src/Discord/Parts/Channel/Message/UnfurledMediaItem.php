@@ -22,11 +22,12 @@ use Discord\Parts\Part;
  *
  * @since 10.11.0
  *
- * @property string      $url          Supports arbitrary urls and attachment://<filename> references.
- * @property string|null $proxy_url    The proxied url of the media item. This field is ignored and provided by the API as part of the response.
- * @property int|null    $height       The height of the media item. This field is ignored and provided by the API as part of the response.
- * @property int|null    $width        The width of the media item. This field is ignored and provided by the API as part of the response.
- * @property string|null $content_type The media type of the content. This field is ignored and provided by the API as part of the response.
+ * @property string       $url           Supports arbitrary urls and attachment://<filename> references.
+ * @property ?string|null $proxy_url     The proxied url of the media item. This field is ignored and provided by the API as part of the response.
+ * @property ?int|null    $height        The height of the media item. This field is ignored and provided by the API as part of the response.
+ * @property ?int|null    $width         The width of the media item. This field is ignored and provided by the API as part of the response.
+ * @property ?string|null $content_type  The media type of the content. This field is ignored and provided by the API as part of the response.
+ * @property ?string|null $attachment_id The id of the uploaded attachment. This field is ignored and provided by the API as part of the response
  */
 class UnfurledMediaItem extends Part
 {
@@ -39,5 +40,6 @@ class UnfurledMediaItem extends Part
         'height',
         'width',
         'content_type',
+        'attachment_id',
     ];
 }
