@@ -21,6 +21,9 @@ namespace Discord\Builders\Components;
  * @link https://discord.com/developers/docs/interactions/message-components#action-rows
  *
  * @since 7.0.0
+ *
+ * @property int               $type       1 for action row component.
+ * @property ComponentObject[] $components Up to 5 interactive button components or a single select component.
  */
 class ActionRow extends Layout
 {
@@ -39,7 +42,7 @@ class ActionRow extends Layout
      *
      * @var ComponentObject[]
      */
-    private $components = [];
+    protected $components = [];
 
     /**
      * Creates a new action row.
@@ -147,9 +150,15 @@ class ActionRow extends Layout
      */
     public function jsonSerialize(): array
     {
-        return [
+        $content = [
             'type' => $this->type,
             'components' => $this->components,
         ];
+
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
+        }
+
+        return $content;
     }
 }
