@@ -20,18 +20,18 @@ use function Discord\poly_strlen;
  *
  * @link https://discord.com/developers/docs/components/reference#label
  *
- * @todo Update to match Discord's documentation upon public release.
  * @todo Update Label class to extend the relevant base class.
  * @todo Confirm if Label will be usable in Message components.
  *
  * @since 10.19.0
  *
  * @property int          $type        18 for label component.
+ * @property ?string|null $id          Optional identifier for component.
  * @property string       $label       The text for the label. Must be between 1 and 45 characters.
  * @property ?string|null $description Optional description for the label. Max 100 characters.
  * @property SelectMenu   $component   The component associated with the label.
  */
-class Label extends ComponentObject
+class Label extends Layout
 {
     public const USAGE = ['Modal'];
 
@@ -159,6 +159,10 @@ class Label extends ComponentObject
 
         if (isset($this->description)) {
             $data['description'] = $this->description;
+        }
+
+        if (isset($this->id)) {
+            $data['id'] = $this->id;
         }
 
         return $data;
