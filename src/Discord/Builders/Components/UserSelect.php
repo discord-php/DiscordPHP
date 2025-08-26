@@ -30,8 +30,6 @@ namespace Discord\Builders\Components;
  */
 class UserSelect extends SelectMenu
 {
-    public const USAGE = ['Message'];
-
     /**
      * Component type.
      *

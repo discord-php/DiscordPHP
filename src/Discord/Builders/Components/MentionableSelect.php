@@ -22,8 +22,6 @@ namespace Discord\Builders\Components;
  */
 class MentionableSelect extends SelectMenu
 {
-    public const USAGE = ['Message'];
-
     /**
      * Component type.
      *
