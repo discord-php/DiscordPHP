@@ -23,58 +23,17 @@ use JsonSerializable;
  * @link https://discord.com/developers/docs/interactions/message-components#unfurled-media-items
  *
  * @since 10.5.0
+ *
+ * @property string $url Supports arbitrary urls and attachment://<filename> references.
  */
 class UnfurledMediaItem implements JsonSerializable
 {
-    /**
-     * Loading states for unfurled media items.
-     */
-    public const LOADING_STATE_UNKNOWN = 0;
-    public const LOADING_STATE_LOADING = 1;
-    public const LOADING_STATE_LOADED_SUCCESS = 2;
-    public const LOADING_STATE_LOADED_NOT_FOUND = 3;
-
     /**
      * Source URL of media item (only supports http(s) and attachments).
      *
      * @var string
      */
-    private $url;
-
-    /**
-     * A proxied URL of the media item.
-     *
-     * @var string|null
-     */
-    private $proxy_url;
-
-    /**
-     * Height of media item.
-     *
-     * @var int|null
-     */
-    private $height;
-
-    /**
-     * Width of media item.
-     *
-     * @var int|null
-     */
-    private $width;
-
-    /**
-     * The media item's media type.
-     *
-     * @var string|null
-     */
-    private $content_type;
-
-    /**
-     * Loading state of the media item.
-     *
-     * @var int|null
-     */
-    private $loading_state;
+    protected $url;
 
     /**
      * Creates a new unfurled media item.
@@ -124,100 +83,18 @@ class UnfurledMediaItem implements JsonSerializable
     /**
      * Returns the URL of the media item.
      *
-     * @return string
+     * @return ?string
      */
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
-        return $this->url;
+        return $this->url ?? null;
     }
 
     /**
-     * Sets the resolved data for the media item.
-     * This is typically set by Discord after the media is resolved.
-     *
-     * @param array $data Resolved data from Discord.
-     *
-     * @return $this
-     */
-    public function setResolvedData(array $data): self
-    {
-        $this->proxy_url = $data['proxy_url'] ?? null;
-        $this->width = $data['width'] ?? null;
-        $this->height = $data['height'] ?? null;
-        $this->content_type = $data['content_type'] ?? null;
-        $this->loading_state = $data['loading_state'] ?? null;
-
-        return $this;
-    }
-
-    /**
-     * Returns whether the media item has been resolved.
-     *
-     * @return bool
-     */
-    public function isResolved(): bool
-    {
-        return isset($this->loading_state);
-    }
-
-    /**
-     * Returns whether the media item was successfully loaded.
-     *
-     * @return bool
-     */
-    public function isLoaded(): bool
-    {
-        return $this->loading_state === self::LOADING_STATE_LOADED_SUCCESS;
-    }
-
-    /**
-     * Returns whether the media item failed to load.
-     *
-     * @return bool
-     */
-    public function isNotFound(): bool
-    {
-        return $this->loading_state === self::LOADING_STATE_LOADED_NOT_FOUND;
-    }
-
-    /**
-     * Returns whether the media item is still loading.
-     *
-     * @return bool
-     */
-    public function isLoading(): bool
-    {
-        return $this->loading_state === self::LOADING_STATE_LOADING;
-    }
-
-    /**
-     * Returns whether the media item's loading state is unknown.
-     *
-     * @return bool
-     */
-    public function isUnknown(): bool
-    {
-        return $this->loading_state === self::LOADING_STATE_UNKNOWN;
-    }
-
-    /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
-        $data = ['url' => $this->url];
-
-        if ($this->isResolved()) {
-            $resolved = array_filter([
-                'proxy_url' => $this->proxy_url ?? null,
-                'width' => $this->width ?? null,
-                'height' => $this->height ?? null,
-                'content_type' => $this->content_type ?? null,
-            ], fn ($value) => $value !== null);
-
-            return array_merge($data, $resolved, ['loading_state' => $this->loading_state]);
-        }
-
-        return $data;
+        return ['url' => $this->url];
     }
 }
