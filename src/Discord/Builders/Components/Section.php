@@ -157,20 +157,20 @@ class Section extends Layout implements Contracts\ComponentV2
      */
     public function jsonSerialize(): array
     {
-        $data = [
+        $content = [
             'type' => $this->type,
             'components' => $this->components,
         ];
 
-        if (isset($this->id)) {
-            $data['id'] = $this->id;
-        }
-
         if (! isset($this->accessory)) {
             throw new \DomainException('Section must have an accessory component set.');
         }
-        $data['accessory'] = $this->accessory;
+        $content['accessory'] = $this->accessory;
 
-        return $data;
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
+        }
+
+        return $content;
     }
 }

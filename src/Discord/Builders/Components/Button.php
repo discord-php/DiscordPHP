@@ -656,6 +656,10 @@ class Button extends Interactive
             $content['disabled'] = $this->disabled;
         }
 
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
+        }
+
         return $content;
     }
 

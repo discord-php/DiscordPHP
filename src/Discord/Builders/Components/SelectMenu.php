@@ -523,10 +523,6 @@ abstract class SelectMenu extends Interactive
             'custom_id' => $this->custom_id,
         ];
 
-        if (isset($this->id)) {
-            $content['id'] = $this->id;
-        }
-
         if (isset($this->options)) {
             $content['options'] = $this->options;
         }
@@ -568,6 +564,10 @@ abstract class SelectMenu extends Interactive
             if ($this->min_values === null || $this->min_values === 0) {
                 throw new \LengthException('Required select menus must have a minimum value greater than 0.');
             }
+        }
+
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
         }
 
         return $content;

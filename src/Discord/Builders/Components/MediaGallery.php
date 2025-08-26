@@ -98,9 +98,15 @@ class MediaGallery extends Content implements Contracts\ComponentV2
             throw new \DomainException('MediaGallery must have at least one item.');
         }
 
-        return [
+        $content = [
             'type' => $this->type,
             'items' => $this->items,
         ];
+
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
+        }
+
+        return $content;
     }
 }

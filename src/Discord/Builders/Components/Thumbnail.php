@@ -160,23 +160,23 @@ class Thumbnail extends Content implements Contracts\ComponentV2
      */
     public function jsonSerialize(): array
     {
-        $data = [
+        $content = [
             'type' => $this->type,
             'media' => $this->media,
         ];
 
-        if (isset($this->id)) {
-            $data['id'] = $this->id;
-        }
-
         if (isset($this->description)) {
-            $data['description'] = $this->description;
+            $content['description'] = $this->description;
         }
 
         if (isset($this->spoiler)) {
-            $data['spoiler'] = true;
+            $content['spoiler'] = true;
         }
 
-        return $data;
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
+        }
+
+        return $content;
     }
 }

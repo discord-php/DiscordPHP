@@ -126,22 +126,22 @@ class Separator extends Layout implements Contracts\ComponentV2
      */
     public function jsonSerialize(): array
     {
-        $data = [
+        $content = [
             'type' => $this->type,
         ];
 
-        if (isset($this->id)) {
-            $data['id'] = $this->id;
-        }
-
         if (isset($this->divider)) {
-            $data['divider'] = $this->divider;
+            $content['divider'] = $this->divider;
         }
 
         if (isset($this->spacing)) {
-            $data['spacing'] = $this->spacing;
+            $content['spacing'] = $this->spacing;
         }
 
-        return $data;
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
+        }
+
+        return $content;
     }
 }

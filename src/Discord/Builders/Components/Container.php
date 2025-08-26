@@ -222,23 +222,23 @@ class Container extends Layout implements Contracts\ComponentV2
      */
     public function jsonSerialize(): array
     {
-        $data = [
+        $content = [
             'type' => $this->type,
             'components' => $this->components,
         ];
 
-        if (isset($this->id)) {
-            $data['id'] = $this->id;
-        }
-
         if (isset($this->accent_color)) {
-            $data['accent_color'] = $this->accent_color;
+            $content['accent_color'] = $this->accent_color;
         }
 
         if (isset($this->spoiler)) {
-            $data['spoiler'] = $this->spoiler;
+            $content['spoiler'] = $this->spoiler;
         }
 
-        return $data;
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
+        }
+
+        return $content;
     }
 }

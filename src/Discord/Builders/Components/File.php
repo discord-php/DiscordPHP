@@ -127,15 +127,19 @@ class File extends Content implements Contracts\ComponentV2
      */
     public function jsonSerialize(): array
     {
-        $data = [
+        $content = [
             'type' => $this->type,
             'file' => $this->file,
         ];
 
         if (isset($this->spoiler)) {
-            $data['spoiler'] = $this->spoiler;
+            $content['spoiler'] = $this->spoiler;
         }
 
-        return $data;
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
+        }
+
+        return $content;
     }
 }

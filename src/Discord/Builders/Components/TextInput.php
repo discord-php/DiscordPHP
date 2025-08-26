@@ -339,10 +339,6 @@ class TextInput extends Interactive
             'style' => $this->style,
         ];
 
-        if (isset($this->id)) {
-            $content['id'] = $this->id;
-        }
-
         if (isset($this->label)) {
             $content['label'] = $this->label;
         }
@@ -369,6 +365,10 @@ class TextInput extends Interactive
 
         if (isset($this->placeholder)) {
             $content['placeholder'] = $this->placeholder;
+        }
+
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
         }
 
         return $content;
