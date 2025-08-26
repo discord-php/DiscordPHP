@@ -24,6 +24,8 @@ use Discord\Parts\Part;
  */
 abstract class Builder
 {
+    use BuilderTrait;
+
     /**
      * Creates a new instance of the builder from a given Part.
      *
