@@ -51,4 +51,16 @@ abstract class ComponentObject extends Component
     {
         return $this->type;
     }
+
+    /**
+     * The id field is optional and is used to identify components in the response from an interaction. The id must be unique within the message and is generated sequentially if left empty. Generation of ids won't use another id that exists in the message if you have one defined for another component. Sending components with an id of 0 is allowed but will be treated as empty and replaced by the API. 	32 bit integer used as an optional identifier for component.
+     *
+     * @param string|null $id 32 bit integer used as an optional identifier for component.
+     */
+    protected function setId(?string $id = null): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }
