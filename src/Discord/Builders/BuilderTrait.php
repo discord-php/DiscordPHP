@@ -162,9 +162,7 @@ trait BuilderTrait
      */
     public function offsetUnset($key): void
     {
-        if (isset($this->{$key})) {
-            unset($this->{$key});
-        }
+        unset($this->{$key});
     }
 
     /**
