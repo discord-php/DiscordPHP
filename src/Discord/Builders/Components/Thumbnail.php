@@ -19,6 +19,12 @@ namespace Discord\Builders\Components;
  * @link https://discord.com/developers/docs/interactions/message-components#thumbnail
  *
  * @since 10.5.0
+ *
+ * @property int               $type        11 for thumbnail component.
+ * @property ?int|null         $id          Optional identifier for component.
+ * @property UnfurledMediaItem $media       A url or attachment.
+ * @property ?string|null      $description Alt text for the media, max 1024 characters.
+ * @property ?bool|null        $spoiler     Whether the thumbnail should be a spoiler (or blurred out). Defaults to false.
  */
 class Thumbnail extends Content implements Contracts\ComponentV2
 {
@@ -36,21 +42,21 @@ class Thumbnail extends Content implements Contracts\ComponentV2
      *
      * @var UnfurledMediaItem
      */
-    private $media;
+    protected $media;
 
     /**
      * Description for the thumbnail.
      *
      * @var string|null
      */
-    private $description;
+    protected $description;
 
     /**
      * Whether the thumbnail is a spoiler.
      *
-     * @var bool
+     * @var bool|null
      */
-    private $spoiler = false;
+    protected $spoiler;
 
     /**
      * Creates a new thumbnail.
@@ -94,7 +100,7 @@ class Thumbnail extends Content implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function setDescription(?string $description): self
+    public function setDescription(?string $description = null): self
     {
         if ($description !== null && strlen($description) > 1024) {
             throw new \LengthException('Description cannot exceed 1024 characters.');
@@ -112,7 +118,7 @@ class Thumbnail extends Content implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function setSpoiler(bool $spoiler = true): self
+    public function setSpoiler(?bool $spoiler = true): self
     {
         $this->spoiler = $spoiler;
 
@@ -122,11 +128,11 @@ class Thumbnail extends Content implements Contracts\ComponentV2
     /**
      * Returns the media item for the thumbnail.
      *
-     * @return UnfurledMediaItem
+     * @return ?UnfurledMediaItem
      */
-    public function getMedia(): UnfurledMediaItem
+    public function getMedia(): ?UnfurledMediaItem
     {
-        return $this->media;
+        return $this->media ?? null;
     }
 
     /**
@@ -136,7 +142,7 @@ class Thumbnail extends Content implements Contracts\ComponentV2
      */
     public function getDescription(): ?string
     {
-        return $this->description;
+        return $this->description ?? null;
     }
 
     /**
@@ -146,11 +152,11 @@ class Thumbnail extends Content implements Contracts\ComponentV2
      */
     public function isSpoiler(): bool
     {
-        return $this->spoiler;
+        return $this->spoiler ?? false;
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
@@ -159,11 +165,15 @@ class Thumbnail extends Content implements Contracts\ComponentV2
             'media' => $this->media,
         ];
 
+        if (isset($this->id)) {
+            $data['id'] = $this->id;
+        }
+
         if (isset($this->description)) {
             $data['description'] = $this->description;
         }
 
-        if ($this->spoiler) {
+        if (isset($this->spoiler)) {
             $data['spoiler'] = true;
         }
 
