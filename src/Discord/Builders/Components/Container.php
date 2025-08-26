@@ -20,6 +20,12 @@ namespace Discord\Builders\Components;
  * @link https://discord.com/developers/docs/interactions/message-components#container
  *
  * @since 10.5.0
+ *
+ * @property int        $type         17 for container component
+ * @property ?int|null  $id           Optional identifier for component
+ * @property array      $components   Components of the type action row, text display, section, media gallery, separator, or file
+ * @property ?int|null  $accent_color Color for the accent on the container as RGB from 0x000000 to 0xFFFFFF
+ * @property ?bool|null $spoiler      Whether the container should be a spoiler (or blurred out). Defaults to false.
  */
 class Container extends Layout implements Contracts\ComponentV2
 {
@@ -37,21 +43,21 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @var ComponentObject[]
      */
-    private $components = [];
+    protected $components = [];
 
     /**
      * Accent color for the container.
      *
      * @var int|null
      */
-    private $accent_color;
+    protected $accent_color;
 
     /**
      * Whether the container is a spoiler.
      *
-     * @var bool
+     * @var bool|null
      */
-    private $spoiler = false;
+    protected $spoiler;
 
     /**
      * Creates a new container.
@@ -142,7 +148,7 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function setComponents(array $components): self
+    public function setComponents($components): self
     {
         $this->components = $components;
 
@@ -156,7 +162,7 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function setAccentColor($color): self
+    public function setAccentColor($color = null): self
     {
         if ($color !== null) {
             $color = self::resolveColor($color);
@@ -170,11 +176,11 @@ class Container extends Layout implements Contracts\ComponentV2
     /**
      * Sets whether the container is a spoiler.
      *
-     * @param bool $spoiler Whether the container is a spoiler.
+     * @param bool|null $spoiler Whether the container is a spoiler.
      *
      * @return $this
      */
-    public function setSpoiler(bool $spoiler = true): self
+    public function setSpoiler(?bool $spoiler = true): self
     {
         $this->spoiler = $spoiler;
 
@@ -208,7 +214,7 @@ class Container extends Layout implements Contracts\ComponentV2
      */
     public function isSpoiler(): bool
     {
-        return $this->spoiler;
+        return $this->spoiler ?? false;
     }
 
     /**
@@ -221,12 +227,16 @@ class Container extends Layout implements Contracts\ComponentV2
             'components' => $this->components,
         ];
 
+        if (isset($this->id)) {
+            $data['id'] = $this->id;
+        }
+
         if (isset($this->accent_color)) {
             $data['accent_color'] = $this->accent_color;
         }
 
-        if ($this->spoiler) {
-            $data['spoiler'] = true;
+        if (isset($this->spoiler)) {
+            $data['spoiler'] = $this->spoiler;
         }
 
         return $data;
