@@ -110,12 +110,14 @@ class Label extends Layout
      */
     public function setDescription(?string $description = null): self
     {
-        if (poly_strlen($description) === 0) {
-            $description = null;
-        }
+        if (isset($description)) {
+            if (poly_strlen($description) === 0) {
+                $description = null;
+            }
 
-        if (poly_strlen($description) > 100) {
-            throw new \LengthException('Description must be between 0 and 100 in length.');
+            if (poly_strlen($description) > 100) {
+                throw new \LengthException('Description must be between 0 and 100 in length.');
+            }
         }
 
         $this->description = $description;
