@@ -24,6 +24,8 @@ use Discord\Parts\Part;
  */
 abstract class Builder
 {
+    use BuilderTrait;
+
     /**
      * Creates a new instance of the builder from a given Part.
      *
@@ -37,11 +39,7 @@ abstract class Builder
 
         $attributes = $part->getRawAttributes();
 
-        foreach ($attributes as $key => $value) {
-            if (property_exists($builder, $key)) {
-                $builder->{$key} = $value;
-            }
-        }
+        $builder->fill($attributes);
 
         return $builder;
     }
