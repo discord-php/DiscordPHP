@@ -122,7 +122,7 @@ trait BuilderTrait
      * @return mixed
      *
      * @throws \Exception
-     * @see Part::getProperty() This function forwards onto getProperty.
+     * @see self::getProperty() This function forwards onto getProperty.
      */
     #[\ReturnTypeWillChange]
     public function offsetGet($key)
@@ -148,7 +148,7 @@ trait BuilderTrait
      * @param string $key   The property key.
      * @param mixed  $value The property value.
      *
-     * @see Part::setProperty() This function forwards onto setProperty.
+     * @see self::setProperty() This function forwards onto setProperty.
      */
     public function offsetSet($key, $value): void
     {
@@ -185,7 +185,7 @@ trait BuilderTrait
      *
      * @param string $data Some serialized data.
      *
-     * @see Part::setProperty() The unserialized data is stored with setProperty.
+     * @see self::setProperty() The unserialized data is stored with setProperty.
      */
     public function unserialize($data): void
     {
@@ -240,7 +240,7 @@ trait BuilderTrait
      * @return mixed The value of the property.
      *
      * @throws \Exception
-     * @see Part::getProperty() This function forwards onto getProperty.
+     * @see self::getProperty() This function forwards onto getProperty.
      */
     public function __get(string $key)
     {
