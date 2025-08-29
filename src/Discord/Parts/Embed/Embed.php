@@ -166,7 +166,7 @@ class Embed extends Part
      */
     protected function getFieldsAttribute(): ExCollectionInterface
     {
-        $fields = Collection::for(Field::class, null);
+        $fields = Collection::for(Field::class, 'name');
 
         if (! array_key_exists('fields', $this->attributes)) {
             return $fields;
