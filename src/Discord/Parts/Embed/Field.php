@@ -22,14 +22,14 @@ use Discord\Parts\Part;
  *
  * @since 4.0.3
  *
- * @property string    $name   The name of the field.
- * @property string    $value  The value of the field.
- * @property bool|null $inline Whether the field should be displayed in-line.
+ * @property string     $name   The name of the field.
+ * @property string     $value  The value of the field.
+ * @property ?bool|null $inline Whether the field should be displayed in-line.
  */
 class Field extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'name',

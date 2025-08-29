@@ -27,6 +27,7 @@ use function Discord\poly_strlen;
  * @link https://discord.com/developers/docs/resources/message#embed-object-embed-structure
  *
  * @since 4.0.3
+ * @since 10.19.0 The `provider` property was added and `thumbnail` was updated to return `Thumbnail`.
  *
  * @property      ?string|null                        $title       The title of the embed.
  * @property-read ?string|null                        $type        The type of the embed (always "rich" for webhook embeds).
@@ -36,14 +37,25 @@ use function Discord\poly_strlen;
  * @property      ?int|null                           $color       The color of the embed.
  * @property      ?Footer|null                        $footer      The footer of the embed.
  * @property      ?Image|null                         $image       The image of the embed.
- * @property      ?Image|null                         $thumbnail   The thumbnail of the embed.
+ * @property      ?Thumbnail|null                     $thumbnail   The thumbnail of the embed.
  * @property-read ?Video|null                         $video       The video of the embed.
- * @property-read ?object|null                        $provider    The provider of the embed.
+ * @property-read ?Provider|null                      $provider    The provider of the embed.
  * @property      ?Author|null                        $author      The author of the embed.
  * @property      ?ExCollectionInterface|Field[]|null $fields      A collection of embed fields (max of 25).
  */
 class Embed extends Part
 {
+    public const TYPES = [
+        0 => Embed::class, // Fallback for unknown types
+        self::TYPE_RICH => EmbedRich::class,
+        self::TYPE_IMAGE => EmbedImage::class,
+        self::TYPE_VIDEO => EmbedVideo::class,
+        self::TYPE_GIFV => EmbedGifv::class,
+        self::TYPE_ARTICLE => EmbedArticle::class,
+        self::TYPE_LINK => EmbedLink::class,
+        self::TYPE_POLL_RESULT => EmbedPollResult::class,
+    ];
+
     public const TYPE_RICH = 'rich';
     public const TYPE_IMAGE = 'image';
     public const TYPE_VIDEO = 'video';
@@ -110,11 +122,11 @@ class Embed extends Part
     /**
      * Gets the thumbnail attribute.
      *
-     * @return Image The thumbnail attribute.
+     * @return Thumbnail The thumbnail attribute.
      */
-    protected function getThumbnailAttribute(): Image
+    protected function getThumbnailAttribute(): Thumbnail
     {
-        return $this->attributeHelper('thumbnail', Image::class);
+        return $this->attributeHelper('thumbnail', Thumbnail::class);
     }
 
     /**
@@ -125,6 +137,16 @@ class Embed extends Part
     protected function getVideoAttribute(): Video
     {
         return $this->attributeHelper('video', Video::class);
+    }
+
+    /**
+     * Gets the provider attribute.
+     *
+     * @return Provider The provider attribute.
+     */
+    protected function getProviderAttribute(): Provider
+    {
+        return $this->attributeHelper('provider', Provider::class);
     }
 
     /**

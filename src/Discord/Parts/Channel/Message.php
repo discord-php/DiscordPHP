@@ -629,7 +629,7 @@ class Message extends Part
         $embeds = Collection::for(Embed::class, null);
 
         foreach ($this->attributes['embeds'] ?? [] as $embed) {
-            $embeds->pushItem($this->createOf(Embed::class, $embed));
+            $embeds->pushItem($this->createOf(Embed::TYPES[$embed->type ?? 0], $embed));
         }
 
         return $embeds;

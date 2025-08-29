@@ -22,10 +22,10 @@ use Discord\Parts\Part;
  *
  * @since 10.19.0
  *
- * @property ?string|null $url        Source URL of thumbnail (only supports http(s) and attachments).
- * @property ?string|null $proxy_url  A proxied URL of the thumbnail.
- * @property ?int|null    $height     Height of thumbnail.
- * @property ?int|null    $width      Width of thumbnail.
+ * @property ?string|null $url       Source URL of thumbnail (only supports http(s) and attachments).
+ * @property ?string|null $proxy_url A proxied URL of the thumbnail.
+ * @property ?int|null    $height    Height of thumbnail.
+ * @property ?int|null    $width     Width of thumbnail.
  */
 class Thumbnail extends Part
 {
