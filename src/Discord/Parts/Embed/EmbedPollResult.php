@@ -28,7 +28,7 @@ use Discord\Helpers\ExCollectionInterface;
  * @property-read ?Video|null                         $video                                  The video of the embed.
  * @property-read ?Provider|null                      $provider                               The provider of the embed.
  * @property      ?Author|null                        $author                                 The author of the embed.
- * @property      ?ExCollectionInterface|Field[]|null $fields                                 A collection of embed fields (max of 25).
+ * @property      ExCollectionInterface|Field[]       $fields                                 A collection of embed fields (max of 25).
  * @property      string|null                         $fields['poll_question_text']           Question text from the original poll
  * @property      int|null                            $fields['victor_answer_votes']          Number of votes for the answer(s) with the most votes
  * @property      int|null                            $fields['total_votes']                  Total number of votes in the poll
