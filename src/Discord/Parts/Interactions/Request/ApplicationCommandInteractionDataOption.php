@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Request;
 
+use Discord\Helpers\ExCollectionInterface;
+
 /**
  * Represents the data associated with an interaction.
  *
