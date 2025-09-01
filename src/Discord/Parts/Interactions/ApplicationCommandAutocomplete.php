@@ -30,13 +30,6 @@ class ApplicationCommandAutocomplete extends Interaction
     protected $type = Interaction::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE;
 
     /**
-     * The data for the application command interaction.
-     *
-     * @var ApplicationCommandData
-     */
-    protected $data;
-
-    /**
      * Returns the data associated with the interaction. (This can be partial).
      *
      * @return ApplicationCommandData

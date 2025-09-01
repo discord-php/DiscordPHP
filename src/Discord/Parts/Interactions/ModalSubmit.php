@@ -30,13 +30,6 @@ class ModalSubmit extends Interaction
     protected $type = Interaction::TYPE_MODAL_SUBMIT;
 
     /**
-     * The data for the application command interaction.
-     *
-     * @var ModalSubmitData
-     */
-    protected $data;
-
-    /**
      * Returns the data associated with the interaction.
      *
      * @return ModalSubmitData
