@@ -24,6 +24,8 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\MemberRepository;
+use Discord\Repository\Channel\MessageRepository;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;

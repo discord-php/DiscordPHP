@@ -1868,7 +1868,7 @@ class VoiceClient extends EventEmitter
             $nonce->write($voicePacket->getHeader(), 0);
         }
 
-        switch($this->mode) {
+        switch ($this->mode) {
             case 'aead_aes256_gcm_rtpsize': // preferred
                 return \sodium_crypto_aead_aes256gcm_decrypt(
                     $ciphertext,
