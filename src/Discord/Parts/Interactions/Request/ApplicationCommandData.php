@@ -20,13 +20,13 @@ namespace Discord\Parts\Interactions\Request;
  *
  * @since 10.19.0
  *
- * @property string         $id        ID of the invoked command.
- * @property string         $name      Name of the invoked command.
- * @property int            $type      Type of the invoked command.
- * @property ?Resolved|null $resolved  Converted users, roles, channels, attachments.
- * @property ?array|null    $options   Params and values from the user.
- * @property ?string|null   $guild_id  ID of the guild the command is registered to.
- * @property ?string|null   $target_id ID of the user or message targeted by a user or message command.
+ * @property string                               $id        ID of the invoked command.
+ * @property string                               $name      Name of the invoked command.
+ * @property int                                  $type      Type of the invoked command.
+ * @property ?Resolved|null                       $resolved  Converted users, roles, channels, attachments.
+ * @property ?ExCollectionInterface|Option[]|null $options   Params and values from the user.
+ * @property ?string|null                         $guild_id  ID of the guild the command is registered to.
+ * @property ?string|null                         $target_id ID of the user or message targeted by a user or message command.
  */
 class ApplicationCommandData extends InteractionData
 {

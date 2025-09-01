@@ -20,11 +20,11 @@ namespace Discord\Parts\Interactions\Request;
  *
  * @since 10.19.0
  *
- * @property string                      $name    Name of the parameter.
- * @property int                         $type    Value of application command option type.
- * @property ?string|int|float|bool|null $value   Value of the option resulting from user input.
- * @property ?array|null                 $options Present if this option is a group or subcommand.
- * @property ?bool|null                  $focused True if this option is the currently focused option for autocomplete.
+ * @property string                               $name    Name of the parameter.
+ * @property int                                  $type    Value of application command option type.
+ * @property ?string|int|float|bool|null          $value   Value of the option resulting from user input.
+ * @property ?ExCollectionInterface|Option[]|null $options Present if this option is a group or subcommand.
+ * @property ?bool|null                           $focused True if this option is the currently focused option for autocomplete.
  */
 class ApplicationCommandInteractionDataOption extends InteractionData
 {
