@@ -15,13 +15,24 @@ namespace Discord\Parts;
 
 use Carbon\Carbon;
 use Discord\Discord;
+use Discord\Factory\Factory;
+use Discord\Http\Http;
 use React\Promise\PromiseInterface;
 
 /**
- * This class is the base of all objects that are returned. All "Parts" extend
- * off this base class.
- *
- * @since 2.0.0
+ * @property Http    $http               The HTTP client.
+ * @property Factory $factory            The factory instance.
+ * @property Discord $discord            The Discord client.
+ * @property array   $scriptData         Custom script data. Used for storing custom information, used by end products.
+ * @property array   $fillable           The array of attributes that can be mass-assigned.
+ * @property array   $attributes         The parts attributes and content.
+ * @property array   $visible            Attributes which are visible from debug info.
+ * @property array   $hidden             Attributes that are hidden from public.
+ * @property array   $repositories       Repositories that can exist in a part.
+ * @property array   $repositories_cache An array of repositories.
+ * @property Discord $discord            The Discord client.
+ * @property mixed   $scriptData         Custom script data.
+ * @property bool    $created            Whether the part has been created.
  */
 trait PartTrait
 {

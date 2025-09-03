@@ -127,7 +127,6 @@ abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
         $this->afterConstruct();
     }
 
-
     /** @return array */
     public function __debugInfo(): array
     {
