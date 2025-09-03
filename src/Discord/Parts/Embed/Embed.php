@@ -573,29 +573,6 @@ class Embed extends Part
     }
 
     /**
-     * Helps with getting embed attributes.
-     *
-     * @param string $key   The attribute key.
-     * @param string $class The attribute class.
-     *
-     * @throws \Exception
-     *
-     * @return mixed
-     */
-    private function attributeHelper($key, $class)
-    {
-        if (! array_key_exists($key, $this->attributes)) {
-            return $this->factory->create($class);
-        }
-
-        if ($this->attributes[$key] instanceof $class) {
-            return $this->attributes[$key];
-        }
-
-        return $this->factory->create($class, $this->attributes[$key], true);
-    }
-
-    /**
      * Returns all possible embed types.
      *
      * @return array
