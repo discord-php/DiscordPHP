@@ -108,6 +108,26 @@ abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
      */
     public $created = false;
 
+    /**
+     * Create a new part instance.
+     *
+     * @param Discord $discord    The Discord client.
+     * @param array   $attributes An array of attributes to build the part.
+     * @param bool    $created    Whether the part has already been created.
+     */
+    public function __construct(Discord $discord, array $attributes = [], bool $created = false)
+    {
+        $this->discord = $discord;
+        $this->http = $discord->getHttpClient();
+        $this->factory = $discord->getFactory();
+
+        $this->created = $created;
+        $this->fill($attributes);
+
+        $this->afterConstruct();
+    }
+
+
     /** @return array */
     public function __debugInfo(): array
     {
