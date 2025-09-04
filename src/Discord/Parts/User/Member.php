@@ -707,11 +707,7 @@ class Member extends Part implements Stringable
             return $user;
         }
 
-        if (! isset($this->attributes['user'])) {
-            return null;
-        }
-
-        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        return $this->attributeHelper('user', User::class);
     }
 
     /**
