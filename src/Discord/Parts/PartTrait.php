@@ -440,19 +440,17 @@ trait PartTrait
      *
      * @throws \Exception
      *
-     * @return mixed
+     * @return Part|null
      */
-    protected function attributeHelper($key, $class)
+    protected function attributeHelper($key, $class): ?Part
     {
         if (! array_key_exists($key, $this->attributes)) {
-            return $this->factory->create($class);
+            return null;
         }
 
-        if ($this->attributes[$key] instanceof $class) {
-            return $this->attributes[$key];
-        }
-
-        return $this->factory->create($class, $this->attributes[$key], true);
+        return ($this->attributes[$key] instanceof $class)
+            ? $this->attributes[$key]
+            : $this->attributes[$key] = $this->factory->part($class, $this->attributes[$key], $this->created);
     }
 
     /**
