@@ -212,7 +212,7 @@ class Member extends Part implements Stringable
      * @param ?string|null $params['bio']    Guild member bio.
      * @param string|null  $reason           Reason for Audit Log.
      *
-     * @throws NoPermissionsException Missing manage_nicknames permission.
+     * @throws NoPermissionsException Member is not the current user.
      *
      * @return PromiseInterface<self>
      */
@@ -225,7 +225,7 @@ class Member extends Part implements Stringable
         $allowed = ['nick', 'banner', 'avatar', 'bio'];
         $params = array_filter(
             $params,
-            fn($key) => in_array($key, $allowed, true),
+            fn ($key) => in_array($key, $allowed, true),
             ARRAY_FILTER_USE_KEY
         );
 
