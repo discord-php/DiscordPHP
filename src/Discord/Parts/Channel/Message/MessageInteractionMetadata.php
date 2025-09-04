@@ -100,11 +100,7 @@ class MessageInteractionMetadata extends Part
      */
     protected function getTriggeringInteractionMetadataAttribute(): ?MessageInteractionMetadata
     {
-        if (! isset($this->attributes['triggering_interaction_metadata'])) {
-            return null;
-        }
-
-        return $this->factory->part(self::class, (array) $this->attributes['triggering_interaction_metadata'], true);
+        return $this->attributeHelper('triggering_interaction_metadata', MessageInteractionMetadata::class);
     }
 
     /**
