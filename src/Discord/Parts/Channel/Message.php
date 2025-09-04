@@ -643,11 +643,7 @@ class Message extends Part
      */
     protected function getInteractionMetadataAttribute(): ?MessageInteractionMetadata
     {
-        if (! isset($this->attributes['interaction_metadata'])) {
-            return null;
-        }
-
-        return $this->createOf(MessageInteractionMetadata::class, (array) $this->attributes['interaction_metadata'] + ['guild_id' => $this->guild_id] + ['channel_id' => $this->channel_id]);
+        return $this->attributeHelper('interaction_metadata', MessageInteractionMetadata::class, ['guild_id' => $this->guild_id] + ['channel_id' => $this->channel_id]);
     }
 
     /**
@@ -657,11 +653,7 @@ class Message extends Part
      */
     protected function getInteractionAttribute(): ?MessageInteraction
     {
-        if (! isset($this->attributes['interaction'])) {
-            return null;
-        }
-
-        return $this->createOf(MessageInteraction::class, (array) $this->attributes['interaction'] + ['guild_id' => $this->guild_id]);
+        return $this->attributeHelper('interaction', MessageInteraction::class, ['guild_id' => $this->guild_id]);
     }
 
     /**
@@ -814,11 +806,7 @@ class Message extends Part
      */
     protected function getResolvedAttribute(): ?Resolved
     {
-        if (! isset($this->attributes['resolved'])) {
-            return null;
-        }
-
-        return $this->factory->part(Resolved::class, (array) $this->attributes['resolved'] + ['guild_id' => $this->guild_id], true);
+        return $this->attributeHelper('resolved', Resolved::class, ['guild_id' => $this->guild_id]);
     }
 
     /**
@@ -828,11 +816,7 @@ class Message extends Part
      */
     protected function getPollAttribute(): ?Poll
     {
-        if (! isset($this->attributes['poll'])) {
-            return null;
-        }
-
-        return $this->factory->part(Poll::class, (array) $this->attributes['poll'] + ['channel_id' => $this->channel_id, 'message_id' => $this->id], true);
+        return $this->attributeHelper('poll', Poll::class, ['channel_id' => $this->channel_id, 'message_id' => $this->id]);
     }
 
     /**
