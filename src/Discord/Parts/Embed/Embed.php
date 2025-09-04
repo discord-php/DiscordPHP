@@ -89,9 +89,9 @@ class Embed extends Part
     /**
      * Gets the footer attribute.
      *
-     * @return Footer The footer attribute.
+     * @return Footer|null The footer attribute.
      */
-    protected function getFooterAttribute(): Footer
+    protected function getFooterAttribute(): ?Footer
     {
         return $this->attributeHelper('footer', Footer::class);
     }
@@ -99,9 +99,9 @@ class Embed extends Part
     /**
      * Gets the image attribute.
      *
-     * @return Image The image attribute.
+     * @return Image|null The image attribute.
      */
-    protected function getImageAttribute(): Image
+    protected function getImageAttribute(): ?Image
     {
         return $this->attributeHelper('image', Image::class);
     }
@@ -109,9 +109,9 @@ class Embed extends Part
     /**
      * Gets the thumbnail attribute.
      *
-     * @return Image The thumbnail attribute.
+     * @return Image|null The thumbnail attribute.
      */
-    protected function getThumbnailAttribute(): Image
+    protected function getThumbnailAttribute(): ?Image
     {
         return $this->attributeHelper('thumbnail', Image::class);
     }
@@ -119,9 +119,9 @@ class Embed extends Part
     /**
      * Gets the video attribute.
      *
-     * @return Video The video attribute.
+     * @return Video|null The video attribute.
      */
-    protected function getVideoAttribute(): Video
+    protected function getVideoAttribute(): ?Video
     {
         return $this->attributeHelper('video', Video::class);
     }
@@ -129,9 +129,9 @@ class Embed extends Part
     /**
      * Gets the author attribute.
      *
-     * @return Author The author attribute.
+     * @return Author|null The author attribute.
      */
-    protected function getAuthorAttribute(): Author
+    protected function getAuthorAttribute(): ?Author
     {
         return $this->attributeHelper('author', Author::class);
     }

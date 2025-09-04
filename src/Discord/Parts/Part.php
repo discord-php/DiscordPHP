@@ -28,6 +28,7 @@ use JsonSerializable;
 abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
 {
     use PartTrait;
+
     /**
      * The HTTP client.
      *
