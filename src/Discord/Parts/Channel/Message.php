@@ -643,7 +643,7 @@ class Message extends Part
      */
     protected function getInteractionMetadataAttribute(): ?MessageInteractionMetadata
     {
-        return $this->attributeHelper('interaction_metadata', MessageInteractionMetadata::class, ['guild_id' => $this->guild_id] + ['channel_id' => $this->channel_id]);
+        return $this->attributeHelper('interaction_metadata', MessageInteractionMetadata::class, ['guild_id' => $this->guild_id, 'channel_id' => $this->channel_id]);
     }
 
     /**
