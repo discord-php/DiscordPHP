@@ -1146,11 +1146,7 @@ class Guild extends Part
      */
     protected function getWelcomeScreenAttribute(): ?WelcomeScreen
     {
-        if (! isset($this->attributes['welcome_screen'])) {
-            return null;
-        }
-
-        return $this->createOf(WelcomeScreen::class, $this->attributes['welcome_screen']);
+        return $this->attributeHelper('welcome_screen', WelcomeScreen::class);
     }
 
     /**
