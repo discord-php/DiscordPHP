@@ -440,7 +440,7 @@ trait PartTrait
      *
      * @return Part|null
      */
-    protected function attributeHelper($key, $class): ?Part
+    protected function attributeHelper($key, $class, array $extraData = []): ?Part
     {
         if (! isset($this->attributes[$key])) {
             return null;
@@ -448,7 +448,7 @@ trait PartTrait
 
         return ($this->attributes[$key] instanceof $class)
             ? $this->attributes[$key]
-            : $this->attributes[$key] = $this->createOf($class, $this->attributes[$key]);
+            : $this->attributes[$key] = $this->createOf($class, $this->attributes[$key] + $extraData);
     }
 
     /**
