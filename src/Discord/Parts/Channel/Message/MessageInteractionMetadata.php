@@ -90,11 +90,7 @@ class MessageInteractionMetadata extends Part
      */
     protected function getTargetUserAttribute(): ?User
     {
-        if (! isset($this->attributes['target_user'])) {
-            return null;
-        }
-
-        return $this->factory->part(User::class, (array) $this->attributes['target_user'], true);
+        return $this->attributeHelper('target_user', User::class);
     }
 
     /**
