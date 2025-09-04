@@ -448,7 +448,7 @@ trait PartTrait
 
         return ($this->attributes[$key] instanceof $class)
             ? $this->attributes[$key]
-            : $this->attributes[$key] = $this->createOf($class, $this->attributes[$key] + $extraData);
+            : $this->attributes[$key] = $this->createOf($class, ((array) $this->attributes[$key]) + $extraData);
     }
 
     /**
