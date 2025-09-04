@@ -16,18 +16,18 @@ namespace Discord\Parts\Embed;
 use Discord\Parts\Part;
 
 /**
- * A video for an embed.
+ * The thumbnail of an embed object.
  *
- * @link https://discord.com/developers/docs/resources/channel#embed-object-embed-video-structure
+ * @link https://discord.com/developers/docs/resources/message#embed-object-embed-thumbnail-structure
  *
- * @since 4.0.3
+ * @since 10.19.0
  *
- * @property      ?string|null $url       The source of the video.
- * @property-read ?string|null $proxy_url A proxied url of the video.
- * @property-read ?int|null    $height    The height of the video.
- * @property-read ?int|null    $width     The width of the video.
+ * @property ?string|null $url       Source URL of thumbnail (only supports http(s) and attachments).
+ * @property ?string|null $proxy_url A proxied URL of the thumbnail.
+ * @property ?int|null    $height    Height of thumbnail.
+ * @property ?int|null    $width     Width of thumbnail.
  */
-class Video extends Part
+class Thumbnail extends Part
 {
     /**
      * @inheritDoc

@@ -23,15 +23,15 @@ use Discord\Parts\Part;
  *
  * @since 4.0.3
  *
- * @property      string      $url       The source of the image. Must be https.
- * @property-read string|null $proxy_url A proxied version of the image.
- * @property-read int|null    $height    The height of the image.
- * @property-read int|null    $width     The width of the image.
+ * @property      string       $url       The source of the image. Must be https.
+ * @property-read ?string|null $proxy_url A proxied version of the image.
+ * @property-read ?int|null    $height    The height of the image.
+ * @property-read ?int|null    $width     The width of the image.
  */
 class Image extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'url',
