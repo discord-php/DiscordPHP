@@ -199,48 +199,6 @@ class Member extends Part implements Stringable
     }
 
     /**
-     * Sets the nickname of the member.
-     *
-     * @param ?string|null $nick   The nickname of the member.
-     * @param string|null  $reason Reason for Audit Log.
-     *
-     * @throws NoPermissionsException Missing manage_nicknames permission.
-     *
-     * @return PromiseInterface<self>
-     */
-    public function setNickname(?string $nick = null, ?string $reason = null): PromiseInterface
-    {
-        $payload = [
-            'nick' => $nick ?? '',
-        ];
-
-        $headers = [];
-        if (isset($reason)) {
-            $headers['X-Audit-Log-Reason'] = $reason;
-        }
-
-        // jake plz
-        if ($this->discord->id == $this->id) {
-            return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $payload, $headers);
-        }
-
-        if ($guild = $this->guild) {
-            if ($botperms = $guild->getBotPermissions()) {
-                if (! $botperms->manage_nicknames) {
-                    return reject(new NoPermissionsException("You do not have permission to manage nicknames in the guild {$guild->id}."));
-                }
-            }
-        }
-
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), $payload, $headers)
-            ->then(function ($response) {
-                $this->nick = $response->nick;
-
-                return $this;
-            });
-    }
-
-    /**
      * Modifies the current member.
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-current-member-json-params
@@ -281,6 +239,48 @@ class Member extends Part implements Stringable
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $params, $headers);
+    }
+
+    /**
+     * Sets the nickname of the member.
+     *
+     * @param ?string|null $nick   The nickname of the member.
+     * @param string|null  $reason Reason for Audit Log.
+     *
+     * @throws NoPermissionsException Missing manage_nicknames permission.
+     *
+     * @return PromiseInterface<self>
+     */
+    public function setNickname(?string $nick = null, ?string $reason = null): PromiseInterface
+    {
+        $payload = [
+            'nick' => $nick ?? '',
+        ];
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        // jake plz
+        if ($this->discord->id == $this->id) {
+            return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $payload, $headers);
+        }
+
+        if ($guild = $this->guild) {
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->manage_nicknames) {
+                    return reject(new NoPermissionsException("You do not have permission to manage nicknames in the guild {$guild->id}."));
+                }
+            }
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), $payload, $headers)
+            ->then(function ($response) {
+                $this->nick = $response->nick;
+
+                return $this;
+            });
     }
 
     /**
