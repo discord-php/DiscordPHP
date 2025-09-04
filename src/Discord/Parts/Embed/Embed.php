@@ -102,9 +102,9 @@ class Embed extends Part
     /**
      * Gets the footer attribute.
      *
-     * @return Footer The footer attribute.
+     * @return Footer|null The footer attribute.
      */
-    protected function getFooterAttribute(): Footer
+    protected function getFooterAttribute(): ?Footer
     {
         return $this->attributeHelper('footer', Footer::class);
     }
@@ -112,9 +112,9 @@ class Embed extends Part
     /**
      * Gets the image attribute.
      *
-     * @return Image The image attribute.
+     * @return Image|null The image attribute.
      */
-    protected function getImageAttribute(): Image
+    protected function getImageAttribute(): ?Image
     {
         return $this->attributeHelper('image', Image::class);
     }
@@ -122,9 +122,9 @@ class Embed extends Part
     /**
      * Gets the thumbnail attribute.
      *
-     * @return Thumbnail The thumbnail attribute.
+     * @return Thumbnail|null The thumbnail attribute.
      */
-    protected function getThumbnailAttribute(): Thumbnail
+    protected function getThumbnailAttribute(): ?Thumbnail
     {
         return $this->attributeHelper('thumbnail', Thumbnail::class);
     }
@@ -132,9 +132,9 @@ class Embed extends Part
     /**
      * Gets the video attribute.
      *
-     * @return Video The video attribute.
+     * @return Video|null The video attribute.
      */
-    protected function getVideoAttribute(): Video
+    protected function getVideoAttribute(): ?Video
     {
         return $this->attributeHelper('video', Video::class);
     }
@@ -142,9 +142,9 @@ class Embed extends Part
     /**
      * Gets the provider attribute.
      *
-     * @return Provider The provider attribute.
+     * @return Provider|null The provider attribute.
      */
-    protected function getProviderAttribute(): Provider
+    protected function getProviderAttribute(): ?Provider
     {
         return $this->attributeHelper('provider', Provider::class);
     }
@@ -152,9 +152,9 @@ class Embed extends Part
     /**
      * Gets the author attribute.
      *
-     * @return Author The author attribute.
+     * @return Author|null The author attribute.
      */
-    protected function getAuthorAttribute(): Author
+    protected function getAuthorAttribute(): ?Author
     {
         return $this->attributeHelper('author', Author::class);
     }
@@ -593,29 +593,6 @@ class Embed extends Part
         }
 
         return (($color[0] << 16) + (($color[1] ?? 0) << 8) + ($color[2] ?? 0));
-    }
-
-    /**
-     * Helps with getting embed attributes.
-     *
-     * @param string $key   The attribute key.
-     * @param string $class The attribute class.
-     *
-     * @throws \Exception
-     *
-     * @return mixed
-     */
-    private function attributeHelper($key, $class)
-    {
-        if (! array_key_exists($key, $this->attributes)) {
-            return $this->factory->create($class);
-        }
-
-        if ($this->attributes[$key] instanceof $class) {
-            return $this->attributes[$key];
-        }
-
-        return $this->factory->create($class, $this->attributes[$key], true);
     }
 
     /**

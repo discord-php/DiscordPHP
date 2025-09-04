@@ -30,13 +30,6 @@ class MessageComponent extends Interaction
     protected $type = Interaction::TYPE_MESSAGE_COMPONENT;
 
     /**
-     * The data for the application command interaction.
-     *
-     * @var MessageComponentData
-     */
-    protected $data;
-
-    /**
      * Returns the data associated with the interaction.
      *
      * @return MessageComponentData

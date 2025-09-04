@@ -30,13 +30,6 @@ class ApplicationCommand extends Interaction
     protected $type = Interaction::TYPE_APPLICATION_COMMAND;
 
     /**
-     * The data for the application command interaction.
-     *
-     * @var ApplicationCommandData
-     */
-    protected $data;
-
-    /**
      * Returns the data associated with the interaction.
      *
      * @return ApplicationCommandData

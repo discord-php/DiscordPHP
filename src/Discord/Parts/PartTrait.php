@@ -15,35 +15,27 @@ namespace Discord\Parts;
 
 use Carbon\Carbon;
 use Discord\Discord;
+use Discord\Factory\Factory;
+use Discord\Http\Http;
 use React\Promise\PromiseInterface;
 
 /**
- * This class is the base of all objects that are returned. All "Parts" extend
- * off this base class.
- *
- * @since 2.0.0
+ * @property Http    $http               The HTTP client.
+ * @property Factory $factory            The factory instance.
+ * @property Discord $discord            The Discord client.
+ * @property array   $scriptData         Custom script data. Used for storing custom information, used by end products.
+ * @property array   $fillable           The array of attributes that can be mass-assigned.
+ * @property array   $attributes         The parts attributes and content.
+ * @property array   $visible            Attributes which are visible from debug info.
+ * @property array   $hidden             Attributes that are hidden from public.
+ * @property array   $repositories       Repositories that can exist in a part.
+ * @property array   $repositories_cache An array of repositories.
+ * @property Discord $discord            The Discord client.
+ * @property mixed   $scriptData         Custom script data.
+ * @property bool    $created            Whether the part has been created.
  */
 trait PartTrait
 {
-    /**
-     * Create a new part instance.
-     *
-     * @param Discord $discord    The Discord client.
-     * @param array   $attributes An array of attributes to build the part.
-     * @param bool    $created    Whether the part has already been created.
-     */
-    public function __construct(Discord $discord, array $attributes = [], bool $created = false)
-    {
-        $this->discord = $discord;
-        $this->http = $discord->getHttpClient();
-        $this->factory = $discord->getFactory();
-
-        $this->created = $created;
-        $this->fill($attributes);
-
-        $this->afterConstruct();
-    }
-
     /**
      * Called after the part has been constructed.
      */
@@ -104,7 +96,7 @@ trait PartTrait
      *
      * @return string|false Either a string if it is a method or false.
      */
-    private function checkForGetMutator(string $key)
+    protected function checkForGetMutator(string $key)
     {
         $str = 'get'.self::studly($key).'Attribute';
 
@@ -124,7 +116,7 @@ trait PartTrait
      *
      * @return string|false Either a string if it is a method or false.
      */
-    private function checkForSetMutator(string $key)
+    protected function checkForSetMutator(string $key)
     {
         $str = 'set'.self::studly($key).'Attribute';
 
@@ -143,7 +135,7 @@ trait PartTrait
      * @return mixed      Either the attribute if it exists or void.
      * @throws \Exception
      */
-    private function getAttribute(string $key)
+    protected function getAttribute(string $key)
     {
         if (isset($this->repositories[$key])) {
             if (! isset($this->repositories_cache[$key])) {
@@ -170,7 +162,7 @@ trait PartTrait
      * @param string $key   The key to the attribute.
      * @param mixed  $value The value of the attribute.
      */
-    private function setAttribute(string $key, $value): void
+    protected function setAttribute(string $key, $value): void
     {
         if ($str = $this->checkForSetMutator($key)) {
             $this->{$str}($value);
@@ -231,9 +223,7 @@ trait PartTrait
      */
     public function offsetUnset($key): void
     {
-        if (isset($this->attributes[$key])) {
-            unset($this->attributes[$key]);
-        }
+        unset($this->attributes[$key]);
     }
 
     /**
@@ -438,6 +428,27 @@ trait PartTrait
         $studlyWords = array_map('ucfirst', $words);
 
         return $studlyCache[$string] = implode($studlyWords);
+    }
+
+    /**
+     * Helps with getting attributes.
+     *
+     * @param string $key   The attribute key.
+     * @param string $class The attribute class.
+     *
+     * @throws \Exception
+     *
+     * @return Part|null
+     */
+    protected function attributeHelper($key, $class): ?Part
+    {
+        if (! isset($this->attributes[$key])) {
+            return null;
+        }
+
+        return ($this->attributes[$key] instanceof $class)
+            ? $this->attributes[$key]
+            : $this->attributes[$key] = $this->factory->part($class, $this->attributes[$key], $this->created);
     }
 
     /**
