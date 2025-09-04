@@ -223,9 +223,7 @@ trait PartTrait
      */
     public function offsetUnset($key): void
     {
-        if (isset($this->attributes[$key])) {
-            unset($this->attributes[$key]);
-        }
+        unset($this->attributes[$key]);
     }
 
     /**
