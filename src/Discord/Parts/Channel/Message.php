@@ -704,11 +704,7 @@ class Message extends Part
 
     protected function getMessageReferenceAttribute(): ?MessageReference
     {
-        if (! isset($this->attributes['message_reference'])) {
-            return null;
-        }
-
-        return $this->createOf(MessageReference::class, $this->attributes['message_reference']);
+        return $this->attributeHelper('message_reference', MessageReference::class);
     }
 
     /**
@@ -846,11 +842,7 @@ class Message extends Part
      */
     protected function getCallAttribute(): ?MessageCall
     {
-        if (! isset($this->attributes['call'])) {
-            return null;
-        }
-
-        return $this->factory->part(MessageCall::class, (array) $this->attributes['call'], true);
+        return $this->attributeHelper('call', MessageCall::class);
     }
 
     /**
