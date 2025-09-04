@@ -96,7 +96,7 @@ trait PartTrait
      *
      * @return string|false Either a string if it is a method or false.
      */
-    private function checkForGetMutator(string $key)
+    protected function checkForGetMutator(string $key)
     {
         $str = 'get'.self::studly($key).'Attribute';
 
@@ -116,7 +116,7 @@ trait PartTrait
      *
      * @return string|false Either a string if it is a method or false.
      */
-    private function checkForSetMutator(string $key)
+    protected function checkForSetMutator(string $key)
     {
         $str = 'set'.self::studly($key).'Attribute';
 
@@ -135,7 +135,7 @@ trait PartTrait
      * @return mixed      Either the attribute if it exists or void.
      * @throws \Exception
      */
-    private function getAttribute(string $key)
+    protected function getAttribute(string $key)
     {
         if (isset($this->repositories[$key])) {
             if (! isset($this->repositories_cache[$key])) {
@@ -162,7 +162,7 @@ trait PartTrait
      * @param string $key   The key to the attribute.
      * @param mixed  $value The value of the attribute.
      */
-    private function setAttribute(string $key, $value): void
+    protected function setAttribute(string $key, $value): void
     {
         if ($str = $this->checkForSetMutator($key)) {
             $this->{$str}($value);
