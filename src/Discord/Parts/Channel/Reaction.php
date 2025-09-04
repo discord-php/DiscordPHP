@@ -229,11 +229,7 @@ class Reaction extends Part
      */
     protected function getEmojiAttribute(): ?Emoji
     {
-        if (! isset($this->attributes['emoji'])) {
-            return null;
-        }
-
-        return $this->factory->part(Emoji::class, (array) $this->attributes['emoji'] + ['guild_id' => $this->guild_id], true);
+        return $this->attributeHelper('emoji', Emoji::class, ['guild_id' => $this->guild_id]);
     }
 
     /**
@@ -247,7 +243,7 @@ class Reaction extends Part
             return $channel->messages->get('id', $this->message_id);
         }
 
-        return $this->attributes['message'] ?? null;
+        return $this->attributeHelper('message', Message::class);
     }
 
     /**
