@@ -442,7 +442,7 @@ trait PartTrait
      */
     protected function attributeHelper($key, $class): ?Part
     {
-        if (! array_key_exists($key, $this->attributes)) {
+        if (! isset($this->attributes[$key])) {
             return null;
         }
 
