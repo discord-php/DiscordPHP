@@ -116,11 +116,7 @@ class Invite extends Part implements Stringable
             return $guild;
         }
 
-        if (! isset($this->attributes['guild'])) {
-            return null;
-        }
-
-        return $this->factory->part(Guild::class, (array) $this->attributes['guild'], true);
+        return $this->attributeHelper('guild', Guild::class);
     }
 
     /**
@@ -229,11 +225,7 @@ class Invite extends Part implements Stringable
      */
     protected function getTargetApplicationAttribute(): ?Application
     {
-        if (! isset($this->attributes['target_application'])) {
-            return null;
-        }
-
-        return $this->factory->part(Application::class, (array) $this->attributes['target_application'], true);
+        return $this->attributeHelper('target_application', Application::class);
     }
 
     /**
