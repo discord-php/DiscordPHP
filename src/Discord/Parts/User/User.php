@@ -303,11 +303,7 @@ class User extends Part implements Stringable
      */
     public function getAvatarDecorationDataAttribute(): ?AvatarDecorationData
     {
-        if (! isset($this->attributes['avatar_decoration_data'])) {
-            return null;
-        }
-
-        return $this->factory->part(AvatarDecorationData::class, (array) $this->attributes['avatar_decoration_data'], true);
+        return $this->attributeHelper('avatar_decoration_data', AvatarDecorationData::class);
     }
 
     /**
@@ -317,11 +313,7 @@ class User extends Part implements Stringable
      */
     protected function getCollectiblesAttribute(): ?Collectibles
     {
-        if (! isset($this->attributes['collectibles'])) {
-            return null;
-        }
-
-        return $this->factory->part(Collectibles::class, (array) $this->attributes['collectibles'], true);
+        return $this->attributeHelper('collectibles', Collectibles::class);
     }
 
     /**
@@ -329,11 +321,7 @@ class User extends Part implements Stringable
      */
     protected function getPrimaryGuildAttribute(): ?PrimaryGuild
     {
-        if (! isset($this->attributes['primary_guild'])) {
-            return null;
-        }
-
-        return $this->factory->part(PrimaryGuild::class, (array) $this->attributes['primary_guild'], true);
+        return $this->attributeHelper('primary_guild', PrimaryGuild::class);
     }
 
     /**
