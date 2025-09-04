@@ -253,11 +253,7 @@ class Interaction extends Part
             return $member->user;
         }
 
-        if (! isset($this->attributes['user'])) {
-            return null;
-        }
-
-        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        return $this->attributeHelper('user', User::class);
     }
 
     /**
@@ -267,11 +263,7 @@ class Interaction extends Part
      */
     protected function getMessageAttribute(): ?Message
     {
-        if (! isset($this->attributes['message'])) {
-            return null;
-        }
-
-        return $this->factory->part(Message::class, (array) $this->attributes['message'], true);
+        return $this->attributeHelper('message', Message::class);
     }
 
     /**
