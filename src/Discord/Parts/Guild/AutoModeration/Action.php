@@ -47,11 +47,7 @@ class Action extends Part
      */
     public function getMetadataAttribute(): ?ActionMetadata
     {
-        if (! isset($this->attributes['metadata'])) {
-            return null;
-        }
-
-        return $this->createOf(ActionMetadata::class, $this->attributes['metadata']);
+        return $this->attributeHelper('metadata', ActionMetadata::class);
     }
 
     /**
