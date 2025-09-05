@@ -63,6 +63,10 @@ class ModalBuilder extends Builder implements JsonSerializable
     /**
      * Creates a new message builder.
      *
+     * @param string                                                   $title
+     * @param string                                                   $custom_id
+     * @param ExCollectionInterface<ComponentObject>|ComponentObject[] $components
+     *
      * @return static
      */
     public static function new($title, $custom_id, $components): self
