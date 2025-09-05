@@ -2143,7 +2143,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003A\u0024components",
             "name": "components",
-            "summary": "Between\u00201\u0020and\u00205\u0020\u0028inclusive\u0029\u0020components\u0020that\u0020make\u0020up\u0020the\u0020modal\u0020contained\u0020in\u0020Action\u0020Row.",
+            "summary": "Between\u00201\u0020and\u00205\u0020\u0028inclusive\u0029\u0020components\u0020that\u0020make\u0020up\u0020the\u0020modal.",
             "url": "classes/Discord-Builders-ModalBuilder.html#property_components"
         },                {
             "fqsen": "\\Discord\\CommandClient\\Command",
@@ -5501,6 +5501,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_POLL_RESULT"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AEMOJI_ADDED",
+            "name": "EMOJI_ADDED",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_EMOJI_ADDED"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AGUILD_MEMBER_JOIN",
             "name": "GUILD_MEMBER_JOIN",
             "summary": "",
@@ -6141,6 +6146,11 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020video\u0020attribute.",
             "url": "classes/Discord-Parts-Embed-Embed.html#method_getVideoAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003AgetProviderAttribute\u0028\u0029",
+            "name": "getProviderAttribute",
+            "summary": "Gets\u0020the\u0020provider\u0020attribute.",
+            "url": "classes/Discord-Parts-Embed-Embed.html#method_getProviderAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003AgetAuthorAttribute\u0028\u0029",
             "name": "getAuthorAttribute",
             "summary": "Gets\u0020the\u0020author\u0020attribute.",
@@ -6251,15 +6261,15 @@ Search.appendIndex(
             "summary": "Resolves\u0020a\u0020color\u0020to\u0020an\u0020integer.",
             "url": "classes/Discord-Parts-Embed-Embed.html#method_resolveColor"
         },                {
-            "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003AattributeHelper\u0028\u0029",
-            "name": "attributeHelper",
-            "summary": "Helps\u0020with\u0020getting\u0020embed\u0020attributes.",
-            "url": "classes/Discord-Parts-Embed-Embed.html#method_attributeHelper"
-        },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003AgetEmbedTypes\u0028\u0029",
             "name": "getEmbedTypes",
             "summary": "Returns\u0020all\u0020possible\u0020embed\u0020types.",
             "url": "classes/Discord-Parts-Embed-Embed.html#method_getEmbedTypes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003ATYPES",
+            "name": "TYPES",
+            "summary": "",
+            "url": "classes/Discord-Parts-Embed-Embed.html#constant_TYPES"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003ATYPE_RICH",
             "name": "TYPE_RICH",
@@ -6291,10 +6301,90 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Embed-Embed.html#constant_TYPE_LINK"
         },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003ATYPE_POLL_RESULT",
+            "name": "TYPE_POLL_RESULT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Embed-Embed.html#constant_TYPE_POLL_RESULT"
+        },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Embed-Embed.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedArticle",
+            "name": "EmbedArticle",
+            "summary": "An\u0020embed\u0020object\u0020to\u0020be\u0020sent\u0020with\u0020a\u0020message.",
+            "url": "classes/Discord-Parts-Embed-EmbedArticle.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedArticle\u003A\u003ATYPE",
+            "name": "TYPE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Embed-EmbedArticle.html#constant_TYPE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedGifv",
+            "name": "EmbedGifv",
+            "summary": "An\u0020embed\u0020object\u0020to\u0020be\u0020sent\u0020with\u0020a\u0020message.",
+            "url": "classes/Discord-Parts-Embed-EmbedGifv.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedGifv\u003A\u003ATYPE",
+            "name": "TYPE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Embed-EmbedGifv.html#constant_TYPE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedImage",
+            "name": "EmbedImage",
+            "summary": "An\u0020embed\u0020object\u0020to\u0020be\u0020sent\u0020with\u0020a\u0020message.",
+            "url": "classes/Discord-Parts-Embed-EmbedImage.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedImage\u003A\u003ATYPE",
+            "name": "TYPE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Embed-EmbedImage.html#constant_TYPE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedLink",
+            "name": "EmbedLink",
+            "summary": "An\u0020embed\u0020object\u0020to\u0020be\u0020sent\u0020with\u0020a\u0020message.",
+            "url": "classes/Discord-Parts-Embed-EmbedLink.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedLink\u003A\u003ATYPE",
+            "name": "TYPE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Embed-EmbedLink.html#constant_TYPE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedPollResult",
+            "name": "EmbedPollResult",
+            "summary": "An\u0020embed\u0020object\u0020to\u0020be\u0020sent\u0020with\u0020a\u0020message.",
+            "url": "classes/Discord-Parts-Embed-EmbedPollResult.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedPollResult\u003A\u003AgetPollFieldsAttribute\u0028\u0029",
+            "name": "getPollFieldsAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Embed-EmbedPollResult.html#method_getPollFieldsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedPollResult\u003A\u003ATYPE",
+            "name": "TYPE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Embed-EmbedPollResult.html#constant_TYPE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedRich",
+            "name": "EmbedRich",
+            "summary": "An\u0020embed\u0020object\u0020to\u0020be\u0020sent\u0020with\u0020a\u0020message.",
+            "url": "classes/Discord-Parts-Embed-EmbedRich.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedRich\u003A\u003ATYPE",
+            "name": "TYPE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Embed-EmbedRich.html#constant_TYPE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedVideo",
+            "name": "EmbedVideo",
+            "summary": "An\u0020embed\u0020object\u0020to\u0020be\u0020sent\u0020with\u0020a\u0020message.",
+            "url": "classes/Discord-Parts-Embed-EmbedVideo.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\EmbedVideo\u003A\u003ATYPE",
+            "name": "TYPE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Embed-EmbedVideo.html#constant_TYPE"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Field",
             "name": "Field",
@@ -6330,6 +6420,26 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Embed-Image.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\Provider",
+            "name": "Provider",
+            "summary": "The\u0020provider\u0020of\u0020an\u0020embed\u0020object.",
+            "url": "classes/Discord-Parts-Embed-Provider.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\Provider\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Embed-Provider.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\Thumbnail",
+            "name": "Thumbnail",
+            "summary": "The\u0020thumbnail\u0020of\u0020an\u0020embed\u0020object.",
+            "url": "classes/Discord-Parts-Embed-Thumbnail.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\Thumbnail\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Embed-Thumbnail.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Video",
             "name": "Video",
@@ -7353,33 +7463,38 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ASUPPRESS_JOIN_NOTIFICATIONS",
             "name": "SUPPRESS_JOIN_NOTIFICATIONS",
-            "summary": "",
+            "summary": "Suppress\u0020member\u0020join\u0020notifications.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_SUPPRESS_JOIN_NOTIFICATIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ASUPPRESS_PREMIUM_SUBSCRIPTION",
             "name": "SUPPRESS_PREMIUM_SUBSCRIPTION",
-            "summary": "",
+            "summary": "Suppress\u0020server\u0020boost\u0020notifications.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_SUPPRESS_PREMIUM_SUBSCRIPTION"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ASUPPRESS_GUILD_REMINDER_NOTIFICATIONS",
             "name": "SUPPRESS_GUILD_REMINDER_NOTIFICATIONS",
-            "summary": "",
+            "summary": "Suppress\u0020server\u0020setup\u0020tips.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_SUPPRESS_GUILD_REMINDER_NOTIFICATIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ASUPPRESS_JOIN_NOTIFICATION_REPLIES",
             "name": "SUPPRESS_JOIN_NOTIFICATION_REPLIES",
-            "summary": "",
+            "summary": "Hide\u0020member\u0020join\u0020sticker\u0020reply\u0020buttons.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_SUPPRESS_JOIN_NOTIFICATION_REPLIES"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ASUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATIONS",
             "name": "SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATIONS",
-            "summary": "",
+            "summary": "Suppress\u0020role\u0020subscription\u0020purchase\u0020and\u0020renewal\u0020notifications.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ASUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATION_REPLIES",
             "name": "SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATION_REPLIES",
-            "summary": "",
+            "summary": "Hide\u0020role\u0020subscription\u0020sticker\u0020reply\u0020buttons.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATION_REPLIES"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ASUPPRESS_UGC_ADDED_NOTIFICATIONS",
+            "name": "SUPPRESS_UGC_ADDED_NOTIFICATIONS",
+            "summary": "Suppress\u0020emoji\u0020added\u0020notifications.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#constant_SUPPRESS_UGC_ADDED_NOTIFICATIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AHUB_TYPE_DEFAULT",
             "name": "HUB_TYPE_DEFAULT",
@@ -9256,6 +9371,11 @@ Search.appendIndex(
             "summary": "This\u0020class\u0020is\u0020the\u0020base\u0020of\u0020all\u0020objects\u0020that\u0020are\u0020returned.\u0020All\u0020\u0022Parts\u0022\u0020extend\noff\u0020this\u0020base\u0020class.",
             "url": "classes/Discord-Parts-Part.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Part\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Create\u0020a\u0020new\u0020part\u0020instance.",
+            "url": "classes/Discord-Parts-Part.html#method___construct"
+        },                {
             "fqsen": "\\Discord\\Parts\\Part\u003A\u003A__debugInfo\u0028\u0029",
             "name": "__debugInfo",
             "summary": "",
@@ -9443,13 +9563,8 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\PartTrait",
             "name": "PartTrait",
-            "summary": "This\u0020class\u0020is\u0020the\u0020base\u0020of\u0020all\u0020objects\u0020that\u0020are\u0020returned.\u0020All\u0020\u0022Parts\u0022\u0020extend\noff\u0020this\u0020base\u0020class.",
+            "summary": "",
             "url": "classes/Discord-Parts-PartTrait.html"
-        },                {
-            "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "Create\u0020a\u0020new\u0020part\u0020instance.",
-            "url": "classes/Discord-Parts-PartTrait.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AafterConstruct\u0028\u0029",
             "name": "afterConstruct",
@@ -9576,6 +9691,11 @@ Search.appendIndex(
             "summary": "Converts\u0020a\u0020string\u0020to\u0020studlyCase.",
             "url": "classes/Discord-Parts-PartTrait.html#method_studly"
         },                {
+            "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AattributeHelper\u0028\u0029",
+            "name": "attributeHelper",
+            "summary": "Helps\u0020with\u0020getting\u0020attributes.",
+            "url": "classes/Discord-Parts-PartTrait.html#method_attributeHelper"
+        },                {
             "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AgetConstants\u0028\u0029",
             "name": "getConstants",
             "summary": "Returns\u0020an\u0020array\u0020of\u0020constant\u0020names\u0020and\u0020their\u0020values.",
@@ -9618,7 +9738,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Create\u0020a\u0020new\u0020part\u0020instance.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AgetPermissions\u0028\u0029",

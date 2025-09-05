@@ -806,7 +806,7 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-PartTrait.html#method___construct">__construct()</a>
+    <a class="" href="classes/Discord-Parts-Part.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
@@ -1179,6 +1179,34 @@ JSON. Used for JsonSerializable.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method_attributeHelper">attributeHelper()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null    </span>
+</dt>
+<dd>Helps with getting attributes.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a>
+    <span>
+                                &nbsp;: string|false    </span>
+</dt>
+<dd>Checks if there is a get mutator present.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a>
+    <span>
+                                &nbsp;: string|false    </span>
+</dt>
+<dd>Checks if there is a set mutator present.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Gets an attribute on the part.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_getAvailableTagsAttribute">getAvailableTagsAttribute()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;    </span>
@@ -1270,39 +1298,18 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Return key-value attributes if it has been filled.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_setPermissionOverwritesAttribute">setPermissionOverwritesAttribute()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Sets the permission overwrites attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a>
-    <span>
-                                &nbsp;: string|false    </span>
-</dt>
-<dd>Checks if there is a get mutator present.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a>
-    <span>
-                                &nbsp;: string|false    </span>
-</dt>
-<dd>Checks if there is a set mutator present.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>Gets an attribute on the part.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Sets an attribute on the part.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_setPermissionOverwritesAttribute">setPermissionOverwritesAttribute()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Sets the permission overwrites attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a>
@@ -2537,7 +2544,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">109</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
@@ -3138,7 +3145,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -3386,7 +3393,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -3427,7 +3434,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -3468,7 +3475,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -3597,7 +3604,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
@@ -3638,7 +3645,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -3734,7 +3741,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -3773,7 +3780,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">82</span>
 
     </aside>
 
@@ -3811,13 +3818,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
-        <a href="classes/Discord-Parts-PartTrait.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Part.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -3882,7 +3889,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
@@ -3920,7 +3927,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">493</span>
+    <span class="phpdocumentor-element-found-in__line">504</span>
 
     </aside>
 
@@ -4000,7 +4007,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">249</span>
+    <span class="phpdocumentor-element-found-in__line">239</span>
 
     </aside>
 
@@ -4038,7 +4045,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">506</span>
+    <span class="phpdocumentor-element-found-in__line">517</span>
 
     </aside>
 
@@ -4154,7 +4161,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">270</span>
+    <span class="phpdocumentor-element-found-in__line">260</span>
 
     </aside>
 
@@ -4775,7 +4782,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -4831,7 +4838,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -4932,7 +4939,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">450</span>
+    <span class="phpdocumentor-element-found-in__line">461</span>
 
     </aside>
 
@@ -5049,7 +5056,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">387</span>
+    <span class="phpdocumentor-element-found-in__line">377</span>
 
     </aside>
 
@@ -5247,7 +5254,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">297</span>
+    <span class="phpdocumentor-element-found-in__line">287</span>
 
     </aside>
 
@@ -5305,7 +5312,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">323</span>
+    <span class="phpdocumentor-element-found-in__line">313</span>
 
     </aside>
 
@@ -5459,7 +5466,7 @@ Or also missing <code class="prettyprint">connect</code> permission for text in 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -5585,7 +5592,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">286</span>
+    <span class="phpdocumentor-element-found-in__line">276</span>
 
     </aside>
 
@@ -5908,7 +5915,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">209</span>
+    <span class="phpdocumentor-element-found-in__line">201</span>
 
     </aside>
 
@@ -5963,7 +5970,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">196</span>
+    <span class="phpdocumentor-element-found-in__line">188</span>
 
     </aside>
 
@@ -6046,7 +6053,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">222</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
@@ -6119,7 +6126,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">232</span>
+    <span class="phpdocumentor-element-found-in__line">224</span>
 
     </aside>
 
@@ -6669,7 +6676,7 @@ or the bot is deafened, self-deafened, muted, or suppressed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">244</span>
+    <span class="phpdocumentor-element-found-in__line">234</span>
 
     </aside>
 
@@ -7428,7 +7435,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">261</span>
+    <span class="phpdocumentor-element-found-in__line">251</span>
 
     </aside>
 
@@ -7525,6 +7532,295 @@ send_messages when creating a forum post.</p>
     
 
     
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_attributeHelper">
+        attributeHelper()
+        <a href="classes/Discord-Parts-PartTrait.html#method_attributeHelper" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">443</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Helps with getting attributes.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">attributeHelper</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$class</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The attribute key.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$class</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The attribute class.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-PartTrait.html#method_attributeHelper#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_checkForGetMutator">
+        checkForGetMutator()
+        <a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">99</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Checks if there is a get mutator present.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">checkForGetMutator</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The attribute name to check.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Replaces checkForMutator($key, 'get')</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string|false</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Either a string if it is a method or false.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_checkForSetMutator">
+        checkForSetMutator()
+        <a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">119</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Checks if there is a set mutator present.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">checkForSetMutator</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The attribute name to check.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Replaces checkForMutator($key, 'set')</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string|false</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Either a string if it is a method or false.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getAttribute">
+        getAttribute()
+        <a href="classes/Discord-Parts-PartTrait.html#method_getAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">138</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets an attribute on the part.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The key to the attribute.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-PartTrait.html#method_getAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">mixed</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Either the attribute if it exists or void.</p>
+</section>
+
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -8077,7 +8373,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">368</span>
+    <span class="phpdocumentor-element-found-in__line">358</span>
 
     </aside>
 
@@ -8115,6 +8411,62 @@ send_messages when creating a forum post.</p>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             </section>
 
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setAttribute">
+        setAttribute()
+        <a href="classes/Discord-Parts-PartTrait.html#method_setAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">165</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets an attribute on the part.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">setAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The key to the attribute.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$value</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The value of the attribute.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -8165,276 +8517,6 @@ send_messages when creating a forum post.</p>
         class="phpdocumentor-element
             -method
             -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_checkForGetMutator">
-        checkForGetMutator()
-        <a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">107</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Checks if there is a get mutator present.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">checkForGetMutator</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The attribute name to check.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.0.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Replaces checkForMutator($key, 'get')</p>
-</section>
-
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string|false</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>Either a string if it is a method or false.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_checkForSetMutator">
-        checkForSetMutator()
-        <a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">127</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Checks if there is a set mutator present.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">checkForSetMutator</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The attribute name to check.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.0.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Replaces checkForMutator($key, 'set')</p>
-</section>
-
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string|false</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>Either a string if it is a method or false.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getAttribute">
-        getAttribute()
-        <a href="classes/Discord-Parts-PartTrait.html#method_getAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">146</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Gets an attribute on the part.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">getAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The key to the attribute.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_getAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">mixed</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>Either the attribute if it exists or void.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setAttribute">
-        setAttribute()
-        <a href="classes/Discord-Parts-PartTrait.html#method_setAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">173</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Sets an attribute on the part.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">setAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The key to the attribute.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$value</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The value of the attribute.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
                                     -static                    "
 >
     <h4 class="phpdocumentor-element__name" id="method_studly">
@@ -8445,7 +8527,7 @@ send_messages when creating a forum post.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">428</span>
+    <span class="phpdocumentor-element-found-in__line">418</span>
 
     </aside>
 
@@ -8694,7 +8776,7 @@ static as we may move it outside this class in future.</p>
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___construct">__construct()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Part.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Part.html#method___debugInfo">__debugInfo()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___get">__get()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___serialize">__serialize()</a></li>
@@ -8748,6 +8830,10 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_unpinMessage">unpinMessage()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_unserialize">unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_afterConstruct">afterConstruct()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_attributeHelper">attributeHelper()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getAvailableTagsAttribute">getAvailableTagsAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getDefaultReactionEmojiAttribute">getDefaultReactionEmojiAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-ChannelTrait.html#method_getGuildAttribute">getGuildAttribute()</a></li>
@@ -8761,11 +8847,8 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getRecipientIdAttribute">getRecipientIdAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_getRecipientsAttribute">getRecipientsAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_setPermissionOverwritesAttribute">setPermissionOverwritesAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Channel.html#method_setPermissionOverwritesAttribute">setPermissionOverwritesAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a></li>
                                     </ul>
             </li>

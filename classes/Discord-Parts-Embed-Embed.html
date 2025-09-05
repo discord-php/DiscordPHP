@@ -265,7 +265,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -284,7 +284,7 @@
                     <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#embed-object"> https://discord.com/developers/docs/resources/channel#embed-object </a>
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/message#embed-object-embed-structure"> https://discord.com/developers/docs/resources/message#embed-object-embed-structure </a>
                     
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
@@ -294,6 +294,133 @@
                                             <span class="phpdocumentor-tag-link">4.0.3</span>
                                                                                 
                                              
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.19.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>The <code class="prettyprint">provider</code> property was added and <code class="prettyprint">thumbnail</code> was updated to return <code class="prettyprint">Thumbnail</code>.</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?string|null                        $title       The title of the embed.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?string|null                        $description A description of the embed.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?string|null                        $url         The URL of the embed.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Carbon|null                        $timestamp   A timestamp of the embed.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?int|null                           $color       The color of the embed.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Footer|null                        $footer      The footer of the embed.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Image|null                         $image       The image of the embed.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Thumbnail|null                     $thumbnail   The thumbnail of the embed.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Author|null                        $author      The author of the embed.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?ExCollectionInterface|Field[]|null $fields      A collection of embed fields (max of 25).</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property-read</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?string|null                        $type        The type of the embed (always &quot;rich&quot; for webhook embeds).</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property-read</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Video|null                         $video       The video of the embed.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property-read</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Provider|null                      $provider    The provider of the embed.</p>
+</section>
+
                                     </dd>
                                             </dl>
 
@@ -344,6 +471,12 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Embed-Embed.html#constant_TYPE_POLL_RESULT">TYPE_POLL_RESULT</a>
+    <span>
+        &nbsp;= &#039;poll_result&#039;                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Embed-Embed.html#constant_TYPE_RICH">TYPE_RICH</a>
     <span>
         &nbsp;= &#039;rich&#039;                            </span>
@@ -353,6 +486,22 @@
     <a class="" href="classes/Discord-Parts-Embed-Embed.html#constant_TYPE_VIDEO">TYPE_VIDEO</a>
     <span>
         &nbsp;= &#039;video&#039;                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Embed-Embed.html#constant_TYPES">TYPES</a>
+    <span>
+        &nbsp;= [
+    0 =&gt; \Discord\Parts\Embed\Embed::class,
+    // Fallback for unknown types
+    self::TYPE_RICH =&gt; \Discord\Parts\Embed\EmbedRich::class,
+    self::TYPE_IMAGE =&gt; \Discord\Parts\Embed\EmbedImage::class,
+    self::TYPE_VIDEO =&gt; \Discord\Parts\Embed\EmbedVideo::class,
+    self::TYPE_GIFV =&gt; \Discord\Parts\Embed\EmbedGifv::class,
+    self::TYPE_ARTICLE =&gt; \Discord\Parts\Embed\EmbedArticle::class,
+    self::TYPE_LINK =&gt; \Discord\Parts\Embed\EmbedLink::class,
+    self::TYPE_POLL_RESULT =&gt; \Discord\Parts\Embed\EmbedPollResult::class,
+]                            </span>
 </dt>
 
     </dl>
@@ -365,18 +514,6 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_author">$author</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_color">$color</a>
-    <span>
-                        &nbsp;: int|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Part.html#property_created">$created</a>
     <span>
                         &nbsp;: bool            </span>
@@ -384,77 +521,11 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_description">$description</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_fields">$fields</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Embed-Field.html"><abbr title="\Discord\Parts\Embed\Field">Field</abbr></a>&gt;            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_footer">$footer</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Embed-Footer.html"><abbr title="\Discord\Parts\Embed\Footer">Footer</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_image">$image</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_provider">$provider</a>
-    <span>
-                        &nbsp;: object|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="-deprecated" href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a>
     <span>
                         &nbsp;: mixed            </span>
 </dt>
 <dd>Custom script data.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_thumbnail">$thumbnail</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_timestamp">$timestamp</a>
-    <span>
-                        &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_title">$title</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_type">$type</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_url">$url</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#property_video">$video</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a>|null            </span>
-</dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a>
@@ -528,7 +599,7 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-PartTrait.html#method___construct">__construct()</a>
+    <a class="" href="classes/Discord-Parts-Part.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
@@ -786,6 +857,27 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Called after the part has been constructed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method_attributeHelper">attributeHelper()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null    </span>
+</dt>
+<dd>Helps with getting attributes.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a>
+    <span>
+                                &nbsp;: string|false    </span>
+</dt>
+<dd>Checks if there is a get mutator present.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a>
+    <span>
+                                &nbsp;: string|false    </span>
+</dt>
+<dd>Checks if there is a set mutator present.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Embed-Embed.html#method_ensureValidUrl">ensureValidUrl()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -801,9 +893,16 @@ JSON. Used for JsonSerializable.</dd>
 characters overall limit.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Gets an attribute on the part.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Embed-Embed.html#method_getAuthorAttribute">getAuthorAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a>|null    </span>
 </dt>
 <dd>Gets the author attribute.</dd>
 
@@ -817,21 +916,28 @@ characters overall limit.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Embed-Embed.html#method_getFooterAttribute">getFooterAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Embed-Footer.html"><abbr title="\Discord\Parts\Embed\Footer">Footer</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Embed-Footer.html"><abbr title="\Discord\Parts\Embed\Footer">Footer</abbr></a>|null    </span>
 </dt>
 <dd>Gets the footer attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Embed-Embed.html#method_getImageAttribute">getImageAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a>|null    </span>
 </dt>
 <dd>Gets the image attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Embed-Embed.html#method_getProviderAttribute">getProviderAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Embed-Provider.html"><abbr title="\Discord\Parts\Embed\Provider">Provider</abbr></a>|null    </span>
+</dt>
+<dd>Gets the provider attribute.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Embed-Embed.html#method_getThumbnailAttribute">getThumbnailAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Embed-Thumbnail.html"><abbr title="\Discord\Parts\Embed\Thumbnail">Thumbnail</abbr></a>|null    </span>
 </dt>
 <dd>Gets the thumbnail attribute.</dd>
 
@@ -845,7 +951,7 @@ characters overall limit.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Embed-Embed.html#method_getVideoAttribute">getVideoAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a>|null    </span>
 </dt>
 <dd>Gets the video attribute.</dd>
 
@@ -862,6 +968,13 @@ characters overall limit.</dd>
                                 &nbsp;: int    </span>
 </dt>
 <dd>Resolves a color to an integer.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Sets an attribute on the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Embed-Embed.html#method_setColorAttribute">setColorAttribute()</a>
@@ -899,46 +1012,11 @@ characters overall limit.</dd>
 <dd>Sets the type of the embed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/Discord-Parts-Embed-Embed.html#method_attributeHelper">attributeHelper()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>Helps with getting embed attributes.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a>
-    <span>
-                                &nbsp;: string|false    </span>
-</dt>
-<dd>Checks if there is a get mutator present.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a>
-    <span>
-                                &nbsp;: string|false    </span>
-</dt>
-<dd>Checks if there is a set mutator present.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>Gets an attribute on the part.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/Discord-Parts-Embed-Embed.html#method_getEmbedTypes">getEmbedTypes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Returns all possible embed types.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Sets an attribute on the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a>
@@ -968,7 +1046,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
@@ -999,7 +1077,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -1030,7 +1108,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -1061,7 +1139,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -1083,6 +1161,37 @@ characters overall limit.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_POLL_RESULT">
+        TYPE_POLL_RESULT
+        <a href="classes/Discord-Parts-Embed-Embed.html#constant_TYPE_POLL_RESULT" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">65</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_POLL_RESULT</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;poll_result&#039;</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_TYPE_RICH">
         TYPE_RICH
         <a href="classes/Discord-Parts-Embed-Embed.html#constant_TYPE_RICH" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1092,7 +1201,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
@@ -1123,7 +1232,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -1134,6 +1243,47 @@ characters overall limit.</dd>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">TYPE_VIDEO</span>
     = <span class="phpdocumentor-signature__default-value">&#039;video&#039;</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPES">
+        TYPES
+        <a href="classes/Discord-Parts-Embed-Embed.html#constant_TYPES" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">48</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPES</span>
+    = <span class="phpdocumentor-signature__default-value">[
+    0 =&gt; \Discord\Parts\Embed\Embed::class,
+    // Fallback for unknown types
+    self::TYPE_RICH =&gt; \Discord\Parts\Embed\EmbedRich::class,
+    self::TYPE_IMAGE =&gt; \Discord\Parts\Embed\EmbedImage::class,
+    self::TYPE_VIDEO =&gt; \Discord\Parts\Embed\EmbedVideo::class,
+    self::TYPE_GIFV =&gt; \Discord\Parts\Embed\EmbedGifv::class,
+    self::TYPE_ARTICLE =&gt; \Discord\Parts\Embed\EmbedArticle::class,
+    self::TYPE_LINK =&gt; \Discord\Parts\Embed\EmbedLink::class,
+    self::TYPE_POLL_RESULT =&gt; \Discord\Parts\Embed\EmbedPollResult::class,
+]</span>
 </code>
 
 
@@ -1160,86 +1310,6 @@ characters overall limit.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_author">
-        $author
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_author" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$author</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The author of the embed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_color">
-        $color
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_color" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$color</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The color of the embed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_created">
         $created
         <a href="classes/Discord-Parts-Part.html#property_created" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1250,7 +1320,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">109</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
@@ -1279,206 +1349,6 @@ characters overall limit.</dd>
             phpdocumentor-element
             -property
             -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_description">
-        $description
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_description" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$description</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>A description of the embed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_fields">
-        $fields
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_fields" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Embed-Field.html"><abbr title="\Discord\Parts\Embed\Field">Field</abbr></a>&gt;</span>
-    <span class="phpdocumentor-signature__name">$fields</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>A collection of embed fields.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_footer">
-        $footer
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_footer" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Embed-Footer.html"><abbr title="\Discord\Parts\Embed\Footer">Footer</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$footer</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The footer of the embed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_image">
-        $image
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_image" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$image</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The image of the embed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                -read-only                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_provider">
-        $provider
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_provider" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">object|null</span>
-    <span class="phpdocumentor-signature__name">$provider</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The provider of the embed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
                         -deprecated                                            "
 >
     <h4 class="phpdocumentor-element__name" id="property_scriptData">
@@ -1491,7 +1361,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -1526,246 +1396,6 @@ characters overall limit.</dd>
         class="
             phpdocumentor-element
             -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_thumbnail">
-        $thumbnail
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_thumbnail" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$thumbnail</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The thumbnail of the embed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_timestamp">
-        $timestamp
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_timestamp" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-    <span class="phpdocumentor-signature__name">$timestamp</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>A timestamp of the embed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_title">
-        $title
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_title" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$title</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The title of the embed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                -read-only                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_type">
-        $type
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$type</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The type of the embed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_url">
-        $url
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_url" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$url</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The URL of the embed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                -read-only                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_video">
-        $video
-        <a href="classes/Discord-Parts-Embed-Embed.html#property_video" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$video</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The video of the embed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
             -protected
                                                                     "
 >
@@ -1779,7 +1409,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -1820,7 +1450,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -1861,7 +1491,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -1902,7 +1532,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 
     </aside>
 
@@ -1920,6 +1550,20 @@ characters overall limit.</dd>
 </section>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Embed-Embed.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 
@@ -1943,7 +1587,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
@@ -1984,7 +1628,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -2025,7 +1669,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
@@ -2066,7 +1710,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -2105,7 +1749,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">82</span>
 
     </aside>
 
@@ -2143,13 +1787,13 @@ characters overall limit.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
-        <a href="classes/Discord-Parts-PartTrait.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Part.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -2214,7 +1858,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
@@ -2252,7 +1896,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">493</span>
+    <span class="phpdocumentor-element-found-in__line">504</span>
 
     </aside>
 
@@ -2332,7 +1976,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">249</span>
+    <span class="phpdocumentor-element-found-in__line">239</span>
 
     </aside>
 
@@ -2370,7 +2014,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">506</span>
+    <span class="phpdocumentor-element-found-in__line">517</span>
 
     </aside>
 
@@ -2443,7 +2087,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">465</span>
+    <span class="phpdocumentor-element-found-in__line">476</span>
 
     </aside>
 
@@ -2511,7 +2155,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">270</span>
+    <span class="phpdocumentor-element-found-in__line">260</span>
 
     </aside>
 
@@ -2555,7 +2199,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">317</span>
+    <span class="phpdocumentor-element-found-in__line">340</span>
 
     </aside>
 
@@ -2621,7 +2265,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">345</span>
+    <span class="phpdocumentor-element-found-in__line">368</span>
 
     </aside>
 
@@ -2705,7 +2349,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -2761,7 +2405,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -2823,7 +2467,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">450</span>
+    <span class="phpdocumentor-element-found-in__line">461</span>
 
     </aside>
 
@@ -2881,7 +2525,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">344</span>
+    <span class="phpdocumentor-element-found-in__line">334</span>
 
     </aside>
 
@@ -2920,7 +2564,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">387</span>
+    <span class="phpdocumentor-element-found-in__line">377</span>
 
     </aside>
 
@@ -2959,7 +2603,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">297</span>
+    <span class="phpdocumentor-element-found-in__line">287</span>
 
     </aside>
 
@@ -3017,7 +2661,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">323</span>
+    <span class="phpdocumentor-element-found-in__line">313</span>
 
     </aside>
 
@@ -3060,7 +2704,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">334</span>
+    <span class="phpdocumentor-element-found-in__line">324</span>
 
     </aside>
 
@@ -3105,7 +2749,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">354</span>
+    <span class="phpdocumentor-element-found-in__line">344</span>
 
     </aside>
 
@@ -3144,7 +2788,7 @@ characters overall limit.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -3184,7 +2828,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">286</span>
+    <span class="phpdocumentor-element-found-in__line">276</span>
 
     </aside>
 
@@ -3253,7 +2897,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">209</span>
+    <span class="phpdocumentor-element-found-in__line">201</span>
 
     </aside>
 
@@ -3308,7 +2952,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">196</span>
+    <span class="phpdocumentor-element-found-in__line">188</span>
 
     </aside>
 
@@ -3391,7 +3035,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">222</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
@@ -3464,7 +3108,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">232</span>
+    <span class="phpdocumentor-element-found-in__line">224</span>
 
     </aside>
 
@@ -3511,7 +3155,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">244</span>
+    <span class="phpdocumentor-element-found-in__line">234</span>
 
     </aside>
 
@@ -3554,7 +3198,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">366</span>
+    <span class="phpdocumentor-element-found-in__line">389</span>
 
     </aside>
 
@@ -3650,7 +3294,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">301</span>
+    <span class="phpdocumentor-element-found-in__line">324</span>
 
     </aside>
 
@@ -3699,7 +3343,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">287</span>
+    <span class="phpdocumentor-element-found-in__line">310</span>
 
     </aside>
 
@@ -3748,7 +3392,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">405</span>
+    <span class="phpdocumentor-element-found-in__line">428</span>
 
     </aside>
 
@@ -3835,7 +3479,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">439</span>
+    <span class="phpdocumentor-element-found-in__line">462</span>
 
     </aside>
 
@@ -3903,7 +3547,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">461</span>
+    <span class="phpdocumentor-element-found-in__line">484</span>
 
     </aside>
 
@@ -3971,7 +3615,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">483</span>
+    <span class="phpdocumentor-element-found-in__line">506</span>
 
     </aside>
 
@@ -4035,7 +3679,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">257</span>
+    <span class="phpdocumentor-element-found-in__line">280</span>
 
     </aside>
 
@@ -4084,7 +3728,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">273</span>
+    <span class="phpdocumentor-element-found-in__line">296</span>
 
     </aside>
 
@@ -4140,7 +3784,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">497</span>
+    <span class="phpdocumentor-element-found-in__line">520</span>
 
     </aside>
 
@@ -4189,7 +3833,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">261</span>
+    <span class="phpdocumentor-element-found-in__line">251</span>
 
     </aside>
 
@@ -4253,7 +3897,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -4280,6 +3924,225 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_attributeHelper">
+        attributeHelper()
+        <a href="classes/Discord-Parts-PartTrait.html#method_attributeHelper" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">443</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Helps with getting attributes.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">attributeHelper</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$class</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The attribute key.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$class</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The attribute class.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-PartTrait.html#method_attributeHelper#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_checkForGetMutator">
+        checkForGetMutator()
+        <a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">99</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Checks if there is a get mutator present.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">checkForGetMutator</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The attribute name to check.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Replaces checkForMutator($key, 'get')</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string|false</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Either a string if it is a method or false.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_checkForSetMutator">
+        checkForSetMutator()
+        <a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">119</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Checks if there is a set mutator present.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">checkForSetMutator</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The attribute name to check.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Replaces checkForMutator($key, 'set')</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string|false</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Either a string if it is a method or false.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_ensureValidUrl">
         ensureValidUrl()
         <a href="classes/Discord-Parts-Embed-Embed.html#method_ensureValidUrl" class="headerlink"><i class="fas fa-link"></i></a>
@@ -4288,7 +4151,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">512</span>
+    <span class="phpdocumentor-element-found-in__line">535</span>
 
     </aside>
 
@@ -4357,7 +4220,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">527</span>
+    <span class="phpdocumentor-element-found-in__line">550</span>
 
     </aside>
 
@@ -4399,6 +4262,76 @@ characters overall limit.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getAttribute">
+        getAttribute()
+        <a href="classes/Discord-Parts-PartTrait.html#method_getAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">138</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets an attribute on the part.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The key to the attribute.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-PartTrait.html#method_getAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">mixed</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Either the attribute if it exists or void.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getAuthorAttribute">
         getAuthorAttribute()
         <a href="classes/Discord-Parts-Embed-Embed.html#method_getAuthorAttribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -4407,7 +4340,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">157</span>
 
     </aside>
 
@@ -4415,7 +4348,7 @@ characters overall limit.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getAuthorAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getAuthorAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4428,7 +4361,7 @@ characters overall limit.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a>|null</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>The author attribute.</p>
 </section>
@@ -4450,7 +4383,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">167</span>
 
     </aside>
 
@@ -4489,7 +4422,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
@@ -4497,7 +4430,7 @@ characters overall limit.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getFooterAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Footer.html"><abbr title="\Discord\Parts\Embed\Footer">Footer</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getFooterAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Footer.html"><abbr title="\Discord\Parts\Embed\Footer">Footer</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4510,7 +4443,7 @@ characters overall limit.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Footer.html"><abbr title="\Discord\Parts\Embed\Footer">Footer</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Footer.html"><abbr title="\Discord\Parts\Embed\Footer">Footer</abbr></a>|null</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>The footer attribute.</p>
 </section>
@@ -4532,7 +4465,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">104</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -4540,7 +4473,7 @@ characters overall limit.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getImageAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getImageAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4553,9 +4486,52 @@ characters overall limit.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a>|null</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>The image attribute.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getProviderAttribute">
+        getProviderAttribute()
+        <a href="classes/Discord-Parts-Embed-Embed.html#method_getProviderAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">147</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets the provider attribute.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getProviderAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Provider.html"><abbr title="\Discord\Parts\Embed\Provider">Provider</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Provider.html"><abbr title="\Discord\Parts\Embed\Provider">Provider</abbr></a>|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The provider attribute.</p>
 </section>
 
             </section>
@@ -4575,7 +4551,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -4583,7 +4559,7 @@ characters overall limit.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getThumbnailAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getThumbnailAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Thumbnail.html"><abbr title="\Discord\Parts\Embed\Thumbnail">Thumbnail</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4596,7 +4572,7 @@ characters overall limit.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Thumbnail.html"><abbr title="\Discord\Parts\Embed\Thumbnail">Thumbnail</abbr></a>|null</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>The thumbnail attribute.</p>
 </section>
@@ -4618,7 +4594,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -4676,7 +4652,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">137</span>
 
     </aside>
 
@@ -4684,7 +4660,7 @@ characters overall limit.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getVideoAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getVideoAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4697,7 +4673,7 @@ characters overall limit.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a>|null</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>The video attribute.</p>
 </section>
@@ -4719,7 +4695,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">368</span>
+    <span class="phpdocumentor-element-found-in__line">358</span>
 
     </aside>
 
@@ -4772,7 +4748,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">554</span>
+    <span class="phpdocumentor-element-found-in__line">577</span>
 
     </aside>
 
@@ -4830,6 +4806,62 @@ characters overall limit.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setAttribute">
+        setAttribute()
+        <a href="classes/Discord-Parts-PartTrait.html#method_setAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">165</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets an attribute on the part.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">setAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The key to the attribute.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$value</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The value of the attribute.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setColorAttribute">
         setColorAttribute()
         <a href="classes/Discord-Parts-Embed-Embed.html#method_setColorAttribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -4838,7 +4870,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">204</span>
 
     </aside>
 
@@ -4898,7 +4930,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">193</span>
+    <span class="phpdocumentor-element-found-in__line">216</span>
 
     </aside>
 
@@ -4962,7 +4994,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">168</span>
+    <span class="phpdocumentor-element-found-in__line">191</span>
 
     </aside>
 
@@ -5007,7 +5039,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">235</span>
+    <span class="phpdocumentor-element-found-in__line">258</span>
 
     </aside>
 
@@ -5075,7 +5107,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">217</span>
+    <span class="phpdocumentor-element-found-in__line">240</span>
 
     </aside>
 
@@ -5134,291 +5166,6 @@ characters overall limit.</p>
         class="phpdocumentor-element
             -method
             -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_attributeHelper">
-        attributeHelper()
-        <a href="classes/Discord-Parts-Embed-Embed.html#method_attributeHelper" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Embed/Embed.php"><a href="files/src-discord-parts-embed-embed.html"><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">585</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Helps with getting embed attributes.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">attributeHelper</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$class</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The attribute key.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$class</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The attribute class.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-Embed-Embed.html#method_attributeHelper#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_checkForGetMutator">
-        checkForGetMutator()
-        <a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">107</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Checks if there is a get mutator present.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">checkForGetMutator</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The attribute name to check.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.0.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Replaces checkForMutator($key, 'get')</p>
-</section>
-
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string|false</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>Either a string if it is a method or false.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_checkForSetMutator">
-        checkForSetMutator()
-        <a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">127</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Checks if there is a set mutator present.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">checkForSetMutator</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The attribute name to check.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.0.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Replaces checkForMutator($key, 'set')</p>
-</section>
-
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string|false</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>Either a string if it is a method or false.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getAttribute">
-        getAttribute()
-        <a href="classes/Discord-Parts-PartTrait.html#method_getAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">146</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Gets an attribute on the part.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">getAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The key to the attribute.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-PartTrait.html#method_getAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">mixed</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>Either the attribute if it exists or void.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
                                     -static                    "
 >
     <h4 class="phpdocumentor-element__name" id="method_getEmbedTypes">
@@ -5458,62 +5205,6 @@ characters overall limit.</p>
         class="phpdocumentor-element
             -method
             -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setAttribute">
-        setAttribute()
-        <a href="classes/Discord-Parts-PartTrait.html#method_setAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">173</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Sets an attribute on the part.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">setAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The key to the attribute.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$value</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The value of the attribute.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
                                     -static                    "
 >
     <h4 class="phpdocumentor-element__name" id="method_studly">
@@ -5524,7 +5215,7 @@ characters overall limit.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">428</span>
+    <span class="phpdocumentor-element-found-in__line">418</span>
 
     </aside>
 
@@ -5700,29 +5391,18 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#constant_TYPE_GIFV">TYPE_GIFV</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#constant_TYPE_IMAGE">TYPE_IMAGE</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#constant_TYPE_LINK">TYPE_LINK</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#constant_TYPE_POLL_RESULT">TYPE_POLL_RESULT</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#constant_TYPE_RICH">TYPE_RICH</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#constant_TYPE_VIDEO">TYPE_VIDEO</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#constant_TYPES">TYPES</a></li>
                                             </ul>
                 </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_author">$author</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_color">$color</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_description">$description</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_fields">$fields</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_footer">$footer</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_image">$image</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_provider">$provider</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_thumbnail">$thumbnail</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_timestamp">$timestamp</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_title">$title</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_type">$type</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_url">$url</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#property_video">$video</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>
@@ -5738,7 +5418,7 @@ static as we may move it outside this class in future.</p>
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___construct">__construct()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Part.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Part.html#method___debugInfo">__debugInfo()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___get">__get()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___serialize">__serialize()</a></li>
@@ -5775,28 +5455,29 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_setURL">setURL()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_unserialize">unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_afterConstruct">afterConstruct()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_attributeHelper">attributeHelper()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_ensureValidUrl">ensureValidUrl()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_exceedsOverallLimit">exceedsOverallLimit()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_getAuthorAttribute">getAuthorAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_getFieldsAttribute">getFieldsAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_getFooterAttribute">getFooterAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_getImageAttribute">getImageAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_getProviderAttribute">getProviderAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_getThumbnailAttribute">getThumbnailAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_getTimestampAttribute">getTimestampAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_getVideoAttribute">getVideoAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_resolveColor">resolveColor()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_setColorAttribute">setColorAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_setDescriptionAttribute">setDescriptionAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_setFieldsAttribute">setFieldsAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_setTitleAttribute">setTitleAttribute()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Parts-Embed-Embed.html#method_setTypeAttribute">setTypeAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_attributeHelper">attributeHelper()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Embed-Embed.html#method_getEmbedTypes">getEmbedTypes()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a></li>
                                     </ul>
             </li>
