@@ -116,7 +116,7 @@ class ActionRow extends Layout
      */
     public function removeComponent(ComponentObject $component): self
     {
-        if (($idx = array_search($component, $this->components)) !== null) {
+        if (($idx = array_search($component, $this->components)) !== false) {
             array_splice($this->components, $idx, 1);
         }
 

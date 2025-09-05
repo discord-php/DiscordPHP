@@ -98,7 +98,7 @@ class StringSelect extends SelectMenu
      */
     public function removeOption(Option $option): self
     {
-        if (($idx = array_search($option, $this->options)) !== null) {
+        if (($idx = array_search($option, $this->options)) !== false) {
             array_splice($this->options, $idx, 1);
         }
 
