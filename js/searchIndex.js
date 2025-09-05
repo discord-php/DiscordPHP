@@ -7188,7 +7188,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AsetChannelsAttribute\u0028\u0029",
             "name": "setChannelsAttribute",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_setChannelsAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AsetRolesAttribute\u0028\u0029",
