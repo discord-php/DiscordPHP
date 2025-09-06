@@ -19,6 +19,8 @@ use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\Interactive;
 use Discord\Exceptions\FileNotFoundException;
+use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
@@ -106,7 +108,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Components to send with this message.
      *
-     * @var ComponentObject[]|null
+     * @var ExCollectionInterface<ComponentObject>|ComponentObject[]|null
      */
     protected $components;
 
@@ -449,7 +451,9 @@ class MessageBuilder extends Builder implements JsonSerializable
             $this->enforceV1Limits($component);
         }
 
-        $this->components[] = $component;
+        $this->components ??= Collection::for(ComponentObject::class);
+
+        $this->components->pushItem($component);
 
         return $this;
     }
@@ -457,7 +461,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Add a group of components to the builder.
      *
-     * @param ComponentObject[] $components Components to add.
+     * @param ExCollectionInterface<ComponentObject>|ComponentObject[] $components Components to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
@@ -534,8 +538,8 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function removeComponent(Component $component): self
     {
-        if (($idx = array_search($component, $this->components)) !== null) {
-            array_splice($this->components, $idx, 1);
+        if (($idx = $this->components->search($component)) !== false) {
+            $this->components->splice($idx, 1);
         }
 
         return $this;
@@ -550,10 +554,10 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function setComponents(array $components): self
     {
-        $this->components = [];
+        $this->components = Collection::for(ComponentObject::class);
 
         foreach ($components as $component) {
-            $this->addComponent($component);
+            $this->components->pushItem($component);
         }
 
         return $this;
@@ -562,11 +566,11 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Returns all the components in the builder.
      *
-     * @return ComponentObject[]
+     * @return ExcollectionInterface<ComponentObject>|ComponentObject[]
      */
-    public function getComponents(): array
+    public function getComponents(): ExCollectionInterface
     {
-        return $this->components;
+        return $this->components ?? Collection::for(ComponentObject::class);
     }
 
     /**
