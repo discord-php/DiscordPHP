@@ -53,7 +53,7 @@ class Thread extends Part implements Stringable
     public const FLAG_PINNED = (1 << 1);
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -78,14 +78,14 @@ class Thread extends Part implements Stringable
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $hidden = [
         'member',
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $repositories = [
         'members' => MemberRepository::class,
@@ -93,7 +93,7 @@ class Thread extends Part implements Stringable
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function afterConstruct(): void
     {
@@ -376,7 +376,7 @@ class Thread extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message-json-params
      */
@@ -402,7 +402,7 @@ class Thread extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-thread
      */
@@ -429,7 +429,7 @@ class Thread extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

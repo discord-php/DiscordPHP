@@ -30,7 +30,7 @@ use Discord\Parts\Part;
 class MessagePin extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'pinned_at',

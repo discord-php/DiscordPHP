@@ -435,8 +435,8 @@ trait PartTrait
     /**
      * Helps with getting Part attributes.
      *
-     * @param string $key   The attribute key.
-     * @param string $class The attribute class.
+     * @param string $key       The attribute key.
+     * @param string $class     The attribute class.
      * @param array  $extraData Extra data to pass to the part constructor.
      *
      * @throws \Exception
@@ -499,7 +499,6 @@ trait PartTrait
         }
 
         return $collection;
-
     }
 
     /**

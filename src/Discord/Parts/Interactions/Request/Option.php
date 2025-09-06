@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Request;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
-use Discord\Parts\Interactions\Command\Option as CommandOption;
 use Discord\Parts\Part;
 
 /**
@@ -25,11 +23,11 @@ use Discord\Parts\Part;
  *
  * @since 7.0.0
  *
- * @property string                              $name    Name of the parameter.
- * @property int                                 $type    Type of the option.
- * @property string|int|float|bool|null          $value   Value of the option resulting from user input.
- * @property ExCollectionInterface|Option[]      $options Present if this option is a group or subcommand.
- * @property bool|null                           $focused `true` if this option is the currently focused option for autocomplete.
+ * @property string                         $name    Name of the parameter.
+ * @property int                            $type    Type of the option.
+ * @property string|int|float|bool|null     $value   Value of the option resulting from user input.
+ * @property ExCollectionInterface|Option[] $options Present if this option is a group or subcommand.
+ * @property bool|null                      $focused `true` if this option is the currently focused option for autocomplete.
  */
 class Option extends Part
 {

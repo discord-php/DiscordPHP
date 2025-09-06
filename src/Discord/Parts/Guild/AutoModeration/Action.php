@@ -28,7 +28,7 @@ use Discord\Parts\Part;
 class Action extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',
@@ -51,7 +51,7 @@ class Action extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @see Rule::getCreatableAttributes()
      */

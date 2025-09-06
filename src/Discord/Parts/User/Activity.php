@@ -88,7 +88,7 @@ class Activity extends Part implements Stringable
     public const STATUS_DISPLAY_TYPE_DETAILS = 2;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'name',

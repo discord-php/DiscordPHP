@@ -38,7 +38,7 @@ use Discord\Parts\Guild\Emoji;
 class Button extends Interactive
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',

@@ -26,17 +26,17 @@ use Discord\Parts\Part;
  *
  * @since 7.0.0
  *
- * @property string                                 $id             ID of the invoked command.
- * @property string                                 $name           Name of the invoked command.
- * @property int                                    $type           The type of the invoked command.
- * @property Resolved|null                          $resolved       Resolved users, members, roles and channels that are relevant.
- * @property ExCollectionInterface|Option[]         $options        Parameters and values from the user.
- * @property string|null                            $guild_id       ID of the guild internally passed from Interaction or ID of the guild the command belongs to.
- * @property string|null                            $target_id      ID the of user or message targeted by a user or message command.
- * @property string|null                            $custom_id      Custom ID the component was created for. (Only for Message Component & Modal)
- * @property int|null                               $component_type Type of the component. (Only for Message Component)
- * @property string[]|null                          $values         Values selected in a select menu. (Only for Message Component)
- * @property ExCollectionInterface|Component[]      $components     The values submitted by the user. (Only for Modal)
+ * @property string                            $id             ID of the invoked command.
+ * @property string                            $name           Name of the invoked command.
+ * @property int                               $type           The type of the invoked command.
+ * @property Resolved|null                     $resolved       Resolved users, members, roles and channels that are relevant.
+ * @property ExCollectionInterface|Option[]    $options        Parameters and values from the user.
+ * @property string|null                       $guild_id       ID of the guild internally passed from Interaction or ID of the guild the command belongs to.
+ * @property string|null                       $target_id      ID the of user or message targeted by a user or message command.
+ * @property string|null                       $custom_id      Custom ID the component was created for. (Only for Message Component & Modal)
+ * @property int|null                          $component_type Type of the component. (Only for Message Component)
+ * @property string[]|null                     $values         Values selected in a select menu. (Only for Message Component)
+ * @property ExCollectionInterface|Component[] $components     The values submitted by the user. (Only for Modal)
  *
  * @deprecated 10.19.0 Use either `ApplicationCommandData`,`MessageComponentData`, or `ModalSubmitData`
  */
