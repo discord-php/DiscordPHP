@@ -538,6 +538,10 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function removeComponent(Component $component): self
     {
+        if (! isset($this->components)) {
+            return $this;
+        }
+
         if (($idx = $this->components->search($component)) !== false) {
             $this->components->splice($idx, 1);
         }
@@ -548,16 +552,26 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets the components of the message. Removes the existing components in the process.
      *
-     * @param array $components New message components.
+     * @param ExCollectionInterface<ComponentObject>|ComponentObject[]|null $components New message components.
      *
      * @return $this
      */
-    public function setComponents(array $components): self
+    public function setComponents($components = null): self
     {
+        if ($components === null) {
+            unset($this->components);
+
+            return $this;
+        }
+
         $this->components = Collection::for(ComponentObject::class);
 
         foreach ($components as $component) {
             $this->components->pushItem($component);
+        }
+
+        if (! $components->count()) {
+            unset($this->components);
         }
 
         return $this;
@@ -1067,7 +1081,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             $empty = false;
         }
 
-        if (isset($this->components)) {
+        if (isset($this->components) && $this->components->count()) {
             $body['components'] = $this->components;
             $empty = false;
         }
