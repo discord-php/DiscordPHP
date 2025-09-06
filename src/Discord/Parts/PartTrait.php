@@ -478,9 +478,9 @@ trait PartTrait
 
         foreach ($this->attributes[$key] as $part) {
             $collection->pushItem(
-                ($part instanceof $class)
-                ? $part
-                : $this->createOf($class, $part)
+                $part instanceof $class
+                    ? $part
+                    : $this->createOf($class, $part)
             );
         }
 
