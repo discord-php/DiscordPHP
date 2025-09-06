@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Command;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 
@@ -78,7 +77,7 @@ class Option extends Part
     /**
      * Gets the choices attribute.
      *
-     * @return ExCollectionInterface|Choice[]|null A collection of choices.
+     * @return ExCollectionInterface|Choice[] A collection of choices.
      */
     protected function getChoicesAttribute(): ExCollectionInterface
     {

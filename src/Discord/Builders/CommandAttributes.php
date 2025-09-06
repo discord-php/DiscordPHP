@@ -30,20 +30,20 @@ use function Discord\poly_strlen;
  *
  * @since 7.1.0
  *
- * @property int                                 $type                       The type of the command, defaults 1 if not set.
- * @property string                              $name                       1-32 character name of the command.
- * @property ?string[]|null                      $name_localizations         Localization dictionary for the name field. Values follow the same restrictions as name.
- * @property ?string                             $description                1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
- * @property ?string[]|null                      $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
- * @property ExCollectionInterface|Option[]      $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
- * @property ?string                             $default_member_permissions Set of permissions represented as a bit set.
- * @property bool|null                           $dm_permission              Deprecated (use contexts instead); Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
- * @property ?bool                               $default_permission         Whether the command is enabled by default when the app is added to a guild, defaults to true. SOON DEPRECATED.
- * @property ?int                                $guild_id                   The optional guild ID this command is for. If not set, the command is global.
- * @property bool|null                           $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
- * @property array                               $integration_types          Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts
- * @property ExCollectionInterface|null          $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.
- * @property int|null                            $handler                    Determines whether the interaction is handled by the app's interactions handler or by Discord
+ * @property int                            $type                       The type of the command, defaults 1 if not set.
+ * @property string                         $name                       1-32 character name of the command.
+ * @property ?string[]|null                 $name_localizations         Localization dictionary for the name field. Values follow the same restrictions as name.
+ * @property ?string                        $description                1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
+ * @property ?string[]|null                 $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
+ * @property ExCollectionInterface|Option[] $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
+ * @property ?string                        $default_member_permissions Set of permissions represented as a bit set.
+ * @property bool|null                      $dm_permission              Deprecated (use contexts instead); Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
+ * @property ?bool                          $default_permission         Whether the command is enabled by default when the app is added to a guild, defaults to true. SOON DEPRECATED.
+ * @property ?int                           $guild_id                   The optional guild ID this command is for. If not set, the command is global.
+ * @property bool|null                      $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
+ * @property array                          $integration_types          Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts
+ * @property ExCollectionInterface|null     $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.
+ * @property int|null                       $handler                    Determines whether the interaction is handled by the app's interactions handler or by Discord
  */
 trait CommandAttributes
 {

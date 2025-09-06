@@ -45,7 +45,7 @@ class Option extends Part
     /**
      * Gets the options of the interaction.
      *
-     * @return ExCollectionInterface|Option[]|null $options
+     * @return ExCollectionInterface|Option[] $options
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {

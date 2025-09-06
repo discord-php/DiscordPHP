@@ -97,9 +97,9 @@ class InteractionCreate extends Event
     /**
      * Recursively checks and handles command options for an interaction.
      *
-     * @param RegisteredCommand                                 $command     The command or subcommand to check.
-     * @param ExCollectionInterface|RequestOption[]|null        $options     The list of options to process.
-     * @param ApplicationCommand|ApplicationCommandAutocomplete $interaction The interaction instance from Discord.
+     * @param RegisteredCommand                                         $command     The command or subcommand to check.
+     * @param ExCollectionInterface<RequestOption>|RequestOption[]      $options     The list of options to process.
+     * @param ApplicationCommand|ApplicationCommandAutocomplete         $interaction The interaction instance from Discord.
      *
      * @return bool Returns true if a suggestion was triggered, otherwise false.
      */
