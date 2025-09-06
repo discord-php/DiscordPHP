@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Builders\Components;
 
 use Discord\Builders\Builder;
-use Discord\Helpers\DynamicPropertyMutatorTrait;
 use JsonSerializable;
 
 /**

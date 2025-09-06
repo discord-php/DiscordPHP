@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Builders;
 
+use Discord\Helpers\DynamicPropertyMutatorTrait;
 use Discord\Parts\Part;
 
 /**
