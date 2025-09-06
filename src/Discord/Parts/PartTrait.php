@@ -433,28 +433,6 @@ trait PartTrait
     }
 
     /**
-     * Helps with getting Part attributes.
-     *
-     * @param string $key       The attribute key.
-     * @param string $class     The attribute class.
-     * @param array  $extraData Extra data to pass to the part constructor.
-     *
-     * @throws \Exception
-     *
-     * @return Part|null
-     */
-    protected function attributePartHelper($key, $class, $extraData = []): ?Part
-    {
-        if (! isset($this->attributes[$key])) {
-            return null;
-        }
-
-        return ($this->attributes[$key] instanceof $class)
-            ? $this->attributes[$key]
-            : $this->attributes[$key] = $this->createOf($class, ((array) $this->attributes[$key]) + $extraData);
-    }
-
-    /**
      * Helps with getting ISO8601 timestamp attributes.
      *
      * @param string $key   The attribute key.
@@ -463,6 +441,8 @@ trait PartTrait
      * @throws \Exception
      *
      * @return Carbon|null
+     *
+     * @since 10.19.0
      */
     protected function attributeCarbonHelper($key): ?Carbon
     {
@@ -485,6 +465,8 @@ trait PartTrait
      * @throws \Exception
      *
      * @return ExCollectionInterface
+     *
+     * @since 10.19.0
      */
     protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id'): ExCollectionInterface
     {
@@ -503,6 +485,30 @@ trait PartTrait
         }
 
         return $collection;
+    }
+
+    /**
+     * Helps with getting Part attributes.
+     *
+     * @param string $key       The attribute key.
+     * @param string $class     The attribute class.
+     * @param array  $extraData Extra data to pass to the part constructor.
+     *
+     * @throws \Exception
+     *
+     * @return Part|null
+     *
+     * @since 10.19.0
+     */
+    protected function attributePartHelper($key, $class, $extraData = []): ?Part
+    {
+        if (! isset($this->attributes[$key])) {
+            return null;
+        }
+
+        return ($this->attributes[$key] instanceof $class)
+            ? $this->attributes[$key]
+            : $this->attributes[$key] = $this->createOf($class, ((array) $this->attributes[$key]) + $extraData);
     }
 
     /**
