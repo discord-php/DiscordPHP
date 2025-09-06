@@ -26,17 +26,17 @@ use Discord\Parts\Part;
  *
  * @since 7.0.0
  *
- * @property string                                 $id             ID of the invoked command.
- * @property string                                 $name           Name of the invoked command.
- * @property int                                    $type           The type of the invoked command.
- * @property Resolved|null                          $resolved       Resolved users, members, roles and channels that are relevant.
- * @property ExCollectionInterface|Option[]|null    $options        Parameters and values from the user.
- * @property string|null                            $guild_id       ID of the guild internally passed from Interaction or ID of the guild the command belongs to.
- * @property string|null                            $target_id      ID the of user or message targeted by a user or message command.
- * @property string|null                            $custom_id      Custom ID the component was created for. (Only for Message Component & Modal)
- * @property int|null                               $component_type Type of the component. (Only for Message Component)
- * @property string[]|null                          $values         Values selected in a select menu. (Only for Message Component)
- * @property ExCollectionInterface|Component[]|null $components     The values submitted by the user. (Only for Modal)
+ * @property string                            $id             ID of the invoked command.
+ * @property string                            $name           Name of the invoked command.
+ * @property int                               $type           The type of the invoked command.
+ * @property Resolved|null                     $resolved       Resolved users, members, roles and channels that are relevant.
+ * @property ExCollectionInterface|Option[]    $options        Parameters and values from the user.
+ * @property string|null                       $guild_id       ID of the guild internally passed from Interaction or ID of the guild the command belongs to.
+ * @property string|null                       $target_id      ID the of user or message targeted by a user or message command.
+ * @property string|null                       $custom_id      Custom ID the component was created for. (Only for Message Component & Modal)
+ * @property int|null                          $component_type Type of the component. (Only for Message Component)
+ * @property string[]|null                     $values         Values selected in a select menu. (Only for Message Component)
+ * @property ExCollectionInterface|Component[] $components     The values submitted by the user. (Only for Modal)
  *
  * @deprecated 10.19.0 Use either `ApplicationCommandData`,`MessageComponentData`, or `ModalSubmitData`
  */
@@ -66,35 +66,25 @@ class InteractionData extends Part
     /**
      * Gets the options of the interaction.
      *
-     * @return ExCollectionInterface|Option[]|null $options
+     * @return ExCollectionInterface|Option[] $options
      */
-    protected function getOptionsAttribute(): ?ExCollectionInterface
+    protected function getOptionsAttribute(): ExCollectionInterface
     {
-        if (! isset($this->attributes['options']) && $this->type != Command::CHAT_INPUT) {
-            return null;
-        }
-
-        $options = Collection::for(Option::class, 'name');
-
-        foreach ($this->attributes['options'] ?? [] as $option) {
-            $options->pushItem($this->createOf(Option::class, $option));
-        }
-
-        return $options;
+        return $this->attributeCollectionHelper('options', Option::class, 'name');
     }
 
     /**
      * Gets the components of the interaction.
      *
-     * @return ExCollectionInterface|Component[]|null $components
+     * @return ExCollectionInterface|Component[] $components
      */
-    protected function getComponentsAttribute(): ?ExCollectionInterface
+    protected function getComponentsAttribute(): ExCollectionInterface
     {
-        if (! isset($this->attributes['components'])) {
-            return null;
-        }
-
         $components = Collection::for(Component::class, null);
+
+        if (! isset($this->attributes['components'])) {
+            return $components;
+        }
 
         foreach ($this->attributes['components'] as $component) {
             $components->pushItem($this->createOf(Component::TYPES[$component->type ?? 0], $component));

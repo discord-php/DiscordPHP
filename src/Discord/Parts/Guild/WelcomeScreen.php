@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 
@@ -30,7 +29,7 @@ use Discord\Parts\Part;
 class WelcomeScreen extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'description',
@@ -44,12 +43,6 @@ class WelcomeScreen extends Part
      */
     protected function getWelcomeChannelsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(WelcomeChannel::class, null);
-
-        foreach ($this->attributes['welcome_channels'] ?? [] as $welcome_channel) {
-            $collection->pushItem($this->createOf(WelcomeChannel::class, $welcome_channel));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('welcome_channels', WelcomeChannel::class, 'channel_id');
     }
 }

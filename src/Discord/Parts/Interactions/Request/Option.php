@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Request;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
-use Discord\Parts\Interactions\Command\Option as CommandOption;
 use Discord\Parts\Part;
 
 /**
@@ -25,11 +23,11 @@ use Discord\Parts\Part;
  *
  * @since 7.0.0
  *
- * @property string                              $name    Name of the parameter.
- * @property int                                 $type    Type of the option.
- * @property string|int|float|bool|null          $value   Value of the option resulting from user input.
- * @property ExCollectionInterface|Option[]|null $options Present if this option is a group or subcommand.
- * @property bool|null                           $focused `true` if this option is the currently focused option for autocomplete.
+ * @property string                         $name    Name of the parameter.
+ * @property int                            $type    Type of the option.
+ * @property string|int|float|bool|null     $value   Value of the option resulting from user input.
+ * @property ExCollectionInterface|Option[] $options Present if this option is a group or subcommand.
+ * @property bool|null                      $focused `true` if this option is the currently focused option for autocomplete.
  */
 class Option extends Part
 {
@@ -47,21 +45,11 @@ class Option extends Part
     /**
      * Gets the options of the interaction.
      *
-     * @return ExCollectionInterface|Option[]|null $options
+     * @return ExCollectionInterface|Option[] $options
      */
-    protected function getOptionsAttribute(): ?ExCollectionInterface
+    protected function getOptionsAttribute(): ExCollectionInterface
     {
-        if (! isset($this->attributes['options']) && ! in_array($this->type, [CommandOption::SUB_COMMAND, CommandOption::SUB_COMMAND_GROUP])) {
-            return null;
-        }
-
-        $options = Collection::for(Option::class, 'name');
-
-        foreach ($this->attributes['options'] ?? [] as $option) {
-            $options->pushItem($this->createOf(Option::class, $option));
-        }
-
-        return $options;
+        return $this->attributeCollectionHelper('options', Option::class, 'name');
     }
 
     /**

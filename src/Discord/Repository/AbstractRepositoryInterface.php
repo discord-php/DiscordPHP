@@ -39,7 +39,7 @@ interface AbstractRepositoryInterface extends CollectionInterface
     public function filter(callable $callback);
     public function find(callable $callback);
     public function clear(): void;
-    public function toArray(): array;
+    public function toArray(bool $assoc = true): array;
     public function keys(): array;
     public function values(): array;
     public function offsetExists($offset): bool;

@@ -49,7 +49,7 @@ use Discord\Parts\User\ClientStatus;
 class PresenceUpdate extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'user',
@@ -60,7 +60,7 @@ class PresenceUpdate extends Part
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $visible = [
         'game',
@@ -101,13 +101,7 @@ class PresenceUpdate extends Part
      */
     protected function getActivitiesAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Activity::class, null);
-
-        foreach ($this->attributes['activities'] ?? [] as $activity) {
-            $collection->pushItem($this->factory->part(Activity::class, (array) $activity, true));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('activities', Activity::class);
     }
 
     /**

@@ -42,7 +42,7 @@ use Discord\Parts\User\User;
 class TypingStart extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'channel_id',
@@ -117,7 +117,7 @@ class TypingStart extends Part
      */
     protected function getTimestampAttribute(): Carbon
     {
-        return new Carbon($this->attributes['timestamp']);
+        return $this->attributeCarbonHelper('timestamp');
     }
 
     /**

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 
 /**
@@ -39,7 +38,7 @@ use Discord\Helpers\ExCollectionInterface;
 class StringSelect extends SelectMenu
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',
@@ -59,12 +58,6 @@ class StringSelect extends SelectMenu
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(StringSelectOption::class, null);
-
-        foreach ($this->attributes['options'] ?? [] as $item) {
-            $collection->pushItem($this->createOf(StringSelectOption::class, $item));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('options', StringSelectOption::class);
     }
 }

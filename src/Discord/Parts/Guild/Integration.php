@@ -49,7 +49,7 @@ use Discord\Parts\User\User;
 class Integration extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -100,11 +100,7 @@ class Integration extends Part
      */
     protected function getSyncedAtAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['synced_at'])) {
-            return null;
-        }
-
-        return new Carbon($this->attributes['synced_at']);
+        return $this->attributeCarbonHelper('synced_at');
     }
 
     /**
@@ -154,7 +150,7 @@ class Integration extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

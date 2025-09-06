@@ -30,7 +30,7 @@ use Discord\Parts\Part;
 class MessagePin extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'pinned_at',
@@ -39,7 +39,7 @@ class MessagePin extends Part
 
     protected function getPinnedAtAttribute(): Carbon
     {
-        return Carbon::parse($this->attributes['pinned_at']);
+        return $this->attributeCarbonHelper('pinned_at');
     }
 
     protected function getMessageAttribute(): Message

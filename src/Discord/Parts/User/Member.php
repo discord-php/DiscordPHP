@@ -641,13 +641,7 @@ class Member extends Part implements Stringable
      */
     protected function getActivitiesAttribute(): ExCollectionInterface
     {
-        $activities = Collection::for(Activity::class, null);
-
-        foreach ($this->attributes['activities'] ?? [] as $activity) {
-            $activities->pushItem($this->createOf(Activity::class, $activity));
-        }
-
-        return $activities;
+        return $this->attributeCollectionHelper('activities', Activity::class);
     }
 
     /**
@@ -707,11 +701,7 @@ class Member extends Part implements Stringable
             return $user;
         }
 
-        if (! isset($this->attributes['user'])) {
-            return null;
-        }
-
-        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        return $this->attributePartHelper('user', User::class);
     }
 
     /**
@@ -759,11 +749,7 @@ class Member extends Part implements Stringable
      */
     protected function getJoinedAtAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['joined_at'])) {
-            return null;
-        }
-
-        return new Carbon($this->attributes['joined_at']);
+        return $this->attributeCarbonHelper('joined_at');
     }
 
     /**
@@ -814,11 +800,7 @@ class Member extends Part implements Stringable
      */
     protected function getPremiumSinceAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['premium_since'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['premium_since']);
+        return $this->attributeCarbonHelper('premium_since');
     }
 
     /**
@@ -847,11 +829,7 @@ class Member extends Part implements Stringable
      */
     protected function getCommunicationDisabledUntilAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['communication_disabled_until'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['communication_disabled_until']);
+        return $this->attributeCarbonHelper('communication_disabled_until');
     }
 
     /**

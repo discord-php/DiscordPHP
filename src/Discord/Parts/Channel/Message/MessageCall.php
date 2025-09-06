@@ -46,11 +46,7 @@ class MessageCall extends Part
      */
     protected function getEndedTimestampAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['ended_timestamp'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['ended_timestamp']);
+        return $this->attributeCarbonHelper('ended_timestamp');
     }
 
     /**

@@ -522,11 +522,7 @@ class Guild extends Part
      */
     protected function getJoinedAtAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['joined_at'])) {
-            return null;
-        }
-
-        return new Carbon($this->attributes['joined_at']);
+        return $this->attributeCarbonHelper('joined_at');
     }
 
     /**
@@ -1154,11 +1150,7 @@ class Guild extends Part
      */
     protected function getWelcomeScreenAttribute(): ?WelcomeScreen
     {
-        if (! isset($this->attributes['welcome_screen'])) {
-            return null;
-        }
-
-        return $this->createOf(WelcomeScreen::class, $this->attributes['welcome_screen']);
+        return $this->attributePartHelper('welcome_screen', WelcomeScreen::class);
     }
 
     /**

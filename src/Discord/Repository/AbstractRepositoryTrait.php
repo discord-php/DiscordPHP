@@ -640,7 +640,7 @@ trait AbstractRepositoryTrait
      *
      * @return array
      */
-    public function toArray(): array
+    public function toArray(bool $assoc = true): array
     {
         $items = [];
 

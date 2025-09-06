@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 
 /**
@@ -28,18 +27,8 @@ use Discord\Helpers\ExCollectionInterface;
  */
 abstract class SelectMenu extends Interactive
 {
-    protected function getDefaultValuesAttribute(): ?ExCollectionInterface
+    protected function getDefaultValuesAttribute(): ExCollectionInterface
     {
-        if (! isset($this->attributes['default_values'])) {
-            return null;
-        }
-
-        $collection = Collection::for(DefaultValue::class);
-
-        foreach ($this->attributes['default_values'] as $item) {
-            $collection->pushItem($this->createOf(DefaultValue::class, $item));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('default_values', DefaultValue::class);
     }
 }
