@@ -110,7 +110,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @var ExCollectionInterface<ComponentObject>|ComponentObject[]|null
      */
-    protected $components = null;
+    protected $components;
 
     /**
      * IDs of up to 3 stickers in the server to send in the message.
@@ -486,7 +486,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     protected function enforceV2Limits(): void
     {
-        if ($this->components) {
+        if (isset($this->components)) {
             if ($this->countTotalComponents($this->components) >= 40) {
                 throw new \OverflowException('You can only add 40 components to a v2 message');
             }
@@ -507,7 +507,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             throw new \InvalidArgumentException('You can only add action rows as components to v1 messages. Put your other components inside an action row.');
         }
 
-        if ($this->components) {
+        if (isset($this->components)) {
             if (count($this->components) >= 5) {
                 throw new \OverflowException('You can only add 5 components to a v1 message');
             }
@@ -566,7 +566,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Returns all the components in the builder.
      *
-     * @return ExCollectionInterface<ComponentObject>|ComponentObject[]
+     * @return ExcollectionInterface<ComponentObject>|ComponentObject[]
      */
     public function getComponents(): ExCollectionInterface
     {
@@ -1067,7 +1067,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             $empty = false;
         }
 
-        if ($this->components) {
+        if (isset($this->components)) {
             $body['components'] = $this->components;
             $empty = false;
         }
