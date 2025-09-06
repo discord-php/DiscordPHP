@@ -120,11 +120,7 @@ class Activity extends Part implements Stringable
      */
     protected function getCreatedAtAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['created_at'])) {
-            return null;
-        }
-
-        return Carbon::createFromTimestamp($this->attributes['created_at']);
+        return $this->attributeCarbonHelper('created_at');
     }
 
     /**
