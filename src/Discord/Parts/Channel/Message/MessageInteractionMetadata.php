@@ -90,7 +90,7 @@ class MessageInteractionMetadata extends Part
      */
     protected function getTargetUserAttribute(): ?User
     {
-        return $this->attributeHelper('target_user', User::class);
+        return $this->attributePartHelper('target_user', User::class);
     }
 
     /**
@@ -100,7 +100,7 @@ class MessageInteractionMetadata extends Part
      */
     protected function getTriggeringInteractionMetadataAttribute(): ?MessageInteractionMetadata
     {
-        return $this->attributeHelper('triggering_interaction_metadata', MessageInteractionMetadata::class);
+        return $this->attributePartHelper('triggering_interaction_metadata', MessageInteractionMetadata::class);
     }
 
     /**

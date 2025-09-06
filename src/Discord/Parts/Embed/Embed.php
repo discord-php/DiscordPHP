@@ -92,11 +92,7 @@ class Embed extends Part
      */
     protected function getTimestampAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['timestamp'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['timestamp']);
+        return $this->attributeCarbonHelper('timestamp');
     }
 
     /**
@@ -106,7 +102,7 @@ class Embed extends Part
      */
     protected function getFooterAttribute(): ?Footer
     {
-        return $this->attributeHelper('footer', Footer::class);
+        return $this->attributePartHelper('footer', Footer::class);
     }
 
     /**
@@ -116,7 +112,7 @@ class Embed extends Part
      */
     protected function getImageAttribute(): ?Image
     {
-        return $this->attributeHelper('image', Image::class);
+        return $this->attributePartHelper('image', Image::class);
     }
 
     /**
@@ -126,7 +122,7 @@ class Embed extends Part
      */
     protected function getThumbnailAttribute(): ?Thumbnail
     {
-        return $this->attributeHelper('thumbnail', Thumbnail::class);
+        return $this->attributePartHelper('thumbnail', Thumbnail::class);
     }
 
     /**
@@ -136,7 +132,7 @@ class Embed extends Part
      */
     protected function getVideoAttribute(): ?Video
     {
-        return $this->attributeHelper('video', Video::class);
+        return $this->attributePartHelper('video', Video::class);
     }
 
     /**
@@ -146,7 +142,7 @@ class Embed extends Part
      */
     protected function getProviderAttribute(): ?Provider
     {
-        return $this->attributeHelper('provider', Provider::class);
+        return $this->attributePartHelper('provider', Provider::class);
     }
 
     /**
@@ -156,7 +152,7 @@ class Embed extends Part
      */
     protected function getAuthorAttribute(): ?Author
     {
-        return $this->attributeHelper('author', Author::class);
+        return $this->attributePartHelper('author', Author::class);
     }
 
     /**

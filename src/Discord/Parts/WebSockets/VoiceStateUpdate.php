@@ -140,10 +140,6 @@ class VoiceStateUpdate extends Part
      */
     protected function getRequestToSpeakTimestampAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['request_to_speak_timestamp'])) {
-            return null;
-        }
-
-        return new Carbon($this->attributes['request_to_speak_timestamp']);
+        return $this->attributeCarbonHelper('request_to_speak_timestamp');
     }
 }

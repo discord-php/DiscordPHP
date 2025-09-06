@@ -107,11 +107,7 @@ class Poll extends Part
      */
     protected function getExpiryAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['expiry'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['expiry']);
+        return $this->attributeCarbonHelper('expiry');
     }
 
     /**
@@ -121,7 +117,7 @@ class Poll extends Part
      */
     protected function getResultsAttribute(): ?PollResults
     {
-        return $this->attributeHelper('results', PollResults::class);
+        return $this->attributePartHelper('results', PollResults::class);
     }
 
     /**

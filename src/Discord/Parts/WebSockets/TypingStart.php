@@ -117,7 +117,7 @@ class TypingStart extends Part
      */
     protected function getTimestampAttribute(): Carbon
     {
-        return new Carbon($this->attributes['timestamp']);
+        return $this->attributeCarbonHelper('timestamp');
     }
 
     /**

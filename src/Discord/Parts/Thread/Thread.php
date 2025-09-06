@@ -207,7 +207,7 @@ class Thread extends Part implements Stringable
      */
     protected function getArchiveTimestampAttribute(): Carbon
     {
-        return new Carbon($this->thread_metadata->archive_timestamp);
+        return Carbon::parse($this->thread_metadata->archive_timestamp);
     }
 
     /**
@@ -220,11 +220,7 @@ class Thread extends Part implements Stringable
      */
     protected function getCreateTimestampAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['create_timestamp'])) {
-            return null;
-        }
-
-        return new Carbon($this->thread_metadata->create_timestamp);
+        return Carbon::parse($this->thread_metadata->create_timestamp);
     }
 
     /**

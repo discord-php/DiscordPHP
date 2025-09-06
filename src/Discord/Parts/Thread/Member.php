@@ -70,7 +70,7 @@ class Member extends Part
      */
     protected function getJoinTimestampAttribute(): Carbon
     {
-        return new Carbon($this->attributes['join_timestamp']);
+        return $this->attributeCarbonHelper('join_timestamp');
     }
 
     /**

@@ -47,7 +47,7 @@ class Action extends Part
      */
     public function getMetadataAttribute(): ?ActionMetadata
     {
-        return $this->attributeHelper('metadata', ActionMetadata::class);
+        return $this->attributePartHelper('metadata', ActionMetadata::class);
     }
 
     /**

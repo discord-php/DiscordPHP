@@ -134,7 +134,7 @@ class Activity extends Part implements Stringable
      */
     protected function getEmojiAttribute(): ?Emoji
     {
-        return $this->attributeHelper('emoji', Emoji::class);
+        return $this->attributePartHelper('emoji', Emoji::class);
     }
 
     /**
@@ -144,7 +144,7 @@ class Activity extends Part implements Stringable
      */
     protected function getPartyAttribute(): ?Party
     {
-        return $this->attributeHelper('party', Party::class);
+        return $this->attributePartHelper('party', Party::class);
     }
 
     /**
@@ -154,7 +154,7 @@ class Activity extends Part implements Stringable
      */
     protected function getAssetsAttribute(): ?Assets
     {
-        return $this->attributeHelper('assets', Assets::class);
+        return $this->attributePartHelper('assets', Assets::class);
     }
 
     /**

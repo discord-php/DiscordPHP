@@ -794,7 +794,7 @@ class Channel extends Part implements Stringable
      */
     protected function getDefaultReactionEmojiAttribute(): ?Reaction
     {
-        return $this->attributeHelper('default_reaction_emoji', Reaction::class);
+        return $this->attributePartHelper('default_reaction_emoji', Reaction::class);
     }
 
     /**

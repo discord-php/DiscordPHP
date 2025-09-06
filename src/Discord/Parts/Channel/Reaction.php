@@ -229,7 +229,7 @@ class Reaction extends Part
      */
     protected function getEmojiAttribute(): ?Emoji
     {
-        return $this->attributeHelper('emoji', Emoji::class, ['guild_id' => $this->guild_id]);
+        return $this->attributePartHelper('emoji', Emoji::class, ['guild_id' => $this->guild_id]);
     }
 
     /**
@@ -243,7 +243,7 @@ class Reaction extends Part
             return $channel->messages->get('id', $this->message_id);
         }
 
-        return $this->attributeHelper('message', Message::class);
+        return $this->attributePartHelper('message', Message::class);
     }
 
     /**

@@ -116,7 +116,7 @@ class Invite extends Part implements Stringable
             return $guild;
         }
 
-        return $this->attributeHelper('guild', Guild::class);
+        return $this->attributePartHelper('guild', Guild::class);
     }
 
     /**
@@ -225,7 +225,7 @@ class Invite extends Part implements Stringable
      */
     protected function getTargetApplicationAttribute(): ?Application
     {
-        return $this->attributeHelper('target_application', Application::class);
+        return $this->attributePartHelper('target_application', Application::class);
     }
 
     /**
@@ -237,11 +237,7 @@ class Invite extends Part implements Stringable
      */
     protected function getExpiresAtAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['expires_at'])) {
-            return null;
-        }
-
-        return new Carbon($this->attributes['expires_at']);
+        return $this->attributeCarbonHelper('expires_at');
     }
 
     /**
@@ -283,11 +279,7 @@ class Invite extends Part implements Stringable
      */
     protected function getCreatedAtAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['created_at'])) {
-            return null;
-        }
-
-        return new Carbon($this->attributes['created_at']);
+        return $this->attributeCarbonHelper('created_at');
     }
 
     /**

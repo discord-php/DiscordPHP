@@ -38,6 +38,6 @@ class Collectibles extends Part
      */
     protected function getNameplateAttribute(): ?Nameplate
     {
-        return $this->attributeHelper('nameplate', Nameplate::class);
+        return $this->attributePartHelper('nameplate', Nameplate::class);
     }
 }

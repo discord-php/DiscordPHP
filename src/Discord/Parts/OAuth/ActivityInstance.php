@@ -48,7 +48,7 @@ class ActivityInstance extends Part
      */
     protected function getLocationAttribute(): ?ActivityLocation
     {
-        return $this->attributeHelper('location', ActivityLocation::class);
+        return $this->attributePartHelper('location', ActivityLocation::class);
     }
 
     /**

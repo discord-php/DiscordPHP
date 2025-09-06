@@ -303,7 +303,7 @@ class User extends Part implements Stringable
      */
     public function getAvatarDecorationDataAttribute(): ?AvatarDecorationData
     {
-        return $this->attributeHelper('avatar_decoration_data', AvatarDecorationData::class);
+        return $this->attributePartHelper('avatar_decoration_data', AvatarDecorationData::class);
     }
 
     /**
@@ -313,7 +313,7 @@ class User extends Part implements Stringable
      */
     protected function getCollectiblesAttribute(): ?Collectibles
     {
-        return $this->attributeHelper('collectibles', Collectibles::class);
+        return $this->attributePartHelper('collectibles', Collectibles::class);
     }
 
     /**
@@ -321,7 +321,7 @@ class User extends Part implements Stringable
      */
     protected function getPrimaryGuildAttribute(): ?PrimaryGuild
     {
-        return $this->attributeHelper('primary_guild', PrimaryGuild::class);
+        return $this->attributePartHelper('primary_guild', PrimaryGuild::class);
     }
 
     /**

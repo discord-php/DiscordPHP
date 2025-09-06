@@ -253,7 +253,7 @@ class Interaction extends Part
             return $member->user;
         }
 
-        return $this->attributeHelper('user', User::class);
+        return $this->attributePartHelper('user', User::class);
     }
 
     /**
@@ -263,7 +263,7 @@ class Interaction extends Part
      */
     protected function getMessageAttribute(): ?Message
     {
-        return $this->attributeHelper('message', Message::class);
+        return $this->attributePartHelper('message', Message::class);
     }
 
     /**

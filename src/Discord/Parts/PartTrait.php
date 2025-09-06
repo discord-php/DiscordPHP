@@ -440,7 +440,7 @@ trait PartTrait
      *
      * @return Part|null
      */
-    protected function attributeHelper($key, $class, array $extraData = []): ?Part
+    protected function attributePartHelper($key, $class, array $extraData = []): ?Part
     {
         if (! isset($this->attributes[$key])) {
             return null;
@@ -449,6 +449,17 @@ trait PartTrait
         return ($this->attributes[$key] instanceof $class)
             ? $this->attributes[$key]
             : $this->attributes[$key] = $this->createOf($class, ((array) $this->attributes[$key]) + $extraData);
+    }
+
+    protected function attributeCarbonHelper($key): ?Carbon
+    {
+        if (! isset($this->attributes[$key])) {
+            return null;
+        }
+
+        return ($this->attributes[$key] instanceof Carbon)
+            ? $this->attributes[$key]
+            : $this->attributes[$key] = Carbon::parse($this->attributes[$key]);
     }
 
     /**

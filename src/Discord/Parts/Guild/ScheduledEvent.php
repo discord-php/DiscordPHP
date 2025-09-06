@@ -220,7 +220,7 @@ class ScheduledEvent extends Part
      */
     protected function getScheduledStartTimeAttribute(): Carbon
     {
-        return new Carbon($this->attributes['scheduled_start_time']);
+        return $this->attributeCarbonHelper('scheduled_start_time');
     }
 
     /**
@@ -232,11 +232,7 @@ class ScheduledEvent extends Part
      */
     protected function getScheduledEndTimeAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['scheduled_end_time'])) {
-            return null;
-        }
-
-        return new Carbon($this->attributes['scheduled_end_time']);
+        return $this->attributeCarbonHelper('scheduled_end_time');
     }
 
     /**

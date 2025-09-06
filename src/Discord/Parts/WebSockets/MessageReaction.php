@@ -216,7 +216,7 @@ class MessageReaction extends Part
      */
     protected function getEmojiAttribute(): ?Emoji
     {
-        return $this->attributeHelper('emoji', Emoji::class);
+        return $this->attributePartHelper('emoji', Emoji::class);
     }
 
     /**

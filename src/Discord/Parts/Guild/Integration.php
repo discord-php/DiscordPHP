@@ -100,11 +100,7 @@ class Integration extends Part
      */
     protected function getSyncedAtAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['synced_at'])) {
-            return null;
-        }
-
-        return new Carbon($this->attributes['synced_at']);
+        return $this->attributeCarbonHelper('synced_at');
     }
 
     /**

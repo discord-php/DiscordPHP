@@ -643,7 +643,7 @@ class Message extends Part
      */
     protected function getInteractionMetadataAttribute(): ?MessageInteractionMetadata
     {
-        return $this->attributeHelper('interaction_metadata', MessageInteractionMetadata::class, ['guild_id' => $this->guild_id, 'channel_id' => $this->channel_id]);
+        return $this->attributePartHelper('interaction_metadata', MessageInteractionMetadata::class, ['guild_id' => $this->guild_id, 'channel_id' => $this->channel_id]);
     }
 
     /**
@@ -653,7 +653,7 @@ class Message extends Part
      */
     protected function getInteractionAttribute(): ?MessageInteraction
     {
-        return $this->attributeHelper('interaction', MessageInteraction::class, ['guild_id' => $this->guild_id]);
+        return $this->attributePartHelper('interaction', MessageInteraction::class, ['guild_id' => $this->guild_id]);
     }
 
     /**
@@ -696,7 +696,7 @@ class Message extends Part
 
     protected function getMessageReferenceAttribute(): ?MessageReference
     {
-        return $this->attributeHelper('message_reference', MessageReference::class);
+        return $this->attributePartHelper('message_reference', MessageReference::class);
     }
 
     /**
@@ -736,11 +736,7 @@ class Message extends Part
      */
     protected function getTimestampAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['timestamp'])) {
-            return null;
-        }
-
-        return new Carbon($this->attributes['timestamp']);
+        return $this->attributeCarbonHelper('timestamp');
     }
 
     /**
@@ -752,11 +748,7 @@ class Message extends Part
      */
     protected function getEditedTimestampAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['edited_timestamp'])) {
-            return null;
-        }
-
-        return new Carbon($this->attributes['edited_timestamp']);
+        return $this->attributeCarbonHelper('edited_timestamp');
     }
 
     /**
@@ -806,7 +798,7 @@ class Message extends Part
      */
     protected function getResolvedAttribute(): ?Resolved
     {
-        return $this->attributeHelper('resolved', Resolved::class, ['guild_id' => $this->guild_id]);
+        return $this->attributePartHelper('resolved', Resolved::class, ['guild_id' => $this->guild_id]);
     }
 
     /**
@@ -816,7 +808,7 @@ class Message extends Part
      */
     protected function getPollAttribute(): ?Poll
     {
-        return $this->attributeHelper('poll', Poll::class, ['channel_id' => $this->channel_id, 'message_id' => $this->id]);
+        return $this->attributePartHelper('poll', Poll::class, ['channel_id' => $this->channel_id, 'message_id' => $this->id]);
     }
 
     /**
@@ -826,7 +818,7 @@ class Message extends Part
      */
     protected function getCallAttribute(): ?MessageCall
     {
-        return $this->attributeHelper('call', MessageCall::class);
+        return $this->attributePartHelper('call', MessageCall::class);
     }
 
     /**

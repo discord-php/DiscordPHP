@@ -188,7 +188,7 @@ class Role extends Part implements Stringable
      */
     protected function getTagsAttribute(): ?RoleTags
     {
-        return $this->attributeHelper('tags', RoleTags::class);
+        return $this->attributePartHelper('tags', RoleTags::class);
     }
 
     /**
