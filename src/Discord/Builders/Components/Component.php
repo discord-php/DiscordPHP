@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use Discord\Helpers\DynamicPropertyMutatorTrait;
 use JsonSerializable;
 
 /**
@@ -26,6 +27,8 @@ use JsonSerializable;
  */
 abstract class Component implements JsonSerializable
 {
+    use DynamicPropertyMutatorTrait;
+
     public const TYPE_ACTION_ROW = 1;
     public const TYPE_BUTTON = 2;
     public const TYPE_STRING_SELECT = 3;
