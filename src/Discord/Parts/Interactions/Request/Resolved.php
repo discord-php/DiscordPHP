@@ -150,7 +150,7 @@ class Resolved extends Part
      *
      * @return ExCollectionInterface|Channel[]|Thread[] Map of Snowflakes to partial channel objects
      */
-    protected function getChannelsAttribute(): ?ExCollectionInterface
+    protected function getChannelsAttribute(): ExCollectionInterface
     {
         $collection = new Collection();
 

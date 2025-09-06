@@ -77,9 +77,9 @@ class GuildSearch extends Part
     /**
      * Returns a collection of members found in the search.
      *
-     * @return ExCollectionInterface|Member[]|null
+     * @return ExCollectionInterface|Member[]
      */
-    protected function getMembersAttribute(): ?ExCollectionInterface
+    protected function getMembersAttribute(): ExCollectionInterface
     {
         $collection = Collection::for(Member::class);
 
