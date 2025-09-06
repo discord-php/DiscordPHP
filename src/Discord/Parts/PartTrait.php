@@ -484,15 +484,15 @@ trait PartTrait
      *
      * @throws \Exception
      *
-     * @return ExCollectionInterface|null
+     * @return ExCollectionInterface
      */
-    protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id'): ?ExCollectionInterface
+    protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id'): ExCollectionInterface
     {
-        if (! isset($this->attributes[$key])) {
-            return null;
-        }
-
         $collection = Collection::for($class, $discrim);
+
+        if (! isset($this->attributes[$key])) {
+            return $collection;
+        }
 
         foreach ($this->attributes[$key] as $part) {
             $collection->pushItem($this->createOf($class, $part));
