@@ -81,8 +81,8 @@ use function React\Promise\reject;
  * @property      MessageInteractionMetadata|null        $interaction_metadata   Sent if the message is sent as a result of an interaction.
  * @property      MessageInteraction|null                $interaction            Sent if the message is a response to an Interaction.
  * @property      Thread|null                            $thread                 The thread that was started from this message, includes thread member object.
- * @property      ExCollectionInterface|Component[]|null $components             Sent if the message contains components like buttons, action rows, or other interactive components.
- * @property      ExCollectionInterface|Sticker[]|null   $sticker_items          Stickers attached to the message.
+ * @property      ExCollectionInterface|Component[]      $components             Sent if the message contains components like buttons, action rows, or other interactive components.
+ * @property      ExCollectionInterface|Sticker[]        $sticker_items          Stickers attached to the message.
  * @property      int|null                               $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
  * @property      object|null                            $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
  * @property      Resolved|null                          $resolved               Data for users, members, channels, and roles in the message's auto-populated select menus
@@ -748,15 +748,15 @@ class Message extends Part
     /**
      * Returns the components attribute.
      *
-     * @return ExCollectionInterface|Component[]|null
+     * @return ExCollectionInterface<Component>|Component[]
      */
-    protected function getComponentsAttribute(): ?ExCollectionInterface
+    protected function getComponentsAttribute(): ExCollectionInterface
     {
-        if (! isset($this->attributes['components'])) {
-            return null;
-        }
-
         $components = Collection::for(Component::class, null);
+
+        if (! isset($this->attributes['components'])) {
+            return $components;
+        }
 
         foreach ($this->attributes['components'] as $component) {
             $components->pushItem($this->createOf(Component::TYPES[$component->type ?? 0], $component));
