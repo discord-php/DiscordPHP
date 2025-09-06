@@ -16,6 +16,8 @@ namespace Discord\Parts;
 use Carbon\Carbon;
 use Discord\Discord;
 use Discord\Factory\Factory;
+use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Http;
 use React\Promise\PromiseInterface;
 
@@ -431,16 +433,17 @@ trait PartTrait
     }
 
     /**
-     * Helps with getting attributes.
+     * Helps with getting Part attributes.
      *
      * @param string $key   The attribute key.
      * @param string $class The attribute class.
+     * @param array  $extraData Extra data to pass to the part constructor.
      *
      * @throws \Exception
      *
      * @return Part|null
      */
-    protected function attributePartHelper($key, $class, array $extraData = []): ?Part
+    protected function attributePartHelper($key, $class, $extraData = []): ?Part
     {
         if (! isset($this->attributes[$key])) {
             return null;
@@ -451,6 +454,16 @@ trait PartTrait
             : $this->attributes[$key] = $this->createOf($class, ((array) $this->attributes[$key]) + $extraData);
     }
 
+    /**
+     * Helps with getting ISO8601 timestamp attributes.
+     *
+     * @param string $key   The attribute key.
+     * @param string $class The attribute class.
+     *
+     * @throws \Exception
+     *
+     * @return Carbon|null
+     */
     protected function attributeCarbonHelper($key): ?Carbon
     {
         if (! isset($this->attributes[$key])) {
@@ -460,6 +473,33 @@ trait PartTrait
         return ($this->attributes[$key] instanceof Carbon)
             ? $this->attributes[$key]
             : $this->attributes[$key] = Carbon::parse($this->attributes[$key]);
+    }
+
+    /**
+     * Helps with getting Part attributes.
+     *
+     * @param string  $key     The attribute key.
+     * @param string  $class   The attribute class.
+     * @param ?string $discrim The attribute discriminator.
+     *
+     * @throws \Exception
+     *
+     * @return ExCollectionInterface|null
+     */
+    protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id'): ?ExCollectionInterface
+    {
+        if (! isset($this->attributes[$key])) {
+            return null;
+        }
+
+        $collection = Collection::for($class, $discrim);
+
+        foreach ($this->attributes[$key] as $part) {
+            $collection->pushItem($this->createOf($class, $part));
+        }
+
+        return $collection;
+
     }
 
     /**
