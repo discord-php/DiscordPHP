@@ -62,13 +62,7 @@ class CommandPermissions extends Part
      */
     protected function getPermissionsAttribute(): ExCollectionInterface
     {
-        $permissions = Collection::for(Permission::class);
-
-        foreach ($this->attributes['permissions'] ?? [] as $permission) {
-            $permissions->pushItem($this->factory->part(Permission::class, (array) $permission, true));
-        }
-
-        return $permissions;
+        return $this->attributeCollectionHelper('permissions', Permission::class);
     }
 
     /**

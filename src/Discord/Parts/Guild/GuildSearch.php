@@ -108,12 +108,6 @@ class GuildSearch extends Part
      */
     protected function getThreadsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Thread::class);
-
-        foreach ($this->attributes['threads'] ?? [] as $thread) {
-            $collection->pushItem($this->factory->part(Thread::class, (array) $thread, true));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('threads', Thread::class);
     }
 }

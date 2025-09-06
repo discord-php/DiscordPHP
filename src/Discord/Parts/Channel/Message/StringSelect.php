@@ -59,12 +59,6 @@ class StringSelect extends SelectMenu
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(StringSelectOption::class, null);
-
-        foreach ($this->attributes['options'] ?? [] as $item) {
-            $collection->pushItem($this->createOf(StringSelectOption::class, $item));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('options', StringSelectOption::class);
     }
 }

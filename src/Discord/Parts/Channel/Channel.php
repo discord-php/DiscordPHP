@@ -776,13 +776,7 @@ class Channel extends Part implements Stringable
      */
     protected function getAvailableTagsAttribute(): ExCollectionInterface
     {
-        $available_tags = Collection::for(Tag::class);
-
-        foreach ($this->attributes['available_tags'] ?? [] as $available_tag) {
-            $available_tags->pushItem($this->createOf(Tag::class, $available_tag));
-        }
-
-        return $available_tags;
+        return $this->attributeCollectionHelper('available_tags', Tag::class);
     }
 
     /**

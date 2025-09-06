@@ -44,12 +44,6 @@ class WelcomeScreen extends Part
      */
     protected function getWelcomeChannelsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(WelcomeChannel::class, null);
-
-        foreach ($this->attributes['welcome_channels'] ?? [] as $welcome_channel) {
-            $collection->pushItem($this->createOf(WelcomeChannel::class, $welcome_channel));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('welcome_channels', WelcomeChannel::class, 'channel_id');
     }
 }

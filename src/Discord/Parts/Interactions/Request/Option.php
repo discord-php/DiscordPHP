@@ -51,17 +51,7 @@ class Option extends Part
      */
     protected function getOptionsAttribute(): ?ExCollectionInterface
     {
-        if (! isset($this->attributes['options']) && ! in_array($this->type, [CommandOption::SUB_COMMAND, CommandOption::SUB_COMMAND_GROUP])) {
-            return null;
-        }
-
-        $options = Collection::for(Option::class, 'name');
-
-        foreach ($this->attributes['options'] ?? [] as $option) {
-            $options->pushItem($this->createOf(Option::class, $option));
-        }
-
-        return $options;
+        return $this->attributeCollectionHelper('options', Option::class, 'name');
     }
 
     /**

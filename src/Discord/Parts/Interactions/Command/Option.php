@@ -82,17 +82,7 @@ class Option extends Part
      */
     protected function getChoicesAttribute(): ?ExCollectionInterface
     {
-        if (! isset($this->attributes['choices']) && ! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
-            return null;
-        }
-
-        $choices = Collection::for(Choice::class, null);
-
-        foreach ($this->attributes['choices'] ?? [] as $choice) {
-            $choices->pushItem($this->createOf(Choice::class, $choice));
-        }
-
-        return $choices;
+        return $this->attributeCollectionHelper('choices', Choice::class);
     }
 
     /**
@@ -102,13 +92,7 @@ class Option extends Part
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {
-        $options = Collection::for(Option::class, null);
-
-        foreach ($this->attributes['options'] ?? [] as $option) {
-            $options->pushItem($this->createOf(Option::class, $option));
-        }
-
-        return $options;
+        return $this->attributeCollectionHelper('options', Option::class);
     }
 
     /**

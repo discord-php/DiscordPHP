@@ -403,13 +403,7 @@ class Message extends Part
      */
     protected function getAttachmentsAttribute(): ExCollectionInterface
     {
-        $attachments = Collection::for(Attachment::class);
-
-        foreach ($this->attributes['attachments'] ?? [] as $attachment) {
-            $attachments->pushItem($this->createOf(Attachment::class, $attachment));
-        }
-
-        return $attachments;
+        return $this->attributeCollectionHelper('attachments', Attachment::class);
     }
 
     /**
@@ -778,17 +772,11 @@ class Message extends Part
      */
     protected function getStickerItemsAttribute(): ?ExCollectionInterface
     {
-        if (! isset($this->attributes['sticker_items']) && ! in_array($this->type, [self::TYPE_DEFAULT, self::TYPE_REPLY])) {
+        if (! in_array($this->type, [self::TYPE_DEFAULT, self::TYPE_REPLY])) {
             return null;
         }
 
-        $sticker_items = Collection::for(Sticker::class);
-
-        foreach ($this->attributes['sticker_items'] ?? [] as $sticker) {
-            $sticker_items->pushItem($this->factory->part(Sticker::class, (array) $sticker, true));
-        }
-
-        return $sticker_items;
+        return $this->attributeCollectionHelper('sticker_items', Sticker::class);
     }
 
     /**

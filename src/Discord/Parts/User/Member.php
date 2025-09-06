@@ -641,13 +641,7 @@ class Member extends Part implements Stringable
      */
     protected function getActivitiesAttribute(): ExCollectionInterface
     {
-        $activities = Collection::for(Activity::class, null);
-
-        foreach ($this->attributes['activities'] ?? [] as $activity) {
-            $activities->pushItem($this->createOf(Activity::class, $activity));
-        }
-
-        return $activities;
+        return $this->attributeCollectionHelper('activities', Activity::class);
     }
 
     /**

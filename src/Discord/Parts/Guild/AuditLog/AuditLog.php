@@ -81,13 +81,7 @@ class AuditLog extends Part
      */
     protected function getApplicationCommandsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Command::class);
-
-        foreach ($this->attributes['application_commands'] ?? [] as $application_commands) {
-            $collection->pushItem($this->factory->part(Command::class, (array) $application_commands, true));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('application_commands', Command::class);
     }
 
     /**
@@ -97,13 +91,7 @@ class AuditLog extends Part
      */
     protected function getAuditLogEntriesAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Entry::class);
-
-        foreach ($this->attributes['audit_log_entries'] ?? [] as $entry) {
-            $collection->pushItem($this->createOf(Entry::class, $entry));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('audit_log_entries', Entry::class);
     }
 
     /**
@@ -113,13 +101,7 @@ class AuditLog extends Part
      */
     protected function getAutoModerationRulesAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Rule::class);
-
-        foreach ($this->attributes['auto_moderation_rules'] ?? [] as $rule) {
-            $collection->pushItem($this->factory->part(Rule::class, (array) $rule, true));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('auto_moderation_rules', Rule::class);
     }
 
     /**
@@ -129,13 +111,7 @@ class AuditLog extends Part
      */
     protected function getGuildScheduledEventsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(ScheduledEvent::class);
-
-        foreach ($this->attributes['guild_scheduled_events'] ?? [] as $scheduled_event) {
-            $collection->pushItem($this->factory->part(ScheduledEvent::class, (array) $scheduled_event, true));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('guild_scheduled_events', ScheduledEvent::class);
     }
 
     /**
@@ -147,13 +123,7 @@ class AuditLog extends Part
      */
     protected function getIntegrationsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Integration::class);
-
-        foreach ($this->attributes['integrations'] ?? [] as $integration) {
-            $collection->pushItem($this->factory->part(Integration::class, (array) $integration, true));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('integrations', Integration::class);
     }
 
     /**
@@ -163,13 +133,7 @@ class AuditLog extends Part
      */
     protected function getThreadsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Thread::class);
-
-        foreach ($this->attributes['threads'] ?? [] as $thread) {
-            $collection->pushItem($this->factory->part(Thread::class, (array) $thread, true));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('threads', Thread::class);
     }
 
     /**
@@ -195,13 +159,7 @@ class AuditLog extends Part
      */
     protected function getWebhooksAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Webhook::class);
-
-        foreach ($this->attributes['webhooks'] ?? [] as $webhook) {
-            $collection->pushItem($this->factory->part(Webhook::class, (array) $webhook, true));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('webhooks', Webhook::class);
     }
 
     /**

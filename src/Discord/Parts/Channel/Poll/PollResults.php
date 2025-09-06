@@ -44,12 +44,6 @@ class PollResults extends Part
      */
     protected function getAnswerCountsAttribute(): ExCollectionInterface
     {
-        $answerCounts = Collection::for(PollAnswerCount::class);
-
-        foreach ($this->attributes['answer_counts'] as $answerCount) {
-            $answerCounts->pushItem($this->factory->part(PollAnswerCount::class, $answerCount, true));
-        }
-
-        return $answerCounts;
+        return $this->attributeCollectionHelper('answer_counts', PollAnswerCount::class);
     }
 }

@@ -105,13 +105,7 @@ class Rule extends Part
      */
     protected function getActionsAttribute(): ExCollectionInterface
     {
-        $actions = Collection::for(Action::class, null);
-
-        foreach ($this->attributes['actions'] as $action) {
-            $actions->pushItem($this->createOf(Action::class, $action));
-        }
-
-        return $actions;
+        return $this->attributeCollectionHelper('actions', Action::class);
     }
 
     /**

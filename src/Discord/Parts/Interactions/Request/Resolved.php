@@ -71,11 +71,11 @@ class Resolved extends Part
      */
     protected function getUsersAttribute(): ?ExCollectionInterface
     {
-        if (! isset($this->attributes['users'])) {
-            return null;
-        }
-
         $collection = Collection::for(User::class);
+
+        if (! isset($this->attributes['users'])) {
+            return $collection;
+        }
 
         foreach ($this->attributes['users'] as $snowflake => $user) {
             $collection->pushItem($this->discord->users->get('id', $snowflake) ?: $this->factory->part(User::class, (array) $user, true));
@@ -93,11 +93,11 @@ class Resolved extends Part
      */
     protected function getMembersAttribute(): ?ExCollectionInterface
     {
-        if (! isset($this->attributes['members'])) {
-            return null;
-        }
-
         $collection = Collection::for(Member::class);
+
+        if (! isset($this->attributes['members'])) {
+            return $collection;
+        }
 
         foreach ($this->attributes['members'] as $snowflake => $member) {
             if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
@@ -122,11 +122,11 @@ class Resolved extends Part
      */
     protected function getRolesAttribute(): ?ExCollectionInterface
     {
-        if (! isset($this->attributes['roles'])) {
-            return null;
-        }
-
         $collection = Collection::for(Role::class);
+
+        if (! isset($this->attributes['roles'])) {
+            return $collection;
+        }
 
         foreach ($this->attributes['roles'] as $snowflake => $role) {
             if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
@@ -184,11 +184,11 @@ class Resolved extends Part
      */
     protected function getMessagesAttribute(): ?ExCollectionInterface
     {
-        if (! isset($this->attributes['messages'])) {
-            return null;
-        }
-
         $collection = Collection::for(Message::class);
+
+        if (! isset($this->attributes['messages'])) {
+            return $collection;
+        }
 
         foreach ($this->attributes['messages'] as $snowflake => $message) {
             if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
@@ -210,17 +210,7 @@ class Resolved extends Part
      */
     protected function getAttachmentsAttribute(): ?ExCollectionInterface
     {
-        if (! isset($this->attributes['attachments'])) {
-            return null;
-        }
-
-        $attachments = Collection::for(Attachment::class);
-
-        foreach ($this->attributes['attachments'] as $attachment) {
-            $attachments->pushItem($this->factory->part(Attachment::class, (array) $attachment, true));
-        }
-
-        return $attachments;
+        return $this->attributeCollectionHelper('attachments', Attachment::class);
     }
 
     protected function getGuildAttribute(): ?Guild

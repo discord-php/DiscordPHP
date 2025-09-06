@@ -70,17 +70,7 @@ class InteractionData extends Part
      */
     protected function getOptionsAttribute(): ?ExCollectionInterface
     {
-        if (! isset($this->attributes['options']) && $this->type != Command::CHAT_INPUT) {
-            return null;
-        }
-
-        $options = Collection::for(Option::class, 'name');
-
-        foreach ($this->attributes['options'] ?? [] as $option) {
-            $options->pushItem($this->createOf(Option::class, $option));
-        }
-
-        return $options;
+        return $this->attributeCollectionHelper('options', Option::class, 'name');
     }
 
     /**
