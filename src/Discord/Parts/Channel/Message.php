@@ -768,14 +768,10 @@ class Message extends Part
     /**
      * Returns the sticker_items attribute.
      *
-     * @return ExCollectionInterface|Sticker[]|null Partial stickers.
+     * @return ExCollectionInterface|Sticker[] Partial stickers.
      */
-    protected function getStickerItemsAttribute(): ?ExCollectionInterface
+    protected function getStickerItemsAttribute(): ExCollectionInterface
     {
-        if (! in_array($this->type, [self::TYPE_DEFAULT, self::TYPE_REPLY])) {
-            return null;
-        }
-
         return $this->attributeCollectionHelper('sticker_items', Sticker::class);
     }
 
