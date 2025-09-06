@@ -28,7 +28,7 @@ use Discord\Parts\WebSockets\MessageReaction;
 class MessageReactionRemoveEmoji extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

@@ -37,7 +37,7 @@ use Stringable;
 class Sound extends Part implements Stringable
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'name',
@@ -103,7 +103,7 @@ class Sound extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/soundboard#modify-guild-soundboard-sound
      */
@@ -118,7 +118,7 @@ class Sound extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

@@ -27,7 +27,7 @@ use Discord\Parts\Thread\Thread;
 class MessageDelete extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

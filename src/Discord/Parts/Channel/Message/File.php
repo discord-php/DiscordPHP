@@ -30,7 +30,7 @@ namespace Discord\Parts\Channel\Message;
 class File extends Content
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',

@@ -25,7 +25,7 @@ use Discord\Parts\Guild\Guild;
 class GuildRoleUpdate extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

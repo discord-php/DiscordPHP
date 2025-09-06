@@ -24,7 +24,7 @@ use Discord\Parts\Guild\AuditLog\Entry;
 class GuildAuditLogEntryCreate extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

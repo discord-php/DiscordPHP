@@ -27,7 +27,7 @@ use Discord\Parts\Part;
 class Secrets extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'join',

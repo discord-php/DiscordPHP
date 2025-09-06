@@ -30,7 +30,7 @@ namespace Discord\Parts\Channel\Message;
 class Section extends Layout
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',

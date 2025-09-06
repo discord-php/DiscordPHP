@@ -37,7 +37,7 @@ use function React\Promise\resolve;
 class ScheduledEventRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_SCHEDULED_EVENTS,
@@ -48,12 +48,12 @@ class ScheduledEventRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = ScheduledEvent::class;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @param bool $with_user_count Whether to include number of users subscribed to each event
      *

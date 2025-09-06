@@ -30,7 +30,7 @@ use function React\Promise\all;
 class GuildCreate extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {
