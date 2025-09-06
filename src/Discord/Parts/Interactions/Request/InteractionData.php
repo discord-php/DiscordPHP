@@ -30,13 +30,13 @@ use Discord\Parts\Part;
  * @property string                                 $name           Name of the invoked command.
  * @property int                                    $type           The type of the invoked command.
  * @property Resolved|null                          $resolved       Resolved users, members, roles and channels that are relevant.
- * @property ExCollectionInterface|Option[]|null    $options        Parameters and values from the user.
+ * @property ExCollectionInterface|Option[]         $options        Parameters and values from the user.
  * @property string|null                            $guild_id       ID of the guild internally passed from Interaction or ID of the guild the command belongs to.
  * @property string|null                            $target_id      ID the of user or message targeted by a user or message command.
  * @property string|null                            $custom_id      Custom ID the component was created for. (Only for Message Component & Modal)
  * @property int|null                               $component_type Type of the component. (Only for Message Component)
  * @property string[]|null                          $values         Values selected in a select menu. (Only for Message Component)
- * @property ExCollectionInterface|Component[]|null $components     The values submitted by the user. (Only for Modal)
+ * @property ExCollectionInterface|Component[]      $components     The values submitted by the user. (Only for Modal)
  *
  * @deprecated 10.19.0 Use either `ApplicationCommandData`,`MessageComponentData`, or `ModalSubmitData`
  */
@@ -68,7 +68,7 @@ class InteractionData extends Part
      *
      * @return ExCollectionInterface|Option[]|null $options
      */
-    protected function getOptionsAttribute(): ?ExCollectionInterface
+    protected function getOptionsAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('options', Option::class, 'name');
     }
@@ -76,15 +76,15 @@ class InteractionData extends Part
     /**
      * Gets the components of the interaction.
      *
-     * @return ExCollectionInterface|Component[]|null $components
+     * @return ExCollectionInterface|Component[] $components
      */
-    protected function getComponentsAttribute(): ?ExCollectionInterface
+    protected function getComponentsAttribute(): ExCollectionInterface
     {
-        if (! isset($this->attributes['components'])) {
-            return null;
-        }
-
         $components = Collection::for(Component::class, null);
+
+        if (! isset($this->attributes['components'])) {
+            return $components;
+        }
 
         foreach ($this->attributes['components'] as $component) {
             $components->pushItem($this->createOf(Component::TYPES[$component->type ?? 0], $component));

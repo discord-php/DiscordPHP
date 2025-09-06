@@ -28,7 +28,7 @@ use Discord\Parts\Part;
  * @property string                              $name    Name of the parameter.
  * @property int                                 $type    Type of the option.
  * @property string|int|float|bool|null          $value   Value of the option resulting from user input.
- * @property ExCollectionInterface|Option[]|null $options Present if this option is a group or subcommand.
+ * @property ExCollectionInterface|Option[]      $options Present if this option is a group or subcommand.
  * @property bool|null                           $focused `true` if this option is the currently focused option for autocomplete.
  */
 class Option extends Part
@@ -49,7 +49,7 @@ class Option extends Part
      *
      * @return ExCollectionInterface|Option[]|null $options
      */
-    protected function getOptionsAttribute(): ?ExCollectionInterface
+    protected function getOptionsAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('options', Option::class, 'name');
     }

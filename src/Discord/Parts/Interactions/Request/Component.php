@@ -41,7 +41,7 @@ use Discord\Parts\Part;
  * @property string|null                            $placeholder Custom placeholder text if nothing is selected; max 150 characters. (Select Menus, Text Inputs)
  * @property int|null                               $min_values  The minimum number of items that must be chosen; default 1, min 0, max 25. (Select Menus)
  * @property int|null                               $max_values  The maximum number of items that can be chosen; default 1, max 25. (Select Menus)
- * @property ExCollectionInterface|Component[]|null $components  A list of child components. (Action Rows)
+ * @property ExCollectionInterface|Component[]      $components  A list of child components. (Action Rows)
  * @property int|null                               $min_length  Minimum input length for a text input. (Text Inputs)
  * @property int|null                               $max_length  Maximum input length for a text input. (Text Inputs)
  * @property bool|null                              $required    Whether this component is required to be filled; defaults to `true` (Text Inputs)
@@ -76,7 +76,7 @@ class Component extends Part
      *
      * @return ExCollectionInterface|Component[]|null $components
      */
-    protected function getComponentsAttribute(): ?ExCollectionInterface
+    protected function getComponentsAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('components', Component::class);
     }

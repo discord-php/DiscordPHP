@@ -32,7 +32,7 @@ use function Discord\poly_strlen;
  * @property string                              $description               1-100 character description.
  * @property ?string[]|null                      $description_localizations Localization dictionary for the description field. Values follow the same restrictions as description.
  * @property bool|null                           $required                  If the parameter is required or optional--default false.
- * @property ExCollectionInterface|Choice[]|null $choices                   Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
+ * @property ExCollectionInterface|Choice[]      $choices                   Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
  * @property ExCollectionInterface|Option[]      $options                   Sub-options if applicable.
  * @property array|null                          $channel_types             If the option is a channel type, the channels shown will be restricted to these types.
  * @property int|float|null                      $min_value                 If the option is an INTEGER or NUMBER type, the minimum value permitted.
@@ -80,7 +80,7 @@ class Option extends Part
      *
      * @return ExCollectionInterface|Choice[]|null A collection of choices.
      */
-    protected function getChoicesAttribute(): ?ExCollectionInterface
+    protected function getChoicesAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('choices', Choice::class);
     }
