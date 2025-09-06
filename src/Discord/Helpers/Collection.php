@@ -42,18 +42,4 @@ class Collection implements ExCollectionInterface
      * @var string
      */
     protected $class;
-
-    /**
-     * Create a new Collection.
-     *
-     * @param array   $items
-     * @param ?string $discrim
-     * @param ?string $class
-     */
-    public function __construct(array $items = [], ?string $discrim = 'id', ?string $class = null)
-    {
-        $this->items = $items;
-        $this->discrim = $discrim;
-        $this->class = $class;
-    }
 }
