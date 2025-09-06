@@ -610,7 +610,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             $sticker = $sticker->id;
         }
 
-        if (($idx = array_search($sticker, $this->sticker_ids)) !== null) {
+        if (($idx = array_search($sticker, $this->sticker_ids)) !== false) {
             array_splice($this->sticker_ids, $idx, 1);
         }
 

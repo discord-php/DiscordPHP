@@ -175,7 +175,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      */
     public function removeComponent($component): self
     {
-        if (($idx = array_search($component, $this->components)) !== null) {
+        if (($idx = array_search($component, $this->components)) !== false) {
             array_splice($this->components, $idx, 1);
         }
 
