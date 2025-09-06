@@ -24,6 +24,8 @@ use Discord\Parts\Part;
  */
 abstract class Builder
 {
+    use DynamicPropertyMutatorTrait;
+
     /**
      * Creates a new instance of the builder from a given Part.
      *

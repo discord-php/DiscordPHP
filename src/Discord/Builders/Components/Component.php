@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use Discord\Builders\Builder;
 use Discord\Helpers\DynamicPropertyMutatorTrait;
 use JsonSerializable;
 
@@ -25,10 +26,8 @@ use JsonSerializable;
  * @since 7.0.0
  * @deprecated 10.9.0 Use `ComponentObject` instead.
  */
-abstract class Component implements JsonSerializable
+abstract class Component extends Builder implements JsonSerializable
 {
-    use DynamicPropertyMutatorTrait;
-
     public const TYPE_ACTION_ROW = 1;
     public const TYPE_BUTTON = 2;
     public const TYPE_STRING_SELECT = 3;
