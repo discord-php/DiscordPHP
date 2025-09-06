@@ -191,12 +191,20 @@ class Guild extends Part
     public const PREMIUM_TIER_2 = 2;
     public const PREMIUM_TIER_3 = 3;
 
+    /** Suppress member join notifications. */
     public const SUPPRESS_JOIN_NOTIFICATIONS = (1 << 0);
+    /** Suppress server boost notifications. */
     public const SUPPRESS_PREMIUM_SUBSCRIPTION = (1 << 1);
+    /** Suppress server setup tips. */
     public const SUPPRESS_GUILD_REMINDER_NOTIFICATIONS = (1 << 2);
+    /** Hide member join sticker reply buttons. */
     public const SUPPRESS_JOIN_NOTIFICATION_REPLIES = (1 << 3);
+    /** Suppress role subscription purchase and renewal notifications. */
     public const SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATIONS = (1 << 4);
+    /** Hide role subscription sticker reply buttons. */
     public const SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATION_REPLIES = (1 << 5);
+    /** Suppress emoji added notifications. */
+    public const SUPPRESS_UGC_ADDED_NOTIFICATIONS = (1 << 8);
 
     public const HUB_TYPE_DEFAULT = 0;
     public const HUB_TYPE_HIGH_SCHOOL = 1;
