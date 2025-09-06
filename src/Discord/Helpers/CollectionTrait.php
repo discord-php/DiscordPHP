@@ -573,9 +573,11 @@ trait CollectionTrait
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(bool $assoc = true): array
     {
-        return $this->items;
+        return $assoc
+            ? $this->items
+            : array_values($this->items);
     }
     /**
      * Converts the items into a new collection.

@@ -1082,7 +1082,7 @@ class MessageBuilder extends Builder implements JsonSerializable
         }
 
         if (isset($this->components) && $this->components->count()) {
-            $body['components'] = $this->components;
+            $body['components'] = $this->components->toArray(false);
             $empty = false;
         }
 
