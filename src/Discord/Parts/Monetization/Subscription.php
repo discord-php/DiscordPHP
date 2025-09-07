@@ -70,11 +70,7 @@ class Subscription extends Part
      */
     protected function getCurrentPeriodStartAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['current_period_start'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['current_period_start']);
+        return $this->attributeCarbonHelper('current_period_start');
     }
 
     /**
@@ -84,11 +80,7 @@ class Subscription extends Part
      */
     protected function getCurrentPeriodEndAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['current_period_end'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['current_period_end']);
+        return $this->attributeCarbonHelper('current_period_end');
     }
 
     /**
@@ -98,10 +90,6 @@ class Subscription extends Part
      */
     protected function getCanceledAtAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['canceled_at'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['canceled_at']);
+        return $this->attributeCarbonHelper('canceled_at');
     }
 }

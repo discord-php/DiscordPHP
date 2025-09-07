@@ -29,19 +29,19 @@ use function Discord\poly_strlen;
  * @since 4.0.3
  * @since 10.19.0 The `provider` property was added and `thumbnail` was updated to return `Thumbnail`.
  *
- * @property      ?string|null                        $title       The title of the embed.
- * @property-read ?string|null                        $type        The type of the embed (always "rich" for webhook embeds).
- * @property      ?string|null                        $description A description of the embed.
- * @property      ?string|null                        $url         The URL of the embed.
- * @property      ?Carbon|null                        $timestamp   A timestamp of the embed.
- * @property      ?int|null                           $color       The color of the embed.
- * @property      ?Footer|null                        $footer      The footer of the embed.
- * @property      ?Image|null                         $image       The image of the embed.
- * @property      ?Thumbnail|null                     $thumbnail   The thumbnail of the embed.
- * @property-read ?Video|null                         $video       The video of the embed.
- * @property-read ?Provider|null                      $provider    The provider of the embed.
- * @property      ?Author|null                        $author      The author of the embed.
- * @property      ?ExCollectionInterface|Field[]|null $fields      A collection of embed fields (max of 25).
+ * @property      ?string|null                          $title       The title of the embed.
+ * @property-read ?string|null                          $type        The type of the embed (always "rich" for webhook embeds).
+ * @property      ?string|null                          $description A description of the embed.
+ * @property      ?string|null                          $url         The URL of the embed.
+ * @property      ?Carbon|null                          $timestamp   A timestamp of the embed.
+ * @property      ?int|null                             $color       The color of the embed.
+ * @property      ?Footer|null                          $footer      The footer of the embed.
+ * @property      ?Image|null                           $image       The image of the embed.
+ * @property      ?Thumbnail|null                       $thumbnail   The thumbnail of the embed.
+ * @property-read ?Video|null                           $video       The video of the embed.
+ * @property-read ?Provider|null                        $provider    The provider of the embed.
+ * @property      ?Author|null                          $author      The author of the embed.
+ * @property      ?ExCollectionInterface<Field>|Field[] $fields      A collection of embed fields (max of 25).
  */
 class Embed extends Part
 {
@@ -92,11 +92,7 @@ class Embed extends Part
      */
     protected function getTimestampAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['timestamp'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['timestamp']);
+        return $this->attributeCarbonHelper('timestamp');
     }
 
     /**
@@ -106,7 +102,7 @@ class Embed extends Part
      */
     protected function getFooterAttribute(): ?Footer
     {
-        return $this->attributeHelper('footer', Footer::class);
+        return $this->attributePartHelper('footer', Footer::class);
     }
 
     /**
@@ -116,7 +112,7 @@ class Embed extends Part
      */
     protected function getImageAttribute(): ?Image
     {
-        return $this->attributeHelper('image', Image::class);
+        return $this->attributePartHelper('image', Image::class);
     }
 
     /**
@@ -126,7 +122,7 @@ class Embed extends Part
      */
     protected function getThumbnailAttribute(): ?Thumbnail
     {
-        return $this->attributeHelper('thumbnail', Thumbnail::class);
+        return $this->attributePartHelper('thumbnail', Thumbnail::class);
     }
 
     /**
@@ -136,7 +132,7 @@ class Embed extends Part
      */
     protected function getVideoAttribute(): ?Video
     {
-        return $this->attributeHelper('video', Video::class);
+        return $this->attributePartHelper('video', Video::class);
     }
 
     /**
@@ -146,7 +142,7 @@ class Embed extends Part
      */
     protected function getProviderAttribute(): ?Provider
     {
-        return $this->attributeHelper('provider', Provider::class);
+        return $this->attributePartHelper('provider', Provider::class);
     }
 
     /**
@@ -156,31 +152,17 @@ class Embed extends Part
      */
     protected function getAuthorAttribute(): ?Author
     {
-        return $this->attributeHelper('author', Author::class);
+        return $this->attributePartHelper('author', Author::class);
     }
 
     /**
      * Gets the fields attribute.
      *
-     * @return ExCollectionInterface|Field[]
+     * @return ExCollectionInterface<Field>|Field[]
      */
     protected function getFieldsAttribute(): ExCollectionInterface
     {
-        $fields = Collection::for(Field::class, 'name');
-
-        if (! array_key_exists('fields', $this->attributes)) {
-            return $fields;
-        }
-
-        foreach ($this->attributes['fields'] as $field) {
-            if (! ($field instanceof Field)) {
-                $field = $this->createOf(Field::class, $field);
-            }
-
-            $fields->pushItem($field);
-        }
-
-        return $fields;
+        return $this->attributeCollectionHelper('fields', Field::class);
     }
 
     /**

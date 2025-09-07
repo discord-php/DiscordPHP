@@ -49,7 +49,7 @@ class Sticker extends Part implements Stringable
     public const FORMAT_TYPE_GIF = 4;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -66,7 +66,7 @@ class Sticker extends Part implements Stringable
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function isPartial(): bool
     {
@@ -147,7 +147,7 @@ class Sticker extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/sticker#modify-guild-sticker-json-params
      */
@@ -161,7 +161,7 @@ class Sticker extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

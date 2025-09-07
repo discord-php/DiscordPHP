@@ -31,7 +31,7 @@ namespace Discord\Parts\Channel\Message;
 class Thumbnail extends Content
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',

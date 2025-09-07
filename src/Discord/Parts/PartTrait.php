@@ -16,6 +16,8 @@ namespace Discord\Parts;
 use Carbon\Carbon;
 use Discord\Discord;
 use Discord\Factory\Factory;
+use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Http;
 use React\Promise\PromiseInterface;
 
@@ -431,16 +433,74 @@ trait PartTrait
     }
 
     /**
-     * Helps with getting attributes.
+     * Helps with getting ISO8601 timestamp attributes.
      *
      * @param string $key   The attribute key.
      * @param string $class The attribute class.
      *
      * @throws \Exception
      *
-     * @return Part|null
+     * @return Carbon|null
+     *
+     * @since 10.19.0
      */
-    protected function attributeHelper($key, $class): ?Part
+    protected function attributeCarbonHelper($key): ?Carbon
+    {
+        if (! isset($this->attributes[$key])) {
+            return null;
+        }
+
+        return ($this->attributes[$key] instanceof Carbon)
+            ? $this->attributes[$key]
+            : $this->attributes[$key] = Carbon::parse($this->attributes[$key]);
+    }
+
+    /**
+     * Helps with getting Part attributes.
+     *
+     * @param string  $key     The attribute key.
+     * @param string  $class   The attribute class.
+     * @param ?string $discrim The attribute discriminator.
+     *
+     * @throws \Exception
+     *
+     * @return ExCollectionInterface
+     *
+     * @since 10.19.0
+     */
+    protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id'): ExCollectionInterface
+    {
+        $collection = Collection::for($class, $discrim);
+
+        if (! isset($this->attributes[$key])) {
+            return $collection;
+        }
+
+        foreach ($this->attributes[$key] as $part) {
+            $collection->pushItem(
+                $part instanceof $class
+                    ? $part
+                    : $this->createOf($class, $part)
+            );
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Helps with getting Part attributes.
+     *
+     * @param string $key       The attribute key.
+     * @param string $class     The attribute class.
+     * @param array  $extraData Extra data to pass to the part constructor.
+     *
+     * @throws \Exception
+     *
+     * @return Part|null
+     *
+     * @since 10.19.0
+     */
+    protected function attributePartHelper($key, $class, $extraData = []): ?Part
     {
         if (! isset($this->attributes[$key])) {
             return null;
@@ -448,7 +508,7 @@ trait PartTrait
 
         return ($this->attributes[$key] instanceof $class)
             ? $this->attributes[$key]
-            : $this->attributes[$key] = $this->factory->part($class, $this->attributes[$key], $this->created);
+            : $this->attributes[$key] = $this->createOf($class, ((array) $this->attributes[$key]) + $extraData);
     }
 
     /**

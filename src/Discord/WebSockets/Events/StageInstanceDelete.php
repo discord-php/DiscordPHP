@@ -26,7 +26,7 @@ use Discord\Parts\Guild\Guild;
 class StageInstanceDelete extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

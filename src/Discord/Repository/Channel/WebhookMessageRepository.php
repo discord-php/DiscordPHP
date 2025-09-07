@@ -35,7 +35,7 @@ use Discord\Repository\AbstractRepository;
 class WebhookMessageRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'get' => Endpoint::WEBHOOK_MESSAGE,
@@ -44,7 +44,7 @@ class WebhookMessageRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Message::class;
 }

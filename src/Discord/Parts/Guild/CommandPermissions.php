@@ -36,7 +36,7 @@ use Discord\Parts\Part;
 class CommandPermissions extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -62,17 +62,11 @@ class CommandPermissions extends Part
      */
     protected function getPermissionsAttribute(): ExCollectionInterface
     {
-        $permissions = Collection::for(Permission::class);
-
-        foreach ($this->attributes['permissions'] ?? [] as $permission) {
-            $permissions->pushItem($this->factory->part(Permission::class, (array) $permission, true));
-        }
-
-        return $permissions;
+        return $this->attributeCollectionHelper('permissions', Permission::class);
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getUpdatableAttributes(): array
     {
@@ -82,7 +76,7 @@ class CommandPermissions extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

@@ -65,7 +65,7 @@ class ScheduledEvent extends Part
     public const STATUS_CANCELED = 4;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -220,7 +220,7 @@ class ScheduledEvent extends Part
      */
     protected function getScheduledStartTimeAttribute(): Carbon
     {
-        return new Carbon($this->attributes['scheduled_start_time']);
+        return $this->attributeCarbonHelper('scheduled_start_time');
     }
 
     /**
@@ -232,11 +232,7 @@ class ScheduledEvent extends Part
      */
     protected function getScheduledEndTimeAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['scheduled_end_time'])) {
-            return null;
-        }
-
-        return new Carbon($this->attributes['scheduled_end_time']);
+        return $this->attributeCarbonHelper('scheduled_end_time');
     }
 
     /**
@@ -262,7 +258,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event-json-params
      */
@@ -282,7 +278,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event-json-params
      */
@@ -314,7 +310,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

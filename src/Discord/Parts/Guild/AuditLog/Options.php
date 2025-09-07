@@ -39,7 +39,7 @@ use Discord\Parts\Part;
 class Options extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'application_id',

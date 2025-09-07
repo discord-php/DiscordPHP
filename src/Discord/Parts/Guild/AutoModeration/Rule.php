@@ -50,7 +50,7 @@ use Discord\Parts\User\User;
 class Rule extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -105,13 +105,7 @@ class Rule extends Part
      */
     protected function getActionsAttribute(): ExCollectionInterface
     {
-        $actions = Collection::for(Action::class, null);
-
-        foreach ($this->attributes['actions'] as $action) {
-            $actions->pushItem($this->createOf(Action::class, $action));
-        }
-
-        return $actions;
+        return $this->attributeCollectionHelper('actions', Action::class);
     }
 
     /**
@@ -163,7 +157,7 @@ class Rule extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule-json-params
      */
@@ -192,7 +186,7 @@ class Rule extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule-json-params
      */
@@ -215,7 +209,7 @@ class Rule extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

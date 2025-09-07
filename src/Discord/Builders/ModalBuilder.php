@@ -187,10 +187,10 @@ class ModalBuilder extends Builder implements JsonSerializable
      */
     public function removeComponent($component): self
     {
-        if (isset($this->components)) {
-            if (($idx = $this->components->search($component)) !== false) {
-                $this->components->splice($idx, 1);
-            }
+        $this->components ??= Collection::for(ComponentObject::class);
+
+        if (($idx = $this->components->search($component)) !== false) {
+            $this->components->splice($idx, 1);
         }
 
         return $this;
@@ -216,7 +216,7 @@ class ModalBuilder extends Builder implements JsonSerializable
             'data' => [
                 'custom_id' => $this->custom_id,
                 'title' => $this->title,
-                'components' => $this->components,
+                'components' => $this->component->toArray(false),
             ],
         ];
     }

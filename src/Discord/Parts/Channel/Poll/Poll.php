@@ -35,7 +35,7 @@ class Poll extends Part
     public const LAYOUT_DEFAULT = 1;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'question',

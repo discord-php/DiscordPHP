@@ -88,7 +88,7 @@ class Activity extends Part implements Stringable
     public const STATUS_DISPLAY_TYPE_DETAILS = 2;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'name',
@@ -120,11 +120,7 @@ class Activity extends Part implements Stringable
      */
     protected function getCreatedAtAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['created_at'])) {
-            return null;
-        }
-
-        return Carbon::createFromTimestamp($this->attributes['created_at']);
+        return $this->attributeCarbonHelper('created_at');
     }
 
     /**
@@ -134,11 +130,7 @@ class Activity extends Part implements Stringable
      */
     protected function getEmojiAttribute(): ?Emoji
     {
-        if (! isset($this->attributes['emoji'])) {
-            return null;
-        }
-
-        return $this->factory->part(Emoji::class, (array) $this->attributes['emoji'], true);
+        return $this->attributePartHelper('emoji', Emoji::class);
     }
 
     /**
@@ -148,11 +140,7 @@ class Activity extends Part implements Stringable
      */
     protected function getPartyAttribute(): ?Party
     {
-        if (! isset($this->attributes['party'])) {
-            return null;
-        }
-
-        return $this->factory->part(Party::class, (array) $this->attributes['party'], true);
+        return $this->attributePartHelper('party', Party::class);
     }
 
     /**
@@ -162,11 +150,7 @@ class Activity extends Part implements Stringable
      */
     protected function getAssetsAttribute(): ?Assets
     {
-        if (! isset($this->attributes['assets'])) {
-            return null;
-        }
-
-        return $this->factory->part(Assets::class, (array) $this->attributes['assets'], true);
+        return $this->attributePartHelper('assets', Assets::class);
     }
 
     /**

@@ -35,7 +35,7 @@ use React\Promise\PromiseInterface;
 class ReactionRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'get' => Endpoint::MESSAGE_REACTION_EMOJI,
@@ -43,7 +43,7 @@ class ReactionRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Reaction::class;
 

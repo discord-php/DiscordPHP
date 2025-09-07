@@ -29,7 +29,7 @@ use Discord\Parts\Guild\Emoji;
 class PollMedia extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'text',

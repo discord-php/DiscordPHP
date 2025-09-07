@@ -44,7 +44,7 @@ class SoundRepository extends AbstractRepository
     protected $discrim = 'sound_id';
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_SOUNDBOARD_SOUNDS,
@@ -55,7 +55,7 @@ class SoundRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Sound::class;
 

@@ -31,7 +31,7 @@ namespace Discord\Parts\Channel\Message;
 class Container extends Layout
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',

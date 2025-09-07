@@ -70,11 +70,7 @@ class Entitlement extends Part
      */
     protected function getStartsAtAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['starts_at'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['starts_at']);
+        return $this->attributeCarbonHelper('starts_at');
     }
 
     /**
@@ -86,10 +82,6 @@ class Entitlement extends Part
      */
     protected function getEndsAtAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['ends_at'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['ends_at']);
+        return $this->attributeCarbonHelper('ends_at');
     }
 }

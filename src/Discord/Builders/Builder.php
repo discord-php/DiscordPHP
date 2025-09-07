@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Builders;
 
+use Discord\Helpers\DynamicPropertyMutatorTrait;
 use Discord\Parts\Part;
 
 /**
@@ -24,6 +25,8 @@ use Discord\Parts\Part;
  */
 abstract class Builder
 {
+    use DynamicPropertyMutatorTrait;
+
     /**
      * Creates a new instance of the builder from a given Part.
      *

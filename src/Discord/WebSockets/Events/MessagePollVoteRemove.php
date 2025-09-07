@@ -28,7 +28,7 @@ use Discord\Parts\Thread\Thread;
 class MessagePollVoteRemove extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

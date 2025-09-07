@@ -35,7 +35,7 @@ namespace Discord\Parts\Channel\Message;
 class ActionRow extends Layout
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',

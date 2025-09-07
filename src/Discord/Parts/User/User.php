@@ -85,7 +85,7 @@ class User extends Part implements Stringable
     public const PREMIUM_NITRO_BASIC = 3;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -303,11 +303,7 @@ class User extends Part implements Stringable
      */
     public function getAvatarDecorationDataAttribute(): ?AvatarDecorationData
     {
-        if (! isset($this->attributes['avatar_decoration_data'])) {
-            return null;
-        }
-
-        return $this->factory->part(AvatarDecorationData::class, (array) $this->attributes['avatar_decoration_data'], true);
+        return $this->attributePartHelper('avatar_decoration_data', AvatarDecorationData::class);
     }
 
     /**
@@ -317,11 +313,7 @@ class User extends Part implements Stringable
      */
     protected function getCollectiblesAttribute(): ?Collectibles
     {
-        if (! isset($this->attributes['collectibles'])) {
-            return null;
-        }
-
-        return $this->factory->part(Collectibles::class, (array) $this->attributes['collectibles'], true);
+        return $this->attributePartHelper('collectibles', Collectibles::class);
     }
 
     /**
@@ -329,11 +321,7 @@ class User extends Part implements Stringable
      */
     protected function getPrimaryGuildAttribute(): ?PrimaryGuild
     {
-        if (! isset($this->attributes['primary_guild'])) {
-            return null;
-        }
-
-        return $this->factory->part(PrimaryGuild::class, (array) $this->attributes['primary_guild'], true);
+        return $this->attributePartHelper('primary_guild', PrimaryGuild::class);
     }
 
     /**
@@ -347,7 +335,7 @@ class User extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

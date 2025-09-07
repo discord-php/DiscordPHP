@@ -25,7 +25,7 @@ use Discord\Parts\Guild\Guild;
 class GuildBanAdd extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

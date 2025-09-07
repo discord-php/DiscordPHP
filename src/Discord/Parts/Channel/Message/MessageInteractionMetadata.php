@@ -47,7 +47,7 @@ use Discord\Parts\User\User;
 class MessageInteractionMetadata extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -66,7 +66,7 @@ class MessageInteractionMetadata extends Part
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $hidden = [
         'guild_id',
@@ -90,11 +90,7 @@ class MessageInteractionMetadata extends Part
      */
     protected function getTargetUserAttribute(): ?User
     {
-        if (! isset($this->attributes['target_user'])) {
-            return null;
-        }
-
-        return $this->factory->part(User::class, (array) $this->attributes['target_user'], true);
+        return $this->attributePartHelper('target_user', User::class);
     }
 
     /**
@@ -104,11 +100,7 @@ class MessageInteractionMetadata extends Part
      */
     protected function getTriggeringInteractionMetadataAttribute(): ?MessageInteractionMetadata
     {
-        if (! isset($this->attributes['triggering_interaction_metadata'])) {
-            return null;
-        }
-
-        return $this->factory->part(self::class, (array) $this->attributes['triggering_interaction_metadata'], true);
+        return $this->attributePartHelper('triggering_interaction_metadata', MessageInteractionMetadata::class);
     }
 
     /**

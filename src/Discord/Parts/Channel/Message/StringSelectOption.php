@@ -32,7 +32,7 @@ use Discord\Parts\Part;
 class StringSelectOption extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'label',

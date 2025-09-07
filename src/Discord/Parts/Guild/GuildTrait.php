@@ -268,7 +268,7 @@ trait GuildTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

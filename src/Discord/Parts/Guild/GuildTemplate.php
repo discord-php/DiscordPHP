@@ -45,7 +45,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class GuildTemplate extends Part implements Stringable
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'code',
@@ -108,7 +108,7 @@ class GuildTemplate extends Part implements Stringable
      */
     protected function getCreatedAtAttribute(): Carbon
     {
-        return new Carbon($this->attributes['created_at']);
+        return $this->attributeCarbonHelper('created_at');
     }
 
     /**
@@ -120,7 +120,7 @@ class GuildTemplate extends Part implements Stringable
      */
     protected function getUpdatedAtAttribute(): Carbon
     {
-        return new Carbon($this->attributes['updated_at']);
+        return $this->attributeCarbonHelper('updated_at');
     }
 
     /**
@@ -184,7 +184,7 @@ class GuildTemplate extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild-template#create-guild-template-json-params
      */
@@ -198,7 +198,7 @@ class GuildTemplate extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild-template#modify-guild-template-json-params
      */
@@ -211,7 +211,7 @@ class GuildTemplate extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

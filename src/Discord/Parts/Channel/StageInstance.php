@@ -38,7 +38,7 @@ class StageInstance extends Part
     public const PRIVACY_LEVEL_GROUP_ONLY = 2;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -82,7 +82,7 @@ class StageInstance extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/stage-instance#create-stage-instance-json-params
      */
@@ -103,7 +103,7 @@ class StageInstance extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance-json-params
      */
@@ -116,7 +116,7 @@ class StageInstance extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

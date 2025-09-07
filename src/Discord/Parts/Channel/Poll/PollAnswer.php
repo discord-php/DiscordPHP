@@ -48,7 +48,7 @@ use function Discord\normalizePartId;
 class PollAnswer extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'answer_id',

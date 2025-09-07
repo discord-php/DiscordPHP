@@ -29,7 +29,7 @@ use Discord\Parts\Part;
 class PollAnswerCount extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'id',

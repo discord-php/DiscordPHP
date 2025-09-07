@@ -33,7 +33,7 @@ class Permission extends Part
     public const TYPE_CHANNEL = 3;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
