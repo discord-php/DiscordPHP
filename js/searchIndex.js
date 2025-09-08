@@ -933,7 +933,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-MediaGalleryItem.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\MediaGalleryItem\u003A\u003A\u0024media",
@@ -1023,7 +1023,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Option\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Builders-Components-Option.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Option\u003A\u003A\u0024label",
@@ -3053,7 +3053,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Helpers\\Buffer\u003A\u003Awrite\u0028\u0029",
             "name": "write",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Helpers-Buffer.html#method_write"
         },                {
             "fqsen": "\\Discord\\Helpers\\Buffer\u003A\u003AreadRaw\u0028\u0029",
@@ -3078,17 +3078,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Helpers\\Buffer\u003A\u003AisWritable\u0028\u0029",
             "name": "isWritable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Helpers-Buffer.html#method_isWritable"
         },                {
             "fqsen": "\\Discord\\Helpers\\Buffer\u003A\u003Aend\u0028\u0029",
             "name": "end",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Helpers-Buffer.html#method_end"
         },                {
             "fqsen": "\\Discord\\Helpers\\Buffer\u003A\u003Aclose\u0028\u0029",
             "name": "close",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Helpers-Buffer.html#method_close"
         },                {
             "fqsen": "\\Discord\\Helpers\\Buffer\u003A\u003A\u0024buffer",
@@ -3665,6 +3665,46 @@ Search.appendIndex(
             "name": "__debugInfo",
             "summary": "Returns\u0020an\u0020item\u0020that\u0020will\u0020be\u0020displayed\u0020for\u0020debugging.",
             "url": "classes/Discord-Helpers-CollectionTrait.html#method___debugInfo"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\DynamicPropertyMutatorTrait",
+            "name": "DynamicPropertyMutatorTrait",
+            "summary": "",
+            "url": "classes/Discord-Helpers-DynamicPropertyMutatorTrait.html"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\DynamicPropertyMutatorTrait\u003A\u003AcheckForGetMutator\u0028\u0029",
+            "name": "checkForGetMutator",
+            "summary": "Checks\u0020if\u0020there\u0020is\u0020a\u0020get\u0020mutator\u0020present.",
+            "url": "classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_checkForGetMutator"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\DynamicPropertyMutatorTrait\u003A\u003AcheckForSetMutator\u0028\u0029",
+            "name": "checkForSetMutator",
+            "summary": "Checks\u0020if\u0020there\u0020is\u0020a\u0020set\u0020mutator\u0020present.",
+            "url": "classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_checkForSetMutator"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\DynamicPropertyMutatorTrait\u003A\u003AgetProperty\u0028\u0029",
+            "name": "getProperty",
+            "summary": "Gets\u0020a\u0020property\u0020on\u0020the\u0020parent\u0020part.",
+            "url": "classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_getProperty"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\DynamicPropertyMutatorTrait\u003A\u003AsetProperty\u0028\u0029",
+            "name": "setProperty",
+            "summary": "Sets\u0020an\u0020property\u0020on\u0020the\u0020parent\u0020part.",
+            "url": "classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_setProperty"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\DynamicPropertyMutatorTrait\u003A\u003Astudly\u0028\u0029",
+            "name": "studly",
+            "summary": "Converts\u0020a\u0020string\u0020to\u0020studlyCase.",
+            "url": "classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_studly"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\DynamicPropertyMutatorTrait\u003A\u003A__get\u0028\u0029",
+            "name": "__get",
+            "summary": "Handles\u0020dynamic\u0020get\u0020calls\u0020onto\u0020the\u0020part.",
+            "url": "classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___get"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\DynamicPropertyMutatorTrait\u003A\u003A__set\u0028\u0029",
+            "name": "__set",
+            "summary": "Handles\u0020dynamic\u0020set\u0020calls\u0020onto\u0020the\u0020part.",
+            "url": "classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___set"
         },                {
             "fqsen": "\\Discord\\Helpers\\ExCollectionInterface",
             "name": "ExCollectionInterface",
@@ -4448,7 +4488,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\ActionRow\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-ActionRow.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions",
@@ -4553,7 +4593,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003ATYPE_ROLE",
@@ -4613,7 +4653,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\ChannelSelect\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-ChannelSelect.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Component",
@@ -4643,7 +4683,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Container\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-Container.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Content",
@@ -4673,7 +4713,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\File\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-File.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Interactive",
@@ -4753,7 +4793,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\MentionableSelect\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-MentionableSelect.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageCall",
@@ -4918,7 +4958,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\RoleSelect\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-RoleSelect.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Section",
@@ -4933,7 +4973,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Section\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-Section.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\SelectMenu",
@@ -4953,7 +4993,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Separator\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-Separator.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\StringSelect",
@@ -4968,7 +5008,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\StringSelect\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-StringSelect.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\StringSelectOption",
@@ -4993,7 +5033,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\TextDisplay\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-TextDisplay.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\TextInput",
@@ -5018,7 +5058,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Thumbnail\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-Thumbnail.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\UnfurledMediaItem",
@@ -5038,7 +5078,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\UserSelect\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-UserSelect.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message",
@@ -7843,7 +7883,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getRepositoryAttributes"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Integration",
@@ -9691,10 +9731,20 @@ Search.appendIndex(
             "summary": "Converts\u0020a\u0020string\u0020to\u0020studlyCase.",
             "url": "classes/Discord-Parts-PartTrait.html#method_studly"
         },                {
-            "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AattributeHelper\u0028\u0029",
-            "name": "attributeHelper",
-            "summary": "Helps\u0020with\u0020getting\u0020attributes.",
-            "url": "classes/Discord-Parts-PartTrait.html#method_attributeHelper"
+            "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AattributeCarbonHelper\u0028\u0029",
+            "name": "attributeCarbonHelper",
+            "summary": "Helps\u0020with\u0020getting\u0020ISO8601\u0020timestamp\u0020attributes.",
+            "url": "classes/Discord-Parts-PartTrait.html#method_attributeCarbonHelper"
+        },                {
+            "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AattributeCollectionHelper\u0028\u0029",
+            "name": "attributeCollectionHelper",
+            "summary": "Helps\u0020with\u0020getting\u0020Part\u0020attributes.",
+            "url": "classes/Discord-Parts-PartTrait.html#method_attributeCollectionHelper"
+        },                {
+            "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AattributePartHelper\u0028\u0029",
+            "name": "attributePartHelper",
+            "summary": "Helps\u0020with\u0020getting\u0020Part\u0020attributes.",
+            "url": "classes/Discord-Parts-PartTrait.html#method_attributePartHelper"
         },                {
             "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AgetConstants\u0028\u0029",
             "name": "getConstants",
@@ -10103,7 +10153,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AafterConstruct\u0028\u0029",
             "name": "afterConstruct",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_afterConstruct"
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetArchivedAttribute\u0028\u0029",
@@ -11658,7 +11708,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\OverwriteRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Channel-OverwriteRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\OverwriteRepository\u003A\u003A\u0024class",
@@ -11673,7 +11723,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\PollAnswerRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Channel-PollAnswerRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\PollAnswerRepository\u003A\u003A\u0024class",
@@ -11693,7 +11743,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\ReactionRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Channel-ReactionRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\ReactionRepository\u003A\u003A\u0024class",
@@ -11708,7 +11758,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\StageInstanceRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Channel-StageInstanceRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\StageInstanceRepository\u003A\u003A\u0024class",
@@ -11723,7 +11773,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\ThreadRepository\u003A\u003AcacheFreshen\u0028\u0029",
             "name": "cacheFreshen",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Channel-ThreadRepository.html#method_cacheFreshen"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\ThreadRepository\u003A\u003Aactive\u0028\u0029",
@@ -11743,7 +11793,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\ThreadRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Channel-ThreadRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\ThreadRepository\u003A\u003A\u0024class",
@@ -11763,7 +11813,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\VoiceMemberRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Channel-VoiceMemberRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\VoiceMemberRepository\u003A\u003A\u0024class",
@@ -11778,7 +11828,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\WebhookMessageRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Channel-WebhookMessageRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\WebhookMessageRepository\u003A\u003A\u0024class",
@@ -11793,7 +11843,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\WebhookRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Channel-WebhookRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\WebhookRepository\u003A\u003A\u0024class",
@@ -11833,7 +11883,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\AutoModerationRuleRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-AutoModerationRuleRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\AutoModerationRuleRepository\u003A\u003A\u0024class",
@@ -11863,7 +11913,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\BanRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-BanRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\BanRepository\u003A\u003A\u0024class",
@@ -11913,7 +11963,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\EmojiRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-EmojiRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\EmojiRepository\u003A\u003A\u0024class",
@@ -11958,7 +12008,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\GuildTemplateRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-GuildTemplateRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\GuildTemplateRepository\u003A\u003A\u0024class",
@@ -11973,7 +12023,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\IntegrationRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-IntegrationRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\IntegrationRepository\u003A\u003A\u0024class",
@@ -11988,7 +12038,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\InviteRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-InviteRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\InviteRepository\u003A\u003A\u0024class",
@@ -12013,7 +12063,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-MemberRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003A\u0024class",
@@ -12058,7 +12108,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\RoleRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-RoleRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\RoleRepository\u003A\u003A\u0024class",
@@ -12078,7 +12128,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\ScheduledEventRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-ScheduledEventRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\ScheduledEventRepository\u003A\u003A\u0024class",
@@ -12103,7 +12153,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\SoundRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-SoundRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\SoundRepository\u003A\u003A\u0024class",
@@ -12118,7 +12168,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\StickerRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Guild-StickerRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\StickerRepository\u003A\u003A\u0024class",
@@ -12158,7 +12208,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Interaction\\GlobalCommandRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-Interaction-GlobalCommandRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Interaction\\GlobalCommandRepository\u003A\u003A\u0024class",
@@ -12253,7 +12303,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\PrivateChannelRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-PrivateChannelRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\PrivateChannelRepository\u003A\u003A\u0024class",
@@ -12273,7 +12323,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\SoundRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-SoundRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\SoundRepository\u003A\u003A\u0024class",
@@ -12313,7 +12363,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\UserRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-UserRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\UserRepository\u003A\u003A\u0024class",
@@ -12418,42 +12468,42 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003AisReadable\u0028\u0029",
             "name": "isReadable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Voice-RecieveStream.html#method_isReadable"
         },                {
             "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003AisWritable\u0028\u0029",
             "name": "isWritable",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Voice-RecieveStream.html#method_isWritable"
         },                {
             "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003Awrite\u0028\u0029",
             "name": "write",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Voice-RecieveStream.html#method_write"
         },                {
             "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003Aend\u0028\u0029",
             "name": "end",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Voice-RecieveStream.html#method_end"
         },                {
             "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003Aclose\u0028\u0029",
             "name": "close",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Voice-RecieveStream.html#method_close"
         },                {
             "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003Apause\u0028\u0029",
             "name": "pause",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Voice-RecieveStream.html#method_pause"
         },                {
             "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003Aresume\u0028\u0029",
             "name": "resume",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Voice-RecieveStream.html#method_resume"
         },                {
             "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003Apipe\u0028\u0029",
             "name": "pipe",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Voice-RecieveStream.html#method_pipe"
         },                {
             "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003ApipePCM\u0028\u0029",
