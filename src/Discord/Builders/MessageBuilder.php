@@ -570,7 +570,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             $this->components->pushItem($component);
         }
 
-        if (! $components->count()) {
+        if (! $this->components->count()) {
             unset($this->components);
         }
 
