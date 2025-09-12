@@ -1343,6 +1343,12 @@ class Message extends Part
             self::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING,
             self::TYPE_THREAD_STARTER_MESSAGE,
             self::TYPE_GUILD_APPLICATION_PREMIUM_SUBSCRIPTION,
+            self::TYPE_GUILD_INCIDENT_ALERT_MODE_ENABLED,
+            self::TYPE_GUILD_INCIDENT_ALERT_MODE_DISABLED,
+            self::TYPE_GUILD_INCIDENT_REPORT_RAID,
+            self::TYPE_GUILD_INCIDENT_REPORT_FALSE_ALARM,
+            self::TYPE_PURCHASE_NOTIFICATION,
+            self::TYPE_POLL_RESULT,
         ]);
     }
 
