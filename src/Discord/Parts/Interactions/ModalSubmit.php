@@ -88,7 +88,7 @@ class ModalSubmit extends Interaction
             $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
 
             /** @var ?TimerInterface $timer */
-            if ($timer !== null) {
+            if ($timer instanceof TimerInterface) {
                 $this->discord->getLoop()->cancelTimer($timer);
             }
         };
