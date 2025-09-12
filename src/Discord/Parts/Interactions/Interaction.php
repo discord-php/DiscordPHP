@@ -744,15 +744,12 @@ class Interaction extends Part
 
             $components = Collection::for(MessageComponent::class, 'custom_id');
             foreach ($interaction->data->components as $container) {
-                $container = $this->createOf(MessageComponent::TYPES[$container->type ?? 0], $container);
                 if (property_exists($container, 'components')) { // e.g. ActionRow
                     foreach ($container->components as $component) {
-                        $component = $this->createOf(MessageComponent::TYPES[$container->type ?? 0], $component);
                         /** @var MessageComponent $component */
                         $components->pushItem($component);
                     }
                 } elseif (property_exists($container, 'component')) { // e.g. Label
-                    $component = $this->createOf(MessageComponent::TYPES[$container->type ?? 0], $container->component);
                     /** @var MessageComponent $component */
                     $components->pushItem($component);
                 }
