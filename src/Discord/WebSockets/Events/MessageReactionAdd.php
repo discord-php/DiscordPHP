@@ -37,9 +37,9 @@ class MessageReactionAdd extends Event
 
         /** @var ?Guild */
         if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            /** @var ?Channel */
+            /** @var ?Channel $channel */
             if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
-                /** @var Channel */
+                /** @var Channel $channel */
                 foreach ($guild->channels as $channel) {
                     /** @var ?Thread */
                     if ($thread = yield $channel->threads->cacheGet($data->channel_id)) {
@@ -49,9 +49,10 @@ class MessageReactionAdd extends Event
                 }
             }
         } else {
-            /** @var ?Channel */
+            /** @var ?Channel $channel*/
             $channel = yield $this->discord->private_channels->cacheGet($data->channel_id);
         }
+        /** @var ?Channel $channel */
 
         $reaction = new MessageReaction($this->discord, (array) $data, true);
 
