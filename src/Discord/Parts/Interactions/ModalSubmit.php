@@ -73,13 +73,13 @@ class ModalSubmit extends Interaction
                 $container = $this->createOf(Component::TYPES[$container->type ?? 0], $container);
                 if (property_exists($container, 'components')) { // e.g. ActionRow
                     foreach ($container->components as $component) {
-                        /** @var Component $component */
                         $component = $this->createOf(Component::TYPES[$container->type ?? 0], $component);
+                        /** @var Component $component */
                         $components->pushItem($component);
                     }
                 } elseif (property_exists($container, 'component')) { // e.g. Label
-                    /** @var Component $component */
                     $component = $this->createOf(Component::TYPES[$container->type ?? 0], $container->component);
+                    /** @var Component $component */
                     $components->pushItem($component);
                 }
             }
