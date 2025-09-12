@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions;
 
-use Discord\Builders\Components\Component;
 use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\MessageBuilder;
 use Discord\Builders\ModalBuilder;
@@ -25,7 +24,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Command\Choice;
-use Discord\Parts\Channel\Message\Component as MessageComponent;
+use Discord\Parts\Channel\Message\Component as RequestComponent;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
@@ -733,15 +732,15 @@ class Interaction extends Part
                 return;
             }
 
-            $components = Collection::for(MessageComponent::class, 'custom_id');
+            $components = Collection::for(RequestComponent::class, 'custom_id');
             foreach ($interaction->data->components as $container) {
                 if (property_exists($container, 'components')) { // e.g. ActionRow
                     foreach ($container->components as $component) {
-                        /** @var MessageComponent $component */
+                        /** @var RequestComponent $component */
                         $components->pushItem($component);
                     }
                 } elseif (property_exists($container, 'component')) { // e.g. Label
-                    /** @var MessageComponent $component */
+                    /** @var RequestComponent $component */
                     $components->pushItem($component);
                 }
             }
