@@ -25,7 +25,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Command\Choice;
-use Discord\Parts\Channel\Message\Component as RequestComponent;
+use Discord\Parts\Channel\Message\Component as MessageComponent;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
@@ -729,24 +729,29 @@ class Interaction extends Part
         $timer = null;
 
         $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener, &$timer) {
-            if ($interaction->type == self::TYPE_MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
-                $components = Collection::for(RequestComponent::class, 'custom_id');
-                foreach ($interaction->data->components as $container) {
-                    if ($container->type == Component::TYPE_LABEL) {
-                        $components->pushItem($container->component);
-                    } elseif ($container->type == Component::TYPE_ACTION_ROW) {
-                        foreach ($container->components as $component) {
-                            $components->pushItem($component);
-                        }
-                    }
-                }
-                $submit($interaction, $components);
-                $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
+            if (! $interaction instanceof ModalSubmit || $interaction->data->custom_id != $custom_id) {
+                return;
+            }
 
-                /** @var ?TimerInterface $timer */
-                if ($timer !== null) {
-                    $this->discord->getLoop()->cancelTimer($timer);
+            $components = Collection::for(MessageComponent::class, 'custom_id');
+            foreach ($interaction->data->components as $container) {
+                if (property_exists($container, 'components')) { // e.g. ActionRow
+                    foreach ($container->components as $component) {
+                        /** @var MessageComponent $component */
+                        $components->pushItem($component);
+                    }
+                } elseif (property_exists($container, 'component')) { // e.g. Label
+                    /** @var MessageComponent $component */
+                    $components->pushItem($component);
                 }
+            }
+
+            $submit($interaction, $components);
+            $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
+
+            /** @var ?TimerInterface $timer */
+            if ($timer instanceof TimerInterface) {
+                $this->discord->getLoop()->cancelTimer($timer);
             }
         };
 
