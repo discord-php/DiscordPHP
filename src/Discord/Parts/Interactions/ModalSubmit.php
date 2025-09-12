@@ -14,9 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Interactions;
 
 use Discord\Helpers\Collection;
-use Discord\Parts\Channel\Message\ActionRow;
 use Discord\Parts\Channel\Message\Component;
-use Discord\Parts\Channel\Message\Label;
 use Discord\Parts\Interactions\Request\ModalSubmitData;
 use Discord\WebSockets\Event;
 use React\EventLoop\TimerInterface;
