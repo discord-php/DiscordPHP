@@ -739,7 +739,11 @@ class Interaction extends Part
     {
         $timer = null;
 
-        $listener = function (ModalSubmit $interaction) use ($custom_id, $submit, &$listener, &$timer) {
+        $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener, &$timer) {
+            if (! $interaction instanceof ModalSubmit) {
+                return;
+            }
+
             if ($interaction->data->custom_id != $custom_id) {
                 return;
             }
