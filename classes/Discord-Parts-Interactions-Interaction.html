@@ -436,7 +436,7 @@
     // Fallback for unknown types
     \Discord\Parts\Interactions\Interaction::TYPE_PING =&gt; \Discord\Parts\Interactions\Ping::class,
     \Discord\Parts\Interactions\Interaction::TYPE_APPLICATION_COMMAND =&gt; \Discord\Parts\Interactions\ApplicationCommand::class,
-    \Discord\Parts\Interactions\Interaction::TYPE_MESSAGE_COMPONENT =&gt; \Discord\Parts\Interactions\MessageComponent::class,
+    \Discord\Parts\Interactions\Interaction::TYPE_MESSAGE_COMPONENT =&gt; \Discord\Parts\Channel\Message\Component::class,
     \Discord\Parts\Interactions\Interaction::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE =&gt; \Discord\Parts\Interactions\ApplicationCommandAutocomplete::class,
     \Discord\Parts\Interactions\Interaction::TYPE_MODAL_SUBMIT =&gt; \Discord\Parts\Interactions\ModalSubmit::class,
 ]                            </span>
@@ -1641,7 +1641,7 @@ JSON. Used for JsonSerializable.</dd>
     // Fallback for unknown types
     \Discord\Parts\Interactions\Interaction::TYPE_PING =&gt; \Discord\Parts\Interactions\Ping::class,
     \Discord\Parts\Interactions\Interaction::TYPE_APPLICATION_COMMAND =&gt; \Discord\Parts\Interactions\ApplicationCommand::class,
-    \Discord\Parts\Interactions\Interaction::TYPE_MESSAGE_COMPONENT =&gt; \Discord\Parts\Interactions\MessageComponent::class,
+    \Discord\Parts\Interactions\Interaction::TYPE_MESSAGE_COMPONENT =&gt; \Discord\Parts\Channel\Message\Component::class,
     \Discord\Parts\Interactions\Interaction::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE =&gt; \Discord\Parts\Interactions\ApplicationCommandAutocomplete::class,
     \Discord\Parts\Interactions\Interaction::TYPE_MODAL_SUBMIT =&gt; \Discord\Parts\Interactions\ModalSubmit::class,
 ]</span>
@@ -6306,7 +6306,7 @@ This behavior is deprecated, and you should use the Edit Original Interaction Re
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Interaction.php"><a href="files/src-discord-parts-interactions-interaction.html"><abbr title="src/Discord/Parts/Interactions/Interaction.php">Interaction.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">767</span>
+    <span class="phpdocumentor-element-found-in__line">772</span>
 
     </aside>
 
