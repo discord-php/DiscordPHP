@@ -723,8 +723,6 @@ class Interaction extends Part
      * @param int|float|null $timeout   Optional timeout in seconds after which the listener will be removed. (Mandatory for modal submit interactions)
      *
      * @return callable The listener callback to be registered for interaction events.
-     *
-     * @deprecated 10.19.3 Use `ModalSubmit::createListener()`
      */
     /**
      * Creates a listener callback for handling modal submit interactions with a specific custom ID.
