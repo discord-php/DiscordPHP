@@ -12056,6 +12056,11 @@ Search.appendIndex(
             "summary": "Contains\u0020members\u0020of\u0020a\u0020guild.",
             "url": "classes/Discord-Repository-Guild-MemberRepository.html"
         },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003AmodifyCurrentMember\u0028\u0029",
+            "name": "modifyCurrentMember",
+            "summary": "Modifies\u0020the\u0020current\u0020member\u0020\u0028no\u0020validation\u0029.",
+            "url": "classes/Discord-Repository-Guild-MemberRepository.html#method_modifyCurrentMember"
+        },                {
             "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003Akick\u0028\u0029",
             "name": "kick",
             "summary": "Alias\u0020for\u0020\u0060\u0024member\u002D\u003Edelete\u0028\u0029\u0060.",

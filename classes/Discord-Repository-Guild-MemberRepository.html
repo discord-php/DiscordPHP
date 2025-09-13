@@ -265,7 +265,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MemberRepository.php"><a href="files/src-discord-repository-guild-memberrepository.html"><abbr title="src/Discord/Repository/Guild/MemberRepository.php">MemberRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -639,6 +639,13 @@ based on the response of the callback.</dd>
 <dd>Merges another collection into this collection.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Repository-Guild-MemberRepository.html#method_modifyCurrentMember">modifyCurrentMember()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, self&gt;    </span>
+</dt>
+<dd>Modifies the current member (no validation).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="-deprecated" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetExists">offsetExists()</a>
     <span>
                                 &nbsp;: bool    </span>
@@ -901,7 +908,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MemberRepository.php"><a href="files/src-discord-repository-guild-memberrepository.html"><abbr title="src/Discord/Repository/Guild/MemberRepository.php">MemberRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
@@ -992,7 +999,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MemberRepository.php"><a href="files/src-discord-repository-guild-memberrepository.html"><abbr title="src/Discord/Repository/Guild/MemberRepository.php">MemberRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -2398,7 +2405,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MemberRepository.php"><a href="files/src-discord-repository-guild-memberrepository.html"><abbr title="src/Discord/Repository/Guild/MemberRepository.php">MemberRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
@@ -2861,7 +2868,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MemberRepository.php"><a href="files/src-discord-repository-guild-memberrepository.html"><abbr title="src/Discord/Repository/Guild/MemberRepository.php">MemberRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -3054,6 +3061,88 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">self</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_modifyCurrentMember">
+        modifyCurrentMember()
+        <a href="classes/Discord-Repository-Guild-MemberRepository.html#method_modifyCurrentMember" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MemberRepository.php"><a href="files/src-discord-repository-guild-memberrepository.html"><abbr title="src/Discord/Repository/Guild/MemberRepository.php">MemberRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">67</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Modifies the current member (no validation).</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">modifyCurrentMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, self&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$params</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The parameters to modify.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$reason</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Reason for Audit Log.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Repository-Guild-MemberRepository.html#method_modifyCurrentMember#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/guild#modify-current-member-json-params"> https://discord.com/developers/docs/resources/guild#modify-current-member-json-params </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.20.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, self&gt;</span>
             </section>
 
 </article>
@@ -4401,6 +4490,7 @@ This method is deprecated for userland code but can still be used internally wit
                                             <li class=""><a href="classes/Discord-Repository-Guild-MemberRepository.html#method_last">last()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_map">map()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_merge">merge()</a></li>
+                                            <li class=""><a href="classes/Discord-Repository-Guild-MemberRepository.html#method_modifyCurrentMember">modifyCurrentMember()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetExists">offsetExists()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetGet">offsetGet()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetSet">offsetSet()</a></li>
