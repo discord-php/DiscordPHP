@@ -14,10 +14,13 @@ declare(strict_types=1);
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\User\Member;
 use Discord\Repository\AbstractRepository;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * Contains members of a guild.
@@ -44,6 +47,43 @@ class MemberRepository extends AbstractRepository
         'update' => Endpoint::GUILD_MEMBER,
         'delete' => Endpoint::GUILD_MEMBER,
     ];
+
+    /**
+     * Modifies the current member (no validation).
+     *
+     * @link https://discord.com/developers/docs/resources/guild#modify-current-member-json-params
+     *
+     * @since 10.19.0
+     *
+     * @param array        $params           The parameters to modify.
+     * @param ?string|null $params['nick']   Value to set user's nickname to.
+     * @param ?string|null $params['banner'] Data URI base64 encoded banner image.
+     * @param ?string|null $params['avatar'] Data URL base64 encoded avatar image.
+     * @param ?string|null $params['bio']    Guild member bio.
+     * @param string|null  $reason           Reason for Audit Log.
+     *
+     * @return PromiseInterface<self>
+     */
+    public function modifyCurrentMember(array $params, ?string $reason = null): PromiseInterface
+    {
+        $allowed = ['nick', 'banner', 'avatar', 'bio'];
+        $params = array_filter(
+            $params,
+            fn ($key) => in_array($key, $allowed, true),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        if (empty($params)) {
+            return reject(new \InvalidArgumentException('No valid parameters to modify.'));
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $params, $headers);
+    }
 
     /**
      * {@inheritDoc}
