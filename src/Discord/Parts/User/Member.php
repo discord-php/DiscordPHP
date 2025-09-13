@@ -199,7 +199,7 @@ class Member extends Part implements Stringable
     }
 
     /**
-     * Modifies the current member.
+     * Modifies the current member (no validation).
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-current-member-json-params
      *
