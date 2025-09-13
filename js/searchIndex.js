@@ -10561,6 +10561,11 @@ Search.appendIndex(
             "summary": "Alias\u0020for\u0020\u0060\u0024guild\u002D\u003Emembers\u002D\u003Edelete\u0028\u0029\u0060.",
             "url": "classes/Discord-Parts-User-Member.html#method_kick"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AmodifyCurrentMember\u0028\u0029",
+            "name": "modifyCurrentMember",
+            "summary": "Modifies\u0020the\u0020current\u0020member\u0020\u0028no\u0020validation\u0029.",
+            "url": "classes/Discord-Parts-User-Member.html#method_modifyCurrentMember"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AsetNickname\u0028\u0029",
             "name": "setNickname",
             "summary": "Sets\u0020the\u0020nickname\u0020of\u0020the\u0020member.",

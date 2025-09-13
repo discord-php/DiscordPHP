@@ -800,6 +800,13 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Alias for `$guild-&gt;members-&gt;delete()`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-User-Member.html#method_modifyCurrentMember">modifyCurrentMember()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, self&gt;    </span>
+</dt>
+<dd>Modifies the current member (no validation).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-User-Member.html#method_moveMember">moveMember()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, self&gt;    </span>
@@ -2969,7 +2976,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">882</span>
+    <span class="phpdocumentor-element-found-in__line">925</span>
 
     </aside>
 
@@ -3052,7 +3059,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">279</span>
+    <span class="phpdocumentor-element-found-in__line">322</span>
 
     </aside>
 
@@ -3357,7 +3364,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">763</span>
+    <span class="phpdocumentor-element-found-in__line">806</span>
 
     </aside>
 
@@ -3557,7 +3564,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">439</span>
+    <span class="phpdocumentor-element-found-in__line">482</span>
 
     </aside>
 
@@ -3738,7 +3745,7 @@ fact that you cannot edit a role higher than your own.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">870</span>
+    <span class="phpdocumentor-element-found-in__line">913</span>
 
     </aside>
 
@@ -3790,7 +3797,7 @@ fact that you cannot edit a role higher than your own.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">860</span>
+    <span class="phpdocumentor-element-found-in__line">903</span>
 
     </aside>
 
@@ -3849,7 +3856,7 @@ fact that you cannot edit a role higher than your own.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">840</span>
+    <span class="phpdocumentor-element-found-in__line">883</span>
 
     </aside>
 
@@ -4067,6 +4074,98 @@ JSON. Used for JsonSerializable.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_modifyCurrentMember">
+        modifyCurrentMember()
+        <a href="classes/Discord-Parts-User-Member.html#method_modifyCurrentMember" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">219</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Modifies the current member (no validation).</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">modifyCurrentMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, self&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$params</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The parameters to modify.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$reason</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Reason for Audit Log.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-User-Member.html#method_modifyCurrentMember#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/guild#modify-current-member-json-params"> https://discord.com/developers/docs/resources/guild#modify-current-member-json-params </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.19.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Discord\Http\Exceptions\NoPermissionsException">NoPermissionsException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>Member is not the current user.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, self&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_moveMember">
         moveMember()
         <a href="classes/Discord-Parts-User-Member.html#method_moveMember" class="headerlink"><i class="fas fa-link"></i></a>
@@ -4075,7 +4174,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">251</span>
+    <span class="phpdocumentor-element-found-in__line">294</span>
 
     </aside>
 
@@ -4391,7 +4490,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">323</span>
+    <span class="phpdocumentor-element-found-in__line">366</span>
 
     </aside>
 
@@ -4475,7 +4574,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">416</span>
+    <span class="phpdocumentor-element-found-in__line">459</span>
 
     </aside>
 
@@ -4631,7 +4730,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">584</span>
+    <span class="phpdocumentor-element-found-in__line">627</span>
 
     </aside>
 
@@ -4708,7 +4807,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">211</span>
+    <span class="phpdocumentor-element-found-in__line">254</span>
 
     </aside>
 
@@ -4785,7 +4884,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">362</span>
+    <span class="phpdocumentor-element-found-in__line">405</span>
 
     </aside>
 
@@ -4869,7 +4968,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">551</span>
+    <span class="phpdocumentor-element-found-in__line">594</span>
 
     </aside>
 
@@ -5447,7 +5546,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">642</span>
+    <span class="phpdocumentor-element-found-in__line">685</span>
 
     </aside>
 
@@ -5556,7 +5655,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">789</span>
+    <span class="phpdocumentor-element-found-in__line">832</span>
 
     </aside>
 
@@ -5611,7 +5710,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">652</span>
+    <span class="phpdocumentor-element-found-in__line">695</span>
 
     </aside>
 
@@ -5650,7 +5749,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">830</span>
+    <span class="phpdocumentor-element-found-in__line">873</span>
 
     </aside>
 
@@ -5704,7 +5803,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">688</span>
+    <span class="phpdocumentor-element-found-in__line">731</span>
 
     </aside>
 
@@ -5754,7 +5853,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">619</span>
+    <span class="phpdocumentor-element-found-in__line">662</span>
 
     </aside>
 
@@ -5797,7 +5896,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">632</span>
+    <span class="phpdocumentor-element-found-in__line">675</span>
 
     </aside>
 
@@ -5838,7 +5937,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">712</span>
+    <span class="phpdocumentor-element-found-in__line">755</span>
 
     </aside>
 
@@ -5881,7 +5980,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">666</span>
+    <span class="phpdocumentor-element-found-in__line">709</span>
 
     </aside>
 
@@ -5924,7 +6023,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">750</span>
+    <span class="phpdocumentor-element-found-in__line">793</span>
 
     </aside>
 
@@ -5982,7 +6081,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">814</span>
+    <span class="phpdocumentor-element-found-in__line">857</span>
 
     </aside>
 
@@ -6042,7 +6141,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">801</span>
+    <span class="phpdocumentor-element-found-in__line">844</span>
 
     </aside>
 
@@ -6096,7 +6195,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">722</span>
+    <span class="phpdocumentor-element-found-in__line">765</span>
 
     </aside>
 
@@ -6139,7 +6238,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">698</span>
+    <span class="phpdocumentor-element-found-in__line">741</span>
 
     </aside>
 
@@ -6182,7 +6281,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">676</span>
+    <span class="phpdocumentor-element-found-in__line">719</span>
 
     </aside>
 
@@ -6582,6 +6681,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_isPartial">isPartial()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_jsonSerialize">jsonSerialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-User-Member.html#method_kick">kick()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-User-Member.html#method_modifyCurrentMember">modifyCurrentMember()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-User-Member.html#method_moveMember">moveMember()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetExists">offsetExists()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetGet">offsetGet()</a></li>
