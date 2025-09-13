@@ -27,7 +27,7 @@ namespace Discord\Parts\Channel\Message;
 abstract class Interactive extends Component
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',

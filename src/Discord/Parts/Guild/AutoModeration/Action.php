@@ -28,7 +28,7 @@ use Discord\Parts\Part;
 class Action extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',
@@ -47,15 +47,11 @@ class Action extends Part
      */
     public function getMetadataAttribute(): ?ActionMetadata
     {
-        if (! isset($this->attributes['metadata'])) {
-            return null;
-        }
-
-        return $this->createOf(ActionMetadata::class, $this->attributes['metadata']);
+        return $this->attributePartHelper('metadata', ActionMetadata::class);
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @see Rule::getCreatableAttributes()
      */

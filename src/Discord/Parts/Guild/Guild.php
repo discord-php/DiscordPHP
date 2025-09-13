@@ -191,19 +191,27 @@ class Guild extends Part
     public const PREMIUM_TIER_2 = 2;
     public const PREMIUM_TIER_3 = 3;
 
+    /** Suppress member join notifications. */
     public const SUPPRESS_JOIN_NOTIFICATIONS = (1 << 0);
+    /** Suppress server boost notifications. */
     public const SUPPRESS_PREMIUM_SUBSCRIPTION = (1 << 1);
+    /** Suppress server setup tips. */
     public const SUPPRESS_GUILD_REMINDER_NOTIFICATIONS = (1 << 2);
+    /** Hide member join sticker reply buttons. */
     public const SUPPRESS_JOIN_NOTIFICATION_REPLIES = (1 << 3);
+    /** Suppress role subscription purchase and renewal notifications. */
     public const SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATIONS = (1 << 4);
+    /** Hide role subscription sticker reply buttons. */
     public const SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATION_REPLIES = (1 << 5);
+    /** Suppress emoji added notifications. */
+    public const SUPPRESS_UGC_ADDED_NOTIFICATIONS = (1 << 8);
 
     public const HUB_TYPE_DEFAULT = 0;
     public const HUB_TYPE_HIGH_SCHOOL = 1;
     public const HUB_TYPE_COLLEGE = 2;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -258,7 +266,7 @@ class Guild extends Part
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $visible = [
         'feature_animated_banner',
@@ -301,7 +309,7 @@ class Guild extends Part
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $repositories = [
         'roles' => RoleRepository::class,
@@ -330,7 +338,7 @@ class Guild extends Part
     protected $regions;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function setChannelsAttribute(?array $channels): void
     {
@@ -514,11 +522,7 @@ class Guild extends Part
      */
     protected function getJoinedAtAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['joined_at'])) {
-            return null;
-        }
-
-        return new Carbon($this->attributes['joined_at']);
+        return $this->attributeCarbonHelper('joined_at');
     }
 
     /**
@@ -1146,11 +1150,7 @@ class Guild extends Part
      */
     protected function getWelcomeScreenAttribute(): ?WelcomeScreen
     {
-        if (! isset($this->attributes['welcome_screen'])) {
-            return null;
-        }
-
-        return $this->createOf(WelcomeScreen::class, $this->attributes['welcome_screen']);
+        return $this->attributePartHelper('welcome_screen', WelcomeScreen::class);
     }
 
     /**
@@ -1398,7 +1398,7 @@ class Guild extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-json-params
      */
@@ -1425,7 +1425,7 @@ class Guild extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-json-params
      */

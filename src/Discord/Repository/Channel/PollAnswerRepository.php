@@ -35,14 +35,14 @@ use Discord\Repository\AbstractRepository;
 class PollAnswerRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'get' => Endpoint::MESSAGE_POLL_ANSWER,
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = PollAnswer::class;
 }

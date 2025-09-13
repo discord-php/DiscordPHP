@@ -25,7 +25,7 @@ use Discord\WebSockets\Event;
 class GuildRoleDelete extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

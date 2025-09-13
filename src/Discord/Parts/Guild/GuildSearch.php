@@ -25,13 +25,13 @@ use Discord\Parts\User\Member;
  *
  * @link TODO
  *
- * @property string                                 $analytics_id
- * @property ExCollectionInterface<Message>         $messages
- * @property bool                                   $doing_deep_historical_index
- * @property int                                    $total_results
- * @property ExCollectionInterface<Thread>|Thread[] $threads
- * @property ExCollectionInterface<Member>|Member[] $members
- * @property ?int|null                              $documents_indexed
+ * @property string                                   $analytics_id
+ * @property ExCollectionInterface<Message>|Message[] $messages
+ * @property bool                                     $doing_deep_historical_index
+ * @property int                                      $total_results
+ * @property ExCollectionInterface<Thread>|Thread[]   $threads
+ * @property ExCollectionInterface<Member>|Member[]   $members
+ * @property ?int|null                                $documents_indexed
  */
 class GuildSearch extends Part
 {
@@ -51,15 +51,15 @@ class GuildSearch extends Part
     /**
      * Returns a collection of messages found in the search.
      *
-     * @return ExCollectionInterface|Message[]|null
+     * @return ExCollectionInterface|Message[]
      */
-    protected function getMessagesAttribute(): ?ExCollectionInterface
+    protected function getMessagesAttribute(): ExCollectionInterface
     {
-        if (! isset($this->attributes['messages'])) {
-            return null;
-        }
-
         $collection = Collection::for(Message::class);
+
+        if (! isset($this->attributes['messages'])) {
+            return $collection;
+        }
 
         foreach ($this->attributes['messages'] as $snowflake => $message) {
             if ($guild = $this->discord->guilds->get('id', $message->guild_id)) {
@@ -77,9 +77,9 @@ class GuildSearch extends Part
     /**
      * Returns a collection of members found in the search.
      *
-     * @return ExCollectionInterface|Member[]|null
+     * @return ExCollectionInterface|Member[]
      */
-    protected function getMembersAttribute(): ?ExCollectionInterface
+    protected function getMembersAttribute(): ExCollectionInterface
     {
         $collection = Collection::for(Member::class);
 
@@ -108,12 +108,6 @@ class GuildSearch extends Part
      */
     protected function getThreadsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Thread::class);
-
-        foreach ($this->attributes['threads'] ?? [] as $thread) {
-            $collection->pushItem($this->factory->part(Thread::class, (array) $thread, true));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('threads', Thread::class);
     }
 }

@@ -40,14 +40,14 @@ class SoundRepository extends AbstractRepository
     protected $discrim = 'sound_id';
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::SOUNDBOARD_DEFAULT_SOUNDS,
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Sound::class;
 }

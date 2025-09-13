@@ -225,7 +225,7 @@ class Option extends Component
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {

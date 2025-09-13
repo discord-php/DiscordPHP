@@ -81,11 +81,7 @@ trait ChannelTrait
      */
     protected function getLastPinTimestampAttribute(): ?Carbon
     {
-        if (! isset($this->attributes['last_pin_timestamp'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['last_pin_timestamp']);
+        return $this->attributeCarbonHelper('last_pin_timestamp');
     }
 
     /**

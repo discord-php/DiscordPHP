@@ -38,7 +38,7 @@ use Discord\Parts\Guild\Emoji;
 class Button extends Interactive
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',
@@ -59,10 +59,6 @@ class Button extends Interactive
      */
     protected function getEmojiAttribute(): ?Emoji
     {
-        if (! isset($this->attributes['emoji'])) {
-            return null;
-        }
-
-        return $this->factory->part(Emoji::class, (array) $this->attributes['emoji'], true);
+        return $this->attributePartHelper('emoji', Emoji::class);
     }
 }

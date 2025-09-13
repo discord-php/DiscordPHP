@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Command;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 
@@ -26,20 +25,20 @@ use function Discord\poly_strlen;
  *
  * @since 7.0.0
  *
- * @property int                                 $type                      Type of the option.
- * @property string                              $name                      Name of the option.
- * @property ?string[]|null                      $name_localizations        Localization dictionary for the name field. Values follow the same restrictions as name.
- * @property string                              $description               1-100 character description.
- * @property ?string[]|null                      $description_localizations Localization dictionary for the description field. Values follow the same restrictions as description.
- * @property bool|null                           $required                  If the parameter is required or optional--default false.
- * @property ExCollectionInterface|Choice[]|null $choices                   Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
- * @property ExCollectionInterface|Option[]      $options                   Sub-options if applicable.
- * @property array|null                          $channel_types             If the option is a channel type, the channels shown will be restricted to these types.
- * @property int|float|null                      $min_value                 If the option is an INTEGER or NUMBER type, the minimum value permitted.
- * @property int|float|null                      $max_value                 If the option is an INTEGER or NUMBER type, the maximum value permitted.
- * @property int|null                            $min_length                For option type `STRING`, the minimum allowed length (minimum of `0`, maximum of `6000`).
- * @property int|null                            $max_length                For option type `STRING`, the maximum allowed length (minimum of `1`, maximum of `6000`).
- * @property bool|null                           $autocomplete              Enable autocomplete interactions for this option.
+ * @property int                            $type                      Type of the option.
+ * @property string                         $name                      Name of the option.
+ * @property ?string[]|null                 $name_localizations        Localization dictionary for the name field. Values follow the same restrictions as name.
+ * @property string                         $description               1-100 character description.
+ * @property ?string[]|null                 $description_localizations Localization dictionary for the description field. Values follow the same restrictions as description.
+ * @property bool|null                      $required                  If the parameter is required or optional--default false.
+ * @property ExCollectionInterface|Choice[] $choices                   Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
+ * @property ExCollectionInterface|Option[] $options                   Sub-options if applicable.
+ * @property array|null                     $channel_types             If the option is a channel type, the channels shown will be restricted to these types.
+ * @property int|float|null                 $min_value                 If the option is an INTEGER or NUMBER type, the minimum value permitted.
+ * @property int|float|null                 $max_value                 If the option is an INTEGER or NUMBER type, the maximum value permitted.
+ * @property int|null                       $min_length                For option type `STRING`, the minimum allowed length (minimum of `0`, maximum of `6000`).
+ * @property int|null                       $max_length                For option type `STRING`, the maximum allowed length (minimum of `1`, maximum of `6000`).
+ * @property bool|null                      $autocomplete              Enable autocomplete interactions for this option.
  */
 class Option extends Part
 {
@@ -56,7 +55,7 @@ class Option extends Part
     public const ATTACHMENT = 11;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',
@@ -78,21 +77,11 @@ class Option extends Part
     /**
      * Gets the choices attribute.
      *
-     * @return ExCollectionInterface|Choice[]|null A collection of choices.
+     * @return ExCollectionInterface|Choice[] A collection of choices.
      */
-    protected function getChoicesAttribute(): ?ExCollectionInterface
+    protected function getChoicesAttribute(): ExCollectionInterface
     {
-        if (! isset($this->attributes['choices']) && ! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
-            return null;
-        }
-
-        $choices = Collection::for(Choice::class, null);
-
-        foreach ($this->attributes['choices'] ?? [] as $choice) {
-            $choices->pushItem($this->createOf(Choice::class, $choice));
-        }
-
-        return $choices;
+        return $this->attributeCollectionHelper('choices', Choice::class);
     }
 
     /**
@@ -102,13 +91,7 @@ class Option extends Part
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {
-        $options = Collection::for(Option::class, null);
-
-        foreach ($this->attributes['options'] ?? [] as $option) {
-            $options->pushItem($this->createOf(Option::class, $option));
-        }
-
-        return $options;
+        return $this->attributeCollectionHelper('options', Option::class);
     }
 
     /**

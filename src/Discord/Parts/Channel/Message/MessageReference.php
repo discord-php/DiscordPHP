@@ -41,7 +41,7 @@ class MessageReference extends Part
     public const TYPE_FORWARD = 1;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',

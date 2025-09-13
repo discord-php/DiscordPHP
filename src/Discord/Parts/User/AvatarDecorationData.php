@@ -26,7 +26,7 @@ use Discord\Parts\Part;
 class AvatarDecorationData extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'asset',

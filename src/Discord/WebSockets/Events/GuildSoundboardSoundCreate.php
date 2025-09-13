@@ -26,7 +26,7 @@ use Discord\WebSockets\Event;
 class GuildSoundboardSoundCreate extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

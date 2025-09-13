@@ -40,13 +40,7 @@ class MessagePinData extends Part
     /** @return ExCollectionInterface<MessagePin> */
     protected function getItemsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(MessagePin::class);
-
-        foreach ($this->attributes['items'] as $item) {
-            $collection->pushItem($this->createOf(MessagePin::class, $item));
-        }
-
-        return $collection;
+        return $this->attributeCollectionHelper('items', MessagePin::class);
     }
 
     /**

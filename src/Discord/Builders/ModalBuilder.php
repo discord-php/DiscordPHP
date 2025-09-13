@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Builders\Components\ComponentObject;
+use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Interaction;
 use JsonSerializable;
 
@@ -52,14 +54,18 @@ class ModalBuilder extends Builder implements JsonSerializable
     protected $custom_id;
 
     /**
-     * Between 1 and 5 (inclusive) components that make up the modal contained in Action Row.
+     * Between 1 and 5 (inclusive) components that make up the modal.
      *
-     * @var array|ComponentObject[]
+     * @var ExCollectionInterface<ComponentObject>|ComponentObject[]
      */
     protected $components;
 
     /**
      * Creates a new message builder.
+     *
+     * @param string                                                   $title
+     * @param string                                                   $custom_id
+     * @param ExCollectionInterface<ComponentObject>|ComponentObject[] $components
      *
      * @return static
      */
@@ -137,13 +143,17 @@ class ModalBuilder extends Builder implements JsonSerializable
     /**
      * Sets the components of the modal.
      *
-     * @param array|ComponentObject[] $components
+     * @param ExCollectionInterface<ComponentObject>|ComponentObject[] $components
      *
      * @return $this
      */
     public function setComponents($components): self
     {
-        $this->components = $components;
+        $this->components = Collection::for(ComponentObject::class);
+
+        foreach ($components as $component) {
+            $this->components->pushItem($component);
+        }
 
         return $this;
     }
@@ -151,7 +161,7 @@ class ModalBuilder extends Builder implements JsonSerializable
     /**
      * Add a component to the modal.
      *
-     * Only ActionRow, TextInput, and Label components are allowed.
+     * Only ActionRow, TextDisplay, and Label components are allowed.
      *
      * Using ActionRow in modals is now deprecated. Use `Component::Label` as the top level component.
      *
@@ -161,7 +171,9 @@ class ModalBuilder extends Builder implements JsonSerializable
      */
     public function addComponent($component): self
     {
-        $this->components[] = $component;
+        $this->components ??= Collection::for(ComponentObject::class);
+
+        $this->components->pushItem($component);
 
         return $this;
     }
@@ -175,8 +187,10 @@ class ModalBuilder extends Builder implements JsonSerializable
      */
     public function removeComponent($component): self
     {
-        if (($idx = array_search($component, $this->components)) !== null) {
-            array_splice($this->components, $idx, 1);
+        $this->components ??= Collection::for(ComponentObject::class);
+
+        if (($idx = $this->components->search($component)) !== false) {
+            $this->components->splice($idx, 1);
         }
 
         return $this;
@@ -185,11 +199,11 @@ class ModalBuilder extends Builder implements JsonSerializable
     /**
      * Returns the components of the modal.
      *
-     * @return array|ComponentObject[]
+     * @return ExCollectionInterface<ComponentObject>|ComponentObject[]
      */
-    public function getComponents(): array
+    public function getComponents(): ExCollectionInterface
     {
-        return $this->components;
+        return $this->components ?? Collection::for(ComponentObject::class);
     }
 
     /**
@@ -202,7 +216,7 @@ class ModalBuilder extends Builder implements JsonSerializable
             'data' => [
                 'custom_id' => $this->custom_id,
                 'title' => $this->title,
-                'components' => $this->components,
+                'components' => $this->component->toArray(false),
             ],
         ];
     }

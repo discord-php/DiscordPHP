@@ -28,7 +28,7 @@ use Discord\Parts\User\Member;
 class PresenceUpdate extends Event
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function handle($data)
     {

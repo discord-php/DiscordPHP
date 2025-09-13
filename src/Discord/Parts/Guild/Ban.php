@@ -33,7 +33,7 @@ use Discord\Parts\User\User;
 class Ban extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'reason',
@@ -89,7 +89,7 @@ class Ban extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

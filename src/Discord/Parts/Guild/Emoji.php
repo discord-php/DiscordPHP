@@ -41,7 +41,7 @@ use Stringable;
 class Emoji extends Part implements Stringable
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -138,7 +138,7 @@ class Emoji extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/emoji#modify-guild-emoji-json-params
      */
@@ -151,7 +151,7 @@ class Emoji extends Part implements Stringable
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

@@ -77,7 +77,7 @@ class GuildPreview extends Part
     use GuildTrait;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -94,7 +94,7 @@ class GuildPreview extends Part
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $visible = [
         'feature_animated_banner',
@@ -137,7 +137,7 @@ class GuildPreview extends Part
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $repositories = [
         'emojis' => EmojiRepository::class,

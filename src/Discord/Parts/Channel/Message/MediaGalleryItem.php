@@ -27,7 +27,7 @@ use Discord\Parts\Part;
 class MediaGalleryItem extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'media',

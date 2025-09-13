@@ -33,7 +33,7 @@ use Discord\Parts\Part;
 class Assets extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'large_image',

@@ -73,7 +73,7 @@ use function React\Promise\reject;
 class Application extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -136,7 +136,7 @@ class Application extends Part
     public const INTEGRATION_TYPE_USER_INSTALL = 1;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $repositories = [
         'commands' => GlobalCommandRepository::class,
@@ -292,7 +292,7 @@ class Application extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

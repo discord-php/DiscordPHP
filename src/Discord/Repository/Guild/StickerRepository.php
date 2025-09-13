@@ -34,7 +34,7 @@ use Discord\Repository\AbstractRepository;
 class StickerRepository extends AbstractRepository
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_STICKERS,
@@ -45,7 +45,7 @@ class StickerRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $class = Sticker::class;
 }

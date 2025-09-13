@@ -38,7 +38,7 @@ namespace Discord\Parts\Channel\Message;
 class TextInput extends Interactive
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',

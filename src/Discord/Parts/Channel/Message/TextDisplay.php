@@ -29,7 +29,7 @@ namespace Discord\Parts\Channel\Message;
 class TextDisplay extends Content
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'type',

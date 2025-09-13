@@ -94,21 +94,11 @@ class Command extends Part implements Stringable
     /**
      * Gets the options attribute.
      *
-     * @return ExCollectionInterface|Option[]|null A collection of options.
+     * @return ExCollectionInterface|Option[] A collection of options.
      */
-    protected function getOptionsAttribute(): ?ExCollectionInterface
+    protected function getOptionsAttribute(): ExCollectionInterface
     {
-        if (! isset($this->attributes['options']) && (isset($this->type) && $this->type != self::CHAT_INPUT)) {
-            return null;
-        }
-
-        $options = Collection::for(Option::class, null);
-
-        foreach ($this->attributes['options'] ?? [] as $option) {
-            $options->pushItem($this->createOf(Option::class, $option));
-        }
-
-        return $options;
+        return $this->attributeCollectionHelper('options', Option::class);
     }
 
     /**

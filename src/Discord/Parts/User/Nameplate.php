@@ -33,7 +33,7 @@ use Discord\Parts\Part;
 class Nameplate extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'id', // @internal

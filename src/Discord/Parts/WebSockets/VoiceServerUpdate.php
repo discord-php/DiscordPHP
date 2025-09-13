@@ -31,7 +31,7 @@ use Discord\Parts\Part;
 class VoiceServerUpdate extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'token',

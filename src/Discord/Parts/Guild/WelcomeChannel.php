@@ -32,7 +32,7 @@ use Discord\Parts\Part;
 class WelcomeChannel extends Part
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected $fillable = [
         'channel_id',
