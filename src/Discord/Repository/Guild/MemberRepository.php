@@ -53,7 +53,7 @@ class MemberRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-current-member-json-params
      *
-     * @since 10.19.0
+     * @since 10.20.0
      *
      * @param array        $params           The parameters to modify.
      * @param ?string|null $params['nick']   Value to set user's nickname to.
