@@ -49,6 +49,12 @@ class MemberRepository extends AbstractRepository
     ];
 
     /**
+     * {@inheritDoc}
+     * @inheritDoc
+     */
+    protected $class = Member::class;
+
+    /**
      * Modifies the current member (no validation).
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-current-member-json-params
@@ -84,12 +90,6 @@ class MemberRepository extends AbstractRepository
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $params, $headers);
     }
-
-    /**
-     * {@inheritDoc}
-     * @inheritDoc
-     */
-    protected $class = Member::class;
 
     /**
      * Alias for `$member->delete()`.
