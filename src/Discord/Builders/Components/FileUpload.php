@@ -21,9 +21,9 @@ namespace Discord\Builders\Components;
  * @since 10.21.0
  *
  * @property int        $type       19 for File Upload component.
- * @property string     $custom_id  ID for the select menu; max 100 characters.
- * @property ?int|null  $min_values Minimum number of items that must be chosen (defaults to 1); min 0, max 10.
- * @property ?int|null  $max_values Maximum number of items that can be chosen (defaults to 1); max 10.
+ * @property string     $custom_id  ID for the File Upload component; max 100 characters.
+ * @property ?int|null  $min_values Minimum number of files that must be uploaded (defaults to 1); min 0, max 10.
+ * @property ?int|null  $max_values Maximum number of files that can be uploaded (defaults to 1); max 10.
  * @property ?bool|null $required   Whether this component is required to be filled (defaults to true).
  */
 class FileUpload extends Interactive
@@ -54,9 +54,9 @@ class FileUpload extends Interactive
     protected $max_values;
 
     /**
-     * Creates a new button.
+     * Creates a new file upload.
      *
-     * @param string|null $custom_id custom ID of the button. If not given, a UUID will be used
+     * @param string|null $custom_id custom ID of the file upload. If not given, a UUID will be used
      *
      * @throws \InvalidArgumentException
      */
