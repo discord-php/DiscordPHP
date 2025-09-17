@@ -162,23 +162,23 @@ class ChannelBuilder extends Builder implements JsonSerializable
             'name' => $this->name,
         ];
 
-        if ($this->type !== null) $body['type'] = $this->type;
-        if ($this->topic !== null) $body['topic'] = $this->topic;
-        if ($this->bitrate !== null) $body['bitrate'] = $this->bitrate;
-        if ($this->user_limit !== null) $body['user_limit'] = $this->user_limit;
-        if ($this->rate_limit_per_user !== null) $body['rate_limit_per_user'] = $this->rate_limit_per_user;
-        if ($this->position !== null) $body['position'] = $this->position;
-        if ($this->permission_overwrites !== null) $body['permission_overwrites'] = $this->permission_overwrites;
-        if ($this->parent_id !== null) $body['parent_id'] = $this->parent_id;
-        if ($this->nsfw !== null) $body['nsfw'] = $this->nsfw;
-        if ($this->rtc_region !== null) $body['rtc_region'] = $this->rtc_region;
-        if ($this->video_quality_mode !== null) $body['video_quality_mode'] = $this->video_quality_mode;
-        if ($this->default_auto_archive_duration !== null) $body['default_auto_archive_duration'] = $this->default_auto_archive_duration;
-        if ($this->default_reaction_emoji !== null) $body['default_reaction_emoji'] = $this->default_reaction_emoji;
-        if ($this->available_tags !== null) $body['available_tags'] = $this->available_tags;
-        if ($this->default_sort_order !== null) $body['default_sort_order'] = $this->default_sort_order;
-        if ($this->default_forum_layout !== null) $body['default_forum_layout'] = $this->default_forum_layout;
-        if ($this->default_thread_rate_limit_per_user !== null) $body['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
+        if (isset($this->type)) $body['type'] = $this->type;
+        if (isset($this->topic)) $body['topic'] = $this->topic;
+        if (isset($this->bitrate)) $body['bitrate'] = $this->bitrate;
+        if (isset($this->user_limit)) $body['user_limit'] = $this->user_limit;
+        if (isset($this->rate_limit_per_user)) $body['rate_limit_per_user'] = $this->rate_limit_per_user;
+        if (isset($this->position)) $body['position'] = $this->position;
+        if (isset($this->permission_overwrites)) $body['permission_overwrites'] = $this->permission_overwrites;
+        if (isset($this->parent_id)) $body['parent_id'] = $this->parent_id;
+        if (isset($this->nsfw)) $body['nsfw'] = $this->nsfw;
+        if (isset($this->rtc_region)) $body['rtc_region'] = $this->rtc_region;
+        if (isset($this->video_quality_mode)) $body['video_quality_mode'] = $this->video_quality_mode;
+        if (isset($this->default_auto_archive_duration)) $body['default_auto_archive_duration'] = $this->default_auto_archive_duration;
+        if (isset($this->default_reaction_emoji)) $body['default_reaction_emoji'] = $this->default_reaction_emoji;
+        if (isset($this->available_tags)) $body['available_tags'] = $this->available_tags;
+        if (isset($this->default_sort_order)) $body['default_sort_order'] = $this->default_sort_order;
+        if (isset($this->default_forum_layout)) $body['default_forum_layout'] = $this->default_forum_layout;
+        if (isset($this->default_thread_rate_limit_per_user)) $body['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
 
         return $body;
     }
