@@ -57,6 +57,7 @@ class Component extends Part
         ComponentBuilder::TYPE_SEPARATOR => Separator::class,
         ComponentBuilder::TYPE_CONTAINER => Container::class,
         ComponentBuilder::TYPE_LABEL => Label::class,
+        ComponentBuilder::TYPE_FILE_UPLOAD => FileUpload::class,
     ];
 
     /**
