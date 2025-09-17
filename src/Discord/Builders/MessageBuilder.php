@@ -559,19 +559,19 @@ class MessageBuilder extends Builder implements JsonSerializable
     public function setComponents($components = null): self
     {
         if ($components === null) {
-            unset($this->components);
+            $this->components = null;
 
             return $this;
         }
 
-        $this->components = Collection::for(ComponentObject::class);
+        $collection = Collection::for(ComponentObject::class);
 
         foreach ($components as $component) {
-            $this->components->pushItem($component);
+            $collection->pushItem($component);
         }
 
-        if (! $this->components->count()) {
-            unset($this->components);
+        if ($collection->count()) {
+            $this->components = $collection;
         }
 
         return $this;
