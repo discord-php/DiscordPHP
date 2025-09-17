@@ -586,6 +586,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_LABEL"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_FILE_UPLOAD",
+            "name": "TYPE_FILE_UPLOAD",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_FILE_UPLOAD"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_SELECT_MENU",
             "name": "TYPE_SELECT_MENU",
             "summary": "",
@@ -771,6 +776,61 @@ Search.appendIndex(
             "summary": "Whether\u0020the\u0020file\u0020is\u0020a\u0020spoiler.",
             "url": "classes/Discord-Builders-Components-File.html#property_spoiler"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload",
+            "name": "FileUpload",
+            "summary": "TODO.",
+            "url": "classes/Discord-Builders-Components-FileUpload.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Creates\u0020a\u0020new\u0020button.",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020file\u0020upload\u0020component.",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003AsetMinValues\u0028\u0029",
+            "name": "setMinValues",
+            "summary": "Sets\u0020the\u0020minimum\u0020number\u0020of\u0020options\u0020which\u0020must\u0020be\u0020chosen.",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#method_setMinValues"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003AsetMaxValues\u0028\u0029",
+            "name": "setMaxValues",
+            "summary": "Sets\u0020the\u0020maximum\u0020number\u0020of\u0020options\u0020which\u0020must\u0020be\u0020chosen.",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#method_setMaxValues"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003AsetRequired\u0028\u0029",
+            "name": "setRequired",
+            "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled,\u0020default\u0020false.\u0020\u0028Modal\u0020only\u0029.",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#method_setRequired"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "Component\u0020type.",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003A\u0024min_values",
+            "name": "min_values",
+            "summary": "Minimum\u0020number\u0020of\u0020files\u0020that\u0020can\u0020be\u0020uploaded.",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#property_min_values"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003A\u0024max_values",
+            "name": "max_values",
+            "summary": "Maximum\u0020number\u0020of\u0020files\u0020that\u0020can\u0020be\u0020uploaded.",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#property_max_values"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Interactive",
             "name": "Interactive",
             "summary": "Components\u0020allow\u0020you\u0020to\u0020style\u0020and\u0020structure\u0020your\u0020messages,\u0020modals,\u0020and\u0020interactions.",
@@ -780,6 +840,11 @@ Search.appendIndex(
             "name": "getId",
             "summary": "Retrieves\u0020the\u0020ID\u0020associated\u0020with\u0020the\u0020interactive\u0020component.",
             "url": "classes/Discord-Builders-Components-Interactive.html#method_getId"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Interactive\u003A\u003AsetCustomId\u0028\u0029",
+            "name": "setCustomId",
+            "summary": "Sets\u0020the\u0020custom\u0020ID\u0020for\u0020the\u0020interactive\u0020component.",
+            "url": "classes/Discord-Builders-Components-Interactive.html#method_setCustomId"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Interactive\u003A\u003A\u0024custom_id",
             "name": "custom_id",
@@ -1146,11 +1211,6 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020type\u0020for\u0020the\u0020select\u0020menu.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#method_setType"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AsetCustomId\u0028\u0029",
-            "name": "setCustomId",
-            "summary": "Sets\u0020the\u0020custom\u0020ID\u0020for\u0020the\u0020select\u0020menu.",
-            "url": "classes/Discord-Builders-Components-SelectMenu.html#method_setCustomId"
-        },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003AsetOptions\u0028\u0029",
             "name": "setOptions",
             "summary": "Specified\u0020choices\u0020in\u0020a\u0020select\u0020menu\u0020\u0028only\u0020required\u0020and\u0020available\u0020for\u0020string\u0020selects\u0020\u0028type\u00203\u0029\u003B\u0020max\u002025.",
@@ -1465,11 +1525,6 @@ Search.appendIndex(
             "name": "new",
             "summary": "Creates\u0020a\u0020new\u0020text\u0020input.",
             "url": "classes/Discord-Builders-Components-TextInput.html#method_new"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003AsetCustomId\u0028\u0029",
-            "name": "setCustomId",
-            "summary": "Sets\u0020the\u0020custom\u0020ID\u0020for\u0020the\u0020text\u0020input.",
-            "url": "classes/Discord-Builders-Components-TextInput.html#method_setCustomId"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003AsetStyle\u0028\u0029",
             "name": "setStyle",
@@ -4715,6 +4770,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-File.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\FileUpload",
+            "name": "FileUpload",
+            "summary": "TODO.",
+            "url": "classes/Discord-Parts-Channel-Message-FileUpload.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\FileUpload\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-FileUpload.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Interactive",
             "name": "Interactive",
