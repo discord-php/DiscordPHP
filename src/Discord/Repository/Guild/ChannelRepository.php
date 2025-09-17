@@ -54,7 +54,7 @@ class ChannelRepository extends AbstractRepository
     protected $class = Channel::class;
 
     /**
-     * Create a new channel.
+     * Attempts to save a channel to the Discord servers.
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
      *
@@ -66,6 +66,7 @@ class ChannelRepository extends AbstractRepository
     public function createChannel(Part|Builder|string $channel, ?string $reason = null): PromiseInterface
     {
         if ($channel instanceof Part) {
+            unset($channel->id);
             return $this->save($channel, $reason);
         }
 
