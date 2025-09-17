@@ -550,18 +550,6 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * Removes all components from the builder.
-     *
-     * @return $this
-     */
-    public function clearComponents(): self
-    {
-        $this->components = null;
-
-        return $this;
-    }
-
-    /**
      * Sets the components of the message. Removes the existing components in the process.
      *
      * @param ExCollectionInterface<ComponentObject>|ComponentObject[]|null $components New message components.
@@ -578,9 +566,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             $collection->pushItem($component);
         }
 
-        if ($collection->count()) {
-            $this->components = $collection;
-        }
+        $this->components = $collection;
 
         return $this;
     }
@@ -1089,7 +1075,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             $empty = false;
         }
 
-        if (isset($this->components) && $this->components->count()) {
+        if (isset($this->components)) {
             $body['components'] = $this->components->toArray(false);
             $empty = false;
         }
