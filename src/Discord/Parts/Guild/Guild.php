@@ -362,12 +362,15 @@ class Guild extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->post(Endpoint::GUILD_CHANNELS, $channel->jsonSerialize(), $headers)->then(function ($response) {
-            $newPart = $this->factory->create(Channel::class, (array) $response, true);
-            $newPart->created = true;
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_CHANNELS, $this->id),  $channel->jsonSerialize(), $headers)
+            ->then(function ($response) {
+                if (! $channelPart = $this->channels->get('id', $response->id)) {
+                    $channelPart = $this->channels->create($response, true);
+                    $this->channels->pushItem($channelPart);
+                }
 
-            return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
-        });
+                return $channelPart;
+            });
     }
 
     /**
