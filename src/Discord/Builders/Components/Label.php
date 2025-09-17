@@ -59,16 +59,16 @@ class Label extends Layout
     /**
      * The component associated with the label.
      *
-     * @var SelectMenu|TextInput
+     * @var FileUpload|SelectMenu|TextInput
      */
     protected $component;
 
     /**
      * Creates a new label component.
      *
-     * @param string               $label       The text for the label.
-     * @param SelectMenu|TextInput $component   The component associated with the label.
-     * @param string|null          $description Optional description for the label.
+     * @param string                          $label       The text for the label.
+     * @param FileUpload|SelectMenu|TextInput $component   The component associated with the label.
+     * @param string|null                     $description Optional description for the label.
      *
      * @return self
      */
@@ -127,7 +127,7 @@ class Label extends Layout
 
     /** Sets the component associated with the label.
      *
-     * @param SelectMenu|TextInput $component The component associated with the label.
+     * @param FileUpload|SelectMenu|TextInput $component The component associated with the label.
      *
      * @return self
      */
