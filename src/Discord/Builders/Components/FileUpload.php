@@ -78,7 +78,7 @@ class FileUpload extends Interactive
     }
 
     /**
-     * Sets the minimum number of options which must be chosen.
+     * Sets the minimum number of files which must be uploaded.
      *
      * @param int|null $min_values Default `1`, minimum `0` and maximum `10`. `null` to set as default.
      *
@@ -98,7 +98,7 @@ class FileUpload extends Interactive
     }
 
     /**
-     * Sets the maximum number of options which must be chosen.
+     * Sets the maximum number of files which can be uploaded.
      *
      * @param int|null $max_values Default `1` and maximum `10`. `null` to set as default.
      *
