@@ -363,7 +363,7 @@ class Guild extends Part
         }
 
         return $this->http->post(Endpoint::GUILD_CHANNELS, $channel->jsonSerialize(), $headers)->then(function ($response) {
-            $newPart = $this->factory->create($this->class, (array) $response, true);
+            $newPart = $this->factory->create(Channel::class, (array) $response, true);
             $newPart->created = true;
 
             return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
