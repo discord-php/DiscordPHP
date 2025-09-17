@@ -22,8 +22,8 @@ namespace Discord\Parts\Channel\Message;
  *
  * @property int        $type       19 for File Upload component.
  * @property string     $custom_id  ID for the select menu; max 100 characters.
- * @property ?int|null  $min_values Minimum number of items that must be chosen (defaults to 1); min 0, max 5.
- * @property ?int|null  $max_values Maximum number of items that can be chosen (defaults to 1); max 5.
+ * @property ?int|null  $min_values Minimum number of items that must be chosen (defaults to 1); min 0, max 10.
+ * @property ?int|null  $max_values Maximum number of items that can be chosen (defaults to 1); max 10.
  * @property ?bool|null $required   Whether this component is required to be filled (defaults to true).
  */
 class FileUpload extends interactive
