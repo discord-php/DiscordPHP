@@ -38,6 +38,22 @@ class FileUpload extends Interactive
     protected $type = Component::TYPE_FILE_UPLOAD;
 
     /**
+     * Minimum number of files that can be uploaded.
+     * Default 0, maximum 10.
+     *
+     * @var int|null
+     */
+    protected $min_values;
+
+    /**
+     * Maximum number of files that can be uploaded.
+     * Default 1, maximum 10.
+     *
+     * @var int|null
+     */
+    protected $max_values;
+
+    /**
      * Creates a new button.
      *
      * @param string|null $custom_id custom ID of the button. If not given, a UUID will be used
