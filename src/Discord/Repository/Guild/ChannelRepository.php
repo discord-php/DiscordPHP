@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Guild;
 
+use Discord\Builders\Builder;
 use Discord\Builders\ChannelBuilder;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Part;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 
@@ -52,11 +54,15 @@ class ChannelRepository extends AbstractRepository
     protected $class = Channel::class;
 
     /**
-     * @param MessageBuilder|string $channel The Channel builder that should be converted into a channel, or the name of the channel.
+     * @param Channel|ChannelBuilder|string $channel The Channel builder that should be converted into a channel, or the name of the channel.
      * @param string|null           $reason  Reason for Audit Log.
      */
-    public function createChannel($channel, ?string $reason = null): PromiseInterface
+    public function createChannel(Part|Builder|string $channel, ?string $reason = null): PromiseInterface
     {
+        if ($channel instanceof Part) {
+            return $this->save($channel, $reason);
+        }
+
         if (is_string($channel)) {
             $channel = ChannelBuilder::new($channel)->setName($channel);
         }
