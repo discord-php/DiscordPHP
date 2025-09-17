@@ -362,7 +362,7 @@ class Guild extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->post(Endpoint::bind(Endpoint::GUILD_CHANNELS, $this->id),  $channel->jsonSerialize(), $headers)
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_CHANNELS, $this->id), $channel->jsonSerialize(), $headers)
             ->then(function ($response) {
                 if (! $channelPart = $this->channels->get('id', $response->id)) {
                     $channelPart = $this->channels->create($response, true);

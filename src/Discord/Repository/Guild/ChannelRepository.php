@@ -13,13 +13,9 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Guild;
 
-use Discord\Builders\Builder;
-use Discord\Builders\ChannelBuilder;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Part;
 use Discord\Repository\AbstractRepository;
-use React\Promise\PromiseInterface;
 
 /**
  * Contains channels on a guild.
