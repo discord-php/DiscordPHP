@@ -22,11 +22,11 @@ namespace Discord\Builders\Components;
  *
  * @property int        $type       19 for File Upload component.
  * @property string     $custom_id  ID for the select menu; max 100 characters.
- * @property ?int|null  $min_values Minimum number of items that must be chosen (defaults to 1); min 0, max 5.
- * @property ?int|null  $max_values Maximum number of items that can be chosen (defaults to 1); max 5.
+ * @property ?int|null  $min_values Minimum number of items that must be chosen (defaults to 1); min 0, max 10.
+ * @property ?int|null  $max_values Maximum number of items that can be chosen (defaults to 1); max 10.
  * @property ?bool|null $required   Whether this component is required to be filled (defaults to true).
  */
-class FileUpload extends SelectMenu
+class FileUpload extends Interactive
 {
     public const USAGE = ['Modal'];
 
@@ -49,5 +49,34 @@ class FileUpload extends SelectMenu
         $this->required = $required;
 
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        $content = [
+            'type' => $this->type,
+            'custom_id' => $this->custom_id,
+        ];
+
+        if (isset($this->min_values)) {
+            $content['min_values'] = $this->min_values;
+        }
+
+        if (isset($this->max_values)) {
+            $content['max_values'] = $this->max_values;
+        }
+
+        if (isset($this->required)) {
+            $content['required'] = $this->required;
+        }
+
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
+        }
+
+        return $content;
     }
 }
