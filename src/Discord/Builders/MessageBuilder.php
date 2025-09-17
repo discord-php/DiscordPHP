@@ -570,11 +570,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function setComponents($components = null): self
     {
-        if ($components === null) {
-            $this->components = null;
-
-            return $this;
-        }
+        $this->components = null;
 
         $collection = Collection::for(ComponentObject::class);
 
