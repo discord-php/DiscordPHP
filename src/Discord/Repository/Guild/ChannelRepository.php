@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Guild;
 
+use Discord\Builders\ChannelBuilder;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Repository\AbstractRepository;
@@ -48,4 +49,28 @@ class ChannelRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $class = Channel::class;
+
+    /**
+     * @param MessageBuilder|string      $channel The Channel builder that should be converted into a channel, or the name of the channel.
+     */
+    public function createChannel($channel)
+    {
+        if (is_string($channel)) {
+            $channel = ChannelBuilder::new()->setName($channel);
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->post(new Endpoint($this->endpoints['create']), $channel->jsonSerialize(), $headers)->then(function ($response) {
+            $newPart = $this->factory->create($this->class, (array) $response, true);
+            $newPart->created = true;
+
+            return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
+        });
+
+
+    }
 }
