@@ -56,7 +56,7 @@ class ChannelRepository extends AbstractRepository
     public function createChannel($channel)
     {
         if (is_string($channel)) {
-            $channel = ChannelBuilder::new()->setName($channel);
+            $channel = ChannelBuilder::new($channel)->setName($channel);
         }
 
         $headers = [];
