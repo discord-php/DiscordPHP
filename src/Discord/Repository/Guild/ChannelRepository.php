@@ -61,7 +61,7 @@ class ChannelRepository extends AbstractRepository
      * @since 10.21.0
      *
      * @param Channel|ChannelBuilder|string $channel The Channel builder that should be converted into a channel, or the name of the channel.
-     * @param string|null           $reason  Reason for Audit Log.
+     * @param string|null                   $reason  Reason for Audit Log.
      */
     public function createChannel(Part|Builder|string $channel, ?string $reason = null): PromiseInterface
     {
