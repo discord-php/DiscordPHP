@@ -17,6 +17,7 @@ use Discord\Builders\ChannelBuilder;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Repository\AbstractRepository;
+use React\Promise\PromiseInterface;
 
 /**
  * Contains channels on a guild.
@@ -51,9 +52,10 @@ class ChannelRepository extends AbstractRepository
     protected $class = Channel::class;
 
     /**
-     * @param MessageBuilder|string      $channel The Channel builder that should be converted into a channel, or the name of the channel.
+     * @param MessageBuilder|string $channel The Channel builder that should be converted into a channel, or the name of the channel.
+     * @param string|null           $reason  Reason for Audit Log.
      */
-    public function createChannel($channel)
+    public function createChannel($channel, ?string $reason = null): PromiseInterface
     {
         if (is_string($channel)) {
             $channel = ChannelBuilder::new($channel)->setName($channel);
@@ -70,7 +72,5 @@ class ChannelRepository extends AbstractRepository
 
             return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
         });
-
-
     }
 }
