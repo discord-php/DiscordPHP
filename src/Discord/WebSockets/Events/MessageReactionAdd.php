@@ -53,7 +53,6 @@ class MessageReactionAdd extends Event
             $channel = yield $this->discord->private_channels->cacheGet($data->channel_id);
         }
         /** @var ?Channel $channel */
-
         $reaction = new MessageReaction($this->discord, (array) $data, true);
 
         if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
