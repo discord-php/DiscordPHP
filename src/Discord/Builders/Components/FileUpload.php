@@ -62,6 +62,46 @@ class FileUpload extends Interactive
     }
 
     /**
+     * Sets the minimum number of options which must be chosen.
+     *
+     * @param int|null $min_values Default `1`, minimum `0` and maximum `10`. `null` to set as default.
+     *
+     * @throws \LengthException
+     *
+     * @return $this
+     */
+    public function setMinValues(?int $min_values): self
+    {
+        if (isset($min_values) && ($min_values < 1 || $min_values > 10)) {
+            throw new \LengthException('Number must be between 0 and 10 inclusive.');
+        }
+
+        $this->min_values = $min_values;
+
+        return $this;
+    }
+
+    /**
+     * Sets the maximum number of options which must be chosen.
+     *
+     * @param int|null $max_values Default `1` and maximum `10`. `null` to set as default.
+     *
+     * @throws \LengthException
+     *
+     * @return $this
+     */
+    public function setMaxValues(?int $max_values): self
+    {
+        if ($max_values && $max_values > 10) {
+            throw new \LengthException('Number must be less than or equal to 10.');
+        }
+
+        $this->max_values = $max_values;
+
+        return $this;
+    }
+
+    /**
      * Set if this component is required to be filled, default false. (Modal only).
      *
      * @param bool|null $required
