@@ -47,7 +47,7 @@ use function React\Promise\reject;
 /**
  * A message which is posted to a Discord text channel.
  *
- * @link https://discord.com/developers/docs/resources/channel#message-object
+ * @link https://discord.com/developers/docs/resources/message#message-object
  *
  * @since 2.0.0
  *
