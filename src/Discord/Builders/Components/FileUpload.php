@@ -38,13 +38,27 @@ class FileUpload extends Interactive
     protected $type = Component::TYPE_FILE_UPLOAD;
 
     /**
+     * Creates a new button.
+     *
+     * @param string|null $custom_id custom ID of the button. If not given, a UUID will be used
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function __construct(?string $custom_id = null)
+    {
+        $this->setCustomId($custom_id ?? self::generateUuid());
+    }
+
+    /**
      * Creates a new file upload component.
+     *
+     * @param string $custom_id ID for the file upload.
      *
      * @return self
      */
-    public static function new(): self
+    public static function new(?string $custom_id = null): self
     {
-        return new self();
+        return new self($custom_id);
     }
 
     /**
