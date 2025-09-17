@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
+use Discord\Builders\Builder;
+use Discord\Builders\ChannelBuilder;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\CollectionInterface;
@@ -336,6 +338,35 @@ class Guild extends Part
      * @var ExCollectionInterface|null
      */
     protected $regions;
+
+    /**
+     * Attempts to save a channel to the Discord servers.
+     *
+     * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
+     *
+     * @since 10.21.0
+     *
+     * @param Channel|ChannelBuilder|string $channel The Channel builder that should be converted into a channel, or the name of the channel.
+     * @param string|null                   $reason  Reason for Audit Log.
+     */
+    public function createChannel(Part|Builder|string $channel, ?string $reason = null): PromiseInterface
+    {
+        if (is_string($channel)) {
+            $channel = ChannelBuilder::new($channel)->setName($channel);
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->post(Endpoint::GUILD_CHANNELS, $channel->jsonSerialize(), $headers)->then(function ($response) {
+            $newPart = $this->factory->create($this->class, (array) $response, true);
+            $newPart->created = true;
+
+            return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
+        });
+    }
 
     /**
      * @inheritDoc
