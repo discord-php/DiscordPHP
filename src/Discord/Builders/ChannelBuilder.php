@@ -15,23 +15,23 @@ use JsonSerializable;
 class ChannelBuilder extends Builder implements JsonSerializable
 {
     protected string $name;
-    protected ?int $type = null;
-    protected ?string $topic = null; // Text, Announcement, Forum, Media
-    protected ?int $bitrate = null; // Voice, Stage
-    protected ?int $user_limit = null; // Voice, Stage
-    protected ?int $rate_limit_per_user = null; // Text, Voice, Stage, Forum, Media
-    protected ?int $position = null;
-    protected ?array $permission_overwrites = null;
-    protected ?string $parent_id = null; // Text, Voice, Announcement, Stage, Forum, Media
-    protected ?bool $nsfw = null; // Text, Voice, Announcement, Stage, Forum
-    protected ?string $rtc_region = null; // Voice, Stage
-    protected ?int $video_quality_mode = null; // Voice, Stage
-    protected ?int $default_auto_archive_duration = null; // Text, Announcement, Forum, Media
-    protected ?array $default_reaction_emoji = null; // Forum, Media
-    protected ?array $available_tags = null; // Forum, Media
-    protected ?int $default_sort_order = null; // Forum, Media
-    protected ?int $default_forum_layout = null; // Forum
-    protected ?int $default_thread_rate_limit_per_user = null; // Text, Announcement, Forum, Media
+    protected ?int $type;
+    protected ?string $topic; // Text, Announcement, Forum, Media
+    protected ?int $bitrate; // Voice, Stage
+    protected ?int $user_limit; // Voice, Stage
+    protected ?int $rate_limit_per_user; // Text, Voice, Stage, Forum, Media
+    protected ?int $position;
+    protected ?array $permission_overwrites;
+    protected ?string $parent_id; // Text, Voice, Announcement, Stage, Forum, Media
+    protected ?bool $nsfw; // Text, Voice, Announcement, Stage, Forum
+    protected ?string $rtc_region; // Voice, Stage
+    protected ?int $video_quality_mode; // Voice, Stage
+    protected ?int $default_auto_archive_duration; // Text, Announcement, Forum, Media
+    protected ?array $default_reaction_emoji; // Forum, Media
+    protected ?array $available_tags; // Forum, Media
+    protected ?int $default_sort_order; // Forum, Media
+    protected ?int $default_forum_layout; // Forum
+    protected ?int $default_thread_rate_limit_per_user; // Text, Announcement, Forum, Media
 
     public static function new(string $name): self
     {
