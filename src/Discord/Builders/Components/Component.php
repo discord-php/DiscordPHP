@@ -47,6 +47,7 @@ abstract class Component extends Builder implements JsonSerializable
     public const TYPE_CONTAINER = 17;
 
     public const TYPE_LABEL = 18;
+    public const TYPE_FILE_UPLOAD = 19;
 
     /** @deprecated 7.4.0 Use `Component::TYPE_STRING_SELECT` */
     public const TYPE_SELECT_MENU = 3;

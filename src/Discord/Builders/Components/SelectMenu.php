@@ -171,26 +171,6 @@ abstract class SelectMenu extends Interactive
     }
 
     /**
-     * Sets the custom ID for the select menu.
-     *
-     * @param string $custom_id
-     *
-     * @throws \LengthException If the custom ID is longer than 100 characters.
-     *
-     * @return $this
-     */
-    public function setCustomId($custom_id): self
-    {
-        if (poly_strlen($custom_id) > 100) {
-            throw new \LengthException('Custom ID must be maximum 100 characters.');
-        }
-
-        $this->custom_id = $custom_id;
-
-        return $this;
-    }
-
-    /**
      * Specified choices in a select menu (only required and available for string selects (type 3); max 25.
      *
      * @param array $options
