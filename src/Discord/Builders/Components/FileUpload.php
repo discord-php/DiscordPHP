@@ -38,6 +38,16 @@ class FileUpload extends Interactive
     protected $type = Component::TYPE_FILE_UPLOAD;
 
     /**
+     * Creates a new file upload component.
+     *
+     * @return self
+     */
+    public static function new(): self
+    {
+        return new self();
+    }
+
+    /**
      * Set if this component is required to be filled, default false. (Modal only).
      *
      * @param bool|null $required
