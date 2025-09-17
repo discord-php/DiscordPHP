@@ -33,9 +33,9 @@ class ChannelBuilder extends Builder implements JsonSerializable
     protected ?int $default_forum_layout = null; // Forum
     protected ?int $default_thread_rate_limit_per_user = null; // Text, Announcement, Forum, Media
 
-    public static function new(): self
+    public static function new(string $name): self
     {
-        return new static();
+        return (new static())->setName($name);
     }
 
     public function setName(string $name): self
