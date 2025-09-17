@@ -550,6 +550,18 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
+     * Removes all components from the builder.
+     *
+     * @return $this
+     */
+    public function clearComponents(): self
+    {
+        $this->components = null;
+
+        return $this;
+    }
+
+    /**
      * Sets the components of the message. Removes the existing components in the process.
      *
      * @param ExCollectionInterface<ComponentObject>|ComponentObject[]|null $components New message components.
