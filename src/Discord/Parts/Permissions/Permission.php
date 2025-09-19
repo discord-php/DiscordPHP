@@ -79,6 +79,7 @@ use Discord\Parts\Part;
  * @property bool       $send_polls                          Allows sending polls
  * @property bool       $use_external_apps                   Allows user-installed apps to send public responses. When disabled, users will still be allowed to use their apps but the responses will be ephemeral. This only applies to apps not also installed to the server.
  * @property bool       $pin_messages                        Allows pinning and unpinning messages
+ * @property bool       $bypass_slowmode                     Allows members to send messages in this channel without being affected by slowmode
  */
 abstract class Permission extends Part
 {
