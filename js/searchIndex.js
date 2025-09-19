@@ -783,7 +783,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "Creates\u0020a\u0020new\u0020button.",
+            "summary": "Creates\u0020a\u0020new\u0020file\u0020upload.",
             "url": "classes/Discord-Builders-Components-FileUpload.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003Anew\u0028\u0029",
@@ -793,12 +793,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003AsetMinValues\u0028\u0029",
             "name": "setMinValues",
-            "summary": "Sets\u0020the\u0020minimum\u0020number\u0020of\u0020options\u0020which\u0020must\u0020be\u0020chosen.",
+            "summary": "Sets\u0020the\u0020minimum\u0020number\u0020of\u0020files\u0020which\u0020must\u0020be\u0020uploaded.",
             "url": "classes/Discord-Builders-Components-FileUpload.html#method_setMinValues"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003AsetMaxValues\u0028\u0029",
             "name": "setMaxValues",
-            "summary": "Sets\u0020the\u0020maximum\u0020number\u0020of\u0020options\u0020which\u0020must\u0020be\u0020chosen.",
+            "summary": "Sets\u0020the\u0020maximum\u0020number\u0020of\u0020files\u0020which\u0020can\u0020be\u0020uploaded.",
             "url": "classes/Discord-Builders-Components-FileUpload.html#method_setMaxValues"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003AsetRequired\u0028\u0029",
@@ -10135,6 +10135,11 @@ Search.appendIndex(
             "name": "PIN_MESSAGES",
             "summary": "Allows\u0020pinning\u0020and\u0020unpinning\u0020messages.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_PIN_MESSAGES"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ABYPASS_SLOWMODE",
+            "name": "BYPASS_SLOWMODE",
+            "summary": "Allows\u0020members\u0020to\u0020send\u0020messages\u0020in\u0020this\u0020channel\u0020without\u0020being\u0020affected\u0020by\u0020slowmode.",
+            "url": "classes/Discord-Parts-Permissions-Permission.html#constant_BYPASS_SLOWMODE"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ATEXT_PERMISSIONS",
             "name": "TEXT_PERMISSIONS",
