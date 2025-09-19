@@ -182,6 +182,8 @@ abstract class Permission extends Part
     public const USE_EXTERNAL_APPS = 50;
     /** Allows pinning and unpinning messages. */
     public const PIN_MESSAGES = 51;
+    /** Allows members to send messages in this channel without being affected by slowmode. */
+    public const BYPASS_SLOWMODE = 52;
 
     /**
      * Array of permissions that only apply to text channels.
@@ -199,6 +201,7 @@ abstract class Permission extends Part
         'create_private_threads' => self::CREATE_PRIVATE_THREADS,
         'send_messages_in_threads' => self::SEND_MESSAGES_IN_THREADS,
         'pin_messages' => self::PIN_MESSAGES,
+        'bypass_slowmode' => self::BYPASS_SLOWMODE,
     ];
 
     /**
