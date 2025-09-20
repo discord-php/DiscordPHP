@@ -15,6 +15,7 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\Profile;
 use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
@@ -44,6 +45,7 @@ use Stringable;
  * @property Carbon              $expires_at                 The expiration date of this invite.
  * @property ScheduledEvent|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
  * @property int                 $flags                      Guild invite flags for guild invites.
+ * @property Profile             $profile                    The guild profile.
  *
  * @property int|null    $uses       How many times the invite has been used.
  * @property int|null    $max_uses   How many times the invite can be used.
@@ -75,6 +77,8 @@ class Invite extends Part implements Stringable
         'approximate_member_count',
         'expires_at',
         'guild_scheduled_event',
+        'flags',
+        'profile',
 
         // Extra metadata
         'uses',
@@ -258,6 +262,16 @@ class Invite extends Part implements Stringable
         }
 
         return $this->factory->part(ScheduledEvent::class, (array) $this->attributes['guild_scheduled_event'], true);
+    }
+
+    /**
+     * Returns the guild profile for this invite.
+     *
+     * @return Profile The guild profile.
+     */
+    protected function getProfileAttribute(): Profile
+    {
+        return $this->attributePartHelper('profile', Profile::class);
     }
 
     /**
