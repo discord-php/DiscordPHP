@@ -4476,6 +4476,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020guild\u0020scheduled\u0020event\u0020on\u0020this\u0020invite.",
             "url": "classes/Discord-Parts-Channel-Invite.html#method_getGuildScheduledEventAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AgetProfileAttribute\u0028\u0029",
+            "name": "getProfileAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020profile\u0020for\u0020this\u0020invite.",
+            "url": "classes/Discord-Parts-Channel-Invite.html#method_getProfileAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AisGuestInvite\u0028\u0029",
             "name": "isGuestInvite",
             "summary": "Returns\u0020whether\u0020the\u0020guest\u0020invite\u0020flag\u0020is\u0020set.",
@@ -7951,6 +7956,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getRepositoryAttributes"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTraitObject",
+            "name": "GuildTraitObject",
+            "summary": "Guild\u0020Trait\u0020Object.",
+            "url": "classes/Discord-Parts-Guild-GuildTraitObject.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTraitObject\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-GuildTraitObject.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Integration",
             "name": "Integration",
             "summary": "An\u0020Integration\u0020is\u0020a\u0020guild\u0020integrations\u0020for\u0020Twitch,\u0020YouTube,\u0020Bot\u0020and\u0020Apps.",
@@ -7990,6 +8005,21 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-Integration.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Profile",
+            "name": "Profile",
+            "summary": "This\u0020object\u0020can\u0020only\u0020be\u0020retrieved\u0020through\u0020the\u0020\u0060profile\u0060\u0020field\u0020of\u0020the\u0020\u005BGET\u0020Invite\u005D\u0028\/docs\/resources\/invite\u0023get\u002Dinvite\u0029\u0020endpoint.",
+            "url": "classes/Discord-Parts-Guild-Profile.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Profile\u003A\u003AgetTraitsAttribute\u0028\u0029",
+            "name": "getTraitsAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Profile.html#method_getTraitsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Profile\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-Profile.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Role",
             "name": "Role",

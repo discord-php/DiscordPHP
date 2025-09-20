@@ -236,12 +236,12 @@
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts.html">Parts</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-channel.html">Channel</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-guild.html">Guild</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Invite
+    Profile
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
@@ -254,9 +254,6 @@
                             </ul>
         </div>
     
-            <span class="phpdocumentor-element__implements">
-            implements
-                            <abbr title="\Stringable">Stringable</abbr>                    </span>
     
     </h2>
 
@@ -266,20 +263,20 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">An invite to a Channel and Guild.</p>
+            <p class="phpdocumentor-summary">This object can only be retrieved through the `profile` field of the [GET Invite](/docs/resources/invite#get-invite) endpoint.</p>
 
 
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Invite.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Guild-Profile.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -287,24 +284,14 @@
                     <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/invite"> https://discord.com/developers/docs/resources/invite </a>
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/guild#guild-profile-object"> https://discord.com/developers/docs/resources/guild#guild-profile-object </a>
                     
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.0.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Namespace moved from Guild to Channel</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2.0.0</span>
+                                            <span class="phpdocumentor-tag-link">10.22.0</span>
                                                                                 
                                              
                                     </dd>
@@ -316,102 +303,52 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Parts-Channel-Invite.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Guild-Profile.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
 
 
-    <h4 id="toc-interfaces">
-        Interfaces
-        <a href="classes/Discord-Parts-Channel-Invite.html#toc-interfaces" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -interface"><abbr title="\Stringable">Stringable</abbr></dt>    </dl>
 
 
 
 
-<h4 id="toc-constants">
-    Constants
-    <a href="classes/Discord-Parts-Channel-Invite.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-</h4>
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#constant_FLAG_IS_GUEST_INVITE">FLAG_IS_GUEST_INVITE</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 0                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#constant_TARGET_TYPE_EMBEDDED_APPLICATION">TARGET_TYPE_EMBEDDED_APPLICATION</a>
-    <span>
-        &nbsp;= 2                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#constant_TARGET_TYPE_STREAM">TARGET_TYPE_STREAM</a>
-    <span>
-        &nbsp;= 1                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#constant_TYPE_FRIEND">TYPE_FRIEND</a>
-    <span>
-        &nbsp;= 2                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#constant_TYPE_GROUP_DM">TYPE_GROUP_DM</a>
-    <span>
-        &nbsp;= 1                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#constant_TYPE_GUILD">TYPE_GUILD</a>
-    <span>
-        &nbsp;= 0                            </span>
-</dt>
-
-    </dl>
 
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-Parts-Channel-Invite.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Guild-Profile.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_approximate_member_count">$approximate_member_count</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_badge">$badge</a>
     <span>
-                        &nbsp;: int|null            </span>
+                        &nbsp;: int            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_approximate_presence_count">$approximate_presence_count</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_badge_color_primary">$badge_color_primary</a>
     <span>
-                        &nbsp;: int|null            </span>
+                        &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_channel">$channel</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_badge_color_secondary">$badge_color_secondary</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>            </span>
+                        &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_channel_id">$channel_id</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_badge_hash">$badge_hash</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_code">$code</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_banner_hash">$banner_hash</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -422,69 +359,75 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_created_at">$created_at</a>
-    <span>
-                        &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_expires_at">$expires_at</a>
-    <span>
-                        &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_flags">$flags</a>
-    <span>
-                        &nbsp;: int            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_guild">$guild</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_guild_id">$guild_id</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_custom_banner_hash">$custom_banner_hash</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_guild_scheduled_event">$guild_scheduled_event</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_description">$description</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Guild-ScheduledEvent.html"><abbr title="\Discord\Parts\Guild\ScheduledEvent">ScheduledEvent</abbr></a>|null            </span>
+                        &nbsp;: string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_invite_url">$invite_url</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_features">$features</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_game_activity">$game_activity</a>
+    <span>
+                        &nbsp;: object            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_game_application_ids">$game_application_ids</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_icon_hash">$icon_hash</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_id">$id</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_inviter">$inviter</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_member_count">$member_count</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null            </span>
+                        &nbsp;: int            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_max_age">$max_age</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_name">$name</a>
     <span>
-                        &nbsp;: int|null            </span>
+                        &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_max_uses">$max_uses</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_online_count">$online_count</a>
     <span>
-                        &nbsp;: int|null            </span>
+                        &nbsp;: int            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_profile">$profile</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_premium_subscription_count">$premium_subscription_count</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Guild-Profile.html"><abbr title="\Discord\Parts\Guild\Profile">Profile</abbr></a>            </span>
+                        &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_premium_tier">$premium_tier</a>
+    <span>
+                        &nbsp;: int            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -495,39 +438,21 @@
 <dd>Custom script data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_target_application">$target_application</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_tag">$tag</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null            </span>
+                        &nbsp;: string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_target_type">$target_type</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_traits">$traits</a>
     <span>
-                        &nbsp;: int|null            </span>
+                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Guild-GuildTraitObject.html"><abbr title="\Discord\Parts\Guild\GuildTraitObject">GuildTraitObject</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Guild-GuildTraitObject.html"><abbr title="\Discord\Parts\Guild\GuildTraitObject">GuildTraitObject</abbr></a>&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_target_user">$target_user</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_temporary">$temporary</a>
-    <span>
-                        &nbsp;: bool|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_type">$type</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_visibility">$visibility</a>
     <span>
                         &nbsp;: int            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_uses">$uses</a>
-    <span>
-                        &nbsp;: int|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
@@ -552,7 +477,7 @@
 <dd>The factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_fillable">$fillable</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#property_fillable">$fillable</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -597,7 +522,7 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Parts-Channel-Invite.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Guild-Profile.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -635,10 +560,11 @@
 <dd>Handles dynamic set calls onto the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method___toString">__toString()</a>
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method___toString">__toString()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Converts the part to a string.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method___unserialize">__unserialize()</a>
@@ -696,10 +622,11 @@
 <dd>Returns an array of raw attributes.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getRepositoryAttributes">getRepositoryAttributes()</a>
+    <a class="" href="classes/Discord-Parts-PartTrait.html#method_getRepositoryAttributes">getRepositoryAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
+<dd>Gets the attributes to pass to repositories.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_getUpdatableAttributes">getUpdatableAttributes()</a>
@@ -707,13 +634,6 @@
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Returns the updatable attributes.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_isGuestInvite">isGuestInvite()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Returns whether the guest invite flag is set.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_isPartial">isPartial()</a>
@@ -823,95 +743,10 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Gets an attribute on the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getChannelAttribute">getChannelAttribute()</a>
+    <a class="" href="classes/Discord-Parts-Guild-Profile.html#method_getTraitsAttribute">getTraitsAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>    </span>
 </dt>
-<dd>Returns the channel attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getChannelIdAttribute">getChannelIdAttribute()</a>
-    <span>
-                                &nbsp;: string|null    </span>
-</dt>
-<dd>Returns the channel id attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getCreatedAtAttribute">getCreatedAtAttribute()</a>
-    <span>
-                                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null    </span>
-</dt>
-<dd>Returns the created at attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getExpiresAtAttribute">getExpiresAtAttribute()</a>
-    <span>
-                                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null    </span>
-</dt>
-<dd>Returns the expires at attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getGuildAttribute">getGuildAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null    </span>
-</dt>
-<dd>Returns the guild attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getGuildIdAttribute">getGuildIdAttribute()</a>
-    <span>
-                                &nbsp;: string|null    </span>
-</dt>
-<dd>Returns the guild id attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getGuildScheduledEventAttribute">getGuildScheduledEventAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Guild-ScheduledEvent.html"><abbr title="\Discord\Parts\Guild\ScheduledEvent">ScheduledEvent</abbr></a>|null    </span>
-</dt>
-<dd>Returns the guild scheduled event on this invite.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getIdAttribute">getIdAttribute()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd>Returns the id attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getInviterAttribute">getInviterAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null    </span>
-</dt>
-<dd>Returns the inviter attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getInviteUrlAttribute">getInviteUrlAttribute()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd>Returns the invite URL attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getProfileAttribute">getProfileAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Guild-Profile.html"><abbr title="\Discord\Parts\Guild\Profile">Profile</abbr></a>    </span>
-</dt>
-<dd>Returns the guild profile for this invite.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getTargetApplicationAttribute">getTargetApplicationAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null    </span>
-</dt>
-<dd>Returns the target application attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getTargetUserAttribute">getTargetUserAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null    </span>
-</dt>
-<dd>Returns the target user attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a>
@@ -939,205 +774,12 @@ JSON. Used for JsonSerializable.</dd>
 
 
         
-    <section class="phpdocumentor-constants">
-        <h3 class="phpdocumentor-elements__header" id="constants">
-            Constants
-            <a href="classes/Discord-Parts-Channel-Invite.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h3>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_IS_GUEST_INVITE">
-        FLAG_IS_GUEST_INVITE
-        <a href="classes/Discord-Parts-Channel-Invite.html#constant_FLAG_IS_GUEST_INVITE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">98</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_IS_GUEST_INVITE</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 0</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TARGET_TYPE_EMBEDDED_APPLICATION">
-        TARGET_TYPE_EMBEDDED_APPLICATION
-        <a href="classes/Discord-Parts-Channel-Invite.html#constant_TARGET_TYPE_EMBEDDED_APPLICATION" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">96</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TARGET_TYPE_EMBEDDED_APPLICATION</span>
-    = <span class="phpdocumentor-signature__default-value">2</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TARGET_TYPE_STREAM">
-        TARGET_TYPE_STREAM
-        <a href="classes/Discord-Parts-Channel-Invite.html#constant_TARGET_TYPE_STREAM" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">95</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TARGET_TYPE_STREAM</span>
-    = <span class="phpdocumentor-signature__default-value">1</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_FRIEND">
-        TYPE_FRIEND
-        <a href="classes/Discord-Parts-Channel-Invite.html#constant_TYPE_FRIEND" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">62</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_FRIEND</span>
-    = <span class="phpdocumentor-signature__default-value">2</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_GROUP_DM">
-        TYPE_GROUP_DM
-        <a href="classes/Discord-Parts-Channel-Invite.html#constant_TYPE_GROUP_DM" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">61</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_GROUP_DM</span>
-    = <span class="phpdocumentor-signature__default-value">1</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TYPE_GUILD">
-        TYPE_GUILD
-        <a href="classes/Discord-Parts-Channel-Invite.html#constant_TYPE_GUILD" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">60</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TYPE_GUILD</span>
-    = <span class="phpdocumentor-signature__default-value">0</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-            </section>
 
         
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-Channel-Invite.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Guild-Profile.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -1147,15 +789,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_approximate_member_count">
-        $approximate_member_count
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_approximate_member_count" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_badge">
+        $badge
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_badge" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1165,11 +807,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$approximate_member_count</span>
+            <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$badge</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Approximate count of total members, returned from the GET /invites/<code class="prettyprint"> endpoint when with_counts is true.</p>
+        <section class="phpdocumentor-description"><p>Guild badge.</p>
 </section>
 
     
@@ -1187,133 +829,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_approximate_presence_count">
-        $approximate_presence_count
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_approximate_presence_count" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_badge_color_primary">
+        $badge_color_primary
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_badge_color_primary" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$approximate_presence_count</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Approximate count of online members, returned from the GET /invites/<code class="prettyprint"> endpoint when with_counts is true.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_channel">
-        $channel
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_channel" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$channel</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The partial channel that the invite is for.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_channel_id">
-        $channel_id
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_channel_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$channel_id</span>
-    </code>
-
-    
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_code">
-        $code
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_code" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1324,10 +848,130 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$code</span>
+    <span class="phpdocumentor-signature__name">$badge_color_primary</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The invite code.</p>
+        <section class="phpdocumentor-description"><p>Primary color for the guild badge.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_badge_color_secondary">
+        $badge_color_secondary
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_badge_color_secondary" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$badge_color_secondary</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Secondary color for the guild badge.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_badge_hash">
+        $badge_hash
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_badge_hash" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$badge_hash</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Guild tag badge hash.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_banner_hash">
+        $banner_hash
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_banner_hash" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$banner_hash</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Server tag badge hash.</p>
 </section>
 
     
@@ -1386,175 +1030,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_created_at">
-        $created_at
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_created_at" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_custom_banner_hash">
+        $custom_banner_hash
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_custom_banner_hash" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-    <span class="phpdocumentor-signature__name">$created_at</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>A timestamp of when the invite was created.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_expires_at">
-        $expires_at
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_expires_at" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr></span>
-    <span class="phpdocumentor-signature__name">$expires_at</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The expiration date of this invite.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_flags">
-        $flags
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_flags" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$flags</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Guild invite flags for guild invites.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_guild">
-        $guild
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$guild</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The partial guild that the invite is for.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_guild_id">
-        $guild_id
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1565,48 +1049,10 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$guild_id</span>
+    <span class="phpdocumentor-signature__name">$custom_banner_hash</span>
     </code>
 
-    
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_guild_scheduled_event">
-        $guild_scheduled_event
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_guild_scheduled_event" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Guild-ScheduledEvent.html"><abbr title="\Discord\Parts\Guild\ScheduledEvent">ScheduledEvent</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$guild_scheduled_event</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.</p>
+        <section class="phpdocumentor-description"><p>Custom banner hash.</p>
 </section>
 
     
@@ -1622,17 +1068,217 @@ JSON. Used for JsonSerializable.</dd>
             phpdocumentor-element
             -property
             -public
-                                                -read-only                    "
+                                                                    "
 >
-    <h4 class="phpdocumentor-element__name" id="property_invite_url">
-        $invite_url
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_invite_url" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_description">
+        $description
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_description" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
+                                            </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$description</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The description for the guild.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_features">
+        $features
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_features" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$features</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Enabled guild features.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_game_activity">
+        $game_activity
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_game_activity" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">object</span>
+    <span class="phpdocumentor-signature__name">$game_activity</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Game activity data for the guild.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_game_application_ids">
+        $game_application_ids
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_game_application_ids" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$game_application_ids</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Application ids for games associated with the guild.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_icon_hash">
+        $icon_hash
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_icon_hash" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$icon_hash</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Icon hash.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_id">
+        $id
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1643,10 +1289,10 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$invite_url</span>
+    <span class="phpdocumentor-signature__name">$id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Returns the invite URL.</p>
+        <section class="phpdocumentor-description"><p>The unique identifier of the guild.</p>
 </section>
 
     
@@ -1664,15 +1310,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_inviter">
-        $inviter
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_inviter" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_member_count">
+        $member_count
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_member_count" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1682,11 +1328,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$inviter</span>
+            <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$member_count</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The user that created the invite.</p>
+        <section class="phpdocumentor-description"><p>Total number of members in the guild.</p>
 </section>
 
     
@@ -1704,15 +1350,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_max_age">
-        $max_age
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_max_age" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_name">
+        $name
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1722,11 +1368,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$max_age</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$name</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>How many seconds the invite will be alive.</p>
+        <section class="phpdocumentor-description"><p>Guild name.</p>
 </section>
 
     
@@ -1744,15 +1390,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_max_uses">
-        $max_uses
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_max_uses" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_online_count">
+        $online_count
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_online_count" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1762,11 +1408,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$max_uses</span>
+            <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$online_count</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>How many times the invite can be used.</p>
+        <section class="phpdocumentor-description"><p>Number of online members in the guild.</p>
 </section>
 
     
@@ -1784,15 +1430,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_profile">
-        $profile
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_profile" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_premium_subscription_count">
+        $premium_subscription_count
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_premium_subscription_count" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1802,11 +1448,51 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Guild-Profile.html"><abbr title="\Discord\Parts\Guild\Profile">Profile</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$profile</span>
+            <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$premium_subscription_count</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The guild profile.</p>
+        <section class="phpdocumentor-description"><p>The number of boosts this guild currently has.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_premium_tier">
+        $premium_tier
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_premium_tier" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$premium_tier</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Premium tier (Server Boost level).</p>
 </section>
 
     
@@ -1872,15 +1558,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_target_application">
-        $target_application
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_target_application" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_tag">
+        $tag
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_tag" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1890,11 +1576,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$target_application</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$tag</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The partial embedded application to open for this voice channel embedded application invite.</p>
+        <section class="phpdocumentor-description"><p>Tag of the guild.</p>
 </section>
 
     
@@ -1912,15 +1598,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_target_type">
-        $target_type
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_target_type" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_traits">
+        $traits
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_traits" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1930,11 +1616,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$target_type</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Guild-GuildTraitObject.html"><abbr title="\Discord\Parts\Guild\GuildTraitObject">GuildTraitObject</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Guild-GuildTraitObject.html"><abbr title="\Discord\Parts\Guild\GuildTraitObject">GuildTraitObject</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$traits</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The type of target for this voice channel invite.</p>
+        <section class="phpdocumentor-description"><p>Traits of the guild.</p>
 </section>
 
     
@@ -1952,95 +1638,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_target_user">
-        $target_user
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_target_user" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_visibility">
+        $visibility
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_visibility" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$target_user</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The user whose stream to display for this voice channel stream invite.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_temporary">
-        $temporary
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_temporary" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">bool|null</span>
-    <span class="phpdocumentor-signature__name">$temporary</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Whether the invite is for temporary membership.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_type">
-        $type
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -2051,50 +1657,10 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$type</span>
+    <span class="phpdocumentor-signature__name">$visibility</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The type of invite</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_uses">
-        $uses
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_uses" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$uses</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>How many times the invite has been used.</p>
+        <section class="phpdocumentor-description"><p>Visibility level of the guild.</p>
 </section>
 
     
@@ -2237,15 +1803,15 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_fillable">
         $fillable
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -2256,31 +1822,7 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[
-    &#039;type&#039;,
-    &#039;code&#039;,
-    &#039;guild&#039;,
-    &#039;channel&#039;,
-    &#039;inviter&#039;,
-    &#039;target_type&#039;,
-    &#039;target_user&#039;,
-    &#039;target_application&#039;,
-    &#039;approximate_presence_count&#039;,
-    &#039;approximate_member_count&#039;,
-    &#039;expires_at&#039;,
-    &#039;guild_scheduled_event&#039;,
-    &#039;flags&#039;,
-    &#039;profile&#039;,
-    // Extra metadata
-    &#039;uses&#039;,
-    &#039;max_uses&#039;,
-    &#039;max_age&#039;,
-    &#039;temporary&#039;,
-    &#039;created_at&#039;,
-    // @internal
-    &#039;guild_id&#039;,
-    &#039;channel_id&#039;,
-]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;badge&#039;, &#039;badge_color_primary&#039;, &#039;badge_color_secondary&#039;, &#039;badge_hash&#039;, &#039;banner_hash&#039;, &#039;custom_banner_hash&#039;, &#039;description&#039;, &#039;features&#039;, &#039;game_activity&#039;, &#039;game_application_ids&#039;, &#039;icon_hash&#039;, &#039;member_count&#039;, &#039;name&#039;, &#039;online_count&#039;, &#039;premium_subscription_count&#039;, &#039;premium_tier&#039;, &#039;tag&#039;, &#039;traits&#039;, &#039;visibility&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -2289,7 +1831,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Invite.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Guild-Profile.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -2513,7 +2055,7 @@ JSON. Used for JsonSerializable.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-Channel-Invite.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Guild-Profile.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -2818,17 +2360,18 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method___toString">
         __toString()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method___toString" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method___toString" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">319</span>
+    <span class="phpdocumentor-element-found-in__line">536</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Converts the part to a string.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__toString</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -2839,12 +2382,41 @@ JSON. Used for JsonSerializable.</dd>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-PartTrait.html#method___toString#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\Part::getPublicAttributes()">Part::getPublicAttributes()</abbr></span>
+                                        
+                                                 <section class="phpdocumentor-description"><p>This function encodes getPublicAttributes into JSON.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
     
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>A JSON string of attributes.</p>
+</section>
+
             </section>
 
 </article>
@@ -3255,17 +2827,18 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method_getRepositoryAttributes">
         getRepositoryAttributes()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getRepositoryAttributes" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-PartTrait.html#method_getRepositoryAttributes" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">312</span>
+    <span class="phpdocumentor-element-found-in__line">326</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Gets the attributes to pass to repositories.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getRepositoryAttributes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
@@ -3273,29 +2846,21 @@ JSON. Used for JsonSerializable.</dd>
     <div class="phpdocumentor-label-line">
         </div>
     
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getRepositoryAttributes#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <section class="phpdocumentor-description"><p>Note: The order matters for repository tree (top to bottom).</p>
+</section>
 
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritDoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
+    
+    
 
     
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Attributes.</p>
+</section>
+
             </section>
 
 </article>
@@ -3335,49 +2900,6 @@ JSON. Used for JsonSerializable.</dd>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_isGuestInvite">
-        isGuestInvite()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_isGuestInvite" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">282</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns whether the guest invite flag is set.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">isGuestInvite</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>Whether the invite is a guest invite for a voice channel.</p>
-</section>
-
             </section>
 
 </article>
@@ -4368,23 +3890,22 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getChannelAttribute">
-        getChannelAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getChannelAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getTraitsAttribute">
+        getTraitsAttribute()
+        <a href="classes/Discord-Parts-Guild-Profile.html#method_getTraitsAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Profile.php"><a href="files/src-discord-parts-guild-profile.html"><abbr title="src/Discord/Parts/Guild/Profile.php">Profile.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">149</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns the channel attribute.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getChannelAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">getTraitsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4397,553 +3918,7 @@ JSON. Used for JsonSerializable.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The Channel that you have been invited to.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getChannelIdAttribute">
-        getChannelIdAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getChannelIdAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">176</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the channel id attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getChannelIdAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The Channel ID that you have been invited to.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getCreatedAtAttribute">
-        getCreatedAtAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getCreatedAtAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">294</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the created at attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getCreatedAtAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getCreatedAtAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The time that the invite was created.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getExpiresAtAttribute">
-        getExpiresAtAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getExpiresAtAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">242</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the expires at attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getExpiresAtAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getExpiresAtAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The time that the invite was created.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
-        getGuildAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">115</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the guild attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getGuildAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The Guild that you have been invited to.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getGuildIdAttribute">
-        getGuildIdAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getGuildIdAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">131</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the guild id attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getGuildIdAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getGuildScheduledEventAttribute">
-        getGuildScheduledEventAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getGuildScheduledEventAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">252</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the guild scheduled event on this invite.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getGuildScheduledEventAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-ScheduledEvent.html"><abbr title="\Discord\Parts\Guild\ScheduledEvent">ScheduledEvent</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-ScheduledEvent.html"><abbr title="\Discord\Parts\Guild\ScheduledEvent">ScheduledEvent</abbr></a>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The guild scheduled event data.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getIdAttribute">
-        getIdAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getIdAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">105</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the id attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getIdAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The id attribute.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getInviterAttribute">
-        getInviterAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getInviterAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">194</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the inviter attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getInviterAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The User that invited you.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getInviteUrlAttribute">
-        getInviteUrlAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getInviteUrlAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">304</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the invite URL attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getInviteUrlAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The URL to the invite.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getProfileAttribute">
-        getProfileAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getProfileAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">272</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the guild profile for this invite.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getProfileAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Profile.html"><abbr title="\Discord\Parts\Guild\Profile">Profile</abbr></a></span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Profile.html"><abbr title="\Discord\Parts\Guild\Profile">Profile</abbr></a></span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The guild profile.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getTargetApplicationAttribute">
-        getTargetApplicationAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetApplicationAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">230</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the target application attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getTargetApplicationAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The partial target application data.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getTargetUserAttribute">
-        getTargetUserAttribute()
-        <a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetUserAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">212</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the target user attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getTargetUserAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The user whose stream to display for this voice channel stream invite.</p>
-</section>
-
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a></span>
             </section>
 
 </article>
@@ -5133,7 +4108,7 @@ static as we may move it outside this class in future.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Channel/Invite.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Guild/Profile.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -5234,54 +4209,40 @@ static as we may move it outside this class in future.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                        <li><a href="classes/Discord-Parts-Channel-Invite.html#toc-constants">Constants</a></li>
-                                                            <li><a href="classes/Discord-Parts-Channel-Invite.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-Parts-Channel-Invite.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Discord-Parts-Guild-Profile.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-Parts-Guild-Profile.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
-                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#constant_FLAG_IS_GUEST_INVITE">FLAG_IS_GUEST_INVITE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#constant_TARGET_TYPE_EMBEDDED_APPLICATION">TARGET_TYPE_EMBEDDED_APPLICATION</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#constant_TARGET_TYPE_STREAM">TARGET_TYPE_STREAM</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#constant_TYPE_FRIEND">TYPE_FRIEND</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#constant_TYPE_GROUP_DM">TYPE_GROUP_DM</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#constant_TYPE_GUILD">TYPE_GUILD</a></li>
-                                            </ul>
-                </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_approximate_member_count">$approximate_member_count</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_approximate_presence_count">$approximate_presence_count</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_channel">$channel</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_channel_id">$channel_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_code">$code</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_badge">$badge</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_badge_color_primary">$badge_color_primary</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_badge_color_secondary">$badge_color_secondary</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_badge_hash">$badge_hash</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_banner_hash">$banner_hash</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_created_at">$created_at</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_expires_at">$expires_at</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_flags">$flags</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_guild">$guild</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_guild_id">$guild_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_guild_scheduled_event">$guild_scheduled_event</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_invite_url">$invite_url</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_inviter">$inviter</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_max_age">$max_age</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_max_uses">$max_uses</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_profile">$profile</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_custom_banner_hash">$custom_banner_hash</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_description">$description</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_features">$features</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_game_activity">$game_activity</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_game_application_ids">$game_application_ids</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_icon_hash">$icon_hash</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_member_count">$member_count</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_name">$name</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_online_count">$online_count</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_premium_subscription_count">$premium_subscription_count</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_premium_tier">$premium_tier</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_target_application">$target_application</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_target_type">$target_type</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_target_user">$target_user</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_temporary">$temporary</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_type">$type</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_uses">$uses</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_tag">$tag</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_traits">$traits</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_visibility">$visibility</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_fillable">$fillable</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#property_fillable">$fillable</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_http">$http</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories">$repositories</a></li>
@@ -5298,7 +4259,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___get">__get()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___serialize">__serialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___set">__set()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method___toString">__toString()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___toString">__toString()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___unserialize">__unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
@@ -5307,9 +4268,8 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getDiscord">getDiscord()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getPublicAttributes">getPublicAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getRawAttributes">getRawAttributes()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getRepositoryAttributes">getRepositoryAttributes()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getRepositoryAttributes">getRepositoryAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getUpdatableAttributes">getUpdatableAttributes()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_isGuestInvite">isGuestInvite()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_isPartial">isPartial()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_jsonSerialize">jsonSerialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetExists">offsetExists()</a></li>
@@ -5325,19 +4285,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getChannelAttribute">getChannelAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getChannelIdAttribute">getChannelIdAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getCreatedAtAttribute">getCreatedAtAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getExpiresAtAttribute">getExpiresAtAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getGuildAttribute">getGuildAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getGuildIdAttribute">getGuildIdAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getGuildScheduledEventAttribute">getGuildScheduledEventAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getIdAttribute">getIdAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getInviterAttribute">getInviterAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getInviteUrlAttribute">getInviteUrlAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getProfileAttribute">getProfileAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetApplicationAttribute">getTargetApplicationAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetUserAttribute">getTargetUserAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Guild-Profile.html#method_getTraitsAttribute">getTraitsAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a></li>
@@ -5360,7 +4308,7 @@ static as we may move it outside this class in future.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Parts-Channel-Invite.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Parts-Guild-Profile.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
