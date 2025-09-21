@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\ChannelTrait;
+use Discord\Parts\Channel\ThreadMetadata;
 use Discord\Parts\Part;
 use Discord\Parts\Thread\Member as ThreadMember;
 use Discord\Parts\User\Member;
@@ -33,18 +34,18 @@ use Stringable;
  *
  * @since 7.0.0
  *
- * @property int           $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, the message count is inaccurate when it's greater than 50).
- * @property int           $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
- * @property object        $thread_metadata       Thread-specific fields not needed by other channels.
- * @property bool          $archived              Whether the thread has been archived.
- * @property int|null      $auto_archive_duration The number of minutes of inactivity until the thread is automatically archived.
- * @property Carbon        $archive_timestamp     The time that the thread's archive status was changed.
- * @property bool          $locked                Whether the thread has been locked.
- * @property bool|null     $invitable             Whether non-moderators can add other non-moderators to a thread; only available on private threads.
- * @property Carbon|null   $create_timestamp      Timestamp when the thread was created; only populated for threads created after 2022-01-09.
- * @property int|null      $total_message_sent    Number of messages ever sent in a thread, it's similar to `message_count` on message creation, but will not decrement the number when a message is deleted.
- * @property int|null      $flags                 Channel flags combined as a bitfield. PINNED can only be set for threads in forum channels.
- * @property string[]|null $applied_tags          The IDs of the set of tags that have been applied to a thread in a forum channel, limited to 5.
+ * @property int            $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, the message count is inaccurate when it's greater than 50).
+ * @property int            $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
+ * @property ThreadMetadata $thread_metadata       Thread-specific fields not needed by other channels.
+ * @property bool           $archived              Whether the thread has been archived.
+ * @property int|null       $auto_archive_duration The number of minutes of inactivity until the thread is automatically archived.
+ * @property Carbon         $archive_timestamp     The time that the thread's archive status was changed.
+ * @property bool           $locked                Whether the thread has been locked.
+ * @property bool|null      $invitable             Whether non-moderators can add other non-moderators to a thread; only available on private threads.
+ * @property Carbon|null    $create_timestamp      Timestamp when the thread was created; only populated for threads created after 2022-01-09.
+ * @property int|null       $total_message_sent    Number of messages ever sent in a thread, it's similar to `message_count` on message creation, but will not decrement the number when a message is deleted.
+ * @property int|null       $flags                 Channel flags combined as a bitfield. PINNED can only be set for threads in forum channels.
+ * @property string[]|null  $applied_tags          The IDs of the set of tags that have been applied to a thread in a forum channel, limited to 5.
  */
 class Thread extends Part implements Stringable
 {
@@ -106,6 +107,18 @@ class Thread extends Part implements Stringable
             $memberPart->created = &$this->created;
             $this->members->pushItem($memberPart);
         }
+    }
+
+    /**
+     * Returns the thread metadata.
+     *
+     * @return ThreadMetadata|null
+     *
+     * @since 10.22.0
+     */
+    protected function getThreadMetadataAttribute(): ?ThreadMetadata
+    {
+        return $this->attributePartHelper('thread_metadata', ThreadMetadata::class);
     }
 
     /**
