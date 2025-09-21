@@ -4551,6 +4551,36 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-ActionRow.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Activity",
+            "name": "Activity",
+            "summary": "Sent\u0020with\u0020Rich\u0020Presence\u002Drelated\u0020chat\u0020embeds.",
+            "url": "classes/Discord-Parts-Channel-Message-Activity.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Activity\u003A\u003ATYPE_JOIN",
+            "name": "TYPE_JOIN",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-Activity.html#constant_TYPE_JOIN"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Activity\u003A\u003ATYPE_SPECTATE",
+            "name": "TYPE_SPECTATE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-Activity.html#constant_TYPE_SPECTATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Activity\u003A\u003ATYPE_LISTEN",
+            "name": "TYPE_LISTEN",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-Activity.html#constant_TYPE_LISTEN"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Activity\u003A\u003ATYPE_JOIN_REQUEST",
+            "name": "TYPE_JOIN_REQUEST",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message-Activity.html#constant_TYPE_JOIN_REQUEST"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Activity\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-Activity.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions",
             "name": "AllowedMentions",
             "summary": "The\u0020allowed\u0020mention\u0020field\u0020allows\u0020for\u0020more\u0020granular\u0020control\u0020over\u0020mentions\u0020without\u0020various\u0020hacks\u0020to\u0020the\u0020message.",
@@ -5021,6 +5051,21 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Channel-Message-MessageReference.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageSnapshot",
+            "name": "MessageSnapshot",
+            "summary": "The\u0020message\u0020associated\u0020with\u0020the\u0020message_reference.\u0020This\u0020is\u0020a\u0020minimal\u0020subset\u0020of\u0020fields\u0020in\u0020a\u0020message\u0020\u0028e.g.\u0020author\u0020is\u0020excluded.\u0029.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageSnapshot.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageSnapshot\u003A\u003AgetMessageAttribute\u0028\u0029",
+            "name": "getMessageAttribute",
+            "summary": "Returns\u0020the\u0020message\u0020associated\u0020with\u0020the\u0020message_reference.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageSnapshot.html#method_getMessageAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageSnapshot\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-MessageSnapshot.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\RoleSelect",
             "name": "RoleSelect",
             "summary": "A\u0020Role\u0020Select\u0020is\u0020an\u0020interactive\u0020component\u0020that\u0020allows\u0020users\u0020to\u0020select\u0020one\u0020or\u0020more\u0020roles\u0020in\u0020a\u0020message.\u0020Options\u0020are\u0020automatically\u0020populated\u0020based\u0020on\u0020the\u0020server\u0027s\u0020available\u0020roles.",
@@ -5030,6 +5075,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-RoleSelect.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\RoleSubscriptionData",
+            "name": "RoleSubscriptionData",
+            "summary": "Data\u0020of\u0020the\u0020role\u0020subscription\u0020purchase\u0020or\u0020renewal\u0020that\u0020prompted\u0020this\u0020ROLE_SUBSCRIPTION_PURCHASE\u0020message.",
+            "url": "classes/Discord-Parts-Channel-Message-RoleSubscriptionData.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\RoleSubscriptionData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-RoleSubscriptionData.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Section",
             "name": "Section",
@@ -5266,6 +5321,16 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020embed\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Message.html#method_getEmbedsAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetActivityAttribute\u0028\u0029",
+            "name": "getActivityAttribute",
+            "summary": "Returns\u0020the\u0020activity\u0020sent\u0020with\u0020Rich\u0020Presence\u002Drelated\u0020chat\u0020embeds.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_getActivityAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetApplicationAttribute\u0028\u0029",
+            "name": "getApplicationAttribute",
+            "summary": "Returns\u0020the\u0020application\u0020sent\u0020with\u0020Rich\u0020Presence\u002Drelated\u0020chat\u0020embeds.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_getApplicationAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetInteractionMetadataAttribute\u0028\u0029",
             "name": "getInteractionMetadataAttribute",
             "summary": "Returns\u0020the\u0020interaction_metadata\u0020attribute,\u0020if\u0020present.",
@@ -5291,6 +5356,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020message_snapshot\u0020attribute,\u0020if\u0020present.",
             "url": "classes/Discord-Parts-Channel-Message.html#method_getMessageSnapshotAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetMessageSnapshotsAttribute\u0028\u0029",
+            "name": "getMessageSnapshotsAttribute",
+            "summary": "Returns\u0020the\u0020message_snapshot\u0020attribute,\u0020if\u0020present.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_getMessageSnapshotsAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetTimestampAttribute\u0028\u0029",
             "name": "getTimestampAttribute",
             "summary": "Returns\u0020the\u0020timestamp\u0020attribute.",
@@ -5310,6 +5380,11 @@ Search.appendIndex(
             "name": "getStickerItemsAttribute",
             "summary": "Returns\u0020the\u0020sticker_items\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Message.html#method_getStickerItemsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetRoleSubscriptionDataAttribute\u0028\u0029",
+            "name": "getRoleSubscriptionDataAttribute",
+            "summary": "Returns\u0020the\u0020role_subscription_data\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_getRoleSubscriptionDataAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetResolvedAttribute\u0028\u0029",
             "name": "getResolvedAttribute",
@@ -5690,26 +5765,6 @@ Search.appendIndex(
             "name": "TYPE_APPLICATION_COMMAND",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_APPLICATION_COMMAND"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AACTIVITY_JOIN",
-            "name": "ACTIVITY_JOIN",
-            "summary": "",
-            "url": "classes/Discord-Parts-Channel-Message.html#constant_ACTIVITY_JOIN"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AACTIVITY_SPECTATE",
-            "name": "ACTIVITY_SPECTATE",
-            "summary": "",
-            "url": "classes/Discord-Parts-Channel-Message.html#constant_ACTIVITY_SPECTATE"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AACTIVITY_LISTEN",
-            "name": "ACTIVITY_LISTEN",
-            "summary": "",
-            "url": "classes/Discord-Parts-Channel-Message.html#constant_ACTIVITY_LISTEN"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AACTIVITY_JOIN_REQUEST",
-            "name": "ACTIVITY_JOIN_REQUEST",
-            "summary": "",
-            "url": "classes/Discord-Parts-Channel-Message.html#constant_ACTIVITY_JOIN_REQUEST"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AREACT_DELETE_ALL",
             "name": "REACT_DELETE_ALL",
@@ -6140,6 +6195,21 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Channel-StageInstance.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ThreadMetadata",
+            "name": "ThreadMetadata",
+            "summary": "The\u0020thread\u0020metadata\u0020object\u0020contains\u0020a\u0020number\u0020of\u0020thread\u002Dspecific\u0020channel\u0020fields\u0020that\u0020are\u0020not\u0020needed\u0020by\u0020other\u0020channel\u0020types.",
+            "url": "classes/Discord-Parts-Channel-ThreadMetadata.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ThreadMetadata\u003A\u003AgetCreateTimestampAttribute\u0028\u0029",
+            "name": "getCreateTimestampAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-ThreadMetadata.html#method_getCreateTimestampAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ThreadMetadata\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-ThreadMetadata.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Webhook",
             "name": "Webhook",
@@ -10255,6 +10325,11 @@ Search.appendIndex(
             "name": "afterConstruct",
             "summary": "",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_afterConstruct"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetThreadMetadataAttribute\u0028\u0029",
+            "name": "getThreadMetadataAttribute",
+            "summary": "Returns\u0020the\u0020thread\u0020metadata.",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_getThreadMetadataAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetArchivedAttribute\u0028\u0029",
             "name": "getArchivedAttribute",
