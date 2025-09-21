@@ -1873,18 +1873,22 @@ class VoiceClient extends EventEmitter
                 return \sodium_crypto_aead_aes256gcm_decrypt(
                     $ciphertext,
                     '', // no additional data
-                    $nonce,
+                    (string) $nonce,
                     $this->secret_key
                 );
             case 'aead_xchacha20_poly1305_rtpsize': // required
                 return \sodium_crypto_aead_xchacha20poly1305_ietf_decrypt(
                     $ciphertext,
                     '', // no additional data
-                    $nonce,
+                    (string) $nonce,
                     $this->secret_key
                 );
             case 'xsalsa20_poly1305': // deprecated
-                return \sodium_crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
+                return \sodium_crypto_secretbox_open(
+                    $voicePacket->getData(),
+                    (string) $nonce,
+                    $this->secret_key
+                );
         }
 
         return false;
