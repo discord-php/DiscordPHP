@@ -19,9 +19,11 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Channel\Message\MessageInteractionMetadata;
+use Discord\Parts\Channel\Message\MessageSnapshot;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Role;
+use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -29,8 +31,10 @@ use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Channel\Message\Activity;
 use Discord\Parts\Channel\Message\MessageCall;
 use Discord\Parts\Channel\Message\MessageReference;
+use Discord\Parts\Channel\Message\RoleSubscriptionData;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Resolved;
@@ -51,43 +55,43 @@ use function React\Promise\reject;
  *
  * @since 2.0.0
  *
- * @property      string                             $id                     The unique identifier of the message.
- * @property      string                             $channel_id             The unique identifier of the channel that the message was sent in.
- * @property-read Channel|Thread                     $channel                The channel that the message was sent in.
- * @property      User|null                          $author                 The author of the message. Will be a webhook if sent from one.
- * @property-read string|null                        $user_id                The user id of the author.
- * @property      string                             $content                The content of the message if it is a normal message.
- * @property      Carbon                             $timestamp              A timestamp of when the message was sent.
- * @property      Carbon|null                        $edited_timestamp       A timestamp of when the message was edited, or null.
- * @property      bool                               $tts                    Whether the message was sent as a text-to-speech message.
- * @property      bool                               $mention_everyone       Whether the message contained an @everyone mention.
- * @property      ExCollectionInterface|User[]       $mentions               A collection of the users mentioned in the message.
- * @property      ExCollectionInterface|Role[]       $mention_roles          A collection of roles that were mentioned in the message.
- * @property      ExCollectionInterface|Channel[]    $mention_channels       Collection of mentioned channels.
- * @property      ExCollectionInterface|Attachment[] $attachments            Collection of attachment objects.
- * @property      ExCollectionInterface|Embed[]      $embeds                 A collection of embed objects.
- * @property      ReactionRepository                 $reactions              Collection of reactions on the message.
- * @property      string|null                        $nonce                  A randomly generated string that provides verification for the client. Not required.
- * @property      bool                               $pinned                 Whether the message is pinned to the channel.
- * @property      string|null                        $webhook_id             ID of the webhook that made the message, if any.
- * @property      int                                $type                   The type of message.
- * @property      object|null                        $activity               Current message activity. Requires rich presence.
- * @property      object|null                        $application            Application of message. Requires rich presence.
- * @property      string|null                        $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
- * @property      int|null                           $flags                  Message flags.
- * @property      MessageReference|null              $message_reference      Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
- * @property      object|null                        $message_snapshot       The message associated with the message_reference. This is a minimal subset of fields in a message (e.g. author is excluded.).
- * @property      Message|null                       $referenced_message     The message that is referenced in a reply.
- * @property      MessageInteractionMetadata|null    $interaction_metadata   Sent if the message is sent as a result of an interaction.
- * @property      MessageInteraction|null            $interaction            Sent if the message is a response to an Interaction.
- * @property      Thread|null                        $thread                 The thread that was started from this message, includes thread member object.
- * @property      ExCollectionInterface|Component[]  $components             Sent if the message contains components like buttons, action rows, or other interactive components.
- * @property      ExCollectionInterface|Sticker[]    $sticker_items          Stickers attached to the message.
- * @property      int|null                           $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
- * @property      object|null                        $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
- * @property      Resolved|null                      $resolved               Data for users, members, channels, and roles in the message's auto-populated select menus
- * @property      Poll|null                          $poll                   The poll attached to the message.
- * @property      MessageCall|null                   $call                   The call associated with the message
+ * @property      string                                                   $id                     The unique identifier of the message.
+ * @property      string                                                   $channel_id             The unique identifier of the channel that the message was sent in.
+ * @property-read Channel|Thread                                           $channel                The channel that the message was sent in.
+ * @property      User|null                                                $author                 The author of the message. Will be a webhook if sent from one.
+ * @property-read string|null                                              $user_id                The user id of the author.
+ * @property      string                                                   $content                The content of the message if it is a normal message.
+ * @property      Carbon                                                   $timestamp              A timestamp of when the message was sent.
+ * @property      Carbon|null                                              $edited_timestamp       A timestamp of when the message was edited, or null.
+ * @property      bool                                                     $tts                    Whether the message was sent as a text-to-speech message.
+ * @property      bool                                                     $mention_everyone       Whether the message contained an @everyone mention.
+ * @property      ExCollectionInterface<User>|User[]                       $mentions               A collection of the users mentioned in the message.
+ * @property      ExCollectionInterface<Role>|Role[]                       $mention_roles          A collection of roles that were mentioned in the message.
+ * @property      ExCollectionInterface<Channel>|Channel[]                 $mention_channels       Collection of mentioned channels.
+ * @property      ExCollectionInterface<Attachment>|Attachment[]           $attachments            Collection of attachment objects.
+ * @property      ExCollectionInterface<Embed>|Embed[]                     $embeds                 A collection of embed objects.
+ * @property      string|null                                              $nonce                  A randomly generated string that provides verification for the client. Not required.
+ * @property      bool                                                     $pinned                 Whether the message is pinned to the channel.
+ * @property      string|null                                              $webhook_id             ID of the webhook that made the message, if any.
+ * @property      int                                                      $type                   The type of message.
+ * @property      Activity|null                                            $activity               Current message activity. Sent with Rich Presence-related chat embeds.
+ * @property      Application|null                                         $application            Application of message. Sent with Rich Presence-related chat embeds.
+ * @property      string|null                                              $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
+ * @property      int|null                                                 $flags                  Message flags.
+ * @property      MessageReference|null                                    $message_reference      Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
+ * @property      MessageSnapshot                                          $message_snapshot       The first message associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
+ * @property      ExCollectionInterface<MessageSnapshot>|MessageSnapshot[] $message_snapshots      The messages associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
+ * @property      Message|null                                             $referenced_message     The message that is referenced in a reply.
+ * @property      MessageInteractionMetadata|null                          $interaction_metadata   Sent if the message is sent as a result of an interaction.
+ * @property      MessageInteraction|null                                  $interaction            Sent if the message is a response to an Interaction.
+ * @property      Thread|null                                              $thread                 The thread that was started from this message, includes thread member object.
+ * @property      ExCollectionInterface<Component>|Component[]             $components             Sent if the message contains components like buttons, action rows, or other interactive components.
+ * @property      ExCollectionInterface<Sticker>|Sticker[]                 $sticker_items          Stickers attached to the message.
+ * @property      int|null                                                 $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
+ * @property      RoleSubscriptionData|null                                $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
+ * @property      Resolved|null                                            $resolved               Data for users, members, channels, and roles in the message's auto-populated select menus
+ * @property      Poll|null                                                $poll                   The poll attached to the message.
+ * @property      MessageCall|null                                         $call                   The call associated with the message
  *
  * @property-read bool $crossposted                            Message has been crossposted.
  * @property-read bool $is_crosspost                           Message is a crosspost from another channel.
@@ -104,6 +108,8 @@ use function React\Promise\reject;
  * @property-read Guild|null  $guild    The guild that the message was sent in.
  * @property      Member|null $member   The member that sent this message, or null if it was in a private message.
  * @property-read string|null $link     Returns a link to the message.
+ *
+ * @property ReactionRepository $reactions Collection of reactions on the message.
  */
 class Message extends Part
 {
@@ -177,11 +183,6 @@ class Message extends Part
     /** @deprecated 10.0.0 Use `Message::TYPE_CHAT_INPUT_COMMAND` */
     public const TYPE_APPLICATION_COMMAND = self::TYPE_CHAT_INPUT_COMMAND;
 
-    public const ACTIVITY_JOIN = 1;
-    public const ACTIVITY_SPECTATE = 2;
-    public const ACTIVITY_LISTEN = 3;
-    public const ACTIVITY_JOIN_REQUEST = 5;
-
     public const REACT_DELETE_ALL = 0;
     public const REACT_DELETE_ME = 1;
     public const REACT_DELETE_ID = 2;
@@ -245,9 +246,10 @@ class Message extends Part
         'activity',
         'application',
         'application_id',
+        'flags',
         'message_reference',
         'message_snapshot',
-        'flags',
+        'message_snapshots',
         'referenced_message',
         'interaction_metadata',
         'interaction',
@@ -256,6 +258,7 @@ class Message extends Part
         'sticker_items',
         'position',
         'role_subscription_data',
+        'resolved',
         'poll',
         'call',
         // @internal
@@ -631,6 +634,22 @@ class Message extends Part
     }
 
     /**
+     * Returns the activity sent with Rich Presence-related chat embeds.
+     */
+    protected function getActivityAttribute(): ?Activity
+    {
+        return $this->attributePartHelper('activity', Activity::class);
+    }
+
+    /**
+     * Returns the application sent with Rich Presence-related chat embeds.
+     */
+    protected function getApplicationAttribute(): ?Application
+    {
+        return $this->attributePartHelper('application', Application::class);
+    }
+
+    /**
      * Returns the interaction_metadata attribute, if present.
      * Contains metadata about the interaction that caused this message.
      *
@@ -723,6 +742,17 @@ class Message extends Part
     }
 
     /**
+     * Returns the message_snapshot attribute, if present.
+     * For forwarded messages, this contains a snapshot of the original message.
+     *
+     * @return ExCollectionInterface<MessageSnapshot>|MessageSnapshot[]
+     */
+    protected function getMessageSnapshotsAttribute(): ExCollectionInterface
+    {
+        return $this->attributeCollectionHelper('message_snapshots', MessageSnapshot::class);
+    }
+
+    /**
      * Returns the timestamp attribute.
      *
      * @return Carbon|null The time that the message was sent.
@@ -774,6 +804,16 @@ class Message extends Part
     protected function getStickerItemsAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('sticker_items', Sticker::class);
+    }
+
+    /**
+     * Returns the role_subscription_data attribute.
+     *
+     * @return RoleSubscriptionData|null Role subscription data.
+     */
+    protected function getRoleSubscriptionDataAttribute(): ?RoleSubscriptionData
+    {
+        return $this->attributePartHelper('role_subscription_data', RoleSubscriptionData::class);
     }
 
     /**
