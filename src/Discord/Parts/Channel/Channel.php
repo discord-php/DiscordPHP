@@ -51,30 +51,29 @@ use function React\Promise\resolve;
  * @since 2.0.0 Refactored as Part
  * @since 1.0.0
  *
- * @property      int|null                     $position                           The position of the channel on the sidebar.
- * @property      ?array                       $permission_overwrites              Explicit permission overwrites for members and roles
- * @property      OverwriteRepository          $overwrites                         Permission overwrites
- * @property      ?string|null                 $topic                              The topic of the channel (0-4096 characters for forum channels, 0-1024 characters for all others).
+ * @property      int|null                     $position                           Sorting position of the channel.
+ * @property      array                        $permission_overwrites              Explicit permission overwrites for members and roles.
+ * @property      ?string|null                 $topic                              The topic of the channel (0-4096 characters for forum/media, 0-1024 for others).
  * @property      bool|null                    $nsfw                               Whether the channel is NSFW.
- * @property      int|null                     $bitrate                            The bitrate of the channel. Only for voice channels.
- * @property      int|null                     $user_limit                         The user limit of the channel. Max 99 for voice channels and 10000 for stage channels (0 refers to no limit).
- * @property      ExCollectionInterface|User[] $recipients                         A collection of all the recipients in the channel. Only for DM or group channels.
- * @property-read User|null                    $recipient                          The first recipient of the channel. Only for DM or group channels.
- * @property-read string|null                  $recipient_id                       The ID of the recipient of the channel, if it is a DM channel.
- * @property      ?string|null                 $icon                               Icon hash.
- * @property      string|null                  $application_id                     ID of the group DM creator if it is a bot.
- * @property      bool|null                    $managed                            Whether the channel is managed by an application via the `gdm.join` OAuth2 scope. Only for group DM channels.
+ * @property      int|null                     $bitrate                            The bitrate (in bits) of the voice or stage channel; min 8000.
+ * @property      int|null                     $user_limit                         The user limit of the voice or stage channel, max 99 for voice channels and 10,000 for stage channels (0 refers to no limit).
+ * @property      ExCollectionInterface|User[] $recipients                         The recipients of the DM.
+ * @property-read User|null                    $recipient                          The first recipient of the DM (DM/group).
+ * @property-read string|null                  $recipient_id                       The ID of the recipient (DM).
+ * @property      ?string|null                 $icon                               Icon hash of the group DM.
+ * @property      string|null                  $application_id                     Application id of the group DM creator if bot-created.
+ * @property      bool|null                    $managed                            For group DM channels: whether the channel is managed by an application via the `gdm.join` OAuth2 scope.
  * @property      ?string|null                 $rtc_region                         Voice region id for the voice channel, automatic when set to null.
- * @property      int|null                     $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.
- * @property      int|null                     $default_auto_archive_duration      Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
- * @property      string|null                  $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on an application command interaction.
+ * @property      ?int|null                    $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.
+ * @property      ?int|null                    $default_auto_archive_duration      Default duration for newly created threads, in minutes.
  * @property      int|null                     $flags                              Channel flags combined as a bitfield.
- * @property      ExCollectionInterface|Tag[]  $available_tags                     Set of tags that can be used in a forum channel, limited to 20.
- * @property      ?Reaction|null               $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.
- * @property      int|null                     $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a forum channel. This field is copied to the thread at creation time and does not live update.
- * @property      ?int|null                    $default_sort_order                 The default sort order type used to order posts in forum channels.
- * @property      int|null                     $default_forum_layout               The default layout type used to display posts in a forum channel. Defaults to `0`, which indicates a layout view has not been set by a channel admin.
+ * @property      ExCollectionInterface|Tag[]  $available_tags                     The set of tags that can be used in a `GUILD_FORUM` or a `GUILD_MEDIA` channel. Limited to 20.
+ * @property      ?Reaction|null               $default_reaction_emoji             The emoji to show in the add reaction button on a thread in a `GUILD_FORUM` or a `GUILD_MEDIA` channel.
+ * @property      int|null                     $default_thread_rate_limit_per_user The initial `rate_limit_per_user` to set on newly created threads in a channel. This field is copied to the thread at creation time and does not live update.
+ * @property      ?int|null                    $default_sort_order                 The default sort order type used to order posts in `GUILD_FORUM` and `GUILD_MEDIA` channels. Defaults to `null`, which indicates a preferred sort order hasn't been set by a channel admin.
+ * @property      int|null                     $default_forum_layout               The default forum layout view used to display posts in `GUILD_FORUM` channels. Defaults to `0`, which indicates a layout view has not been set by a channel admin.
  *
+ * @property OverwriteRepository     $overwrites      Permission overwrites.
  * @property WebhookRepository       $webhooks        Webhooks in the channel.
  * @property ThreadRepository        $threads         Threads that belong to the channel.
  * @property InviteRepository        $invites         Invites in the channel.
