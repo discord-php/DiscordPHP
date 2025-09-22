@@ -39,7 +39,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property      Carbon     $updated_at              When this template was last synced to the source guild.
  * @property      string     $source_guild_id         The ID of the guild this template is based on.
  * @property-read Guild|null $source_guild            The guild this template is based on.
- * @property      object     $serialized_source_guild The guild snapshot this template contains.
+ * @property      Guild      $serialized_source_guild The guild snapshot this template contains.
  * @property      ?bool      $is_dirty                Whether the template has unsynced changes.
  */
 class GuildTemplate extends Part implements Stringable
@@ -82,6 +82,16 @@ class GuildTemplate extends Part implements Stringable
             return $guild;
         }
 
+        return $this->createOf(Guild::class, $this->attributes['serialized_source_guild']);
+    }
+
+    /**
+     * Returns the serialized source guild attribute.
+     *
+     * @return Guild The guild snapshot this template contains.
+     */
+    protected function getSerializedSourceGuildAttribute(): Guild
+    {
         return $this->createOf(Guild::class, $this->attributes['serialized_source_guild']);
     }
 
