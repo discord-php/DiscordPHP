@@ -870,6 +870,11 @@ class MessageBuilder extends Builder implements JsonSerializable
      * Sets or unsets the IS_COMPONENTS_V2 flag for the message.
      * Once a message has been sent with this flag, it can't be removed from that message.
      *
+     * When the `IS_COMPONENTS_V2` flag is set, any of the used `content`, `embeds`, `sticker_ids`, or `poll` fields must have their values reset to empty.
+     * For `content` and `poll` this is `null`.
+     * For `embeds` and `sticker_ids` this is `[]`.
+     * Failing to do this will result in a 400 BAD REQUEST response.
+     *
      * @deprecated 10.19.0 use `MessageBuilder::setIsComponentsV2Flag()` instead.
      *
      * @param  bool $enable
@@ -883,6 +888,11 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets or unsets the IS_COMPONENTS_V2 flag for the message.
      * Once a message has been sent with this flag, it can't be removed from that message.
+     *
+     * When the `IS_COMPONENTS_V2` flag is set, any of the used `content`, `embeds`, `sticker_ids`, or `poll` fields must have their values reset to empty.
+     * For `content` and `poll` this is `null`.
+     * For `embeds` and `sticker_ids` this is `[]`.
+     * Failing to do this will result in a 400 BAD REQUEST response.
      *
      * @since 10.19.0
      *
