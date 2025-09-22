@@ -60,13 +60,18 @@ class ChannelRepository extends AbstractRepository
      *
      * @since 10.25.0
      *
+     * @param Guild|string $guild           The guild or guild ID that the channel should be created on.
      * @param Channel|ChannelBuilder|string $channel The Channel builder that should be converted into a channel, or the name of the channel.
      * @param string|null                   $reason  Reason for Audit Log.
      *
      * @return PromiseInterface<Channel>
      */
-    public function createChannel(Part|Builder|string $channel, ?string $reason = null): PromiseInterface
+    public function createChannel($guild, $channel, ?string $reason = null): PromiseInterface
     {
+        if ($guild instanceof Part) {
+            $guild = $guild->id;
+        }
+
         if (is_string($channel)) {
             $channel = ChannelBuilder::new($channel)->setName($channel);
         }
@@ -76,7 +81,7 @@ class ChannelRepository extends AbstractRepository
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->post(Endpoint::bind(Endpoint::GUILD_CHANNELS, $this->id), $channel->jsonSerialize(), $headers)
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_CHANNELS, $guild), $channel->jsonSerialize(), $headers)
             ->then(function ($response) {
                 if (! $channelPart = $this->channels->get('id', $response->id)) {
                     $channelPart = $this->channels->create($response, true);
