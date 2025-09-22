@@ -29,7 +29,7 @@ use Discord\Parts\Part;
  * @property      int                              $mention_total_limit Total number of unique role and user mentions allowed per message (Maximum of 50).
  * @property      bool                             $mention_raid_protection_enabled Whether to automatically detect mention raids.
  */
-class Rule extends Part
+class TriggerMetadata extends Part
 {
     /**
      * @inheritDoc
