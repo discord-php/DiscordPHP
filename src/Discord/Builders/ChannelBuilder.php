@@ -25,6 +25,7 @@ use JsonSerializable;
  *
  * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
  *
+ * @since 10.23.0 Added data validation and support for Parts as parameters.
  * @since 10.21.0
  */
 class ChannelBuilder extends Builder implements JsonSerializable
@@ -111,7 +112,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setTopic(?string $topic): self
+    public function setTopic(?string $topic = null): self
     {
         if ($topic !== null && mb_strlen($topic) > 1024) {
             throw new \LengthException('Channel topic must be 0-1024 characters.');
@@ -129,7 +130,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setBitrate(?int $bitrate): self
+    public function setBitrate(?int $bitrate = null): self
     {
         if ($bitrate !== null && ($bitrate < 8000)) {
             throw new \OutOfRangeException('Bitrate must be at least 8000.');
@@ -147,7 +148,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setUserLimit(?int $user_limit): self
+    public function setUserLimit(?int $user_limit = null): self
     {
         $this->user_limit = $user_limit;
 
@@ -161,7 +162,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setRateLimitPerUser(?int $rate_limit): self
+    public function setRateLimitPerUser(?int $rate_limit = null): self
     {
         $this->rate_limit_per_user = $rate_limit;
 
@@ -175,7 +176,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setPosition(?int $position): self
+    public function setPosition(?int $position = null): self
     {
         $this->position = $position;
 
@@ -189,7 +190,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setPermissionOverwrites(?array $overwrites): self
+    public function setPermissionOverwrites(?array $overwrites = null): self
     {
         $this->permission_overwrites = $overwrites;
 
@@ -203,7 +204,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setParentId(Channel|string|null $parent_id): self
+    public function setParentId(Channel|string|null $parent_id = null): self
     {
         if ($parent_id instanceof Channel) {
             $parent_id = $parent_id->id;
@@ -221,7 +222,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setNsfw(?bool $nsfw): self
+    public function setNsfw(?bool $nsfw = null): self
     {
         $this->nsfw = $nsfw;
 
@@ -235,7 +236,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setRtcRegion(Region|string|null $rtc_region): self
+    public function setRtcRegion(Region|string|null $rtc_region = null): self
     {
         if ($rtc_region instanceof Region) {
             $rtc_region = $rtc_region->id;
@@ -253,7 +254,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setVideoQualityMode(?int $mode): self
+    public function setVideoQualityMode(?int $mode = null): self
     {
         if ($mode !== null && !in_array($mode, [1, 2])) {
             throw new \InvalidArgumentException('Invalid video quality mode specified. Must be 1 (Discord chooses the quality for optimal performance) or 2 (full 720p).');
@@ -271,7 +272,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setDefaultAutoArchiveDuration(?int $duration): self
+    public function setDefaultAutoArchiveDuration(?int $duration = null): self
     {
         $this->default_auto_archive_duration = $duration;
 
@@ -306,7 +307,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setAvailableTags(?array $tags): self
+    public function setAvailableTags(?array $tags = null): self
     {
         $this->available_tags = $tags;
 
@@ -320,7 +321,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setDefaultSortOrder(?int $order): self
+    public function setDefaultSortOrder(?int $order = null): self
     {
         $this->default_sort_order = $order;
 
@@ -332,7 +333,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @param int|null $layout The default forum layout. 0 for Not Set, 1 for List View, 2 for Gallery View.
      */
-    public function setDefaultForumLayout(?int $layout): self
+    public function setDefaultForumLayout(?int $layout = null): self
     {
         $this->default_forum_layout = $layout;
 
@@ -346,7 +347,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setDefaultThreadRateLimitPerUser(?int $rate_limit): self
+    public function setDefaultThreadRateLimitPerUser(?int $rate_limit = null): self
     {
         $this->default_thread_rate_limit_per_user = $rate_limit;
 
