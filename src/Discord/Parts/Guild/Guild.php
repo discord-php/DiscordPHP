@@ -344,7 +344,7 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
      *
-     * @since 10.21.0
+     * @since 10.23.0
      *
      * @param Channel|ChannelBuilder|string $channel The Channel builder that should be converted into a channel, or the name of the channel.
      * @param string|null                   $reason  Reason for Audit Log.
