@@ -60,7 +60,7 @@ use function React\Promise\reject;
  * @property string[]|null      $tags                              Up to 5 tags describing the content and functionality of the application.
  * @property InstallParams|null $install_params                    Settings for the application's default in-app authorization link, if enabled.
  * @property int[]|null         $integration_types
- * @property object[]|null      $integration_types_config          Default scopes and permissions for each supported installation context. Value for each key is an integration type configuration object.
+ * @property object[]|null      $integration_types_config          Default scopes and permissions for each supported installation context. Value for each key is an integration type configuration object (0 for GUILD_INSTALL, 1 for USER_INSTALL).
  * @property string|null        $custom_install_url                The application's default custom authorization link, if enabled.
  *
  * @property string $invite_url The invite URL to invite the bot to a guild.
