@@ -17,6 +17,7 @@ use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
 use Discord\Helpers\BigInt;
 use Discord\Helpers\CacheConfig;
+use Discord\Helpers\Collection;
 use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
@@ -37,6 +38,7 @@ use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
+use Discord\Voice\Region;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildCreate;
@@ -1365,6 +1367,24 @@ class Discord
         foreach ($this->unparsedPackets as $parser) {
             $parser();
         }
+    }
+
+    /**
+     * Lists voice regions.
+     *
+     * @return PromiseInterface<ExCollectionInterface<Region>|Region[]> A promise that resolves to a collection of voice regions.
+     */
+    public function listVoiceRegions(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::LIST_VOICE_REGIONS)->then(function ($response) {
+            $regions = Collection::for(Region::class);
+
+            foreach ($response as $region) {
+                $regions->pushItem($this->factory->part(Region::class, (array) $region, true));
+            }
+
+            return $regions;
+        });
     }
 
     /**
