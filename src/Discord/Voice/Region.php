@@ -18,11 +18,11 @@ use Discord\Parts\Part;
 /**
  * Voice region object that can be used when setting a voice or stage channel's rtc_region.
  *
- * @property      string  $id         Unique ID for the region.
- * @property      string  $name       Name of the region.
- * @property      bool    $optimal    True for a single server that is closest to the current user's client.
- * @property      bool    $deprecated Whether this is a deprecated voice region (avoid switching to these).
- * @property      bool    $custom     Whether this is a custom voice region (used for events/etc).
+ * @property string $id         Unique ID for the region.
+ * @property string $name       Name of the region.
+ * @property bool   $optimal    True for a single server that is closest to the current user's client.
+ * @property bool   $deprecated Whether this is a deprecated voice region (avoid switching to these).
+ * @property bool   $custom     Whether this is a custom voice region (used for events/etc).
  */
 class Region extends Part
 {

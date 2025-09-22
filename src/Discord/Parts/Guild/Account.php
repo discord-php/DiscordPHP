@@ -16,14 +16,14 @@ namespace Discord\Parts\Guild;
 use Discord\Parts\Part;
 
 /**
- * integration account information
+ * integration account information.
  *
  * @link https://discord.com/developers/docs/resources/guild#integration-account-object
  *
  * @since 10.24.0
  *
- * @property string        $id   The id of the account.
- * @property string        $name The name of the account.
+ * @property string $id   The id of the account.
+ * @property string $name The name of the account.
  */
 class Account extends Part
 {

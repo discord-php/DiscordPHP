@@ -95,7 +95,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
             Channel::TYPE_GUILD_MEDIA,
         ];
 
-        if (!in_array($type, $allowed, true)) {
+        if (! in_array($type, $allowed, true)) {
             throw new \InvalidArgumentException('Invalid channel type specified.');
         }
 
@@ -255,7 +255,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      */
     public function setVideoQualityMode(?int $mode = null): self
     {
-        if ($mode !== null && !in_array($mode, [1, 2])) {
+        if ($mode !== null && ! in_array($mode, [1, 2])) {
             throw new \InvalidArgumentException('Invalid video quality mode specified. Must be 1 (Discord chooses the quality for optimal performance) or 2 (full 720p).');
         }
 
