@@ -6441,6 +6441,16 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020user\u0020that\u0020created\u0020the\u0020webhook.",
             "url": "classes/Discord-Parts-Channel-Webhook.html#method_getUserAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003AgetSourceGuildAttribute\u0028\u0029",
+            "name": "getSourceGuildAttribute",
+            "summary": "Gets\u0020the\u0020source\u0020guild\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Webhook.html#method_getSourceGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003AgetSourceChannelAttribute\u0028\u0029",
+            "name": "getSourceChannelAttribute",
+            "summary": "Gets\u0020the\u0020source\u0020channel\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Webhook.html#method_getSourceChannelAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003AgetUrlAttribute\u0028\u0029",
             "name": "getUrlAttribute",
             "summary": "Gets\u0020the\u0020webhook\u0020url\u0020attribute.",
@@ -6860,6 +6870,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Gateway-SessionStartLimit.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Account",
+            "name": "Account",
+            "summary": "integration\u0020account\u0020information.",
+            "url": "classes/Discord-Parts-Guild-Account.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Account\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-Account.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\AuditLog",
             "name": "AuditLog",
@@ -7361,6 +7381,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020user\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getCreatorAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AgetTriggerMetadataAttribute\u0028\u0029",
+            "name": "getTriggerMetadataAttribute",
+            "summary": "Returns\u0020the\u0020trigger\u0020metadata\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getTriggerMetadataAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AgetActionsAttribute\u0028\u0029",
             "name": "getActionsAttribute",
             "summary": "Returns\u0020the\u0020actions\u0020attribute.",
@@ -7440,6 +7465,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\TriggerMetadata",
+            "name": "TriggerMetadata",
+            "summary": "Additional\u0020data\u0020used\u0020to\u0020determine\u0020whether\u0020a\u0020rule\u0020should\u0020be\u0020triggered.\u0020Different\u0020fields\u0020are\u0020relevant\u0020based\u0020on\u0020the\u0020value\u0020of\u0020trigger_type.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-TriggerMetadata.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\TriggerMetadata\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-TriggerMetadata.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Ban",
             "name": "Ban",
@@ -7560,6 +7595,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-Emoji.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\EntityMetadata",
+            "name": "EntityMetadata",
+            "summary": "Additional\u0020metadata\u0020for\u0020the\u0020guild\u0020scheduled\u0020event.",
+            "url": "classes/Discord-Parts-Guild-EntityMetadata.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\EntityMetadata\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-EntityMetadata.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild",
             "name": "Guild",
@@ -7976,6 +8021,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020source\u0020guild\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-GuildTemplate.html#method_getSourceGuildAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTemplate\u003A\u003AgetSerializedSourceGuildAttribute\u0028\u0029",
+            "name": "getSerializedSourceGuildAttribute",
+            "summary": "Returns\u0020the\u0020serialized\u0020source\u0020guild\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-GuildTemplate.html#method_getSerializedSourceGuildAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildTemplate\u003A\u003AgetCreatorAttribute\u0028\u0029",
             "name": "getCreatorAttribute",
             "summary": "Gets\u0020the\u0020user\u0020that\u0020created\u0020the\u0020template.",
@@ -8251,6 +8301,11 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020user\u0020that\u0020created\u0020the\u0020integration.",
             "url": "classes/Discord-Parts-Guild-Integration.html#method_getUserAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Integration\u003A\u003AgetAccountAttribute\u0028\u0029",
+            "name": "getAccountAttribute",
+            "summary": "Returns\u0020the\u0020account\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-Integration.html#method_getAccountAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Integration\u003A\u003AgetSyncedAtAttribute\u0028\u0029",
             "name": "getSyncedAtAttribute",
             "summary": "Returns\u0020the\u0020synced_at\u0020attribute.",
@@ -8295,6 +8350,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-Profile.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\RecurrenceRule",
+            "name": "RecurrenceRule",
+            "summary": "Discord\u0027s\u0020recurrence\u0020rule\u0020is\u0020a\u0020subset\u0020of\u0020the\u0020behaviors\u0020defined\u0020in\u0020the\u0020iCalendar\u0020RFC\u0020and\u0020implemented\u0020by\u0020python\u0027s\u0020dateutil\u0020rrule.",
+            "url": "classes/Discord-Parts-Guild-RecurrenceRule.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\RecurrenceRule\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-RecurrenceRule.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Role",
             "name": "Role",
@@ -8436,10 +8501,20 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020created\u0020at\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_getScheduledEndTimeAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AgetEntityMetadataAttribute\u0028\u0029",
+            "name": "getEntityMetadataAttribute",
+            "summary": "Gets\u0020the\u0020entity\u0020metadata\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_getEntityMetadataAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AgetCreatorAttribute\u0028\u0029",
             "name": "getCreatorAttribute",
             "summary": "Gets\u0020the\u0020user\u0020that\u0020created\u0020the\u0020scheduled\u0020event.",
             "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_getCreatorAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AgetRecurrenceRuleAttribute\u0028\u0029",
+            "name": "getRecurrenceRuleAttribute",
+            "summary": "Gets\u0020the\u0020recurrence\u0020rule\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_getRecurrenceRuleAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AgetCreatableAttributes\u0028\u0029",
             "name": "getCreatableAttributes",
@@ -8660,6 +8735,16 @@ Search.appendIndex(
             "name": "getGuildAttribute",
             "summary": "Returns\u0020the\u0020guild\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-Widget.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003AgetChannelsAttribute\u0028\u0029",
+            "name": "getChannelsAttribute",
+            "summary": "Returns\u0020the\u0020channels\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-Widget.html#method_getChannelsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003AgetMembersAttribute\u0028\u0029",
+            "name": "getMembersAttribute",
+            "summary": "Returns\u0020the\u0020members\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-Widget.html#method_getMembersAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003AgetImageAttribute\u0028\u0029",
             "name": "getImageAttribute",
@@ -9681,6 +9766,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020owner\u0020of\u0020the\u0020application.",
             "url": "classes/Discord-Parts-OAuth-Application.html#method_getOwnerAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AgetTeamAttribute\u0028\u0029",
+            "name": "getTeamAttribute",
+            "summary": "Returns\u0020the\u0020team\u0020of\u0020the\u0020application.",
+            "url": "classes/Discord-Parts-OAuth-Application.html#method_getTeamAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AgetCoverImageAttribute\u0028\u0029",
             "name": "getCoverImageAttribute",
             "summary": "Returns\u0020the\u0020application\u0020cover\u0020image.",
@@ -9690,6 +9780,11 @@ Search.appendIndex(
             "name": "getCoverImageHashAttribute",
             "summary": "Returns\u0020the\u0020application\u0020cover\u0020image\u0020attribute.",
             "url": "classes/Discord-Parts-OAuth-Application.html#method_getCoverImageHashAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AgetInstallParamsAttribute\u0028\u0029",
+            "name": "getInstallParamsAttribute",
+            "summary": "Returns\u0020the\u0020install\u0020params\u0020attribute.",
+            "url": "classes/Discord-Parts-OAuth-Application.html#method_getInstallParamsAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AgetInviteURLAttribute\u0028\u0029",
             "name": "getInviteURLAttribute",
@@ -9775,6 +9870,46 @@ Search.appendIndex(
             "name": "repositories",
             "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
             "url": "classes/Discord-Parts-OAuth-Application.html#property_repositories"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\InstallParams",
+            "name": "InstallParams",
+            "summary": "Settings\u0020for\u0020the\u0020app\u0027s\u0020default\u0020in\u002Dapp\u0020authorization\u0020link,\u0020if\u0020enabled.",
+            "url": "classes/Discord-Parts-OAuth-InstallParams.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\InstallParams\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-OAuth-InstallParams.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Team",
+            "name": "Team",
+            "summary": "If\u0020the\u0020app\u0020belongs\u0020to\u0020a\u0020team,\u0020this\u0020will\u0020be\u0020a\u0020list\u0020of\u0020the\u0020members\u0020of\u0020that\u0020team.",
+            "url": "classes/Discord-Parts-OAuth-Team.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Team\u003A\u003AgetMembersAttribute\u0028\u0029",
+            "name": "getMembersAttribute",
+            "summary": "Returns\u0020the\u0020members\u0020attribute.",
+            "url": "classes/Discord-Parts-OAuth-Team.html#method_getMembersAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Team\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-OAuth-Team.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\TeamMember",
+            "name": "TeamMember",
+            "summary": "Member\u0020of\u0020a\u0020team.",
+            "url": "classes/Discord-Parts-OAuth-TeamMember.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\TeamMember\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Returns\u0020the\u0020user\u0020attribute.",
+            "url": "classes/Discord-Parts-OAuth-TeamMember.html#method_getUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\TeamMember\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-OAuth-TeamMember.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Part",
             "name": "Part",
@@ -10676,6 +10811,11 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020created\u0020at\u0020timestamp.",
             "url": "classes/Discord-Parts-User-Activity.html#method_getCreatedAtAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003AgetTimestampsAttribute\u0028\u0029",
+            "name": "getTimestampsAttribute",
+            "summary": "Gets\u0020the\u0020timestamps\u0020object\u0020of\u0020the\u0020activity.",
+            "url": "classes/Discord-Parts-User-Activity.html#method_getTimestampsAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003AgetEmojiAttribute\u0028\u0029",
             "name": "getEmojiAttribute",
             "summary": "Gets\u0020the\u0020emoji\u0020object\u0020of\u0020the\u0020activity.",
@@ -10690,6 +10830,16 @@ Search.appendIndex(
             "name": "getAssetsAttribute",
             "summary": "Gets\u0020the\u0020assets\u0020object\u0020of\u0020the\u0020activity.",
             "url": "classes/Discord-Parts-User-Activity.html#method_getAssetsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003AgetSecretsAttribute\u0028\u0029",
+            "name": "getSecretsAttribute",
+            "summary": "Gets\u0020the\u0020secrets\u0020object\u0020of\u0020the\u0020activity.",
+            "url": "classes/Discord-Parts-User-Activity.html#method_getSecretsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003AgetButtonsAttribute\u0028\u0029",
+            "name": "getButtonsAttribute",
+            "summary": "Gets\u0020the\u0020buttons\u0020array\u0020of\u0020the\u0020activity.",
+            "url": "classes/Discord-Parts-User-Activity.html#method_getButtonsAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
@@ -10835,6 +10985,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-User-AvatarDecorationData.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Button",
+            "name": "Button",
+            "summary": "Custom\u0020buttons\u0020shown\u0020in\u0020the\u0020Rich\u0020Presence\u0020\u0028max\u00202\u0029.",
+            "url": "classes/Discord-Parts-User-Button.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Button\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-Button.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Client",
             "name": "Client",
@@ -11195,6 +11355,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-User-Secrets.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Timestamps",
+            "name": "Timestamps",
+            "summary": "Unix\u0020timestamps\u0020for\u0020start\u0020and\/or\u0020end\u0020of\u0020the\u0020game.",
+            "url": "classes/Discord-Parts-User-Timestamps.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Timestamps\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-Timestamps.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User",
             "name": "User",
@@ -15421,6 +15591,11 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/discord-parts-gateway.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild",
+            "name": "Guild",
+            "summary": "",
+            "url": "namespaces/discord-parts-guild.html"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog",
             "name": "AuditLog",
             "summary": "",
@@ -15430,11 +15605,6 @@ Search.appendIndex(
             "name": "AutoModeration",
             "summary": "",
             "url": "namespaces/discord-parts-guild-automoderation.html"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild",
-            "name": "Guild",
-            "summary": "",
-            "url": "namespaces/discord-parts-guild.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions",
             "name": "Interactions",
