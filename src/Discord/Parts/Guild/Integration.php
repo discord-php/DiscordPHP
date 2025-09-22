@@ -36,7 +36,7 @@ use Discord\Parts\User\User;
  * @property      int|null         $expire_behavior     The behavior of expiring subscribers.
  * @property      int|null         $expire_grace_period The grace period (in days) before expiring subscribers.
  * @property      User|null        $user                User for this integration.
- * @property      object           $account             Integration account information.
+ * @property      Account          $account             Integration account information.
  * @property      Carbon|null      $synced_at           When this integration was last synced.
  * @property      int|null         $subscriber_count    How many subscribers this integration has.
  * @property      bool|null        $revoked             Has this integration been revoked.
@@ -89,6 +89,16 @@ class Integration extends Part
         }
 
         return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+    }
+
+    /**
+     * Returns the account attribute.
+     *
+     * @return Account The account attribute.
+     */
+    protected function getAccountAttribute(): Account
+    {
+        return $this->attributePartHelper('account', Account::class);
     }
 
     /**
