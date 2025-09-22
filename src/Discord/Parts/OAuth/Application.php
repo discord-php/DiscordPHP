@@ -45,7 +45,7 @@ use function React\Promise\reject;
  * @property string|null   $privacy_policy_url                The url of the app's privacy policy
  * @property User|null     $owner                             The owner of the OAuth application.
  * @property string        $verify_key                        The hex encoded key for verification in interactions and the GameSDK's GetTicket.
- * @property object|null   $team                              If the application belongs to a team, this will be a list of the members of that team.
+ * @property Team|null     $team                              If the application belongs to a team, this will be a list of the members of that team.
  * @property string|null   $guild_id                          If this application is a game sold on Discord, this field will be the guild to which it has been linked.
  * @property string|null   $primary_sku_id                    If this application is a game sold on Discord, this field will be the id of the "Game SKU" that is created, if exists.
  * @property string|null   $slug                              If this application is a game sold on Discord, this field will be the URL slug that links to the store page.
@@ -241,6 +241,16 @@ class Application extends Part
         }
 
         return $this->factory->part(User::class, (array) $this->attributes['owner'], true);
+    }
+
+    /**
+     * Returns the team of the application.
+     *
+     * @return Team|null If the application belongs to a team, this will be a list of the members of that team.
+     */
+    protected function getTeamAttribute(): ?Team
+    {
+        return $this->attributePartHelper('team', Team::class);
     }
 
     /**
