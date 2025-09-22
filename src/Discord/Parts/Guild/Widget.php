@@ -13,9 +13,12 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
+use Discord\Parts\User\Member;
 use React\Promise\PromiseInterface;
 
 /**
@@ -25,13 +28,13 @@ use React\Promise\PromiseInterface;
  *
  * @since 7.0.0
  *
- * @property      string     $id             Guild id.
- * @property-read Guild|null $guild          Guild.
- * @property      string     $name           Guild name (2-100 characters).
- * @property      ?string    $instant_invite Instant invite for the guilds specified widget invite channel.
- * @property      object[]   $channels       Voice and stage channels which are accessible by @everyone.
- * @property      object[]   $members        Special widget user objects that includes users presence (Limit 100).
- * @property      int        $presence_count Number of online members in this guild.
+ * @property      string                                   $id             Guild id.
+ * @property-read Guild|null                               $guild          Guild.
+ * @property      string                                   $name           Guild name (2-100 characters).
+ * @property      ?string                                  $instant_invite Instant invite for the guilds specified widget invite channel.
+ * @property      ExCollectionInterface<Channel>|Channel[] $channels       Voice and stage channels which are accessible by @everyone.
+ * @property      ExCollectionInterface<Member>|Member[]   $members        Special widget user objects that includes users presence (Limit 100).
+ * @property      int                                      $presence_count Number of online members in this guild.
  *
  * @property-read string $image
  */
@@ -107,6 +110,26 @@ class Widget extends Part
     protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->id);
+    }
+
+    /**
+     * Returns the channels attribute.
+     *
+     * @return ExCollectionInterface<Channel>|Channel[] A collection of channels.
+     */
+    protected function getChannelsAttribute(): ExCollectionInterface
+    {
+        return $this->attributeCollectionHelper('channels', Channel::class);
+    }
+
+    /**
+     * Returns the members attribute.
+     *
+     * @return ExCollectionInterface<Member>|Member[] A collection of members.
+     */
+    protected function getMembersAttribute(): ExCollectionInterface
+    {
+        return $this->attributeCollectionHelper('members', Member::class);
     }
 
     /**

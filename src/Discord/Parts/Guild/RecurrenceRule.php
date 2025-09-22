@@ -22,17 +22,17 @@ use Discord\Parts\Part;
  *
  * @since 10.24.0
  *
- * @property string      $id              The unique identifier of the guild.
- * @property string      $start           Starting time of the recurrence interval (ISO8601 timestamp).
- * @property ?string     $end             Ending time of the recurrence interval (ISO8601 timestamp).
- * @property array       $frequency       How often the event occurs (recurrence rule - frequency object).
- * @property int         $interval        The spacing between the events, defined by frequency.
- * @property ?array      $by_weekday      Set of specific days within a week for the event to recur on.
- * @property ?array      $by_n_weekday    List of specific days within a specific week (1-5) to recur on.
- * @property ?array      $by_month        Set of specific months to recur on.
- * @property ?array      $by_month_day    Set of specific dates within a month to recur on.
- * @property ?array      $by_year_day     Set of days within a year to recur on (1-364).
- * @property ?int        $count           The total amount of times that the event is allowed to recur before stopping.
+ * @property string  $id           The unique identifier of the guild.
+ * @property string  $start        Starting time of the recurrence interval (ISO8601 timestamp).
+ * @property ?string $end          Ending time of the recurrence interval (ISO8601 timestamp).
+ * @property array   $frequency    How often the event occurs (recurrence rule - frequency object).
+ * @property int     $interval     The spacing between the events, defined by frequency.
+ * @property ?array  $by_weekday   Set of specific days within a week for the event to recur on.
+ * @property ?array  $by_n_weekday List of specific days within a specific week (1-5) to recur on.
+ * @property ?array  $by_month     Set of specific months to recur on.
+ * @property ?array  $by_month_day Set of specific dates within a month to recur on.
+ * @property ?array  $by_year_day  Set of days within a year to recur on (1-364).
+ * @property ?int    $count        The total amount of times that the event is allowed to recur before stopping.
  */
 class RecurrenceRule extends Part
 {
