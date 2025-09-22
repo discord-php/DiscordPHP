@@ -25,8 +25,7 @@ use JsonSerializable;
  *
  * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
  *
- * @since 10.23.0 Added data validation and support for Parts as parameters.
- * @since 10.21.0
+ * @since 10.23.0
  */
 class ChannelBuilder extends Builder implements JsonSerializable
 {
