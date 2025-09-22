@@ -42,8 +42,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property      ?string      $avatar         The avatar of the webhook.
  * @property      string|null  $token          The token of the webhook.
  * @property      ?string      $application_id The bot/OAuth2 application that created this webhook.
- * @property      object|null  $source_guild   The partial guild of the channel that this webhook is following (returned for Channel Follower Webhooks).
- * @property      object|null  $source_channel The partial channel that this webhook is following (returned for Channel Follower Webhooks).
+ * @property      Guild|null   $source_guild   The partial guild of the channel that this webhook is following (returned for Channel Follower Webhooks).
+ * @property      Channel|null $source_channel The partial channel that this webhook is following (returned for Channel Follower Webhooks).
  * @property      string|null  $url            The url used for executing the webhook (returned by the webhooks OAuth2 flow).
  *
  * @property WebhookMessageRepository $messages
@@ -212,6 +212,30 @@ class Webhook extends Part
         }
 
         return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+    }
+
+    /**
+     * Gets the source guild attribute.
+     *
+     * @return Guild|null
+     *
+     * @since 10.23.0
+     */
+    protected function getSourceGuildAttribute(): ?Guild
+    {
+        return $this::attributePartHelper('source_guild', Guild::class);
+    }
+
+    /**
+     * Gets the source channel attribute.
+     *
+     * @return Channel|null
+     *
+     * @since 10.23.0
+     */
+    protected function getSourceChannelAttribute(): ?Channel
+    {
+        return $this::attributePartHelper('source_channel', Channel::class);
     }
 
     /**
