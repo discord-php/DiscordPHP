@@ -221,7 +221,7 @@ class Member extends Part implements Stringable
 
         // jake plz
         if ($this->discord->id == $this->id) {
-            $this->logger->warning('Modifying the bot member nickname via Member::setNickname is deprecated. Use MemberRepository::modifyCurrentMember instead.');
+            $this->discord->getLogger()->warning('Modifying the bot member nickname via Member::setNickname is deprecated. Use MemberRepository::modifyCurrentMember instead.');
             return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $payload, $headers);
         }
 
