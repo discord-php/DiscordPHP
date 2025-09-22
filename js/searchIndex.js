@@ -11,6 +11,201 @@ Search.appendIndex(
             "summary": "Creates\u0020a\u0020new\u0020instance\u0020of\u0020the\u0020builder\u0020from\u0020a\u0020given\u0020Part.",
             "url": "classes/Discord-Builders-Builder.html#method_fromPart"
         },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder",
+            "name": "ChannelBuilder",
+            "summary": "Helper\u0020class\u0020used\u0020to\u0020build\u0020guild\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetName\u0028\u0029",
+            "name": "setName",
+            "summary": "Sets\u0020the\u0020channel\u0020name.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setName"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetType\u0028\u0029",
+            "name": "setType",
+            "summary": "Sets\u0020the\u0020channel\u0020type.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setType"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetTopic\u0028\u0029",
+            "name": "setTopic",
+            "summary": "Sets\u0020the\u0020channel\u0020topic\u0020for\u0020Text,\u0020Announcement,\u0020Forum,\u0020and\u0020Media\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setTopic"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetBitrate\u0028\u0029",
+            "name": "setBitrate",
+            "summary": "Sets\u0020the\u0020bitrate\u0020for\u0020Voice\u0020and\u0020Stage\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setBitrate"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetUserLimit\u0028\u0029",
+            "name": "setUserLimit",
+            "summary": "Sets\u0020the\u0020user\u0020limit\u0020for\u0020Voice\u0020and\u0020Stage\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setUserLimit"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetRateLimitPerUser\u0028\u0029",
+            "name": "setRateLimitPerUser",
+            "summary": "Sets\u0020the\u0020rate\u0020limit\u0020per\u0020user\u0020for\u0020Text,\u0020Voice,\u0020Stage,\u0020Forum,\u0020and\u0020Media\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setRateLimitPerUser"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetPosition\u0028\u0029",
+            "name": "setPosition",
+            "summary": "Sets\u0020the\u0020position\u0020of\u0020the\u0020channel.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setPosition"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetPermissionOverwrites\u0028\u0029",
+            "name": "setPermissionOverwrites",
+            "summary": "Sets\u0020the\u0020permission\u0020overwrites\u0020for\u0020the\u0020channel.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setPermissionOverwrites"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetParentId\u0028\u0029",
+            "name": "setParentId",
+            "summary": "Sets\u0020the\u0020parent\u0020category\u0020ID\u0020for\u0020Text,\u0020Voice,\u0020Announcement,\u0020Stage,\u0020Forum,\u0020and\u0020Media\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setParentId"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetNsfw\u0028\u0029",
+            "name": "setNsfw",
+            "summary": "Sets\u0020whether\u0020the\u0020channel\u0020is\u0020NSFW\u0020for\u0020Text,\u0020Voice,\u0020Announcement,\u0020Stage,\u0020and\u0020Forum\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setNsfw"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetRtcRegion\u0028\u0029",
+            "name": "setRtcRegion",
+            "summary": "Sets\u0020the\u0020RTC\u0020region\u0020for\u0020Voice\u0020and\u0020Stage\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setRtcRegion"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetVideoQualityMode\u0028\u0029",
+            "name": "setVideoQualityMode",
+            "summary": "Sets\u0020the\u0020video\u0020quality\u0020mode\u0020for\u0020Voice\u0020and\u0020Stage\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setVideoQualityMode"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetDefaultAutoArchiveDuration\u0028\u0029",
+            "name": "setDefaultAutoArchiveDuration",
+            "summary": "Sets\u0020the\u0020default\u0020auto\u0020archive\u0020duration\u0020for\u0020Text,\u0020Announcement,\u0020Forum,\u0020and\u0020Media\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setDefaultAutoArchiveDuration"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetDefaultReactionEmoji\u0028\u0029",
+            "name": "setDefaultReactionEmoji",
+            "summary": "Sets\u0020the\u0020default\u0020reaction\u0020emoji\u0020for\u0020the\u0020channel.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setDefaultReactionEmoji"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetAvailableTags\u0028\u0029",
+            "name": "setAvailableTags",
+            "summary": "Sets\u0020the\u0020available\u0020tags\u0020for\u0020the\u0020channel.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setAvailableTags"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetDefaultSortOrder\u0028\u0029",
+            "name": "setDefaultSortOrder",
+            "summary": "Sets\u0020the\u0020default\u0020sort\u0020order\u0020for\u0020Forum\u0020and\u0020Media\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setDefaultSortOrder"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetDefaultForumLayout\u0028\u0029",
+            "name": "setDefaultForumLayout",
+            "summary": "Sets\u0020the\u0020default\u0020forum\u0020layout\u0020for\u0020Forum\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setDefaultForumLayout"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetDefaultThreadRateLimitPerUser\u0028\u0029",
+            "name": "setDefaultThreadRateLimitPerUser",
+            "summary": "Sets\u0020the\u0020default\u0020thread\u0020rate\u0020limit\u0020per\u0020user\u0020for\u0020Text,\u0020Announcement,\u0020Forum,\u0020and\u0020Media\u0020channels.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_setDefaultThreadRateLimitPerUser"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024name",
+            "name": "name",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_name"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024topic",
+            "name": "topic",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_topic"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024bitrate",
+            "name": "bitrate",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_bitrate"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024user_limit",
+            "name": "user_limit",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_user_limit"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024rate_limit_per_user",
+            "name": "rate_limit_per_user",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_rate_limit_per_user"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024position",
+            "name": "position",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_position"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024permission_overwrites",
+            "name": "permission_overwrites",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_permission_overwrites"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024parent_id",
+            "name": "parent_id",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_parent_id"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024nsfw",
+            "name": "nsfw",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_nsfw"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024rtc_region",
+            "name": "rtc_region",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_rtc_region"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024video_quality_mode",
+            "name": "video_quality_mode",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_video_quality_mode"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024default_auto_archive_duration",
+            "name": "default_auto_archive_duration",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_default_auto_archive_duration"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024default_reaction_emoji",
+            "name": "default_reaction_emoji",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_default_reaction_emoji"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024available_tags",
+            "name": "available_tags",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_available_tags"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024default_sort_order",
+            "name": "default_sort_order",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_default_sort_order"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024default_forum_layout",
+            "name": "default_forum_layout",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_default_forum_layout"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024default_thread_rate_limit_per_user",
+            "name": "default_thread_rate_limit_per_user",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#property_default_thread_rate_limit_per_user"
+        },                {
             "fqsen": "\\Discord\\Builders\\CommandAttributes",
             "name": "CommandAttributes",
             "summary": "Application\u0020Command\u0020attributes.",
@@ -2475,6 +2670,11 @@ Search.appendIndex(
             "name": "ready",
             "summary": "Emits\u0020init\u0020if\u0020it\u0020has\u0020not\u0020been\u0020emitted\u0020already.",
             "url": "classes/Discord-Discord.html#method_ready"
+        },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AlistVoiceRegions\u0028\u0029",
+            "name": "listVoiceRegions",
+            "summary": "Lists\u0020voice\u0020regions.",
+            "url": "classes/Discord-Discord.html#method_listVoiceRegions"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AgetVoiceClient\u0028\u0029",
             "name": "getVoiceClient",
@@ -7365,6 +7565,11 @@ Search.appendIndex(
             "name": "Guild",
             "summary": "A\u0020Guild\u0020is\u0020Discord\u0027s\u0020equivalent\u0020of\u0020a\u0020server.\u0020It\u0020contains\u0020all\u0020the\u0020Members,\nChannels,\u0020Roles,\u0020Bans\u0020etc.",
             "url": "classes/Discord-Parts-Guild-Guild.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AcreateChannel\u0028\u0029",
+            "name": "createChannel",
+            "summary": "Attempts\u0020to\u0020save\u0020a\u0020channel\u0020to\u0020the\u0020Discord\u0020servers.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_createChannel"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AsetChannelsAttribute\u0028\u0029",
             "name": "setChannelsAttribute",
@@ -12725,6 +12930,16 @@ Search.appendIndex(
             "name": "opusPauseBuffer",
             "summary": "The\u0020pause\u0020buffer.",
             "url": "classes/Discord-Voice-RecieveStream.html#property_opusPauseBuffer"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Region",
+            "name": "Region",
+            "summary": "Voice\u0020region\u0020object\u0020that\u0020can\u0020be\u0020used\u0020when\u0020setting\u0020a\u0020voice\u0020or\u0020stage\u0020channel\u0027s\u0020rtc_region.",
+            "url": "classes/Discord-Voice-Region.html"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Region\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Voice-Region.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState",
             "name": "UserSpeakingState",
