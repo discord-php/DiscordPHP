@@ -83,9 +83,11 @@ class ChannelRepository extends AbstractRepository
 
         return $this->http->post(Endpoint::bind(Endpoint::GUILD_CHANNELS, $guild), $channel->jsonSerialize(), $headers)
             ->then(function ($response) {
-                if (! $channelPart = $this->get('id', $response->id)) {
+                if ($channelPart = $this->get('id', $response->id)) {
+                    $channelPart->fill((array) $response);
+                    $channelPart->created = true;
+                } else {
                     $channelPart = $this->create($response, true);
-                    $this->pushItem($channelPart);
                 }
 
                 return $this->cache->set($channelPart->{$this->discrim}, $channelPart)->then(fn ($success) => $channelPart);
