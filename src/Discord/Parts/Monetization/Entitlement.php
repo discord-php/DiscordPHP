@@ -23,16 +23,16 @@ use Discord\Parts\Part;
  *
  * @since 10.15.0
  *
- * @property string       $id             ID of the entitlement.
- * @property string       $sku_id         ID of the SKU.
- * @property string       $application_id ID of the parent application.
- * @property string|null  $user_id        ID of the user that is granted access to the entitlement's SKU.
- * @property int          $type           Type of entitlement.
- * @property bool         $deleted        Whether the entitlement was deleted.
- * @property Carbons|null $starts_at      Start date at which the entitlement is valid (ISO8601 timestamp).
- * @property Carbon|null  $ends_at        Date at which the entitlement is no longer valid (ISO8601 timestamp).
- * @property string|null  $guild_id       ID of the guild that is granted access to the entitlement's SKU.
- * @property bool|null    $consumed       For consumable items, whether or not the entitlement has been consumed.
+ * @property string        $id             ID of the entitlement.
+ * @property string        $sku_id         ID of the SKU.
+ * @property string        $application_id ID of the parent application.
+ * @property string|null   $user_id        ID of the user that is granted access to the entitlement's SKU.
+ * @property int           $type           Type of entitlement.
+ * @property bool          $deleted        Whether the entitlement was deleted.
+ * @property ?Carbons|null $starts_at      Start date at which the entitlement is valid (ISO8601 timestamp).
+ * @property ?Carbon|null  $ends_at        Date at which the entitlement is no longer valid (ISO8601 timestamp).
+ * @property string|null   $guild_id       ID of the guild that is granted access to the entitlement's SKU.
+ * @property bool|null     $consumed       For consumable items, whether or not the entitlement has been consumed.
  */
 class Entitlement extends Part
 {
