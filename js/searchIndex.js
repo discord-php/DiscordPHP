@@ -12771,6 +12771,26 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020guild\u0020preview\u0020object\u0020for\u0020the\u0020given\u0020id.\u0020If\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020guild,\u0020then\u0020the\u0020guild\u0020must\u0020be\u0020discoverable.",
             "url": "classes/Discord-Repository-GuildRepository.html#method_preview"
         },                {
+            "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003AgetCurrentUserVoiceState\u0028\u0029",
+            "name": "getCurrentUserVoiceState",
+            "summary": "Returns\u0020the\u0020current\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
+            "url": "classes/Discord-Repository-GuildRepository.html#method_getCurrentUserVoiceState"
+        },                {
+            "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003AgetUserVoiceState\u0028\u0029",
+            "name": "getUserVoiceState",
+            "summary": "Returns\u0020the\u0020specified\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
+            "url": "classes/Discord-Repository-GuildRepository.html#method_getUserVoiceState"
+        },                {
+            "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003AmodifyCurrentUserVoiceState\u0028\u0029",
+            "name": "modifyCurrentUserVoiceState",
+            "summary": "Modify\u0020the\u0020current\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
+            "url": "classes/Discord-Repository-GuildRepository.html#method_modifyCurrentUserVoiceState"
+        },                {
+            "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003AmodifyUserVoiceState\u0028\u0029",
+            "name": "modifyUserVoiceState",
+            "summary": "Updates\u0020another\u0020user\u0027s\u0020voice\u0020state.",
+            "url": "classes/Discord-Repository-GuildRepository.html#method_modifyUserVoiceState"
+        },                {
             "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
             "summary": "",
