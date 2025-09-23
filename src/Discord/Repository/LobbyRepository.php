@@ -40,8 +40,8 @@ class LobbyRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $endpoints = [
+        //'create' => Endpoint::LOBBIES,
         'get' => Endpoint::LOBBY,
-        'create' => Endpoint::LOBBIES,
         'update' => Endpoint::LOBBY,
         'delete' => Endpoint::LOBBY,
         'leave' => Endpoint::LOBBY_SELF,
