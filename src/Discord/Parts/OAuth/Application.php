@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\OAuth;
 
+use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
@@ -136,6 +138,52 @@ class Application extends Part
         'skus' => SKURepository::class,
         'activity_instances' => ActivityInstanceRepository::class,
     ];
+
+    /**
+     * Returns a list of application role connection metadata objects for the given application.
+     *
+     * @link https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
+     *
+     * @since 10.29.0
+     *
+     * @return PromiseInterface<ExCollectionInterface<ApplicationRoleConnectionMetadata>|ApplicationRoleConnectionMetadata[]> A collection of application role connection metadata objects.
+     */
+    public function getApplicationRoleConnectionMetadataRecords(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::bind(Endpoint::APPLICATION_ROLE_CONNECTION_METADATA, $this->id))
+            ->then(function ($response) {
+                $collection = Collection::for(ApplicationRoleConnectionMetadata::class);
+
+                foreach ($response as $record) {
+                    $collection[] = $this->factory->part(ApplicationRoleConnectionMetadata::class, (array) $record, true);
+                }
+
+                return $collection;
+            });
+    }
+
+    /**
+     * Updates and returns a list of application role connection metadata objects for the given application.
+     *
+     * @link https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
+     *
+     * @since v10.29.0
+     *
+     * @return PromiseInterface<ExCollectionInterface<ApplicationRoleConnectionMetadata>|ApplicationRoleConnectionMetadata[]> A collection of application role connection metadata objects.
+     */
+    public function updateApplicationRoleConnectionMetadataRecords(): PromiseInterface
+    {
+        return $this->http->put(Endpoint::bind(Endpoint::APPLICATION_ROLE_CONNECTION_METADATA, $this->id))
+            ->then(function ($response) {
+                $collection = Collection::for(ApplicationRoleConnectionMetadata::class);
+
+                foreach ($response as $record) {
+                    $collection[] = $this->factory->part(ApplicationRoleConnectionMetadata::class, (array) $record, true);
+                }
+
+                return $collection;
+            });
+    }
 
     /**
      * Returns a serialized activity instance, if it exists.
