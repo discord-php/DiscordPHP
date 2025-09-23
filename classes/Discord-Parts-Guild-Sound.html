@@ -268,13 +268,17 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Sound.php"><a href="files/src-discord-parts-guild-sound.html"><abbr title="src/Discord/Parts/Guild/Sound.php">Sound.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
             <p class="phpdocumentor-summary">An sound object represents a soundboard sound.</p>
 
 
+    <section class="phpdocumentor-description"><p>Users can play soundboard sounds in voice channels, triggering a Voice Channel Effect Send Gateway event for users connected to the voice channel.
+There is a set of default sounds available to all users. Soundboard sounds can also be created in a guild; users will be able to use the sounds in the guild, and Nitro subscribers can use them in all guilds.
+Soundboard sounds in a set of guilds can be retrieved over the Gateway using Request Soundboard Sounds.</p>
+</section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -297,6 +301,24 @@
                                             <span class="phpdocumentor-tag-link">10.0.0</span>
                                                                                 
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?string|null $guild_id   The identifier of the guild this sound is in.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?User|null   $user       The user who created this sound.</p>
+</section>
+
                                     </dd>
                                             </dl>
 
@@ -363,12 +385,6 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-Sound.html#property_guild_id">$guild_id</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Guild-Sound.html#property_name">$name</a>
     <span>
                         &nbsp;: string            </span>
@@ -384,13 +400,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Guild-Sound.html#property_sound_id">$sound_id</a>
     <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-Sound.html#property_user">$user</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null            </span>
+                        &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -947,46 +957,6 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_guild_id">
-        $guild_id
-        <a href="classes/Discord-Parts-Guild-Sound.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Sound.php"><a href="files/src-discord-parts-guild-sound.html"><abbr title="src/Discord/Parts/Guild/Sound.php">Sound.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$guild_id</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The identifier of the guild this sound is in.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_name">
         $name
         <a href="classes/Discord-Parts-Guild-Sound.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1093,51 +1063,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
+            <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$sound_id</span>
     </code>
 
         <section class="phpdocumentor-description"><p>The identifier for this sound.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_user">
-        $user
-        <a href="classes/Discord-Parts-Guild-Sound.html#property_user" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Sound.php"><a href="files/src-discord-parts-guild-sound.html"><abbr title="src/Discord/Parts/Guild/Sound.php">Sound.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$user</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The user who created this sound.</p>
 </section>
 
     
@@ -1328,7 +1258,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Sound.php"><a href="files/src-discord-parts-guild-sound.html"><abbr title="src/Discord/Parts/Guild/Sound.php">Sound.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -1883,7 +1813,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Sound.php"><a href="files/src-discord-parts-guild-sound.html"><abbr title="src/Discord/Parts/Guild/Sound.php">Sound.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">100</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -2321,7 +2251,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Sound.php"><a href="files/src-discord-parts-guild-sound.html"><abbr title="src/Discord/Parts/Guild/Sound.php">Sound.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -2373,7 +2303,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Sound.php"><a href="files/src-discord-parts-guild-sound.html"><abbr title="src/Discord/Parts/Guild/Sound.php">Sound.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
@@ -2432,7 +2362,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Sound.php"><a href="files/src-discord-parts-guild-sound.html"><abbr title="src/Discord/Parts/Guild/Sound.php">Sound.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -3452,7 +3382,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Sound.php"><a href="files/src-discord-parts-guild-sound.html"><abbr title="src/Discord/Parts/Guild/Sound.php">Sound.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -3495,7 +3425,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Sound.php"><a href="files/src-discord-parts-guild-sound.html"><abbr title="src/Discord/Parts/Guild/Sound.php">Sound.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
@@ -3820,11 +3750,9 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-Sound.html#property_emoji_id">$emoji_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-Sound.html#property_emoji_name">$emoji_name</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-Sound.html#property_guild">$guild</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Sound.html#property_guild_id">$guild_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-Sound.html#property_name">$name</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-Sound.html#property_sound_id">$sound_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Sound.html#property_user">$user</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-Sound.html#property_volume">$volume</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>

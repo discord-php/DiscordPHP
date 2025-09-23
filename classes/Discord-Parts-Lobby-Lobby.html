@@ -236,16 +236,15 @@
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts.html">Parts</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-channel.html">Channel</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-channel-poll.html">Poll</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-lobby.html">Lobby</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Poll
+    Lobby
 
         <span class="phpdocumentor-element__extends">
-        extends <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html"><abbr title="\Discord\Parts\Channel\Poll\PollCreateRequest">PollCreateRequest</abbr></a>
+        extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
     </span>
     
             <div class="phpdocumentor-element__package">
@@ -264,44 +263,44 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/Poll.php"><a href="files/src-discord-parts-channel-poll-poll.html"><abbr title="src/Discord/Parts/Channel/Poll/Poll.php">Poll.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Lobby.php"><a href="files/src-discord-parts-lobby-lobby.html"><abbr title="src/Discord/Parts/Lobby/Lobby.php">Lobby.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">A poll create request object that can be attached to a message.</p>
+            <p class="phpdocumentor-summary">Represents a lobby within Discord. See Managing Lobbies for more information.</p>
 
-            <div class="phpdocumentor-admonition">
-        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-            <article>
-                <p>Use <code class="prettyprint">PollCreateRequest</code>.</p>
 
-            </article>
-        </div>
-    
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Poll-Poll.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Lobby-Lobby.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/poll#poll-create-request-object-poll-create-request-object-structure"> https://discord.com/developers/docs/resources/poll#poll-create-request-object-poll-create-request-object-structure </a>
-                    
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                            <span class="phpdocumentor-tag-link">10.28.0</span>
                                                                                 
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/lobby#lobby-object"> https://discord.com/developers/docs/resources/lobby#lobby-object </a>
+                    
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/discord-social-sdk/development-guides/managing-lobbies"> https://discord.com/developers/docs/discord-social-sdk/development-guides/managing-lobbies </a>
+                    
                                     </dd>
                                             </dl>
 
@@ -311,7 +310,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Parts-Channel-Poll-Poll.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Lobby-Lobby.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -321,38 +320,18 @@
 
 
 
-<h4 id="toc-constants">
-    Constants
-    <a href="classes/Discord-Parts-Channel-Poll-Poll.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-</h4>
-<dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#constant_LAYOUT_DEFAULT">LAYOUT_DEFAULT</a>
-    <span>
-        &nbsp;= 1                            </span>
-</dt>
-<dd>The, uhm, default layout type.</dd>
-
-    </dl>
 
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-Parts-Channel-Poll-Poll.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Lobby-Lobby.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_allow_multiselect">$allow_multiselect</a>
+    <a class="" href="classes/Discord-Parts-Lobby-Lobby.html#property_application_id">$application_id</a>
     <span>
-                        &nbsp;: bool|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_answers">$answers</a>
-    <span>
-                        &nbsp;: array&lt;string|int, <a href="classes/Discord-Parts-Channel-Poll-PollAnswer.html"><abbr title="\Discord\Parts\Channel\Poll\PollAnswer">PollAnswer</abbr></a>&gt;            </span>
+                        &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -363,21 +342,27 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_duration">$duration</a>
+    <a class="" href="classes/Discord-Parts-Lobby-Lobby.html#property_id">$id</a>
     <span>
-                        &nbsp;: int|null            </span>
+                        &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_layout_type">$layout_type</a>
+    <a class="" href="classes/Discord-Parts-Lobby-Lobby.html#property_linked_channel">$linked_channel</a>
     <span>
-                        &nbsp;: int|null            </span>
+                        &nbsp;: <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_question">$question</a>
+    <a class="" href="classes/Discord-Parts-Lobby-Lobby.html#property_members">$members</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Channel-Poll-PollMedia.html"><abbr title="\Discord\Parts\Channel\Poll\PollMedia">PollMedia</abbr></a>            </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Lobby-Lobby.html#property_metadata">$metadata</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -409,7 +394,7 @@
 <dd>The factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_fillable">$fillable</a>
+    <a class="" href="classes/Discord-Parts-Lobby-Lobby.html#property_fillable">$fillable</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -454,7 +439,7 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Parts-Channel-Poll-Poll.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Lobby-Lobby.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -503,13 +488,6 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_addAnswer">addAnswer()</a>
-    <span>
-                                &nbsp;: $this    </span>
-</dt>
-<dd>Add an answer to the poll.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a>
@@ -591,6 +569,13 @@ be fetched from Discord.</dd>
 JSON. Used for JsonSerializable.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Lobby-Lobby.html#method_leave">leave()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
+</dt>
+<dd>Removes the current user from the specified lobby.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_offsetExists">offsetExists()</a>
     <span>
                                 &nbsp;: bool    </span>
@@ -624,34 +609,6 @@ JSON. Used for JsonSerializable.</dd>
                                 &nbsp;: string|null    </span>
 </dt>
 <dd>Serializes the data. Used for Serializable.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setAllowMultiselect">setAllowMultiselect()</a>
-    <span>
-                                &nbsp;: $this    </span>
-</dt>
-<dd>Determine whether a user can select multiple answers.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setAnswers">setAnswers()</a>
-    <span>
-                                &nbsp;: $this    </span>
-</dt>
-<dd>Set the answers attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setDuration">setDuration()</a>
-    <span>
-                                &nbsp;: $this    </span>
-</dt>
-<dd>Set the duration of the poll.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setQuestion">setQuestion()</a>
-    <span>
-                                &nbsp;: $this    </span>
-</dt>
-<dd>Set the question attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_unserialize">unserialize()</a>
@@ -710,6 +667,13 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Gets an attribute on the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Lobby-Lobby.html#method_getLinkedChannelAttribute">getLinkedChannelAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null    </span>
+</dt>
+<dd>Gets the linked_channel attribute.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -723,13 +687,6 @@ JSON. Used for JsonSerializable.</dd>
 </dt>
 <dd>Sets an attribute on the part.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setLayoutType">setLayoutType()</a>
-    <span>
-                                &nbsp;: $this    </span>
-</dt>
-<dd>Set the layout type of the poll.</dd>
-
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a>
     <span>
@@ -742,51 +699,12 @@ JSON. Used for JsonSerializable.</dd>
 
 
         
-    <section class="phpdocumentor-constants">
-        <h3 class="phpdocumentor-elements__header" id="constants">
-            Constants
-            <a href="classes/Discord-Parts-Channel-Poll-Poll.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
-
-        </h3>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_LAYOUT_DEFAULT">
-        LAYOUT_DEFAULT
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#constant_LAYOUT_DEFAULT" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">39</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The, uhm, default layout type.</p>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">LAYOUT_DEFAULT</span>
-    = <span class="phpdocumentor-signature__default-value">1</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-            </section>
 
         
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-Channel-Poll-Poll.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Lobby-Lobby.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -796,15 +714,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_allow_multiselect">
-        $allow_multiselect
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_allow_multiselect" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_application_id">
+        $application_id
+        <a href="classes/Discord-Parts-Lobby-Lobby.html#property_application_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Lobby.php"><a href="files/src-discord-parts-lobby-lobby.html"><abbr title="src/Discord/Parts/Lobby/Lobby.php">Lobby.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -814,51 +732,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">bool|null</span>
-    <span class="phpdocumentor-signature__name">$allow_multiselect</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$application_id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Whether a user can select multiple answers. Defaults to false.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_answers">
-        $answers
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_answers" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/Discord-Parts-Channel-Poll-PollAnswer.html"><abbr title="\Discord\Parts\Channel\Poll\PollAnswer">PollAnswer</abbr></a>&gt;</span>
-    <span class="phpdocumentor-signature__name">$answers</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Each of the answers available in the poll, up to 10.</p>
+        <section class="phpdocumentor-description"><p>The application that created the lobby.</p>
 </section>
 
     
@@ -917,15 +795,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_duration">
-        $duration
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_duration" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_id">
+        $id
+        <a href="classes/Discord-Parts-Lobby-Lobby.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Lobby.php"><a href="files/src-discord-parts-lobby-lobby.html"><abbr title="src/Discord/Parts/Lobby/Lobby.php">Lobby.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -935,11 +813,51 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$duration</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Number of hours the poll should be open for, up to 32 days. Defaults to 24.</p>
+        <section class="phpdocumentor-description"><p>The unique identifier of the lobby.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                -read-only                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_linked_channel">
+        $linked_channel
+        <a href="classes/Discord-Parts-Lobby-Lobby.html#property_linked_channel" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Lobby.php"><a href="files/src-discord-parts-lobby-lobby.html"><abbr title="src/Discord/Parts/Lobby/Lobby.php">Lobby.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$linked_channel</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The guild channel linked to the lobby.</p>
 </section>
 
     
@@ -957,15 +875,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_layout_type">
-        $layout_type
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_layout_type" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_members">
+        $members
+        <a href="classes/Discord-Parts-Lobby-Lobby.html#property_members" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Lobby.php"><a href="files/src-discord-parts-lobby-lobby.html"><abbr title="src/Discord/Parts/Lobby/Lobby.php">Lobby.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -975,11 +893,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int|null</span>
-    <span class="phpdocumentor-signature__name">$layout_type</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$members</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The layout type of the poll. Defaults to... DEFAULT!</p>
+        <section class="phpdocumentor-description"><p>Members of the lobby.</p>
 </section>
 
     
@@ -997,15 +915,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_question">
-        $question
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_question" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_metadata">
+        $metadata
+        <a href="classes/Discord-Parts-Lobby-Lobby.html#property_metadata" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Lobby.php"><a href="files/src-discord-parts-lobby-lobby.html"><abbr title="src/Discord/Parts/Lobby/Lobby.php">Lobby.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1015,11 +933,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Poll-PollMedia.html"><abbr title="\Discord\Parts\Channel\Poll\PollMedia">PollMedia</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$question</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$metadata</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The question of the poll. Only text is supported.</p>
+        <section class="phpdocumentor-description"><p>Dictionary of string key/value pairs. The max total length is 1000.</p>
 </section>
 
     
@@ -1210,15 +1128,15 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_fillable">
         $fillable
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Lobby-Lobby.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Lobby.php"><a href="files/src-discord-parts-lobby-lobby.html"><abbr title="src/Discord/Parts/Lobby/Lobby.php">Lobby.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -1229,7 +1147,7 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;question&#039;, &#039;answers&#039;, &#039;duration&#039;, &#039;allow_multiselect&#039;, &#039;layout_type&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;application_id&#039;, &#039;metadata&#039;, &#039;members&#039;, &#039;linked_channel&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -1238,12 +1156,12 @@ JSON. Used for JsonSerializable.</dd>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Lobby-Lobby.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
@@ -1462,7 +1380,7 @@ JSON. Used for JsonSerializable.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-Channel-Poll-Poll.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Lobby-Lobby.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -1870,78 +1788,6 @@ JSON. Used for JsonSerializable.</dd>
     
 
     
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_addAnswer">
-        addAnswer()
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_addAnswer" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">104</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Add an answer to the poll.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">addAnswer</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Poll-PollAnswer.html"><abbr title="\Discord\Parts\Channel\Poll\PollAnswer">PollAnswer</abbr></a>|<a href="classes/Discord-Parts-Channel-Poll-PollMedia.html"><abbr title="\Discord\Parts\Channel\Poll\PollMedia">PollMedia</abbr></a>|array&lt;string|int, mixed&gt;|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$answer</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$answer</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Poll-PollAnswer.html"><abbr title="\Discord\Parts\Channel\Poll\PollAnswer">PollAnswer</abbr></a>|<a href="classes/Discord-Parts-Channel-Poll-PollMedia.html"><abbr title="\Discord\Parts\Channel\Poll\PollMedia">PollMedia</abbr></a>|array&lt;string|int, mixed&gt;|string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_addAnswer#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\OutOfRangeException">OutOfRangeException</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\LengthException">LengthException</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
-            </section>
-
 </article>
                     <article
         class="phpdocumentor-element
@@ -2497,6 +2343,47 @@ JSON. Used for JsonSerializable.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_leave">
+        leave()
+        <a href="classes/Discord-Parts-Lobby-Lobby.html#method_leave" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Lobby.php"><a href="files/src-discord-parts-lobby-lobby.html"><abbr title="src/Discord/Parts/Lobby/Lobby.php">Lobby.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">52</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Removes the current user from the specified lobby.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">leave</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>It is safe to call this even if the user is no longer a member of the lobby, but will fail if the lobby does not exist.</p>
+</section>
+
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_offsetExists">
         offsetExists()
         <a href="classes/Discord-Parts-PartTrait.html#method_offsetExists" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2789,240 +2676,6 @@ JSON. Used for JsonSerializable.</p>
                 <section class="phpdocumentor-description"><p>A string of serialized data.</p>
 </section>
 
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setAllowMultiselect">
-        setAllowMultiselect()
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setAllowMultiselect" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">168</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Determine whether a user can select multiple answers.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setAllowMultiselect</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$multiselect</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$multiselect</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Whether a user can select multiple answers. Defaults to false.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setAnswers">
-        setAnswers()
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setAnswers" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">85</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Set the answers attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setAnswers</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Discord-Parts-Channel-Poll-PollAnswer.html"><abbr title="\Discord\Parts\Channel\Poll\PollAnswer">PollAnswer</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$answers</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$answers</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Discord-Parts-Channel-Poll-PollAnswer.html"><abbr title="\Discord\Parts\Channel\Poll\PollAnswer">PollAnswer</abbr></a>&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Each of the answers available in the poll.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setDuration">
-        setDuration()
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setDuration" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">148</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Set the duration of the poll.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setDuration</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$duration</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$duration</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Number of hours the poll should be open for, up to 32 days. Defaults to 24.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setDuration#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\OutOfRangeException">OutOfRangeException</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setQuestion">
-        setQuestion()
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setQuestion" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">61</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Set the question attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setQuestion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Poll-PollMedia.html"><abbr title="\Discord\Parts\Channel\Poll\PollMedia">PollMedia</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$question</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$question</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Poll-PollMedia.html"><abbr title="\Discord\Parts\Channel\Poll\PollMedia">PollMedia</abbr></a>|string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The question of the poll.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setQuestion#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\LengthException">LengthException</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
             </section>
 
 </article>
@@ -3603,6 +3256,49 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getLinkedChannelAttribute">
+        getLinkedChannelAttribute()
+        <a href="classes/Discord-Parts-Lobby-Lobby.html#method_getLinkedChannelAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Lobby/Lobby.php"><a href="files/src-discord-parts-lobby-lobby.html"><abbr title="src/Discord/Parts/Lobby/Lobby.php">Lobby.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">62</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets the linked_channel attribute.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getLinkedChannelAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The guild channel linked to the lobby.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_makeOptionalAttributes">
         makeOptionalAttributes()
         <a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3709,57 +3405,6 @@ JSON. Used for JsonSerializable.</p>
                     <article
         class="phpdocumentor-element
             -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setLayoutType">
-        setLayoutType()
-        <a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setLayoutType" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php"><a href="files/src-discord-parts-channel-poll-pollcreaterequest.html"><abbr title="src/Discord/Parts/Channel/Poll/PollCreateRequest.php">PollCreateRequest.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">182</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Set the layout type of the poll.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">setLayoutType</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$type</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The layout type of the poll.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">$this</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
             -private
                                     -static                    "
 >
@@ -3834,7 +3479,7 @@ static as we may move it outside this class in future.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Channel/Poll/Poll.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Lobby/Lobby.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -3935,32 +3580,25 @@ static as we may move it outside this class in future.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                        <li><a href="classes/Discord-Parts-Channel-Poll-Poll.html#toc-constants">Constants</a></li>
-                                                            <li><a href="classes/Discord-Parts-Channel-Poll-Poll.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-Parts-Channel-Poll-Poll.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Discord-Parts-Lobby-Lobby.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-Parts-Lobby-Lobby.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
-                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#constant_LAYOUT_DEFAULT">LAYOUT_DEFAULT</a></li>
-                                            </ul>
-                </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_allow_multiselect">$allow_multiselect</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_answers">$answers</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Lobby-Lobby.html#property_application_id">$application_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_duration">$duration</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_layout_type">$layout_type</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_question">$question</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Lobby-Lobby.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Lobby-Lobby.html#property_linked_channel">$linked_channel</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Lobby-Lobby.html#property_members">$members</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Lobby-Lobby.html#property_metadata">$metadata</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_fillable">$fillable</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Lobby-Lobby.html#property_fillable">$fillable</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_http">$http</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories">$repositories</a></li>
@@ -3979,7 +3617,6 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___set">__set()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___toString">__toString()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___unserialize">__unserialize()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_addAnswer">addAnswer()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getConstants">getConstants()</a></li>
@@ -3991,15 +3628,12 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getUpdatableAttributes">getUpdatableAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_isPartial">isPartial()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_jsonSerialize">jsonSerialize()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Lobby-Lobby.html#method_leave">leave()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetExists">offsetExists()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetGet">offsetGet()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetSet">offsetSet()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetUnset">offsetUnset()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_serialize">serialize()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setAllowMultiselect">setAllowMultiselect()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setAnswers">setAnswers()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setDuration">setDuration()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setQuestion">setQuestion()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_unserialize">unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_afterConstruct">afterConstruct()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_attributeCarbonHelper">attributeCarbonHelper()</a></li>
@@ -4008,9 +3642,9 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Lobby-Lobby.html#method_getLinkedChannelAttribute">getLinkedChannelAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setLayoutType">setLayoutType()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a></li>
                                     </ul>
             </li>
@@ -4031,7 +3665,7 @@ static as we may move it outside this class in future.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Parts-Channel-Poll-Poll.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Parts-Lobby-Lobby.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

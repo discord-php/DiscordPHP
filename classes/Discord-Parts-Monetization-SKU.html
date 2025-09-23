@@ -320,46 +320,53 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_AVAILABLE">AVAILABLE</a>
+    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_FLAG_AVAILABLE">FLAG_AVAILABLE</a>
     <span>
         &nbsp;= 1 &lt;&lt; 2                            </span>
 </dt>
+<dd>SKU is available for purchase.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_CONSUMABLE">CONSUMABLE</a>
-    <span>
-        &nbsp;= 3                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_DURABLE">DURABLE</a>
-    <span>
-        &nbsp;= 2                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_GUILD_SUBSCRIPTION">GUILD_SUBSCRIPTION</a>
+    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_FLAG_GUILD_SUBSCRIPTION">FLAG_GUILD_SUBSCRIPTION</a>
     <span>
         &nbsp;= 1 &lt;&lt; 7                            </span>
 </dt>
+<dd>Recurring SKU that can be purchased by a user and applied to a single server. Grants access to every user in that server.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_SUBSCRIPTION">SUBSCRIPTION</a>
-    <span>
-        &nbsp;= 5                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_SUBSCRIPTION_GROUP">SUBSCRIPTION_GROUP</a>
-    <span>
-        &nbsp;= 6                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_USER_SUBSCRIPTION">USER_SUBSCRIPTION</a>
+    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_FLAG_USER_SUBSCRIPTION">FLAG_USER_SUBSCRIPTION</a>
     <span>
         &nbsp;= 1 &lt;&lt; 8                            </span>
 </dt>
+<dd>Recurring SKU purchased by a user for themselves. Grants access to the purchasing user in every server.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_CONSUMABLE">TYPE_CONSUMABLE</a>
+    <span>
+        &nbsp;= 3                            </span>
+</dt>
+<dd>Consumable one-time purchase.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_DURABLE">TYPE_DURABLE</a>
+    <span>
+        &nbsp;= 2                            </span>
+</dt>
+<dd>Durable one-time purchase.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_SUBSCRIPTION">TYPE_SUBSCRIPTION</a>
+    <span>
+        &nbsp;= 5                            </span>
+</dt>
+<dd>Represents a recurring subscription.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_SUBSCRIPTION_GROUP">TYPE_SUBSCRIPTION_GROUP</a>
+    <span>
+        &nbsp;= 6                            </span>
+</dt>
+<dd>System-generated group for each SUBSCRIPTION SKU created.</dd>
 
     </dl>
 
@@ -746,25 +753,26 @@ JSON. Used for JsonSerializable.</dd>
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_AVAILABLE">
-        AVAILABLE
-        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_AVAILABLE" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_AVAILABLE">
+        FLAG_AVAILABLE
+        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_FLAG_AVAILABLE" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/SKU.php"><a href="files/src-discord-parts-monetization-sku.html"><abbr title="src/Discord/Parts/Monetization/SKU.php">SKU.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">SKU is available for purchase.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">AVAILABLE</span>
+    <span class="phpdocumentor-signature__name">FLAG_AVAILABLE</span>
     = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 2</span>
 </code>
 
@@ -777,87 +785,26 @@ JSON. Used for JsonSerializable.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_CONSUMABLE">
-        CONSUMABLE
-        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_CONSUMABLE" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_GUILD_SUBSCRIPTION">
+        FLAG_GUILD_SUBSCRIPTION
+        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_FLAG_GUILD_SUBSCRIPTION" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/SKU.php"><a href="files/src-discord-parts-monetization-sku.html"><abbr title="src/Discord/Parts/Monetization/SKU.php">SKU.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Recurring SKU that can be purchased by a user and applied to a single server. Grants access to every user in that server.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">CONSUMABLE</span>
-    = <span class="phpdocumentor-signature__default-value">3</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_DURABLE">
-        DURABLE
-        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_DURABLE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/SKU.php"><a href="files/src-discord-parts-monetization-sku.html"><abbr title="src/Discord/Parts/Monetization/SKU.php">SKU.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">38</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">DURABLE</span>
-    = <span class="phpdocumentor-signature__default-value">2</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_GUILD_SUBSCRIPTION">
-        GUILD_SUBSCRIPTION
-        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_GUILD_SUBSCRIPTION" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/SKU.php"><a href="files/src-discord-parts-monetization-sku.html"><abbr title="src/Discord/Parts/Monetization/SKU.php">SKU.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">45</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">GUILD_SUBSCRIPTION</span>
+    <span class="phpdocumentor-signature__name">FLAG_GUILD_SUBSCRIPTION</span>
     = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 7</span>
 </code>
 
@@ -870,9 +817,41 @@ JSON. Used for JsonSerializable.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_SUBSCRIPTION">
-        SUBSCRIPTION
-        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_SUBSCRIPTION" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_USER_SUBSCRIPTION">
+        FLAG_USER_SUBSCRIPTION
+        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_FLAG_USER_SUBSCRIPTION" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/SKU.php"><a href="files/src-discord-parts-monetization-sku.html"><abbr title="src/Discord/Parts/Monetization/SKU.php">SKU.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">51</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Recurring SKU purchased by a user for themselves. Grants access to the purchasing user in every server.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_USER_SUBSCRIPTION</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 8</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_CONSUMABLE">
+        TYPE_CONSUMABLE
+        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_CONSUMABLE" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
@@ -883,12 +862,77 @@ JSON. Used for JsonSerializable.</dd>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Consumable one-time purchase.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">SUBSCRIPTION</span>
+    <span class="phpdocumentor-signature__name">TYPE_CONSUMABLE</span>
+    = <span class="phpdocumentor-signature__default-value">3</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_DURABLE">
+        TYPE_DURABLE
+        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_DURABLE" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/SKU.php"><a href="files/src-discord-parts-monetization-sku.html"><abbr title="src/Discord/Parts/Monetization/SKU.php">SKU.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">38</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Durable one-time purchase.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_DURABLE</span>
+    = <span class="phpdocumentor-signature__default-value">2</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_SUBSCRIPTION">
+        TYPE_SUBSCRIPTION
+        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_SUBSCRIPTION" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/SKU.php"><a href="files/src-discord-parts-monetization-sku.html"><abbr title="src/Discord/Parts/Monetization/SKU.php">SKU.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">42</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Represents a recurring subscription.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_SUBSCRIPTION</span>
     = <span class="phpdocumentor-signature__default-value">5</span>
 </code>
 
@@ -901,57 +945,27 @@ JSON. Used for JsonSerializable.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_SUBSCRIPTION_GROUP">
-        SUBSCRIPTION_GROUP
-        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_SUBSCRIPTION_GROUP" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_SUBSCRIPTION_GROUP">
+        TYPE_SUBSCRIPTION_GROUP
+        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_SUBSCRIPTION_GROUP" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/SKU.php"><a href="files/src-discord-parts-monetization-sku.html"><abbr title="src/Discord/Parts/Monetization/SKU.php">SKU.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">System-generated group for each SUBSCRIPTION SKU created.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">SUBSCRIPTION_GROUP</span>
+    <span class="phpdocumentor-signature__name">TYPE_SUBSCRIPTION_GROUP</span>
     = <span class="phpdocumentor-signature__default-value">6</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_USER_SUBSCRIPTION">
-        USER_SUBSCRIPTION
-        <a href="classes/Discord-Parts-Monetization-SKU.html#constant_USER_SUBSCRIPTION" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/SKU.php"><a href="files/src-discord-parts-monetization-sku.html"><abbr title="src/Discord/Parts/Monetization/SKU.php">SKU.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">46</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">USER_SUBSCRIPTION</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 8</span>
 </code>
 
 
@@ -1480,7 +1494,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/SKU.php"><a href="files/src-discord-parts-monetization-sku.html"><abbr title="src/Discord/Parts/Monetization/SKU.php">SKU.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -1617,7 +1631,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/SKU.php"><a href="files/src-discord-parts-monetization-sku.html"><abbr title="src/Discord/Parts/Monetization/SKU.php">SKU.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
@@ -3862,13 +3876,13 @@ static as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_AVAILABLE">AVAILABLE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_CONSUMABLE">CONSUMABLE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_DURABLE">DURABLE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_GUILD_SUBSCRIPTION">GUILD_SUBSCRIPTION</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_SUBSCRIPTION">SUBSCRIPTION</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_SUBSCRIPTION_GROUP">SUBSCRIPTION_GROUP</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_USER_SUBSCRIPTION">USER_SUBSCRIPTION</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_FLAG_AVAILABLE">FLAG_AVAILABLE</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_FLAG_GUILD_SUBSCRIPTION">FLAG_GUILD_SUBSCRIPTION</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_FLAG_USER_SUBSCRIPTION">FLAG_USER_SUBSCRIPTION</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_CONSUMABLE">TYPE_CONSUMABLE</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_DURABLE">TYPE_DURABLE</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_SUBSCRIPTION">TYPE_SUBSCRIPTION</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_SUBSCRIPTION_GROUP">TYPE_SUBSCRIPTION_GROUP</a></li>
                                             </ul>
                 </li>
             

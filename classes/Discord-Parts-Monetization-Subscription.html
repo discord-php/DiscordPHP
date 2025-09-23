@@ -265,7 +265,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Subscription.php"><a href="files/src-discord-parts-monetization-subscription.html"><abbr title="src/Discord/Parts/Monetization/Subscription.php">Subscription.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -275,6 +275,8 @@
     <section class="phpdocumentor-description"><p>Subscription status should not be used to grant perks.
 Use entitlements as an indication of whether a user should have access to a specific SKU.
 See the guide on Implementing App Subscriptions for more information.</p>
+<p>The start of a subscription is determined by its ID. When the subscription renews, its current period is updated.
+If the user cancels the subscription, the subscription will enter the ENDING status and the canceled_at timestamp will reflect the time of the cancellation.</p>
 </section>
 
 
@@ -306,6 +308,24 @@ See the guide on Implementing App Subscriptions for more information.</p>
                                                                                 
                                              
                                     </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?array|null  $renewal_sku_ids      List of SKUs that this user will be subscribed to at renewal.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Carbon|null $canceled_at          When the subscription was canceled.</p>
+</section>
+
+                                    </dd>
                                             </dl>
 
 
@@ -335,18 +355,21 @@ See the guide on Implementing App Subscriptions for more information.</p>
     <span>
         &nbsp;= 0                            </span>
 </dt>
+<dd>Subscription is active and scheduled to renew.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_ENDING">STATUS_ENDING</a>
     <span>
         &nbsp;= 1                            </span>
 </dt>
+<dd>Subscription is active but will not renew.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_INACTIVE">STATUS_INACTIVE</a>
     <span>
         &nbsp;= 2                            </span>
 </dt>
+<dd>Subscription is inactive and not being charged.</dd>
 
     </dl>
 
@@ -357,12 +380,6 @@ See the guide on Implementing App Subscriptions for more information.</p>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Subscription.html#property_canceled_at">$canceled_at</a>
-    <span>
-                        &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null            </span>
-</dt>
-
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Monetization-Subscription.html#property_country">$country</a>
     <span>
@@ -398,12 +415,6 @@ See the guide on Implementing App Subscriptions for more information.</p>
     <a class="" href="classes/Discord-Parts-Monetization-Subscription.html#property_id">$id</a>
     <span>
                         &nbsp;: string            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Subscription.html#property_renewal_sku_ids">$renewal_sku_ids</a>
-    <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -781,11 +792,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Subscription.php"><a href="files/src-discord-parts-monetization-subscription.html"><abbr title="src/Discord/Parts/Monetization/Subscription.php">Subscription.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Subscription is active and scheduled to renew.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -812,11 +824,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Subscription.php"><a href="files/src-discord-parts-monetization-subscription.html"><abbr title="src/Discord/Parts/Monetization/Subscription.php">Subscription.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Subscription is active but will not renew.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -843,11 +856,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Subscription.php"><a href="files/src-discord-parts-monetization-subscription.html"><abbr title="src/Discord/Parts/Monetization/Subscription.php">Subscription.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Subscription is inactive and not being charged.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -873,46 +887,6 @@ JSON. Used for JsonSerializable.</dd>
             <a href="classes/Discord-Parts-Monetization-Subscription.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_canceled_at">
-        $canceled_at
-        <a href="classes/Discord-Parts-Monetization-Subscription.html#property_canceled_at" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Subscription.php"><a href="files/src-discord-parts-monetization-subscription.html"><abbr title="src/Discord/Parts/Monetization/Subscription.php">Subscription.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-    <span class="phpdocumentor-signature__name">$canceled_at</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>When the subscription was canceled.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
                     <article
         class="
             phpdocumentor-element
@@ -1144,46 +1118,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>ID of the subscription.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_renewal_sku_ids">
-        $renewal_sku_ids
-        <a href="classes/Discord-Parts-Monetization-Subscription.html#property_renewal_sku_ids" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Subscription.php"><a href="files/src-discord-parts-monetization-subscription.html"><abbr title="src/Discord/Parts/Monetization/Subscription.php">Subscription.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;|null</span>
-    <span class="phpdocumentor-signature__name">$renewal_sku_ids</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>List of SKUs that this user will be subscribed to at renewal.</p>
 </section>
 
     
@@ -1502,7 +1436,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Subscription.php"><a href="files/src-discord-parts-monetization-subscription.html"><abbr title="src/Discord/Parts/Monetization/Subscription.php">Subscription.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
@@ -3589,7 +3523,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Subscription.php"><a href="files/src-discord-parts-monetization-subscription.html"><abbr title="src/Discord/Parts/Monetization/Subscription.php">Subscription.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">91</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
@@ -3628,7 +3562,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Subscription.php"><a href="files/src-discord-parts-monetization-subscription.html"><abbr title="src/Discord/Parts/Monetization/Subscription.php">Subscription.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
@@ -3667,7 +3601,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Subscription.php"><a href="files/src-discord-parts-monetization-subscription.html"><abbr title="src/Discord/Parts/Monetization/Subscription.php">Subscription.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -3996,14 +3930,12 @@ static as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Subscription.html#property_canceled_at">$canceled_at</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Monetization-Subscription.html#property_country">$country</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Monetization-Subscription.html#property_current_period_end">$current_period_end</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Monetization-Subscription.html#property_current_period_start">$current_period_start</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Monetization-Subscription.html#property_entitlement_ids">$entitlement_ids</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Monetization-Subscription.html#property_id">$id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Subscription.html#property_renewal_sku_ids">$renewal_sku_ids</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Monetization-Subscription.html#property_sku_ids">$sku_ids</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Monetization-Subscription.html#property_status">$status</a></li>

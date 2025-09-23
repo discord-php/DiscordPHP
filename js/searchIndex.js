@@ -6136,46 +6136,6 @@ Search.appendIndex(
             "summary": "A\u0020poll\u0020create\u0020request\u0020object\u0020that\u0020can\u0020be\u0020attached\u0020to\u0020a\u0020message.",
             "url": "classes/Discord-Parts-Channel-Poll-Poll.html"
         },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\Poll\u003A\u003AsetQuestion\u0028\u0029",
-            "name": "setQuestion",
-            "summary": "Set\u0020the\u0020question\u0020attribute.",
-            "url": "classes/Discord-Parts-Channel-Poll-Poll.html#method_setQuestion"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\Poll\u003A\u003AsetAnswers\u0028\u0029",
-            "name": "setAnswers",
-            "summary": "Set\u0020the\u0020answers\u0020attribute.",
-            "url": "classes/Discord-Parts-Channel-Poll-Poll.html#method_setAnswers"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\Poll\u003A\u003AaddAnswer\u0028\u0029",
-            "name": "addAnswer",
-            "summary": "Add\u0020an\u0020answer\u0020to\u0020the\u0020poll.",
-            "url": "classes/Discord-Parts-Channel-Poll-Poll.html#method_addAnswer"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\Poll\u003A\u003AsetDuration\u0028\u0029",
-            "name": "setDuration",
-            "summary": "Set\u0020the\u0020duration\u0020of\u0020the\u0020poll.",
-            "url": "classes/Discord-Parts-Channel-Poll-Poll.html#method_setDuration"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\Poll\u003A\u003AsetAllowMultiselect\u0028\u0029",
-            "name": "setAllowMultiselect",
-            "summary": "Determine\u0020whether\u0020a\u0020user\u0020can\u0020select\u0020multiple\u0020answers.",
-            "url": "classes/Discord-Parts-Channel-Poll-Poll.html#method_setAllowMultiselect"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\Poll\u003A\u003AsetLayoutType\u0028\u0029",
-            "name": "setLayoutType",
-            "summary": "Set\u0020the\u0020layout\u0020type\u0020of\u0020the\u0020poll.",
-            "url": "classes/Discord-Parts-Channel-Poll-Poll.html#method_setLayoutType"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\Poll\u003A\u003ALAYOUT_DEFAULT",
-            "name": "LAYOUT_DEFAULT",
-            "summary": "",
-            "url": "classes/Discord-Parts-Channel-Poll-Poll.html#constant_LAYOUT_DEFAULT"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\Poll\u003A\u003A\u0024fillable",
-            "name": "fillable",
-            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
-            "url": "classes/Discord-Parts-Channel-Poll-Poll.html#property_fillable"
-        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Poll\\PollAnswer",
             "name": "PollAnswer",
             "summary": "An\u0020answer\u0020to\u0020a\u0020poll.",
@@ -6220,6 +6180,51 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Channel-Poll-PollAnswerCount.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\PollCreateRequest",
+            "name": "PollCreateRequest",
+            "summary": "This\u0020is\u0020the\u0020request\u0020object\u0020used\u0020when\u0020creating\u0020a\u0020poll\u0020across\u0020the\u0020different\u0020endpoints.",
+            "url": "classes/Discord-Parts-Channel-Poll-PollCreateRequest.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\PollCreateRequest\u003A\u003AsetQuestion\u0028\u0029",
+            "name": "setQuestion",
+            "summary": "Set\u0020the\u0020question\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setQuestion"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\PollCreateRequest\u003A\u003AsetAnswers\u0028\u0029",
+            "name": "setAnswers",
+            "summary": "Set\u0020the\u0020answers\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setAnswers"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\PollCreateRequest\u003A\u003AaddAnswer\u0028\u0029",
+            "name": "addAnswer",
+            "summary": "Add\u0020an\u0020answer\u0020to\u0020the\u0020poll.",
+            "url": "classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_addAnswer"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\PollCreateRequest\u003A\u003AsetDuration\u0028\u0029",
+            "name": "setDuration",
+            "summary": "Set\u0020the\u0020duration\u0020of\u0020the\u0020poll.",
+            "url": "classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setDuration"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\PollCreateRequest\u003A\u003AsetAllowMultiselect\u0028\u0029",
+            "name": "setAllowMultiselect",
+            "summary": "Determine\u0020whether\u0020a\u0020user\u0020can\u0020select\u0020multiple\u0020answers.",
+            "url": "classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setAllowMultiselect"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\PollCreateRequest\u003A\u003AsetLayoutType\u0028\u0029",
+            "name": "setLayoutType",
+            "summary": "Set\u0020the\u0020layout\u0020type\u0020of\u0020the\u0020poll.",
+            "url": "classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#method_setLayoutType"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\PollCreateRequest\u003A\u003ALAYOUT_DEFAULT",
+            "name": "LAYOUT_DEFAULT",
+            "summary": "The,\u0020uhm,\u0020default\u0020layout\u0020type.",
+            "url": "classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#constant_LAYOUT_DEFAULT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Poll\\PollCreateRequest\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Poll-PollCreateRequest.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Poll\\PollMedia",
             "name": "PollMedia",
@@ -6393,7 +6398,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\StageInstance\u003A\u003APRIVACY_LEVEL_GROUP_ONLY",
             "name": "PRIVACY_LEVEL_GROUP_ONLY",
-            "summary": "",
+            "summary": "The\u0020Stage\u0020instance\u0020is\u0020visible\u0020to\u0020only\u0020guild\u0020members.",
             "url": "classes/Discord-Parts-Channel-StageInstance.html#constant_PRIVACY_LEVEL_GROUP_ONLY"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\StageInstance\u003A\u003A\u0024fillable",
@@ -9566,6 +9571,41 @@ Search.appendIndex(
             "summary": "Attributes\u0020that\u0020are\u0020hidden\u0020from\u0020debug\u0020info.",
             "url": "classes/Discord-Parts-Interactions-Request-Resolved.html#property_hidden"
         },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Lobby",
+            "name": "Lobby",
+            "summary": "Represents\u0020a\u0020lobby\u0020within\u0020Discord.\u0020See\u0020Managing\u0020Lobbies\u0020for\u0020more\u0020information.",
+            "url": "classes/Discord-Parts-Lobby-Lobby.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Lobby\u003A\u003Aleave\u0028\u0029",
+            "name": "leave",
+            "summary": "Removes\u0020the\u0020current\u0020user\u0020from\u0020the\u0020specified\u0020lobby.",
+            "url": "classes/Discord-Parts-Lobby-Lobby.html#method_leave"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Lobby\u003A\u003AgetLinkedChannelAttribute\u0028\u0029",
+            "name": "getLinkedChannelAttribute",
+            "summary": "Gets\u0020the\u0020linked_channel\u0020attribute.",
+            "url": "classes/Discord-Parts-Lobby-Lobby.html#method_getLinkedChannelAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Lobby\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Lobby-Lobby.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Member",
+            "name": "Member",
+            "summary": "Represents\u0020a\u0020member\u0020of\u0020a\u0020lobby,\u0020including\u0020optional\u0020metadata\u0020and\u0020flags.",
+            "url": "classes/Discord-Parts-Lobby-Member.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Member\u003A\u003AFLAG_CAN_LINK_LOBBY",
+            "name": "FLAG_CAN_LINK_LOBBY",
+            "summary": "User\u0020can\u0020link\u0020a\u0020text\u0020channel\u0020to\u0020a\u0020lobby.",
+            "url": "classes/Discord-Parts-Lobby-Member.html#constant_FLAG_CAN_LINK_LOBBY"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby\\Member\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Lobby-Member.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement",
             "name": "Entitlement",
             "summary": "Entitlements\u0020in\u0020Discord\u0020represent\u0020that\u0020a\u0020user\u0020or\u0020guild\u0020has\u0020access\u0020to\u0020a\u0020premium\u0020offering\u0020in\u0020your\u0020application.",
@@ -9631,40 +9671,40 @@ Search.appendIndex(
             "summary": "SKUs\u0020\u0028stock\u002Dkeeping\u0020units\u0029\u0020in\u0020Discord\u0020represent\u0020premium\u0020offerings\u0020that\u0020can\u0020be\u0020made\u0020available\u0020to\u0020your\u0020application\u0027s\u0020users\u0020or\u0020guilds.",
             "url": "classes/Discord-Parts-Monetization-SKU.html"
         },                {
-            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003ADURABLE",
-            "name": "DURABLE",
-            "summary": "",
-            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_DURABLE"
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003ATYPE_DURABLE",
+            "name": "TYPE_DURABLE",
+            "summary": "Durable\u0020one\u002Dtime\u0020purchase.",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_DURABLE"
         },                {
-            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003ACONSUMABLE",
-            "name": "CONSUMABLE",
-            "summary": "",
-            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_CONSUMABLE"
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003ATYPE_CONSUMABLE",
+            "name": "TYPE_CONSUMABLE",
+            "summary": "Consumable\u0020one\u002Dtime\u0020purchase.",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_CONSUMABLE"
         },                {
-            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003ASUBSCRIPTION",
-            "name": "SUBSCRIPTION",
-            "summary": "",
-            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_SUBSCRIPTION"
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003ATYPE_SUBSCRIPTION",
+            "name": "TYPE_SUBSCRIPTION",
+            "summary": "Represents\u0020a\u0020recurring\u0020subscription.",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_SUBSCRIPTION"
         },                {
-            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003ASUBSCRIPTION_GROUP",
-            "name": "SUBSCRIPTION_GROUP",
-            "summary": "",
-            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_SUBSCRIPTION_GROUP"
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003ATYPE_SUBSCRIPTION_GROUP",
+            "name": "TYPE_SUBSCRIPTION_GROUP",
+            "summary": "System\u002Dgenerated\u0020group\u0020for\u0020each\u0020SUBSCRIPTION\u0020SKU\u0020created.",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_TYPE_SUBSCRIPTION_GROUP"
         },                {
-            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003AAVAILABLE",
-            "name": "AVAILABLE",
-            "summary": "",
-            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_AVAILABLE"
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003AFLAG_AVAILABLE",
+            "name": "FLAG_AVAILABLE",
+            "summary": "SKU\u0020is\u0020available\u0020for\u0020purchase.",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_FLAG_AVAILABLE"
         },                {
-            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003AGUILD_SUBSCRIPTION",
-            "name": "GUILD_SUBSCRIPTION",
-            "summary": "",
-            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_GUILD_SUBSCRIPTION"
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003AFLAG_GUILD_SUBSCRIPTION",
+            "name": "FLAG_GUILD_SUBSCRIPTION",
+            "summary": "Recurring\u0020SKU\u0020that\u0020can\u0020be\u0020purchased\u0020by\u0020a\u0020user\u0020and\u0020applied\u0020to\u0020a\u0020single\u0020server.\u0020Grants\u0020access\u0020to\u0020every\u0020user\u0020in\u0020that\u0020server.",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_FLAG_GUILD_SUBSCRIPTION"
         },                {
-            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003AUSER_SUBSCRIPTION",
-            "name": "USER_SUBSCRIPTION",
-            "summary": "",
-            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_USER_SUBSCRIPTION"
+            "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003AFLAG_USER_SUBSCRIPTION",
+            "name": "FLAG_USER_SUBSCRIPTION",
+            "summary": "Recurring\u0020SKU\u0020purchased\u0020by\u0020a\u0020user\u0020for\u0020themselves.\u0020Grants\u0020access\u0020to\u0020the\u0020purchasing\u0020user\u0020in\u0020every\u0020server.",
+            "url": "classes/Discord-Parts-Monetization-SKU.html#constant_FLAG_USER_SUBSCRIPTION"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\SKU\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -9698,17 +9738,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003ASTATUS_ACTIVE",
             "name": "STATUS_ACTIVE",
-            "summary": "",
+            "summary": "Subscription\u0020is\u0020active\u0020and\u0020scheduled\u0020to\u0020renew.",
             "url": "classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_ACTIVE"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003ASTATUS_ENDING",
             "name": "STATUS_ENDING",
-            "summary": "",
+            "summary": "Subscription\u0020is\u0020active\u0020but\u0020will\u0020not\u0020renew.",
             "url": "classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_ENDING"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003ASTATUS_INACTIVE",
             "name": "STATUS_INACTIVE",
-            "summary": "",
+            "summary": "Subscription\u0020is\u0020inactive\u0020and\u0020not\u0020being\u0020charged.",
             "url": "classes/Discord-Parts-Monetization-Subscription.html#constant_STATUS_INACTIVE"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Subscription\u003A\u003A\u0024fillable",
@@ -12826,6 +12866,46 @@ Search.appendIndex(
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-Interaction-GlobalCommandRepository.html#property_class"
         },                {
+            "fqsen": "\\Discord\\Repository\\LobbyRepository",
+            "name": "LobbyRepository",
+            "summary": "Contains\u0020lobbies.",
+            "url": "classes/Discord-Repository-LobbyRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003AcreateLobby\u0028\u0029",
+            "name": "createLobby",
+            "summary": "Creates\u0020a\u0020new\u0020lobby,\u0020adding\u0020any\u0020of\u0020the\u0020specified\u0020members\u0020to\u0020it,\u0020if\u0020provided.",
+            "url": "classes/Discord-Repository-LobbyRepository.html#method_createLobby"
+        },                {
+            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003AaddMember\u0028\u0029",
+            "name": "addMember",
+            "summary": "Adds\u0020the\u0020provided\u0020user\u0020to\u0020the\u0020specified\u0020lobby.",
+            "url": "classes/Discord-Repository-LobbyRepository.html#method_addMember"
+        },                {
+            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003AremoveMember\u0028\u0029",
+            "name": "removeMember",
+            "summary": "Removes\u0020the\u0020provided\u0020user\u0020from\u0020the\u0020specified\u0020lobby.",
+            "url": "classes/Discord-Repository-LobbyRepository.html#method_removeMember"
+        },                {
+            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003Aleave\u0028\u0029",
+            "name": "leave",
+            "summary": "Removes\u0020the\u0020current\u0020user\u0020from\u0020the\u0020specified\u0020lobby.",
+            "url": "classes/Discord-Repository-LobbyRepository.html#method_leave"
+        },                {
+            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003AlinkChannelLobby\u0028\u0029",
+            "name": "linkChannelLobby",
+            "summary": "Links\u0020or\u0020unlinks\u0020a\u0020lobby\u0020to\u0020a\u0020channel.",
+            "url": "classes/Discord-Repository-LobbyRepository.html#method_linkChannelLobby"
+        },                {
+            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "",
+            "url": "classes/Discord-Repository-LobbyRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
+            "url": "classes/Discord-Repository-LobbyRepository.html#property_class"
+        },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository",
             "name": "EntitlementRepository",
             "summary": "Contains\u0020all\u0020entitlements\u0020for\u0020a\u0020given\u0020app,\u0020active\u0020and\u0020expired.",
@@ -15675,6 +15755,11 @@ Search.appendIndex(
             "name": "Request",
             "summary": "",
             "url": "namespaces/discord-parts-interactions-request.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Lobby",
+            "name": "Lobby",
+            "summary": "",
+            "url": "namespaces/discord-parts-lobby.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization",
             "name": "Monetization",
