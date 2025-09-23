@@ -147,7 +147,7 @@ class GuildRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state
      *
-     * @param Guild|string        $guild The guild or guild ID.
+     * @param Guild|string        $guild                              The guild or guild ID.
      * @param array               $data
      * @param ?string|null        $data['channel_id']                 The ID of the channel the user is currently in.
      * @param ?bool|null          $data['suppress']                   Toggles the user's suppress state.
@@ -176,7 +176,7 @@ class GuildRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/voice#modify-user-voice-state
      *
-     * @param Guild|string $guild The guild or guild ID.
+     * @param Guild|string $guild              The guild or guild ID.
      * @param array        $data
      * @param ?string|null $data['channel_id'] The ID of the channel the user is currently in.
      * @param ?bool|null   $data['suppress']   Toggles the user's suppress state.
