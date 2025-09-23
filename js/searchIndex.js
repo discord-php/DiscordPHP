@@ -6426,6 +6426,16 @@ Search.appendIndex(
             "summary": "Executes\u0020the\u0020webhook\u0020with\u0020an\u0020array\u0020of\u0020data.",
             "url": "classes/Discord-Parts-Channel-Webhook.html#method_execute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003AexecuteSlack\u0028\u0029",
+            "name": "executeSlack",
+            "summary": "Executes\u0020a\u0020Slack\u002Dcompatible\u0020webhook.",
+            "url": "classes/Discord-Parts-Channel-Webhook.html#method_executeSlack"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003AexecuteGitHub\u0028\u0029",
+            "name": "executeGitHub",
+            "summary": "Executes\u0020a\u0020GitHub\u002Dcompatible\u0020webhook.",
+            "url": "classes/Discord-Parts-Channel-Webhook.html#method_executeGitHub"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003AupdateMessage\u0028\u0029",
             "name": "updateMessage",
             "summary": "Edits\u0020a\u0020previously\u002Dsent\u0020webhook\u0020message\u0020from\u0020the\u0020same\u0020token.",
