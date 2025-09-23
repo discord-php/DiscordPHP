@@ -72,17 +72,17 @@ use function React\Promise\resolve;
  *
  * @version 10.0.0
  *
- * @property string                   $id               The unique identifier of the client.
- * @property string                   $username         The username of the client.
- * @property string                   $password         The password of the client (if they have provided it).
- * @property string                   $email            The email of the client.
- * @property bool                     $verified         Whether the client has verified their email.
- * @property string                   $avatar           The avatar URL of the client.
- * @property string                   $avatar_hash      The avatar hash of the client.
- * @property string                   $discriminator    The unique discriminator of the client.
- * @property bool                     $bot              Whether the client is a bot.
- * @property User                     $user             The user instance of the client.
- * @property Application              $application      The OAuth2 application of the bot.
+ * @property string      $id            The unique identifier of the client.
+ * @property string      $username      The username of the client.
+ * @property string      $password      The password of the client (if they have provided it).
+ * @property string      $email         The email of the client.
+ * @property bool        $verified      Whether the client has verified their email.
+ * @property string      $avatar        The avatar URL of the client.
+ * @property string      $avatar_hash   The avatar hash of the client.
+ * @property string      $discriminator The unique discriminator of the client.
+ * @property bool        $bot           Whether the client is a bot.
+ * @property User        $user          The user instance of the client.
+ * @property Application $application   The OAuth2 application of the bot.
  *
  * @property EmojiRepository          $emojis
  * @property GuildRepository          $guilds
