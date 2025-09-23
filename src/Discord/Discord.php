@@ -64,6 +64,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function React\Async\coroutine;
 use function React\Promise\all;
+use function React\Promise\resolve;
 
 /**
  * The Discord client class.
@@ -368,6 +369,13 @@ class Discord
      * @var bool Whether to use payload compression.
      */
     protected $usePayloadCompression;
+
+    /**
+     * An array of valid regions.
+     *
+     * @var ExCollectionInterface<Region>|null
+     */
+    protected $regions;
 
     /**
      * Creates a Discord client instance.
@@ -1376,12 +1384,18 @@ class Discord
      */
     public function listVoiceRegions(): PromiseInterface
     {
+        if (null !== $this->regions) {
+            return resolve($this->regions);
+        }
+
         return $this->http->get(Endpoint::LIST_VOICE_REGIONS)->then(function ($response) {
             $regions = Collection::for(Region::class);
 
             foreach ($response as $region) {
                 $regions->pushItem($this->factory->part(Region::class, (array) $region, true));
             }
+
+            $this->regions = $regions;
 
             return $regions;
         });
