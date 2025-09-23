@@ -85,13 +85,97 @@ class Webhook extends Part
      * @link https://discord.com/developers/docs/resources/webhook#execute-webhook
      *
      * @param MessageBuilder|array $data
-     * @param array                $queryparams Query string params to add to the request.
+     * @param array                $queryparams                    Query string params to add to the request.
+     * @param ?bool                $queryparams['wait']            Waits for server confirmation of message send before response, and returns the created message body (defaults to false; when false a message that is not saved does not return an error)
+     * @param ?string|int          $queryparams['thread_id']       Send a message to the specified thread within a webhook's channel. The thread will automatically be unarchived.
+     * @param ?bool                $queryparams['with_components'] Whether to respect the components field of the request. When enabled, allows application-owned webhooks to use all components and non-owned webhooks to use non-interactive components. (defaults to false)
      *
-     * @return PromiseInterface<void|Message> Message returned if wait parameter is set true.
+     * @return PromiseInterface<Message|void> Message returned if wait parameter is set true.
      */
     public function execute($data, array $queryparams = []): PromiseInterface
     {
         $endpoint = Endpoint::bind(Endpoint::WEBHOOK_EXECUTE, $this->id, $this->token);
+
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined(['wait', 'thread_id', 'with_components'])
+            ->setAllowedTypes('wait', 'bool')
+            ->setAllowedTypes('thread_id', ['string', 'int'])
+            ->setAllowedTypes('with_components', 'bool');
+
+        $options = $resolver->resolve($queryparams);
+
+        foreach ($options as $query => $param) {
+            $endpoint->addQuery($query, $param);
+        }
+
+        if ($data instanceof MessageBuilder && $data->requiresMultipart()) {
+            $multipart = $data->toMultipart();
+
+            $promise = $this->http->post($endpoint, (string) $multipart, $multipart->getHeaders());
+        } else {
+            $promise = $this->http->post($endpoint, $data);
+        }
+
+        if (! empty($queryparams['wait'])) {
+            return $promise->then(fn ($response) => $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true));
+        }
+
+        return $promise;
+    }
+
+    /**
+     * Executes a Slack-compatible webhook.
+     *
+     * Refer to Slack's documentation for more information. Discord does not support Slack's `channel`, `icon_emoji`, `mrkdwn`, or `mrkdwn_in` properties.
+     *
+     * @param ?string|int $queryparams['thread_id'] Id of the thread to send the message in.
+     * @param ?bool       $queryparams['wait']      Waits for server confirmation of message send before response (defaults to `true`; when `false` a message that is not saved does not return an error)
+     */
+    public function executeSlack($data, array $queryparams = []): PromiseInterface
+    {
+        $endpoint = Endpoint::bind(Endpoint::WEBHOOK_EXECUTE_SLACK, $this->id, $this->token);
+
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined(['wait', 'thread_id'])
+            ->setAllowedTypes('wait', 'bool')
+            ->setAllowedTypes('thread_id', ['string', 'int']);
+
+        $options = $resolver->resolve($queryparams);
+
+        foreach ($options as $query => $param) {
+            $endpoint->addQuery($query, $param);
+        }
+
+        if ($data instanceof MessageBuilder && $data->requiresMultipart()) {
+            $multipart = $data->toMultipart();
+
+            $promise = $this->http->post($endpoint, (string) $multipart, $multipart->getHeaders());
+        } else {
+            $promise = $this->http->post($endpoint, $data);
+        }
+
+        if (! empty($queryparams['wait'])) {
+            return $promise->then(fn ($response) => $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true));
+        }
+
+        return $promise;
+    }
+
+    /**
+     * Executes a GitHub-compatible webhook.
+     *
+     * Add a new webhook to your GitHub repo (in the repo's settings), and use this endpoint as the "Payload URL."
+     * You can choose what events your Discord channel receives by choosing the "Let me select individual events" option and selecting individual events for the new webhook you're configuring.
+     * The supported events are `commit_comment`, `create`, `delete`, `fork`, `issue_comment`, `issues`, `member`, `public`, `pull_request`, `pull_request_review`, `pull_request_review_comment`, `push`, `release`, `watch`, `check_run`, `check_suite`, `discussion`, and `discussion_comment`.
+     *
+     * @param ?string|int $queryparams['thread_id'] Id of the thread to send the message in.
+     * @param ?bool       $queryparams['wait']      Waits for server confirmation of message send before response (defaults to `true`; when `false` a message that is not saved does not return an error)
+     */
+    public function executeGitHub($data, array $queryparams = []): PromiseInterface
+    {
+        $endpoint = Endpoint::bind(Endpoint::WEBHOOK_EXECUTE_GITHUB, $this->id, $this->token);
 
         $resolver = new OptionsResolver();
         $resolver
