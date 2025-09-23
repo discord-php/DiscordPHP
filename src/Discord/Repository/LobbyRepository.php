@@ -60,7 +60,7 @@ class LobbyRepository extends AbstractRepository
      * @param ?Member[] $data['members']              Optional array of up to 25 users to be added to the lobby.
      * @param ?int      $data['idle_timeout_seconds'] Seconds to wait before shutting down a lobby after it becomes idle. Value can be between 5 and 604800 (7 days). See LobbyHandle for more details on this behavior.
      */
-    protected function createLobby($data = [])
+    public function createLobby($data = [])
     {
         return $this->http->post(Endpoint::LOBBIES, $data)
             ->then(fn ($response) => $this->factory->part($this->class, $response, true));
@@ -79,7 +79,7 @@ class LobbyRepository extends AbstractRepository
      *
      * @return PromiseInterface<Member>
      */
-    protected function addMember($lobby, $user, $data = []): PromiseInterface
+    public function addMember($lobby, $user, $data = []): PromiseInterface
     {
         if (! is_string($lobby)) {
             $lobby = $lobby->id;
@@ -103,7 +103,7 @@ class LobbyRepository extends AbstractRepository
      *
      * @return PromiseInterface
      */
-    protected function removeMember($lobby, $user): PromiseInterface
+    public function removeMember($lobby, $user): PromiseInterface
     {
         if (! is_string($lobby)) {
             $lobby = $lobby->id;
@@ -125,7 +125,7 @@ class LobbyRepository extends AbstractRepository
      *
      * @return PromiseInterface
      */
-    protected function leave($lobby): PromiseInterface
+    public function leave($lobby): PromiseInterface
     {
         if (! is_string($lobby)) {
             $lobby = $lobby->id;
@@ -144,7 +144,7 @@ class LobbyRepository extends AbstractRepository
      *
      * @return PromiseInterface<Lobby>
      */
-    protected function linkChannelLobby($lobby, $channel = null): PromiseInterface
+    public function linkChannelLobby($lobby, $channel = null): PromiseInterface
     {
         if (! is_string($lobby)) {
             $lobby = $lobby->id;
