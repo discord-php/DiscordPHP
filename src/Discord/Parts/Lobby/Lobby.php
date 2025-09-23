@@ -23,6 +23,7 @@ use React\Promise\PromiseInterface;
  * @since 10.28.0
  *
  * @link https://discord.com/developers/docs/resources/lobby#lobby-object
+ * @link https://discord.com/developers/docs/discord-social-sdk/development-guides/managing-lobbies
  *
  * @property      string       $id             The unique identifier of the lobby.
  * @property      string       $application_id The application that created the lobby.
