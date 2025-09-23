@@ -2996,6 +2996,11 @@ Search.appendIndex(
             "summary": "The\u0020payload\u0020compression\u0020setting.",
             "url": "classes/Discord-Discord.html#property_usePayloadCompression"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024regions",
+            "name": "regions",
+            "summary": "An\u0020array\u0020of\u0020valid\u0020regions.",
+            "url": "classes/Discord-Discord.html#property_regions"
+        },                {
             "fqsen": "\\Discord\\DiscordCommandClient",
             "name": "DiscordCommandClient",
             "summary": "Provides\u0020an\u0020easy\u0020way\u0020to\u0020have\u0020triggerable\u0020message\u0020based\u0020commands.",
@@ -7666,6 +7671,26 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020voice\u0020regions\u0020available.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getVoiceRegions"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetCurrentUserVoiceState\u0028\u0029",
+            "name": "getCurrentUserVoiceState",
+            "summary": "Returns\u0020the\u0020current\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getCurrentUserVoiceState"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetUserVoiceState\u0028\u0029",
+            "name": "getUserVoiceState",
+            "summary": "Returns\u0020the\u0020specified\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getUserVoiceState"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AmodifyCurrentUserVoiceState\u0028\u0029",
+            "name": "modifyCurrentUserVoiceState",
+            "summary": "Modify\u0020the\u0020current\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_modifyCurrentUserVoiceState"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AmodifyUserVoiceState\u0028\u0029",
+            "name": "modifyUserVoiceState",
+            "summary": "Updates\u0020another\u0020user\u0027s\u0020voice\u0020state.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_modifyUserVoiceState"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AcreateRole\u0028\u0029",
             "name": "createRole",
             "summary": "Creates\u0020a\u0020role.",
@@ -7955,11 +7980,6 @@ Search.appendIndex(
             "name": "repositories",
             "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
             "url": "classes/Discord-Parts-Guild-Guild.html#property_repositories"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003A\u0024regions",
-            "name": "regions",
-            "summary": "An\u0020array\u0020of\u0020valid\u0020regions.",
-            "url": "classes/Discord-Parts-Guild-Guild.html#property_regions"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildPreview",
             "name": "GuildPreview",

@@ -268,7 +268,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">164</span>
+    <span class="phpdocumentor-element-found-in__line">166</span>
 
     </aside>
 
@@ -1159,13 +1159,6 @@ Channels, Roles, Bans etc.</p>
 <dd>The HTTP client.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Parts-Guild-Guild.html#property_regions">$regions</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|null            </span>
-</dt>
-<dd>An array of valid regions.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Parts-Guild-Guild.html#property_repositories">$repositories</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
@@ -1331,6 +1324,13 @@ Channels, Roles, Bans etc.</p>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Guild-Guild.html#method_getCurrentUserVoiceState">getCurrentUserVoiceState()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceStateUpdate">VoiceStateUpdate</abbr></a>&gt;    </span>
+</dt>
+<dd>Returns the current user&#039;s voice state in the guild.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_getDiscord">getDiscord()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>    </span>
@@ -1392,7 +1392,14 @@ Channels, Roles, Bans etc.</p>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Parts-Guild-Guild.html#method_getVoiceRegions">getVoiceRegions()</a>
+    <a class="" href="classes/Discord-Parts-Guild-Guild.html#method_getUserVoiceState">getUserVoiceState()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceStateUpdate">VoiceStateUpdate</abbr></a>&gt;    </span>
+</dt>
+<dd>Returns the specified user&#039;s voice state in the guild.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="-deprecated" href="classes/Discord-Parts-Guild-Guild.html#method_getVoiceRegions">getVoiceRegions()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>&gt;    </span>
 </dt>
@@ -1441,6 +1448,20 @@ JSON. Used for JsonSerializable.</dd>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
 </dt>
 <dd>Leaves the guild.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Guild-Guild.html#method_modifyCurrentUserVoiceState">modifyCurrentUserVoiceState()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
+</dt>
+<dd>Modify the current user&#039;s voice state in the guild.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Guild-Guild.html#method_modifyUserVoiceState">modifyUserVoiceState()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
+</dt>
+<dd>Updates another user&#039;s voice state.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_offsetExists">offsetExists()</a>
@@ -1925,7 +1946,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">175</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
@@ -1956,7 +1977,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">173</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -1987,7 +2008,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">174</span>
+    <span class="phpdocumentor-element-found-in__line">176</span>
 
     </aside>
 
@@ -2018,7 +2039,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">213</span>
+    <span class="phpdocumentor-element-found-in__line">215</span>
 
     </aside>
 
@@ -2049,7 +2070,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">211</span>
+    <span class="phpdocumentor-element-found-in__line">213</span>
 
     </aside>
 
@@ -2080,7 +2101,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">212</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
@@ -2111,7 +2132,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">184</span>
+    <span class="phpdocumentor-element-found-in__line">186</span>
 
     </aside>
 
@@ -2142,7 +2163,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">183</span>
 
     </aside>
 
@@ -2173,7 +2194,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">182</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
@@ -2204,7 +2225,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">180</span>
+    <span class="phpdocumentor-element-found-in__line">182</span>
 
     </aside>
 
@@ -2235,7 +2256,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">183</span>
+    <span class="phpdocumentor-element-found-in__line">185</span>
 
     </aside>
 
@@ -2266,7 +2287,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">178</span>
+    <span class="phpdocumentor-element-found-in__line">180</span>
 
     </aside>
 
@@ -2297,7 +2318,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">177</span>
+    <span class="phpdocumentor-element-found-in__line">179</span>
 
     </aside>
 
@@ -2328,7 +2349,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">170</span>
+    <span class="phpdocumentor-element-found-in__line">172</span>
 
     </aside>
 
@@ -2359,7 +2380,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">171</span>
+    <span class="phpdocumentor-element-found-in__line">173</span>
 
     </aside>
 
@@ -2390,7 +2411,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">191</span>
 
     </aside>
 
@@ -2421,7 +2442,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">186</span>
+    <span class="phpdocumentor-element-found-in__line">188</span>
 
     </aside>
 
@@ -2452,7 +2473,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">187</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 
@@ -2483,7 +2504,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">188</span>
+    <span class="phpdocumentor-element-found-in__line">190</span>
 
     </aside>
 
@@ -2514,7 +2535,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">191</span>
+    <span class="phpdocumentor-element-found-in__line">193</span>
 
     </aside>
 
@@ -2545,7 +2566,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">192</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
     </aside>
 
@@ -2576,7 +2597,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">193</span>
+    <span class="phpdocumentor-element-found-in__line">195</span>
 
     </aside>
 
@@ -2607,7 +2628,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">194</span>
+    <span class="phpdocumentor-element-found-in__line">196</span>
 
     </aside>
 
@@ -2638,7 +2659,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">168</span>
+    <span class="phpdocumentor-element-found-in__line">170</span>
 
     </aside>
 
@@ -2669,7 +2690,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">201</span>
+    <span class="phpdocumentor-element-found-in__line">203</span>
 
     </aside>
 
@@ -2701,7 +2722,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">203</span>
+    <span class="phpdocumentor-element-found-in__line">205</span>
 
     </aside>
 
@@ -2733,7 +2754,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">197</span>
+    <span class="phpdocumentor-element-found-in__line">199</span>
 
     </aside>
 
@@ -2765,7 +2786,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">199</span>
+    <span class="phpdocumentor-element-found-in__line">201</span>
 
     </aside>
 
@@ -2797,7 +2818,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">207</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 
     </aside>
 
@@ -2829,7 +2850,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">205</span>
+    <span class="phpdocumentor-element-found-in__line">207</span>
 
     </aside>
 
@@ -2861,7 +2882,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">209</span>
+    <span class="phpdocumentor-element-found-in__line">211</span>
 
     </aside>
 
@@ -6703,7 +6724,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">218</span>
+    <span class="phpdocumentor-element-found-in__line">220</span>
 
     </aside>
 
@@ -6878,45 +6899,6 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
             -protected
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_regions">
-        $regions
-        <a href="classes/Discord-Parts-Guild-Guild.html#property_regions" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">340</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">An array of valid regions.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$regions</span>
-    </code>
-
-    
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_repositories">
         $repositories
         <a href="classes/Discord-Parts-Guild-Guild.html#property_repositories" class="headerlink"><i class="fas fa-link"></i></a>
@@ -6927,7 +6909,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">316</span>
+    <span class="phpdocumentor-element-found-in__line">318</span>
 
     </aside>
 
@@ -7021,7 +7003,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">273</span>
+    <span class="phpdocumentor-element-found-in__line">275</span>
 
     </aside>
 
@@ -7485,7 +7467,7 @@ be passed in with JSON and modified. Requires the MANAGE_GUILD permission.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1094</span>
+    <span class="phpdocumentor-element-found-in__line">1188</span>
 
     </aside>
 
@@ -7576,7 +7558,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">354</span>
+    <span class="phpdocumentor-element-found-in__line">349</span>
 
     </aside>
 
@@ -7658,7 +7640,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1480</span>
+    <span class="phpdocumentor-element-found-in__line">1574</span>
 
     </aside>
 
@@ -7697,7 +7679,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">630</span>
+    <span class="phpdocumentor-element-found-in__line">724</span>
 
     </aside>
 
@@ -7800,7 +7782,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1315</span>
+    <span class="phpdocumentor-element-found-in__line">1409</span>
 
     </aside>
 
@@ -7882,7 +7864,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">602</span>
+    <span class="phpdocumentor-element-found-in__line">696</span>
 
     </aside>
 
@@ -7966,7 +7948,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">706</span>
+    <span class="phpdocumentor-element-found-in__line">800</span>
 
     </aside>
 
@@ -8217,7 +8199,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">881</span>
+    <span class="phpdocumentor-element-found-in__line">975</span>
 
     </aside>
 
@@ -8292,7 +8274,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">925</span>
+    <span class="phpdocumentor-element-found-in__line">1019</span>
 
     </aside>
 
@@ -8389,7 +8371,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1424</span>
+    <span class="phpdocumentor-element-found-in__line">1518</span>
 
     </aside>
 
@@ -8431,6 +8413,67 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getCurrentUserVoiceState">
+        getCurrentUserVoiceState()
+        <a href="classes/Discord-Parts-Guild-Guild.html#method_getCurrentUserVoiceState" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">586</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the current user&#039;s voice state in the guild.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getCurrentUserVoiceState</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceStateUpdate">VoiceStateUpdate</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Guild-Guild.html#method_getCurrentUserVoiceState#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/voice#get-current-user-voice-state"> https://discord.com/developers/docs/resources/voice#get-current-user-voice-state </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.26.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceStateUpdate">VoiceStateUpdate</abbr></a>&gt;</span>
             </section>
 
 </article>
@@ -8551,7 +8594,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">485</span>
+    <span class="phpdocumentor-element-found-in__line">480</span>
 
     </aside>
 
@@ -8614,7 +8657,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1040</span>
+    <span class="phpdocumentor-element-found-in__line">1134</span>
 
     </aside>
 
@@ -8910,7 +8953,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1451</span>
+    <span class="phpdocumentor-element-found-in__line">1545</span>
 
     </aside>
 
@@ -8961,6 +9004,71 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getUserVoiceState">
+        getUserVoiceState()
+        <a href="classes/Discord-Parts-Guild-Guild.html#method_getUserVoiceState" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">601</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the specified user&#039;s voice state in the guild.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getUserVoiceState</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceStateUpdate">VoiceStateUpdate</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$user</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The user or user ID.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Guild-Guild.html#method_getUserVoiceState#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/voice#get-user-voice-state"> https://discord.com/developers/docs/resources/voice#get-user-voice-state </a>
+                    
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceStateUpdate">VoiceStateUpdate</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+            -deprecated                                            "
+>
     <h4 class="phpdocumentor-element__name" id="method_getVoiceRegions">
         getVoiceRegions()
         <a href="classes/Discord-Parts-Guild-Guild.html#method_getVoiceRegions" class="headerlink"><i class="fas fa-link"></i></a>
@@ -8969,17 +9077,24 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">575</span>
+    <span class="phpdocumentor-element-found-in__line">572</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Gets the voice regions available.</p>
 
-    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getVoiceRegions</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
+        </div>
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>Use <code class="prettyprint">Discord::listVoiceRegions</code> instead.</p>
+
+            </article>
         </div>
     
     
@@ -9022,7 +9137,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1145</span>
+    <span class="phpdocumentor-element-found-in__line">1239</span>
 
     </aside>
 
@@ -9097,7 +9212,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1300</span>
+    <span class="phpdocumentor-element-found-in__line">1394</span>
 
     </aside>
 
@@ -9150,7 +9265,7 @@ to <code class="prettyprint">false</code>, forcing 'pruned' to null.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1233</span>
+    <span class="phpdocumentor-element-found-in__line">1327</span>
 
     </aside>
 
@@ -9322,7 +9437,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">806</span>
+    <span class="phpdocumentor-element-found-in__line">900</span>
 
     </aside>
 
@@ -9338,6 +9453,157 @@ JSON. Used for JsonSerializable.</p>
     
     
     
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_modifyCurrentUserVoiceState">
+        modifyCurrentUserVoiceState()
+        <a href="classes/Discord-Parts-Guild-Guild.html#method_modifyCurrentUserVoiceState" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">630</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Modify the current user&#039;s voice state in the guild.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">modifyCurrentUserVoiceState</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Caveats:</p>
+<ul>
+<li>channel_id must currently point to a stage channel.</li>
+<li>Current user must already have joined channel_id.</li>
+<li>You must have the MUTE_MEMBERS permission to unsuppress yourself. You can always suppress yourself.</li>
+<li>You must have the REQUEST_TO_SPEAK permission to request to speak. You can always clear your own request to speak.</li>
+<li>You are able to set request_to_speak_timestamp to any present or future time.</li>
+</ul>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$data</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Guild-Guild.html#method_modifyCurrentUserVoiceState#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state"> https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state </a>
+                    
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_modifyUserVoiceState">
+        modifyUserVoiceState()
+        <a href="classes/Discord-Parts-Guild-Guild.html#method_modifyUserVoiceState" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">669</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Updates another user&#039;s voice state.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">modifyUserVoiceState</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Caveats:</p>
+<ul>
+<li>channel_id must currently point to a stage channel.</li>
+<li>User must already have joined channel_id.</li>
+<li>You must have the MUTE_MEMBERS permission. (Since suppression is the only thing that is available currently.)</li>
+<li>When unsuppressed, non-bot users will have their request_to_speak_timestamp set to the current time. Bot users will not.</li>
+<li>When suppressed, the user will have their request_to_speak_timestamp removed.</li>
+</ul>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$user</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$data</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Guild-Guild.html#method_modifyUserVoiceState#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/voice#modify-user-voice-state"> https://discord.com/developers/docs/resources/voice#modify-user-voice-state </a>
+                    
+                                    </dd>
+                                            </dl>
 
     
 
@@ -9619,7 +9885,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">993</span>
+    <span class="phpdocumentor-element-found-in__line">1087</span>
 
     </aside>
 
@@ -9728,7 +9994,7 @@ with a provided string.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1377</span>
+    <span class="phpdocumentor-element-found-in__line">1471</span>
 
     </aside>
 
@@ -9845,7 +10111,7 @@ manage_guild for INVITES_DISABLED or RAID_ALERTS_ENABLED.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">821</span>
+    <span class="phpdocumentor-element-found-in__line">915</span>
 
     </aside>
 
@@ -9922,7 +10188,7 @@ manage_guild for INVITES_DISABLED or RAID_ALERTS_ENABLED.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">515</span>
+    <span class="phpdocumentor-element-found-in__line">510</span>
 
     </aside>
 
@@ -10060,7 +10326,7 @@ manage_guild for INVITES_DISABLED or RAID_ALERTS_ENABLED.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1346</span>
+    <span class="phpdocumentor-element-found-in__line">1440</span>
 
     </aside>
 
@@ -10138,7 +10404,7 @@ manage_guild for INVITES_DISABLED or RAID_ALERTS_ENABLED.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">943</span>
+    <span class="phpdocumentor-element-found-in__line">1037</span>
 
     </aside>
 
@@ -10215,7 +10481,7 @@ e.g. <code class="prettyprint">[1 =&gt; 'role_id_1', 3 =&gt; 'role_id_3']</code>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1189</span>
+    <span class="phpdocumentor-element-found-in__line">1283</span>
 
     </aside>
 
@@ -10294,7 +10560,7 @@ e.g. <code class="prettyprint">[1 =&gt; 'role_id_1', 3 =&gt; 'role_id_3']</code>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1263</span>
+    <span class="phpdocumentor-element-found-in__line">1357</span>
 
     </aside>
 
@@ -10385,7 +10651,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">850</span>
+    <span class="phpdocumentor-element-found-in__line">944</span>
 
     </aside>
 
@@ -12366,7 +12632,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">542</span>
+    <span class="phpdocumentor-element-found-in__line">537</span>
 
     </aside>
 
@@ -12424,7 +12690,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">530</span>
+    <span class="phpdocumentor-element-found-in__line">525</span>
 
     </aside>
 
@@ -12506,7 +12772,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">554</span>
+    <span class="phpdocumentor-element-found-in__line">549</span>
 
     </aside>
 
@@ -12552,7 +12818,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1170</span>
+    <span class="phpdocumentor-element-found-in__line">1264</span>
 
     </aside>
 
@@ -12700,7 +12966,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">362</span>
+    <span class="phpdocumentor-element-found-in__line">357</span>
 
     </aside>
 
@@ -12758,7 +13024,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">425</span>
+    <span class="phpdocumentor-element-found-in__line">420</span>
 
     </aside>
 
@@ -12803,7 +13069,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">387</span>
+    <span class="phpdocumentor-element-found-in__line">382</span>
 
     </aside>
 
@@ -12848,7 +13114,7 @@ channel_id =&gt; the widget channel id</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Guild.php"><a href="files/src-discord-parts-guild-guild.html"><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">453</span>
+    <span class="phpdocumentor-element-found-in__line">448</span>
 
     </aside>
 
@@ -13200,7 +13466,6 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#property_fillable">$fillable</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_http">$http</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#property_regions">$regions</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#property_repositories">$repositories</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories_cache">$repositories_cache</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#property_visible">$visible</a></li>
@@ -13230,6 +13495,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_getBotPermissions">getBotPermissions()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getConstants">getConstants()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_getCreatableAttributes">getCreatableAttributes()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_getCurrentUserVoiceState">getCurrentUserVoiceState()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getDiscord">getDiscord()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getIconAttribute">getIconAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_getInvites">getInvites()</a></li>
@@ -13239,13 +13505,16 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getRepositoryAttributes">getRepositoryAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getSplashAttribute">getSplashAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_getUpdatableAttributes">getUpdatableAttributes()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_getVoiceRegions">getVoiceRegions()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_getUserVoiceState">getUserVoiceState()</a></li>
+                                            <li class="-deprecated"><a href="classes/Discord-Parts-Guild-Guild.html#method_getVoiceRegions">getVoiceRegions()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_getWelcomeScreen">getWelcomeScreen()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_getWidget">getWidget()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_getWidgetSettings">getWidgetSettings()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_isPartial">isPartial()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_jsonSerialize">jsonSerialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_leave">leave()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_modifyCurrentUserVoiceState">modifyCurrentUserVoiceState()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Guild-Guild.html#method_modifyUserVoiceState">modifyUserVoiceState()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetExists">offsetExists()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetGet">offsetGet()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetSet">offsetSet()</a></li>
