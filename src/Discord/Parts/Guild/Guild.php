@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
-use Discord\Builders\Builder;
 use Discord\Builders\ChannelBuilder;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
@@ -48,7 +47,6 @@ use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
 use Discord\Repository\Guild\MessageRepository;
-use Discord\Voice\Region;
 use React\Promise\PromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -145,6 +143,7 @@ use function React\Promise\resolve;
  * @property      StickerRepository  $stickers                                          Custom guild stickers.
  * @property      bool               $premium_progress_bar_enabled                      Whether the guild has the boost progress bar enabled.
  * @property      string|null        $safety_alerts_channel_id                          The id of the channel where admins and moderators of Community guilds receive safety alerts from Discord.
+ * @property      IncidentsData      $incidents_data                                    The incidents data for this guild.
  *
  * @property Carbon|null              $joined_at              A timestamp of when the current user joined the guild.
  * @property bool|null                $large                  Whether the guild is considered 'large' (over 250 members).
@@ -256,6 +255,7 @@ class Guild extends Part
         'nsfw_level',
         'premium_progress_bar_enabled',
         'safety_alerts_channel_id',
+        'incidents_data',
 
         // events
         'joined_at',
@@ -466,6 +466,11 @@ class Guild extends Part
         }
 
         $this->attributes['stickers'] = $stickers;
+    }
+
+    protected function getIncidentsDataAttribute(): IncidentsData
+    {
+        return $this->attributePartHelper('incidents_data', IncidentsData::class);
     }
 
     /**

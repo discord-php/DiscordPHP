@@ -23,10 +23,10 @@ use Discord\Parts\Part;
  *
  * @since 10.29.0
  *
- * @property      ?Carbon|null        $invites_disabled_until   When invites get enabled again (ISO8601 timestamp).
- * @property      ?Carbon|null        $dms_disabled_until       When direct messages get enabled again (ISO8601 timestamp).
- * @property      ?Carbon|null        $dm_spam_detected_at      When the DM spam was detected (ISO8601 timestamp).
- * @property      ?Carbon|null        $raid_detected_at         When the raid was detected (ISO8601 timestamp).
+ * @property ?Carbon|null $invites_disabled_until When invites get enabled again (ISO8601 timestamp).
+ * @property ?Carbon|null $dms_disabled_until     When direct messages get enabled again (ISO8601 timestamp).
+ * @property ?Carbon|null $dm_spam_detected_at    When the DM spam was detected (ISO8601 timestamp).
+ * @property ?Carbon|null $raid_detected_at       When the raid was detected (ISO8601 timestamp).
  */
 class IncidentsData extends Part
 {
