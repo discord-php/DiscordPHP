@@ -175,6 +175,10 @@ class Application extends Part
      */
     public function updateApplicationRoleConnectionMetadataRecords($data = []): PromiseInterface
     {
+        if (count($data) > 5) {
+            return reject(new \InvalidArgumentException('You can only have up to 5 application role connection metadata records.'));
+        }
+
         return $this->http->put(Endpoint::bind(Endpoint::APPLICATION_ROLE_CONNECTION_METADATA, $this->id), $data)
             ->then(function ($response) {
                 $collection = Collection::for(ApplicationRoleConnectionMetadata::class);
