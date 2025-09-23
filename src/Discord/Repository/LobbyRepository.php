@@ -53,6 +53,20 @@ class LobbyRepository extends AbstractRepository
     protected $class = Lobby::class;
 
     /**
+     * Creates a new lobby, adding any of the specified members to it, if provided.
+     *
+     * @param array     $data
+     * @param ?array    $data['metadata']             Optional dictionary of string key/value pairs. The max total length is 1000.
+     * @param ?Member[] $data['members']              Optional array of up to 25 users to be added to the lobby.
+     * @param ?int      $data['idle_timeout_seconds'] Seconds to wait before shutting down a lobby after it becomes idle. Value can be between 5 and 604800 (7 days). See LobbyHandle for more details on this behavior.
+     */
+    protected function createLobby($data = [])
+    {
+        return $this->http->post(Endpoint::LOBBIES, $data)
+            ->then(fn ($response) => $this->factory->part($this->class, $response, true));
+    }
+
+    /**
      * Adds the provided user to the specified lobby.
      *
      * If called when the user is already a member of the lobby will update fields such as metadata on that user instead.
