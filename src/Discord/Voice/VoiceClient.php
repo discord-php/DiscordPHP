@@ -476,7 +476,7 @@ class VoiceClient extends EventEmitter
     /**
      * Starts the voice client.
      *
-     * @return void|bool
+     * @return bool|void
      */
     public function start()
     {
