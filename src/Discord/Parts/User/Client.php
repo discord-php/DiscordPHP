@@ -19,6 +19,7 @@ use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
+use Discord\Repository\LobbyRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\SoundRepository;
 use Discord\Repository\UserRepository;
@@ -79,6 +80,7 @@ class Client extends Part
     protected $repositories = [
         'emojis' => EmojiRepository::class,
         'guilds' => GuildRepository::class,
+        'lobbies' => LobbyRepository::class,
         'private_channels' => PrivateChannelRepository::class,
         'sounds' => SoundRepository::class,
         'users' => UserRepository::class,
