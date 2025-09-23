@@ -15,6 +15,7 @@ namespace Discord\Parts\Lobby;
 
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
+use React\Promise\PromiseInterface;
 
 /**
  * Represents a lobby within Discord. See Managing Lobbies for more information.
@@ -41,6 +42,16 @@ class Lobby extends Part
         'members',
         'linked_channel',
     ];
+
+    /**
+     * Removes the current user from the specified lobby.
+     *
+     * It is safe to call this even if the user is no longer a member of the lobby, but will fail if the lobby does not exist.
+     */
+    public function leave(): PromiseInterface
+    {
+        return $this->discord->lobbies->leave($this->id);
+    }
 
     /**
      * Gets the linked_channel attribute.
