@@ -38,6 +38,7 @@ use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
 use Discord\Parts\Permissions\RolePermission;
+use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Repository\Guild\AutoModerationRuleRepository;
 use Discord\Repository\Guild\CommandPermissionsRepository;
 use Discord\Repository\Guild\GuildCommandRepository;
@@ -47,6 +48,7 @@ use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
 use Discord\Repository\Guild\MessageRepository;
+use Discord\Voice\Region;
 use React\Promise\PromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -333,13 +335,6 @@ class Guild extends Part
     ];
 
     /**
-     * An array of valid regions.
-     *
-     * @var ExCollectionInterface|null
-     */
-    protected $regions;
-
-    /**
      * Attempts to save a channel to the Discord servers.
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
@@ -571,20 +566,119 @@ class Guild extends Part
      * @link https://discord.com/developers/docs/resources/voice#list-voice-regions
      *
      * @return PromiseInterface<Collection>
+     *
+     * @deprecated 10.23.0 Use `Discord::listVoiceRegions` instead.
      */
     public function getVoiceRegions(): PromiseInterface
     {
-        if (null !== $this->regions) {
-            return resolve($this->regions);
+        return $this->discord->listVoiceRegions();
+    }
+
+    /**
+     * Returns the current user's voice state in the guild.
+     *
+     * @link https://discord.com/developers/docs/resources/voice#get-current-user-voice-state
+     *
+     * @return PromiseInterface<VoiceStateUpdate>
+     *
+     * @since 10.26.0
+     */
+    public function getCurrentUserVoiceState(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::GUILD_USER_CURRENT_VOICE_STATE)
+            ->then(fn ($response) => $this->factory->part(VoiceStateUpdate::class, (array) $response, true));
+    }
+
+    /**
+     * Returns the specified user's voice state in the guild.
+     *
+     * @link https://discord.com/developers/docs/resources/voice#get-user-voice-state
+     *
+     * @param User|string $user The user or user ID.
+     *
+     * @return PromiseInterface<VoiceStateUpdate>
+     */
+    public function getUserVoiceState($user): PromiseInterface
+    {
+        if ($user instanceof User) {
+            $user = $user->id;
         }
 
-        return $this->http->get('voice/regions')->then(function ($regions) {
-            $regions = new Collection($regions);
+        return $this->http->get(Endpoint::GUILD_USER_VOICE_STATE)
+            ->then(fn ($response) => $this->factory->part(VoiceStateUpdate::class, (array) $response, true));
+    }
 
-            $this->regions = $regions;
+    /**
+     * Modify the current user's voice state in the guild.
+     *
+     * Caveats:
+     * - channel_id must currently point to a stage channel.
+     * - Current user must already have joined channel_id.
+     * - You must have the MUTE_MEMBERS permission to unsuppress yourself. You can always suppress yourself.
+     * - You must have the REQUEST_TO_SPEAK permission to request to speak. You can always clear your own request to speak.
+     * - You are able to set request_to_speak_timestamp to any present or future time.
+     *
+     * @link https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state
+     *
+     * @param array               $data
+     * @param ?string|null        $data['channel_id']                 The ID of the channel the user is currently in.
+     * @param ?bool|null          $data['suppress']                   Toggles the user's suppress state.
+     * @param ?Carbon|string|null $data['request_to_speak_timestamp'] ISO8601 timestamp to set the user's request to speak.
+     *
+     * @return PromiseInterface
+     */
+    public function modifyCurrentUserVoiceState(array $data): PromiseInterface
+    {
+        if (isset($data['suppress']) && $data['suppress'] === false) {
+            $botperms = $this->getBotPermissions();
 
-            return $regions;
-        });
+            if ($botperms && ! $botperms->mute_members) {
+                return reject(new NoPermissionsException("You do not have permission to mute members in the guild {$this->id}."));
+            }
+        }
+
+        if (isset($data['request_to_speak_timestamp'])) {
+            $botperms = $this->getBotPermissions();
+
+            if ($botperms && ! $botperms->request_to_speak) {
+                return reject(new NoPermissionsException("You do not have permission to request to speak in the guild {$this->id}."));
+            }
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_USER_CURRENT_VOICE_STATE, $this->id), $data);
+    }
+
+    /**
+     * Updates another user's voice state.
+     *
+     * Caveats:
+     * - channel_id must currently point to a stage channel.
+     * - User must already have joined channel_id.
+     * - You must have the MUTE_MEMBERS permission. (Since suppression is the only thing that is available currently.)
+     * - When unsuppressed, non-bot users will have their request_to_speak_timestamp set to the current time. Bot users will not.
+     * - When suppressed, the user will have their request_to_speak_timestamp removed.
+     *
+     * @link https://discord.com/developers/docs/resources/voice#modify-user-voice-state
+     *
+     * @param array        $data
+     * @param ?string|null $data['channel_id'] The ID of the channel the user is currently in.
+     * @param ?bool|null   $data['suppress']   Toggles the user's suppress state.
+     *
+     * @return PromiseInterface
+     */
+    public function modifyUserVoiceState($user, array $data): PromiseInterface
+    {
+        $botperms = $this->getBotPermissions();
+
+        if ($botperms && ! $botperms->mute_members) {
+            return reject(new NoPermissionsException("You do not have permission to mute members in the guild {$this->id}."));
+        }
+
+        if ($user instanceof User) {
+            $user = $user->id;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_USER_VOICE_STATE, $this->id, $user), $data);
     }
 
     /**
