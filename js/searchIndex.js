@@ -7656,6 +7656,11 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020stickers\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_setStickersAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetIncidentsDataAttribute\u0028\u0029",
+            "name": "getIncidentsDataAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getIncidentsDataAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetInvites\u0028\u0029",
             "name": "getInvites",
             "summary": "Returns\u0020the\u0020channels\u0020invites.",
@@ -8325,6 +8330,36 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-GuildTraitObject.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\IncidentsData",
+            "name": "IncidentsData",
+            "summary": "The\u0020incidents\u0020data\u0020for\u0020a\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-IncidentsData.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\IncidentsData\u003A\u003AgetInvitesDisabledUntilAttribute\u0028\u0029",
+            "name": "getInvitesDisabledUntilAttribute",
+            "summary": "Get\u0020the\u0020invites_disabled_until\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-IncidentsData.html#method_getInvitesDisabledUntilAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\IncidentsData\u003A\u003AgetDmsDisabledUntilAttribute\u0028\u0029",
+            "name": "getDmsDisabledUntilAttribute",
+            "summary": "Get\u0020the\u0020dms_disabled_until\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-IncidentsData.html#method_getDmsDisabledUntilAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\IncidentsData\u003A\u003AgetDmSpamDetectedAtAttribute\u0028\u0029",
+            "name": "getDmSpamDetectedAtAttribute",
+            "summary": "Get\u0020the\u0020dm_spam_detected_at\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-IncidentsData.html#method_getDmSpamDetectedAtAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\IncidentsData\u003A\u003AgetRaidDetectedAtAttribute\u0028\u0029",
+            "name": "getRaidDetectedAtAttribute",
+            "summary": "Get\u0020the\u0020raid_detected_at\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-IncidentsData.html#method_getRaidDetectedAtAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\IncidentsData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-IncidentsData.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Integration",
             "name": "Integration",
