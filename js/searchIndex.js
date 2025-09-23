@@ -7611,6 +7611,11 @@ Search.appendIndex(
             "summary": "A\u0020Guild\u0020is\u0020Discord\u0027s\u0020equivalent\u0020of\u0020a\u0020server.\u0020It\u0020contains\u0020all\u0020the\u0020Members,\nChannels,\u0020Roles,\u0020Bans\u0020etc.",
             "url": "classes/Discord-Parts-Guild-Guild.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AcreateChannel\u0028\u0029",
+            "name": "createChannel",
+            "summary": "Attempts\u0020to\u0020save\u0020a\u0020channel\u0020to\u0020the\u0020Discord\u0020servers.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_createChannel"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AsetChannelsAttribute\u0028\u0029",
             "name": "setChannelsAttribute",
             "summary": "",
