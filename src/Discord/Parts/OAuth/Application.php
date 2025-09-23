@@ -169,11 +169,13 @@ class Application extends Part
      *
      * @since v10.29.0
      *
+     * @param ApplicationRoleConnectionMetadata[] $data The new metadata records.
+     *
      * @return PromiseInterface<ExCollectionInterface<ApplicationRoleConnectionMetadata>|ApplicationRoleConnectionMetadata[]> A collection of application role connection metadata objects.
      */
-    public function updateApplicationRoleConnectionMetadataRecords(): PromiseInterface
+    public function updateApplicationRoleConnectionMetadataRecords($data = []): PromiseInterface
     {
-        return $this->http->put(Endpoint::bind(Endpoint::APPLICATION_ROLE_CONNECTION_METADATA, $this->id))
+        return $this->http->put(Endpoint::bind(Endpoint::APPLICATION_ROLE_CONNECTION_METADATA, $this->id), $data)
             ->then(function ($response) {
                 $collection = Collection::for(ApplicationRoleConnectionMetadata::class);
 
