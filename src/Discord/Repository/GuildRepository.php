@@ -45,7 +45,6 @@ class GuildRepository extends AbstractRepository
         'update' => Endpoint::GUILD,
         'delete' => Endpoint::GUILD,
         'leave' => Endpoint::USER_CURRENT_GUILD,
-        'preview' => Endpoint::GUILD_PREVIEW,
     ];
 
     /**
