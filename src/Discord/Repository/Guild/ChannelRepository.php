@@ -60,7 +60,7 @@ class ChannelRepository extends AbstractRepository
      *
      * @since 10.25.0
      *
-     * @param Guild|string $guild           The guild or guild ID that the channel should be created on.
+     * @param Guild|string                  $guild   The guild or guild ID that the channel should be created on.
      * @param Channel|ChannelBuilder|string $channel The Channel builder that should be converted into a channel, or the name of the channel.
      * @param string|null                   $reason  Reason for Audit Log.
      *
