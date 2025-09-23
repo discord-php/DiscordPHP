@@ -12,6 +12,7 @@ declare(strict_types=1);
  */
 
 namespace Discord\Parts\Channel\Poll;
+
 /**
  * A poll create request object that can be attached to a message.
  *
@@ -22,4 +23,5 @@ namespace Discord\Parts\Channel\Poll;
  * @deprecated 10.28.0 Use `PollCreateRequest`.
  */
 class Poll extends PollCreateRequest
-{}
+{
+}
