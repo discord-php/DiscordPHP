@@ -16,6 +16,8 @@ namespace Discord\Repository;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\GuildPreview;
+use Discord\Parts\User\User;
+use Discord\Parts\WebSockets\VoiceStateUpdate;
 use React\Promise\PromiseInterface;
 
 /**
@@ -91,5 +93,106 @@ class GuildRepository extends AbstractRepository
 
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_PREVIEW, $guild_id))
             ->then(fn ($data) => $data ? $this->factory->create(GuildPreview::class, $data, true) : null);
+    }
+
+    /**
+     * Returns the current user's voice state in the guild.
+     *
+     * @link https://discord.com/developers/docs/resources/voice#get-current-user-voice-state
+     *
+     * @param Guild|string $guild The guild or guild ID.
+     *
+     * @return PromiseInterface<VoiceStateUpdate>
+     *
+     * @since 10.26.0
+     */
+    public function getCurrentUserVoiceState($guild): PromiseInterface
+    {
+        if ($guild instanceof Guild) {
+            $guild = $guild->id;
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_USER_CURRENT_VOICE_STATE), $guild)
+            ->then(fn ($response) => $this->factory->part(VoiceStateUpdate::class, (array) $response, true));
+    }
+
+    /**
+     * Returns the specified user's voice state in the guild.
+     *
+     * @link https://discord.com/developers/docs/resources/voice#get-user-voice-state
+     *
+     * @param User|string $user The user or user ID.
+     *
+     * @return PromiseInterface<VoiceStateUpdate>
+     */
+    public function getUserVoiceState($guild, $user): PromiseInterface
+    {
+        if ($user instanceof User) {
+            $user = $user->id;
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_USER_VOICE_STATE, $guild, $user))
+            ->then(fn ($response) => $this->factory->part(VoiceStateUpdate::class, (array) $response, true));
+    }
+
+    /**
+     * Modify the current user's voice state in the guild.
+     *
+     * Caveats:
+     * - channel_id must currently point to a stage channel.
+     * - Current user must already have joined channel_id.
+     * - You must have the MUTE_MEMBERS permission to unsuppress yourself. You can always suppress yourself.
+     * - You must have the REQUEST_TO_SPEAK permission to request to speak. You can always clear your own request to speak.
+     * - You are able to set request_to_speak_timestamp to any present or future time.
+     *
+     * @link https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state
+     *
+     * @param Guild|string        $guild The guild or guild ID.
+     * @param array               $data
+     * @param ?string|null        $data['channel_id']                 The ID of the channel the user is currently in.
+     * @param ?bool|null          $data['suppress']                   Toggles the user's suppress state.
+     * @param ?Carbon|string|null $data['request_to_speak_timestamp'] ISO8601 timestamp to set the user's request to speak.
+     *
+     * @return PromiseInterface
+     */
+    public function modifyCurrentUserVoiceState($guild, array $data): PromiseInterface
+    {
+        if ($guild instanceof Guild) {
+            $guild = $guild->id;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_USER_CURRENT_VOICE_STATE, $guild), $data);
+    }
+
+    /**
+     * Updates another user's voice state.
+     *
+     * Caveats:
+     * - channel_id must currently point to a stage channel.
+     * - User must already have joined channel_id.
+     * - You must have the MUTE_MEMBERS permission. (Since suppression is the only thing that is available currently.)
+     * - When unsuppressed, non-bot users will have their request_to_speak_timestamp set to the current time. Bot users will not.
+     * - When suppressed, the user will have their request_to_speak_timestamp removed.
+     *
+     * @link https://discord.com/developers/docs/resources/voice#modify-user-voice-state
+     *
+     * @param Guild|string $guild The guild or guild ID.
+     * @param array        $data
+     * @param ?string|null $data['channel_id'] The ID of the channel the user is currently in.
+     * @param ?bool|null   $data['suppress']   Toggles the user's suppress state.
+     *
+     * @return PromiseInterface
+     */
+    public function modifyUserVoiceState($guild, $user, array $data): PromiseInterface
+    {
+        if ($guild instanceof Guild) {
+            $guild = $guild->id;
+        }
+
+        if ($user instanceof User) {
+            $user = $user->id;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_USER_VOICE_STATE, $guild, $user), $data);
     }
 }

@@ -585,8 +585,7 @@ class Guild extends Part
      */
     public function getCurrentUserVoiceState(): PromiseInterface
     {
-        return $this->http->get(Endpoint::GUILD_USER_CURRENT_VOICE_STATE)
-            ->then(fn ($response) => $this->factory->part(VoiceStateUpdate::class, (array) $response, true));
+        return $this->discord->guilds->getCurrentUserVoiceState($this->id);
     }
 
     /**
@@ -604,8 +603,7 @@ class Guild extends Part
             $user = $user->id;
         }
 
-        return $this->http->get(Endpoint::GUILD_USER_VOICE_STATE)
-            ->then(fn ($response) => $this->factory->part(VoiceStateUpdate::class, (array) $response, true));
+        return $this->discord->guilds->getUserVoiceState($this->id, $user);
     }
 
     /**
@@ -645,7 +643,7 @@ class Guild extends Part
             }
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_USER_CURRENT_VOICE_STATE, $this->id), $data);
+        return $this->discord->guilds->modifyCurrentUserVoiceState($this->id, $data);
     }
 
     /**
@@ -678,7 +676,7 @@ class Guild extends Part
             $user = $user->id;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_USER_VOICE_STATE, $this->id, $user), $data);
+        return $this->discord->guilds->modifyUserVoiceState($this->id, $user, $data);
     }
 
     /**
