@@ -340,6 +340,23 @@ class Guild extends Part
     protected $regions;
 
     /**
+     * Attempts to save a channel to the Discord servers.
+     *
+     * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
+     *
+     * @since 10.25.2
+     *
+     * @param Channel|ChannelBuilder|string $channel The Channel builder that should be converted into a channel, or the name of the channel.
+     * @param string|null                   $reason  Reason for Audit Log.
+     *
+     * @return PromiseInterface<Channel>
+     */
+    public function createChannel($channel, ?string $reason = null): PromiseInterface
+    {
+        return $this->channels->createChannel($this->id, $channel, $reason);
+    }
+
+    /**
      * @inheritDoc
      */
     protected function setChannelsAttribute(?array $channels): void
