@@ -265,7 +265,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
@@ -419,6 +419,12 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-OAuth-Application.html#property_approximate_user_authorization_count">$approximate_user_authorization_count</a>
+    <span>
+                        &nbsp;: int|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#property_approximate_user_install_count">$approximate_user_install_count</a>
     <span>
                         &nbsp;: int|null            </span>
@@ -486,6 +492,24 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-OAuth-Application.html#property_event_webhooks_status">$event_webhooks_status</a>
+    <span>
+                        &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-OAuth-Application.html#property_event_webhooks_types">$event_webhooks_types</a>
+    <span>
+                        &nbsp;: array&lt;string|int, string&gt;|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-OAuth-Application.html#property_event_webhooks_url">$event_webhooks_url</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#property_flags">$flags</a>
     <span>
                         &nbsp;: int            </span>
@@ -519,12 +543,6 @@
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#property_install_params">$install_params</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Parts-OAuth-InstallParams.html"><abbr title="\Discord\Parts\OAuth\InstallParams">InstallParams</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-OAuth-Application.html#property_integration_types">$integration_types</a>
-    <span>
-                        &nbsp;: array&lt;string|int, int&gt;|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -769,6 +787,13 @@
 <dd>Returns a serialized activity instance, if it exists.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-OAuth-Application.html#method_getApplicationRoleConnectionMetadataRecords">getApplicationRoleConnectionMetadataRecords()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"><abbr title="\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata">ApplicationRoleConnectionMetadata</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"><abbr title="\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata">ApplicationRoleConnectionMetadata</abbr></a>&gt;&gt;    </span>
+</dt>
+<dd>Returns a list of application role connection metadata objects for the given application.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_getConstants">getConstants()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -894,6 +919,13 @@ JSON. Used for JsonSerializable.</dd>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Unserializes some data and stores it. Used for Serializable.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-OAuth-Application.html#method_updateApplicationRoleConnectionMetadataRecords">updateApplicationRoleConnectionMetadataRecords()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"><abbr title="\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata">ApplicationRoleConnectionMetadata</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"><abbr title="\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata">ApplicationRoleConnectionMetadata</abbr></a>&gt;&gt;    </span>
+</dt>
+<dd>Updates and returns a list of application role connection metadata objects for the given application.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_afterConstruct">afterConstruct()</a>
@@ -1028,7 +1060,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
@@ -1059,7 +1091,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -1090,7 +1122,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -1121,7 +1153,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">130</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -1152,7 +1184,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">127</span>
+    <span class="phpdocumentor-element-found-in__line">121</span>
 
     </aside>
 
@@ -1183,7 +1215,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -1214,7 +1246,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">131</span>
+    <span class="phpdocumentor-element-found-in__line">125</span>
 
     </aside>
 
@@ -1245,7 +1277,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">132</span>
+    <span class="phpdocumentor-element-found-in__line">126</span>
 
     </aside>
 
@@ -1276,7 +1308,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -1307,7 +1339,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
@@ -1338,7 +1370,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">135</span>
+    <span class="phpdocumentor-element-found-in__line">129</span>
 
     </aside>
 
@@ -1369,7 +1401,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">136</span>
+    <span class="phpdocumentor-element-found-in__line">130</span>
 
     </aside>
 
@@ -1400,7 +1432,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -1500,6 +1532,46 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>The application's approximate count of the app's guild membership.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_approximate_user_authorization_count">
+        $approximate_user_authorization_count
+        <a href="classes/Discord-Parts-OAuth-Application.html#property_approximate_user_authorization_count" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">int|null</span>
+    <span class="phpdocumentor-signature__name">$approximate_user_authorization_count</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The approximate count of users that have OAuth2 authorizations for the app.</p>
 </section>
 
     
@@ -1958,6 +2030,126 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_event_webhooks_status">
+        $event_webhooks_status
+        <a href="classes/Discord-Parts-OAuth-Application.html#property_event_webhooks_status" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$event_webhooks_status</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>If webhook events are enabled for the app. <code class="prettyprint">1</code> (default) means disabled, <code class="prettyprint">2</code> means enabled, and <code class="prettyprint">3</code> means disabled by Discord.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_event_webhooks_types">
+        $event_webhooks_types
+        <a href="classes/Discord-Parts-OAuth-Application.html#property_event_webhooks_types" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, string&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$event_webhooks_types</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>List of Webhook event types the app subscribes to.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_event_webhooks_url">
+        $event_webhooks_url
+        <a href="classes/Discord-Parts-OAuth-Application.html#property_event_webhooks_url" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$event_webhooks_url</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Event webhooks URL for the app to receive webhook events.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_flags">
         $flags
         <a href="classes/Discord-Parts-OAuth-Application.html#property_flags" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2183,44 +2375,6 @@ JSON. Used for JsonSerializable.</dd>
         <section class="phpdocumentor-description"><p>Settings for the application's default in-app authorization link, if enabled.</p>
 </section>
 
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_integration_types">
-        $integration_types
-        <a href="classes/Discord-Parts-OAuth-Application.html#property_integration_types" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">array&lt;string|int, int&gt;|null</span>
-    <span class="phpdocumentor-signature__name">$integration_types</span>
-    </code>
-
-    
     
     
 
@@ -3057,7 +3211,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -3068,51 +3222,7 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[
-    &#039;id&#039;,
-    &#039;name&#039;,
-    &#039;icon&#039;,
-    &#039;description&#039;,
-    // &#039;type&#039;,
-    &#039;bot&#039;,
-    // &#039;is_monetized&#039;,
-    &#039;guild_id&#039;,
-    &#039;bot_public&#039;,
-    &#039;bot_require_code_grant&#039;,
-    &#039;verify_key&#039;,
-    &#039;flags&#039;,
-    // &#039;hook&#039;,
-    &#039;redirect_uris&#039;,
-    &#039;interactions_endpoint_url&#039;,
-    &#039;role_connections_verification_url&#039;,
-    &#039;owner&#039;,
-    &#039;approximate_guild_count&#039;,
-    &#039;approximate_user_install_count&#039;,
-    // &#039;interactions_event_types&#039;,
-    // &#039;interactions_version&#039;,
-    // &#039;explicit_content_filter&#039;,
-    // &#039;rpc_application_state&#039;,
-    // &#039;store_application_state&#039;,
-    // &#039;verification_state&#039;,
-    // &#039;integration_public&#039;,
-    // &#039;integration_require_code_grant&#039;,
-    // &#039;discoverability_state&#039;,
-    // &#039;discovery_eligibility_flags&#039;,
-    // &#039;monetization_state&#039;,
-    // &#039;monetization_eligibility_flags&#039;,
-    &#039;team&#039;,
-    &#039;integration_types&#039;,
-    &#039;integration_types_config&#039;,
-    &#039;cover_image&#039;,
-    &#039;primary_sku_id&#039;,
-    &#039;slug&#039;,
-    &#039;rpc_origins&#039;,
-    &#039;terms_of_service_url&#039;,
-    &#039;privacy_policy_url&#039;,
-    &#039;custom_install_url&#039;,
-    &#039;install_params&#039;,
-    &#039;tags&#039;,
-]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;name&#039;, &#039;icon&#039;, &#039;description&#039;, &#039;rpc_origins&#039;, &#039;bot_public&#039;, &#039;bot_require_code_grant&#039;, &#039;bot&#039;, &#039;terms_of_service_url&#039;, &#039;privacy_policy_url&#039;, &#039;owner&#039;, &#039;verify_key&#039;, &#039;team&#039;, &#039;guild_id&#039;, &#039;guild&#039;, &#039;primary_sku_id&#039;, &#039;slug&#039;, &#039;cover_image&#039;, &#039;flags&#039;, &#039;approximate_guild_count&#039;, &#039;approximate_user_install_count&#039;, &#039;approximate_user_authorization_count&#039;, &#039;redirect_uris&#039;, &#039;interactions_endpoint_url&#039;, &#039;role_connections_verification_url&#039;, &#039;event_webhooks_url&#039;, &#039;event_webhooks_status&#039;, &#039;event_webhooks_types&#039;, &#039;tags&#039;, &#039;install_params&#039;, &#039;integration_types_config&#039;, &#039;custom_install_url&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -3238,7 +3348,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">135</span>
 
     </aside>
 
@@ -3900,7 +4010,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">158</span>
+    <span class="phpdocumentor-element-found-in__line">198</span>
 
     </aside>
 
@@ -3953,6 +4063,71 @@ JSON. Used for JsonSerializable.</dd>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-ActivityInstance.html"><abbr title="\Discord\Parts\OAuth\ActivityInstance">ActivityInstance</abbr></a>|null&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getApplicationRoleConnectionMetadataRecords">
+        getApplicationRoleConnectionMetadataRecords()
+        <a href="classes/Discord-Parts-OAuth-Application.html#method_getApplicationRoleConnectionMetadataRecords" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">151</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns a list of application role connection metadata objects for the given application.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getApplicationRoleConnectionMetadataRecords</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"><abbr title="\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata">ApplicationRoleConnectionMetadata</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"><abbr title="\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata">ApplicationRoleConnectionMetadata</abbr></a>&gt;&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-OAuth-Application.html#method_getApplicationRoleConnectionMetadataRecords#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records"> https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.29.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"><abbr title="\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata">ApplicationRoleConnectionMetadata</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"><abbr title="\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata">ApplicationRoleConnectionMetadata</abbr></a>&gt;&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>A collection of application role connection metadata objects.</p>
+</section>
+
             </section>
 
 </article>
@@ -4028,7 +4203,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">264</span>
+    <span class="phpdocumentor-element-found-in__line">304</span>
 
     </aside>
 
@@ -4170,7 +4345,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">186</span>
+    <span class="phpdocumentor-element-found-in__line">226</span>
 
     </aside>
 
@@ -4234,7 +4409,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">305</span>
+    <span class="phpdocumentor-element-found-in__line">345</span>
 
     </aside>
 
@@ -4390,7 +4565,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">317</span>
+    <span class="phpdocumentor-element-found-in__line">357</span>
 
     </aside>
 
@@ -4944,6 +5119,72 @@ JSON. Used for JsonSerializable.</p>
                     <article
         class="phpdocumentor-element
             -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_updateApplicationRoleConnectionMetadataRecords">
+        updateApplicationRoleConnectionMetadataRecords()
+        <a href="classes/Discord-Parts-OAuth-Application.html#method_updateApplicationRoleConnectionMetadataRecords" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">174</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Updates and returns a list of application role connection metadata objects for the given application.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">updateApplicationRoleConnectionMetadataRecords</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"><abbr title="\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata">ApplicationRoleConnectionMetadata</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"><abbr title="\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata">ApplicationRoleConnectionMetadata</abbr></a>&gt;&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-OAuth-Application.html#method_updateApplicationRoleConnectionMetadataRecords#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records"> https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>v10.29.0</p>
+</section>
+
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"><abbr title="\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata">ApplicationRoleConnectionMetadata</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"><abbr title="\Discord\Parts\OAuth\ApplicationRoleConnectionMetadata">ApplicationRoleConnectionMetadata</abbr></a>&gt;&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>A collection of application role connection metadata objects.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
             -protected
                                                         "
 >
@@ -5462,7 +5703,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">215</span>
+    <span class="phpdocumentor-element-found-in__line">255</span>
 
     </aside>
 
@@ -5505,7 +5746,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">283</span>
+    <span class="phpdocumentor-element-found-in__line">323</span>
 
     </aside>
 
@@ -5548,7 +5789,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">205</span>
+    <span class="phpdocumentor-element-found-in__line">245</span>
 
     </aside>
 
@@ -5591,7 +5832,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">293</span>
+    <span class="phpdocumentor-element-found-in__line">333</span>
 
     </aside>
 
@@ -5634,7 +5875,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">233</span>
+    <span class="phpdocumentor-element-found-in__line">273</span>
 
     </aside>
 
@@ -5677,7 +5918,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">251</span>
+    <span class="phpdocumentor-element-found-in__line">291</span>
 
     </aside>
 
@@ -6022,6 +6263,7 @@ static as we may move it outside this class in future.</p>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_activity_instances">$activity_instances</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_approximate_guild_count">$approximate_guild_count</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_approximate_user_authorization_count">$approximate_user_authorization_count</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_approximate_user_install_count">$approximate_user_install_count</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_bot">$bot</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_bot_public">$bot_public</a></li>
@@ -6033,13 +6275,15 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_custom_install_url">$custom_install_url</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_description">$description</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_entitlements">$entitlements</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_event_webhooks_status">$event_webhooks_status</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_event_webhooks_types">$event_webhooks_types</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_event_webhooks_url">$event_webhooks_url</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_flags">$flags</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_guild_id">$guild_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_icon">$icon</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_icon_hash">$icon_hash</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_install_params">$install_params</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_integration_types">$integration_types</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_integration_types_config">$integration_types_config</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_interactions_endpoint_url">$interactions_endpoint_url</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#property_invite_url">$invite_url</a></li>
@@ -6082,6 +6326,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#method_getActivityInstance">getActivityInstance()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#method_getApplicationRoleConnectionMetadataRecords">getApplicationRoleConnectionMetadataRecords()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getConstants">getConstants()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#method_getCoverImageAttribute">getCoverImageAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getCreatableAttributes">getCreatableAttributes()</a></li>
@@ -6100,6 +6345,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_offsetUnset">offsetUnset()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_serialize">serialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_unserialize">unserialize()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-OAuth-Application.html#method_updateApplicationRoleConnectionMetadataRecords">updateApplicationRoleConnectionMetadataRecords()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_afterConstruct">afterConstruct()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_attributeCarbonHelper">attributeCarbonHelper()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_attributeCollectionHelper">attributeCollectionHelper()</a></li>

@@ -236,12 +236,12 @@
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts.html">Parts</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-monetization.html">Monetization</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-oauth.html">OAuth</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Entitlement
+    ApplicationRoleConnectionMetadata
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
@@ -263,20 +263,23 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Entitlements in Discord represent that a user or guild has access to a premium offering in your application.</p>
+            <p class="phpdocumentor-summary">A representation of role connection metadata for an application.</p>
 
 
+    <section class="phpdocumentor-description"><p>Each metadata type offers a comparison operation that allows guilds to configure role requirements based on metadata values stored by the bot.
+Bots specify a metadata value for each user and guilds specify the required guild's configured value within the guild role settings.</p>
+</section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -284,34 +287,16 @@
                     <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/entitlement#entitlement-object"> https://discord.com/developers/docs/resources/entitlement#entitlement-object </a>
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata"> https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata </a>
                     
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.15.0</span>
+                                            <span class="phpdocumentor-tag-link">10.29.0</span>
                                                                                 
                                              
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>?Carbons|null $starts_at      Start date at which the entitlement is valid (ISO8601 timestamp).</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>?Carbon|null  $ends_at        Date at which the entitlement is no longer valid (ISO8601 timestamp).</p>
-</section>
-
                                     </dd>
                                             </dl>
 
@@ -321,7 +306,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Parts-Monetization-Entitlement.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -333,79 +318,75 @@
 
 <h4 id="toc-constants">
     Constants
-    <a href="classes/Discord-Parts-Monetization-Entitlement.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#constant_APPLICATION_SUBSCRIPTION">APPLICATION_SUBSCRIPTION</a>
-    <span>
-        &nbsp;= 8                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#constant_DEVELOPER_GIFT">DEVELOPER_GIFT</a>
-    <span>
-        &nbsp;= 3                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#constant_FREE_PURCHASE">FREE_PURCHASE</a>
-    <span>
-        &nbsp;= 5                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#constant_PREMIUM_PURCHASE">PREMIUM_PURCHASE</a>
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_BOOLEAN_EQUAL">TYPE_BOOLEAN_EQUAL</a>
     <span>
         &nbsp;= 7                            </span>
 </dt>
+<dd>The metadata value (integer) is equal to the guild&#039;s configured value (integer; 1).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#constant_PREMIUM_SUBSCRIPTION">PREMIUM_SUBSCRIPTION</a>
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_BOOLEAN_NOT_EQUAL">TYPE_BOOLEAN_NOT_EQUAL</a>
     <span>
-        &nbsp;= 2                            </span>
+        &nbsp;= 8                            </span>
 </dt>
+<dd>The metadata value (integer) is not equal to the guild&#039;s configured value (integer; 1).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#constant_PURCHASE">PURCHASE</a>
-    <span>
-        &nbsp;= 1                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#constant_TEST_MODE_PURCHASE">TEST_MODE_PURCHASE</a>
-    <span>
-        &nbsp;= 4                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#constant_USER_GIFT">USER_GIFT</a>
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_DATETIME_GREATER_THAN_OR_EQUAL">TYPE_DATETIME_GREATER_THAN_OR_EQUAL</a>
     <span>
         &nbsp;= 6                            </span>
 </dt>
+<dd>The metadata value (ISO8601 string) is greater than or equal to the guild&#039;s configured value (integer; days before current date).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_DATETIME_LESS_THAN_OR_EQUAL">TYPE_DATETIME_LESS_THAN_OR_EQUAL</a>
+    <span>
+        &nbsp;= 5                            </span>
+</dt>
+<dd>The metadata value (ISO8601 string) is less than or equal to the guild&#039;s configured value (integer; days before current date).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_EQUAL">TYPE_INTEGER_EQUAL</a>
+    <span>
+        &nbsp;= 3                            </span>
+</dt>
+<dd>The metadata value (integer) is equal to the guild&#039;s configured value (integer).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_GREATER_THAN_OR_EQUAL">TYPE_INTEGER_GREATER_THAN_OR_EQUAL</a>
+    <span>
+        &nbsp;= 2                            </span>
+</dt>
+<dd>The metadata value (integer) is less than or equal to the guild&#039;s configured value (integer).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_LESS_THAN_OR_EQUAL">TYPE_INTEGER_LESS_THAN_OR_EQUAL</a>
+    <span>
+        &nbsp;= 1                            </span>
+</dt>
+<dd>The metadata value (integer) is less than or equal to the guild&#039;s configured value (integer).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_NOT_EQUAL">TYPE_INTEGER_NOT_EQUAL</a>
+    <span>
+        &nbsp;= 4                            </span>
+</dt>
+<dd>The metadata value (integer) is not equal to the guild&#039;s configured value (integer).</dd>
 
     </dl>
 
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-Parts-Monetization-Entitlement.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#property_application_id">$application_id</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#property_consumed">$consumed</a>
-    <span>
-                        &nbsp;: bool|null            </span>
-</dt>
-
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Part.html#property_created">$created</a>
     <span>
@@ -414,21 +395,33 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#property_deleted">$deleted</a>
-    <span>
-                        &nbsp;: bool            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#property_guild_id">$guild_id</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#property_id">$id</a>
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_description">$description</a>
     <span>
                         &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_description_localizations">$description_localizations</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_key">$key</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_name">$name</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_name_localizations">$name_localizations</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -439,21 +432,9 @@
 <dd>Custom script data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#property_sku_id">$sku_id</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#property_type">$type</a>
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_type">$type</a>
     <span>
                         &nbsp;: int            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#property_user_id">$user_id</a>
-    <span>
-                        &nbsp;: string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
@@ -478,7 +459,7 @@
 <dd>The factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#property_fillable">$fillable</a>
+    <a class="" href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_fillable">$fillable</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -523,7 +504,7 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Parts-Monetization-Entitlement.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -744,20 +725,6 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Gets an attribute on the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#method_getEndsAtAttribute">getEndsAtAttribute()</a>
-    <span>
-                                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null    </span>
-</dt>
-<dd>Return the ends_at attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Monetization-Entitlement.html#method_getStartsAtAttribute">getStartsAtAttribute()</a>
-    <span>
-                                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null    </span>
-</dt>
-<dd>Return the starts_at attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -786,122 +753,30 @@ JSON. Used for JsonSerializable.</dd>
     <section class="phpdocumentor-constants">
         <h3 class="phpdocumentor-elements__header" id="constants">
             Constants
-            <a href="classes/Discord-Parts-Monetization-Entitlement.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_APPLICATION_SUBSCRIPTION">
-        APPLICATION_SUBSCRIPTION
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_APPLICATION_SUBSCRIPTION" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_BOOLEAN_EQUAL">
+        TYPE_BOOLEAN_EQUAL
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_BOOLEAN_EQUAL" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The metadata value (integer) is equal to the guild&#039;s configured value (integer; 1).</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">APPLICATION_SUBSCRIPTION</span>
-    = <span class="phpdocumentor-signature__default-value">8</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_DEVELOPER_GIFT">
-        DEVELOPER_GIFT
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_DEVELOPER_GIFT" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">41</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">DEVELOPER_GIFT</span>
-    = <span class="phpdocumentor-signature__default-value">3</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FREE_PURCHASE">
-        FREE_PURCHASE
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_FREE_PURCHASE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">43</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FREE_PURCHASE</span>
-    = <span class="phpdocumentor-signature__default-value">5</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_PREMIUM_PURCHASE">
-        PREMIUM_PURCHASE
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_PREMIUM_PURCHASE" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">45</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">PREMIUM_PURCHASE</span>
+    <span class="phpdocumentor-signature__name">TYPE_BOOLEAN_EQUAL</span>
     = <span class="phpdocumentor-signature__default-value">7</span>
 </code>
 
@@ -914,25 +789,154 @@ JSON. Used for JsonSerializable.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_PREMIUM_SUBSCRIPTION">
-        PREMIUM_SUBSCRIPTION
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_PREMIUM_SUBSCRIPTION" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_BOOLEAN_NOT_EQUAL">
+        TYPE_BOOLEAN_NOT_EQUAL
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_BOOLEAN_NOT_EQUAL" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">52</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The metadata value (integer) is not equal to the guild&#039;s configured value (integer; 1).</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_BOOLEAN_NOT_EQUAL</span>
+    = <span class="phpdocumentor-signature__default-value">8</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_DATETIME_GREATER_THAN_OR_EQUAL">
+        TYPE_DATETIME_GREATER_THAN_OR_EQUAL
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_DATETIME_GREATER_THAN_OR_EQUAL" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">48</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The metadata value (ISO8601 string) is greater than or equal to the guild&#039;s configured value (integer; days before current date).</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_DATETIME_GREATER_THAN_OR_EQUAL</span>
+    = <span class="phpdocumentor-signature__default-value">6</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_DATETIME_LESS_THAN_OR_EQUAL">
+        TYPE_DATETIME_LESS_THAN_OR_EQUAL
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_DATETIME_LESS_THAN_OR_EQUAL" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">46</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The metadata value (ISO8601 string) is less than or equal to the guild&#039;s configured value (integer; days before current date).</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_DATETIME_LESS_THAN_OR_EQUAL</span>
+    = <span class="phpdocumentor-signature__default-value">5</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_INTEGER_EQUAL">
+        TYPE_INTEGER_EQUAL
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_EQUAL" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">42</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The metadata value (integer) is equal to the guild&#039;s configured value (integer).</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_INTEGER_EQUAL</span>
+    = <span class="phpdocumentor-signature__default-value">3</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_INTEGER_GREATER_THAN_OR_EQUAL">
+        TYPE_INTEGER_GREATER_THAN_OR_EQUAL
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_GREATER_THAN_OR_EQUAL" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The metadata value (integer) is less than or equal to the guild&#039;s configured value (integer).</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">PREMIUM_SUBSCRIPTION</span>
+    <span class="phpdocumentor-signature__name">TYPE_INTEGER_GREATER_THAN_OR_EQUAL</span>
     = <span class="phpdocumentor-signature__default-value">2</span>
 </code>
 
@@ -945,25 +949,26 @@ JSON. Used for JsonSerializable.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_PURCHASE">
-        PURCHASE
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_PURCHASE" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_INTEGER_LESS_THAN_OR_EQUAL">
+        TYPE_INTEGER_LESS_THAN_OR_EQUAL
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_LESS_THAN_OR_EQUAL" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The metadata value (integer) is less than or equal to the guild&#039;s configured value (integer).</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">PURCHASE</span>
+    <span class="phpdocumentor-signature__name">TYPE_INTEGER_LESS_THAN_OR_EQUAL</span>
     = <span class="phpdocumentor-signature__default-value">1</span>
 </code>
 
@@ -976,57 +981,27 @@ JSON. Used for JsonSerializable.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TEST_MODE_PURCHASE">
-        TEST_MODE_PURCHASE
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_TEST_MODE_PURCHASE" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_INTEGER_NOT_EQUAL">
+        TYPE_INTEGER_NOT_EQUAL
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_NOT_EQUAL" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">42</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">TEST_MODE_PURCHASE</span>
-    = <span class="phpdocumentor-signature__default-value">4</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_USER_GIFT">
-        USER_GIFT
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_USER_GIFT" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">The metadata value (integer) is not equal to the guild&#039;s configured value (integer).</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">USER_GIFT</span>
-    = <span class="phpdocumentor-signature__default-value">6</span>
+    <span class="phpdocumentor-signature__name">TYPE_INTEGER_NOT_EQUAL</span>
+    = <span class="phpdocumentor-signature__default-value">4</span>
 </code>
 
 
@@ -1043,89 +1018,9 @@ JSON. Used for JsonSerializable.</dd>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-Monetization-Entitlement.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_application_id">
-        $application_id
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#property_application_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$application_id</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>ID of the parent application.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_consumed">
-        $consumed
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#property_consumed" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">bool|null</span>
-    <span class="phpdocumentor-signature__name">$consumed</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>For consumable items, whether or not the entitlement has been consumed.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
                     <article
         class="
             phpdocumentor-element
@@ -1174,95 +1069,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_deleted">
-        $deleted
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#property_deleted" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_description">
+        $description
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_description" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$deleted</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Whether the entitlement was deleted.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_guild_id">
-        $guild_id
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$guild_id</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>ID of the guild that is granted access to the entitlement's SKU.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_id">
-        $id
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1273,10 +1088,170 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$id</span>
+    <span class="phpdocumentor-signature__name">$description</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>ID of the entitlement.</p>
+        <section class="phpdocumentor-description"><p>Description of the metadata field (1-200 characters).</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_description_localizations">
+        $description_localizations
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_description_localizations" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$description_localizations</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Translations of the description (dictionary with keys in available locales).</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_key">
+        $key
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_key" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$key</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Dictionary key for the metadata field (a-z, 0-9, or _; 1-50 characters).</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_name">
+        $name
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$name</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Name of the metadata field (1-100 characters).</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_name_localizations">
+        $name_localizations
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_name_localizations" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$name_localizations</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Translations of the name (dictionary with keys in available locales).</p>
 </section>
 
     
@@ -1342,55 +1317,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_sku_id">
-        $sku_id
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#property_sku_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$sku_id</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>ID of the SKU.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_type">
         $type
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_type" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1404,47 +1339,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$type</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Type of entitlement.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_user_id">
-        $user_id
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#property_user_id" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$user_id</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>ID of the user that is granted access to the entitlement's SKU.</p>
+        <section class="phpdocumentor-description"><p>Type of metadata value (see ApplicationRoleConnectionMetadataType).</p>
 </section>
 
     
@@ -1587,15 +1482,15 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_fillable">
         $fillable
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php"><a href="files/src-discord-parts-oauth-applicationroleconnectionmetadata.html"><abbr title="src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php">ApplicationRoleConnectionMetadata.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -1606,7 +1501,7 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;sku_id&#039;, &#039;application_id&#039;, &#039;user_id&#039;, &#039;type&#039;, &#039;deleted&#039;, &#039;starts_at&#039;, &#039;ends_at&#039;, &#039;guild_id&#039;, &#039;consumed&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;type&#039;, &#039;key&#039;, &#039;name&#039;, &#039;name_localizations&#039;, &#039;description&#039;, &#039;description_localizations&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -1615,12 +1510,12 @@ JSON. Used for JsonSerializable.</dd>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
@@ -1839,7 +1734,7 @@ JSON. Used for JsonSerializable.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-Monetization-Entitlement.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -3674,114 +3569,6 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getEndsAtAttribute">
-        getEndsAtAttribute()
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#method_getEndsAtAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">83</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Return the ends_at attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getEndsAtAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#method_getEndsAtAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getStartsAtAttribute">
-        getStartsAtAttribute()
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#method_getStartsAtAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/Entitlement.php"><a href="files/src-discord-parts-monetization-entitlement.html"><abbr title="src/Discord/Parts/Monetization/Entitlement.php">Entitlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">71</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Return the starts_at attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getStartsAtAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#method_getStartsAtAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_makeOptionalAttributes">
         makeOptionalAttributes()
         <a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3962,7 +3749,7 @@ static as we may move it outside this class in future.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Monetization/Entitlement.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/OAuth/ApplicationRoleConnectionMetadata.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -4063,42 +3850,40 @@ static as we may move it outside this class in future.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                        <li><a href="classes/Discord-Parts-Monetization-Entitlement.html#toc-constants">Constants</a></li>
-                                                            <li><a href="classes/Discord-Parts-Monetization-Entitlement.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-Parts-Monetization-Entitlement.html#toc-methods">Methods</a></li>
+                                        <li><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#toc-constants">Constants</a></li>
+                                                            <li><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_APPLICATION_SUBSCRIPTION">APPLICATION_SUBSCRIPTION</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_DEVELOPER_GIFT">DEVELOPER_GIFT</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_FREE_PURCHASE">FREE_PURCHASE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_PREMIUM_PURCHASE">PREMIUM_PURCHASE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_PREMIUM_SUBSCRIPTION">PREMIUM_SUBSCRIPTION</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_PURCHASE">PURCHASE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_TEST_MODE_PURCHASE">TEST_MODE_PURCHASE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#constant_USER_GIFT">USER_GIFT</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_BOOLEAN_EQUAL">TYPE_BOOLEAN_EQUAL</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_BOOLEAN_NOT_EQUAL">TYPE_BOOLEAN_NOT_EQUAL</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_DATETIME_GREATER_THAN_OR_EQUAL">TYPE_DATETIME_GREATER_THAN_OR_EQUAL</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_DATETIME_LESS_THAN_OR_EQUAL">TYPE_DATETIME_LESS_THAN_OR_EQUAL</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_EQUAL">TYPE_INTEGER_EQUAL</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_GREATER_THAN_OR_EQUAL">TYPE_INTEGER_GREATER_THAN_OR_EQUAL</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_LESS_THAN_OR_EQUAL">TYPE_INTEGER_LESS_THAN_OR_EQUAL</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_NOT_EQUAL">TYPE_INTEGER_NOT_EQUAL</a></li>
                                             </ul>
                 </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#property_application_id">$application_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#property_consumed">$consumed</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#property_deleted">$deleted</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#property_guild_id">$guild_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_description">$description</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_description_localizations">$description_localizations</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_key">$key</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_name">$name</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_name_localizations">$name_localizations</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#property_sku_id">$sku_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#property_type">$type</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#property_user_id">$user_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_type">$type</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#property_fillable">$fillable</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_fillable">$fillable</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_http">$http</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories">$repositories</a></li>
@@ -4141,8 +3926,6 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#method_getEndsAtAttribute">getEndsAtAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Monetization-Entitlement.html#method_getStartsAtAttribute">getStartsAtAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a></li>
@@ -4165,7 +3948,7 @@ static as we may move it outside this class in future.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Parts-Monetization-Entitlement.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

@@ -9846,6 +9846,16 @@ Search.appendIndex(
             "summary": "The\u0020OAuth2\u0020application\u0020of\u0020the\u0020bot.",
             "url": "classes/Discord-Parts-OAuth-Application.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AgetApplicationRoleConnectionMetadataRecords\u0028\u0029",
+            "name": "getApplicationRoleConnectionMetadataRecords",
+            "summary": "Returns\u0020a\u0020list\u0020of\u0020application\u0020role\u0020connection\u0020metadata\u0020objects\u0020for\u0020the\u0020given\u0020application.",
+            "url": "classes/Discord-Parts-OAuth-Application.html#method_getApplicationRoleConnectionMetadataRecords"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AupdateApplicationRoleConnectionMetadataRecords\u0028\u0029",
+            "name": "updateApplicationRoleConnectionMetadataRecords",
+            "summary": "Updates\u0020and\u0020returns\u0020a\u0020list\u0020of\u0020application\u0020role\u0020connection\u0020metadata\u0020objects\u0020for\u0020the\u0020given\u0020application.",
+            "url": "classes/Discord-Parts-OAuth-Application.html#method_updateApplicationRoleConnectionMetadataRecords"
+        },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AgetActivityInstance\u0028\u0029",
             "name": "getActivityInstance",
             "summary": "Returns\u0020a\u0020serialized\u0020activity\u0020instance,\u0020if\u0020it\u0020exists.",
@@ -9975,6 +9985,56 @@ Search.appendIndex(
             "name": "repositories",
             "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
             "url": "classes/Discord-Parts-OAuth-Application.html#property_repositories"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationRoleConnectionMetadata",
+            "name": "ApplicationRoleConnectionMetadata",
+            "summary": "A\u0020representation\u0020of\u0020role\u0020connection\u0020metadata\u0020for\u0020an\u0020application.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationRoleConnectionMetadata\u003A\u003ATYPE_INTEGER_LESS_THAN_OR_EQUAL",
+            "name": "TYPE_INTEGER_LESS_THAN_OR_EQUAL",
+            "summary": "The\u0020metadata\u0020value\u0020\u0028integer\u0029\u0020is\u0020less\u0020than\u0020or\u0020equal\u0020to\u0020the\u0020guild\u0027s\u0020configured\u0020value\u0020\u0028integer\u0029.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_LESS_THAN_OR_EQUAL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationRoleConnectionMetadata\u003A\u003ATYPE_INTEGER_GREATER_THAN_OR_EQUAL",
+            "name": "TYPE_INTEGER_GREATER_THAN_OR_EQUAL",
+            "summary": "The\u0020metadata\u0020value\u0020\u0028integer\u0029\u0020is\u0020less\u0020than\u0020or\u0020equal\u0020to\u0020the\u0020guild\u0027s\u0020configured\u0020value\u0020\u0028integer\u0029.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_GREATER_THAN_OR_EQUAL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationRoleConnectionMetadata\u003A\u003ATYPE_INTEGER_EQUAL",
+            "name": "TYPE_INTEGER_EQUAL",
+            "summary": "The\u0020metadata\u0020value\u0020\u0028integer\u0029\u0020is\u0020equal\u0020to\u0020the\u0020guild\u0027s\u0020configured\u0020value\u0020\u0028integer\u0029.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_EQUAL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationRoleConnectionMetadata\u003A\u003ATYPE_INTEGER_NOT_EQUAL",
+            "name": "TYPE_INTEGER_NOT_EQUAL",
+            "summary": "The\u0020metadata\u0020value\u0020\u0028integer\u0029\u0020is\u0020not\u0020equal\u0020to\u0020the\u0020guild\u0027s\u0020configured\u0020value\u0020\u0028integer\u0029.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_INTEGER_NOT_EQUAL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationRoleConnectionMetadata\u003A\u003ATYPE_DATETIME_LESS_THAN_OR_EQUAL",
+            "name": "TYPE_DATETIME_LESS_THAN_OR_EQUAL",
+            "summary": "The\u0020metadata\u0020value\u0020\u0028ISO8601\u0020string\u0029\u0020is\u0020less\u0020than\u0020or\u0020equal\u0020to\u0020the\u0020guild\u0027s\u0020configured\u0020value\u0020\u0028integer\u003B\u0020days\u0020before\u0020current\u0020date\u0029.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_DATETIME_LESS_THAN_OR_EQUAL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationRoleConnectionMetadata\u003A\u003ATYPE_DATETIME_GREATER_THAN_OR_EQUAL",
+            "name": "TYPE_DATETIME_GREATER_THAN_OR_EQUAL",
+            "summary": "The\u0020metadata\u0020value\u0020\u0028ISO8601\u0020string\u0029\u0020is\u0020greater\u0020than\u0020or\u0020equal\u0020to\u0020the\u0020guild\u0027s\u0020configured\u0020value\u0020\u0028integer\u003B\u0020days\u0020before\u0020current\u0020date\u0029.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_DATETIME_GREATER_THAN_OR_EQUAL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationRoleConnectionMetadata\u003A\u003ATYPE_BOOLEAN_EQUAL",
+            "name": "TYPE_BOOLEAN_EQUAL",
+            "summary": "The\u0020metadata\u0020value\u0020\u0028integer\u0029\u0020is\u0020equal\u0020to\u0020the\u0020guild\u0027s\u0020configured\u0020value\u0020\u0028integer\u003B\u00201\u0029.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_BOOLEAN_EQUAL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationRoleConnectionMetadata\u003A\u003ATYPE_BOOLEAN_NOT_EQUAL",
+            "name": "TYPE_BOOLEAN_NOT_EQUAL",
+            "summary": "The\u0020metadata\u0020value\u0020\u0028integer\u0029\u0020is\u0020not\u0020equal\u0020to\u0020the\u0020guild\u0027s\u0020configured\u0020value\u0020\u0028integer\u003B\u00201\u0029.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#constant_TYPE_BOOLEAN_NOT_EQUAL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ApplicationRoleConnectionMetadata\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-OAuth-ApplicationRoleConnectionMetadata.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\InstallParams",
             "name": "InstallParams",
