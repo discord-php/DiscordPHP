@@ -35,6 +35,7 @@ use Discord\Parts\Part;
  */
 class StageInstance extends Part
 {
+    /** The Stage instance is visible to only guild members. */
     public const PRIVACY_LEVEL_GROUP_ONLY = 2;
 
     /**
