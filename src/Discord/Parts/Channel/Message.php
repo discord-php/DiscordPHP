@@ -591,7 +591,7 @@ class Message extends Part
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['author'], true);
+        return $this->attributePartHelper('author', User::class);
     }
 
     /**
@@ -701,11 +701,7 @@ class Message extends Part
             }
         }
 
-        if (isset($this->attributes['referenced_message'])) {
-            return $this->factory->part(Message::class, (array) $this->attributes['referenced_message'], true);
-        }
-
-        return null;
+        return $this->attributePartHelper('referenced_message', Message::class);
     }
 
     protected function getMessageReferenceAttribute(): ?MessageReference
@@ -718,6 +714,8 @@ class Message extends Part
      * For forwarded messages, this contains a snapshot of the original message.
      *
      * @return Message|null
+     *
+     * @deprecated Use `getMessageSnapshotsAttribute()`.
      */
     protected function getMessageSnapshotAttribute(): ?Message
     {

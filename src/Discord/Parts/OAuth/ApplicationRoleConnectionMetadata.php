@@ -25,12 +25,12 @@ use Discord\Parts\Part;
  *
  * @since 10.29.0
  *
- * @property int                $type                                  Type of metadata value (see ApplicationRoleConnectionMetadataType).
- * @property string             $key                                   Dictionary key for the metadata field (a-z, 0-9, or _; 1-50 characters).
- * @property string             $name                                  Name of the metadata field (1-100 characters).
- * @property array|null         $name_localizations                    Translations of the name (dictionary with keys in available locales).
- * @property string             $description                           Description of the metadata field (1-200 characters).
- * @property array|null         $description_localizations             Translations of the description (dictionary with keys in available locales).
+ * @property int        $type                      Type of metadata value (see ApplicationRoleConnectionMetadataType).
+ * @property string     $key                       Dictionary key for the metadata field (a-z, 0-9, or _; 1-50 characters).
+ * @property string     $name                      Name of the metadata field (1-100 characters).
+ * @property array|null $name_localizations        Translations of the name (dictionary with keys in available locales).
+ * @property string     $description               Description of the metadata field (1-200 characters).
+ * @property array|null $description_localizations Translations of the description (dictionary with keys in available locales).
  */
 class ApplicationRoleConnectionMetadata extends Part
 {

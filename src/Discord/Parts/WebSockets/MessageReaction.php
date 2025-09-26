@@ -172,7 +172,7 @@ class MessageReaction extends Part
             }
         }
 
-        return $this->attributes['message'] ?? null;
+        return $this->attributePartHelper('message', Message::class);
     }
 
     /**
@@ -202,11 +202,7 @@ class MessageReaction extends Part
             }
         }
 
-        if (isset($this->attributes['member'])) {
-            return $this->factory->part(Member::class, (array) $this->attributes['member'] + ['guild_id' => $this->guild_id], true);
-        }
-
-        return null;
+        return $this->attributePartHelper('member', Member::class, ['guild_id' => $this->guild_id]);
     }
 
     /**

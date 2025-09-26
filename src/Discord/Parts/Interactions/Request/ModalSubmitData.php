@@ -23,9 +23,9 @@ use Discord\Parts\Channel\Message\Component;
  *
  * @since 10.19.0
  *
- * @property string                            $custom_id  Custom ID the component was created for.
- * @property ExCollectionInterface|Component[] $components Values submitted by the user.
- * @property ?Resolved|null                    $resolved   Resolved entities from selected options.
+ * @property string                                       $custom_id  Custom ID the component was created for.
+ * @property ExCollectionInterface<Component>|Component[] $components Values submitted by the user.
+ * @property ?Resolved|null                               $resolved   Resolved entities from selected options.
  */
 class ModalSubmitData extends InteractionData
 {

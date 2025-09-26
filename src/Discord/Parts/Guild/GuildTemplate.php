@@ -82,7 +82,7 @@ class GuildTemplate extends Part implements Stringable
             return $guild;
         }
 
-        return $this->createOf(Guild::class, $this->attributes['serialized_source_guild']);
+        return $this->attributePartHelper('serialized_source_guild', Guild::class);
     }
 
     /**
@@ -92,7 +92,7 @@ class GuildTemplate extends Part implements Stringable
      */
     protected function getSerializedSourceGuildAttribute(): Guild
     {
-        return $this->createOf(Guild::class, $this->attributes['serialized_source_guild']);
+        return $this->attributePartHelper('serialized_source_guild', Guild::class);
     }
 
     /**
@@ -106,7 +106,7 @@ class GuildTemplate extends Part implements Stringable
             return $creator;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['creator'], true);
+        return $this->attributePartHelper('creator', User::class);
     }
 
     /**

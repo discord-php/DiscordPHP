@@ -286,7 +286,7 @@ class Application extends Part
             return $owner;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['owner'], true);
+        return $this->attributePartHelper('owner', User::class);
     }
 
     /**

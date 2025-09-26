@@ -261,7 +261,7 @@ class Invite extends Part implements Stringable
             }
         }
 
-        return $this->factory->part(ScheduledEvent::class, (array) $this->attributes['guild_scheduled_event'], true);
+        return $this->attributePartHelper('guild_scheduled_event', ScheduledEvent::class);
     }
 
     /**

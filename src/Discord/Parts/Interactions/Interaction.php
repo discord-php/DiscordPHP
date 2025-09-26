@@ -177,11 +177,7 @@ class Interaction extends Part
             return $guild;
         }
 
-        if (isset($this->attributes['guild'])) {
-            return $this->factory->part(Guild::class, (array) $this->attributes['guild'], true);
-        }
-
-        return null;
+        return $this->attributePartHelper('guild', Guild::class);
     }
 
     /**
@@ -211,11 +207,7 @@ class Interaction extends Part
             return $channel;
         }
 
-        if (isset($this->attributes['channel'])) {
-            return $this->factory->part(Channel::class, (array) $this->attributes['channel'], true);
-        }
-
-        return null;
+        return $this->attributePartHelper('channel', Channel::class);
     }
 
     /**
@@ -235,7 +227,7 @@ class Interaction extends Part
                 }
             }
 
-            return $this->factory->part(Member::class, (array) $this->attributes['member'] + ['guild_id' => $this->guild_id], true);
+            return $this->attributePartHelper('member', Member::class, ['guild_id' => $this->guild_id]);
         }
 
         return null;

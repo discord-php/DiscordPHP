@@ -32,12 +32,12 @@ use Discord\Parts\User\User;
  *
  * @since 7.0.0
  *
- * @property ExCollectionInterface|User[]             $users       The ids and User objects.
- * @property ExCollectionInterface|Member[]           $members     The ids and partial Member objects.
- * @property ExCollectionInterface|Role[]             $roles       The ids and Role objects.
- * @property ExCollectionInterface|Channel[]|Thread[] $channels    The ids and partial Channel objects.
- * @property ExCollectionInterface|Message[]          $messages    The ids and partial Message objects.
- * @property ExCollectionInterface|Attachment[]       $attachments The ids and partial Attachment objects.
+ * @property ExCollectionInterface<User>|User[]                $users       The ids and User objects.
+ * @property ExCollectionInterface<Member>|Member[]            $members     The ids and partial Member objects.
+ * @property ExCollectionInterface<Role>|Role[]                $roles       The ids and Role objects.
+ * @property ExCollectionInterface<Channel>|Channel[]|Thread[] $channels    The ids and partial Channel objects.
+ * @property ExCollectionInterface<Message>|Message[]          $messages    The ids and partial Message objects.
+ * @property ExCollectionInterface<Attachment>|Attachment[]    $attachments The ids and partial Attachment objects.
  *
  * @property      string|null $guild_id ID of the guild internally passed from Interaction.
  * @property-read ?Guild|null $guild    The guild the interaction was sent in.

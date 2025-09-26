@@ -1255,7 +1255,7 @@ class Guild extends Part
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id))->then(function ($response) {
             $this->attributes['welcome_screen'] = $response;
 
-            return $this->factory->part(WelcomeScreen::class, (array) $response, true);
+            return $this->attributePartHelper('welcome_screen', WelcomeScreen::class);
         });
     }
 
@@ -1314,7 +1314,7 @@ class Guild extends Part
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id), $options)->then(function ($response) {
             $this->attributes['welcome_screen'] = $response;
 
-            return $this->factory->part(WelcomeScreen::class, (array) $response, true);
+            return $this->attributePartHelper('welcome_screen', WelcomeScreen::class);
         });
     }
 

@@ -63,6 +63,16 @@ class Overwrite extends Part
     }
 
     /**
+     * Gets the allow attribute of the role.
+     *
+     * @return ChannelPermission
+     */
+    protected function getAllowAttribute(): ChannelPermission
+    {
+        return $this->attributePartHelper('allow', ChannelPermission::class);
+    }
+
+    /**
      * Sets the deny attribute of the role.
      *
      * @param ChannelPermission|int $deny
@@ -74,6 +84,16 @@ class Overwrite extends Part
         }
 
         $this->attributes['deny'] = $deny;
+    }
+
+    /**
+     * Gets the deny attribute of the role.
+     *
+     * @return ChannelPermission
+     */
+    protected function getDenyAttribute(): ChannelPermission
+    {
+        return $this->attributePartHelper('deny', ChannelPermission::class);
     }
 
     /**

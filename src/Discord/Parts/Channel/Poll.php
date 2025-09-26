@@ -73,7 +73,7 @@ class Poll extends Part
      */
     protected function getQuestionAttribute(): PollMedia
     {
-        return $this->factory->part(PollMedia::class, (array) $this->attributes['question'], true);
+        return $this->attributePartHelper('question', PollMedia::class);
     }
 
     /**
