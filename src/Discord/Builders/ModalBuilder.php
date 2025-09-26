@@ -149,7 +149,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      */
     public function setComponents(...$components): self
     {
-        $this->components = Collection::for(ComponentObject::class);
+        $this->components = Collection::for(ComponentObject::class, 'custom_id');
 
         foreach ($components as $component) {
             $this->components->pushItem($component);
@@ -171,7 +171,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      */
     public function addComponent($component): self
     {
-        $this->components ??= Collection::for(ComponentObject::class);
+        $this->components ??= Collection::for(ComponentObject::class, 'custom_id');
 
         $this->components->pushItem($component);
 
@@ -187,7 +187,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      */
     public function removeComponent($component): self
     {
-        $this->components ??= Collection::for(ComponentObject::class);
+        $this->components ??= Collection::for(ComponentObject::class, 'custom_id');
 
         if (($idx = $this->components->search($component)) !== false) {
             $this->components->splice($idx, 1);
@@ -203,7 +203,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      */
     public function getComponents(): ExCollectionInterface
     {
-        return $this->components ?? Collection::for(ComponentObject::class);
+        return $this->components ?? Collection::for(ComponentObject::class, 'custom_id');
     }
 
     /**

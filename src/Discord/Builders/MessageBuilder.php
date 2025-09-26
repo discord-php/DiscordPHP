@@ -451,7 +451,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             $this->enforceV1Limits($component);
         }
 
-        $this->components ??= Collection::for(ComponentObject::class);
+        $this->components ??= Collection::for(ComponentObject::class, 'custom_id');
 
         $this->components->pushItem($component);
 
@@ -558,7 +558,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function setComponents($components = null): self
     {
-        $this->components = Collection::for(ComponentObject::class);
+        $this->components = Collection::for(ComponentObject::class, 'custom_id');
 
         foreach ($components ?? [] as $component) {
             $this->components->pushItem($component);
@@ -574,7 +574,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function getComponents(): ExCollectionInterface
     {
-        return $this->components ?? Collection::for(ComponentObject::class);
+        return $this->components ?? Collection::for(ComponentObject::class, 'custom_id');
     }
 
     /**

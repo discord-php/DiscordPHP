@@ -75,7 +75,7 @@ class Component extends Part
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        $components = Collection::for(Component::class, null);
+        $components = Collection::for(Component::class, 'custom_id');
 
         if (! isset($this->attributes['components'])) {
             return $components;

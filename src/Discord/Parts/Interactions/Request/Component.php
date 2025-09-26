@@ -76,7 +76,7 @@ class Component extends Part
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        return $this->attributeCollectionHelper('components', Component::class);
+        return $this->attributeCollectionHelper('components', Component::class, 'custom_id');
     }
 
     /**
