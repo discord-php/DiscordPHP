@@ -32,8 +32,6 @@ use React\Promise\PromiseInterface;
  * @property array   $hidden             Attributes that are hidden from public.
  * @property array   $repositories       Repositories that can exist in a part.
  * @property array   $repositories_cache An array of repositories.
- * @property Discord $discord            The Discord client.
- * @property mixed   $scriptData         Custom script data.
  * @property bool    $created            Whether the part has been created.
  */
 trait PartTrait
