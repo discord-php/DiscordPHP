@@ -529,7 +529,7 @@ class Message extends Part
     /**
      * Returns the mention_roles attribute.
      *
-     * @return ExCollectionInterface<?Role> The roles that were mentioned. null role only contains the ID in the collection.
+     * @return ExCollectionInterface<Role>|Role[] The roles that were mentioned. null role only contains the ID in the collection.
      */
     protected function getMentionRolesAttribute(): ExCollectionInterface
     {
@@ -542,9 +542,9 @@ class Message extends Part
         $roles->fill(array_fill_keys($this->attributes['mention_roles'], null));
 
         if ($guild = $this->guild) {
-            $roles->merge($guild->roles->filter(function ($role) {
-                return in_array($role->id, $this->attributes['mention_roles']);
-            }));
+            $roles->merge($guild->roles->filter(
+                fn ($role) => in_array($role->id, $this->attributes['mention_roles'])
+            ));
         }
 
         return $roles;
@@ -620,7 +620,7 @@ class Message extends Part
     /**
      * Returns the embed attribute.
      *
-     * @return ExCollectionInterface<Embed> A collection of embeds.
+     * @return ExCollectionInterface<Embed>|Embed[] A collection of embeds.
      */
     protected function getEmbedsAttribute(): ExCollectionInterface
     {

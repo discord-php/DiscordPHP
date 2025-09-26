@@ -222,7 +222,7 @@ class Channel extends Part implements Stringable
     /**
      * Gets the recipients attribute.
      *
-     * @return ExCollectionInterface A collection of recipients.
+     * @return ExCollectionInterface<User>|User[] A collection of recipients.
      */
     protected function getRecipientsAttribute(): ExCollectionInterface
     {

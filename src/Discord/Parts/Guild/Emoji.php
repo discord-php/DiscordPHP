@@ -70,7 +70,7 @@ class Emoji extends Part implements Stringable
     /**
      * Returns the roles attribute.
      *
-     * @return ExCollectionInterface<?Role> A collection of roles for the emoji.
+     * @return ExCollectionInterface<?Role>|?Role[] A collection of roles for the emoji.
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {

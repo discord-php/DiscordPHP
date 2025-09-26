@@ -40,7 +40,7 @@ class PollResults extends Part
     /**
      * Returns the answer counts attribute.
      *
-     * @return ExCollectionInterface<PollAnswerCount> A collection of poll answer counts.
+     * @return ExCollectionInterface<PollAnswerCount>|PollAnswerCount[] A collection of poll answer counts.
      */
     protected function getAnswerCountsAttribute(): ExCollectionInterface
     {

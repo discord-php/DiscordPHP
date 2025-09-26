@@ -198,7 +198,7 @@ class Reaction extends Part
      * @param ExCollectionInterface $response The collection to accumulate users into.
      * @param mixed|null            $after    The user ID to paginate after, or null to start from the beginning.
      *
-     * @return PromiseInterface Resolves with the collection of users who reacted.
+     * @return PromiseInterface<ExCollectionInterface<User>|User[]> Resolves with the collection of users who reacted.
      */
     protected function __getUsers(ExCollectionInterface $response, $after = null): PromiseInterface
     {
@@ -207,7 +207,7 @@ class Reaction extends Part
             $options['after'] = $after;
         }
 
-        return $this->getUsers($options)->then(function (Collection $users) use ($response) {
+        return $this->getUsers($options)->then(function (ExCollectionInterface $users) use ($response) {
             $last = null;
             foreach ($users as $user) {
                 $response->pushItem($user);

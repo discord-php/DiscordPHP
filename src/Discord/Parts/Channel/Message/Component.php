@@ -71,7 +71,7 @@ class Component extends Part
     /**
      * Gets the components.
      *
-     * @return ExCollectionInterface><Component>|Component[] $components
+     * @return ExCollectionInterface<Component>|Component[] $components
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {

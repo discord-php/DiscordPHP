@@ -72,6 +72,11 @@ class Profile extends Part
         'visibility',
     ];
 
+    /**
+     * Returns the traits attribute.
+     *
+     * @return ExCollectionInterface<GuildTraitObject>|GuildTraitObject[] A collection of guild trait objects.
+     */
     protected function getTraitsAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('traits', GuildTraitObject::class, 'emoji_id');
