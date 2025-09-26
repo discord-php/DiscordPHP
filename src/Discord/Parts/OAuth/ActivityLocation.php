@@ -71,7 +71,7 @@ class ActivityLocation extends Part
             return $channel;
         }
 
-        return $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']] + ['guild_id' => $this->attributes['guild_id'] ?? null], true);
+        return $this->attributePartHelper('channel', Channel::class, ['guild_id' => $this->attributes['guild_id'] ?? null]);
     }
 
     /**

@@ -24,8 +24,8 @@ use Discord\Parts\Part;
  *
  * @since 10.0.0
  *
- * @property bool                                    $is_finalized  Whether the votes have been precisely counted
- * @property ExCollectionInterface|PollAnswerCount[] $answer_counts The counts for each answer
+ * @property bool                                                     $is_finalized  Whether the votes have been precisely counted
+ * @property ExCollectionInterface<PollAnswerCount>|PollAnswerCount[] $answer_counts The counts for each answer
  */
 class PollResults extends Part
 {

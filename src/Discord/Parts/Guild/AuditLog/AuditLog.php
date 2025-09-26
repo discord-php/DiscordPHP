@@ -33,14 +33,14 @@ use ReflectionClass;
  *
  * @since 5.1.0
  *
- * @property ExCollectionInterface|Command[]        $application_commands   List of application commands referenced in the audit log.
- * @property ExCollectionInterface|Entry[]          $audit_log_entries      List of audit log entries.
- * @property ExCollectionInterface|Rule[]           $auto_moderation_rules  List of auto moderation rules referenced in the audit log.
- * @property ExCollectionInterface|ScheduledEvent[] $guild_scheduled_events List of guild scheduled events referenced in the audit log.
- * @property ExCollectionInterface|Integration[]    $integrations           List of partial integration objects.
- * @property ExCollectionInterface|Thread[]         $threads                List of threads referenced in the audit log.
- * @property ExCollectionInterface|User[]           $users                  List of users referenced in the audit log.
- * @property ExCollectionInterface|Webhook[]        $webhooks               List of webhooks referenced in the audit log.
+ * @property ExCollectionInterface<Command>|Command[]               $application_commands   List of application commands referenced in the audit log.
+ * @property ExCollectionInterface<Entry>|Entry[]                   $audit_log_entries      List of audit log entries.
+ * @property ExCollectionInterface<Rule>|Rule[]                     $auto_moderation_rules  List of auto moderation rules referenced in the audit log.
+ * @property ExCollectionInterface<ScheduledEvent>|ScheduledEvent[] $guild_scheduled_events List of guild scheduled events referenced in the audit log.
+ * @property ExCollectionInterface<Integration>|Integration[]       $integrations           List of partial integration objects.
+ * @property ExCollectionInterface<Thread>|Thread[]                 $threads                List of threads referenced in the audit log.
+ * @property ExCollectionInterface<User>|User[]                     $users                  List of users referenced in the audit log.
+ * @property ExCollectionInterface<Webhook>|Webhook[]               $webhooks               List of webhooks referenced in the audit log.
  *
  * @property      string     $guild_id
  * @property-read Guild|null $guild
@@ -77,7 +77,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of application commands found in the audit log.
      *
-     * @return ExCollectionInterface|Command[]
+     * @return ExCollectionInterface<Command>|Command[]
      */
     protected function getApplicationCommandsAttribute(): ExCollectionInterface
     {
@@ -87,7 +87,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of audit log entries.
      *
-     * @return ExCollectionInterface|Entry[]
+     * @return ExCollectionInterface<Entry>|Entry[]
      */
     protected function getAuditLogEntriesAttribute(): ExCollectionInterface
     {
@@ -97,7 +97,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of auto moderation rules found in the audit log.
      *
-     * @return ExCollectionInterface|Rule[]
+     * @return ExCollectionInterface<Rule>|Rule[]
      */
     protected function getAutoModerationRulesAttribute(): ExCollectionInterface
     {
@@ -107,7 +107,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of guild scheduled events found in the audit log.
      *
-     * @return ExCollectionInterface|ScheduledEvent[]
+     * @return ExCollectionInterface<ScheduledEvent>|ScheduledEvent[]
      */
     protected function getGuildScheduledEventsAttribute(): ExCollectionInterface
     {
@@ -119,7 +119,7 @@ class AuditLog extends Part
      *
      * @link https://discord.com/developers/docs/resources/audit-log#audit-log-object-example-partial-integration-object
      *
-     * @return ExCollectionInterface|Integration[]
+     * @return ExCollectionInterface<Integration>|Integration[]
      */
     protected function getIntegrationsAttribute(): ExCollectionInterface
     {
@@ -129,7 +129,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of threads found in the audit log.
      *
-     * @return ExCollectionInterface|Thread[]
+     * @return ExCollectionInterface<Thread>|Thread[]
      */
     protected function getThreadsAttribute(): ExCollectionInterface
     {
@@ -139,7 +139,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of users found in the audit log.
      *
-     * @return ExCollectionInterface|User[]
+     * @return ExCollectionInterface<User>|User[]
      */
     protected function getUsersAttribute(): ExCollectionInterface
     {
@@ -155,7 +155,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of webhooks found in the audit log.
      *
-     * @return ExCollectionInterface|Webhook[]
+     * @return ExCollectionInterface<Webhook>|Webhook[]
      */
     protected function getWebhooksAttribute(): ExCollectionInterface
     {
@@ -169,7 +169,7 @@ class AuditLog extends Part
      *
      * @throws \InvalidArgumentException
      *
-     * @return ExCollectionInterface|Entry[]
+     * @return ExCollectionInterface<Entry>|Entry[]
      */
     public function searchByType(int $action_type): ExCollectionInterface
     {

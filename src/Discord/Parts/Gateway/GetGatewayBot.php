@@ -42,6 +42,6 @@ class GetGatewayBot extends Part
 
     public function getSessionStartLimitAttribute(): SessionStartLimit
     {
-        return $this->factory->part(SessionStartLimit::class, (array) $this->attributes['session_start_limit']);
+        return $this->attributePartHelper('session_start_limit', SessionStartLimit::class);
     }
 }

@@ -51,7 +51,7 @@ class GuildSearch extends Part
     /**
      * Returns a collection of messages found in the search.
      *
-     * @return ExCollectionInterface|Message[]
+     * @return ExCollectionInterface<Message>|Message[]
      */
     protected function getMessagesAttribute(): ExCollectionInterface
     {
@@ -77,7 +77,7 @@ class GuildSearch extends Part
     /**
      * Returns a collection of members found in the search.
      *
-     * @return ExCollectionInterface|Member[]
+     * @return ExCollectionInterface<Member>|Member[]
      */
     protected function getMembersAttribute(): ExCollectionInterface
     {
@@ -104,7 +104,7 @@ class GuildSearch extends Part
     /**
      * Returns a collection of threads found in the search.
      *
-     * @return ExCollectionInterface|Thread[]
+     * @return ExCollectionInterface<Thread>|Thread[]
      */
     protected function getThreadsAttribute(): ExCollectionInterface
     {

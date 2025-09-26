@@ -379,7 +379,7 @@ class Message extends Part
     /**
      * Gets the mention_channels attribute.
      *
-     * @return ExCollectionInterface|Channel[]
+     * @return ExCollectionInterface<Channel>|Channel[]
      */
     protected function getMentionChannelsAttribute(): ExCollectionInterface
     {
@@ -403,7 +403,7 @@ class Message extends Part
     /**
      * Returns any attached files.
      *
-     * @return ExCollectionInterface|Attachment[] Attachment objects.
+     * @return ExCollectionInterface<Attachment>|Attachment[] Attachment objects.
      */
     protected function getAttachmentsAttribute(): ExCollectionInterface
     {
@@ -553,7 +553,7 @@ class Message extends Part
     /**
      * Returns the mention attribute.
      *
-     * @return ExCollectionInterface|User[] The users that were mentioned.
+     * @return ExCollectionInterface<User>|User[] The users that were mentioned.
      */
     protected function getMentionsAttribute(): ExCollectionInterface
     {
@@ -591,7 +591,7 @@ class Message extends Part
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['author'], true);
+        return $this->attributePartHelper('author', User::class);
     }
 
     /**
@@ -701,11 +701,7 @@ class Message extends Part
             }
         }
 
-        if (isset($this->attributes['referenced_message'])) {
-            return $this->factory->part(Message::class, (array) $this->attributes['referenced_message'], true);
-        }
-
-        return null;
+        return $this->attributePartHelper('referenced_message', Message::class);
     }
 
     protected function getMessageReferenceAttribute(): ?MessageReference
@@ -718,6 +714,8 @@ class Message extends Part
      * For forwarded messages, this contains a snapshot of the original message.
      *
      * @return Message|null
+     *
+     * @deprecated Use `getMessageSnapshotsAttribute()`.
      */
     protected function getMessageSnapshotAttribute(): ?Message
     {
@@ -799,7 +797,7 @@ class Message extends Part
     /**
      * Returns the sticker_items attribute.
      *
-     * @return ExCollectionInterface|Sticker[] Partial stickers.
+     * @return ExCollectionInterface<Sticker>|Sticker[] Partial stickers.
      */
     protected function getStickerItemsAttribute(): ExCollectionInterface
     {

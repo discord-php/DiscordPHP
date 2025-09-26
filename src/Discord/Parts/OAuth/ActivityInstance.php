@@ -25,11 +25,11 @@ use Discord\Parts\User\User;
  *
  * @since 10.17.0
  *
- * @property string                       $application_id Application ID.
- * @property string                       $instance_id    Activity Instance ID.
- * @property string                       $launch_id      Unique identifier for the launch.
- * @property ActivityLocation             $location       Location the instance is running in.
- * @property ExCollectionInterface|User[] $users          IDs of the Users currently connected to the instance.
+ * @property string                             $application_id Application ID.
+ * @property string                             $instance_id    Activity Instance ID.
+ * @property string                             $launch_id      Unique identifier for the launch.
+ * @property ActivityLocation                   $location       Location the instance is running in.
+ * @property ExCollectionInterface<User>|User[] $users          IDs of the Users currently connected to the instance.
  */
 class ActivityInstance extends Part
 {
@@ -54,7 +54,7 @@ class ActivityInstance extends Part
     /**
      * Returns a collection of users currently connected to the instance.
      *
-     * @return ExCollectionInterface|User[]
+     * @return ExCollectionInterface<User>|User[]
      */
     protected function getUsersAttribute(): ExCollectionInterface
     {

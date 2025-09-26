@@ -88,7 +88,7 @@ class Integration extends Part
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        return $this->attributePartHelper('user', User::class);
     }
 
     /**
@@ -132,7 +132,7 @@ class Integration extends Part
             return $botApplication;
         }
 
-        return $this->factory->part(Application::class, (array) $this->attributes['application'], true);
+        return $this->attributePartHelper('application', Application::class);
     }
 
     /**

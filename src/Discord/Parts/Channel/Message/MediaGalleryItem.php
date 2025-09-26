@@ -37,6 +37,6 @@ class MediaGalleryItem extends Part
 
     protected function getMediaAttribute(): UnfurledMediaItem
     {
-        return $this->createOf(UnfurledMediaItem::class, $this->attributes['media'], true);
+        return $this->attributePartHelper('media', UnfurledMediaItem::class);
     }
 }

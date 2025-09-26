@@ -44,6 +44,6 @@ class MessagePin extends Part
 
     protected function getMessageAttribute(): Message
     {
-        return $this->factory->create(Message::class, $this->attributes['message'], true);
+        return $this->attributePartHelper('message', Message::class);
     }
 }

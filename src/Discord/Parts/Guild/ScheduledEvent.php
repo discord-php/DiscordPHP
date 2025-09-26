@@ -261,11 +261,9 @@ class ScheduledEvent extends Part
             if ($user = $this->discord->users->get('id', $this->attributes['creator']->id)) {
                 return $user;
             }
-
-            return $this->factory->part(User::class, (array) $this->attributes['creator'], true);
         }
 
-        return null;
+        return $this->attributePartHelper('creator', User::class);
     }
 
     /**

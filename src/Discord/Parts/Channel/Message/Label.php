@@ -43,6 +43,6 @@ class Label extends Component
 
     public function getComponentAttribute(): Component
     {
-        return $this->createOf(Component::TYPES[$this->attributes['component']->type ?? 0], $this->attributes['component']);
+        return $this->attributePartHelper('component', Component::TYPES[$this->attributes['component']->type ?? 0]);
     }
 }

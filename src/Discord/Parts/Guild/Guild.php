@@ -377,7 +377,7 @@ class Guild extends Part
     /**
      * Sets the roles attribute.
      *
-     * @param ExCollectionInterface|array|null $roles
+     * @param ExCollectionInterface<Role>|Role[]|null $roles
      */
     protected function setRolesAttribute($roles): void
     {
@@ -480,7 +480,7 @@ class Guild extends Part
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
-     * @return PromiseInterface<Collection|Invite[]>
+     * @return PromiseInterface<ExCollectionInterface<Invite>|Invite[]>
      */
     public function getInvites(): PromiseInterface
     {
@@ -549,7 +549,7 @@ class Guild extends Part
      *
      * @deprecated 10.0.0 Use `$channel->stage_instances`
      *
-     * @return ExCollectionInterface|StageInstance[]
+     * @return ExCollectionInterface<StageInstance>|StageInstance[]
      */
     protected function getStageInstancesAttribute(): ExCollectionInterface
     {
@@ -1085,7 +1085,7 @@ class Guild extends Part
      * @param string|null $options['query'] Query string to match username(s) and nickname(s) against
      * @param int|null    $options['limit'] How many entries are returned (default 1, minimum 1, maximum 1000)
      *
-     * @return PromiseInterface<Collection|Member[]>
+     * @return PromiseInterface<ExCollectionInterface<Member>|Member[]>
      */
     public function searchMembers(array $options): PromiseInterface
     {
@@ -1255,7 +1255,7 @@ class Guild extends Part
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id))->then(function ($response) {
             $this->attributes['welcome_screen'] = $response;
 
-            return $this->factory->part(WelcomeScreen::class, (array) $response, true);
+            return $this->attributePartHelper('welcome_screen', WelcomeScreen::class);
         });
     }
 
@@ -1314,7 +1314,7 @@ class Guild extends Part
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id), $options)->then(function ($response) {
             $this->attributes['welcome_screen'] = $response;
 
-            return $this->factory->part(WelcomeScreen::class, (array) $response, true);
+            return $this->attributePartHelper('welcome_screen', WelcomeScreen::class);
         });
     }
 

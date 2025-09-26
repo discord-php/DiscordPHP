@@ -142,7 +142,7 @@ class Reaction extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#get-reactions
      *
-     * @return PromiseInterface<Collection|User[]>
+     * @return PromiseInterface<ExCollectionInterface<User>|User[]>
      */
     public function getUsers(array $options = []): PromiseInterface
     {
@@ -185,7 +185,7 @@ class Reaction extends Part
      *
      * @see Message::getUsers()
      *
-     * @return PromiseInterface<Collection|User[]>
+     * @return PromiseInterface<ExCollectionInterface<User>|User[]>
      */
     public function getAllUsers(): PromiseInterface
     {

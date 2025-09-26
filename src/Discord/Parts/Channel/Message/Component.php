@@ -69,9 +69,9 @@ class Component extends Part
     ];
 
     /**
-     * Gets the components of the interaction.
+     * Gets the components.
      *
-     * @return ExCollectionInterface|Component[] $components
+     * @return ExCollectionInterface><Component>|Component[] $components
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
@@ -86,5 +86,13 @@ class Component extends Part
         }
 
         return $components;
+    }
+
+    /**
+     * Gets the component.
+     */
+    public function getComponentAttribute(): ?Component
+    {
+        return $this->attributePartHelper('component', Component::TYPES[$this->attributes['component']->type ?? 0]);
     }
 }

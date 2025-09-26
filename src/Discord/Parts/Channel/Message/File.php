@@ -41,6 +41,6 @@ class File extends Content
 
     protected function getFileAttribute(): UnfurledMediaItem
     {
-        return $this->createOf(UnfurledMediaItem::class, $this->attributes['file'], true);
+        return $this->attributePartHelper('file', UnfurledMediaItem::class, true);
     }
 }

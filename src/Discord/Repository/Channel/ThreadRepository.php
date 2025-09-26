@@ -153,7 +153,7 @@ class ThreadRepository extends AbstractRepository
      *
      * @param object $response
      *
-     * @return ExCollectionInterface|Thread[]
+     * @return ExCollectionInterface<Thread>|Thread[]
      */
     private function handleThreadPaginationResponse(object $response): ExCollectionInterface
     {

@@ -89,7 +89,7 @@ class Role extends Part implements Stringable
      *
      * @since 10.0.0 Replaced setPermissionsAttribute() to save up memory.
      */
-    protected function getPermissionsAttribute(): Part
+    protected function getPermissionsAttribute(): RolePermission
     {
         return $this->createOf(RolePermission::class, ['bitwise' => $this->attributes['permissions']]);
     }
