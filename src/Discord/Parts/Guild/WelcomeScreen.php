@@ -23,8 +23,8 @@ use Discord\Parts\Part;
  *
  * @since 7.0.0
  *
- * @property ?string                                $description      The server description shown in the welcome screen.
- * @property ExCollectionInterface|WelcomeChannel[] $welcome_channels The channels shown in the welcome screen, up to 5.
+ * @property ?string                                                $description      The server description shown in the welcome screen.
+ * @property ExCollectionInterface<WelcomeChannel>|WelcomeChannel[] $welcome_channels The channels shown in the welcome screen, up to 5.
  */
 class WelcomeScreen extends Part
 {
@@ -39,7 +39,7 @@ class WelcomeScreen extends Part
     /**
      * Returns the Welcome Channels of the Welcome Screen.
      *
-     * @return ExCollectionInterface|WelcomeChannel[] The channels of welcome screen.
+     * @return ExCollectionInterface<WelcomeChannel>|WelcomeChannel[] The channels of welcome screen.
      */
     protected function getWelcomeChannelsAttribute(): ExCollectionInterface
     {

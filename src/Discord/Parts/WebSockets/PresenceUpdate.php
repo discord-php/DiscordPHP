@@ -43,8 +43,8 @@ use Discord\Parts\User\ClientStatus;
  * @property      string|null                                $mobile_status  Status of the user on their mobile client. Null if they are not active on mobile.
  * @property      string|null                                $web_status     Status of the user on their web client. Null if they are not active on web.
  *
- * @property-read Member                       $member The member that the presence update affects.
- * @property-read ExCollectionInterface|Role[] $roles  Roles that the user has in the guild.
+ * @property-read Member                             $member The member that the presence update affects.
+ * @property-read ExCollectionInterface<Role>|Role[] $roles  Roles that the user has in the guild.
  */
 class PresenceUpdate extends Part
 {
@@ -171,7 +171,7 @@ class PresenceUpdate extends Part
     /**
      * Returns the users roles.
      *
-     * @return ExCollectionInterface|Role[]
+     * @return ExCollectionInterface<Role>|Role[]
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {

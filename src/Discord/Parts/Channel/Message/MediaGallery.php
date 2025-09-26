@@ -25,9 +25,9 @@ use Discord\Helpers\ExCollectionInterface;
  *
  * @since 10.11.0
  *
- * @property int                                      $type  12 for media gallery component.
- * @property string|null                              $id    Optional identifier for component.
- * @property ExCollectionInterface|MediaGalleryItem[] $items 1 to 10 media gallery items.
+ * @property int                                                        $type  12 for media gallery component.
+ * @property string|null                                                $id    Optional identifier for component.
+ * @property ExCollectionInterface<MediaGalleryItem>|MediaGalleryItem[] $items 1 to 10 media gallery items.
  */
 class MediaGallery extends Content
 {
@@ -40,7 +40,7 @@ class MediaGallery extends Content
         'items',
     ];
 
-    /** @return ExCollectionInterface|MediaGalleryItem[] */
+    /** @return ExCollectionInterface<MediaGalleryItem>|MediaGalleryItem[] */
     protected function getItemsAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('items', MediaGalleryItem::class);

@@ -85,8 +85,8 @@ class RegisteredCommand
      * Executes the command. Will search for a sub-command if given, otherwise
      * executes the callback, if given.
      *
-     * @param ExCollectionInterface|Option[] $options
-     * @param Interaction                    $interaction
+     * @param ExCollectionInterface<Option>|Option[] $options
+     * @param Interaction                            $interaction
      *
      * @return bool Whether the command successfully executed.
      */

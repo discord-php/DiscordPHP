@@ -142,7 +142,7 @@ class PollAnswer extends Part
      *
      * @throws \OutOfRangeException
      *
-     * @return PromiseInterface<Collection|User[]>
+     * @return PromiseInterface<ExCollectionInterface<User>|User[]>
      */
     public function getVoters(array $options = []): PromiseInterface
     {

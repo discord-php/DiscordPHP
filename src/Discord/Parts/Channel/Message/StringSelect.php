@@ -26,14 +26,14 @@ use Discord\Helpers\ExCollectionInterface;
  *
  * @since 10.11.0
  *
- * @property int                                        $type        3 for string select.
- * @property string|null                                $id          Optional identifier for component.
- * @property string                                     $custom_id   ID for the select menu; max 100 characters
- * @property ExCollectionInterface|StringSelectOption[] $options     Specified choices in a select menu; max 25.
- * @property string|null                                $placeholder Placeholder text if nothing is selected or default; max 150 characters
- * @property int|null                                   $min_values  Minimum number of items that must be chosen (defaults to 1); min 0, max 25.
- * @property int|null                                   $max_values  Maximum number of items that can be chosen (defaults to 1); max 25.
- * @property bool|null                                  $disabled    Whether select menu is disabled (defaults to false).
+ * @property int                                                            $type        3 for string select.
+ * @property string|null                                                    $id          Optional identifier for component.
+ * @property string                                                         $custom_id   ID for the select menu; max 100 characters
+ * @property ExCollectionInterface<StringSelectOption>|StringSelectOption[] $options     Specified choices in a select menu; max 25.
+ * @property string|null                                                    $placeholder Placeholder text if nothing is selected or default; max 150 characters
+ * @property int|null                                                       $min_values  Minimum number of items that must be chosen (defaults to 1); min 0, max 25.
+ * @property int|null                                                       $max_values  Maximum number of items that can be chosen (defaults to 1); max 25.
+ * @property bool|null                                                      $disabled    Whether select menu is disabled (defaults to false).
  */
 class StringSelect extends SelectMenu
 {
@@ -54,7 +54,7 @@ class StringSelect extends SelectMenu
     /**
      * Gets the partial options attribute.
      *
-     * @return ExCollectionInterface|StringSelectOption[]
+     * @return ExCollectionInterface<StringSelectOption>|StringSelectOption[]
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {

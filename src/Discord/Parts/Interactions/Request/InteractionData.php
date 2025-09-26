@@ -66,7 +66,7 @@ class InteractionData extends Part
     /**
      * Gets the options of the interaction.
      *
-     * @return ExCollectionInterface|Option[] $options
+     * @return ExCollectionInterface<Option>|Option[] $options
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {
@@ -76,7 +76,7 @@ class InteractionData extends Part
     /**
      * Gets the components of the interaction.
      *
-     * @return ExCollectionInterface|Component[] $components
+     * @return ExCollectionInterface<Component>|Component[] $components
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {

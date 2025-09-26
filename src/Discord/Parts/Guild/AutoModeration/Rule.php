@@ -33,19 +33,19 @@ use Discord\Parts\User\User;
  *
  * @since 7.1.0
  *
- * @property      string                           $id               The id of this rule.
- * @property      string                           $guild_id         The id of the guild which this rule belongs to.
- * @property-read Guild|null                       $guild            The guild which this rule belongs to.
- * @property      string                           $name             The rule name.
- * @property      string                           $creator_id       The id of the user which first created this rule.
- * @property-read User|null                        $creator          The user which first created this rule.
- * @property      int                              $event_type       The rule event type.
- * @property      int                              $trigger_type     The rule trigger type.
- * @property      TriggerMetadata                  $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `regex_patterns`, `presets`, `allow_list`, `mention_total_limit` and `mention_raid_protection_enabled`).
- * @property      ExCollectionInterface|Action[]   $actions          The actions which will execute when the rule is triggered.
- * @property      bool                             $enabled          Whether the rule is enabled.
- * @property      ExCollectionInterface|?Role[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
- * @property      ExCollectionInterface|?Channel[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
+ * @property      string                                   $id               The id of this rule.
+ * @property      string                                   $guild_id         The id of the guild which this rule belongs to.
+ * @property-read Guild|null                               $guild            The guild which this rule belongs to.
+ * @property      string                                   $name             The rule name.
+ * @property      string                                   $creator_id       The id of the user which first created this rule.
+ * @property-read User|null                                $creator          The user which first created this rule.
+ * @property      int                                      $event_type       The rule event type.
+ * @property      int                                      $trigger_type     The rule trigger type.
+ * @property      TriggerMetadata                          $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `regex_patterns`, `presets`, `allow_list`, `mention_total_limit` and `mention_raid_protection_enabled`).
+ * @property      ExCollectionInterface<Action>|Action[]   $actions          The actions which will execute when the rule is triggered.
+ * @property      bool                                     $enabled          Whether the rule is enabled.
+ * @property      ExCollectionInterface<Role>|Role[]       $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
+ * @property      ExCollectionInterface<Channel>|Channel[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
  */
 class Rule extends Part
 {
@@ -111,7 +111,7 @@ class Rule extends Part
     /**
      * Returns the actions attribute.
      *
-     * @return ExCollectionInterface|Action[] A collection of actions.
+     * @return ExCollectionInterface<Action>|Action[] A collection of actions.
      */
     protected function getActionsAttribute(): ExCollectionInterface
     {

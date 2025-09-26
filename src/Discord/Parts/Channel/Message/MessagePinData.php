@@ -24,8 +24,8 @@ use Discord\Parts\Part;
  *
  * @since 10.19.0
  *
- * @property ExCollectionInterface|MessagePin[] $items
- * @property bool                               $has_more
+ * @property ExCollectionInterface<MessagePin>|MessagePin[] $items
+ * @property bool                                           $has_more
  */
 class MessagePinData extends Part
 {
