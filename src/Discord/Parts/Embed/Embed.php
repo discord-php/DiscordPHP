@@ -162,7 +162,7 @@ class Embed extends Part
      */
     protected function getFieldsAttribute(): ExCollectionInterface
     {
-        return $this->attributeCollectionHelper('fields', Field::class);
+        return $this->attributeCollectionHelper('fields', Field::class, 'name');
     }
 
     /**
