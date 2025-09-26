@@ -302,24 +302,6 @@ certain keyword, a rule can trigger and block the message before it is sent.</p>
                                                                                 
                                              
                                     </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>ExCollectionInterface|?Role[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">@property</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>ExCollectionInterface|?Channel[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).</p>
-</section>
-
-                                    </dd>
                                             </dl>
 
 
@@ -410,7 +392,7 @@ certain keyword, a rule can trigger and block the message before it is sent.</p>
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_actions">$actions</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;            </span>
+                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -442,6 +424,18 @@ certain keyword, a rule can trigger and block the message before it is sent.</p>
     <a class="" href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_event_type">$event_type</a>
     <span>
                         &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_exempt_channels">$exempt_channels</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_exempt_roles">$exempt_roles</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a>&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -767,7 +761,7 @@ JSON. Used for JsonSerializable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getActionsAttribute">getActionsAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;    </span>
+                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;    </span>
 </dt>
 <dd>Returns the actions attribute.</dd>
 
@@ -1158,7 +1152,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$actions</span>
     </code>
 
@@ -1364,6 +1358,86 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>The rule event type.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_exempt_channels">
+        $exempt_channels
+        <a href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_exempt_channels" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AutoModeration/Rule.php"><a href="files/src-discord-parts-guild-automoderation-rule.html"><abbr title="src/Discord/Parts/Guild/AutoModeration/Rule.php">Rule.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$exempt_channels</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The channel ids that should not be affected by the rule (Maximum of 50).</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_exempt_roles">
+        $exempt_roles
+        <a href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_exempt_roles" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AutoModeration/Rule.php"><a href="files/src-discord-parts-guild-automoderation-rule.html"><abbr title="src/Discord/Parts/Guild/AutoModeration/Rule.php">Rule.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$exempt_roles</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The role ids that should not be affected by the rule (Maximum of 20).</p>
 </section>
 
     
@@ -3874,7 +3948,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getActionsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getActionsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3887,7 +3961,7 @@ JSON. Used for JsonSerializable.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a>&gt;</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>A collection of actions.</p>
 </section>
@@ -4049,7 +4123,7 @@ JSON. Used for JsonSerializable.</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>ExCollectionInterface|?Channel[] A collection of channels exempt from the rule.</p>
+                                                 <section class="phpdocumentor-description"><p>ExCollectionInterface&lt;Channel&gt;|?Channel[] A collection of channels exempt from the rule.</p>
 </section>
 
                                     </dd>
@@ -4104,7 +4178,7 @@ JSON. Used for JsonSerializable.</p>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>ExCollectionInterface|?Role[] A collection of roles exempt from the rule.</p>
+                                                 <section class="phpdocumentor-description"><p>ExCollectionInterface&lt;Role&gt;|?Role[] A collection of roles exempt from the rule.</p>
 </section>
 
                                     </dd>
@@ -4520,6 +4594,8 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_creator_id">$creator_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_enabled">$enabled</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_event_type">$event_type</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_exempt_channels">$exempt_channels</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_exempt_roles">$exempt_roles</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_guild">$guild</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_guild_id">$guild_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_id">$id</a></li>

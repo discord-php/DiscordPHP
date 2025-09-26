@@ -316,7 +316,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null                 $topic                              The topic of the channel (0-4096 characters for forum/media, 0-1024 for others).</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null                       $topic                              The topic of the channel (0-4096 characters for forum/media, 0-1024 for others).</p>
 </section>
 
                                     </dd>
@@ -325,7 +325,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null                 $icon                               Icon hash of the group DM.</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null                       $icon                               Icon hash of the group DM.</p>
 </section>
 
                                     </dd>
@@ -334,7 +334,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null                 $rtc_region                         Voice region id for the voice channel, automatic when set to null.</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null                       $rtc_region                         Voice region id for the voice channel, automatic when set to null.</p>
 </section>
 
                                     </dd>
@@ -343,7 +343,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?int|null                    $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.</p>
+                                                 <section class="phpdocumentor-description"><p>?int|null                          $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.</p>
 </section>
 
                                     </dd>
@@ -352,7 +352,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?int|null                    $default_auto_archive_duration      Default duration for newly created threads, in minutes.</p>
+                                                 <section class="phpdocumentor-description"><p>?int|null                          $default_auto_archive_duration      Default duration for newly created threads, in minutes.</p>
 </section>
 
                                     </dd>
@@ -361,7 +361,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?Reaction|null               $default_reaction_emoji             The emoji to show in the add reaction button on a thread in a <code class="prettyprint">GUILD_FORUM</code> or a <code class="prettyprint">GUILD_MEDIA</code> channel.</p>
+                                                 <section class="phpdocumentor-description"><p>?Reaction|null                     $default_reaction_emoji             The emoji to show in the add reaction button on a thread in a <code class="prettyprint">GUILD_FORUM</code> or a <code class="prettyprint">GUILD_MEDIA</code> channel.</p>
 </section>
 
                                     </dd>
@@ -370,7 +370,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?int|null                    $default_sort_order                 The default sort order type used to order posts in <code class="prettyprint">GUILD_FORUM</code> and <code class="prettyprint">GUILD_MEDIA</code> channels. Defaults to <code class="prettyprint">null</code>, which indicates a preferred sort order hasn't been set by a channel admin.</p>
+                                                 <section class="phpdocumentor-description"><p>?int|null                          $default_sort_order                 The default sort order type used to order posts in <code class="prettyprint">GUILD_FORUM</code> and <code class="prettyprint">GUILD_MEDIA</code> channels. Defaults to <code class="prettyprint">null</code>, which indicates a preferred sort order hasn't been set by a channel admin.</p>
 </section>
 
                                     </dd>
@@ -615,7 +615,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_available_tags">$available_tags</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;            </span>
+                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -700,7 +700,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#property_recipients">$recipients</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;            </span>
+                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -1223,7 +1223,7 @@ JSON. Used for JsonSerializable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Channel-Channel.html#method_getAvailableTagsAttribute">getAvailableTagsAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;    </span>
+                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;    </span>
 </dt>
 <dd>Gets the available tags attribute.</dd>
 
@@ -2486,7 +2486,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$available_tags</span>
     </code>
 
@@ -3047,7 +3047,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$recipients</span>
     </code>
 
@@ -7921,7 +7921,7 @@ send_messages when creating a forum post.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getAvailableTagsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getAvailableTagsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -7949,7 +7949,7 @@ send_messages when creating a forum post.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Forum-Tag.html"><abbr title="\Discord\Parts\Channel\Forum\Tag">Tag</abbr></a>&gt;</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>Available forum tags.</p>
 </section>

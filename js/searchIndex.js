@@ -4958,8 +4958,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Component\u003A\u003AgetComponentsAttribute\u0028\u0029",
             "name": "getComponentsAttribute",
-            "summary": "Gets\u0020the\u0020components\u0020of\u0020the\u0020interaction.",
+            "summary": "Gets\u0020the\u0020components.",
             "url": "classes/Discord-Parts-Channel-Message-Component.html#method_getComponentsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Component\u003A\u003AgetComponentAttribute\u0028\u0029",
+            "name": "getComponentAttribute",
+            "summary": "Gets\u0020the\u0020component.",
+            "url": "classes/Discord-Parts-Channel-Message-Component.html#method_getComponentAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Component\u003A\u003ATYPES",
             "name": "TYPES",
@@ -5038,7 +5043,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Label\u003A\u003AgetComponentAttribute\u0028\u0029",
             "name": "getComponentAttribute",
-            "summary": "",
+            "summary": "Gets\u0020the\u0020component.",
             "url": "classes/Discord-Parts-Channel-Message-Label.html#method_getComponentAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Label\u003A\u003A\u0024fillable",
@@ -6096,10 +6101,20 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020allow\u0020attribute\u0020of\u0020the\u0020role.",
             "url": "classes/Discord-Parts-Channel-Overwrite.html#method_setAllowAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Overwrite\u003A\u003AgetAllowAttribute\u0028\u0029",
+            "name": "getAllowAttribute",
+            "summary": "Gets\u0020the\u0020allow\u0020attribute\u0020of\u0020the\u0020role.",
+            "url": "classes/Discord-Parts-Channel-Overwrite.html#method_getAllowAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Overwrite\u003A\u003AsetDenyAttribute\u0028\u0029",
             "name": "setDenyAttribute",
             "summary": "Sets\u0020the\u0020deny\u0020attribute\u0020of\u0020the\u0020role.",
             "url": "classes/Discord-Parts-Channel-Overwrite.html#method_setDenyAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Overwrite\u003A\u003AgetDenyAttribute\u0028\u0029",
+            "name": "getDenyAttribute",
+            "summary": "Gets\u0020the\u0020deny\u0020attribute\u0020of\u0020the\u0020role.",
+            "url": "classes/Discord-Parts-Channel-Overwrite.html#method_getDenyAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Overwrite\u003A\u003AgetUpdatableAttributes\u0028\u0029",
             "name": "getUpdatableAttributes",

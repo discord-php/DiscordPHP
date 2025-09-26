@@ -301,7 +301,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|int|float|bool|null     $value   Value of the option resulting from user input.</p>
+                                                 <section class="phpdocumentor-description"><p>?string|int|float|bool|null             $value   Value of the option resulting from user input.</p>
 </section>
 
                                     </dd>
@@ -310,7 +310,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?ExCollectionInterface|Option[] $options Present if this option is a group or subcommand.</p>
+                                                 <section class="phpdocumentor-description"><p>?ExCollectionInterface&lt;Option&gt;|Option[] $options Present if this option is a group or subcommand.</p>
 </section>
 
                                     </dd>
@@ -319,7 +319,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?bool|null                      $focused True if this option is the currently focused option for autocomplete.</p>
+                                                 <section class="phpdocumentor-description"><p>?bool|null                              $focused True if this option is the currently focused option for autocomplete.</p>
 </section>
 
                                     </dd>
@@ -358,7 +358,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_components">$components</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;            </span>
+                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -395,7 +395,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_options">$options</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;            </span>
+                        &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -719,14 +719,14 @@ JSON. Used for JsonSerializable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Interactions-Request-InteractionData.html#method_getComponentsAttribute">getComponentsAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;    </span>
+                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;    </span>
 </dt>
 <dd>Gets the components of the interaction.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Interactions-Request-InteractionData.html#method_getOptionsAttribute">getOptionsAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;    </span>
+                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;    </span>
 </dt>
 <dd>Gets the options of the interaction.</dd>
 
@@ -836,7 +836,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$components</span>
     </code>
 
@@ -1077,7 +1077,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$options</span>
     </code>
 
@@ -3521,7 +3521,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getComponentsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getComponentsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3534,7 +3534,7 @@ JSON. Used for JsonSerializable.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>&gt;</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>$components</p>
 </section>
@@ -3564,7 +3564,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getOptionsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">getOptionsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3577,7 +3577,7 @@ JSON. Used for JsonSerializable.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a>&gt;</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>$options</p>
 </section>
