@@ -68,14 +68,14 @@ class CommandBuilder extends Builder implements JsonSerializable
     /**
      * Interaction context(s) where the command can be used, only for globally-scoped commands.
      *
-     * @var Int[]|null
+     * @var int[]|null
      */
     protected $integration_types = null;
 
     /**
      * Interaction context(s) where the command can be used, only for globally-scoped commands.
      *
-     * @var ExCollectionInterface|Int[]|null
+     * @var ExCollectionInterface<int>|int[]|null
      */
     protected $contexts = null;
 
