@@ -701,7 +701,7 @@ class Message extends Part
             }
         }
 
-        return $this->attributePartHelper('referenced_message', Message::class);
+        return $this->attributePartHelper('referenced_message', self::class);
     }
 
     protected function getMessageReferenceAttribute(): ?MessageReference
