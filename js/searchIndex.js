@@ -11201,6 +11201,11 @@ Search.appendIndex(
             "summary": "Updates\u0020the\u0020current\u0020application\u0020associated\u0020with\u0020the\u0020bot\u0020user.",
             "url": "classes/Discord-Parts-User-Client.html#method_updateCurrentApplication"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AfetchUser\u0028\u0029",
+            "name": "fetchUser",
+            "summary": "Refreshes\u0020the\u0020client\u0020instance\u0020with\u0020the\u0020latest\u0020data\u0020from\u0020Discord.",
+            "url": "classes/Discord-Parts-User-Client.html#method_fetchUser"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetUserAttribute\u0028\u0029",
             "name": "getUserAttribute",
             "summary": "Gets\u0020the\u0020user\u0020attribute.",
@@ -11220,11 +11225,6 @@ Search.appendIndex(
             "name": "getAvatarHashAttribute",
             "summary": "",
             "url": "classes/Discord-Parts-User-Client.html#method_getAvatarHashAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003Afresh\u0028\u0029",
-            "name": "fresh",
-            "summary": "Refreshes\u0020the\u0020client\u0020instance\u0020with\u0020the\u0020latest\u0020data\u0020from\u0020Discord.",
-            "url": "classes/Discord-Parts-User-Client.html#method_fresh"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003Asave\u0028\u0029",
             "name": "save",
