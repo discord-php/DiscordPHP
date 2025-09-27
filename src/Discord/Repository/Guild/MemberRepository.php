@@ -58,7 +58,7 @@ class MemberRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-current-member-json-params
      *
-     * @since 10.20.0
+     * @since 10.30.0
      *
      * @param Guild|string $guild            The guild or guild ID.
      * @param array        $params           The parameters to modify.
