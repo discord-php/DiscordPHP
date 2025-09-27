@@ -11221,6 +11221,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-User-Client.html#method_getAvatarHashAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003Afresh\u0028\u0029",
+            "name": "fresh",
+            "summary": "Refreshes\u0020the\u0020client\u0020instance\u0020with\u0020the\u0020latest\u0020data\u0020from\u0020Discord.",
+            "url": "classes/Discord-Parts-User-Client.html#method_fresh"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003Asave\u0028\u0029",
             "name": "save",
             "summary": "Saves\u0020the\u0020client\u0020instance.",
