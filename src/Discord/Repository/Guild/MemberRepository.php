@@ -60,6 +60,7 @@ class MemberRepository extends AbstractRepository
      *
      * @since 10.20.0
      *
+     * @param Guild|string $guild            The guild or guild ID.
      * @param array        $params           The parameters to modify.
      * @param ?string|null $params['nick']   Value to set user's nickname to.
      * @param ?string|null $params['banner'] Data URI base64 encoded banner image.
@@ -69,8 +70,12 @@ class MemberRepository extends AbstractRepository
      *
      * @return PromiseInterface<self>
      */
-    public function modifyCurrentMember(array $params, ?string $reason = null): PromiseInterface
+    public function modifyCurrentMember($guild, array $params, ?string $reason = null): PromiseInterface
     {
+        if (! is_string($guild)) {
+            $guild = $guild->id;
+        }
+
         $allowed = ['nick', 'banner', 'avatar', 'bio'];
         $params = array_filter(
             $params,
@@ -87,7 +92,7 @@ class MemberRepository extends AbstractRepository
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $params, $headers);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $guild), $params, $headers);
     }
 
     /**

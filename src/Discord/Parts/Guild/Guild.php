@@ -352,6 +352,27 @@ class Guild extends Part
     }
 
     /**
+     * Modifies the current member (no validation).
+     *
+     * @link https://discord.com/developers/docs/resources/guild#modify-current-member-json-params
+     *
+     * @since 10.30.0
+     *
+     * @param array        $params           The parameters to modify.
+     * @param ?string|null $params['nick']   Value to set user's nickname to.
+     * @param ?string|null $params['banner'] Data URI base64 encoded banner image.
+     * @param ?string|null $params['avatar'] Data URL base64 encoded avatar image.
+     * @param ?string|null $params['bio']    Guild member bio.
+     * @param string|null  $reason           Reason for Audit Log.
+     *
+     * @return PromiseInterface<self>
+     */
+    public function modifyCurrentMember(array $params, ?string $reason = null): PromiseInterface
+    {
+        return $this->members->modifyCurrentMember($this->id, $params, $reason);
+    }
+
+    /**
      * @inheritDoc
      */
     protected function setChannelsAttribute(?array $channels): void
