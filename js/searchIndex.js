@@ -7651,6 +7651,11 @@ Search.appendIndex(
             "summary": "Attempts\u0020to\u0020save\u0020a\u0020channel\u0020to\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_createChannel"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AmodifyCurrentMember\u0028\u0029",
+            "name": "modifyCurrentMember",
+            "summary": "Modifies\u0020the\u0020current\u0020member\u0020\u0028no\u0020validation\u0029.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_modifyCurrentMember"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AsetChannelsAttribute\u0028\u0029",
             "name": "setChannelsAttribute",
             "summary": "",
@@ -8428,7 +8433,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Profile\u003A\u003AgetTraitsAttribute\u0028\u0029",
             "name": "getTraitsAttribute",
-            "summary": "",
+            "summary": "Returns\u0020the\u0020traits\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-Profile.html#method_getTraitsAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Profile\u003A\u003A\u0024fillable",
