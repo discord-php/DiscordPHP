@@ -184,6 +184,22 @@ class Client extends Part
     }
 
     /**
+     * Refreshes the client instance with the latest data from Discord.
+     *
+     * @return PromiseInterface<self>
+     *
+     * @since 10.30.0
+     */
+    public function fresh(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::USER_CURRENT)->then(function ($response) {
+            $this->fill((array) $response);
+
+            return $this;
+        });
+    }
+
+    /**
      * Saves the client instance.
      *
      * @return PromiseInterface
