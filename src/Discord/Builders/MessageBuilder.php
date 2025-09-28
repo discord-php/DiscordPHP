@@ -19,8 +19,6 @@ use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\Interactive;
 use Discord\Exceptions\FileNotFoundException;
-use Discord\Helpers\Collection;
-use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
@@ -108,7 +106,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Components to send with this message.
      *
-     * @var ExCollectionInterface<ComponentObject>|ComponentObject[]|null
+     * @var ComponentObject[]|null
      */
     protected $components;
 
@@ -451,9 +449,9 @@ class MessageBuilder extends Builder implements JsonSerializable
             $this->enforceV1Limits($component);
         }
 
-        $this->components ??= Collection::for(ComponentObject::class, 'custom_id');
+        $this->components ??= [];
 
-        $this->components->pushItem($component);
+        $this->components[] = $component;
 
         return $this;
     }
@@ -461,7 +459,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Add a group of components to the builder.
      *
-     * @param ExCollectionInterface<ComponentObject>|ComponentObject[] $components Components to add.
+     * @param ComponentObject[] $components Components to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
@@ -487,7 +485,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     protected function enforceV2Limits(): void
     {
         if (isset($this->components)) {
-            if ($this->countTotalComponents($this->components) >= 40) {
+            if ($this->countTotalComponents() >= 40) {
                 throw new \OverflowException('You can only add 40 components to a v2 message');
             }
         }
@@ -542,8 +540,9 @@ class MessageBuilder extends Builder implements JsonSerializable
             return $this;
         }
 
-        if (($idx = $this->components->search($component)) !== false) {
-            $this->components->splice($idx, 1);
+        $index = array_search($component, $this->components, true);
+        if ($index !== false) {
+            array_splice($this->components, $index, 1);
         }
 
         return $this;
@@ -552,16 +551,16 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets the components of the message. Removes the existing components in the process.
      *
-     * @param ExCollectionInterface<ComponentObject>|ComponentObject[]|null $components New message components.
+     * @param ComponentObject[]|null $components New message components.
      *
      * @return $this
      */
     public function setComponents($components = null): self
     {
-        $this->components = Collection::for(ComponentObject::class, 'custom_id');
+        $this->components = [];
 
         foreach ($components ?? [] as $component) {
-            $this->components->pushItem($component);
+            $this->components[] = $component;
         }
 
         return $this;
@@ -570,11 +569,11 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Returns all the components in the builder.
      *
-     * @return ExcollectionInterface<ComponentObject>|ComponentObject[]
+     * @return ComponentObject[]
      */
-    public function getComponents(): ExCollectionInterface
+    public function getComponents(): array
     {
-        return $this->components ?? Collection::for(ComponentObject::class, 'custom_id');
+        return $this->components ?? [];
     }
 
     /**
@@ -1082,7 +1081,7 @@ class MessageBuilder extends Builder implements JsonSerializable
         }
 
         if (isset($this->components)) {
-            $body['components'] = $this->components->toArray(false);
+            $body['components'] = $this->components;
             $empty = false;
         }
 
