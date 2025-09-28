@@ -11151,6 +11151,21 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-User-Activity.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\ApplicationRoleConnection",
+            "name": "ApplicationRoleConnection",
+            "summary": "The\u0020role\u0020connection\u0020object\u0020that\u0020an\u0020application\u0020has\u0020attached\u0020to\u0020a\u0020user.",
+            "url": "classes/Discord-Parts-User-ApplicationRoleConnection.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\ApplicationRoleConnection\u003A\u003AgetMetadataAttribute\u0028\u0029",
+            "name": "getMetadataAttribute",
+            "summary": "Gets\u0020the\u0020metadata\u0020attribute.",
+            "url": "classes/Discord-Parts-User-ApplicationRoleConnection.html#method_getMetadataAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\ApplicationRoleConnection\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-ApplicationRoleConnection.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Assets",
             "name": "Assets",
             "summary": "Images\u0020for\u0020the\u0020presence\u0020and\u0020their\u0020hover\u0020texts.",
@@ -11190,6 +11205,31 @@ Search.appendIndex(
             "name": "afterConstruct",
             "summary": "Runs\u0020any\u0020extra\u0020construction\u0020tasks.",
             "url": "classes/Discord-Parts-User-Client.html#method_afterConstruct"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetCurrentUserConnections\u0028\u0029",
+            "name": "getCurrentUserConnections",
+            "summary": "Returns\u0020a\u0020list\u0020of\u0020connection\u0020objects.",
+            "url": "classes/Discord-Parts-User-Client.html#method_getCurrentUserConnections"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003A__getCurrentUserConnections\u0028\u0029",
+            "name": "__getCurrentUserConnections",
+            "summary": "Returns\u0020a\u0020list\u0020of\u0020connection\u0020objects.",
+            "url": "classes/Discord-Parts-User-Client.html#method___getCurrentUserConnections"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetCurrentUserApplicationRoleConnection\u0028\u0029",
+            "name": "getCurrentUserApplicationRoleConnection",
+            "summary": "Returns\u0020the\u0020application\u0020role\u0020connection\u0020for\u0020the\u0020user.",
+            "url": "classes/Discord-Parts-User-Client.html#method_getCurrentUserApplicationRoleConnection"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003A__getCurrentUserApplicationRoleConnection\u0028\u0029",
+            "name": "__getCurrentUserApplicationRoleConnection",
+            "summary": "Returns\u0020the\u0020application\u0020role\u0020connection\u0020for\u0020the\u0020user.",
+            "url": "classes/Discord-Parts-User-Client.html#method___getCurrentUserApplicationRoleConnection"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AupdateCurrentUserApplicationRoleConnection\u0028\u0029",
+            "name": "updateCurrentUserApplicationRoleConnection",
+            "summary": "Updates\u0020and\u0020returns\u0020the\u0020application\u0020role\u0020connection\u0020for\u0020the\u0020user.",
+            "url": "classes/Discord-Parts-User-Client.html#method_updateCurrentUserApplicationRoleConnection"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetCurrentApplication\u0028\u0029",
             "name": "getCurrentApplication",
@@ -11270,6 +11310,21 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-User-Collectibles.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Connection",
+            "name": "Connection",
+            "summary": "The\u0020connection\u0020object\u0020that\u0020a\u0020user\u0020has\u0020attached.",
+            "url": "classes/Discord-Parts-User-Connection.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Connection\u003A\u003AgetIntegrationsAttribute\u0028\u0029",
+            "name": "getIntegrationsAttribute",
+            "summary": "Gets\u0020the\u0020integrations\u0020attribute.",
+            "url": "classes/Discord-Parts-User-Connection.html#method_getIntegrationsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Connection\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-Connection.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member",
             "name": "Member",

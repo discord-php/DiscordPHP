@@ -265,7 +265,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -348,6 +348,12 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-User-Client.html#property_connections">$connections</a>
+    <span>
+                        &nbsp;: <abbr title="\Discord\Parts\User\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Part.html#property_created">$created</a>
     <span>
                         &nbsp;: bool            </span>
@@ -406,6 +412,12 @@
     <a class="" href="classes/Discord-Parts-User-Client.html#property_public_flags">$public_flags</a>
     <span>
                         &nbsp;: int|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-User-Client.html#property_role_connection">$role_connection</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -605,6 +617,20 @@
 <dd>Gets the current application of the client.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-User-Client.html#method_getCurrentUserApplicationRoleConnection">getCurrentUserApplicationRoleConnection()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;    </span>
+</dt>
+<dd>Returns the application role connection for the user.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-User-Client.html#method_getCurrentUserConnections">getCurrentUserConnections()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Parts\User\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;&gt;    </span>
+</dt>
+<dd>Returns a list of connection objects.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_getDiscord">getDiscord()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>    </span>
@@ -715,6 +741,27 @@ JSON. Used for JsonSerializable.</dd>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>&gt;    </span>
 </dt>
 <dd>Updates the current application associated with the bot user.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-User-Client.html#method_updateCurrentUserApplicationRoleConnection">updateCurrentUserApplicationRoleConnection()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;    </span>
+</dt>
+<dd>Updates and returns the application role connection for the user.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-User-Client.html#method___getCurrentUserApplicationRoleConnection">__getCurrentUserApplicationRoleConnection()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;    </span>
+</dt>
+<dd>Returns the application role connection for the user.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-User-Client.html#method___getCurrentUserConnections">__getCurrentUserConnections()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Parts\User\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;&gt;    </span>
+</dt>
+<dd>Returns a list of connection objects.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_attributeCarbonHelper">attributeCarbonHelper()</a>
@@ -961,6 +1008,46 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Whether the client is a bot.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_connections">
+        $connections
+        <a href="classes/Discord-Parts-User-Client.html#property_connections" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type"><abbr title="\Discord\Parts\User\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$connections</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The connection object that the user has attached.</p>
 </section>
 
     
@@ -1371,6 +1458,46 @@ JSON. Used for JsonSerializable.</dd>
             phpdocumentor-element
             -property
             -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_role_connection">
+        $role_connection
+        <a href="classes/Discord-Parts-User-Client.html#property_role_connection" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$role_connection</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The role connection object that the user has attached.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
                         -deprecated                                            "
 >
     <h4 class="phpdocumentor-element__name" id="property_scriptData">
@@ -1750,7 +1877,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -1776,6 +1903,9 @@ JSON. Used for JsonSerializable.</dd>
     // actual form
     &#039;user&#039;,
     &#039;application&#039;,
+    // internal
+    &#039;connections&#039;,
+    &#039;role_connection&#039;,
 ]</span></code>
 
     
@@ -1902,7 +2032,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -2446,7 +2576,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -2696,7 +2826,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">223</span>
 
     </aside>
 
@@ -2718,6 +2848,134 @@ JSON. Used for JsonSerializable.</dd>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getCurrentUserApplicationRoleConnection">
+        getCurrentUserApplicationRoleConnection()
+        <a href="classes/Discord-Parts-User-Client.html#method_getCurrentUserApplicationRoleConnection" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">161</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the application role connection for the user.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getCurrentUserApplicationRoleConnection</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fresh</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$fresh</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-User-Client.html#method_getCurrentUserApplicationRoleConnection#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.33.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getCurrentUserConnections">
+        getCurrentUserConnections()
+        <a href="classes/Discord-Parts-User-Client.html#method_getCurrentUserConnections" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">120</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns a list of connection objects.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getCurrentUserConnections</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fresh</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Parts\User\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$fresh</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-User-Client.html#method_getCurrentUserConnections#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.33.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Parts\User\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;&gt;</span>
             </section>
 
 </article>
@@ -2875,7 +3133,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">217</span>
+    <span class="phpdocumentor-element-found-in__line">333</span>
 
     </aside>
 
@@ -2927,7 +3185,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">201</span>
+    <span class="phpdocumentor-element-found-in__line">317</span>
 
     </aside>
 
@@ -3353,7 +3611,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">191</span>
+    <span class="phpdocumentor-element-found-in__line">307</span>
 
     </aside>
 
@@ -3435,7 +3693,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">155</span>
+    <span class="phpdocumentor-element-found-in__line">271</span>
 
     </aside>
 
@@ -3571,7 +3829,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">242</span>
 
     </aside>
 
@@ -3619,6 +3877,193 @@ JSON. Used for JsonSerializable.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_updateCurrentUserApplicationRoleConnection">
+        updateCurrentUserApplicationRoleConnection()
+        <a href="classes/Discord-Parts-User-Client.html#method_updateCurrentUserApplicationRoleConnection" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">197</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Updates and returns the application role connection for the user.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">updateCurrentUserApplicationRoleConnection</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>|array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connection</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Requires an OAuth2 access token with role_connections.write scope for the application specified in the path.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$connection</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>|array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The connection data to update.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-User-Client.html#method_updateCurrentUserApplicationRoleConnection#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.33.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method___getCurrentUserApplicationRoleConnection">
+        __getCurrentUserApplicationRoleConnection()
+        <a href="classes/Discord-Parts-User-Client.html#method___getCurrentUserApplicationRoleConnection" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">178</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the application role connection for the user.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">__getCurrentUserApplicationRoleConnection</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Requires an OAuth2 access token with role_connections.write scope for the application specified in the path.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-User-Client.html#method___getCurrentUserApplicationRoleConnection#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.33.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-ApplicationRoleConnection.html"><abbr title="\Discord\Parts\User\ApplicationRoleConnection">ApplicationRoleConnection</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method___getCurrentUserConnections">
+        __getCurrentUserConnections()
+        <a href="classes/Discord-Parts-User-Client.html#method___getCurrentUserConnections" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">139</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns a list of connection objects.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">__getCurrentUserConnections</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Parts\User\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Requires the connections OAuth2 scope.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-User-Client.html#method___getCurrentUserConnections#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/user#get-current-user-guild-member"> https://discord.com/developers/docs/resources/user#get-current-user-guild-member </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.33.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Parts\User\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-User-Connection.html"><abbr title="\Discord\Parts\User\Connection">Connection</abbr></a>&gt;&gt;</span>
             </section>
 
 </article>
@@ -4108,7 +4553,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">173</span>
+    <span class="phpdocumentor-element-found-in__line">289</span>
 
     </aside>
 
@@ -4150,7 +4595,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">297</span>
 
     </aside>
 
@@ -4192,7 +4637,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Client.php"><a href="files/src-discord-parts-user-client.html"><abbr title="src/Discord/Parts/User/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">257</span>
 
     </aside>
 
@@ -4516,6 +4961,7 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-User-Client.html#property_avatar">$avatar</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Client.html#property_avatar_hash">$avatar_hash</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Client.html#property_bot">$bot</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-Client.html#property_connections">$connections</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Client.html#property_discriminator">$discriminator</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Client.html#property_emojis">$emojis</a></li>
@@ -4526,6 +4972,7 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-User-Client.html#property_mfa_enabled">$mfa_enabled</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Client.html#property_private_channels">$private_channels</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Client.html#property_public_flags">$public_flags</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-Client.html#property_role_connection">$role_connection</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Client.html#property_sounds">$sounds</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Client.html#property_user">$user</a></li>
@@ -4560,6 +5007,8 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getConstants">getConstants()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getCreatableAttributes">getCreatableAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-User-Client.html#method_getCurrentApplication">getCurrentApplication()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-User-Client.html#method_getCurrentUserApplicationRoleConnection">getCurrentUserApplicationRoleConnection()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-User-Client.html#method_getCurrentUserConnections">getCurrentUserConnections()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getDiscord">getDiscord()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getPublicAttributes">getPublicAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getRawAttributes">getRawAttributes()</a></li>
@@ -4576,6 +5025,9 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-User-Client.html#method_setAvatar">setAvatar()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_unserialize">unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-User-Client.html#method_updateCurrentApplication">updateCurrentApplication()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-User-Client.html#method_updateCurrentUserApplicationRoleConnection">updateCurrentUserApplicationRoleConnection()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-User-Client.html#method___getCurrentUserApplicationRoleConnection">__getCurrentUserApplicationRoleConnection()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-User-Client.html#method___getCurrentUserConnections">__getCurrentUserConnections()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_attributeCarbonHelper">attributeCarbonHelper()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_attributeCollectionHelper">attributeCollectionHelper()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_attributePartHelper">attributePartHelper()</a></li>
