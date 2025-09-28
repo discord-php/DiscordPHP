@@ -13271,6 +13271,21 @@ Search.appendIndex(
             "summary": "Updates\u0020another\u0020user\u0027s\u0020voice\u0020state.",
             "url": "classes/Discord-Repository-VoiceStateRepository.html#method_modifyUserVoiceState"
         },                {
+            "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003Afetch\u0028\u0029",
+            "name": "fetch",
+            "summary": "Gets\u0020a\u0020part\u0020from\u0020the\u0020repository\u0020or\u0020Discord\u0020servers.",
+            "url": "classes/Discord-Repository-VoiceStateRepository.html#method_fetch"
+        },                {
+            "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003Afresh\u0028\u0029",
+            "name": "fresh",
+            "summary": "Returns\u0020a\u0020part\u0020with\u0020fresh\u0020values.",
+            "url": "classes/Discord-Repository-VoiceStateRepository.html#method_fresh"
+        },                {
+            "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "Attempts\u0020to\u0020save\u0020a\u0020part\u0020to\u0020the\u0020Discord\u0020servers.",
+            "url": "classes/Discord-Repository-VoiceStateRepository.html#method_save"
+        },                {
             "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
             "summary": "",
