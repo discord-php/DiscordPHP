@@ -77,7 +77,7 @@ class VoiceStateUpdate extends Event
                 $this->cacheUser($data->member->user);
             }
 
-            $guild->voice_states->cache->set($data->user_id, $statePart);
+            yield $guild->voice_states->cache->set($data->user_id, $statePart);
         }
 
         return [$statePart, $oldVoiceState];
