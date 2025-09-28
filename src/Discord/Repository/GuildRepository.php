@@ -20,6 +20,8 @@ use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 use React\Promise\PromiseInterface;
 
+use function React\Promise\resolve;
+
 /**
  * Contains guilds that the client is in.
  *
@@ -128,18 +130,22 @@ class GuildRepository extends AbstractRepository
         }
 
         return $this->http->get(Endpoint::USER_CURRENT_GUILDS, $params)->then(function ($response) {
+            $promise = resolve(true);
+
             foreach ($response as $data) {
-                $this->cache->get($data->id)->then(function ($part) use ($data) {
-                    if ($part !== null) {
-                        $this->cache->set($data->id, $part->fill($data));
+                $promise = $promise
+                    ->then(fn ($success) => $this->cache->get($data->id))
+                    ->then(function ($part) use ($data) {
+                        if ($part !== null) {
+                            return $this->cache->set($data->id, $part->fill($data));
+                        }
 
-                        return;
-                    }
-
-                    $this->cache->set($data->id, $this->factory->create(Guild::class, $data, true));
-                });
+                        return $this->cache->set($data->id, $this->factory->create(Guild::class, $data, true));
+                    });
             }
-        })->then(fn () => $this);
+
+            return $promise;
+        })->then(fn ($success) => $this);
     }
 
     /**
