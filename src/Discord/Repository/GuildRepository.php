@@ -95,6 +95,54 @@ class GuildRepository extends AbstractRepository
     }
 
     /**
+     * Returns a list of partial guild objects the current user is a member of.
+     * For OAuth2, requires the guilds scope.
+     *
+     * This endpoint returns 200 guilds by default, which is the maximum number of guilds a non-bot user can join.
+     * Therefore, pagination is not needed for integrations that need to get a list of the users' guilds.
+     *
+     * @link https://discord.com/developers/docs/resources/user#get-current-user-guilds
+     *
+     * @param ?string|null $before      Get guilds before this guild ID.
+     * @param ?string|null $after       Get guilds after this guild ID.
+     * @param ?int|null    $limit       Max number of guilds to return (1-200). Defaults to 200.
+     * @param ?bool|null   $with_counts Include approximate member and presence counts in response. Defaults to false.
+     *
+     * @throws \InvalidArgumentException No valid parameters to query.
+     *
+     * @return PromiseInterface<self>
+     *
+     * @since 10.32.0
+     */
+    public function getCurrentUserGuilds(array $params): PromiseInterface
+    {
+        $allowed = ['before', 'after', 'limit', 'with_counts'];
+        $params = array_filter(
+            $params,
+            fn ($key) => in_array($key, $allowed, true),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        if (empty($params)) {
+            throw new \InvalidArgumentException('No valid parameters to query.');
+        }
+
+        return $this->http->get(Endpoint::USER_CURRENT_GUILDS, $params)->then(function ($response) {
+            foreach ($response as $data) {
+                $this->cache->get($data->id)->then(function ($part) use ($data) {
+                    if ($part !== null) {
+                        $this->cache->set($data->id, $part->fill($data));
+
+                        return;
+                    }
+
+                    $this->cache->set($data->id, $this->factory->create(Guild::class, $data, true));
+                });
+            }
+        })->then(fn ($success) => $this);
+    }
+
+    /**
      * Returns the current user's voice state in the guild.
      *
      * @link https://discord.com/developers/docs/resources/voice#get-current-user-voice-state
