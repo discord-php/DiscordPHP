@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
-use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
+use Discord\WebSockets\Event;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#voice-state-update
@@ -34,44 +34,50 @@ class VoiceStateUpdate extends Event
     {
         $oldVoiceState = null;
         /** @var VoiceStateUpdatePart */
-        $statePart = $this->factory->part(VoiceStateUpdatePart::class, (array) $data, true);
+        $statePart = $this->factory->part(VoiceStateUpdatePart::class, (array) $data->d, true);
 
         /** @var ?Guild */
-        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            // Preload target new voice state channel
-            yield $guild->channels->cacheGet($data->channel_id);
+        if ($guild = yield $this->discord->guilds->cacheGet($data->d->guild_id)) {
+            /** @var Guild $guild */
 
-            /** @var ?Channel */
+            // Preload target new voice state channel
+            yield $guild->channels->cacheGet($data->d->channel_id);
+
             foreach ($guild->channels as $channel) {
+                /** @var Channel $channel */
                 if (! $channel->isVoiceBased()) {
                     continue;
                 }
 
                 /** @var ?VoiceStateUpdatePart */
-                if ($cachedVoiceState = yield $channel->members->cacheGet($data->user_id)) {
+                if ($cachedVoiceState = yield $channel->members->cacheGet($data->d->user_id)) {
+                    /** @var VoiceStateUpdatePart $cachedVoiceState*/
+
                     // Copy
                     $oldVoiceState = clone $cachedVoiceState;
-                    if ($cachedVoiceState->channel_id == $data->channel_id) {
+                    if ($cachedVoiceState->channel_id == $data->d->channel_id) {
                         // Move
                         $statePart = $cachedVoiceState;
                         // Update
-                        $statePart->fill((array) $data);
+                        $statePart->fill((array) $data->d);
                     }
                 }
 
-                if ($channel->id == $data->channel_id) {
+                if ($channel->id == $data->d->channel_id) {
                     // Add/update this member to the voice channel
-                    yield $channel->members->cache->set($data->user_id, $statePart);
+                    yield $channel->members->cache->set($data->d->user_id, $statePart);
                 } else {
                     // Remove each voice channels containing this member
-                    yield $channel->members->cache->delete($data->user_id);
+                    yield $channel->members->cache->delete($data->d->user_id);
                 }
             }
 
-            if (isset($data->member)) {
-                $this->cacheMember($guild->members, (array) $data->member);
-                $this->cacheUser($data->member->user);
+            if (isset($data->d->member)) {
+                $this->cacheMember($guild->members, (array) $data->d->member);
+                $this->cacheUser($data->d->member->user);
             }
+
+            $guild->voice_states->cache->set($data->d->user_id, $statePart);
         }
 
         return [$statePart, $oldVoiceState];
