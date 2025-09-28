@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\Repository\AbstractRepository;
 use React\Promise\Deferred;
@@ -53,6 +54,55 @@ class MemberRepository extends AbstractRepository
     protected $class = Member::class;
 
     /**
+     * Returns a guild member object for the current user.
+     *
+     * @param Guild|string $guild
+     *
+     * @return PromiseInterface<Member>
+     *
+     * @since 10.32.0
+     */
+    public function getCurrentUserGuildMember($guild, bool $fresh = false): PromiseInterface
+    {
+        if (! is_string($guild)) {
+            $guild = $guild->id;
+        }
+
+        if ($fresh) {
+            return $this->__getCurrentUserGuildMember($guild);
+        }
+
+        return $this->cache->get($guild)->then(function ($part) use ($guild) {
+            if ($part !== null) {
+                return $part;
+            }
+
+            return $this->__getCurrentUserGuildMember($guild);
+        });
+    }
+
+    /**
+     * Returns a guild member object for the current user.
+     * Requires the guilds.members.read OAuth2 scope.
+     *
+     * @link https://discord.com/developers/docs/resources/user#get-current-user-guild-member
+     *
+     * @param string $guild_id
+     *
+     * @return PromiseInterface<Member>
+     *
+     * @since 10.32.0
+     */
+    protected function __getCurrentUserGuildMember($guild_id): PromiseInterface
+    {
+        return $this->http->get(Endpoint::bind(Endpoint::USER_CURRENT_MEMBER, $guild_id))->then(function ($response) {
+            $part = $this->factory->create(Member::class, $response, true);
+
+            return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
+        });
+    }
+
+    /**
      * Modifies the current member (no validation).
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-current-member-json-params
@@ -67,7 +117,7 @@ class MemberRepository extends AbstractRepository
      * @param ?string|null $params['bio']    Guild member bio.
      * @param string|null  $reason           Reason for Audit Log.
      *
-     * @return PromiseInterface<self>
+     * @return PromiseInterface<Member>
      */
     public function modifyCurrentMember($guild, array $params, ?string $reason = null): PromiseInterface
     {
@@ -91,7 +141,11 @@ class MemberRepository extends AbstractRepository
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $guild), $params, $headers);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $guild), $params, $headers)->then(function ($response) {
+            $part = $this->factory->part(Member::class, (array) $response, true);
+
+            return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
+        });
     }
 
     /**
