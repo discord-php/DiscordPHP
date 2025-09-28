@@ -15,9 +15,14 @@ namespace Discord\Repository;
 
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 use React\Promise\PromiseInterface;
+use WeakReference;
+
+use function React\Promise\reject;
+use function React\Promise\resolve;
 
 /**
  * Contains voice states of users in a guild.
@@ -172,5 +177,121 @@ class VoiceStateRepository extends AbstractRepository
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_USER_VOICE_STATE, $guild, $user), $data);
+    }
+
+    /**
+     * Gets a part from the repository or Discord servers.
+     *
+     * @param string $id    The ID to search for.
+     * @param bool   $fresh Whether we should skip checking the cache.
+     *
+     * @throws \Exception
+     *
+     * @return PromiseInterface<VoiceStateUpdate>
+     */
+    public function fetch(string $id, bool $fresh = false): PromiseInterface
+    {
+        if (! $fresh) {
+            if (isset($this->items[$id])) {
+                $part = $this->items[$id];
+                if ($part instanceof WeakReference) {
+                    $part = $part->get();
+                }
+
+                if ($part) {
+                    $this->items[$id] = $part;
+
+                    return resolve($part);
+                }
+            } else {
+                return $this->cache->get($id)->then(function ($part) use ($id) {
+                    if ($part === null) {
+                        return $this->fetch($id, true);
+                    }
+
+                    return $part;
+                });
+            }
+        }
+
+        $part = $this->factory->part($this->class, [$this->discrim => $id]);
+        $endpoint = ($part->user_id == $this->discord->id)
+            ? new Endpoint(Endpoint::GUILD_USER_VOICE_STATE)
+            : new Endpoint($this->endpoints['get']);
+        $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
+
+        return $this->http->get($endpoint)->then(function ($response) use ($part, $id) {
+            $part->created = true;
+            $part->fill(array_merge($this->vars, (array) $response));
+
+            return $this->cache->set($id, $part)->then(fn ($success) => $part);
+        });
+    }
+
+    /**
+     * Returns a part with fresh values.
+     *
+     * @param VoiceStateUpdate $part        The part to get fresh values.
+     * @param array            $queryparams Query string params to add to the request (no validation)
+     *
+     * @return PromiseInterface<VoiceStateUpdate>
+     *
+     * @throws \Exception
+     */
+    public function fresh(Part $part, array $queryparams = []): PromiseInterface
+    {
+        if (! $part->created) {
+            return reject(new \Exception('You cannot get a non-existent part.'));
+        }
+        $endpoint = ($part->user_id == $this->discord->id)
+            ? new Endpoint(Endpoint::GUILD_USER_VOICE_STATE)
+            : new Endpoint($this->endpoints['get']);
+        $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
+
+        foreach ($queryparams as $query => $param) {
+            $endpoint->addQuery($query, $param);
+        }
+
+        return $this->http->get($endpoint)->then(function ($response) use (&$part) {
+            $part->fill((array) $response);
+
+            return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
+        });
+    }
+
+    /**
+     * Attempts to save a part to the Discord servers.
+     *
+     * @param VoiceStateUpdate $part   The part to save.
+     * @param string|null      $reason Reason for Audit Log (if supported).
+     *
+     * @return PromiseInterface<VoiceStateUpdate>
+     *
+     * @throws \Exception
+     */
+    public function save(Part $part, ?string $reason = null): PromiseInterface
+    {
+        if (! $part->created) {
+            return reject(new \Exception('You cannot create this part.'));
+        }
+
+        $method = 'patch';
+        $endpoint = ($part->user_id == $this->discord->id)
+            ? new Endpoint(Endpoint::GUILD_USER_VOICE_STATE)
+            : new Endpoint($this->endpoints['update']);
+        $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
+        $attributes = $part->getUpdatableAttributes();
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->{$method}($endpoint, $attributes, $headers)->then(function ($response) use ($method, $part) {
+            $part->fill((array) $response);
+            $part->created = true;
+
+            return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
+        });
     }
 }
