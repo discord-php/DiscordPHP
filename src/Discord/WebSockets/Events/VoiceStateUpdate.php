@@ -34,14 +34,14 @@ class VoiceStateUpdate extends Event
     {
         $oldVoiceState = null;
         /** @var VoiceStateUpdatePart */
-        $statePart = $this->factory->part(VoiceStateUpdatePart::class, (array) $data->d, true);
+        $statePart = $this->factory->part(VoiceStateUpdatePart::class, (array) $data, true);
 
         /** @var ?Guild */
-        if ($guild = yield $this->discord->guilds->cacheGet($data->d->guild_id)) {
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var Guild $guild */
 
             // Preload target new voice state channel
-            yield $guild->channels->cacheGet($data->d->channel_id);
+            yield $guild->channels->cacheGet($data->channel_id);
 
             foreach ($guild->channels as $channel) {
                 /** @var Channel $channel */
@@ -50,34 +50,34 @@ class VoiceStateUpdate extends Event
                 }
 
                 /** @var ?VoiceStateUpdatePart */
-                if ($cachedVoiceState = yield $channel->members->cacheGet($data->d->user_id)) {
+                if ($cachedVoiceState = yield $channel->members->cacheGet($data->user_id)) {
                     /** @var VoiceStateUpdatePart $cachedVoiceState*/
 
                     // Copy
                     $oldVoiceState = clone $cachedVoiceState;
-                    if ($cachedVoiceState->channel_id == $data->d->channel_id) {
+                    if ($cachedVoiceState->channel_id == $data->channel_id) {
                         // Move
                         $statePart = $cachedVoiceState;
                         // Update
-                        $statePart->fill((array) $data->d);
+                        $statePart->fill((array) $data);
                     }
                 }
 
-                if ($channel->id == $data->d->channel_id) {
+                if ($channel->id == $data->channel_id) {
                     // Add/update this member to the voice channel
-                    yield $channel->members->cache->set($data->d->user_id, $statePart);
+                    yield $channel->members->cache->set($data->user_id, $statePart);
                 } else {
                     // Remove each voice channels containing this member
-                    yield $channel->members->cache->delete($data->d->user_id);
+                    yield $channel->members->cache->delete($data->user_id);
                 }
             }
 
-            if (isset($data->d->member)) {
-                $this->cacheMember($guild->members, (array) $data->d->member);
-                $this->cacheUser($data->d->member->user);
+            if (isset($data->member)) {
+                $this->cacheMember($guild->members, (array) $data->member);
+                $this->cacheUser($data->member->user);
             }
 
-            $guild->voice_states->cache->set($data->d->user_id, $statePart);
+            $guild->voice_states->cache->set($data->user_id, $statePart);
         }
 
         return [$statePart, $oldVoiceState];
