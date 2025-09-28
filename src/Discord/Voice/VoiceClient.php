@@ -564,7 +564,7 @@ class VoiceClient extends EventEmitter
     protected function heartbeatAck($data): void
     {
         $end = microtime(true);
-        $start = $data->d->t;
+        $start = $data->d['t'];
         $diff = ($end - $start) * 1000;
 
         $this->logger->debug('received heartbeat ack', ['response_time' => $diff]);
@@ -581,7 +581,7 @@ class VoiceClient extends EventEmitter
      */
     protected function handleHello($data): void
     {
-        $this->heartbeat_interval = $data->d->heartbeat_interval;
+        $this->heartbeat_interval = $data->d['heartbeat_interval'];
         $this->heartbeat();
         $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, fn () => $this->heartbeat());
     }
@@ -624,19 +624,19 @@ class VoiceClient extends EventEmitter
      * Handles the "ready" event for the voice client, initializing UDP connection and heartbeat.
      *
      * @param Payload $data The data object containing voice server connection details:
-     *                      - $data->d->ssrc: The synchronization source identifier.
-     *                      - $data->d->ip: The IP address for the UDP connection.
-     *                      - $data->d->port: The port for the UDP connection.
-     *                      - $data->d->modes: Supported encryption modes.
+     *                      - $data->d['ssrc']: The synchronization source identifier.
+     *                      - $data->d['ip']: The IP address for the UDP connection.
+     *                      - $data->d['port']: The port for the UDP connection.
+     *                      - $data->d['modes']: Supported encryption modes.
      *
      * @since 10.19.0
      */
     protected function handleReady(object $data): void
     {
-        $this->ssrc = $data->d->ssrc;
-        $this->udpIp = $data->d->ip;
-        $this->udpPort = $data->d->port;
-        $this->supportedModes = $data->d->modes;
+        $this->ssrc = $data->d['ssrc'];
+        $this->udpIp = $data->d['ip'];
+        $this->udpPort = $data->d['port'];
+        $this->supportedModes = $data->d['modes'];
 
         $this->logger->debug('received voice ready packet', ['data' => $data]);
 
@@ -684,10 +684,10 @@ class VoiceClient extends EventEmitter
     protected function handleSessionDescription(object $data): void
     {
         $this->ready = true;
-        $this->mode = $data->d->mode;
+        $this->mode = $data->d['mode'];
         $this->secret_key = '';
 
-        foreach ($data->d->secret_key as $part) {
+        foreach ($data->d['secret_key'] as $part) {
             $this->secret_key .= pack('C*', $part);
         }
 
@@ -744,7 +744,7 @@ class VoiceClient extends EventEmitter
         $this->send(Payload::new(
             Op::VOICE_DAVE_TRANSITION_READY,
             [
-                'transition_id' => $data->d->transition_id,
+                'transition_id' => $data->d['transition_id'],
             ],
         ));
     }
@@ -769,7 +769,7 @@ class VoiceClient extends EventEmitter
         $this->send(Payload::new(
             Op::VOICE_DAVE_MLS_KEY_PACKAGE,
             [
-                'epoch_id' => $data->d->epoch_id,
+                'epoch_id' => $data->d['epoch_id'],
                 'key_package' => $this->generateKeyPackage(),
             ],
         ));
@@ -838,12 +838,12 @@ class VoiceClient extends EventEmitter
      */
     protected function handleSpeaking(object $data): void
     {
-        $this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
-        $this->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this]);
+        $this->emit('speaking', [$data->d['speaking'], $data->d['user_id'], $this]);
+        $this->emit("speaking.{$data->d['user_id']}", [$data->d['speaking'], $this]);
 
         $this->logger->debug('received speaking packet', ['data' => $data]);
 
-        $this->speakingStatus[$data->d->ssrc] = $data->d;
+        $this->speakingStatus[$data->d['ssrc']] = $data->d;
     }
 
     /**
@@ -1733,13 +1733,13 @@ class VoiceClient extends EventEmitter
             unset($this->speakingStatus[$ss->ssrc]);
         };
 
-        $ss = $this->speakingStatus->get('user_id', $data->d->user_id ?? null);
+        $ss = $this->speakingStatus->get('user_id', $data->d['user_id'] ?? null);
 
         if (null === $ss) {
             return; // not in our channel
         }
 
-        if (isset($data->d->channel_id) && $data->d->channel_id == $this->channel->id) {
+        if (isset($data->d['channel_id']) && $data->d['channel_id'] == $this->channel->id) {
             return; // ignore, just a mute/deaf change
         }
 
