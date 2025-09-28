@@ -139,7 +139,7 @@ class GuildRepository extends AbstractRepository
                     $this->cache->set($data->id, $this->factory->create(Guild::class, $data, true));
                 });
             }
-        })->then(fn ($success) => $this);
+        })->then(fn () => $this);
     }
 
     /**
