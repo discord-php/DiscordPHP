@@ -47,6 +47,7 @@ use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
 use Discord\Repository\Guild\MessageRepository;
+use Discord\Repository\VoiceStateRepository;
 use React\Promise\PromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -161,6 +162,7 @@ use function React\Promise\resolve;
  * @property MessageRepository            $messages
  * @property SoundRepository              $sounds
  * @property GuildTemplateRepository      $templates
+ * @property VoiceStateRepository         $voice_states
  */
 class Guild extends Part
 {
@@ -267,6 +269,7 @@ class Guild extends Part
         'roles',
         'emojis',
         'stickers',
+        'voice_states',
     ];
 
     /**
@@ -332,6 +335,7 @@ class Guild extends Part
         'messages' => MessageRepository::class,
         'sounds' => SoundRepository::class,
         'templates' => GuildTemplateRepository::class,
+        'voice_states' => VoiceStateRepository::class,
     ];
 
     /**
@@ -611,25 +615,7 @@ class Guild extends Part
      */
     public function getCurrentUserVoiceState(): PromiseInterface
     {
-        return $this->discord->guilds->getCurrentUserVoiceState($this->id);
-    }
-
-    /**
-     * Returns the specified user's voice state in the guild.
-     *
-     * @link https://discord.com/developers/docs/resources/voice#get-user-voice-state
-     *
-     * @param User|string $user The user or user ID.
-     *
-     * @return PromiseInterface<VoiceStateUpdate>
-     */
-    public function getUserVoiceState($user): PromiseInterface
-    {
-        if ($user instanceof User) {
-            $user = $user->id;
-        }
-
-        return $this->discord->guilds->getUserVoiceState($this->id, $user);
+        return $this->voicesS->getCurrentUserVoiceState($this->id);
     }
 
     /**
@@ -669,7 +655,21 @@ class Guild extends Part
             }
         }
 
-        return $this->discord->guilds->modifyCurrentUserVoiceState($this->id, $data);
+        return $this->voices->modifyCurrentUserVoiceState($this->id, $data);
+    }
+
+    /**
+     * Returns the specified user's voice state in the guild.
+     *
+     * @link https://discord.com/developers/docs/resources/voice#get-user-voice-state
+     *
+     * @param Member|User|string $user The user or user ID.
+     *
+     * @return PromiseInterface<VoiceStateUpdate>
+     */
+    public function getUserVoiceState($user): PromiseInterface
+    {
+        return $this->voices->getUserVoiceState($this->id, $user);
     }
 
     /**
@@ -698,11 +698,7 @@ class Guild extends Part
             return reject(new NoPermissionsException("You do not have permission to mute members in the guild {$this->id}."));
         }
 
-        if ($user instanceof User) {
-            $user = $user->id;
-        }
-
-        return $this->discord->guilds->modifyUserVoiceState($this->id, $user, $data);
+        return $this->voices->modifyUserVoiceState($this->id, $user, $data);
     }
 
     /**
@@ -938,7 +934,7 @@ class Guild extends Part
      */
     public function transferOwnership($member, ?string $reason = null): PromiseInterface
     {
-        if ($member instanceof Member) {
+        if (! is_string($member)) {
             $member = $member->id;
         }
 
@@ -1168,7 +1164,7 @@ class Guild extends Part
         ->setAllowedValues('days', fn ($value) => ($value >= 1 && $value <= 30))
         ->setNormalizer('include_roles', function ($option, $values) {
             foreach ($values as &$value) {
-                if ($value instanceof Role) {
+                if (! is_string($value)) {
                     $value = $value->id;
                 }
             }
@@ -1224,7 +1220,7 @@ class Guild extends Part
         ->setAllowedValues('days', fn ($value) => ($value >= 1 && $value <= 30))
         ->setNormalizer('include_roles', function ($option, $values) {
             foreach ($values as &$value) {
-                if ($value instanceof Role) {
+                if (! is_string($value)) {
                     $value = $value->id;
                 }
             }
