@@ -65,7 +65,7 @@ class GuildRepository extends AbstractRepository
      */
     public function leave($guild): PromiseInterface
     {
-        if ($guild instanceof Guild) {
+        if (! is_string($guild)) {
             $guild = $guild->id;
         }
 
@@ -88,7 +88,7 @@ class GuildRepository extends AbstractRepository
      */
     public function preview($guild_id): PromiseInterface
     {
-        if ($guild_id instanceof Guild) {
+        if (! is_string($guild_id)) {
             $guild_id = $guild_id->id;
         }
 
@@ -161,7 +161,7 @@ class GuildRepository extends AbstractRepository
      */
     public function getCurrentUserVoiceState($guild): PromiseInterface
     {
-        if ($guild instanceof Guild) {
+        if (! is_string($guild)) {
             $guild = $guild->id;
         }
 
@@ -180,7 +180,7 @@ class GuildRepository extends AbstractRepository
      */
     public function getUserVoiceState($guild, $user): PromiseInterface
     {
-        if ($user instanceof User) {
+        if (! is_string($user)) {
             $user = $user->id;
         }
 
@@ -210,7 +210,7 @@ class GuildRepository extends AbstractRepository
      */
     public function modifyCurrentUserVoiceState($guild, array $data): PromiseInterface
     {
-        if ($guild instanceof Guild) {
+        if (! is_string($guild)) {
             $guild = $guild->id;
         }
 
@@ -238,11 +238,11 @@ class GuildRepository extends AbstractRepository
      */
     public function modifyUserVoiceState($guild, $user, array $data): PromiseInterface
     {
-        if ($guild instanceof Guild) {
+        if (! is_string($guild)) {
             $guild = $guild->id;
         }
 
-        if ($user instanceof User) {
+        if (! is_string($user)) {
             $user = $user->id;
         }
 
