@@ -78,7 +78,7 @@ class UserRepository extends AbstractRepository
      *
      * @since 10.32.0
      */
-    protected function __getCurrentUser()
+    protected function __getCurrentUser(): PromiseInterface
     {
         return $this->http->get(Endpoint::USER_CURRENT)->then(function ($response) {
             $part = $this->factory->part(User::class, (array) $response, true);
