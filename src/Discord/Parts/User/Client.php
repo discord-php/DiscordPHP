@@ -48,7 +48,8 @@ use function React\Promise\resolve;
  * @property User         $user          The user instance of the client.
  * @property Application  $application   The OAuth2 application of the bot.
  *
- * @property ExCollectionInterface<Connection>|Connection[] $connections The connection object that the user has attached.
+ * @property ExCollectionInterface<Connection>|Connection[]|null $connections     The connection object that the user has attached.
+ * @property ApplicationRoleConnection|null                      $role_connection The role connection object that the user has attached.
  *
  * @property EmojiRepository          $emojis
  * @property GuildRepository          $guilds
@@ -80,6 +81,7 @@ class Client extends Part
 
         // internal
         'connections',
+        'role_connection',
     ];
 
     /**
@@ -111,6 +113,8 @@ class Client extends Part
      * Returns a list of connection objects.
      *
      * @return PromiseInterface<ExCollectionInterface<Connection>|Connection[]>
+     *
+     * @since 10.33.0
      */
     public function getCurrentUserConnections(bool $fresh = false): PromiseInterface
     {
@@ -128,6 +132,8 @@ class Client extends Part
      * @link https://discord.com/developers/docs/resources/user#get-current-user-guild-member
      *
      * @return PromiseInterface<ExCollectionInterface<Connection>|Connection[]>
+     *
+     * @since 10.33.0
      */
     protected function __getCurrentUserConnections(): PromiseInterface
     {
@@ -142,6 +148,28 @@ class Client extends Part
 
             return $collection;
         });
+    }
+
+    /**
+     * Returns the application role connection for the user.
+     *
+     * @return PromiseInterface<ApplicationRoleConnection>
+     *
+     * @since 10.33.0
+     */
+    public function getCurrentUserApplicationRoleConnection(bool $fresh = false): PromiseInterface
+    {
+        if ($fresh || ! isset($this->attributes['role_connection'])) {
+            return $this->__getCurrentUserApplicationRoleConnection();
+        }
+
+        return resolve($this->attributes['role_connection']);
+    }
+
+    protected function __getCurrentUserApplicationRoleConnection(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::USER_CURRENT_APPLICATION_ROLE_CONNECTION)
+            ->then(fn ($response) => $this->role_connection = $this->factory->part(ApplicationRoleConnection::class, $response, true));
     }
 
     /**
