@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\User;
 
 use Discord\Exceptions\FileNotFoundException;
+use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
@@ -24,6 +25,8 @@ use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\SoundRepository;
 use Discord\Repository\UserRepository;
 use React\Promise\PromiseInterface;
+
+use function React\Promise\resolve;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
@@ -44,6 +47,8 @@ use React\Promise\PromiseInterface;
  * @property int|null     $public_flags  The public flags on a user's account.
  * @property User         $user          The user instance of the client.
  * @property Application  $application   The OAuth2 application of the bot.
+ *
+ * @property ExCollectionInterface<Connection>|Connection[] $connections The connection object that the user has attached.
  *
  * @property EmojiRepository          $emojis
  * @property GuildRepository          $guilds
@@ -72,6 +77,9 @@ class Client extends Part
         // actual form
         'user',
         'application',
+
+        // internal
+        'connections',
     ];
 
     /**
@@ -96,6 +104,43 @@ class Client extends Part
             $this->application = $application;
             $this->discord->setClient($this);
             $this->discord->emit('application-init', [$this->discord]);
+        });
+    }
+
+    /**
+     * Returns a list of connection objects.
+     *
+     * @return PromiseInterface<ExCollectionInterface<Connection>|Connection[]>
+     */
+    public function getCurrentUserConnections(bool $fresh = false): PromiseInterface
+    {
+        if ($fresh || ! isset($this->attributes['connections'])) {
+            return $this->__getCurrentUserConnections();
+        }
+
+        return resolve($this->attributes['connections']);
+    }
+
+    /**
+     * Returns a list of connection objects.
+     * Requires the connections OAuth2 scope.
+     *
+     * @link https://discord.com/developers/docs/resources/user#get-current-user-guild-member
+     *
+     * @return PromiseInterface<ExCollectionInterface<Connection>|Connection[]>
+     */
+    protected function __getCurrentUserConnections(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::USER_CURRENT_CONNECTIONS)->then(function ($response) {
+            $collection = Collection::for(Connection::class);
+
+            foreach ($response as $connection) {
+                $collection->pushItem($this->factory->part(Connection::class, $connection, true));
+            }
+
+            $this->connections = $collection;
+
+            return $collection;
         });
     }
 
