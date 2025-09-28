@@ -49,7 +49,6 @@ class MemberRepository extends AbstractRepository
 
     /**
      * @inheritDoc
-     * @inheritDoc
      */
     protected $class = Member::class;
 
