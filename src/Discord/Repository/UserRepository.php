@@ -46,6 +46,30 @@ class UserRepository extends AbstractRepository
 
     /**
      * Returns the user object of the requester's account.
+     *
+     * @param bool $fresh Whether to fetch a fresh copy from the API.
+     *
+     * @return PromiseInterface<User>
+     *
+     * @since 10.32.0
+     */
+    public function getCurrentUser(bool $fresh = false): PromiseInterface
+    {
+        if ($fresh) {
+            return $this->__getCurrentUser();
+        }
+
+        return $this->cache->get($this->discord->id)->then(function ($part) {
+            if ($part !== null) {
+                return $part;
+            }
+
+            return $this->__getCurrentUser();
+        });
+    }
+
+    /**
+     * Returns the user object of the requester's account.
      * For OAuth2, this requires the identify scope, which will return the object without an email, and optionally the email scope, which returns the object with an email if the user has one.
      *
      * @link https://discord.com/developers/docs/resources/user#get-current-user
@@ -54,7 +78,7 @@ class UserRepository extends AbstractRepository
      *
      * @since 10.32.0
      */
-    public function getCurrentUser(): PromiseInterface
+    protected function __getCurrentUser()
     {
         return $this->http->get(Endpoint::USER_CURRENT)->then(function ($response) {
             $part = $this->factory->part(User::class, (array) $response, true);
@@ -73,7 +97,7 @@ class UserRepository extends AbstractRepository
      * @param array   $params
      * @param string  $username User's username, if changed may cause the user's discriminator to be randomized.
      * @param ?string $avatar   If passed, modifies the user's avatar.
-     * @param ?string $banneer  If passed, modifies the user's banner.
+     * @param ?string $banner   If passed, modifies the user's banner.
      *
      * @throws \InvalidArgumentException No valid parameters to modify.
      *
