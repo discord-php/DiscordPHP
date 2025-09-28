@@ -17,6 +17,7 @@ use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\OAuth\Application;
+use Discord\Parts\OAuth\ApplicationRoleConnectionMetadata;
 use Discord\Parts\Part;
 use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
@@ -166,9 +167,51 @@ class Client extends Part
         return resolve($this->attributes['role_connection']);
     }
 
+    /**
+     * Returns the application role connection for the user.
+     * Requires an OAuth2 access token with role_connections.write scope for the application specified in the path.
+     *
+     * @return PromiseInterface<ApplicationRoleConnection>
+     *
+     * @since 10.33.0
+     */
     protected function __getCurrentUserApplicationRoleConnection(): PromiseInterface
     {
         return $this->http->get(Endpoint::USER_CURRENT_APPLICATION_ROLE_CONNECTION)
+            ->then(fn ($response) => $this->role_connection = $this->factory->part(ApplicationRoleConnection::class, $response, true));
+    }
+
+    /**
+     * Updates and returns the application role connection for the user.
+     * Requires an OAuth2 access token with role_connections.write scope for the application specified in the path.
+     *
+     * @param ApplicationRoleConnection|array         $connection                      The connection data to update.
+     * @param ?string|null                            $connection['platform_name']     The vanity name of the platform a bot has connected (max 50 characters).
+     * @param ?string|null                            $connection['platform_username'] The username on the platform a bot has connected (max 100 characters).
+     * @param ?ApplicationRoleConnectionMetadata|null $connection['metadata']          Object mapping application role connection metadata keys to their string-ified value (max 100 characters) for the user on the platform a bot has connected.
+     *
+     * @return PromiseInterface<ApplicationRoleConnection>
+     *
+     * @since 10.33.0
+     */
+    public function updateCurrentUserApplicationRoleConnection($connection)
+    {
+        if (! is_array($connection)) {
+            $connection = $connection->jsonSerialize();
+        }
+
+        $allowed = ['platform_name', 'platform_username', 'metadata'];
+        $params = array_filter(
+            $connection,
+            fn ($key) => in_array($key, $allowed, true),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        if (empty($params)) {
+            throw new \InvalidArgumentException('No valid parameters to update.');
+        }
+
+        return $this->http->put(Endpoint::USER_CURRENT_APPLICATION_ROLE_CONNECTION, $connection)
             ->then(fn ($response) => $this->role_connection = $this->factory->part(ApplicationRoleConnection::class, $response, true));
     }
 
