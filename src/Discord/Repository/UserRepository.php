@@ -64,7 +64,7 @@ class UserRepository extends AbstractRepository
                 return $part;
             }
 
-            return $this->__getCurrentUser()->then(fn ($success) => $success);
+            return $this->__getCurrentUser()->then(fn ($success) => $part);
         });
     }
 
