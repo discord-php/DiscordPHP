@@ -134,20 +134,6 @@ class Client extends Part
     }
 
     /**
-     * Refreshes the client instance with the latest data from Discord.
-     *
-     * @return PromiseInterface<User>
-     *
-     * @since 10.31.0
-     */
-    public function fetchUser(): PromiseInterface
-    {
-        return $this->http->get(Endpoint::USER_CURRENT)->then(
-            fn ($response) => $this->factory->part(User::class, (array) $response, true)
-        );
-    }
-
-    /**
      * Gets the user attribute.
      *
      * @return User

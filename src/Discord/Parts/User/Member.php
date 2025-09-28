@@ -355,7 +355,7 @@ class Member extends Part implements Stringable
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-member
      *
      * @param ExCollectionInterface<Role|string>|Role[]|string[] $roles  The roles to set to the member.
-     * @param string|null                           $reason Reason for Audit Log.
+     * @param string|null                                        $reason Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *

@@ -15,6 +15,7 @@ namespace Discord\Repository;
 
 use Discord\Http\Endpoint;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 
 /**
  * Contains users that the client shares guilds with.
@@ -42,4 +43,17 @@ class UserRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $class = User::class;
+
+    /**
+     * Gets the current user.
+     *
+     * @return PromiseInterface<User>
+     *
+     * @since 10.32.0
+     */
+    public function getCurrentUser(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::USER_CURRENT)
+            ->then(fn ($response) => $this->factory->part(User::class, (array) $response, true));
+    }
 }
