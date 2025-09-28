@@ -7716,15 +7716,15 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020current\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getCurrentUserVoiceState"
         },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetUserVoiceState\u0028\u0029",
-            "name": "getUserVoiceState",
-            "summary": "Returns\u0020the\u0020specified\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
-            "url": "classes/Discord-Parts-Guild-Guild.html#method_getUserVoiceState"
-        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AmodifyCurrentUserVoiceState\u0028\u0029",
             "name": "modifyCurrentUserVoiceState",
             "summary": "Modify\u0020the\u0020current\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_modifyCurrentUserVoiceState"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetUserVoiceState\u0028\u0029",
+            "name": "getUserVoiceState",
+            "summary": "Returns\u0020the\u0020specified\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getUserVoiceState"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AmodifyUserVoiceState\u0028\u0029",
             "name": "modifyUserVoiceState",
@@ -13006,26 +13006,6 @@ Search.appendIndex(
             "summary": "Returns\u0020a\u0020list\u0020of\u0020partial\u0020guild\u0020objects\u0020the\u0020current\u0020user\u0020is\u0020a\u0020member\u0020of.",
             "url": "classes/Discord-Repository-GuildRepository.html#method_getCurrentUserGuilds"
         },                {
-            "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003AgetCurrentUserVoiceState\u0028\u0029",
-            "name": "getCurrentUserVoiceState",
-            "summary": "Returns\u0020the\u0020current\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
-            "url": "classes/Discord-Repository-GuildRepository.html#method_getCurrentUserVoiceState"
-        },                {
-            "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003AgetUserVoiceState\u0028\u0029",
-            "name": "getUserVoiceState",
-            "summary": "Returns\u0020the\u0020specified\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
-            "url": "classes/Discord-Repository-GuildRepository.html#method_getUserVoiceState"
-        },                {
-            "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003AmodifyCurrentUserVoiceState\u0028\u0029",
-            "name": "modifyCurrentUserVoiceState",
-            "summary": "Modify\u0020the\u0020current\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
-            "url": "classes/Discord-Repository-GuildRepository.html#method_modifyCurrentUserVoiceState"
-        },                {
-            "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003AmodifyUserVoiceState\u0028\u0029",
-            "name": "modifyUserVoiceState",
-            "summary": "Updates\u0020another\u0020user\u0027s\u0020voice\u0020state.",
-            "url": "classes/Discord-Repository-GuildRepository.html#method_modifyUserVoiceState"
-        },                {
             "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
             "summary": "",
@@ -13260,6 +13240,46 @@ Search.appendIndex(
             "name": "class",
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-UserRepository.html#property_class"
+        },                {
+            "fqsen": "\\Discord\\Repository\\VoiceStateRepository",
+            "name": "VoiceStateRepository",
+            "summary": "Contains\u0020voice\u0020states\u0020of\u0020users\u0020in\u0020a\u0020guild.",
+            "url": "classes/Discord-Repository-VoiceStateRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003AgetVoiceRegions\u0028\u0029",
+            "name": "getVoiceRegions",
+            "summary": "Gets\u0020the\u0020voice\u0020regions\u0020available.",
+            "url": "classes/Discord-Repository-VoiceStateRepository.html#method_getVoiceRegions"
+        },                {
+            "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003AgetCurrentUserVoiceState\u0028\u0029",
+            "name": "getCurrentUserVoiceState",
+            "summary": "Returns\u0020the\u0020current\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
+            "url": "classes/Discord-Repository-VoiceStateRepository.html#method_getCurrentUserVoiceState"
+        },                {
+            "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003AmodifyCurrentUserVoiceState\u0028\u0029",
+            "name": "modifyCurrentUserVoiceState",
+            "summary": "Modify\u0020the\u0020current\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
+            "url": "classes/Discord-Repository-VoiceStateRepository.html#method_modifyCurrentUserVoiceState"
+        },                {
+            "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003AgetUserVoiceState\u0028\u0029",
+            "name": "getUserVoiceState",
+            "summary": "Returns\u0020the\u0020specified\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
+            "url": "classes/Discord-Repository-VoiceStateRepository.html#method_getUserVoiceState"
+        },                {
+            "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003AmodifyUserVoiceState\u0028\u0029",
+            "name": "modifyUserVoiceState",
+            "summary": "Updates\u0020another\u0020user\u0027s\u0020voice\u0020state.",
+            "url": "classes/Discord-Repository-VoiceStateRepository.html#method_modifyUserVoiceState"
+        },                {
+            "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "",
+            "url": "classes/Discord-Repository-VoiceStateRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
+            "url": "classes/Discord-Repository-VoiceStateRepository.html#property_class"
         },                {
             "fqsen": "\\Discord\\Voice\\Buffer",
             "name": "Buffer",
