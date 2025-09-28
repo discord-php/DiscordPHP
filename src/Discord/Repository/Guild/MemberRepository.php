@@ -87,15 +87,15 @@ class MemberRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/user#get-current-user-guild-member
      *
-     * @param string $guild_id
+     * @param string $guild
      *
      * @return PromiseInterface<Member>
      *
      * @since 10.32.0
      */
-    protected function __getCurrentUserGuildMember($guild_id): PromiseInterface
+    protected function __getCurrentUserGuildMember($guild): PromiseInterface
     {
-        return $this->http->get(Endpoint::bind(Endpoint::USER_CURRENT_MEMBER, $guild_id))->then(function ($response) {
+        return $this->http->get(Endpoint::bind(Endpoint::USER_CURRENT_MEMBER, $guild))->then(function ($response) {
             $part = $this->factory->create(Member::class, $response, true);
 
             return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
