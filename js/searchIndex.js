@@ -11201,11 +11201,6 @@ Search.appendIndex(
             "summary": "Updates\u0020the\u0020current\u0020application\u0020associated\u0020with\u0020the\u0020bot\u0020user.",
             "url": "classes/Discord-Parts-User-Client.html#method_updateCurrentApplication"
         },                {
-            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AfetchUser\u0028\u0029",
-            "name": "fetchUser",
-            "summary": "Refreshes\u0020the\u0020client\u0020instance\u0020with\u0020the\u0020latest\u0020data\u0020from\u0020Discord.",
-            "url": "classes/Discord-Parts-User-Client.html#method_fetchUser"
-        },                {
             "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetUserAttribute\u0028\u0029",
             "name": "getUserAttribute",
             "summary": "Gets\u0020the\u0020user\u0020attribute.",
@@ -12796,6 +12791,16 @@ Search.appendIndex(
             "summary": "Contains\u0020members\u0020of\u0020a\u0020guild.",
             "url": "classes/Discord-Repository-Guild-MemberRepository.html"
         },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003AgetCurrentUserGuildMember\u0028\u0029",
+            "name": "getCurrentUserGuildMember",
+            "summary": "Returns\u0020a\u0020guild\u0020member\u0020object\u0020for\u0020the\u0020current\u0020user.",
+            "url": "classes/Discord-Repository-Guild-MemberRepository.html#method_getCurrentUserGuildMember"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003A__getCurrentUserGuildMember\u0028\u0029",
+            "name": "__getCurrentUserGuildMember",
+            "summary": "Returns\u0020a\u0020guild\u0020member\u0020object\u0020for\u0020the\u0020current\u0020user.",
+            "url": "classes/Discord-Repository-Guild-MemberRepository.html#method___getCurrentUserGuildMember"
+        },                {
             "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003AmodifyCurrentMember\u0028\u0029",
             "name": "modifyCurrentMember",
             "summary": "Modifies\u0020the\u0020current\u0020member\u0020\u0028no\u0020validation\u0029.",
@@ -12940,6 +12945,11 @@ Search.appendIndex(
             "name": "preview",
             "summary": "Returns\u0020the\u0020guild\u0020preview\u0020object\u0020for\u0020the\u0020given\u0020id.\u0020If\u0020the\u0020bot\u0020is\u0020not\u0020in\u0020the\u0020guild,\u0020then\u0020the\u0020guild\u0020must\u0020be\u0020discoverable.",
             "url": "classes/Discord-Repository-GuildRepository.html#method_preview"
+        },                {
+            "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003AgetCurrentUserGuilds\u0028\u0029",
+            "name": "getCurrentUserGuilds",
+            "summary": "Returns\u0020a\u0020list\u0020of\u0020partial\u0020guild\u0020objects\u0020the\u0020current\u0020user\u0020is\u0020a\u0020member\u0020of.",
+            "url": "classes/Discord-Repository-GuildRepository.html#method_getCurrentUserGuilds"
         },                {
             "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003AgetCurrentUserVoiceState\u0028\u0029",
             "name": "getCurrentUserVoiceState",
@@ -13170,6 +13180,21 @@ Search.appendIndex(
             "name": "UserRepository",
             "summary": "Contains\u0020users\u0020that\u0020the\u0020client\u0020shares\u0020guilds\u0020with.",
             "url": "classes/Discord-Repository-UserRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\UserRepository\u003A\u003AgetCurrentUser\u0028\u0029",
+            "name": "getCurrentUser",
+            "summary": "Returns\u0020the\u0020user\u0020object\u0020of\u0020the\u0020requester\u0027s\u0020account.",
+            "url": "classes/Discord-Repository-UserRepository.html#method_getCurrentUser"
+        },                {
+            "fqsen": "\\Discord\\Repository\\UserRepository\u003A\u003A__getCurrentUser\u0028\u0029",
+            "name": "__getCurrentUser",
+            "summary": "Returns\u0020the\u0020user\u0020object\u0020of\u0020the\u0020requester\u0027s\u0020account.",
+            "url": "classes/Discord-Repository-UserRepository.html#method___getCurrentUser"
+        },                {
+            "fqsen": "\\Discord\\Repository\\UserRepository\u003A\u003AmodifyCurrentUser\u0028\u0029",
+            "name": "modifyCurrentUser",
+            "summary": "Modify\u0020the\u0020requester\u0027s\u0020user\u0020account\u0020settings.",
+            "url": "classes/Discord-Repository-UserRepository.html#method_modifyCurrentUser"
         },                {
             "fqsen": "\\Discord\\Repository\\UserRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",

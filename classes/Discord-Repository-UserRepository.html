@@ -264,7 +264,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/UserRepository.php"><a href="files/src-discord-repository-userrepository.html"><abbr title="src/Discord/Repository/UserRepository.php">UserRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 
     </aside>
 
@@ -562,6 +562,13 @@ based on the response of the callback.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Repository-UserRepository.html#method_getCurrentUser">getCurrentUser()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;    </span>
+</dt>
+<dd>Returns the user object of the requester&#039;s account.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_getIterator">getIterator()</a>
     <span>
                                 &nbsp;: <abbr title="\Traversable">Traversable</abbr>    </span>
@@ -622,6 +629,13 @@ based on the response of the callback.</dd>
                                 &nbsp;: self    </span>
 </dt>
 <dd>Merges another collection into this collection.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Repository-UserRepository.html#method_modifyCurrentUser">modifyCurrentUser()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;    </span>
+</dt>
+<dd>Modify the requester&#039;s user account settings.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="-deprecated" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetExists">offsetExists()</a>
@@ -770,6 +784,13 @@ based on the response of the callback.</dd>
 <dd>Applies the given callback function to each item in the collection.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Repository-UserRepository.html#method___getCurrentUser">__getCurrentUser()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;    </span>
+</dt>
+<dd>Returns the user object of the requester&#039;s account.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_cacheFreshen">cacheFreshen()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;    </span>
@@ -886,7 +907,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/UserRepository.php"><a href="files/src-discord-repository-userrepository.html"><abbr title="src/Discord/Repository/UserRepository.php">UserRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -977,7 +998,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/UserRepository.php"><a href="files/src-discord-repository-userrepository.html"><abbr title="src/Discord/Repository/UserRepository.php">UserRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -2559,6 +2580,72 @@ based on the response of the callback.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getCurrentUser">
+        getCurrentUser()
+        <a href="classes/Discord-Repository-UserRepository.html#method_getCurrentUser" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/UserRepository.php"><a href="files/src-discord-repository-userrepository.html"><abbr title="src/Discord/Repository/UserRepository.php">UserRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">56</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the user object of the requester&#039;s account.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getCurrentUser</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fresh</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$fresh</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Whether to fetch a fresh copy from the API.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Repository-UserRepository.html#method_getCurrentUser#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.32.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getIterator">
         getIterator()
         <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_getIterator" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2967,6 +3054,90 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">self</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_modifyCurrentUser">
+        modifyCurrentUser()
+        <a href="classes/Discord-Repository-UserRepository.html#method_modifyCurrentUser" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/UserRepository.php"><a href="files/src-discord-repository-userrepository.html"><abbr title="src/Discord/Repository/UserRepository.php">UserRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">108</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Modify the requester&#039;s user account settings.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">modifyCurrentUser</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Returns a user object on success.
+Fires a User Update Gateway event.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$params</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Repository-UserRepository.html#method_modifyCurrentUser#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/user#modify-current-user"> https://discord.com/developers/docs/resources/user#modify-current-user </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\InvalidArgumentException">InvalidArgumentException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>No valid parameters to modify.</p>
+</section>
+
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.32.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span>
             </section>
 
 </article>
@@ -4107,6 +4278,69 @@ This method is deprecated for userland code but can still be used internally wit
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method___getCurrentUser">
+        __getCurrentUser()
+        <a href="classes/Discord-Repository-UserRepository.html#method___getCurrentUser" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/UserRepository.php"><a href="files/src-discord-repository-userrepository.html"><abbr title="src/Discord/Repository/UserRepository.php">UserRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">81</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the user object of the requester&#039;s account.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">__getCurrentUser</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>For OAuth2, this requires the identify scope, which will return the object without an email, and optionally the email scope, which returns the object with an email if the user has one.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Repository-UserRepository.html#method___getCurrentUser#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/user#get-current-user"> https://discord.com/developers/docs/resources/user#get-current-user </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.32.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_cacheFreshen">
         cacheFreshen()
         <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_cacheFreshen" class="headerlink"><i class="fas fa-link"></i></a>
@@ -4304,6 +4538,7 @@ This method is deprecated for userland code but can still be used internally wit
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_freshen">freshen()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_from">from()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-UserRepository.html#method_get">get()</a></li>
+                                            <li class=""><a href="classes/Discord-Repository-UserRepository.html#method_getCurrentUser">getCurrentUser()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_getIterator">getIterator()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_has">has()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_intersect">intersect()</a></li>
@@ -4313,6 +4548,7 @@ This method is deprecated for userland code but can still be used internally wit
                                             <li class=""><a href="classes/Discord-Repository-UserRepository.html#method_last">last()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_map">map()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_merge">merge()</a></li>
+                                            <li class=""><a href="classes/Discord-Repository-UserRepository.html#method_modifyCurrentUser">modifyCurrentUser()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetExists">offsetExists()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetGet">offsetGet()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_offsetSet">offsetSet()</a></li>
@@ -4334,6 +4570,7 @@ This method is deprecated for userland code but can still be used internally wit
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_unserialize">unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_values">values()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_walk">walk()</a></li>
+                                            <li class=""><a href="classes/Discord-Repository-UserRepository.html#method___getCurrentUser">__getCurrentUser()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_cacheFreshen">cacheFreshen()</a></li>
                                     </ul>
             </li>
