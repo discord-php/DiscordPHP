@@ -76,21 +76,25 @@ class InteractionData extends Part
     /**
      * Gets the components of the interaction.
      *
-     * @return ExCollectionInterface<Component>|Component[] $components
+     * @return ExCollectionInterface<Component>|Component[]
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        $components = Collection::for(Component::class);
-
         if (! isset($this->attributes['components'])) {
-            return $components;
+            return Collection::for(Component::class);
         }
+
+        if ($this->attributes['components'] instanceof ExCollectionInterface) {
+            return $this->attributes['components'];
+        }
+
+        $components = Collection::for(Component::class);
 
         foreach ($this->attributes['components'] as $component) {
             $components->pushItem($this->createOf(Component::TYPES[$component->type ?? 0], $component));
         }
 
-        return $components;
+        return $this->attributes['components'] = $components;
     }
 
     /**
