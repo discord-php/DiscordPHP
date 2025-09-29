@@ -615,7 +615,7 @@ class Guild extends Part
      */
     public function getCurrentUserVoiceState(): PromiseInterface
     {
-        return $this->voicesS->getCurrentUserVoiceState($this->id);
+        return $this->voice_states->getCurrentUserVoiceState($this->id);
     }
 
     /**
@@ -655,7 +655,7 @@ class Guild extends Part
             }
         }
 
-        return $this->voices->modifyCurrentUserVoiceState($this->id, $data);
+        return $this->voice_states->modifyCurrentUserVoiceState($this->id, $data);
     }
 
     /**
@@ -669,7 +669,7 @@ class Guild extends Part
      */
     public function getUserVoiceState($user): PromiseInterface
     {
-        return $this->voices->getUserVoiceState($this->id, $user);
+        return $this->voice_states->getUserVoiceState($this->id, $user);
     }
 
     /**
@@ -698,7 +698,7 @@ class Guild extends Part
             return reject(new NoPermissionsException("You do not have permission to mute members in the guild {$this->id}."));
         }
 
-        return $this->voices->modifyUserVoiceState($this->id, $user, $data);
+        return $this->voice_states->modifyUserVoiceState($this->id, $user, $data);
     }
 
     /**
