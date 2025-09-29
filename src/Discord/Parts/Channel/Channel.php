@@ -718,6 +718,34 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Delete a channel, or close a private message.
+     *
+     * Deleting a category does not delete its child channels; they will have their parent_id removed and a Channel Update Gateway event will fire for each of them.
+     *
+     * @link https://discord.com/developers/docs/resources/channel#deleteclose-channel
+     *
+     * @param string|null $reason Reason for Audit Log.
+     *
+     * @return PromiseInterface<Channel>
+     *
+     * @throws NoPermissionsException Missing manage_channels permission.
+     *
+     * @since 10.35.0
+     */
+    public function delete(?string $reason = null): PromiseInterface
+    {
+        if ($this->user_id != $this->discord->id) {
+            if ($botperms = $this->getBotPermissions()) {
+                if (! $botperms->manage_channels) {
+                    return reject(new NoPermissionsException("You do not have permission to delete channel {$this->id}."));
+                }
+            }
+        }
+
+        return $this->messages->delete($this, $reason);
+    }
+
+    /**
      * Sets the permission overwrites attribute.
      *
      * @param ?array $overwrites
