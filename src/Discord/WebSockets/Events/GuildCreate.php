@@ -104,7 +104,7 @@ class GuildCreate extends Event
         }
 
         foreach ($data->soundboard_sounds as $sound) {
-            $await[] = $guildPart->sounds->cache->set($sound->id, $guildPart->sounds->create($sound, true));
+            $await[] = $guildPart->sounds->cache->set($sound->sound_id, $guildPart->sounds->create($sound, true));
         }
 
         $all = yield all($await)->then(function () use (&$guildPart) {
