@@ -73,7 +73,7 @@ class GuildCreate extends Event
         }
 
         foreach ($data->voice_states as $voice_state) {
-            yield $guildPart->voice_states->cache->set($voice_state->user_id, $this->factory->part(VoiceStateUpdate::class, (array) $voice_state, true));
+            $await[] = $guildPart->voice_states->cache->set($voice_state->user_id, $this->factory->part(VoiceStateUpdate::class, (array) $voice_state, true));
             /** @var ?Channel */
             if ($voiceChannel = $guildPart->channels->offsetGet($voice_state->channel_id)) {
                 $userId = $voice_state->user_id;
@@ -101,6 +101,10 @@ class GuildCreate extends Event
 
         foreach ($data->guild_scheduled_events as $scheduledEvent) {
             $await[] = $guildPart->guild_scheduled_events->cache->set($scheduledEvent->id, $guildPart->guild_scheduled_events->create($scheduledEvent, true));
+        }
+
+        foreach ($data->soundboard_sounds as $sound) {
+            $await[] = $guildPart->sounds->cache->set($sound->id, $guildPart->sounds->create($sound, true));
         }
 
         $all = yield all($await)->then(function () use (&$guildPart) {
