@@ -721,6 +721,7 @@ class Channel extends Part implements Stringable
      * Delete a channel, or close a private message.
      *
      * Deleting a category does not delete its child channels; they will have their parent_id removed and a Channel Update Gateway event will fire for each of them.
+     * For Community guilds, the Rules or Guidelines channel and the Community Updates channel cannot be deleted.
      *
      * @link https://discord.com/developers/docs/resources/channel#deleteclose-channel
      *
