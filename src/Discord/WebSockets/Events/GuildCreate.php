@@ -18,6 +18,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Discord\Http\Endpoint;
+use Discord\Parts\WebSockets\VoiceStateUpdate;
 use React\Promise\Deferred;
 
 use function React\Promise\all;
@@ -72,6 +73,7 @@ class GuildCreate extends Event
         }
 
         foreach ($data->voice_states as $voice_state) {
+            yield $guildPart->voice_states->cache->set($voice_state->user_id, $this->factory->part(VoiceStateUpdate::class, (array) $voice_state, true));
             /** @var ?Channel */
             if ($voiceChannel = $guildPart->channels->offsetGet($voice_state->channel_id)) {
                 $userId = $voice_state->user_id;
