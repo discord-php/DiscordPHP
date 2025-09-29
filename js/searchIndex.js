@@ -4271,6 +4271,11 @@ Search.appendIndex(
             "summary": "Deletes\u0020a\u0020given\u0020number\u0020of\u0020messages,\u0020in\u0020order\u0020of\u0020time\u0020sent.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_limitDelete"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Delete\u0020a\u0020channel,\u0020or\u0020close\u0020a\u0020private\u0020message.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#method_delete"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AsetPermissionOverwritesAttribute\u0028\u0029",
             "name": "setPermissionOverwritesAttribute",
             "summary": "Sets\u0020the\u0020permission\u0020overwrites\u0020attribute.",
