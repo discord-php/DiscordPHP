@@ -20,9 +20,6 @@ use function Discord\poly_strlen;
  *
  * @link https://discord.com/developers/docs/components/reference#label
  *
- * @todo Update Label class to extend the relevant base class.
- * @todo Confirm if Label will be usable in Message components.
- *
  * @since 10.19.0
  *
  * @property int          $type        18 for label component.
