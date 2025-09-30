@@ -87,4 +87,71 @@ class ReferenceCollection implements ExCollectionInterface, JsonSerializable
 
         return new Collection($items, $discrim, $class);
     }
+
+    /**
+     * Fills an array of items into the collection.
+     *
+     * @param ExCollectionInterface|array &$items
+     *
+     * @return self
+     */
+    public function fill(&$items): self
+    {
+        $items = $items instanceof CollectionInterface
+            ? $items->toArray()
+            : $items;
+        if (! is_array($items)) {
+            throw new \InvalidArgumentException('The fill method only accepts arrays or CollectionInterface instances.');
+        }
+
+        foreach ($items as $item) {
+            $this->pushItem($item);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Pushes items to the collection.
+     *
+     * @param mixed ...$items
+     *
+     * @return self
+     */
+    public function push(&...$items): self
+    {
+        foreach ($items as $item) {
+            $this->pushItem($item);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Pushes a single item to the collection.
+     *
+     * @param mixed &$item
+     *
+     * @return self
+     */
+    public function pushItem(&$item): self
+    {
+        if (null === $this->discrim) {
+            $this->items[] = $item;
+
+            return $this;
+        }
+
+        if (null !== $this->class && ! ($item instanceof $this->class)) {
+            return $this;
+        }
+
+        if (is_array($item)) {
+            $this->items[$item[$this->discrim]] = $item;
+        } elseif (is_object($item)) {
+            $this->items[$item->{$this->discrim}] = $item;
+        }
+
+        return $this;
+    }
 }
