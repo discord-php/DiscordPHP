@@ -24,9 +24,9 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, IteratorAgg
     public function get(string $discrim, $key);
     public function set($offset, $value);
     public function pull($key, $default = null);
-    public function fill($items): self;
-    public function push(...$items): self;
-    public function pushItem($item): self;
+    //public function fill($items): self;
+    //public function push(...$items): self;
+    //public function pushItem($item): self;
     public function count(): int;
     public function first();
     public function last();
