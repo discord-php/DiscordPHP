@@ -1637,9 +1637,7 @@ class VoiceClient extends EventEmitter
 
         $this->buffer->end();
         $this->reset();
-        $this->insertSilence();
-
-        return resolve(null);
+        return $this->insertSilence();
     }
 
     /**
@@ -2070,13 +2068,29 @@ class VoiceClient extends EventEmitter
      * Sends five frames of Opus silence to avoid unintended interpolation when there is a break in the sent data.
      *
      * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
+     *
+     * @return PromiseInterface Resolves after all silence frames have been sent.
      */
-    protected function insertSilence(): void
+    protected function insertSilence(): PromiseInterface
+    {
+        $deferred = new Deferred();
+        $this->__insertSilence($deferred);
+        return $deferred->promise();
+    }
+
+    /**
+     * Inserts silence frames recursively.
+     *
+     * @param Deferred $deferred The deferred promise to resolve when done.
+     */
+    protected function __insertSilence(Deferred $deferred): void
     {
         if ($this->silenceRemaining > 0) {
             $this->sendBuffer(self::SILENCE_FRAME);
             $this->silenceRemaining--;
-            $this->loop->addTimer($this->frameSize / 1000, fn () => $this->insertSilence());
+            $this->loop->addTimer($this->frameSize / 1000, fn() => $this->__insertSilence($deferred));
+        } else {
+            $deferred->resolve(null);
         }
     }
 }
