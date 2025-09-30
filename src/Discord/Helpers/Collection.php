@@ -84,6 +84,7 @@ class Collection implements ExCollectionInterface, JsonSerializable
     public static function for(string $class, ?string $discrim = 'id')
     {
         $items = [];
+
         return new Collection($items, $discrim, $class);
     }
 }

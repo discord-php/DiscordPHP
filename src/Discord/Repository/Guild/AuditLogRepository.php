@@ -62,5 +62,4 @@ class AuditLogRepository extends AbstractRepository
     {
         return $this->cache->set('', $this->factory->part($this->class, array_merge($this->vars, (array) $response), true))->then(fn ($success) => $this);
     }
-
 }
