@@ -28,6 +28,7 @@ use Discord\Parts\Channel\StageInstance;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\AuditLogRepository;
 use Discord\Repository\Guild\BanRepository;
 use Discord\Repository\Guild\ChannelRepository;
 use Discord\Repository\Guild\EmojiRepository;
@@ -153,6 +154,7 @@ use function React\Promise\resolve;
  * @property ChannelRepository        $channels               Channels in the guild.
  * @property ScheduledeventRepository $guild_scheduled_events The scheduled events in the guild.
  *
+ * @property AuditLogRepository           $audit_log
  * @property AutoModerationRuleRepository $auto_moderation_rules
  * @property BanRepository                $bans
  * @property GuildCommandRepository       $commands
@@ -994,7 +996,7 @@ class Guild extends Part
      *
      * @return PromiseInterface<AuditLog>
      */
-    public function getAuditLog(array $options = []): PromiseInterface
+    public function getAuditLog(array $queryparams = []): PromiseInterface
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined([
@@ -1015,7 +1017,7 @@ class Guild extends Part
         ->setNormalizer('before', normalizePartId())
         ->setNormalizer('after', normalizePartId());
 
-        $options = $resolver->resolve($options);
+        $queryparams = $resolver->resolve($queryparams);
 
         if ($botperms = $this->getBotPermissions()) {
             if (! $botperms->view_audit_log) {
@@ -1023,15 +1025,7 @@ class Guild extends Part
             }
         }
 
-        $endpoint = Endpoint::bind(Endpoint::AUDIT_LOG, $this->id);
-
-        foreach ($options as $key => $value) {
-            $endpoint->addQuery($key, $value);
-        }
-
-        return $this->http
-            ->get($endpoint)
-            ->then(fn ($response) => $this->factory->part(AuditLog::class, (array) $response + ['guild_id' => $this->id], true));
+        return $this->audit_log->freshen($queryparams);
     }
 
     /**
