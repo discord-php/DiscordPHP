@@ -107,7 +107,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v10.29.6';
+    public const VERSION = 'v10.36.0';
 
     public const REFERRER = 'https://github.com/discord-php/DiscordPHP';
 
