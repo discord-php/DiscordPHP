@@ -566,9 +566,7 @@ class VoiceClient extends EventEmitter
      */
     protected function heartbeatAck($data): void
     {
-        $end = microtime(true);
-        $start = $data->d['t'];
-        $diff = ($end - $start) * 1000;
+        $diff = (microtime(true) - $data->d['t']) * 1000;
 
         $this->logger->debug('received heartbeat ack', ['response_time' => $diff]);
         $this->emit('ws-ping', [$diff]);
@@ -883,7 +881,7 @@ class VoiceClient extends EventEmitter
         $this->voiceWebsocket = $ws;
 
         $ws->on('message', function ($message) {
-            if (! $data = json_decode($message->getPayload(), true)) {
+            if (($data = json_decode($message->getPayload(), true)) === false) {
                 return;
             }
             $data = Payload::fromArray($data);
