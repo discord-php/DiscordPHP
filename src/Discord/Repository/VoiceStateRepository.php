@@ -100,7 +100,7 @@ class VoiceStateRepository extends AbstractRepository
      * - You must have the REQUEST_TO_SPEAK permission to request to speak. You can always clear your own request to speak.
      * - You are able to set request_to_speak_timestamp to any present or future time.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state
+     * @link https://discord.com/developers/docs/resources/voice#modify-current-user-voice-state
      *
      * @param Guild|string        $guild                              The guild or guild ID.
      * @param array               $data
