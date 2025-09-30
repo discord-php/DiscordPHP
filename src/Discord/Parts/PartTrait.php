@@ -474,11 +474,11 @@ trait PartTrait
             return $collection;
         }
 
-        foreach ($this->attributes[$key] as $part) {
+        foreach ($this->attributes[$key] as &$part) {
             $collection->pushItem(
                 $part instanceof $class
                     ? $part
-                    : $this->createOf($class, $part)
+                    : $part = $this->createOf($class, $part)
             );
         }
 
