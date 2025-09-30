@@ -114,7 +114,7 @@ class ReferenceCollection implements ExCollectionInterface, JsonSerializable
     /**
      * Pushes items to the collection.
      *
-     * @param mixed ...$items
+     * @param mixed &...$items
      *
      * @return self
      */
