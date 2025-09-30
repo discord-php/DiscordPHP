@@ -978,12 +978,12 @@ class VoiceClient extends EventEmitter
         $this->emit('ws-close', [$op, $reason, $this]);
 
         // Cancel heartbeat timers
-        if ($this->heartbeat !== null) {
+        if (isset($this->heartbeat)) {
             $this->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
-        if ($this->udpHeartbeat !== null) {
+        if (isset($this->udpHeartbeat)) {
             $this->loop->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
@@ -1358,9 +1358,8 @@ class VoiceClient extends EventEmitter
             // Read JSON content
             return $this->buffer->read($jsonLength);
         })->then(function ($metadata) use ($readOpus) {
-
             if (($metadata = json_decode($metadata, true)) !== false) {
-                if ($metadata !== null) {
+                if (isset($metadata)) {
                     $this->frameSize = $metadata['opus']['frame_size'] / 48;
                 }
             }
@@ -1679,12 +1678,12 @@ class VoiceClient extends EventEmitter
 
         $this->heartbeat_interval = null;
 
-        if ($this->heartbeat !== null) {
+        if (isset($this->heartbeat)) {
             $this->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
-        if ($this->udpHeartbeat !== null) {
+        if (isset($this->udpHeartbeat)) {
             $this->loop->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
@@ -1710,9 +1709,11 @@ class VoiceClient extends EventEmitter
     {
         if (! isset($id)) {
             return $this->speaking;
-        } elseif ($user = $this->speakingStatus->get('user_id', $id)) {
+        }
+        if ($user = $this->speakingStatus->get('user_id', $id)) {
             return $user->speaking;
-        } elseif ($ssrc = $this->speakingStatus->get('ssrc', $id)) {
+        }
+        if ($ssrc = $this->speakingStatus->get('ssrc', $id)) {
             return $ssrc->speaking;
         }
 
@@ -2068,14 +2069,16 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Insert 5 frames of silence.
+     * Sends five frames of Opus silence to avoid unintended interpolation when there is a break in the sent data.
      *
      * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
      */
     protected function insertSilence(): void
     {
-        while (--$this->silenceRemaining > 0) {
+        if ($this->silenceRemaining > 0) {
             $this->sendBuffer(self::SILENCE_FRAME);
+            $this->silenceRemaining--;
+            $this->loop->addTimer($this->frameSize / 1000, fn () => $this->insertSilence());
         }
     }
 }
