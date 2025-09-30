@@ -18,6 +18,7 @@ use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Helpers\ReferenceCollection;
 use Discord\Http\Http;
 use React\Promise\PromiseInterface;
 
@@ -468,17 +469,17 @@ trait PartTrait
      */
     protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id'): ExCollectionInterface
     {
-        $collection = Collection::for($class, $discrim);
+        $collection = ReferenceCollection::for($class, $discrim);
 
         if (! isset($this->attributes[$key])) {
             return $collection;
         }
 
-        foreach ($this->attributes[$key] as $part) {
+        foreach ($this->attributes[$key] as &$part) {
             $collection->pushItem(
                 $part instanceof $class
                     ? $part
-                    : $this->createOf($class, $part)
+                    : $part = $this->createOf($class, $part)
             );
         }
 
