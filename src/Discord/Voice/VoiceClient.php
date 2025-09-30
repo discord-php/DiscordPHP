@@ -1636,8 +1636,8 @@ class VoiceClient extends EventEmitter
         }
 
         $this->buffer->end();
-        $this->insertSilence();
         $this->reset();
+        $this->insertSilence();
 
         return resolve(null);
     }
