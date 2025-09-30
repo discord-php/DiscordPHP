@@ -328,6 +328,7 @@ class Guild extends Part
         'channels' => ChannelRepository::class,
         'guild_scheduled_events' => ScheduledEventRepository::class,
 
+        'audit_log' => AuditLogRepository::class,
         'auto_moderation_rules' => AutoModerationRuleRepository::class,
         'bans' => BanRepository::class,
         'commands' => GuildCommandRepository::class,
