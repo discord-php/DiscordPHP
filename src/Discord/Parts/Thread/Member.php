@@ -82,6 +82,10 @@ class Member extends Part
      */
     protected function getMemberAttribute(): ?GuildMember
     {
+         if (isset($this->attributes['member']) && $this->attributes['member'] instanceof GuildMember) {
+            return $this->attributes['member'];
+        }
+
         if (! isset($this->attributes['member'])) {
             if ($guild = $this->getGuildAttribute()) {
                 return $guild->members->get('id', $this->user_id);
@@ -95,7 +99,11 @@ class Member extends Part
             $memberData['guild_id'] = $this->guild_id;
         }
 
-        return $this->factory->part(Member::class, $memberData, true);
+        $part = $this->factory->part(Member::class, $memberData, true);
+
+        $this->attributes['member'] = $part;
+
+        return $part;
     }
 
     /**

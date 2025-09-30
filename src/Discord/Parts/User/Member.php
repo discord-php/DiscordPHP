@@ -657,7 +657,7 @@ class Member extends Part implements Stringable
             return $this->factory->part(ClientStatus::class, [], true);
         }
 
-        return $this->factory->part(ClientStatus::class, (array) $this->attributes['client_status'], true);
+        return $this->attributePartHelper('client_status', ClientStatus::class);
     }
 
     /**

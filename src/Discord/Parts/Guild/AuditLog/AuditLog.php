@@ -143,11 +143,17 @@ class AuditLog extends Part
      */
     protected function getUsersAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['users']) && $this->attributes['users'] instanceof ExCollectionInterface) {
+            return $this->attributes['users'];
+        }
+
         $collection = Collection::for(User::class);
 
         foreach ($this->attributes['users'] ?? [] as $user) {
             $collection->pushItem($this->discord->users->get('id', $user->id) ?: $this->factory->part(User::class, (array) $user, true));
         }
+
+        $this->attributes['users'] = $collection;
 
         return $collection;
     }

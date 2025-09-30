@@ -268,7 +268,7 @@ class Application extends Part
             return $bot;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['bot'], true);
+        return $this->attributePartHelper('bot', User::class);
     }
 
     /**

@@ -71,6 +71,10 @@ class Resolved extends Part
      */
     protected function getUsersAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['users']) && $this->attributes['users'] instanceof ExCollectionInterface) {
+            return $this->attributes['users'];
+        }
+
         $collection = Collection::for(User::class);
 
         if (! isset($this->attributes['users'])) {
@@ -80,6 +84,8 @@ class Resolved extends Part
         foreach ($this->attributes['users'] as $snowflake => $user) {
             $collection->pushItem($this->discord->users->get('id', $snowflake) ?: $this->factory->part(User::class, (array) $user, true));
         }
+
+        $this->attributes['users'] = $collection;
 
         return $collection;
     }
@@ -93,6 +99,10 @@ class Resolved extends Part
      */
     protected function getMembersAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['members']) && $this->attributes['members'] instanceof ExCollectionInterface) {
+            return $this->attributes['members'];
+        }
+
         $collection = Collection::for(Member::class);
 
         if (! isset($this->attributes['members'])) {
@@ -112,6 +122,8 @@ class Resolved extends Part
             $collection->pushItem($memberPart);
         }
 
+        $this->attributes['members'] = $collection;
+
         return $collection;
     }
 
@@ -122,6 +134,10 @@ class Resolved extends Part
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['roles']) && $this->attributes['roles'] instanceof ExCollectionInterface) {
+            return $this->attributes['roles'];
+        }
+
         $collection = Collection::for(Role::class);
 
         if (! isset($this->attributes['roles'])) {
@@ -140,6 +156,8 @@ class Resolved extends Part
             $collection->pushItem($rolePart);
         }
 
+        $this->attributes['roles'] = $collection;
+
         return $collection;
     }
 
@@ -152,6 +170,10 @@ class Resolved extends Part
      */
     protected function getChannelsAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['channels']) && $this->attributes['channels'] instanceof ExCollectionInterface) {
+            return $this->attributes['channels'];
+        }
+
         $collection = new Collection();
 
         if (! isset($this->attributes['channels'])) {
@@ -174,6 +196,8 @@ class Resolved extends Part
             $collection->pushItem($channelPart);
         }
 
+        $this->attributes['channels'] = $collection;
+
         return $collection;
     }
 
@@ -184,6 +208,10 @@ class Resolved extends Part
      */
     protected function getMessagesAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['messages']) && $this->attributes['messages'] instanceof ExCollectionInterface) {
+            return $this->attributes['messages'];
+        }
+
         $collection = Collection::for(Message::class);
 
         if (! isset($this->attributes['messages'])) {
@@ -199,6 +227,8 @@ class Resolved extends Part
 
             $collection->pushItem($messagePart ?? $this->factory->part(Message::class, (array) $message + ['guild_id' => $this->guild_id], true));
         }
+
+        $this->attributes['messages'] = $collection;
 
         return $collection;
     }
