@@ -973,7 +973,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\FileUpload",
             "name": "FileUpload",
-            "summary": "TODO.",
+            "summary": "A\u0020File\u0020Upload\u0020is\u0020an\u0020interactive\u0020component\u0020that\u0020allows\u0020users\u0020to\u0020upload\u0020files\u0020in\u0020modals.",
             "url": "classes/Discord-Builders-Components-FileUpload.html"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003A__construct\u0028\u0029",
@@ -3526,6 +3526,21 @@ Search.appendIndex(
             "summary": "Collection\u0020of\u0020items.\u0020Inspired\u0020by\u0020Laravel\u0020Collections.",
             "url": "classes/Discord-Helpers-Collection.html"
         },                {
+            "fqsen": "\\Discord\\Helpers\\Collection\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Create\u0020a\u0020new\u0020Collection.",
+            "url": "classes/Discord-Helpers-Collection.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\Collection\u003A\u003Afrom\u0028\u0029",
+            "name": "from",
+            "summary": "Creates\u0020a\u0020collection\u0020from\u0020an\u0020array.",
+            "url": "classes/Discord-Helpers-Collection.html#method_from"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\Collection\u003A\u003Afor\u0028\u0029",
+            "name": "for",
+            "summary": "Creates\u0020a\u0020collection\u0020for\u0020a\u0020class.",
+            "url": "classes/Discord-Helpers-Collection.html#method_for"
+        },                {
             "fqsen": "\\Discord\\Helpers\\Collection\u003A\u003A\u0024discrim",
             "name": "discrim",
             "summary": "The\u0020collection\u0020discriminator.",
@@ -3690,21 +3705,6 @@ Search.appendIndex(
             "name": "CollectionTrait",
             "summary": "",
             "url": "classes/Discord-Helpers-CollectionTrait.html"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\CollectionTrait\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "Create\u0020a\u0020new\u0020Collection.",
-            "url": "classes/Discord-Helpers-CollectionTrait.html#method___construct"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\CollectionTrait\u003A\u003Afrom\u0028\u0029",
-            "name": "from",
-            "summary": "Creates\u0020a\u0020collection\u0020from\u0020an\u0020array.",
-            "url": "classes/Discord-Helpers-CollectionTrait.html#method_from"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\CollectionTrait\u003A\u003Afor\u0028\u0029",
-            "name": "for",
-            "summary": "Creates\u0020a\u0020collection\u0020for\u0020a\u0020class.",
-            "url": "classes/Discord-Helpers-CollectionTrait.html#method_for"
         },                {
             "fqsen": "\\Discord\\Helpers\\CollectionTrait\u003A\u003Aget\u0028\u0029",
             "name": "get",
@@ -3970,16 +3970,6 @@ Search.appendIndex(
             "name": "ExCollectionInterface",
             "summary": "",
             "url": "classes/Discord-Helpers-ExCollectionInterface.html"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\ExCollectionInterface\u003A\u003Afrom\u0028\u0029",
-            "name": "from",
-            "summary": "",
-            "url": "classes/Discord-Helpers-ExCollectionInterface.html#method_from"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\ExCollectionInterface\u003A\u003Afor\u0028\u0029",
-            "name": "for",
-            "summary": "",
-            "url": "classes/Discord-Helpers-ExCollectionInterface.html#method_for"
         },                {
             "fqsen": "\\Discord\\Helpers\\ExCollectionInterface\u003A\u003Ashift\u0028\u0029",
             "name": "shift",
@@ -5023,12 +5013,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\FileUpload",
             "name": "FileUpload",
-            "summary": "TODO.",
+            "summary": "A\u0020File\u0020Upload\u0020is\u0020an\u0020interactive\u0020component\u0020that\u0020allows\u0020users\u0020to\u0020upload\u0020files\u0020in\u0020modals.",
             "url": "classes/Discord-Parts-Channel-Message-FileUpload.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\FileUpload\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Channel-Message-FileUpload.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Interactive",
@@ -13796,6 +13786,11 @@ Search.appendIndex(
             "summary": "Handles\u0020a\u0020voice\u0020state\u0020update.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_handleVoiceStateUpdate"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AremoveDecoder\u0028\u0029",
+            "name": "removeDecoder",
+            "summary": "Removes\u0020the\u0020voice\u0020decoder\u0020associated\u0020with\u0020the\u0020given\u0020SSRC.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_removeDecoder"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AgetRecieveStream\u0028\u0029",
             "name": "getRecieveStream",
             "summary": "Gets\u0020a\u0020recieve\u0020voice\u0020stream.",
@@ -13805,6 +13800,11 @@ Search.appendIndex(
             "name": "handleAudioData",
             "summary": "Handles\u0020raw\u0020opus\u0020data\u0020from\u0020the\u0020UDP\u0020server.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_handleAudioData"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AcreateDecoder\u0028\u0029",
+            "name": "createDecoder",
+            "summary": "Creates\u0020and\u0020starts\u0020a\u0020decoder\u0020process\u0020for\u0020the\u0020given\u0020stream\u0020source.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_createDecoder"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AdecryptVoicePacket\u0028\u0029",
             "name": "decryptVoicePacket",
@@ -13863,8 +13863,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AinsertSilence\u0028\u0029",
             "name": "insertSilence",
-            "summary": "Insert\u00205\u0020frames\u0020of\u0020silence.",
+            "summary": "Sends\u0020five\u0020frames\u0020of\u0020Opus\u0020silence\u0020to\u0020avoid\u0020unintended\u0020interpolation\u0020when\u0020there\u0020is\u0020a\u0020break\u0020in\u0020the\u0020sent\u0020data.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_insertSilence"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A__insertSilence\u0028\u0029",
+            "name": "__insertSilence",
+            "summary": "Inserts\u0020silence\u0020frames\u0020recursively.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method___insertSilence"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ADCA_VERSION",
             "name": "DCA_VERSION",
