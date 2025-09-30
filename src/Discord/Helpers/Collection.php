@@ -13,13 +13,15 @@ declare(strict_types=1);
 
 namespace Discord\Helpers;
 
+use JsonSerializable;
+
 /**
  * Collection of items. Inspired by Laravel Collections.
  *
  * @since 5.0.0 No longer extends Laravel's BaseCollection
  * @since 4.0.0
  */
-class Collection implements ExCollectionInterface
+class Collection implements ExCollectionInterface, JsonSerializable
 {
     use CollectionTrait;
     /**
