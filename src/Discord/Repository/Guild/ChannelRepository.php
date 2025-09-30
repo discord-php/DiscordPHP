@@ -80,7 +80,7 @@ class ChannelRepository extends AbstractRepository
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->post(Endpoint::bind(Endpoint::GUILD_CHANNELS, $guild), $channel->jsonSerialize(), $headers)
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_CHANNELS, $guild), $channel, $headers)
             ->then(function ($response) {
                 if ($channelPart = $this->get('id', $response->id)) {
                     $channelPart->fill((array) $response);
