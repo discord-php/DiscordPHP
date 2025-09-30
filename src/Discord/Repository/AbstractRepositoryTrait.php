@@ -59,7 +59,6 @@ trait AbstractRepositoryTrait
         __debugInfo as __debugInfo;
 
         // 'Parent' methods
-        __construct as __Collection____construct;
         get as __Collection__get;
         set as __Collection__set;
         pull as __Collection__pull;
@@ -740,7 +739,7 @@ trait AbstractRepositoryTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {
