@@ -55,6 +55,10 @@ class GuildSearch extends Part
      */
     protected function getMessagesAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['messages']) && $this->attributes['messages'] instanceof ExCollectionInterface) {
+            return $this->attributes['messages'];
+        }
+
         $collection = Collection::for(Message::class);
 
         if (! isset($this->attributes['messages'])) {
@@ -71,6 +75,8 @@ class GuildSearch extends Part
             $collection->pushItem($messagePart ?? $this->factory->part(Message::class, (array) $message, true));
         }
 
+        $this->attributes['messages'] = $collection;
+
         return $collection;
     }
 
@@ -81,6 +87,10 @@ class GuildSearch extends Part
      */
     protected function getMembersAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['members']) && $this->attributes['members'] instanceof ExCollectionInterface) {
+            return $this->attributes['members'];
+        }
+
         $collection = Collection::for(Member::class);
 
         foreach ($this->attributes['members'] ?? [] as $snowflake => $member) {
@@ -97,6 +107,8 @@ class GuildSearch extends Part
 
             $collection->pushItem($memberPart);
         }
+
+        $this->attributes['members'] = $collection;
 
         return $collection;
     }
