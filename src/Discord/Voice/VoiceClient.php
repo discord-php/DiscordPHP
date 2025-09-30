@@ -38,6 +38,9 @@ use React\EventLoop\TimerInterface;
 use React\Stream\ReadableResourceStream;
 use React\Stream\ReadableStreamInterface;
 
+use function React\Promise\reject;
+use function React\Promise\resolve;
+
 /**
  * The Discord voice client.
  *
@@ -975,12 +978,12 @@ class VoiceClient extends EventEmitter
         $this->emit('ws-close', [$op, $reason, $this]);
 
         // Cancel heartbeat timers
-        if (null !== $this->heartbeat) {
+        if ($this->heartbeat !== null) {
             $this->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
-        if (null !== $this->udpHeartbeat) {
+        if ($this->udpHeartbeat !== null) {
             $this->loop->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
@@ -1355,10 +1358,11 @@ class VoiceClient extends EventEmitter
             // Read JSON content
             return $this->buffer->read($jsonLength);
         })->then(function ($metadata) use ($readOpus) {
-            $metadata = json_decode($metadata, true);
 
-            if (null !== $metadata) {
-                $this->frameSize = $metadata['opus']['frame_size'] / 48;
+            if (($metadata = json_decode($metadata, true)) !== false) {
+                if ($metadata !== null) {
+                    $this->frameSize = $metadata['opus']['frame_size'] / 48;
+                }
             }
 
             $this->startTime = microtime(true) + 0.5;
@@ -1530,8 +1534,9 @@ class VoiceClient extends EventEmitter
      */
     protected function send(Payload|array $data): void
     {
-        $json = json_encode($data);
-        $this->voiceWebsocket->send($json);
+        if (($json = json_encode($data)) !== false) {
+            $this->voiceWebsocket->send($json);
+        }
     }
 
     /**
@@ -1541,8 +1546,9 @@ class VoiceClient extends EventEmitter
      */
     protected function mainSend(Payload $data): void
     {
-        $json = json_encode($data);
-        $this->mainWebsocket->send($json);
+        if (($json = json_encode($data)) !== false) {
+            $this->mainWebsocket->send($json);
+        }
     }
 
     /**
@@ -1577,54 +1583,66 @@ class VoiceClient extends EventEmitter
      * Pauses the current sound.
      *
      * @throws \RuntimeException
+     *
+     * @return PromiseInterface
      */
-    public function pause(): void
+    public function pause(): PromiseInterface
     {
         if (! $this->speaking) {
-            throw new \RuntimeException('Audio must be playing to pause it.');
+            return reject(new \RuntimeException('Audio must be playing to pause it.'));
         }
 
         if ($this->paused) {
-            throw new \RuntimeException('Audio is already paused.');
+            return reject(new \RuntimeException('Audio is already paused.'));
         }
 
         $this->paused = true;
         $this->silenceRemaining = 5;
+
+        return resolve(null);
     }
 
     /**
      * Unpauses the current sound.
      *
      * @throws \RuntimeException
+     *
+     * @return PromiseInterface
      */
-    public function unpause(): void
+    public function unpause(): PromiseInterface
     {
         if (! $this->speaking) {
-            throw new \RuntimeException('Audio must be playing to unpause it.');
+            return reject(new \RuntimeException('Audio must be playing to unpause it.'));
         }
 
         if (! $this->paused) {
-            throw new \RuntimeException('Audio is already playing.');
+            return reject(new \RuntimeException('Audio is already playing.'));
         }
 
         $this->paused = false;
         $this->timestamp = microtime(true) * 1000;
+
+        return resolve(null);
     }
 
     /**
      * Stops the current sound.
      *
      * @throws \RuntimeException
+     *
+     * @return PromiseInterface
      */
-    public function stop(): void
+    public function stop(): PromiseInterface
     {
         if (! $this->speaking) {
-            throw new \RuntimeException('Audio must be playing to stop it.');
+            return reject(new \RuntimeException('Audio must be playing to stop it.'));
         }
 
         $this->buffer->end();
         $this->insertSilence();
         $this->reset();
+
+        return resolve(null);
     }
 
     /**
@@ -1661,12 +1679,12 @@ class VoiceClient extends EventEmitter
 
         $this->heartbeat_interval = null;
 
-        if (null !== $this->heartbeat) {
+        if ($this->heartbeat !== null) {
             $this->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
-        if (null !== $this->udpHeartbeat) {
+        if ($this->udpHeartbeat !== null) {
             $this->loop->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
@@ -2003,7 +2021,7 @@ class VoiceClient extends EventEmitter
             'pipe:1',
         ];
 
-        if (null !== $preArgs) {
+        if ($preArgs) {
             $flags = array_merge($preArgs, $flags);
         }
 
