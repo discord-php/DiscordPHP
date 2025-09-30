@@ -1208,7 +1208,7 @@ class VoiceClient extends EventEmitter
 
             $ogg->getPacket()->then(function ($packet) use (&$readOpus, &$loops, $deferred) {
                 // EOF for Ogg stream.
-                if (null === $packet) {
+                if ($packet === null) {
                     $this->reset();
                     $deferred->resolve(null);
 
@@ -1721,11 +1721,7 @@ class VoiceClient extends EventEmitter
      */
     public function handleVoiceStateUpdate(object $data): void
     {
-        if (! isset($data->d['user_id'])) {
-            return;
-        }
-
-        if (! $ss = $this->speakingStatus->get('user_id', $data->d['user_id'])) {
+        if (! isset($data->d['user_id']) || ! $ss = $this->speakingStatus->get('user_id', $data->d['user_id'])) {
             return; // not in our channel
         }
 
@@ -1740,10 +1736,9 @@ class VoiceClient extends EventEmitter
      * Removes the voice decoder associated with the given SSRC.
      *
      * @param object $ss
-     *
-     * @return void
      */
-    protected function removeDecoder($ss) {
+    protected function removeDecoder($ss)
+    {
         if (! $decoder = $this->voiceDecoders[$ss->ssrc] ?? null) {
             return; // no voice decoder to remove
         }
@@ -1791,25 +1786,19 @@ class VoiceClient extends EventEmitter
 
         $voicePacket = VoicePacket::make($message);
 
-        $decrypted = $this->decryptVoicePacket($voicePacket);
-
-        if ($decrypted === false) {
-            // if we can't decode the message, drop it silently.
-            return;
+        if (($decrypted = $this->decryptVoicePacket($voicePacket)) === false) {
+            return; // if we can't decode the message, drop it silently.
         }
 
         $this->emit('raw', [$decrypted, $this]);
 
         $vp = VoicePacket::make($voicePacket->getHeader().$decrypted);
-        $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
-        $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
 
-        if (null === $ss) {
-            // for some reason we don't have a speaking status
-            return;
+        if (! $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC())) {
+            return; // for some reason we don't have a speaking status
         }
 
-        if (null === $decoder) {
+        if ($decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null) {
             // make a decoder
             if (! isset($this->recieveStreams[$ss->ssrc])) {
                 $this->recieveStreams[$ss->ssrc] = new RecieveStream();
@@ -1822,30 +1811,7 @@ class VoiceClient extends EventEmitter
                     $this->emit('channel-opus', [$d, $this]);
                 });
             }
-
-            $createDecoder = function () use (&$createDecoder, $ss) {
-                $decoder = $this->dcaDecode();
-                $decoder->start($this->loop);
-
-                $decoder->stdout->on('data', function ($data) use ($ss) {
-                    $this->recieveStreams[$ss->ssrc]->writePCM($data);
-                });
-                $decoder->stderr->on('data', function ($data) use ($ss) {
-                    $this->emit("voice.{$ss->ssrc}.stderr", [$data, $this]);
-                    $this->emit("voice.{$ss->user_id}.stderr", [$data, $this]);
-                });
-                $decoder->on('exit', function ($code, $term) use ($ss, &$createDecoder) {
-                    if ($code > 0) {
-                        $this->emit('decoder-error', [$code, $term, $ss]);
-
-                        $createDecoder();
-                    }
-                });
-
-                $this->voiceDecoders[$ss->ssrc] = $decoder;
-            };
-
-            $createDecoder();
+            $this->createDecoder($ss);
             $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
         }
 
@@ -1854,6 +1820,32 @@ class VoiceClient extends EventEmitter
         $buff->write($vp->getData(), 2);
 
         $decoder->stdin->write((string) $buff);
+    }
+
+    /**
+     * Creates and starts a decoder process for the given stream source.
+     *
+     * @param object $ss The stream source object containing ssrc and user_id properties.
+     */
+    protected function createDecoder(object $ss)
+    {
+        $decoder = $this->dcaDecode();
+        $decoder->start($this->loop);
+        $decoder->stdout->on('data', function ($data) use ($ss) {
+            $this->recieveStreams[$ss->ssrc]->writePCM($data);
+        });
+        $decoder->stderr->on('data', function ($data) use ($ss) {
+            $this->emit("voice.{$ss->ssrc}.stderr", [$data, $this]);
+            $this->emit("voice.{$ss->user_id}.stderr", [$data, $this]);
+        });
+        $decoder->on('exit', function ($code, $term) use ($ss) {
+            if ($code > 0) {
+                $this->emit('decoder-error', [$code, $term, $ss]);
+                $this->createDecoder($ss);
+            }
+        });
+
+        $this->voiceDecoders[$ss->ssrc] = $decoder;
     }
 
     protected function decryptVoicePacket(VoicePacket $voicePacket): string|false
@@ -1932,20 +1924,11 @@ class VoiceClient extends EventEmitter
      */
     protected function checkForFFmpeg(): bool
     {
-        $binaries = [
-            'ffmpeg',
-        ];
+        if ($output = $this->checkForExecutable('ffmpeg')) {
+            $this->ffmpeg = $output;
 
-        foreach ($binaries as $binary) {
-            $output = $this->checkForExecutable($binary);
-
-            if (null !== $output) {
-                $this->ffmpeg = $output;
-
-                return true;
-            }
+            return true;
         }
-
         $this->emit('error', [new FFmpegNotFoundException('No FFmpeg binary was found.')]);
 
         return false;
@@ -2044,14 +2027,10 @@ class VoiceClient extends EventEmitter
      */
     public function dcaDecode(int $channels = 2, ?int $frameSize = null): Process
     {
-        if (null === $frameSize) {
-            $frameSize = round($this->frameSize * 48);
-        }
-
         $flags = [
             '-ac', $channels, // Channels
             '-ab', round($this->bitrate / 1000), // Bitrate
-            '-as', $frameSize, // Frame Size
+            '-as', $frameSize ?? round($this->frameSize * 48), // Frame Size
             '-mode', 'decode', // Decode mode
         ];
 
