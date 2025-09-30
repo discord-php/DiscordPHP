@@ -1637,6 +1637,7 @@ class VoiceClient extends EventEmitter
 
         $this->buffer->end();
         $this->reset();
+
         return $this->insertSilence();
     }
 
@@ -2075,6 +2076,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
         $this->__insertSilence($deferred);
+
         return $deferred->promise();
     }
 
@@ -2088,7 +2090,7 @@ class VoiceClient extends EventEmitter
         if ($this->silenceRemaining > 0) {
             $this->sendBuffer(self::SILENCE_FRAME);
             $this->silenceRemaining--;
-            $this->loop->addTimer($this->frameSize / 1000, fn() => $this->__insertSilence($deferred));
+            $this->loop->addTimer($this->frameSize / 1000, fn () => $this->__insertSilence($deferred));
         } else {
             $deferred->resolve(null);
         }

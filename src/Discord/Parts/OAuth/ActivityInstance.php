@@ -58,7 +58,7 @@ class ActivityInstance extends Part
      */
     protected function getUsersAttribute(): ExCollectionInterface
     {
-         if (isset($this->attributes['users']) && $this->attributes['users'] instanceof ExCollectionInterface) {
+        if (isset($this->attributes['users']) && $this->attributes['users'] instanceof ExCollectionInterface) {
             return $this->attributes['users'];
         }
 

@@ -82,7 +82,7 @@ class Member extends Part
      */
     protected function getMemberAttribute(): ?GuildMember
     {
-         if (isset($this->attributes['member']) && $this->attributes['member'] instanceof GuildMember) {
+        if (isset($this->attributes['member']) && $this->attributes['member'] instanceof GuildMember) {
             return $this->attributes['member'];
         }
 

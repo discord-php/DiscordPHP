@@ -17,7 +17,6 @@ use Discord\Builders\Builder;
 use Discord\Builders\ChannelBuilder;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Part;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 
