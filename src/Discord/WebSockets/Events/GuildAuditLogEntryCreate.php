@@ -46,8 +46,6 @@ class GuildAuditLogEntryCreate extends Event
             }
         }
 
-        $this->cacheUser($data->user);
-
         return $entryPart;
     }
 }
