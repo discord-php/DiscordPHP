@@ -468,6 +468,10 @@ trait PartTrait
      */
     protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id'): ExCollectionInterface
     {
+        if (isset($this->attributes[$key]) && $this->attributes[$key] instanceof ExCollectionInterface) {
+            return $this->attributes[$key];
+        }
+
         $collection = Collection::for($class, $discrim);
 
         if (! isset($this->attributes[$key])) {
@@ -481,6 +485,8 @@ trait PartTrait
                     : $this->createOf($class, $part)
             );
         }
+
+        $this->attributes[$key] = $collection;
 
         return $collection;
     }
