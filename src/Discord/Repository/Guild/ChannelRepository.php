@@ -68,7 +68,7 @@ class ChannelRepository extends AbstractRepository
      */
     public function createChannel($guild, $channel, ?string $reason = null): PromiseInterface
     {
-        if ($guild instanceof Part) {
+        if (! is_string($guild)) {
             $guild = $guild->id;
         }
 
