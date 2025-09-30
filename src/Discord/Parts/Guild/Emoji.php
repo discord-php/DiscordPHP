@@ -106,7 +106,7 @@ class Emoji extends Part implements Stringable
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        return $this->attributePartHelper('user', User::class);
     }
 
     /**
