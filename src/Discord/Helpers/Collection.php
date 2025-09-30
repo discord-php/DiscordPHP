@@ -58,4 +58,32 @@ class Collection implements ExCollectionInterface, JsonSerializable
         $this->discrim = $discrim;
         $this->class = $class;
     }
+
+    /**
+     * Creates a collection from an array.
+     *
+     * @param array   $items
+     * @param ?string $discrim
+     * @param ?string $class
+     *
+     * @return ExCollectionInterface
+     */
+    public static function from(array $items = [], ?string $discrim = 'id', ?string $class = null)
+    {
+        return new Collection($items, $discrim, $class);
+    }
+
+    /**
+     * Creates a collection for a class.
+     *
+     * @param string  $class
+     * @param ?string $discrim
+     *
+     * @return ExCollectionInterface
+     */
+    public static function for(string $class, ?string $discrim = 'id')
+    {
+        $items = [];
+        return new Collection($items, $discrim, $class);
+    }
 }
