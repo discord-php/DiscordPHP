@@ -216,7 +216,7 @@ class VoiceStateRepository extends AbstractRepository
 
         $part = $this->factory->part($this->class, [$this->discrim => $id]);
         $endpoint = ($part->user_id == $this->discord->id)
-            ? new Endpoint(Endpoint::GUILD_USER_VOICE_STATE)
+            ? new Endpoint(Endpoint::GUILD_USER_CURRENT_VOICE_STATE)
             : new Endpoint($this->endpoints['get']);
         $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
@@ -244,7 +244,7 @@ class VoiceStateRepository extends AbstractRepository
             return reject(new \Exception('You cannot get a non-existent part.'));
         }
         $endpoint = ($part->user_id == $this->discord->id)
-            ? new Endpoint(Endpoint::GUILD_USER_VOICE_STATE)
+            ? new Endpoint(Endpoint::GUILD_USER_CURRENT_VOICE_STATE)
             : new Endpoint($this->endpoints['get']);
         $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
@@ -277,7 +277,7 @@ class VoiceStateRepository extends AbstractRepository
 
         $method = 'patch';
         $endpoint = ($part->user_id == $this->discord->id)
-            ? new Endpoint(Endpoint::GUILD_USER_VOICE_STATE)
+            ? new Endpoint(Endpoint::GUILD_USER_CURRENT_VOICE_STATE)
             : new Endpoint($this->endpoints['update']);
         $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
         $attributes = $part->getUpdatableAttributes();
