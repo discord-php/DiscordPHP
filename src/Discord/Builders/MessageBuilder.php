@@ -998,11 +998,15 @@ class MessageBuilder extends Builder implements JsonSerializable
     {
         $fields = [];
 
+        if (($jsonEncoded = json_encode($this)) === false) {
+            throw new \RuntimeException('Failed to encode message to JSON: '.json_last_error_msg());
+        }
+
         if ($payload) {
             $fields = [
                 [
                     'name' => 'payload_json',
-                    'content' => json_encode($this),
+                    'content' => $jsonEncoded,
                     'headers' => [
                         'Content-Type' => 'application/json',
                     ],
