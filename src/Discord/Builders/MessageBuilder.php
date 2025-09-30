@@ -992,6 +992,8 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @param bool $payload Whether to include the JSON payload in the response.
      *
+     * @throws \RuntimeException If encoding the message to JSON fails.
+     *
      * @return Multipart
      */
     public function toMultipart(bool $payload = true): Multipart
