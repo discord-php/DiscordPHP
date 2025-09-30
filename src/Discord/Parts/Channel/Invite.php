@@ -161,11 +161,7 @@ class Invite extends Part implements Stringable
             }
         }
 
-        if (isset($this->attributes['channel'])) {
-            return $this->factory->part(Channel::class, (array) $this->attributes['channel'] + ['guild_id' => $this->guild_id], true);
-        }
-
-        return null;
+        return $this->attributePartHelper('channel', Channel::class, ['guild_id' => $this->guild_id]);
     }
 
     /**
@@ -201,7 +197,7 @@ class Invite extends Part implements Stringable
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['inviter'], true);
+        return $this->attributePartHelper('inviter', User::class);
     }
 
     /**
@@ -219,7 +215,7 @@ class Invite extends Part implements Stringable
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['target_user'], true);
+        return $this->attributePartHelper('target_user', User::class);
     }
 
     /**
