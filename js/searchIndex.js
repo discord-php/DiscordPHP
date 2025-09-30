@@ -12661,6 +12661,31 @@ Search.appendIndex(
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-EmojiRepository.html#property_class"
         },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\AuditLogRepository",
+            "name": "AuditLogRepository",
+            "summary": "Contains\u0020the\u0020audit\u0020log\u0020of\u0020a\u0020guild.",
+            "url": "classes/Discord-Repository-Guild-AuditLogRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\AuditLogRepository\u003A\u003AcacheFreshen\u0028\u0029",
+            "name": "cacheFreshen",
+            "summary": "",
+            "url": "classes/Discord-Repository-Guild-AuditLogRepository.html#method_cacheFreshen"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\AuditLogRepository\u003A\u003A\u0024discrim",
+            "name": "discrim",
+            "summary": "The\u0020discriminator.",
+            "url": "classes/Discord-Repository-Guild-AuditLogRepository.html#property_discrim"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\AuditLogRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "",
+            "url": "classes/Discord-Repository-Guild-AuditLogRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\AuditLogRepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
+            "url": "classes/Discord-Repository-Guild-AuditLogRepository.html#property_class"
+        },                {
             "fqsen": "\\Discord\\Repository\\Guild\\AutoModerationRuleRepository",
             "name": "AutoModerationRuleRepository",
             "summary": "Contains\u0020auto\u0020moderation\u0020rules\u0020for\u0020a\u0020guild.",
