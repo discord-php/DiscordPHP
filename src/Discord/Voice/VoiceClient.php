@@ -1813,7 +1813,7 @@ class VoiceClient extends EventEmitter
             return; // for some reason we don't have a speaking status
         }
 
-        if ($decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null) {
+        if (! $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null) {
             // make a decoder
             if (! isset($this->recieveStreams[$ss->ssrc])) {
                 $this->recieveStreams[$ss->ssrc] = new RecieveStream();
