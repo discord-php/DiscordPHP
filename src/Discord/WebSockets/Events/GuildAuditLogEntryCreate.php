@@ -34,7 +34,7 @@ class GuildAuditLogEntryCreate extends Event
         $entryPart = $this->factory->part(Entry::class, (array) $data, true);
 
         /** @var ?Guild */
-        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id ?? null)) {
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id ?? '')) {
             /** @var Guild $guild */
             /** @var ?AuditLog */
             if ($audit_log = yield $guild->audit_log->cacheGet('')) {
