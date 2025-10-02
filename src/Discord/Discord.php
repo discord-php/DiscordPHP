@@ -1940,7 +1940,7 @@ class Discord
         }
 
         // registering base command
-        if (count($names) == 1) {
+        if (count($names) === 1) {
             $name = array_shift($names);
             if (isset($this->application_commands[$name])) {
                 throw new \LogicException("The command `{$name}` already exists.");
