@@ -1925,7 +1925,7 @@ class Discord
     /**
      * Add listener for incoming application command from interaction.
      *
-     * @param string|array  $name
+     * @param array|string  $names
      * @param callable|null $callback
      * @param callable|null $autocomplete_callback
      *
@@ -1933,14 +1933,15 @@ class Discord
      *
      * @return RegisteredCommand
      */
-    public function listenCommand($name, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
+    public function listenCommand($names, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {
-        if (is_array($name) && count($name) == 1) {
-            $name = array_shift($name);
+        if (! is_array ($names)) {
+            $names = [$names];
         }
 
         // registering base command
-        if (! is_array($name) || count($name) == 1) {
+        if (count($names) == 1) {
+            $name = array_shift($names);
             if (isset($this->application_commands[$name])) {
                 throw new \LogicException("The command `{$name}` already exists.");
             }
@@ -1948,13 +1949,13 @@ class Discord
             return $this->application_commands[$name] = new RegisteredCommand($this, $name, $callback, $autocomplete_callback);
         }
 
-        $baseCommand = array_shift($name);
+        $baseCommand = array_shift($names);
 
         if (! isset($this->application_commands[$baseCommand])) {
             $this->listenCommand($baseCommand);
         }
 
-        return $this->application_commands[$baseCommand]->addSubCommand($name, $callback, $autocomplete_callback);
+        return $this->application_commands[$baseCommand]->addSubCommand($names, $callback, $autocomplete_callback);
     }
 
     /**
