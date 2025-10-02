@@ -169,7 +169,7 @@ class RegisteredCommand
     /**
      * Adds a sub-command to the command.
      *
-     * @param string|array  $name
+     * @param array|string  $names
      * @param callable|null $callback
      * @param callable|null $autocomplete_callback
      *
@@ -177,13 +177,14 @@ class RegisteredCommand
      *
      * @return static
      */
-    public function addSubCommand($name, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
+    public function addSubCommand($names, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {
-        if (is_array($name) && count($name) == 1) {
-            $name = array_shift($name);
+        if (! is_array($names)) {
+            $names = [$names];
         }
 
-        if (! is_array($name) || count($name) == 1) {
+        if (count($names) === 1) {
+            $name = array_shift($names);
             if (isset($this->subCommands[$name])) {
                 throw new \LogicException("The command `{$name}` already exists.");
             }
@@ -191,13 +192,13 @@ class RegisteredCommand
             return $this->subCommands[$name] = new static($this->discord, $name, $callback, $autocomplete_callback);
         }
 
-        $subCommand = array_shift($name);
+        $subCommand = array_shift($names);
 
         if (! isset($this->subCommands[$subCommand])) {
             $this->addSubCommand($subCommand);
         }
 
-        return $this->subCommands[$subCommand]->addSubCommand($name, $callback, $autocomplete_callback);
+        return $this->subCommands[$subCommand]->addSubCommand($names, $callback, $autocomplete_callback);
     }
 
     /**
