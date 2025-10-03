@@ -37,6 +37,7 @@ use Stringable;
  * @property Channel             $channel                    The partial channel that the invite is for.
  * @property string|null         $channel_id
  * @property User|null           $inviter                    The user that created the invite.
+ * @property bool|null           $is_nickname_changeable     A member's ability to change their nickname by default, returned from the `GET /invites/<code>` endpoint when `with_permissions` is `true`
  * @property int|null            $target_type                The type of target for this voice channel invite.
  * @property User|null           $target_user                The user whose stream to display for this voice channel stream invite.
  * @property Application|null    $target_application         The partial embedded application to open for this voice channel embedded application invite.
@@ -70,6 +71,7 @@ class Invite extends Part implements Stringable
         'guild',
         'channel',
         'inviter',
+        'is_nickname_changeable',
         'target_type',
         'target_user',
         'target_application',
