@@ -1935,7 +1935,7 @@ class Discord
      */
     public function listenCommand($names, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {
-        if (! is_array ($names)) {
+        if (! is_array($names)) {
             $names = [$names];
         }
 
