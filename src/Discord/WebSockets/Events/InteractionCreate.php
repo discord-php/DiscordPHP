@@ -87,7 +87,7 @@ class InteractionCreate extends Event
             if (isset($this->discord->application_commands[$command->name])) {
                 $interaction instanceof ApplicationCommand
                     ? $this->discord->application_commands[$command->name]->execute($command->options ?? [], $interaction)
-                    : $this->checkCommand($this->discord->application_commands[$command->name], $command->options, $interaction);
+                    : $this->checkCommand($this->discord->application_commands[$command->name], $command->options ?? [], $interaction);
             }
         }
 
