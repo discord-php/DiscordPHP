@@ -177,28 +177,22 @@ class RegisteredCommand
      *
      * @return static
      */
-    public function addSubCommand($names, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
+    public function addSubCommand(array|string $names, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {
-        if (! is_array($names)) {
+        if (is_string($names)) {
             $names = [$names];
         }
 
-        if (count($names) === 1) {
-            $name = array_shift($names);
-            if (isset($this->subCommands[$name])) {
-                throw new \LogicException("The command `{$name}` already exists.");
+        foreach($names as $subCommand){
+
+            if (isset($this->subCommands[$subCommand])) {
+                throw new \LogicException("The command `{$subCommand}` already exists.");
             }
 
-            return $this->subCommands[$name] = new static($this->discord, $name, $callback, $autocomplete_callback);
+            $this->subCommands[$subCommand] = new static($this->discord, $subCommand, $callback, $autocomplete_callback);
         }
 
-        $subCommand = array_shift($names);
-
-        if (! isset($this->subCommands[$subCommand])) {
-            $this->addSubCommand($subCommand);
-        }
-
-        return $this->subCommands[$subCommand]->addSubCommand($names, $callback, $autocomplete_callback);
+        return $this;
     }
 
     /**

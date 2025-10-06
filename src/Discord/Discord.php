@@ -1933,29 +1933,27 @@ class Discord
      *
      * @return RegisteredCommand
      */
-    public function listenCommand($names, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
+    public function listenCommand(array|string $names, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {
-        if (! is_array($names)) {
+        if (is_string($names)) {
             $names = [$names];
-        }
-
-        // registering base command
-        if (count($names) === 1) {
-            $name = array_shift($names);
-            if (isset($this->application_commands[$name])) {
-                throw new \LogicException("The command `{$name}` already exists.");
-            }
-
-            return $this->application_commands[$name] = new RegisteredCommand($this, $name, $callback, $autocomplete_callback);
         }
 
         $baseCommand = array_shift($names);
 
-        if (! isset($this->application_commands[$baseCommand])) {
-            $this->listenCommand($baseCommand);
+        if (isset($this->application_commands[$baseCommand])) {
+            throw new \LogicException("The command `{$baseCommand}` already exists.");
         }
 
-        return $this->application_commands[$baseCommand]->addSubCommand($names, $callback, $autocomplete_callback);
+        // registering base command
+        $this->application_commands[$baseCommand] = new RegisteredCommand($this, $baseCommand, $callback, $autocomplete_callback);
+
+        // register subcommands
+        foreach($names as $subCommand){
+            $this->application_commands[$baseCommand]->addSubCommand($subCommand, $callback, $autocomplete_callback);
+        }
+
+        return $this->application_commands[$baseCommand];
     }
 
     /**
