@@ -103,7 +103,7 @@ class InteractionCreate extends Event
      *
      * @return bool Returns true if a suggestion was triggered, otherwise false.
      */
-    protected function checkCommand(RegisteredCommand $command, $options, Interaction $interaction): bool
+    protected function checkCommand(RegisteredCommand $command, iterable $options, Interaction $interaction): bool
     {
         foreach ($options as $option) {
             /** @var ?RegisteredCommand $subCommand */
@@ -111,7 +111,7 @@ class InteractionCreate extends Event
                 if ($option->focused) {
                     return $subCommand->suggest($interaction, $option);
                 }
-                if ($option->options) {
+                if (is_iterable($option->options)) {
                     return $this->checkCommand($subCommand, $option->options, $interaction);
                 }
             } elseif ($option->focused) {
