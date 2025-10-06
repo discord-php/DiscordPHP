@@ -1925,9 +1925,9 @@ class Discord
     /**
      * Add listener for incoming application command from interaction.
      *
-     * @param array|string  $names
-     * @param callable|null $callback
-     * @param callable|null $autocomplete_callback
+     * @param string[]|string $names
+     * @param callable|null   $callback
+     * @param callable|null   $autocomplete_callback
      *
      * @throws \LogicException
      *

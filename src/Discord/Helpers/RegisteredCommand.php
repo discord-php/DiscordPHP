@@ -169,9 +169,9 @@ class RegisteredCommand
     /**
      * Adds a sub-command to the command.
      *
-     * @param array|string  $names
-     * @param callable|null $callback
-     * @param callable|null $autocomplete_callback
+     * @param string[]|string $names
+     * @param callable|null   $callback
+     * @param callable|null   $autocomplete_callback
      *
      * @throws \LogicException
      *
