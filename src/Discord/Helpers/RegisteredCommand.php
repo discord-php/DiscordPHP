@@ -117,13 +117,14 @@ class RegisteredCommand
      * executes the callback, if given.
      *
      * @param ApplicationCommand|ApplicationCommandAutocomplete $interaction
+     * @param Option                                            $option      The option value for the current autocomplete request
      *
      * @return bool Whether the command successfully executed.
      */
-    public function suggest(Interaction $interaction): bool
+    public function suggest(Interaction $interaction, Option $option): bool
     {
         if (is_callable($this->autocomplete_callback)) {
-            $choice = ($this->autocomplete_callback)($interaction);
+            $choice = ($this->autocomplete_callback)($interaction, $option);
             if (is_array($choice)) {
                 $interaction->autoCompleteResult($choice);
             }
