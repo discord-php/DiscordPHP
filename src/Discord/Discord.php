@@ -1947,9 +1947,7 @@ class Discord
         }
 
         // register subcommands
-        foreach($names as $subCommand){
-            $this->application_commands[$baseCommand]->addSubCommand($subCommand, $callback, $autocomplete_callback);
-        }
+        $this->application_commands[$baseCommand]->addSubCommand($names, $callback, $autocomplete_callback);
 
         return $this->application_commands[$baseCommand];
     }
