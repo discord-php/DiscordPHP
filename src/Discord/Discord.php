@@ -1941,12 +1941,10 @@ class Discord
 
         $baseCommand = array_shift($names);
 
-        if (isset($this->application_commands[$baseCommand])) {
-            throw new \LogicException("The command `{$baseCommand}` already exists.");
-        }
-
         // registering base command
-        $this->application_commands[$baseCommand] = new RegisteredCommand($this, $baseCommand, $callback, $autocomplete_callback);
+        if (!isset($this->application_commands[$baseCommand])) {
+            $this->application_commands[$baseCommand] = new RegisteredCommand($this, $baseCommand, $callback, $autocomplete_callback);
+        }
 
         // register subcommands
         foreach($names as $subCommand){
