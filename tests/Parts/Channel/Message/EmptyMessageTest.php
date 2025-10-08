@@ -220,7 +220,7 @@ final class EmptyMessageTest extends DiscordTestCase
                     $field = $embed->fields->first();
                     $this->assertEquals('Field name', $field->name);
                     $this->assertEquals('Field value', $field->value);
-                    $this->assertEquals(true, $field->inline);
+                    $this->assertTrue($field->inline);
                 })
                 ->then($resolve, $resolve);
         });
