@@ -13,7 +13,7 @@ use Discord\Discord;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Author;
 use Discord\Parts\Embed\Embed;
-use Discord\Parts\Embed\Image;
+use Discord\Parts\Embed\Thumbnail;
 use Discord\Parts\Embed\Video;
 
 use function Discord\contains;
@@ -36,7 +36,7 @@ final class EmbedTest extends DiscordTestCase
                     $embed = $message->embeds->first();
 
                     $this->assertInstanceOf(Video::class, $embed->video);
-                    $this->assertInstanceOf(Image::class, $embed->thumbnail);
+                    $this->assertInstanceOf(Thumbnail::class, $embed->thumbnail);
                     $this->assertInstanceOf(Author::class, $embed->author);
 
                     $this->assertTrue(contains($embed->video->url, ['dQw4w9WgXcQ']));
@@ -64,7 +64,7 @@ final class EmbedTest extends DiscordTestCase
 
                     $this->assertEquals($url, $embed->url);
                     $this->assertEquals(Embed::TYPE_IMAGE, $embed->type);
-                    $this->assertInstanceOf(Image::class, $embed->thumbnail);
+                    $this->assertInstanceOf(Thumbnail::class, $embed->thumbnail);
                 })
                 ->then($resolve, $resolve);
         }, 10);
