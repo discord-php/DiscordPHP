@@ -952,7 +952,7 @@ class Message extends Part
     /**
      * Replies to the message.
      *
-     * @link https://discord.com/developers/docs/resources/channel#create-message
+     * @link https://discord.com/developers/docs/resources/message#create-message
      *
      * @param string|MessageBuilder $message The reply message.
      *
@@ -974,7 +974,7 @@ class Message extends Part
     /**
      * Crossposts the message to any following channels (publish announcement).
      *
-     * @link https://discord.com/developers/docs/resources/channel#crosspost-message
+     * @link https://discord.com/developers/docs/resources/message#crosspost-message
      *
      * @throws \RuntimeException      Message has already been crossposted.
      * @throws NoPermissionsException Missing permission:
@@ -1056,7 +1056,7 @@ class Message extends Part
     /**
      * Reacts to the message.
      *
-     * @link https://discord.com/developers/docs/resources/channel#create-reaction
+     * @link https://discord.com/developers/docs/resources/message#create-reaction
      *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
@@ -1085,8 +1085,8 @@ class Message extends Part
      *
      * @deprecated 10.14.0 Use `Message::deleteAllReactions()`, `Message::deleteOwnReaction()`, `Message::deleteUserReaction()`, or `Message::deleteEmojiReactions()`.
      *
-     * @link https://discord.com/developers/docs/resources/channel#delete-own-reaction
-     * @link https://discord.com/developers/docs/resources/channel#delete-user-reaction
+     * @link https://discord.com/developers/docs/resources/message#delete-own-reaction
+     * @link https://discord.com/developers/docs/resources/message#delete-user-reaction
      *
      * @param int               $type     The type of deletion to perform.
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
@@ -1235,7 +1235,7 @@ class Message extends Part
     /**
      * Edits the message.
      *
-     * @link https://discord.com/developers/docs/resources/channel#edit-message
+     * @link https://discord.com/developers/docs/resources/message#edit-message
      *
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
      *
@@ -1396,7 +1396,7 @@ class Message extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/channel#edit-message-jsonform-params
+     * @link https://discord.com/developers/docs/resources/message#edit-message-jsonform-params
      */
     public function getUpdatableAttributes(): array
     {
