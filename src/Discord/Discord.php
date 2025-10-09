@@ -860,7 +860,7 @@ class Discord
 
         $deferred = new Deferred();
         $deferred->promise()->then(function ($d) use ($data, $hData) {
-            if (is_array($d) && count($d) == 2) {
+            if (is_array($d) && count($d) === 2) {
                 list($new, $old) = $d;
             } else {
                 $new = $d;
@@ -873,7 +873,7 @@ class Discord
                 $this->emit($alternative, [$d, $this]);
             }
 
-            if ($data->t == Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
+            if ($data->t === Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
                 $this->emit('mention', [$new, $this, $old]);
             }
         }, function ($e) use ($data) {

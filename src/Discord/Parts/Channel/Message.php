@@ -991,7 +991,7 @@ class Message extends Part
 
         if ($channel = $this->channel) {
             if ($botperms = $channel->getBotPermissions()) {
-                if ($this->user_id == $this->discord->id) {
+                if ($this->user_id === $this->discord->id) {
                     if (! $botperms->send_messages) {
                         return reject(new NoPermissionsException("You do not have permission to crosspost message in channel {$this->id}."));
                     }

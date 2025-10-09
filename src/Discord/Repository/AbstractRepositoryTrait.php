@@ -383,7 +383,7 @@ trait AbstractRepositoryTrait
             return null;
         }
 
-        if ($discrim == $this->discrim) {
+        if ($discrim === $this->discrim) {
             if ($item = $this->offsetGet($key)) {
                 return $item;
             }
@@ -739,7 +739,7 @@ trait AbstractRepositoryTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {

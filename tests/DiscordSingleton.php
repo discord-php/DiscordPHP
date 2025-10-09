@@ -14,7 +14,6 @@ use Discord\WebSockets\Intents;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use React\EventLoop\Loop;
 
 class DiscordSingleton
 {

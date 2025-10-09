@@ -68,7 +68,7 @@ class MessageCreate extends Event
 
         if ($this->discord->options['storeMessages'] && (isset($channel) || $channel = $messagePart->channel)) {
             // Only cache if message intent is enabled or message was sent by the bot or message is not cached
-            if (($this->discord->options['intents'] & Intents::MESSAGE_CONTENT) || $data->author->id == $this->discord->id || ! (yield $channel->messages->cache->has($data->id))) {
+            if (($this->discord->options['intents'] & Intents::MESSAGE_CONTENT) || $data->author->id === $this->discord->id || ! (yield $channel->messages->cache->has($data->id))) {
                 $channel->messages->set($data->id, $messagePart);
             }
         }

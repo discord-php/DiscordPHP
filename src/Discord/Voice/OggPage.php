@@ -126,7 +126,7 @@ class OggPage
 
         foreach ($this->pageSegments as $seg) {
             $packetLen += $seg;
-            if ($seg == 255) {
+            if ($seg === 255) {
                 $partial = true;
                 continue;
             }

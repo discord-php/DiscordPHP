@@ -239,7 +239,7 @@ class Embed extends Part
      */
     protected function setTitleAttribute(string $title): self
     {
-        if (poly_strlen($title) == 0) {
+        if (poly_strlen($title) === 0) {
             $this->attributes['title'] = null;
         } elseif (poly_strlen($title) > 256) {
             throw new \LengthException('Embed title can not be longer than 256 characters');

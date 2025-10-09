@@ -875,7 +875,7 @@ class Channel extends Part implements Stringable
 
         $botperms = $this->getBotPermissions();
 
-        if ($this->type == self::TYPE_GUILD_FORUM) {
+        if ($this->type === self::TYPE_GUILD_FORUM) {
             $resolver
                 ->setDefined([
                     'message',
@@ -923,13 +923,13 @@ class Channel extends Part implements Stringable
                 }
             }
 
-            if ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
+            if ($this->type === self::TYPE_GUILD_ANNOUNCEMENT) {
                 if ($options['private']) {
                     return reject(new \RuntimeException('You cannot start a private thread within a news channel.'));
                 }
 
                 $options['type'] = self::TYPE_ANNOUNCEMENT_THREAD;
-            } elseif ($this->type == self::TYPE_GUILD_TEXT) {
+            } elseif ($this->type === self::TYPE_GUILD_TEXT) {
                 $options['type'] = $options['private'] ? self::TYPE_PRIVATE_THREAD : self::TYPE_PUBLIC_THREAD;
             } else {
                 return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
@@ -1076,7 +1076,7 @@ class Channel extends Part implements Stringable
      */
     public function getUpdatableAttributes(): array
     {
-        if ($this->type == self::TYPE_GROUP_DM) {
+        if ($this->type === self::TYPE_GROUP_DM) {
             return [
                 'name' => $this->name,
                 'icon' => $this->icon,

@@ -25,14 +25,14 @@ trait CollectionTrait
      */
     public function get(string $discrim, $key)
     {
-        if ($discrim == $this->discrim && isset($this->items[$key])) {
+        if ($discrim === $this->discrim && isset($this->items[$key])) {
             return $this->items[$key];
         }
 
         foreach ($this->items as $item) {
-            if (is_array($item) && isset($item[$discrim]) && $item[$discrim] == $key) {
+            if (is_array($item) && isset($item[$discrim]) && $item[$discrim] === $key) {
                 return $item;
-            } elseif (is_object($item) && $item->{$discrim} == $key) {
+            } elseif (is_object($item) && $item->{$discrim} === $key) {
                 return $item;
             }
         }

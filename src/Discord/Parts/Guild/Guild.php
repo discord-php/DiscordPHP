@@ -777,7 +777,7 @@ class Guild extends Part
             }
 
             $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
-            if ($extension == 'jpg') {
+            if ($extension === 'jpg') {
                 $extension = 'jpeg';
             }
             $contents = file_get_contents($filepath);
@@ -849,7 +849,7 @@ class Guild extends Part
         }
 
         $descLength = poly_strlen($options['description']);
-        if ($descLength > 100 || $descLength == 1) {
+        if ($descLength > 100 || $descLength === 1) {
             return reject(new \LengthException("Description must be 2 to 100 characters, given {$descLength}."));
         }
 
@@ -872,7 +872,7 @@ class Guild extends Part
             $contentType = $contentTypes[$extension];
         }
 
-        if ($extension == 'lottie' && ! ($this->feature_verified || $this->feature_partnered)) {
+        if ($extension === 'lottie' && ! ($this->feature_verified || $this->feature_partnered)) {
             return reject(new \RuntimeException('Lottie stickers can be only uploaded in verified or partnered guilds.'));
         }
 

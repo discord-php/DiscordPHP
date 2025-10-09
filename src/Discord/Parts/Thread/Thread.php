@@ -190,7 +190,7 @@ class Thread extends Part implements Stringable
      */
     protected function setInvitableAttribute(bool $value): void
     {
-        if ($this->type == Channel::TYPE_PUBLIC_THREAD) {
+        if ($this->type === Channel::TYPE_PUBLIC_THREAD) {
             return;
         }
         $this->attributes['thread_metadata']->invitable = $value;
@@ -399,7 +399,7 @@ class Thread extends Part implements Stringable
             'name' => $this->name,
         ];
 
-        if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
+        if ($this->type === Channel::TYPE_PRIVATE_THREAD) {
             $attr += $this->makeOptionalAttributes([
                 'invitable' => $this->invitable,
             ]);
@@ -429,7 +429,7 @@ class Thread extends Part implements Stringable
             'rate_limit_per_user' => $this->rate_limit_per_user,
         ];
 
-        if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
+        if ($this->type === Channel::TYPE_PRIVATE_THREAD) {
             $attr['invitable'] = $this->invitable;
         }
 

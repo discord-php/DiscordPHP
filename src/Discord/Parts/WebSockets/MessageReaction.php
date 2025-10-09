@@ -232,7 +232,7 @@ class MessageReaction extends Part
     public function delete(?int $type = null): PromiseInterface
     {
         if ($type === null) {
-            if ($this->user_id == $this->discord->id) {
+            if ($this->user_id === $this->discord->id) {
                 $type = Message::REACT_DELETE_ME;
             } else {
                 $type = Message::REACT_DELETE_ID;

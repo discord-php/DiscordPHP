@@ -284,7 +284,7 @@ class Option extends Part
         }
 
         foreach ($this->attributes['options'] ?? [] as $idx => $opt) {
-            if ($opt['name'] == $option) {
+            if ($opt['name'] === $option) {
                 unset($this->attributes['options'][$idx]);
                 break;
             }
@@ -307,7 +307,7 @@ class Option extends Part
         }
 
         foreach ($this->attributes['choices'] ?? [] as $idx => $cho) {
-            if ($cho['name'] == $choice) {
+            if ($cho['name'] === $choice) {
                 unset($this->attributes['choices'][$idx]);
                 break;
             }

@@ -55,7 +55,7 @@ class VoiceStateUpdate extends Event
 
                     // Copy
                     $oldVoiceState = clone $cachedVoiceState;
-                    if ($cachedVoiceState->channel_id == $data->channel_id) {
+                    if ($cachedVoiceState->channel_id === $data->channel_id) {
                         // Move
                         $statePart = $cachedVoiceState;
                         // Update
@@ -63,7 +63,7 @@ class VoiceStateUpdate extends Event
                     }
                 }
 
-                if ($channel->id == $data->channel_id) {
+                if ($channel->id === $data->channel_id) {
                     // Add/update this member to the voice channel
                     yield $channel->members->cache->set($data->user_id, $statePart);
                 } else {

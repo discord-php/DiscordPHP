@@ -186,7 +186,7 @@ class AuditLog extends Part
         }
 
         return $this->audit_log_entries->filter(function (Entry $entry) use ($action_type) {
-            return $entry->action_type == $action_type;
+            return $entry->action_type === $action_type;
         });
     }
 }

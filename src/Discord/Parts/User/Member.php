@@ -220,7 +220,7 @@ class Member extends Part implements Stringable
         }
 
         // jake plz
-        if ($this->discord->id == $this->id) {
+        if ($this->discord->id === $this->id) {
             $this->discord->getLogger()->warning('Modifying the bot member nickname via Member::setNickname is deprecated. Use MemberRepository::modifyCurrentMember instead.');
 
             return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $payload, $headers);
@@ -462,7 +462,7 @@ class Member extends Part implements Stringable
         $roles = [];
 
         // If this member is the guild owner
-        if ($guild->owner_id == $this->id) {
+        if ($guild->owner_id === $this->id) {
             // Add administrator permission
             $bitwise = BigInt::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']);
         } else {

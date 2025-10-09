@@ -76,7 +76,7 @@ class Sticker extends Part implements Stringable
 
         sort($partial);
 
-        return array_keys($partial) == ['format_type', 'name', 'id'];
+        return array_keys($partial) === ['format_type', 'name', 'id'];
     }
 
     /**
@@ -165,7 +165,7 @@ class Sticker extends Part implements Stringable
      */
     public function getRepositoryAttributes(): array
     {
-        if ($this->type == self::TYPE_GUILD) {
+        if ($this->type === self::TYPE_GUILD) {
             return [
                 'guild_id' => $this->guild_id,
                 'sticker_id' => $this->id,

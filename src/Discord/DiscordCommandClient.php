@@ -74,7 +74,7 @@ class DiscordCommandClient extends Discord
             }
 
             $this->on('message', function ($message) {
-                if ($message->author->id == $this->id) {
+                if ($message->author->id === $this->id) {
                     return;
                 }
 
@@ -228,7 +228,7 @@ class DiscordCommandClient extends Discord
     protected function checkForPrefix(string $content): ?string
     {
         foreach ($this->commandClientOptions['prefixes'] as $prefix) {
-            if (substr($content, 0, strlen($prefix)) == $prefix) {
+            if (substr($content, 0, strlen($prefix)) === $prefix) {
                 return substr($content, strlen($prefix));
             }
         }

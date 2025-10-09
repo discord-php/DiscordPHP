@@ -992,7 +992,7 @@ class VoiceClient extends EventEmitter
         }
 
         // Remove voice session when leaving.
-        if ($op == Op::CLOSE_VOICE_DISCONNECTED) {
+        if ($op === Op::CLOSE_VOICE_DISCONNECTED) {
             $this->logger->info('voice client disconnected from channel', ['channel_id' => $this->channel->id]);
             $this->voiceSessions[$this->channel->guild_id] = null;
 
@@ -1414,7 +1414,7 @@ class VoiceClient extends EventEmitter
      */
     public function setSpeaking(bool $speaking = true): void
     {
-        if ($this->speaking == $speaking) {
+        if ($this->speaking === $speaking) {
             return;
         }
 
@@ -1741,7 +1741,7 @@ class VoiceClient extends EventEmitter
             return; // not in our channel
         }
 
-        if (isset($data->d['channel_id']) && $data->d['channel_id'] == $this->channel->id) {
+        if (isset($data->d['channel_id']) && $data->d['channel_id'] === $this->channel->id) {
             return; // ignore, just a mute/deaf change
         }
 
@@ -1777,7 +1777,7 @@ class VoiceClient extends EventEmitter
         }
 
         foreach ($this->speakingStatus as $status) {
-            if ($status->user_id == $id) {
+            if ($status->user_id === $id) {
                 return $this->recieveStreams[$status->ssrc];
             }
         }

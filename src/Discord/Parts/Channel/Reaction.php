@@ -106,9 +106,9 @@ class Reaction extends Part
         $delimitedCount = count($colonDelimiter);
         $emojiId = $emojiAnimated = null;
 
-        if ($delimitedCount == 2) { // Custom emoji name:id
+        if ($delimitedCount === 2) { // Custom emoji name:id
             [$emojiName, $emojiId] = $colonDelimiter;
-        } elseif ($delimitedCount == 3) { // Custom animated emoji a:name:id
+        } elseif ($delimitedCount === 3) { // Custom animated emoji a:name:id
             [$emojiAnimated, $emojiName, $emojiId] = $colonDelimiter;
         } else { // Standard emoji (or just have abnormal colon count)
             $emojiName = $value;
@@ -116,7 +116,7 @@ class Reaction extends Part
 
         $this->attributes['emoji']->id = $emojiId;
         $this->attributes['emoji']->name = $emojiName;
-        if ($emojiAnimated == 'a') {
+        if ($emojiAnimated === 'a') {
             $this->attributes['emoji']->animated = true;
         }
     }

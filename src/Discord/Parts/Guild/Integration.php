@@ -128,7 +128,7 @@ class Integration extends Part
 
         $botApplication = $this->discord->application;
 
-        if ($this->attributes['application']->id == $botApplication->id) {
+        if ($this->attributes['application']->id === $botApplication->id) {
             return $botApplication;
         }
 

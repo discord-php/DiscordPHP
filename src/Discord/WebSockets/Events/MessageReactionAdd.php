@@ -57,7 +57,7 @@ class MessageReactionAdd extends Event
 
         if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
             /** @var Message $message */
-            $me = $data->user_id == $this->discord->id;
+            $me = $data->user_id === $this->discord->id;
 
             /** @var ?Reaction */
             if ($react = yield $message->reactions->cacheGet($reaction->reaction_id)) {

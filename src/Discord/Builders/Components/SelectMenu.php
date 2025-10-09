@@ -335,7 +335,7 @@ abstract class SelectMenu extends Interactive
 
         $this->discord = $discord;
 
-        if ($callback == null) {
+        if ($callback === null) {
             return $this;
         }
 
@@ -362,8 +362,8 @@ abstract class SelectMenu extends Interactive
         $timer = null;
 
         $listener = function (Interaction $interaction) use ($callback, $oneOff, &$timer) {
-            if ($interaction->data->component_type == $this->type &&
-                $interaction->data->custom_id == $this->custom_id) {
+            if ($interaction->data->component_type === $this->type &&
+                $interaction->data->custom_id === $this->custom_id) {
                 if (empty($this->options)) {
                     $response = $callback($interaction);
                 } else {

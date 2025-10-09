@@ -74,7 +74,7 @@ class ThreadRepository extends AbstractRepository
         return $this->cache->setMultiple($items)->then(function ($success) use ($items, $members) {
             foreach ($items as $thread) {
                 foreach ($members as $member) {
-                    if ($member->id == $thread->id) {
+                    if ($member->id === $thread->id) {
                         $thread->members->cache->set($member->id, $thread->members->create((array) $member + ['guild_id' => $thread->guild_id], true));
                         break;
                     }
@@ -164,7 +164,7 @@ class ThreadRepository extends AbstractRepository
             $thread = $this->factory->part(Thread::class, (array) $thread, true);
 
             foreach ($response->members as $member) {
-                if ($member->id == $thread->id) {
+                if ($member->id === $thread->id) {
                     $thread->members->pushItem($thread->members->create($member, true));
                 }
             }

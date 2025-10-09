@@ -86,7 +86,7 @@ trait CommandAttributes
             throw new \LengthException('Command name can be only up to 32 characters long.');
         }
 
-        if (isset($this->type) && $this->type == Command::CHAT_INPUT && preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u', $name) === 0) {
+        if (isset($this->type) && $this->type === Command::CHAT_INPUT && preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u', $name) === 0) {
             throw new \DomainException('Slash command name contains invalid characters.');
         }
 
@@ -116,7 +116,7 @@ trait CommandAttributes
                 throw new \LengthException('Command name can be only up to 32 characters long.');
             }
 
-            if (isset($this->type) && $this->type == Command::CHAT_INPUT && preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u', $name) === 0) {
+            if (isset($this->type) && $this->type === Command::CHAT_INPUT && preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u', $name) === 0) {
                 throw new \DomainException('Slash command localized name contains invalid characters.');
             }
         }
@@ -163,7 +163,7 @@ trait CommandAttributes
      */
     public function setDescriptionLocalization(string $locale, ?string $description): self
     {
-        if (isset($description, $this->type) && $this->type == Command::CHAT_INPUT && poly_strlen($description) > 100) {
+        if (isset($description, $this->type) && $this->type === Command::CHAT_INPUT && poly_strlen($description) > 100) {
             throw new \LengthException('Command description must be less than or equal to 100 characters.');
         }
 

@@ -240,7 +240,7 @@ trait ChannelTrait
                 return reject(new NoPermissionsException("You do not have permission to read message history in the channel {$this->id}."));
             }
 
-            if ($this->type == Channel::TYPE_GUILD_VOICE && ! $botperms->connect) {
+            if ($this->type === Channel::TYPE_GUILD_VOICE && ! $botperms->connect) {
                 return reject(new NoPermissionsException("You do not have permission to connect in the channel {$this->id}."));
             }
         }

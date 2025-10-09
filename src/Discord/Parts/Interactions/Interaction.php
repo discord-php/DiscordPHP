@@ -283,7 +283,7 @@ class Interaction extends Part
      */
     public function acknowledge(): PromiseInterface
     {
-        if ($this->type == self::TYPE_APPLICATION_COMMAND) {
+        if ($this->type === self::TYPE_APPLICATION_COMMAND) {
             return $this->acknowledgeWithResponse();
         }
 
