@@ -1318,10 +1318,10 @@ class VoiceClient extends EventEmitter
             }
 
             // Read opus length
-            $this->buffer->readInt16(1000)->then(function ($opusLength) {
+            $this->buffer->readInt16(1000)->then(fn ($opusLength) =>
                 // Read opus data
-                return $this->buffer->read($opusLength, null, 1000);
-            })->then(function ($opus) use (&$readOpus) {
+                $this->buffer->read($opusLength, null, 1000)
+            )->then(function ($opus) use (&$readOpus) {
                 $this->sendBuffer($opus);
 
                 // increment sequence
