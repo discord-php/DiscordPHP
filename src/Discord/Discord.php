@@ -735,11 +735,11 @@ class Discord
             $this->seq = $data->s;
         }
 
-        $rawOp = [
+        static $rawOp = [
             Op::OP_DISPATCH => 'handleDispatch',
         ];
 
-        $op = [
+        static $op = [
             Op::OP_HEARTBEAT => 'handleHeartbeat',
             Op::OP_RECONNECT => 'handleReconnect',
             Op::OP_INVALID_SESSION => 'handleInvalidSession',
