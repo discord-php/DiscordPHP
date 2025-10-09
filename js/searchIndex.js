@@ -12456,6 +12456,11 @@ Search.appendIndex(
             "summary": "Contains\u0020invites\u0020of\u0020a\u0020channel.",
             "url": "classes/Discord-Repository-Channel-InviteRepository.html"
         },                {
+            "fqsen": "\\Discord\\Repository\\Channel\\InviteRepository\u003A\u003Afreshen\u0028\u0029",
+            "name": "freshen",
+            "summary": "Freshens\u0020the\u0020repository\u0020cache.",
+            "url": "classes/Discord-Repository-Channel-InviteRepository.html#method_freshen"
+        },                {
             "fqsen": "\\Discord\\Repository\\Channel\\InviteRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
             "summary": "",

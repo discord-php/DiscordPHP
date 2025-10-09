@@ -265,7 +265,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/InviteRepository.php"><a href="files/src-discord-repository-channel-inviterepository.html"><abbr title="src/Discord/Repository/Channel/InviteRepository.php">InviteRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
@@ -553,8 +553,9 @@ based on the response of the callback.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Repository-Channel-InviteRepository.html#method_freshen">freshen()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Channel-Invite.html"><abbr title="\Discord\Parts\Channel\Invite">Invite</abbr></a>|null    </span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;    </span>
 </dt>
+<dd>Freshens the repository cache.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Helpers-Collection.html#method_from">from()</a>
@@ -893,7 +894,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/InviteRepository.php"><a href="files/src-discord-repository-channel-inviterepository.html"><abbr title="src/Discord/Repository/Channel/InviteRepository.php">InviteRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
@@ -984,7 +985,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/InviteRepository.php"><a href="files/src-discord-repository-channel-inviterepository.html"><abbr title="src/Discord/Repository/Channel/InviteRepository.php">InviteRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -2390,44 +2391,55 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/InviteRepository.php"><a href="files/src-discord-repository-channel-inviterepository.html"><abbr title="src/Discord/Repository/Channel/InviteRepository.php">InviteRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">0</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Freshens the repository cache.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">freshen</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value"> = &#039;[]&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Invite.html"><abbr title="\Discord\Parts\Channel\Invite">Invite</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">freshen</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
-        <section class="phpdocumentor-description"><p>Optional Query Parameters:</p>
-<ul>
-<li>with_counts? (boolean): Whether the invite should contain approximate member counts.</li>
-<li>guild_scheduled_event_id? (snowflake): The guild scheduled event to include with the invite.</li>
-<li>with_permissions? (boolean): whether the invite should contain the <code class="prettyprint">is_nickname_changeable</code> field.</li>
-</ul>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$queryparams</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value"> = &#039;[]&#039;</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Query string params to add to the request (no validation)</p>
+</section>
+
             </dd>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Repository-Channel-InviteRepository.html#method_freshen#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                                            </dl>
 
     
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Invite.html"><abbr title="\Discord\Parts\Channel\Invite">Invite</abbr></a>|null</span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;</span>
             </section>
 
 </article>
