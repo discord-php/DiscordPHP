@@ -12388,7 +12388,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
-            "summary": "\u007B\u0040inheritDoc\u007D",
+            "summary": "",
             "url": "classes/Discord-Repository-AbstractRepositoryTrait.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait\u003A\u003AgetIterator\u0028\u0029",
