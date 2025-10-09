@@ -110,9 +110,7 @@ class Label extends Layout
         if (isset($description)) {
             if (poly_strlen($description) === 0) {
                 $description = null;
-            }
-
-            if (poly_strlen($description) > 100) {
+            } elseif (poly_strlen($description) > 100) {
                 throw new \LengthException('Description must be between 0 and 100 in length.');
             }
         }
