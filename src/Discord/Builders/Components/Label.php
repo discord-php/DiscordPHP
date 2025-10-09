@@ -124,7 +124,7 @@ class Label extends Layout
 
     /** Sets the component associated with the label.
      *
-     * @param FileUpload|SelectMenu|TextInput $component The component associated with the label.
+     * @param TextInput|StringSelect|UserSelect|RoleSelect|MentionableSelect|ChannelSelect|FileUpload $component The component associated with the label.
      *
      * @return self
      */
