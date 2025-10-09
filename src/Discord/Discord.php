@@ -840,7 +840,7 @@ class Discord
         $hData = $this->handlers->getHandler($data->t);
 
         if (null === $hData) {
-            $handlers = [
+            static $handlers = [
                 Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
                 Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
                 Event::RESUMED => 'handleResume',
@@ -1568,7 +1568,7 @@ class Discord
      */
     protected function buildParams(Deferred $deferred, string $gateway, ?SessionStartLimit $session = null): void
     {
-        $defaultSession = [
+        static $defaultSession = [
             'total' => 1000,
             'remaining' => 1000,
             'reset_after' => 0,
@@ -1983,7 +1983,7 @@ class Discord
      */
     public function __debugInfo(): array
     {
-        $secrets = [
+        static $secrets = [
             'token' => '*****',
         ];
         $replace = array_intersect_key($secrets, $this->options);

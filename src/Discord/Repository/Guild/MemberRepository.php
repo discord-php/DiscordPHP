@@ -125,7 +125,7 @@ class MemberRepository extends AbstractRepository
             $guild = $guild->id;
         }
 
-        $allowed = ['nick', 'banner', 'avatar', 'bio'];
+        static $allowed = ['nick', 'banner', 'avatar', 'bio'];
         $params = array_filter(
             $params,
             fn ($key) => in_array($key, $allowed, true),
