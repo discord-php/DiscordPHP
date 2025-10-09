@@ -124,6 +124,8 @@ class Label extends Layout
 
     /** Sets the component associated with the label.
      *
+     * @link https://discord.com/developers/docs/components/reference#label-label-child-components
+     *
      * @param TextInput|StringSelect|UserSelect|RoleSelect|MentionableSelect|ChannelSelect|FileUpload $component The component associated with the label.
      *
      * @return self
