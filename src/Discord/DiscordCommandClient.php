@@ -228,8 +228,8 @@ class DiscordCommandClient extends Discord
     protected function checkForPrefix(string $content): ?string
     {
         foreach ($this->commandClientOptions['prefixes'] as $prefix) {
-            if (substr($content, 0, strlen($prefix)) === $prefix) {
-                return substr($content, strlen($prefix));
+            if (substr($content, 0, poly_strlen($prefix)) === $prefix) {
+                return substr($content, poly_strlen($prefix));
             }
         }
 

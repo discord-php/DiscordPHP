@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Voice;
 
+use function Discord\poly_strlen;
+
 /**
  * A voice packet received from Discord.
  *
@@ -97,7 +99,7 @@ class VoicePacket
         $data = (string) $data;
         $header = $this->buildHeader();
 
-        $buffer = new Buffer(strlen((string) $header) + strlen($data));
+        $buffer = new Buffer(poly_strlen((string) $header) + poly_strlen($data));
         $buffer->write((string) $header, 0);
         $buffer->write($data, 12);
 
@@ -119,7 +121,7 @@ class VoicePacket
 
         $data = \sodium_crypto_secretbox($data, (string) $nonce, $key);
 
-        $this->buffer = new Buffer(strlen((string) $header) + strlen($data));
+        $this->buffer = new Buffer(poly_strlen((string) $header) + poly_strlen($data));
         $this->buffer->write((string) $header, 0);
         $this->buffer->write($data, 12);
     }
@@ -188,7 +190,7 @@ class VoicePacket
      */
     public function getData(): string
     {
-        return $this->buffer->read(self::RTP_HEADER_BYTE_LENGTH, strlen((string) $this->buffer) - self::RTP_HEADER_BYTE_LENGTH);
+        return $this->buffer->read(self::RTP_HEADER_BYTE_LENGTH, poly_strlen((string) $this->buffer) - self::RTP_HEADER_BYTE_LENGTH);
     }
 
     /**

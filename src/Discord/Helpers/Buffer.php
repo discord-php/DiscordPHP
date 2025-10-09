@@ -20,6 +20,8 @@ use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 use React\Stream\WritableStreamInterface;
 
+use function Discord\poly_strlen;
+
 /**
  * @since 6.0.0
  */
@@ -90,7 +92,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      */
     private function readRaw(int $length)
     {
-        if (strlen($this->buffer) >= $length) {
+        if (poly_strlen($this->buffer) >= $length) {
             $output = substr($this->buffer, 0, $length);
             $this->buffer = substr($this->buffer, $length);
 
