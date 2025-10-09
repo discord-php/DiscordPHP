@@ -1832,8 +1832,8 @@ class VoiceClient extends EventEmitter
             $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
         }
 
-        $buff = new Buffer(poly_strlen($vp->getData()) + 2);
-        $buff->write(pack('s', poly_strlen($vp->getData())), 0);
+        $buff = new Buffer(poly_strlen($vp->getData(), '8bit') + 2);
+        $buff->write(pack('s', poly_strlen($vp->getData(), '8bit')), 0);
         $buff->write($vp->getData(), 2);
 
         $decoder->stdin->write((string) $buff);
@@ -1872,7 +1872,7 @@ class VoiceClient extends EventEmitter
             $data = $voicePacket->getData();
             $nonce = str_repeat("\x00", 12); // 12-byte nonce for AES-GCM
             // The last 4 bytes of the payload are the nonce (32-bit LE integer)
-            if (poly_strlen($data) < 4) {
+            if (poly_strlen($data, '8bit') < 4) {
                 return false;
             }
             $ciphertext = substr($data, 0, -4);

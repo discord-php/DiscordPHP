@@ -20,6 +20,8 @@ use Discord\Parts\Guild\Emoji;
 use Discord\Voice\Region;
 use JsonSerializable;
 
+use function Discord\poly_strlen;
+
 /**
  * Helper class used to build guild channels.
  *
@@ -62,7 +64,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      */
     public function setName(string $name): self
     {
-        if (mb_strlen($name) < 1 || mb_strlen($name) > 100) {
+        if (poly_strlen($name) < 1 || poly_strlen($name) > 100) {
             throw new \LengthException('Channel name must be between 1 and 100 characters.');
         }
         $this->name = $name;
@@ -113,7 +115,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      */
     public function setTopic(?string $topic = null): self
     {
-        if ($topic !== null && mb_strlen($topic) > 1024) {
+        if ($topic !== null && poly_strlen($topic) > 1024) {
             throw new \LengthException('Channel topic must be 0-1024 characters.');
         }
 
