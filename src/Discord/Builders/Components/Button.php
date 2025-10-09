@@ -289,9 +289,9 @@ class Button extends Interactive
             throw new \InvalidArgumentException('Invalid button style.');
         }
 
-        if ($this->style === self::STYLE_LINK && $style != self::STYLE_LINK) {
+        if ($this->style === self::STYLE_LINK && $style !== self::STYLE_LINK) {
             $this->url = null;
-        } elseif ($this->style != self::STYLE_LINK && $style === self::STYLE_LINK && $this->listener && $this->discord) {
+        } elseif ($this->style !== self::STYLE_LINK && $style === self::STYLE_LINK && $this->listener && $this->discord) {
             $this->setListener(null, $this->discord);
         }
 
@@ -400,7 +400,7 @@ class Button extends Interactive
      */
     public function setSkuId(?string $sku_id): self
     {
-        if ($this->style != Button::STYLE_PREMIUM) {
+        if ($this->style !== Button::STYLE_PREMIUM) {
             throw new \LogicException('You cannot set the SKU ID of a non-premium button.');
         }
 
@@ -421,7 +421,7 @@ class Button extends Interactive
      */
     public function setUrl(?string $url): self
     {
-        if ($this->style != Button::STYLE_LINK) {
+        if ($this->style !== Button::STYLE_LINK) {
             throw new \LogicException('You cannot set the URL of a non-link button.');
         }
 
@@ -513,7 +513,7 @@ class Button extends Interactive
         $timer = null;
 
         $listener = function (Interaction $interaction) use ($callback, $oneOff, &$timer) {
-            if ($interaction->data->component_type != Component::TYPE_BUTTON || $interaction->data->custom_id != $this->custom_id) {
+            if ($interaction->data->component_type !== Component::TYPE_BUTTON || $interaction->data->custom_id !== $this->custom_id) {
                 return;
             }
 
@@ -621,7 +621,7 @@ class Button extends Interactive
             'style' => $this->style,
         ];
 
-        if ($this->style != Button::STYLE_PREMIUM) {
+        if ($this->style !== Button::STYLE_PREMIUM) {
             if (! isset($this->label)) {
                 throw new \DomainException('Non-Premium buttons must have a `label` field set.');
             }
@@ -633,7 +633,7 @@ class Button extends Interactive
 
             if (isset($this->custom_id)) {
                 $content['custom_id'] = $this->custom_id;
-            } elseif ($this->style != Button::STYLE_LINK) {
+            } elseif ($this->style !== Button::STYLE_LINK) {
                 throw new \DomainException('Buttons must have a `custom_id` field set.');
             }
 

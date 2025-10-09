@@ -186,7 +186,7 @@ trait CommandAttributes
      */
     public function addOption(Option $option): self
     {
-        if (isset($this->type) && $this->type != Command::CHAT_INPUT) {
+        if (isset($this->type) && $this->type !== Command::CHAT_INPUT) {
             throw new \DomainException('Only CHAT_INPUT Command type can have option.');
         }
 
@@ -212,7 +212,7 @@ trait CommandAttributes
      */
     public function removeOption(Option $option): self
     {
-        if (isset($this->type) && $this->type != Command::CHAT_INPUT) {
+        if (isset($this->type) && $this->type !== Command::CHAT_INPUT) {
             throw new \DomainException('Only CHAT_INPUT Command type can have option.');
         }
 

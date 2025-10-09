@@ -492,7 +492,7 @@ class CacheWrapper
                 $pruning++;
             } elseif ($item instanceof Part) {
                 // Skip ID related to Bot
-                if ($key != $this->discord->id) {
+                if ($key !== $this->discord->id) {
                     // Item is no longer used other than in the repository, weaken so it can be garbage collected
                     $this->items[$key] = WeakReference::create($item);
                 }

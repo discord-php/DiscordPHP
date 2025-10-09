@@ -142,7 +142,7 @@ class DiscordCommandClient extends Discord
                     if (! empty($this->aliases)) {
                         $aliasesString = '';
                         foreach ($this->aliases as $alias => $command) {
-                            if ($command != $commandString) {
+                            if ($command !== $commandString) {
                                 continue;
                             }
 

@@ -949,7 +949,7 @@ class Guild extends Part
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD, $this->id), ['owner_id' => $member], $headers)->then(function ($response) use ($member) {
-            if ($response->owner_id != $member) {
+            if ($response->owner_id !== $member) {
                 throw new \RuntimeException('Ownership was not transferred correctly.');
             }
 

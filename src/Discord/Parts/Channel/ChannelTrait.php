@@ -426,7 +426,7 @@ trait ChannelTrait
             return reject(new \RuntimeException('This message is already pinned.'));
         }
 
-        if ($message->channel_id != $this->id) {
+        if ($message->channel_id !== $this->id) {
             return reject(new \RuntimeException('You cannot pin a message to a different channel.'));
         }
 
@@ -471,7 +471,7 @@ trait ChannelTrait
             return reject(new \RuntimeException('This message is not pinned.'));
         }
 
-        if ($message->channel_id != $this->id) {
+        if ($message->channel_id !== $this->id) {
             return reject(new \RuntimeException('You cannot un-pin a message not sent in this thread.'));
         }
 
@@ -638,7 +638,7 @@ trait ChannelTrait
         ], $options);
 
         $eventHandler = function (Message $message) use (&$eventHandler, $filter, $options, &$messages, &$deferred, &$timer) {
-            if ($message->channel_id != $this->id) {
+            if ($message->channel_id !== $this->id) {
                 return;
             }
             // Reject messages not in this channel

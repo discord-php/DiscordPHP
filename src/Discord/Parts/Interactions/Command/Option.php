@@ -357,7 +357,7 @@ class Option extends Part
     public function setMinLength(?int $min_length): self
     {
         if (isset($min_length)) {
-            if ($this->type != self::STRING) {
+            if ($this->type !== self::STRING) {
                 throw new \LogicException('Minimum length can be only set on Option type STRING.');
             } elseif ($min_length < 0 || $min_length > 6000) {
                 throw new \LengthException('Minimum length must be between 0 and 6000 inclusive.');
@@ -382,7 +382,7 @@ class Option extends Part
     public function setMaxLength(?int $max_length): self
     {
         if (isset($max_length)) {
-            if ($this->type != self::STRING) {
+            if ($this->type !== self::STRING) {
                 throw new \LogicException('Maximum length can be only set on Option type STRING.');
             } elseif ($max_length < 1 || $max_length > 6000) {
                 throw new \LengthException('Maximum length must be between 1 and 6000 inclusive.');

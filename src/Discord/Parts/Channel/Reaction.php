@@ -203,7 +203,7 @@ class Reaction extends Part
     protected function __getUsers(ExCollectionInterface $response, $after = null): PromiseInterface
     {
         $options = ['limit' => 100];
-        if ($after != null) {
+        if ($after !== null) {
             $options['after'] = $after;
         }
 

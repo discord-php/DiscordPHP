@@ -132,11 +132,11 @@ class ThreadRepository extends AbstractRepository
 
         $endpoint = Endpoint::bind($endpoint, $this->vars['channel_id']);
 
-        if ($limit != null) {
+        if ($limit) {
             $endpoint->addQuery('limit', $limit);
         }
 
-        if ($before != null) {
+        if ($before !== null) {
             if ($before instanceof Thread) {
                 $before = $before->id;
             }

@@ -697,7 +697,7 @@ class Discord
             if ($this->zlibDecompressor) {
                 $this->payloadBuffer .= $payload;
 
-                if ($message->getPayloadLength() < 4 || substr($payload, -4) != "\x00\x00\xff\xff") {
+                if ($message->getPayloadLength() < 4 || substr($payload, -4) !== "\x00\x00\xff\xff") {
                     return;
                 }
 
@@ -1474,7 +1474,7 @@ class Discord
 
     protected function voiceStateUpdate($vs, $channel, &$data)
     {
-        if ($vs->guild_id != $channel->guild_id) {
+        if ($vs->guild_id !== $channel->guild_id) {
             return; // This voice state update isn't for our guild.
         }
         $this->voiceSessions[$channel->guild_id] = $vs->session_id;
@@ -1483,7 +1483,7 @@ class Discord
 
     protected function voiceServerUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data, Deferred &$deferred, ?LoggerInterface $logger)
     {
-        if ($vs->guild_id != $channel->guild_id) {
+        if ($vs->guild_id !== $channel->guild_id) {
             return; // This voice server update isn't for our guild.
         }
 

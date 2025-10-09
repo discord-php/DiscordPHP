@@ -181,7 +181,7 @@ abstract class SelectMenu extends Interactive
      */
     public function setOptions(array $options): self
     {
-        if ($this->type != self::TYPE_STRING_SELECT) {
+        if ($this->type !== self::TYPE_STRING_SELECT) {
             throw new \InvalidArgumentException('Options can only be set for string selects.');
         }
 
@@ -204,7 +204,7 @@ abstract class SelectMenu extends Interactive
      */
     public function setChannelTypes(array $channel_types): self
     {
-        if ($this->type != self::TYPE_CHANNEL_SELECT) {
+        if ($this->type !== self::TYPE_CHANNEL_SELECT) {
             throw new \InvalidArgumentException('Channel types can only be set for channel selects.');
         }
 

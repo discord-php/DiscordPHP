@@ -735,7 +735,7 @@ class Channel extends Part implements Stringable
      */
     public function delete(?string $reason = null): PromiseInterface
     {
-        if ($this->user_id != $this->discord->id) {
+        if ($this->user_id !== $this->discord->id) {
             if ($botperms = $this->getBotPermissions()) {
                 if (! $botperms->manage_channels) {
                     return reject(new NoPermissionsException("You do not have permission to delete channel {$this->id}."));

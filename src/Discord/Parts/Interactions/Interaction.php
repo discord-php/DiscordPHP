@@ -444,7 +444,7 @@ class Interaction extends Part
      */
     public function sendFollowUpMessage(MessageBuilder $builder, bool $ephemeral = false): PromiseInterface
     {
-        if (! $this->responded && $this->type != self::TYPE_MESSAGE_COMPONENT) {
+        if (! $this->responded && $this->type !== self::TYPE_MESSAGE_COMPONENT) {
             return reject(new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.'));
         }
 
@@ -632,7 +632,7 @@ class Interaction extends Part
      */
     public function autoCompleteResult(array $choices): PromiseInterface
     {
-        if ($this->type != self::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE) {
+        if ($this->type !== self::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE) {
             return reject(new \LogicException('You can only respond command option results with auto complete interactions.'));
         }
 
@@ -720,7 +720,7 @@ class Interaction extends Part
         $timer = null;
 
         $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener, &$timer) {
-            if (! $interaction instanceof ModalSubmit || $interaction->data->custom_id != $custom_id) {
+            if (! $interaction instanceof ModalSubmit || $interaction->data->custom_id !== $custom_id) {
                 return;
             }
 

@@ -1279,7 +1279,7 @@ class Message extends Part
             return reject(new \RuntimeException("Cannot delete this type of message: {$this->type}", 50021));
         }
 
-        if ($this->user_id != $this->discord->id && $channel = $this->channel) {
+        if ($this->user_id !== $this->discord->id && $channel = $this->channel) {
             $botperms = $channel->getBotPermissions();
             if ($botperms && ! $botperms->manage_messages) {
                 return reject(new NoPermissionsException("You do not have permission to delete message by others in channel {$channel->id}."));
@@ -1320,7 +1320,7 @@ class Message extends Part
         ], $options);
 
         $eventHandler = function (MessageReaction $reaction) use (&$eventHandler, $filter, $options, &$reactions, &$deferred, &$timer) {
-            if ($reaction->message_id != $this->id) {
+            if ($reaction->message_id !== $this->id) {
                 return;
             }
 
