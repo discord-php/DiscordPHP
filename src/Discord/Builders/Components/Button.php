@@ -329,8 +329,8 @@ class Button extends Interactive
      */
     public function setEmoji($emoji): self
     {
-        $this->emoji = (function () use ($emoji) {
-            if ($emoji === null) {
+        $this->emoji = (function ($emoji) {
+            if (! $emoji) {
                 return null;
             }
 
@@ -357,9 +357,9 @@ class Button extends Interactive
             return [
                 'id' => $id,
                 'name' => $name,
-                'animated' => $animated == 'a',
+                'animated' => $animated === 'a',
             ];
-        })();
+        })($emoji);
 
         return $this;
     }
