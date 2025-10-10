@@ -647,17 +647,17 @@ class Interaction extends Part
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
-     * @param string                  $title      The title of the popup modal, max 45 characters.
-     * @param string                  $custom_id  Developer-defined identifier for the component, max 100 characters.
-     * @param array|ComponentObject[] $components Between 1 and 5 (inclusive) components that make up the modal.
-     * @param callable|null           $submit     The function to call once modal is submitted.
+     * @param string            $title      The title of the popup modal, max 45 characters.
+     * @param string            $custom_id  Developer-defined identifier for the component, max 100 characters.
+     * @param ComponentObject[] $components Between 1 and 5 (inclusive) components that make up the modal.
+     * @param callable|null     $submit     The function to call once modal is submitted.
      *
      * @throws \LogicException  Interaction is Ping or Modal Submit.
      * @throws \LengthException Modal title is longer than 45 characters.
      *
      * @return PromiseInterface
      */
-    public function showModal(string $title, string $custom_id, array $components, ?callable $submit = null): PromiseInterface
+    public function showModal(string $title, string $custom_id, $components, ?callable $submit = null): PromiseInterface
     {
         if (in_array($this->type, [self::TYPE_PING, self::TYPE_MODAL_SUBMIT])) {
             return reject(new \LogicException('You cannot pop up a modal from a ping or modal submit interaction.'));
