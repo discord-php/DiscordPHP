@@ -470,7 +470,7 @@ trait PartTrait
     {
         $collection = Collection::for($class, $discrim);
 
-        if (! isset($this->attributes[$key]) || ! $this->attributes[$key]) {
+        if (empty($this->attributes[$key])) {
             return $collection;
         }
 
