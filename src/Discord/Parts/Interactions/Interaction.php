@@ -724,7 +724,7 @@ class Interaction extends Part
                 return;
             }
 
-            $components = $interaction->data->components;
+            $components = Collection::for(RequestComponent::class);
             foreach ($components as $container) {
                 if ($container->components) { // e.g. ActionRow
                     foreach ($container->components as $component) {
