@@ -81,7 +81,7 @@ class Option extends Part
      */
     protected function getChoicesAttribute(): ExCollectionInterface
     {
-        return $this->attributeCollectionHelper('choices', Choice::class);
+        return $this->attributeCollectionHelper('choices', Choice::class, 'name');
     }
 
     /**
