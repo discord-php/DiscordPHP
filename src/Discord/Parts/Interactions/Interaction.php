@@ -737,7 +737,7 @@ class Interaction extends Part
                 }
             }
 
-            $submit($interaction,$interaction->data->components);
+            $submit($interaction, $components);
             $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
 
             /** @var ?TimerInterface $timer */
