@@ -95,6 +95,7 @@ class RegisteredCommand
         $params = Collection::for(Option::class, 'name');
 
         foreach ($options as $option) {
+            /** @var Option $option */
             if (isset($this->subCommands[$option->name])) {
                 if ($this->subCommands[$option->name]->execute($option->options ?? [], $interaction)) {
                     return true;
