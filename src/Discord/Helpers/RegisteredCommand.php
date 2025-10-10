@@ -101,10 +101,8 @@ class RegisteredCommand
                     return true;
                 }
             }
-            /** @var Option $part */
-            $part = $this->discord->getFactory()->part(Option::class, (array) $option, true);
-            if ($part->name) {
-                $params->pushItem($part);
+            if ($option instanceof Option) {
+                $params->pushItem($option);
             }
         }
 
