@@ -1778,7 +1778,7 @@ class Discord
      *
      * @see Factory::create()
      *
-     * @deprecated 10.0.0 Use `new $class($discord, ...)`.
+     * @since 10.0.0 Use `new $class($discord, ...)`.
      */
     public function factory(string $class, $data = [], bool $created = false)
     {
