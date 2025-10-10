@@ -101,9 +101,8 @@ class RegisteredCommand
                     return true;
                 }
             }
-            if ($option instanceof Option) {
-                $params->pushItem($option);
-            }
+
+            $params->pushItem($option);
         }
 
         if (isset($this->callback)) {
