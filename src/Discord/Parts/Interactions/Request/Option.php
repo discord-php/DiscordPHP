@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Represents an option received with an interaction.
  *
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-interaction-data-option-structure
+ * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
  *
  * @since 7.0.0
  *
