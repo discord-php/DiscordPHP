@@ -726,12 +726,12 @@ class Interaction extends Part
 
             $components = Collection::for(RequestComponent::class);
             foreach ($interaction->data->components as $container) {
-                if (property_exists($container, 'components')) { // e.g. ActionRow
+                if ($container->components) { // e.g. ActionRow
                     foreach ($container->components as $component) {
                         /** @var RequestComponent $component */
                         $components->pushItem($component);
                     }
-                } elseif (property_exists($container, 'component')) { // e.g. Label
+                } elseif ($container->component) { // e.g. Label
                     /** @var RequestComponent $component */
                     $components->pushItem($component);
                 }
