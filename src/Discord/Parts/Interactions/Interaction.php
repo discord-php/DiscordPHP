@@ -724,7 +724,20 @@ class Interaction extends Part
                 return;
             }
 
-            $submit($interaction, $interaction->data->components);
+            $components = $interaction->data->components;
+            foreach ($components as $container) {
+                if ($container->components) { // e.g. ActionRow
+                    foreach ($container->components as $component) {
+                        /** @var RequestComponent $component */
+                        $components->pushItem($component);
+                    }
+                } elseif ($container->component) { // e.g. Label
+                    /** @var RequestComponent $component */
+                    $components->pushItem($component);
+                }
+            }
+
+            $submit($interaction,$interaction->data->components);
             $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
 
             /** @var ?TimerInterface $timer */
