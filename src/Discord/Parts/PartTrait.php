@@ -500,7 +500,7 @@ trait PartTrait
      */
     protected function attributePartHelper($key, $class, $extraData = []): ?Part
     {
-        if (! isset($this->attributes[$key]) || ! $this->attributes[$key]) {
+        if (! isset($this->attributes[$key])) {
             return null;
         }
 
