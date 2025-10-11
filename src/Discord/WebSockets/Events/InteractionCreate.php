@@ -54,7 +54,7 @@ class InteractionCreate extends Event
                 $members = $guild->members;
 
                 foreach ($interaction->data->resolved->members ?? [] as $snowflake => $member) {
-                    $this->cacheMember($members, (array) $member + ['user' => $interaction->data->resolved->users->$snowflake]);
+                    $this->cacheMember($members, (array) $member + ['user' => $interaction->data->resolved->users->get('id', $snowflake)]);
                 }
 
                 $this->cacheMember($members, (array) $interaction->member);
