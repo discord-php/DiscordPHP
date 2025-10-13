@@ -11471,6 +11471,16 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020communication\u0020disabled\u0020until\u0020attribute.",
             "url": "classes/Discord-Parts-User-Member.html#method_getCommunicationDisabledUntilAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetAvatarDecorationAttribute\u0028\u0029",
+            "name": "getAvatarDecorationAttribute",
+            "summary": "Returns\u0020the\u0020member\u0027s\u0020guild\u0020avatar\u0020decoration\u0020URL\u0020for\u0020the\u0020client.",
+            "url": "classes/Discord-Parts-User-Member.html#method_getAvatarDecorationAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetAvatarDecorationHashAttribute\u0028\u0029",
+            "name": "getAvatarDecorationHashAttribute",
+            "summary": "Returns\u0020the\u0020avatar\u0020decoration\u0020hash\u0020for\u0020the\u0020member.",
+            "url": "classes/Discord-Parts-User-Member.html#method_getAvatarDecorationHashAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetAvatarDecorationDataAttribute\u0028\u0029",
             "name": "getAvatarDecorationDataAttribute",
             "summary": "Returns\u0020the\u0020avatar\u0020decoration\u0020data\u0020for\u0020the\u0020member.",
@@ -11651,16 +11661,6 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020avatar\u0020hash\u0020for\u0020the\u0020client.",
             "url": "classes/Discord-Parts-User-User.html#method_getAvatarHashAttribute"
         },                {
-            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetAvatarDecorationAttribute\u0028\u0029",
-            "name": "getAvatarDecorationAttribute",
-            "summary": "Returns\u0020the\u0020avatar\u0020decoration\u0020URL\u0020for\u0020the\u0020client.",
-            "url": "classes/Discord-Parts-User-User.html#method_getAvatarDecorationAttribute"
-        },                {
-            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetAvatarDecorationHashAttribute\u0028\u0029",
-            "name": "getAvatarDecorationHashAttribute",
-            "summary": "Returns\u0020the\u0020avatar\u0020decoration\u0020hash\u0020for\u0020the\u0020client.",
-            "url": "classes/Discord-Parts-User-User.html#method_getAvatarDecorationHashAttribute"
-        },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetBannerAttribute\u0028\u0029",
             "name": "getBannerAttribute",
             "summary": "Returns\u0020the\u0020banner\u0020URL\u0020for\u0020the\u0020client.",
@@ -11670,6 +11670,16 @@ Search.appendIndex(
             "name": "getBannerHashAttribute",
             "summary": "Returns\u0020the\u0020banner\u0020hash\u0020for\u0020the\u0020client.",
             "url": "classes/Discord-Parts-User-User.html#method_getBannerHashAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetAvatarDecorationAttribute\u0028\u0029",
+            "name": "getAvatarDecorationAttribute",
+            "summary": "Returns\u0020the\u0020avatar\u0020decoration\u0020URL\u0020for\u0020the\u0020client.",
+            "url": "classes/Discord-Parts-User-User.html#method_getAvatarDecorationAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetAvatarDecorationHashAttribute\u0028\u0029",
+            "name": "getAvatarDecorationHashAttribute",
+            "summary": "Returns\u0020the\u0020avatar\u0020decoration\u0020hash\u0020for\u0020the\u0020client.",
+            "url": "classes/Discord-Parts-User-User.html#method_getAvatarDecorationHashAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetAvatarDecorationDataAttribute\u0028\u0029",
             "name": "getAvatarDecorationDataAttribute",
