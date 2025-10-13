@@ -667,7 +667,7 @@ class Member extends Part implements Stringable
      */
     protected function getIdAttribute(): string
     {
-        return $this->attributes['id'] ?? $this->attributes['user']->id;
+        return $this->attributes['id'] ?? $this->user->id;
     }
 
     /**
