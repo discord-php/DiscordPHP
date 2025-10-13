@@ -22,8 +22,6 @@ use Discord\Parts\Part;
 /**
  * Represents a component received with a message or interaction.
  *
- * @todo split per type
- *
  * @link https://discord.com/developers/docs/interactions/message-components#component-object
  *
  * @since 7.0.0
