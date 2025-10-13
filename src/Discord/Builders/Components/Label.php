@@ -122,11 +122,11 @@ class Label extends Layout
         return $this;
     }
 
-    /** Sets the component associated with the label.
+    /** Sets The component within the label.
      *
      * @link https://discord.com/developers/docs/components/reference#label-label-child-components
      *
-     * @param FileUpload|SelectMenu|TextInput $component The component associated with the label.
+     * @param FileUpload|SelectMenu|TextInput $component The component within the label.
      *
      * @return self
      */

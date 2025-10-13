@@ -435,12 +435,16 @@ class MessageBuilder extends Builder implements JsonSerializable
             throw new \InvalidArgumentException('You can only add component objects to a message.');
         }
 
-        if ($component instanceof ComponentV2) {
-            $this->setV2Flag();
+        if (! in_array($component::USAGE, ['Message'])) {
+            throw new \InvalidArgumentException('Invalid component type for messages.');
         }
 
         if ($component instanceof Interactive) {
             $component = ActionRow::new()->addComponent($component);
+        }
+
+        if ($component instanceof ComponentV2) {
+            $this->setV2Flag();
         }
 
         if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {

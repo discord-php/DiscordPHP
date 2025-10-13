@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Builders\Components\ComponentObject;
+use Discord\Builders\Components\TextInput;
 use Discord\Parts\Interactions\Interaction;
 use JsonSerializable;
 
@@ -165,11 +166,28 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @param ComponentObject $component
      *
+     * @throws \InvalidArgumentException Component is not a valid type.
+     * @throws \OverflowException        If the modal has more than 5 components.
+     *
      * @return $this
      */
-    public function addComponent($component): self
+    public function addComponent(ComponentObject $component): self
     {
+        if (! in_array($component::USAGE, ['Modal'])) {
+            throw new \InvalidArgumentException('Invalid component type for modals.');
+        }
+
+        if ($component instanceof TextInput) {
+            $this->discord->logger->warning('Discord no longer recommends using Text Input within an Action Row in modals. Going forward all Text Inputs should be placed inside a Label component.');
+        }
+
         $this->components ??= [];
+
+        /*
+        if (count($this->components) >= 5) {
+            throw new \OverflowException('You can only have 5 components per modal.');
+        }
+        */
 
         $this->components[] = $component;
 
