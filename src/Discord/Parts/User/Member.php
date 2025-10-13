@@ -667,7 +667,7 @@ class Member extends Part implements Stringable
      */
     protected function getIdAttribute(): string
     {
-        return $this->attributes['id'] ?? $this->user->id;
+        return $this->attributes['id'] ?? $this->user->id ?? '';
     }
 
     /**
@@ -699,11 +699,16 @@ class Member extends Part implements Stringable
      */
     protected function getUserAttribute(): ?User
     {
+        if (isset($this->attributes['user'])) {
+            return $this->attributePartHelper('user', User::class);
+        }
+
         if ($user = $this->discord->users->get('id', $this->id)) {
+            $this->attributes['user'] = $user;
             return $user;
         }
 
-        return $this->attributePartHelper('user', User::class);
+        return null;
     }
 
     /**
