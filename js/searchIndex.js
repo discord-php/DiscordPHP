@@ -1068,7 +1068,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003AsetComponent\u0028\u0029",
             "name": "setComponent",
-            "summary": "Sets\u0020the\u0020component\u0020associated\u0020with\u0020the\u0020label.",
+            "summary": "Sets\u0020The\u0020component\u0020within\u0020the\u0020label.",
             "url": "classes/Discord-Builders-Components-Label.html#method_setComponent"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003AjsonSerialize\u0028\u0029",
