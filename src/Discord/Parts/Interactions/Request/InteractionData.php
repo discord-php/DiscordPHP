@@ -16,7 +16,6 @@ namespace Discord\Parts\Interactions\Request;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message\Component;
-use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Part;
 
 /**
