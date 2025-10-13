@@ -11446,6 +11446,16 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020guild\u0020avatar\u0020hash\u0020for\u0020the\u0020member.",
             "url": "classes/Discord-Parts-User-Member.html#method_getAvatarHashAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetBannerAttribute\u0028\u0029",
+            "name": "getBannerAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020banner\u0020URL\u0020for\u0020the\u0020member.",
+            "url": "classes/Discord-Parts-User-Member.html#method_getBannerAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetBannerHashAttribute\u0028\u0029",
+            "name": "getBannerHashAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020banner\u0020hash\u0020for\u0020the\u0020member.",
+            "url": "classes/Discord-Parts-User-Member.html#method_getBannerHashAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetPremiumSinceAttribute\u0028\u0029",
             "name": "getPremiumSinceAttribute",
             "summary": "Returns\u0020the\u0020premium\u0020since\u0020attribute.",
@@ -11460,6 +11470,11 @@ Search.appendIndex(
             "name": "getCommunicationDisabledUntilAttribute",
             "summary": "Returns\u0020the\u0020communication\u0020disabled\u0020until\u0020attribute.",
             "url": "classes/Discord-Parts-User-Member.html#method_getCommunicationDisabledUntilAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetAvatarDecorationDataAttribute\u0028\u0029",
+            "name": "getAvatarDecorationDataAttribute",
+            "summary": "Returns\u0020the\u0020avatar\u0020decoration\u0020data\u0020for\u0020the\u0020member.",
+            "url": "classes/Discord-Parts-User-Member.html#method_getAvatarDecorationDataAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetVoiceChannel\u0028\u0029",
             "name": "getVoiceChannel",
