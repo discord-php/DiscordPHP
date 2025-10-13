@@ -61,8 +61,8 @@ use function React\Promise\reject;
  * @property      bool|null                          $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
  * @property      RolePermission|null                $permissions                  Total permissions of the member in the channel, including overwrites, returned when in the interaction object.
  * @property      Carbon|null                        $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
- * @property-read ?string|null                       $avatar_decoration            The member's guild avatar decoration URL.
- * @property-read ?string|null                       $avatar_decoration_hash       The member's guild avatar decoration hash.
+ * @property-read string|null                        $avatar_decoration            The member's guild avatar decoration URL.
+ * @property-read string|null                        $avatar_decoration_hash       The member's guild avatar decoration hash.
  * @property      ?AvatarDecorationData|null         $avatar_decoration_data       Data for the member's guild avatar decoration.
  * @property      int                                $flags                        Guild member flags represented as a bit set, defaults to `0`.
  * @property      string|null                        $guild_id                     The unique identifier of the guild that the member belongs to.

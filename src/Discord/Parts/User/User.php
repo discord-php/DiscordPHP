@@ -51,8 +51,8 @@ use function React\Promise\resolve;
  * @property      int|null                   $flags                  User flags.
  * @property      int|null                   $premium_type           Type of nitro subscription.
  * @property      int|null                   $public_flags           Public flags on the user.
- * @property-read ?string|null               $avatar_decoration      The user's avatar decoration URL.
- * @property-read ?string|null               $avatar_decoration_hash The user's avatar decoration hash.
+ * @property-read string|null                $avatar_decoration      The user's avatar decoration URL.
+ * @property-read string|null                $avatar_decoration_hash The user's avatar decoration hash.
  * @property      ?AvatarDecorationData|null $avatar_decoration_data Data for the user's avatar decoration.
  * @property      ?Collectibles|null         $collectibles           Data for the user's collectibles.
  * @property      ?PrimaryGuild|null         $primary_guild          The user's primary guild
