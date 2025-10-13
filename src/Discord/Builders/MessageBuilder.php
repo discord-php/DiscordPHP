@@ -427,6 +427,8 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
      *
+     * @todo Update type hint to ComponentObject
+     *
      * @return $this
      */
     public function addComponent(Component $component): self
