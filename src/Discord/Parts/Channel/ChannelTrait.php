@@ -472,7 +472,7 @@ trait ChannelTrait
         }
 
         if ($message->channel_id !== $this->id) {
-            return reject(new \RuntimeException('You cannot un-pin a message not sent in this thread.'));
+            return reject(new \RuntimeException('You cannot un-pin a message to a different channel.'));
         }
 
         $headers = [];
