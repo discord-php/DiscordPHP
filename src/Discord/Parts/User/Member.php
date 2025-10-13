@@ -51,6 +51,8 @@ use function React\Promise\reject;
  * @property-read string                             $displayname                  The nickname or display name with optional discriminator of the member.
  * @property      ?string|null                       $avatar                       The avatar URL of the member or null if member has no guild avatar.
  * @property      ?string|null                       $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
+ * @property      ?string|null                       $banner                       The guild banner's URL of the member or null if the member has no guild banner.
+ * @property      ?string|null                       $banner_hash                  The guild banner hash of the member or null if the member has no guild banner.
  * @property      ExCollectionInterface<Role>|Role[] $roles                        A collection of Roles that the member has.
  * @property      Carbon|null                        $joined_at                    A timestamp of when the member joined the guild.
  * @property      Carbon|null                        $premium_since                When the user started boosting the server.
@@ -59,6 +61,7 @@ use function React\Promise\reject;
  * @property      bool|null                          $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
  * @property      RolePermission|null                $permissions                  Total permissions of the member in the channel, including overwrites, returned when in the interaction object.
  * @property      Carbon|null                        $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
+ * @property      AvatarDecorationData|null          $avatar_decoration_data       Data for the member's guild avatar decoration.
  * @property      int                                $flags                        Guild member flags represented as a bit set, defaults to `0`.
  * @property      string|null                        $guild_id                     The unique identifier of the guild that the member belongs to.
  * @property-read Guild|null                         $guild                        The guild that the member belongs to.
@@ -101,15 +104,17 @@ class Member extends Part implements Stringable
         'user',
         'nick',
         'avatar',
+        'banner',
         'roles',
         'joined_at',
         'premium_since',
         'deaf',
         'mute',
+        'flags',
         'pending',
         'permissions',
         'communication_disabled_until',
-        'flags',
+        'avatar_decoration_data',
 
         // partial
         'guild_id',
@@ -721,7 +726,7 @@ class Member extends Part implements Stringable
         }
 
         if (isset($this->attributes['user'])) {
-            return (function(){
+            return (function () {
                 if (! $this->attributes['user'] instanceof User) {
                     $this->attributes['user'] = $this->createOf(User::class, ((array) $this->attributes['user']));
                     $this->attributes['id'] = $this->attributes['user']->id;
@@ -797,9 +802,9 @@ class Member extends Part implements Stringable
         }
 
         if (isset($format)) {
-            static $allowed = ['png', 'jpg', 'webp', 'gif'];
-
-            if (! in_array(strtolower($format), $allowed)) {
+            static $allowed = ['png', 'jpg', 'jpeg', 'webp', 'gif'];
+            $format = strtolower($format);
+            if (! in_array($format, $allowed)) {
                 $format = 'webp';
             }
         } elseif (strpos($this->attributes['avatar'], 'a_') === 0) {
@@ -807,6 +812,10 @@ class Member extends Part implements Stringable
         } else {
             $format = 'webp';
         }
+
+        // Clamp size to allowed powers of two between 16 and 4096
+        $size = max(16, min(4096, $size));
+        $size = 2 ** (int) round(log($size, 2));
 
         return "https://cdn.discordapp.com/guilds/{$this->guild_id}/users/{$this->id}/avatars/{$this->attributes['avatar']}.{$format}?size={$size}";
     }
@@ -819,6 +828,49 @@ class Member extends Part implements Stringable
     protected function getAvatarHashAttribute(): ?string
     {
         return $this->attributes['avatar'] ?? null;
+    }
+
+    /**
+     * Returns the guild banner URL for the member.
+     *
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
+     *
+     * @return string|null The URL to the member banner or null.
+     */
+    protected function getBannerAttribute(?string $format = null, int $size = 1024): ?string
+    {
+        if (! isset($this->attributes['banner'])) {
+            return null;
+        }
+
+        if (isset($format)) {
+            static $allowed = ['png', 'jpg', 'jpeg', 'webp', 'gif'];
+            $format = strtolower($format);
+            if (! in_array($format, $allowed)) {
+                $format = 'webp';
+            }
+        } elseif (strpos($this->attributes['banner'], 'a_') === 0) {
+            $format = 'gif';
+        } else {
+            $format = 'webp';
+        }
+
+        // Clamp size to allowed powers of two between 16 and 4096
+        $size = max(16, min(4096, $size));
+        $size = 2 ** (int) round(log($size, 2));
+
+        return "https://cdn.discordapp.com/guilds/{$this->guild_id}/users/{$this->id}/banners/{$this->attributes['banner']}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the guild banner hash for the member.
+     *
+     * @return ?string|null The member's banner hash or null.
+     */
+    protected function getBannerHashAttribute(): ?string
+    {
+        return $this->attributes['banner'] ?? null;
     }
 
     /**
@@ -860,6 +912,16 @@ class Member extends Part implements Stringable
     protected function getCommunicationDisabledUntilAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('communication_disabled_until');
+    }
+
+    /**
+     * Returns the avatar decoration data for the member.
+     *
+     * @return AvatarDecorationData|null
+     */
+    protected function getAvatarDecorationDataAttribute(): ?AvatarDecorationData
+    {
+        return $this->attributePartHelper('avatar_decoration_data', AvatarDecorationData::class);
     }
 
     /**
