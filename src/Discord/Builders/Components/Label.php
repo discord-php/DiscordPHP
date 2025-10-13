@@ -16,17 +16,19 @@ namespace Discord\Builders\Components;
 use function Discord\poly_strlen;
 
 /**
- * A Label is a top-level component.
+ * A Label is a top-level layout component. Labels wrap modal components with text as a label and optional description.
+ *
+ * The description may display above or below the component depending on the platform.
  *
  * @link https://discord.com/developers/docs/components/reference#label
  *
  * @since 10.19.0
  *
- * @property int          $type        18 for label component.
- * @property ?string|null $id          Optional identifier for component.
- * @property string       $label       The text for the label. Must be between 1 and 45 characters.
- * @property ?string|null $description Optional description for the label. Max 100 characters.
- * @property SelectMenu   $component   The component associated with the label.
+ * @property int                             $type        18 for a label.
+ * @property ?string|null                    $id          Optional identifier for component.
+ * @property string                          $label       The label text; max 45 characters.
+ * @property ?string|null                    $description An optional description text for the label; max 100 characters.
+ * @property FileUpload|SelectMenu|TextInput $component   The component within the label.
  */
 class Label extends Layout
 {
@@ -124,7 +126,7 @@ class Label extends Layout
      *
      * @link https://discord.com/developers/docs/components/reference#label-label-child-components
      *
-     * @param TextInput|StringSelect|UserSelect|RoleSelect|MentionableSelect|ChannelSelect|FileUpload $component The component associated with the label.
+     * @param FileUpload|SelectMenu|TextInput $component The component associated with the label.
      *
      * @return self
      */
