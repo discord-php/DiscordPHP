@@ -245,7 +245,7 @@
     Label
 
         <span class="phpdocumentor-element__extends">
-        extends <a href="classes/Discord-Parts-Channel-Message-Component.html"><abbr title="\Discord\Parts\Channel\Message\Component">Component</abbr></a>
+        extends <a href="classes/Discord-Parts-Channel-Message-Layout.html"><abbr title="\Discord\Parts\Channel\Message\Layout">Layout</abbr></a>
     </span>
     
             <div class="phpdocumentor-element__package">
@@ -266,13 +266,15 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Label.php"><a href="files/src-discord-parts-channel-message-label.html"><abbr title="src/Discord/Parts/Channel/Message/Label.php">Label.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">A Label is a top-level component.</p>
+            <p class="phpdocumentor-summary">A Label is a top-level layout component. Labels wrap modal components with text as a label and optional description.</p>
 
 
+    <section class="phpdocumentor-description"><p>The description may display above or below the component depending on the platform.</p>
+</section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -289,30 +291,21 @@
                     
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">todo</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Update to match Discord's documentation upon public release.</p>
-</section>
-
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">todo</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Update Label class to extend the relevant base class.</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                             <span class="phpdocumentor-tag-link">10.19.0</span>
                                                                                 
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?string|null                    $description An optional description text for the label; max 100 characters.</p>
+</section>
+
                                     </dd>
                                             </dl>
 
@@ -377,7 +370,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Message-Label.html#property_component">$component</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Channel-Message-SelectMenu.html"><abbr title="\Discord\Parts\Channel\Message\SelectMenu">SelectMenu</abbr></a>|<a href="classes/Discord-Parts-Channel-Message-TextInput.html"><abbr title="\Discord\Parts\Channel\Message\TextInput">TextInput</abbr></a>            </span>
+                        &nbsp;: <a href="classes/Discord-Parts-Channel-Message-FileUpload.html"><abbr title="\Discord\Parts\Channel\Message\FileUpload">FileUpload</abbr></a>|<a href="classes/Discord-Parts-Channel-Message-SelectMenu.html"><abbr title="\Discord\Parts\Channel\Message\SelectMenu">SelectMenu</abbr></a>|<a href="classes/Discord-Parts-Channel-Message-TextInput.html"><abbr title="\Discord\Parts\Channel\Message\TextInput">TextInput</abbr></a>            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -386,12 +379,6 @@
                         &nbsp;: bool            </span>
 </dt>
 <dd>Is the part already created in the Discord servers?</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Message-Label.html#property_description">$description</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Message-Component.html#property_id">$id</a>
@@ -442,9 +429,8 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Parts-Channel-Message-Label.html#property_fillable">$fillable</a>
     <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+                        &nbsp;: mixed            </span>
 </dt>
-<dd>The parts fillable attributes.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a>
@@ -837,11 +823,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Message-SelectMenu.html"><abbr title="\Discord\Parts\Channel\Message\SelectMenu">SelectMenu</abbr></a>|<a href="classes/Discord-Parts-Channel-Message-TextInput.html"><abbr title="\Discord\Parts\Channel\Message\TextInput">TextInput</abbr></a></span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Message-FileUpload.html"><abbr title="\Discord\Parts\Channel\Message\FileUpload">FileUpload</abbr></a>|<a href="classes/Discord-Parts-Channel-Message-SelectMenu.html"><abbr title="\Discord\Parts\Channel\Message\SelectMenu">SelectMenu</abbr></a>|<a href="classes/Discord-Parts-Channel-Message-TextInput.html"><abbr title="\Discord\Parts\Channel\Message\TextInput">TextInput</abbr></a></span>
     <span class="phpdocumentor-signature__name">$component</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The component associated with the label.</p>
+        <section class="phpdocumentor-description"><p>The component within the label.</p>
 </section>
 
     
@@ -886,46 +872,6 @@ JSON. Used for JsonSerializable.</dd>
         <section class="phpdocumentor-description"><p>Whether the part has been created.</p>
 </section>
 
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_description">
-        $description
-        <a href="classes/Discord-Parts-Channel-Message-Label.html#property_description" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Label.php"><a href="files/src-discord-parts-channel-message-label.html"><abbr title="src/Discord/Parts/Channel/Message/Label.php">Label.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$description</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Optional description for the label.</p>
-</section>
-
-    
     
 
     
@@ -1002,7 +948,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$label</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The text for the label.</p>
+        <section class="phpdocumentor-description"><p>The label text; max 45 characters.</p>
 </section>
 
     
@@ -1090,7 +1036,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$type</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>18 for label component.</p>
+        <section class="phpdocumentor-description"><p>18 for a label.</p>
 </section>
 
     
@@ -1241,23 +1187,20 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Label.php"><a href="files/src-discord-parts-channel-message-label.html"><abbr title="src/Discord/Parts/Channel/Message/Label.php">Label.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">The parts fillable attributes.</p>
-
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+            <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
      = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;type&#039;, &#039;label&#039;, &#039;description&#039;, &#039;component&#039;]</span></code>
 
     
-        <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
-</section>
-
+    
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
@@ -2026,7 +1969,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/Label.php"><a href="files/src-discord-parts-channel-message-label.html"><abbr title="src/Discord/Parts/Channel/Message/Label.php">Label.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 
@@ -3696,7 +3639,6 @@ static as we may move it outside this class in future.</p>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-Label.html#property_component">$component</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-Label.html#property_description">$description</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-Component.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-Label.html#property_label">$label</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>

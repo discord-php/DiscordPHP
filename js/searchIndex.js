@@ -1048,7 +1048,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Label",
             "name": "Label",
-            "summary": "A\u0020Label\u0020is\u0020a\u0020top\u002Dlevel\u0020component.",
+            "summary": "A\u0020Label\u0020is\u0020a\u0020top\u002Dlevel\u0020layout\u0020component.\u0020Labels\u0020wrap\u0020modal\u0020components\u0020with\u0020text\u0020as\u0020a\u0020label\u0020and\u0020optional\u0020description.",
             "url": "classes/Discord-Builders-Components-Label.html"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Label\u003A\u003Anew\u0028\u0029",
@@ -5033,7 +5033,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Label",
             "name": "Label",
-            "summary": "A\u0020Label\u0020is\u0020a\u0020top\u002Dlevel\u0020component.",
+            "summary": "A\u0020Label\u0020is\u0020a\u0020top\u002Dlevel\u0020layout\u0020component.\u0020Labels\u0020wrap\u0020modal\u0020components\u0020with\u0020text\u0020as\u0020a\u0020label\u0020and\u0020optional\u0020description.",
             "url": "classes/Discord-Parts-Channel-Message-Label.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Label\u003A\u003AgetComponentAttribute\u0028\u0029",
@@ -5043,7 +5043,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Label\u003A\u003A\u0024fillable",
             "name": "fillable",
-            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-Label.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Layout",
