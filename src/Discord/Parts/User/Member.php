@@ -667,7 +667,18 @@ class Member extends Part implements Stringable
      */
     protected function getIdAttribute(): string
     {
-        return $this->attributes['id'] ?? $this->user->id ?? '';
+        if (isset($this->attributes['id'])) {
+            return $this->attributes['id'];
+        }
+
+        if ($this->user) {
+            $this->attributes['id'] = $this->user->id;
+
+            return $this->user->id;
+        }
+
+        // The field `user` won't be included in the member object attached to MESSAGE_CREATE and MESSAGE_UPDATE gateway events.
+        return '';
     }
 
     /**
@@ -695,17 +706,29 @@ class Member extends Part implements Stringable
     /**
      * Returns the user attribute.
      *
+     * The field `user` won't be included in the member object attached to MESSAGE_CREATE and MESSAGE_UPDATE gateway events.
+     *
      * @return User|null The user that owns the member.
      */
     protected function getUserAttribute(): ?User
     {
-        if (isset($this->attributes['user'])) {
-            return $this->attributePartHelper('user', User::class);
+        if (isset($this->attributes['id'])) {
+            if ($user = $this->discord->users->get('id', $this->attributes['id'])) {
+                $this->attributes['user'] = $user;
+
+                return $user;
+            }
         }
 
-        if ($user = $this->discord->users->get('id', $this->id)) {
-            $this->attributes['user'] = $user;
-            return $user;
+        if (isset($this->attributes['user'])) {
+            return (function(){
+                if (! $this->attributes['user'] instanceof User) {
+                    $this->attributes['user'] = $this->createOf(User::class, ((array) $this->attributes['user']));
+                    $this->attributes['id'] = $this->attributes['user']->id;
+                }
+
+                return $this->attributes['user'];
+            })();
         }
 
         return null;
