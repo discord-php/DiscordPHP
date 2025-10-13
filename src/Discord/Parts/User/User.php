@@ -51,8 +51,8 @@ use function React\Promise\resolve;
  * @property int|null                   $flags                  User flags.
  * @property int|null                   $premium_type           Type of nitro subscription.
  * @property int|null                   $public_flags           Public flags on the user.
- * @property int|null                   $avatar_decoration      The user's avatar decoration URL.
- * @property int|null                   $avatar_decoration_hash The user's avatar decoration hash.
+ * @property string|null                $avatar_decoration      The user's avatar decoration URL.
+ * @property string|null                $avatar_decoration_hash The user's avatar decoration hash.
  * @property ?AvatarDecorationData|null $avatar_decoration_data Data for the user's avatar decoration.
  * @property ?Collectibles|null         $collectibles           Data for the user's collectibles.
  * @property ?PrimaryGuild|null         $primary_guild          The user's primary guild
@@ -195,8 +195,8 @@ class User extends Part implements Stringable
 
         if (isset($format)) {
             static $allowed = ['png', 'jpg', 'webp', 'gif'];
-
-            if (! in_array(strtolower($format), $allowed)) {
+            $format = strtolower($format);
+            if (! in_array($format, $allowed)) {
                 $format = 'webp';
             }
         } elseif (strpos($this->attributes['avatar'], 'a_') === 0) {
@@ -204,6 +204,10 @@ class User extends Part implements Stringable
         } else {
             $format = 'webp';
         }
+
+        // Clamp size to allowed powers of two between 16 and 4096
+        $size = max(16, min(4096, $size));
+        $size = 2 ** (int) round(log($size, 2));
 
         return "https://cdn.discordapp.com/avatars/{$this->id}/{$this->attributes['avatar']}.{$format}?size={$size}";
     }
@@ -216,45 +220,6 @@ class User extends Part implements Stringable
     public function getAvatarHashAttribute(): ?string
     {
         return $this->attributes['avatar'];
-    }
-
-    /**
-     * Returns the avatar decoration URL for the client.
-     *
-     * @param string|null $format The image format.
-     * @param int         $size   The size of the image.
-     *
-     * @return string|null The URL to the clients avatar decoration.
-     */
-    public function getAvatarDecorationAttribute(?string $format = null, int $size = 288): ?string
-    {
-        if (! isset($this->attributes['avatar_decoration'])) {
-            return null;
-        }
-
-        if (isset($format)) {
-            static $allowed = ['png', 'jpg', 'webp'];
-
-            if (! in_array(strtolower($format), $allowed)) {
-                $format = 'png';
-            }
-        } elseif (strpos($this->attributes['avatar_decoration'], 'a_') === 0) {
-            $format = 'png';
-        } else {
-            $format = 'png';
-        }
-
-        return "https://cdn.discordapp.com/avatar-decorations/{$this->id}/{$this->attributes['avatar_decoration']}.{$format}?size={$size}";
-    }
-
-    /**
-     * Returns the avatar decoration hash for the client.
-     *
-     * @return ?string The client avatar decoration's hash.
-     */
-    public function getAvatarDecorationHashAttribute(): ?string
-    {
-        return $this->attributes['avatar_decoration'];
     }
 
     /**
@@ -294,6 +259,41 @@ class User extends Part implements Stringable
     protected function getBannerHashAttribute(): ?string
     {
         return $this->attributes['banner'] ?? null;
+    }
+
+    /**
+     * Returns the avatar decoration URL for the client.
+     *
+     * @param string|null $format The image format. (Only 'png' is allowed)
+     * @param int         $size   The size of the image.
+     *
+     * @return string|null The URL to the clients avatar decoration.
+     */
+    public function getAvatarDecorationAttribute(?string $format = 'png', int $size = 288): ?string
+    {
+        if (! isset($this->attributes['avatar_decoration_data'])) {
+            return null;
+        }
+
+        // Clamp size to allowed powers of two between 16 and 4096
+        $size = max(16, min(4096, $size));
+        $size = 2 ** (int) round(log($size, 2));
+
+        if (! $asset = $this->avatar_decoration_data->asset ?? null) {
+            return null;
+        }
+
+        return "https://cdn.discordapp.com/avatar-decoration-presets/{$asset}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the avatar decoration hash for the client.
+     *
+     * @return ?string The client avatar decoration's hash.
+     */
+    public function getAvatarDecorationHashAttribute(): ?string
+    {
+        return $this->avatar_decoration_data->asset ?? null;
     }
 
     /**

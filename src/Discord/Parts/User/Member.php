@@ -61,6 +61,8 @@ use function React\Promise\reject;
  * @property      bool|null                          $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
  * @property      RolePermission|null                $permissions                  Total permissions of the member in the channel, including overwrites, returned when in the interaction object.
  * @property      Carbon|null                        $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
+ * @property      string|null                        $avatar_decoration            The member's guild avatar decoration URL.
+ * @property      string|null                        $avatar_decoration_hash       The members's guild avatar decoration hash.
  * @property      AvatarDecorationData|null          $avatar_decoration_data       Data for the member's guild avatar decoration.
  * @property      int                                $flags                        Guild member flags represented as a bit set, defaults to `0`.
  * @property      string|null                        $guild_id                     The unique identifier of the guild that the member belongs to.
@@ -912,6 +914,41 @@ class Member extends Part implements Stringable
     protected function getCommunicationDisabledUntilAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('communication_disabled_until');
+    }
+
+    /**
+     * Returns the member's guild avatar decoration URL for the client.
+     *
+     * @param string|null $format The image format. (Only 'png' is allowed)
+     * @param int         $size   The size of the image.
+     *
+     * @return string|null The URL to the clients avatar decoration.
+     */
+    public function getAvatarDecorationAttribute(?string $format = 'png', int $size = 288): ?string
+    {
+        if (! isset($this->attributes['avatar_decoration_data'])) {
+            return null;
+        }
+
+        // Clamp size to allowed powers of two between 16 and 4096
+        $size = max(16, min(4096, $size));
+        $size = 2 ** (int) round(log($size, 2));
+
+        if (! $asset = $this->avatar_decoration_data->asset ?? null) {
+            return null;
+        }
+
+        return "https://cdn.discordapp.com/avatar-decoration-presets/{$asset}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the avatar decoration hash for the member.
+     *
+     * @return ?string The member's guild avatar decoration's hash.
+     */
+    public function getAvatarDecorationHashAttribute(): ?string
+    {
+        return $this->avatar_decoration_data->asset ?? null;
     }
 
     /**
