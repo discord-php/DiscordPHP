@@ -343,6 +343,24 @@
 </section>
 
                                     </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Carbon|null                       $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?AvatarDecorationData|null         $avatar_decoration_data       Data for the member's guild avatar decoration.</p>
+</section>
+
+                                    </dd>
                                             </dl>
 
 
@@ -466,12 +484,6 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Member.html#property_avatar_decoration_data">$avatar_decoration_data</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-AvatarDecorationData.html"><abbr title="\Discord\Parts\User\AvatarDecorationData">AvatarDecorationData</abbr></a>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-User-Member.html#property_avatar_decoration_hash">$avatar_decoration_hash</a>
     <span>
                         &nbsp;: string|null            </span>
@@ -481,12 +493,6 @@
     <a class="" href="classes/Discord-Parts-User-Member.html#property_client_status">$client_status</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Parts-User-ClientStatus.html"><abbr title="\Discord\Parts\User\ClientStatus">ClientStatus</abbr></a>            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-User-Member.html#property_communication_disabled_until">$communication_disabled_until</a>
-    <span>
-                        &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -1521,14 +1527,14 @@ JSON. Used for JsonSerializable.</dd>
             phpdocumentor-element
             -property
             -public
-                                                                    "
+                                                -read-only                    "
 >
     <h4 class="phpdocumentor-element__name" id="property_avatar_decoration">
         $avatar_decoration
         <a href="classes/Discord-Parts-User-Member.html#property_avatar_decoration" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                            </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
@@ -1561,54 +1567,14 @@ JSON. Used for JsonSerializable.</dd>
             phpdocumentor-element
             -property
             -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_avatar_decoration_data">
-        $avatar_decoration_data
-        <a href="classes/Discord-Parts-User-Member.html#property_avatar_decoration_data" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-AvatarDecorationData.html"><abbr title="\Discord\Parts\User\AvatarDecorationData">AvatarDecorationData</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$avatar_decoration_data</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Data for the member's guild avatar decoration.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
+                                                -read-only                    "
 >
     <h4 class="phpdocumentor-element__name" id="property_avatar_decoration_hash">
         $avatar_decoration_hash
         <a href="classes/Discord-Parts-User-Member.html#property_avatar_decoration_hash" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                            </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
@@ -1625,7 +1591,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$avatar_decoration_hash</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The members's guild avatar decoration hash.</p>
+        <section class="phpdocumentor-description"><p>The member's guild avatar decoration hash.</p>
 </section>
 
     
@@ -1666,46 +1632,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Current client status.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_communication_disabled_until">
-        $communication_disabled_until
-        <a href="classes/Discord-Parts-User-Member.html#property_communication_disabled_until" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/Member.php"><a href="files/src-discord-parts-user-member.html"><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-    <span class="phpdocumentor-signature__name">$communication_disabled_until</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.</p>
 </section>
 
     
@@ -6984,10 +6910,8 @@ static as we may move it outside this class in future.</p>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#property_activities">$activities</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#property_avatar_decoration">$avatar_decoration</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Member.html#property_avatar_decoration_data">$avatar_decoration_data</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#property_avatar_decoration_hash">$avatar_decoration_hash</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#property_client_status">$client_status</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-Member.html#property_communication_disabled_until">$communication_disabled_until</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#property_deaf">$deaf</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-Member.html#property_displayname">$displayname</a></li>
