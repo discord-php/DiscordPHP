@@ -51,8 +51,12 @@ use function React\Promise\resolve;
  * @since 2.0.0 Refactored as Part
  * @since 1.0.0
  *
+ * @property      string                             $id                                 The id of this channel.
+ * @property      int                                $type                               The type of channel.
+ * @property      string|null                        $guild_id                           The id of the guild (may be missing for some channel objects received over gateway guild dispatches).
  * @property      int|null                           $position                           Sorting position of the channel.
- * @property      array                              $permission_overwrites              Explicit permission overwrites for members and roles.
+ * @property      Overwrite[]                        $permission_overwrites              Explicit permission overwrites for members and roles.
+ * @property      ?string|null                       $name                               The name of the channel (1-100 characters).
  * @property      ?string|null                       $topic                              The topic of the channel (0-4096 characters for forum/media, 0-1024 for others).
  * @property      bool|null                          $nsfw                               Whether the channel is NSFW.
  * @property      int|null                           $bitrate                            The bitrate (in bits) of the voice or stage channel; min 8000.
@@ -64,8 +68,9 @@ use function React\Promise\resolve;
  * @property      string|null                        $application_id                     Application id of the group DM creator if bot-created.
  * @property      bool|null                          $managed                            For group DM channels: whether the channel is managed by an application via the `gdm.join` OAuth2 scope.
  * @property      ?string|null                       $rtc_region                         Voice region id for the voice channel, automatic when set to null.
- * @property      ?int|null                          $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.
- * @property      ?int|null                          $default_auto_archive_duration      Default duration for newly created threads, in minutes.
+ * @property      int|null                           $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.
+ * @property      int|null                           $default_auto_archive_duration      Default duration for newly created threads, in minutes.
+ * @property      string|null                        $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the `resolved` data received on an interaction. This does not include implicit permissions, which may need to be checked separately.
  * @property      int|null                           $flags                              Channel flags combined as a bitfield.
  * @property      ExCollectionInterface<Tag>|Tag[]   $available_tags                     The set of tags that can be used in a `GUILD_FORUM` or a `GUILD_MEDIA` channel. Limited to 20.
  * @property      ?Reaction|null                     $default_reaction_emoji             The emoji to show in the add reaction button on a thread in a `GUILD_FORUM` or a `GUILD_MEDIA` channel.
