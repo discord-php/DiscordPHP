@@ -23,8 +23,8 @@ use Discord\Parts\Part;
  *
  * @since 7.4.0
  *
- * @property ?string $emoji_id   The id of a guild's custom emoji.
- * @property ?string $emoji_name The unicode character of the emoji.
+ * @property ?string|null $emoji_id   The id of a guild's custom emoji.
+ * @property ?string|null $emoji_name The unicode character of the emoji.
  */
 class Reaction extends Part
 {
