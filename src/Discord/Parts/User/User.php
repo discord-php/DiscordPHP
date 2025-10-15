@@ -35,15 +35,15 @@ use function React\Promise\resolve;
  * @property      string                     $id                     The unique identifier of the user.
  * @property      string                     $username               The username of the user.
  * @property      string                     $discriminator          The discriminator of the user.
- * @property      string|null                $global_name            The user's display name, if it is set. For bots, this is the application name.
- * @property      string                     $displayname            The display name of the client.
- * @property      ?string                    $avatar                 The avatar URL of the user.
- * @property      string|null                $avatar_hash            The avatar hash of the user.
+ * @property      ?string|null               $global_name            The user's display name, if it is set. For bots, this is the application name.
+ * @property-read string                     $displayname            The display name of the client.
+ * @property      ?string|null               $avatar                 The avatar URL of the user.
+ * @property-read string|null                $avatar_hash            The avatar hash of the user.
  * @property      bool|null                  $bot                    Whether the user is a bot.
  * @property      bool|null                  $system                 Whether the user is a Discord system user.
  * @property      bool|null                  $mfa_enabled            Whether MFA is enabled.
  * @property      ?string|null               $banner                 The banner URL of the user.
- * @property      string|null                $banner_hash            The banner hash of the user.
+ * @property-read string|null                $banner_hash            The banner hash of the user.
  * @property      ?int|null                  $accent_color           The user's banner color encoded as an integer representation of hexadecimal color code.
  * @property      string|null                $locale                 User locale.
  * @property      bool|null                  $verified               Whether the user is verified.
