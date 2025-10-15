@@ -34,7 +34,7 @@ use Stringable;
  * @property string              $code                       The invite code.
  * @property Guild|null          $guild                      The partial guild that the invite is for.
  * @property string|null         $guild_id
- * @property Channel             $channel                    The partial channel that the invite is for.
+ * @property ?Channel|null       $channel                    The partial channel that the invite is for.
  * @property string|null         $channel_id
  * @property User|null           $inviter                    The user that created the invite.
  * @property bool|null           $is_nickname_changeable     A member's ability to change their nickname by default, returned from the `GET /invites/<code>` endpoint when `with_permissions` is `true`
@@ -146,7 +146,7 @@ class Invite extends Part implements Stringable
     /**
      * Returns the channel attribute.
      *
-     * @return ?Channel The Channel that you have been invited to.
+     * @return Channel|null The Channel that you have been invited to.
      */
     protected function getChannelAttribute(): ?Channel
     {
@@ -163,7 +163,11 @@ class Invite extends Part implements Stringable
             }
         }
 
-        return $this->attributePartHelper('channel', Channel::class, ['guild_id' => $this->guild_id]);
+        if ($channel = $this->attributePartHelper('channel', Channel::class, ['guild_id' => $this->guild_id])) {
+            $this->guild->channels->pushItem($channel);
+        }
+
+        return $channel;
     }
 
     /**
