@@ -50,8 +50,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class Webhook extends Part
 {
+    /** Incoming Webhooks can post messages to channels with a generated token. */
     public const TYPE_INCOMING = 1;
+    /** Channel Follower Webhooks are internal webhooks used with Channel Following to post new messages into channels. */
     public const TYPE_CHANNEL_FOLLOWER = 2;
+    /** Application webhooks are webhooks used with Interactions. */
     public const TYPE_APPLICATION = 3;
 
     /**
