@@ -31,7 +31,7 @@ use function React\Promise\resolve;
 /**
  * Represents a reaction emoji to a message by members(s).
  *
- * @link https://discord.com/developers/docs/resources/channel#reaction-object
+ * @link https://discord.com/developers/docs/resources/message#reaction-object
  *
  * @since 5.0.0
  *
