@@ -34,7 +34,10 @@ use React\Promise\PromiseInterface;
  * @property-read User|null        $user           The user that the member object represents.
  * @property      Carbon           $join_timestamp The time that the member joined the thread.
  * @property      int              $flags          Flags relating to the member. Only used for client notifications.
- * @property-read GuildMember|null $member         Additional information about the user.
+ * @property-read GuildMember|null $member         Additional information about the user. The member field is only present when `with_member` is set to `true` when calling List Thread Members or Get Thread Member.
+ *
+ * @property-read string|null $guild_id The ID of the guild that the thread belongs to.
+ * @property-read Guild|null  $guild    The guild that the thread belongs to.
  */
 class Member extends Part
 {
@@ -47,6 +50,7 @@ class Member extends Part
         'join_timestamp',
         'flags',
         'member',
+
         // @internal and events only
         'guild_id',
     ];
@@ -82,28 +86,15 @@ class Member extends Part
      */
     protected function getMemberAttribute(): ?GuildMember
     {
-        if (isset($this->attributes['member']) && $this->attributes['member'] instanceof GuildMember) {
-            return $this->attributes['member'];
+        if ($member = $this->attributePartHelper('member', GuildMember::class, isset($this->guild_id) ? ['guild_id' => $this->guild_id] : [])) {
+            return $member;
         }
 
-        if (! isset($this->attributes['member'])) {
-            if ($guild = $this->getGuildAttribute()) {
-                return $guild->members->get('id', $this->user_id);
-            }
-
-            return null;
+        if ($guild = $this->guild) {
+            return $guild->members->get('id', $this->user_id);
         }
 
-        $memberData = (array) $this->attributes['member'];
-        if (isset($this->guild_id)) {
-            $memberData['guild_id'] = $this->guild_id;
-        }
-
-        $part = $this->factory->part(Member::class, $memberData, true);
-
-        $this->attributes['member'] = $part;
-
-        return $part;
+        return null;
     }
 
     /**
@@ -111,7 +102,7 @@ class Member extends Part
      *
      * @return Guild|null The guild attribute.
      */
-    private function getGuildAttribute(): ?Guild
+    protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
