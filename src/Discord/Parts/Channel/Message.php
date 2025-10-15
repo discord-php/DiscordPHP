@@ -62,7 +62,7 @@ use function React\Promise\reject;
  * @property-read string|null                                              $user_id                The user id of the author.
  * @property      string                                                   $content                The content of the message if it is a normal message.
  * @property      Carbon                                                   $timestamp              A timestamp of when the message was sent.
- * @property      Carbon|null                                              $edited_timestamp       A timestamp of when the message was edited, or null.
+ * @property      ?Carbon|null                                             $edited_timestamp       A timestamp of when the message was edited, or null.
  * @property      bool                                                     $tts                    Whether the message was sent as a text-to-speech message.
  * @property      bool                                                     $mention_everyone       Whether the message contained an @everyone mention.
  * @property      ExCollectionInterface<User>|User[]                       $mentions               A collection of the users mentioned in the message.
@@ -79,9 +79,9 @@ use function React\Promise\reject;
  * @property      string|null                                              $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
  * @property      int|null                                                 $flags                  Message flags.
  * @property      MessageReference|null                                    $message_reference      Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
- * @property      MessageSnapshot                                          $message_snapshot       The first message associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
+ * @property-read MessageSnapshot|null                                     $message_snapshot       The first message associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
  * @property      ExCollectionInterface<MessageSnapshot>|MessageSnapshot[] $message_snapshots      The messages associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
- * @property      Message|null                                             $referenced_message     The message that is referenced in a reply.
+ * @property      ?Message|null                                            $referenced_message     The message that is referenced in a reply.
  * @property      MessageInteractionMetadata|null                          $interaction_metadata   Sent if the message is sent as a result of an interaction.
  * @property      MessageInteraction|null                                  $interaction            Sent if the message is a response to an Interaction.
  * @property      Thread|null                                              $thread                 The thread that was started from this message, includes thread member object.
