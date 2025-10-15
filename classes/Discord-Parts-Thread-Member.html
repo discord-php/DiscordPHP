@@ -265,7 +265,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Member.php"><a href="files/src-discord-parts-thread-member.html"><abbr title="src/Discord/Parts/Thread/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -333,6 +333,18 @@ guild member.</p>
     <a class="" href="classes/Discord-Parts-Thread-Member.html#property_flags">$flags</a>
     <span>
                         &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Thread-Member.html#property_guild">$guild</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Thread-Member.html#property_guild_id">$guild_id</a>
+    <span>
+                        &nbsp;: string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -667,6 +679,13 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Gets an attribute on the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Thread-Member.html#method_getGuildAttribute">getGuildAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null    </span>
+</dt>
+<dd>Returns the guild attribute based on internal `guild_id`.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Thread-Member.html#method_getJoinTimestampAttribute">getJoinTimestampAttribute()</a>
     <span>
                                 &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>    </span>
@@ -700,13 +719,6 @@ JSON. Used for JsonSerializable.</dd>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Sets an attribute on the part.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -private">
-    <a class="" href="classes/Discord-Parts-Thread-Member.html#method_getGuildAttribute">getGuildAttribute()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null    </span>
-</dt>
-<dd>Returns the guild attribute based on internal `guild_id`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a>
@@ -799,6 +811,86 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Flags relating to the member. Only used for client notifications.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                -read-only                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_guild">
+        $guild
+        <a href="classes/Discord-Parts-Thread-Member.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Member.php"><a href="files/src-discord-parts-thread-member.html"><abbr title="src/Discord/Parts/Thread/Member.php">Member.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$guild</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The guild that the thread belongs to.</p>
+</section>
+
+    
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                -read-only                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_guild_id">
+        $guild_id
+        <a href="classes/Discord-Parts-Thread-Member.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Member.php"><a href="files/src-discord-parts-thread-member.html"><abbr title="src/Discord/Parts/Thread/Member.php">Member.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$guild_id</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The ID of the guild that the thread belongs to.</p>
 </section>
 
     
@@ -918,7 +1010,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$member</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Additional information about the user.</p>
+        <section class="phpdocumentor-description"><p>Additional information about the user. The member field is only present when <code class="prettyprint">with_member</code> is set to <code class="prettyprint">true</code> when calling List Thread Members or Get Thread Member.</p>
 </section>
 
     
@@ -1197,7 +1289,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Member.php"><a href="files/src-discord-parts-thread-member.html"><abbr title="src/Discord/Parts/Thread/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -2678,7 +2770,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Member.php"><a href="files/src-discord-parts-thread-member.html"><abbr title="src/Discord/Parts/Thread/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -3337,6 +3429,49 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
+        getGuildAttribute()
+        <a href="classes/Discord-Parts-Thread-Member.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Member.php"><a href="files/src-discord-parts-thread-member.html"><abbr title="src/Discord/Parts/Thread/Member.php">Member.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">105</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the guild attribute based on internal `guild_id`.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getGuildAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The guild attribute.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getJoinTimestampAttribute">
         getJoinTimestampAttribute()
         <a href="classes/Discord-Parts-Thread-Member.html#method_getJoinTimestampAttribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3345,7 +3480,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Member.php"><a href="files/src-discord-parts-thread-member.html"><abbr title="src/Discord/Parts/Thread/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -3399,7 +3534,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Member.php"><a href="files/src-discord-parts-thread-member.html"><abbr title="src/Discord/Parts/Thread/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
@@ -3453,7 +3588,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Member.php"><a href="files/src-discord-parts-thread-member.html"><abbr title="src/Discord/Parts/Thread/Member.php">Member.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
@@ -3586,49 +3721,6 @@ JSON. Used for JsonSerializable.</p>
     
 
     
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -private
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
-        getGuildAttribute()
-        <a href="classes/Discord-Parts-Thread-Member.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Thread/Member.php"><a href="files/src-discord-parts-thread-member.html"><abbr title="src/Discord/Parts/Thread/Member.php">Member.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">114</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the guild attribute based on internal `guild_id`.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">private</span>
-                    <span class="phpdocumentor-signature__name">getGuildAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The guild attribute.</p>
-</section>
-
-            </section>
-
 </article>
                     <article
         class="phpdocumentor-element
@@ -3818,6 +3910,8 @@ static as we may move it outside this class in future.</p>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Thread-Member.html#property_flags">$flags</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Thread-Member.html#property_guild">$guild</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Thread-Member.html#property_guild_id">$guild_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Thread-Member.html#property_id">$id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Thread-Member.html#property_join_timestamp">$join_timestamp</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Thread-Member.html#property_member">$member</a></li>
@@ -3871,12 +3965,12 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Thread-Member.html#method_getGuildAttribute">getGuildAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Thread-Member.html#method_getJoinTimestampAttribute">getJoinTimestampAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Thread-Member.html#method_getMemberAttribute">getMemberAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Thread-Member.html#method_getUserAttribute">getUserAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Thread-Member.html#method_getGuildAttribute">getGuildAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a></li>
                                     </ul>
             </li>

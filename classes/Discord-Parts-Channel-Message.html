@@ -295,6 +295,24 @@
                                                                                 
                                              
                                     </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Carbon|null                                             $edited_timestamp       A timestamp of when the message was edited, or null.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Message|null                                            $referenced_message     The message that is referenced in a reply.</p>
+</section>
+
+                                    </dd>
                                             </dl>
 
 
@@ -859,12 +877,6 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Message.html#property_edited_timestamp">$edited_timestamp</a>
-    <span>
-                        &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Message.html#property_embeds">$embeds</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a>&gt;            </span>
@@ -981,7 +993,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Channel-Message.html#property_message_snapshot">$message_snapshot</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Channel-Message-MessageSnapshot.html"><abbr title="\Discord\Parts\Channel\Message\MessageSnapshot">MessageSnapshot</abbr></a>            </span>
+                        &nbsp;: <a href="classes/Discord-Parts-Channel-Message-MessageSnapshot.html"><abbr title="\Discord\Parts\Channel\Message\MessageSnapshot">MessageSnapshot</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -1018,12 +1030,6 @@
     <a class="" href="classes/Discord-Parts-Channel-Message.html#property_reactions">$reactions</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Repository-Channel-ReactionRepository.html"><abbr title="\Discord\Repository\Channel\ReactionRepository">ReactionRepository</abbr></a>            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Channel-Message.html#property_referenced_message">$referenced_message</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -4741,46 +4747,6 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_edited_timestamp">
-        $edited_timestamp
-        <a href="classes/Discord-Parts-Channel-Message.html#property_edited_timestamp" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-    <span class="phpdocumentor-signature__name">$edited_timestamp</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>A timestamp of when the message was edited, or null.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
     <h4 class="phpdocumentor-element__name" id="property_embeds">
         $embeds
         <a href="classes/Discord-Parts-Channel-Message.html#property_embeds" class="headerlink"><i class="fas fa-link"></i></a>
@@ -5539,14 +5505,14 @@ JSON. Used for JsonSerializable.</dd>
             phpdocumentor-element
             -property
             -public
-                                                                    "
+                                                -read-only                    "
 >
     <h4 class="phpdocumentor-element__name" id="property_message_snapshot">
         $message_snapshot
         <a href="classes/Discord-Parts-Channel-Message.html#property_message_snapshot" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                                            </span>
+                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
@@ -5559,7 +5525,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Message-MessageSnapshot.html"><abbr title="\Discord\Parts\Channel\Message\MessageSnapshot">MessageSnapshot</abbr></a></span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Message-MessageSnapshot.html"><abbr title="\Discord\Parts\Channel\Message\MessageSnapshot">MessageSnapshot</abbr></a>|null</span>
     <span class="phpdocumentor-signature__name">$message_snapshot</span>
     </code>
 
@@ -5804,46 +5770,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Collection of reactions on the message.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_referenced_message">
-        $referenced_message
-        <a href="classes/Discord-Parts-Channel-Message.html#property_referenced_message" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$referenced_message</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The message that is referenced in a reply.</p>
 </section>
 
     
@@ -12017,7 +11943,6 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message.html#property_content">$content</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message.html#property_crossposted">$crossposted</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message.html#property_edited_timestamp">$edited_timestamp</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message.html#property_embeds">$embeds</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message.html#property_ephemeral">$ephemeral</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message.html#property_failed_to_mention_some_roles_in_thread">$failed_to_mention_some_roles_in_thread</a></li>
@@ -12044,7 +11969,6 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message.html#property_poll">$poll</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message.html#property_position">$position</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message.html#property_reactions">$reactions</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message.html#property_referenced_message">$referenced_message</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message.html#property_resolved">$resolved</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message.html#property_role_subscription_data">$role_subscription_data</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>

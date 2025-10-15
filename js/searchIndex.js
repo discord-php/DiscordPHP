@@ -4613,7 +4613,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Forum\\Tag",
             "name": "Tag",
-            "summary": "An\u0020object\u0020that\u0020represents\u0020a\u0020tag\u0020that\u0020is\u0020able\u0020to\u0020be\u0020applied\u0020to\u0020a\u0020thread\u0020in\u0020a\n\u0060GUILD_FORUM\u0060\u0020channel.",
+            "summary": "An\u0020object\u0020that\u0020represents\u0020a\u0020tag\u0020that\u0020is\u0020able\u0020to\u0020be\u0020applied\u0020to\u0020a\u0020thread\u0020in\u0020a\u0020\u0060GUILD_FORUM\u0060\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Forum-Tag.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Forum\\Tag\u003A\u003A\u0024fillable",
@@ -6346,6 +6346,11 @@ Search.appendIndex(
             "summary": "Recursively\u0020retrieves\u0020users\u0020who\u0020reacted,\u0020handling\u0020pagination.",
             "url": "classes/Discord-Parts-Channel-Reaction.html#method___getUsers"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Reaction\u003A\u003AgetCountDetailsAttribute\u0028\u0029",
+            "name": "getCountDetailsAttribute",
+            "summary": "Gets\u0020the\u0020count\u0020details\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Reaction.html#method_getCountDetailsAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Reaction\u003A\u003AgetEmojiAttribute\u0028\u0029",
             "name": "getEmojiAttribute",
             "summary": "Gets\u0020the\u0020partial\u0020emoji\u0020attribute.",
@@ -6376,6 +6381,16 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Channel-Reaction.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ReactionCountDetails",
+            "name": "ReactionCountDetails",
+            "summary": "The\u0020reaction\u0020count\u0020details\u0020object\u0020contains\u0020a\u0020breakdown\u0020of\u0020normal\u0020and\u0020super\u0020reaction\u0020counts\u0020for\u0020the\u0020associated\u0020emoji.",
+            "url": "classes/Discord-Parts-Channel-ReactionCountDetails.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\ReactionCountDetails\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-ReactionCountDetails.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\StageInstance",
             "name": "StageInstance",
             "summary": "A\u0020Stage\u0020Instance\u0020holds\u0020information\u0020about\u0020a\u0020live\u0020stage.",
@@ -6405,6 +6420,11 @@ Search.appendIndex(
             "name": "getRepositoryAttributes",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-StageInstance.html#method_getRepositoryAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\StageInstance\u003A\u003APRIVACY_LEVEL_PUBLIC",
+            "name": "PRIVACY_LEVEL_PUBLIC",
+            "summary": "The\u0020Stage\u0020instance\u0020is\u0020visible\u0020publicly.\u0020\u0028deprecated\u0029",
+            "url": "classes/Discord-Parts-Channel-StageInstance.html#constant_PRIVACY_LEVEL_PUBLIC"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\StageInstance\u003A\u003APRIVACY_LEVEL_GROUP_ONLY",
             "name": "PRIVACY_LEVEL_GROUP_ONLY",
@@ -6503,17 +6523,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003ATYPE_INCOMING",
             "name": "TYPE_INCOMING",
-            "summary": "",
+            "summary": "Incoming\u0020Webhooks\u0020can\u0020post\u0020messages\u0020to\u0020channels\u0020with\u0020a\u0020generated\u0020token.",
             "url": "classes/Discord-Parts-Channel-Webhook.html#constant_TYPE_INCOMING"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003ATYPE_CHANNEL_FOLLOWER",
             "name": "TYPE_CHANNEL_FOLLOWER",
-            "summary": "",
+            "summary": "Channel\u0020Follower\u0020Webhooks\u0020are\u0020internal\u0020webhooks\u0020used\u0020with\u0020Channel\u0020Following\u0020to\u0020post\u0020new\u0020messages\u0020into\u0020channels.",
             "url": "classes/Discord-Parts-Channel-Webhook.html#constant_TYPE_CHANNEL_FOLLOWER"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003ATYPE_APPLICATION",
             "name": "TYPE_APPLICATION",
-            "summary": "",
+            "summary": "Application\u0020webhooks\u0020are\u0020webhooks\u0020used\u0020with\u0020Interactions.",
             "url": "classes/Discord-Parts-Channel-Webhook.html#constant_TYPE_APPLICATION"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003A\u0024fillable",
@@ -7673,7 +7693,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetIncidentsDataAttribute\u0028\u0029",
             "name": "getIncidentsDataAttribute",
-            "summary": "",
+            "summary": "Returns\u0020the\u0020incidents\u0020data\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getIncidentsDataAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetInvites\u0028\u0029",
