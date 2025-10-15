@@ -35,6 +35,8 @@ use Discord\Parts\Part;
  */
 class StageInstance extends Part
 {
+    /** The Stage instance is visible publicly. (deprecated) */
+    public const PRIVACY_LEVEL_PUBLIC = 1;
     /** The Stage instance is visible to only guild members. */
     public const PRIVACY_LEVEL_GROUP_ONLY = 2;
 
@@ -48,8 +50,10 @@ class StageInstance extends Part
         'topic',
         'privacy_level',
         'send_start_notification',
-        'discoverable_disabled', // deprecated
         'guild_scheduled_event_id',
+
+        // deprecated
+        'discoverable_disabled',
     ];
 
     /**
