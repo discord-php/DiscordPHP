@@ -27,7 +27,7 @@ use Discord\Parts\Part;
  * @property int          $auto_archive_duration The thread will stop showing in the channel list after auto_archive_duration minutes of inactivity.
  * @property string       $archive_timestamp     Timestamp when the thread's archive status was last changed (ISO8601).
  * @property bool         $locked                Whether the thread is locked; only users with MANAGE_THREADS can unarchive it.
- * @property ?bool|null   $invitable             Whether non-moderators can add other non-moderators to a thread; only available on private threads.
+ * @property bool|null    $invitable             Whether non-moderators can add other non-moderators to a thread; only available on private threads.
  * @property ?Carbon|null $create_timestamp      Timestamp when the thread was created (ISO8601); only populated for threads created after 2022-01-09.
  */
 class ThreadMetadata extends Part
