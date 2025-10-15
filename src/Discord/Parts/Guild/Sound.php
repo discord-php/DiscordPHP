@@ -31,12 +31,12 @@ use Stringable;
  * @property      string       $name       The name of this sound.
  * @property      string       $sound_id   The identifier for this sound.
  * @property      float        $volume     The volume of this sound, from 0 to 1.
- * @property      string|null  $emoji_id   The identifier for this sound's custom emoji.
- * @property      string|null  $emoji_name The unicode character of this sound's standard emoji.
- * @property      ?string|null $guild_id   The identifier of the guild this sound is in.
+ * @property      ?string|null $emoji_id   The identifier for this sound's custom emoji.
+ * @property      ?string|null $emoji_name The unicode character of this sound's standard emoji.
+ * @property      string|null  $guild_id   The identifier of the guild this sound is in.
  * @property-read Guild|null   $guild      The guild that owns the sound.
  * @property      bool         $available  Whether this sound can be used, may be false due to loss of Server Boosts.
- * @property      ?User|null   $user       The user who created this sound.
+ * @property      User|null    $user       The user who created this sound.
  */
 class Sound extends Part implements Stringable
 {
