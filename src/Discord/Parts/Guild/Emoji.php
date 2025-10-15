@@ -26,9 +26,9 @@ use Stringable;
  *
  * @since 4.0.2
  *
- * @property ?string                            $id             The identifier for the emoji.
- * @property string                             $name           The name of the emoji.
- * @property ExCollectionInterface<Role>|Role[] $roles          The roles that are allowed to use the emoji.
+ * @property ?string|null                       $id             The identifier for the emoji.
+ * @property ?string|null                       $name           The name of the emoji (can be null only in reaction emoji objects).
+ * @property ExCollectionInterface<Role>|Role[] $roles          The roles that are all owed to use the emoji.
  * @property User|null                          $user           User that created this emoji.
  * @property bool|null                          $require_colons Whether the emoji requires colons to be triggered.
  * @property bool|null                          $managed        Whether this emoji is managed by a role.
