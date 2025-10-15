@@ -35,9 +35,12 @@ use function React\Promise\resolve;
  *
  * @since 5.0.0
  *
- * @property int   $count Number of reactions.
- * @property bool  $me    Whether the current bot has reacted.
- * @property Emoji $emoji The emoji that was reacted with.
+ * @property int                  $count         Total number of times this emoji has been used to react (including super reacts).
+ * @property ReactionCountDetails $count_details Reaction count details object.
+ * @property bool                 $me            Whether the current user reacted using this emoji.
+ * @property bool                 $me_burst      Whether the current user super-reacted using this emoji.
+ * @property Emoji                $emoji         Emoji information.
+ * @property array                $burst_colors  HEX colors used for super reaction.
  *
  * @property      string         $channel_id The channel ID that the message belongs in.
  * @property-read Channel|Thread $channel    The channel that the message belongs to.
@@ -56,8 +59,11 @@ class Reaction extends Part
     protected $fillable = [
         'id', // internal
         'count',
+        'count_details',
         'me',
+        'me_burst',
         'emoji',
+        'burst_colors',
 
         // events only
         'channel_id',
@@ -220,6 +226,16 @@ class Reaction extends Part
 
             return $this->__getUsers($response, $last);
         });
+    }
+
+    /**
+     * Gets the count details attribute.
+     *
+     * @return ReactionCountDetails
+     */
+    protected function getCountDetailsAttribute(): ReactionCountDetails
+    {
+        return $this->attributePartHelper('count_details', ReactionCountDetails::class);
     }
 
     /**
