@@ -123,7 +123,9 @@ class Channel extends Part implements Stringable
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_FORUM` */
     public const TYPE_FORUM = self::TYPE_GUILD_FORUM;
 
+    /** Discord chooses the quality for optimal performance. */
     public const VIDEO_QUALITY_AUTO = 1;
+    /** 720p. */
     public const VIDEO_QUALITY_FULL = 2;
 
     /** @deprecated 10.0.0 Use `Thread::FLAG_PINNED` */
@@ -133,12 +135,19 @@ class Channel extends Part implements Stringable
     /** When set hides the embedded media download options. Available only for media channels. */
     public const HIDE_MEDIA_DOWNLOAD_OPTIONS = (1 << 15);
 
+    /** Sort forum posts by activity. */
     public const SORT_ORDER_LATEST_ACTIVITY = 0;
+    /**	Sort forum posts by creation time (from most recent to oldest). */
     public const SORT_ORDER_CREATION_DATE = 1;
 
+    /** No default has been set for forum channel. */
     public const FORUM_LAYOUT_NOT_SET = 0;
+    /** Display posts as a list. */
     public const FORUM_LAYOUT_LIST_VIEW = 1;
-    public const FORUM_LAYOUT_GRID_VIEW = 2;
+    /** Display posts as a collection of tiles. */
+    public const FORUM_LAYOUT_GALLERY_VIEW = 2;
+    /** @deprecated 10.36.32 Use `Channel::FORUM_LAYOUT_GALLERY_VIEW` */
+    public const FORUM_LAYOUT_GRID_VIEW = self::FORUM_LAYOUT_GALLERY_VIEW;
 
     /**
      * @inheritDoc
