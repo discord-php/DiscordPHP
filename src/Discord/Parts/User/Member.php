@@ -641,7 +641,7 @@ class Member extends Part implements Stringable
      */
     protected function getGameAttribute(): ?Activity
     {
-        return $this->activities->get('type', Activity::TYPE_GAME);
+        return $this->activities->get('type', Activity::TYPE_PLAYING);
     }
 
     /**

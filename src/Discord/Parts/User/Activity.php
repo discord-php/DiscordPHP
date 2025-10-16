@@ -49,25 +49,19 @@ use Stringable;
 class Activity extends Part implements Stringable
 {
     /** Playing {name} */
-    public const TYPE_GAME = 0;
-
+    public const TYPE_PLAYING = 0;
+    /** @deprecated 10.36.31 Use `Activity::TYPE_PLAYING` */
+    public const TYPE_GAME = self::TYPE_PLAYING;
     /** Streaming {details} */
     public const TYPE_STREAMING = 1;
-
     /** Listening to {name} */
     public const TYPE_LISTENING = 2;
-
     /** Watching {name} */
     public const TYPE_WATCHING = 3;
-
     /** {emoji} {name} */
     public const TYPE_CUSTOM = 4;
-
     /** Competing in {name} */
     public const TYPE_COMPETING = 5;
-
-    /** @deprecated 10.0.0 Use `Activity::TYPE_GAME` */
-    public const TYPE_PLAYING = self::TYPE_GAME;
 
     public const FLAG_INSTANCE = (1 << 0);
     public const FLAG_JOIN = (1 << 1);
@@ -79,13 +73,22 @@ class Activity extends Part implements Stringable
     public const FLAG_PARTY_PRIVACY_VOICE_CHANNEL = (1 << 7);
     public const FLAG_EMBEDDED = (1 << 8);
 
+    /** Online. */
     public const STATUS_ONLINE = 'online';
-    public const STATUS_IDLE = 'idle';
+    /** Do Not Disturb. */
     public const STATUS_DND = 'dnd';
+    /** AFK. */
+    public const STATUS_IDLE = 'idle';
+    /** Invisible and shown as offline. */
     public const STATUS_INVISIBLE = 'invisible';
+    /** Offline. */
+    public const STATUS_OFFLINE = 'offline';
 
+    /** "Listening to Spotify" */
     public const STATUS_DISPLAY_TYPE_NAME = 0;
+    /** "Listening to Rick Astley" */
     public const STATUS_DISPLAY_TYPE_STATE = 1;
+    /** "Listening to Never Gonna Give You Up" */
     public const STATUS_DISPLAY_TYPE_DETAILS = 2;
 
     /**
@@ -192,7 +195,7 @@ class Activity extends Part implements Stringable
     public function __toString(): string
     {
         return match ($this->type) {
-            self::TYPE_GAME => 'Playing '.$this->name,
+            self::TYPE_PLAYING => 'Playing '.$this->name,
             self::TYPE_STREAMING => 'Streaming '.$this->details,
             self::TYPE_LISTENING => 'Listening to '.$this->name,
             self::TYPE_WATCHING => 'Watching '.$this->name,
