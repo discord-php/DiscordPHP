@@ -487,7 +487,7 @@ trait PartTrait
     }
 
     /**
-     * Helps with getting Part attributes for components.
+     * Helps with getting Part attributes for classes with extended types.
      *
      * @param string $class The attribute class.
      * @param string $key   The attribute key.
