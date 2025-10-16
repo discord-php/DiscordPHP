@@ -66,17 +66,28 @@ class Rule extends Part
         'exempt_channels',
     ];
 
+    /** Check if content contains words from a user defined list of keywords. */
     public const TRIGGER_TYPE_KEYWORD = 1;
+    /** Check if content represents generic spam. */
     public const TRIGGER_TYPE_SPAM = 3;
+    /** Check if content contains words from internal pre-defined wordsets. */
     public const TRIGGER_TYPE_KEYWORD_PRESET = 4;
+    /** Check if content contains more unique mentions than allowed. */
     public const TRIGGER_TYPE_MENTION_SPAM = 5;
+    /** Check if member profile contains words from a user defined list of keywords. */
     public const TRIGGER_TYPE_PROFILE = 6;
 
+    /** Words that may be considered forms of swearing or cursing. */
     public const KEYWORD_PRESET_TYPE_PROFANITY = 1;
+    /** Words that refer to sexually explicit behavior or activity. */
     public const KEYWORD_PRESET_TYPE_SEXUAL_CONTENT = 2;
+    /** Personal insults or words that may be considered hate speech. */
     public const KEYWORD_PRESET_TYPE_SLURS = 3;
 
+    /** When a member sends or edits a message in the guild. */
     public const EVENT_TYPE_MESSAGE_SEND = 1;
+    /** When a member edits their profile. */
+    public const EVENT_TYPE_MEMBER_UPDATE = 2;
 
     /**
      * Returns the guild attribute.
