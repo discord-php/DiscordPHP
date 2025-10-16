@@ -253,8 +253,8 @@ class Member extends Part implements Stringable
     /**
      * Moves the member to another voice channel.
      *
-     * @param Channel|?string $channel The channel to move the member to.
-     * @param string|null     $reason  Reason for Audit Log.
+     * @param Channel|string $channel The channel to move the member to.
+     * @param string|null    $reason  Reason for Audit Log.
      *
      * @return PromiseInterface<self>
      */
@@ -826,7 +826,7 @@ class Member extends Part implements Stringable
     /**
      * Returns the guild avatar hash for the member.
      *
-     * @return ?string|null The member avatar's hash or null.
+     * @return string|null The member avatar's hash or null.
      */
     protected function getAvatarHashAttribute(): ?string
     {
@@ -869,7 +869,7 @@ class Member extends Part implements Stringable
     /**
      * Returns the guild banner hash for the member.
      *
-     * @return ?string|null The member's banner hash or null.
+     * @return string|null The member's banner hash or null.
      */
     protected function getBannerHashAttribute(): ?string
     {

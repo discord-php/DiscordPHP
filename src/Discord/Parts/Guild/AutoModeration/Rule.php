@@ -132,7 +132,7 @@ class Rule extends Part
     /**
      * Returns the exempt roles attribute.
      *
-     * @return ExCollectionInterface<Role>|?Role[] A collection of roles exempt from the rule.
+     * @return ExCollectionInterface<Role>|Role[] A collection of roles exempt from the rule.
      */
     protected function getExemptRolesAttribute(): ExCollectionInterface
     {
@@ -156,7 +156,7 @@ class Rule extends Part
     /**
      * Returns the exempt channels attribute.
      *
-     * @return ExCollectionInterface<Channel>|?Channel[] A collection of channels exempt from the rule.
+     * @return ExCollectionInterface<Channel>|Channel[] A collection of channels exempt from the rule.
      */
     protected function getExemptChannelsAttribute(): ExCollectionInterface
     {

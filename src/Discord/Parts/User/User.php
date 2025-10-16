@@ -252,7 +252,7 @@ class User extends Part implements Stringable
     /**
      * Returns the avatar hash for the client.
      *
-     * @return ?string The client avatar's hash.
+     * @return string|null The client avatar's hash.
      */
     public function getAvatarHashAttribute(): ?string
     {
@@ -291,7 +291,7 @@ class User extends Part implements Stringable
     /**
      * Returns the banner hash for the client.
      *
-     * @return ?string|null The client banner's hash.
+     * @return string|null The client banner's hash.
      */
     protected function getBannerHashAttribute(): ?string
     {
@@ -326,7 +326,7 @@ class User extends Part implements Stringable
     /**
      * Returns the avatar decoration hash for the client.
      *
-     * @return ?string The client avatar decoration's hash.
+     * @return string|null The client avatar decoration's hash.
      */
     public function getAvatarDecorationHashAttribute(): ?string
     {
@@ -336,7 +336,7 @@ class User extends Part implements Stringable
     /**
      * Returns the avatar decoration data.
      *
-     * @return ?AvatarDecorationData|null The avatar decoration.
+     * @return AvatarDecorationData|null The avatar decoration.
      */
     public function getAvatarDecorationDataAttribute(): ?AvatarDecorationData
     {
@@ -346,7 +346,7 @@ class User extends Part implements Stringable
     /**
      * Returns the collectibles for the client.
      *
-     * @return ?Collectibles|null The collectibles data.
+     * @return Collectibles|null The collectibles data.
      */
     protected function getCollectiblesAttribute(): ?Collectibles
     {
@@ -364,7 +364,7 @@ class User extends Part implements Stringable
     /**
      * Returns a timestamp for when a user's account was created.
      *
-     * @return ?float
+     * @return float|null
      */
     public function createdTimestamp()
     {
