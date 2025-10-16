@@ -48,7 +48,7 @@ class CacheWrapper
     /**
      * Repository items array reference.
      *
-     * @var ?Part[]|WeakReference[] Cache Key => Cache Part.
+     * @var Part[]|WeakReference[] Cache Key => Cache Part.
      */
     protected $items;
 
