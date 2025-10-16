@@ -45,13 +45,18 @@ class Option extends Part
     public const SUB_COMMAND = 1;
     public const SUB_COMMAND_GROUP = 2;
     public const STRING = 3;
-    public const INTEGER = 4; // Any integer between -2^53 and 2^53
+    /** Any integer between -2^53+1 and 2^53-1. */
+    public const INTEGER = 4;
     public const BOOLEAN = 5;
     public const USER = 6;
-    public const CHANNEL = 7; // Includes all channel types + categories
+    /** Includes all channel types + categories. */
+    public const CHANNEL = 7;
     public const ROLE = 8;
-    public const MENTIONABLE = 9; // Includes users and roles
-    public const NUMBER = 10; // Any double between -2^53 and 2^53
+    /** Includes users and roles. */
+    public const MENTIONABLE = 9;
+    /** Any double between -2^53 and 2^53. */
+    public const NUMBER = 10;
+    /** Attachment object. */
     public const ATTACHMENT = 11;
 
     /**
