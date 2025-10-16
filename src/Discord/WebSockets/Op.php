@@ -187,6 +187,12 @@ class Op
     public const CLOSE_VOICE_SERVER_CRASH = 4015;
     /** Unknown encryption mode. */
     public const CLOSE_VOICE_UNKNOWN_ENCRYPT = 4016;
+    /** You sent a malformed request. */
+    public const CLOSE_VOICE_BAD_REQUEST = 4020;
+    /** Disconnect due to rate limit exceeded. Should not reconnect. */
+    public const CLOSE_VOICE_DISCONNECTED_RATE_LIMITED = 4021;
+    /** Disconnect all clients due to call terminated (channel deleted, voice server changed, etc.). Should not reconnect. */
+    public const CLOSE_VOICE_DISCONNECTED_CALL_TERMINATED = 4022;
 
     /**
      * Returns the critical event codes that we should not reconnect after.
