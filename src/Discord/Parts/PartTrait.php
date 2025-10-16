@@ -492,9 +492,9 @@ trait PartTrait
      * @param string $class The attribute class.
      * @param string $key   The attribute key.
      *
-     * @return ExCollectionInterface<Component>|Component[]
+     * @return ExCollectionInterface
      */
-    protected function attributeTypedCollectionHelper(string $class, string $key = 'components'): ExCollectionInterface
+    protected function attributeTypedCollectionHelper(string $class, string $key): ExCollectionInterface
     {
         $collection = Collection::for($class);
 
@@ -502,11 +502,11 @@ trait PartTrait
             return $collection;
         }
 
-        foreach ($this->attributes[$key] as &$component) {
-            if (! $component instanceof $class) {
-                $component = $this->createOf($class::TYPES[$component->type ?? 0], $component);
+        foreach ($this->attributes[$key] as &$part) {
+            if (! $part instanceof $class) {
+                $part = $this->createOf($class::TYPES[$part->type ?? 0], $part);
             }
-            $collection->pushItem($component);
+            $collection->pushItem($part);
         }
 
         return $collection;
