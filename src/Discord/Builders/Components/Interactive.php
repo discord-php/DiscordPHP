@@ -16,6 +16,8 @@ namespace Discord\Builders\Components;
 use function Discord\poly_strlen;
 
 /**
+ * For user interactions (Buttons, Select Menus, Text Input).
+ *
  * @since 10.9.0
  */
 abstract class Interactive extends ComponentObject

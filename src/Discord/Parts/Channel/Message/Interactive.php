@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 /**
- * Abstract class for interactive components.
+ * For user interactions (Buttons, Select Menus, Text Input).
  *
  * @link https://discord.com/developers/docs/components/reference#anatomy-of-a-component-custom-id
  *

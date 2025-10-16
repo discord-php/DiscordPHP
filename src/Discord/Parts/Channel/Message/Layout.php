@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 /**
- * Abstract class for layout components.
+ * For organizing and structuring content (Action Rows, Sections, Containers).
  *
  * @since 10.11.0
  */
