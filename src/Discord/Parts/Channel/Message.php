@@ -788,7 +788,7 @@ class Message extends Part
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        return $this->attributeComponentCollectionHelper();
+        return $this->attributeTypedCollectionHelper(Component::class, 'components');
     }
 
     /**

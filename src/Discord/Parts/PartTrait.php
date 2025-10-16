@@ -489,21 +489,22 @@ trait PartTrait
     /**
      * Helps with getting Part attributes for components.
      *
-     * @param string $key The attribute key.
+     * @param string $class The attribute class.
+     * @param string $key   The attribute key.
      *
      * @return ExCollectionInterface<Component>|Component[]
      */
-    protected function attributeComponentCollectionHelper($key = 'components'): ExCollectionInterface
+    protected function attributeTypedCollectionHelper(string $class, string $key = 'components'): ExCollectionInterface
     {
-        $collection = Collection::for(Component::class);
+        $collection = Collection::for($class);
 
         if (empty($this->attributes[$key])) {
             return $collection;
         }
 
         foreach ($this->attributes[$key] as &$component) {
-            if (! $component instanceof Component) {
-                $component = $this->createOf(Component::TYPES[$component->type ?? 0], $component);
+            if (! $component instanceof $class) {
+                $component = $this->createOf($class::TYPES[$component->type ?? 0], $component);
             }
             $collection->pushItem($component);
         }

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Request;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message\Component as MessageComponent;
 use Discord\Parts\Guild\Emoji;
@@ -76,7 +75,7 @@ class Component extends Part
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        return $this->attributeComponentCollectionHelper();
+        return $this->attributeTypedCollectionHelper(Component::class, 'components');
     }
 
     /**
