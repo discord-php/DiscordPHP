@@ -65,7 +65,8 @@ class Invite extends Part implements Stringable
     public const TARGET_TYPE_STREAM = 1;
     public const TARGET_TYPE_EMBEDDED_APPLICATION = 2;
 
-    public const FLAG_IS_GUEST_INVITE = 1 << 0; // This invite is a guest invite for a voice channel
+    /** This invite is a guest invite for a voice channel. */
+    public const FLAG_IS_GUEST_INVITE = 1 << 0;
 
     /**
      * @inheritDoc
