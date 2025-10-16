@@ -188,7 +188,9 @@ class Message extends Part
     public const REACT_DELETE_ID = 2;
     public const REACT_DELETE_EMOJI = 3;
 
+    /** A standard reference used by replies. */
     public const REFERENCE_DEFAULT = 0;
+    /** Reference used to point to a message at a point in time. */
     public const REFERENCE_FORWARD = 1;
 
     /** This message has been published to subscribed channels (via Channel Following). */
