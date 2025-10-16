@@ -84,6 +84,38 @@ class Interaction extends Part
         Interaction::TYPE_MODAL_SUBMIT => ModalSubmit::class,
     ];
 
+    public const TYPE_PING = 1;
+    public const TYPE_APPLICATION_COMMAND = 2;
+    public const TYPE_MESSAGE_COMPONENT = 3;
+    public const TYPE_APPLICATION_COMMAND_AUTOCOMPLETE = 4;
+    public const TYPE_MODAL_SUBMIT = 5;
+
+    /** ACK a `Ping`. */
+    public const RESPONSE_TYPE_PONG = 1;
+    /** Respond to an interaction with a message. */
+    public const RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE = 4;
+    /** ACK an interaction and edit a response later, the user sees a loading state. */
+    public const RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = 5;
+    /** For components, ACK an interaction and edit the original message later; the user does not see a loading state. */
+    public const RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE = 6;
+    /** For components, edit the message the component was attached to. */
+    public const RESPONSE_TYPE_UPDATE_MESSAGE = 7;
+    /** Respond to an autocomplete interaction with suggested choices. */
+    public const RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8;
+    /** Respond to an interaction with a popup modal. */
+    public const RESPONSE_TYPE_MODAL = 9;
+    /**	Deprecated; respond to an interaction with an upgrade button, only available for apps with monetization enabled. */
+    public const RESPONSE_TYPE_PREMIUM_REQUIRED = 10;
+    /** Launch the Activity associated with the app. Only available for apps with Activities enabled. */
+    public const RESPONSE_TYPE_LAUNCH_ACTIVITY = 12;
+
+    /** Interaction can be used within servers. */
+    public const CONTEXT_TYPE_GUILD = 0;
+    /** Interaction can be used within DMs with the app's bot user. */
+    public const CONTEXT_TYPE_BOT_DM = 1;
+    /** Interaction can be used within Group DMs and DMs other than the app's bot user. */
+    public const CONTEXT_TYPE_PRIVATE_CHANNEL = 2;
+
     /**
      * @inheritDoc
      */
@@ -116,38 +148,6 @@ class Interaction extends Part
      * @var bool
      */
     protected $responded = false;
-
-    public const TYPE_PING = 1;
-    public const TYPE_APPLICATION_COMMAND = 2;
-    public const TYPE_MESSAGE_COMPONENT = 3;
-    public const TYPE_APPLICATION_COMMAND_AUTOCOMPLETE = 4;
-    public const TYPE_MODAL_SUBMIT = 5;
-
-    /** ACK a `Ping`. */
-    public const RESPONSE_TYPE_PONG = 1;
-    /** Respond to an interaction with a message. */
-    public const RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE = 4;
-    /** ACK an interaction and edit a response later, the user sees a loading state. */
-    public const RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = 5;
-    /** For components, ACK an interaction and edit the original message later; the user does not see a loading state. */
-    public const RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE = 6;
-    /** For components, edit the message the component was attached to. */
-    public const RESPONSE_TYPE_UPDATE_MESSAGE = 7;
-    /** Respond to an autocomplete interaction with suggested choices. */
-    public const RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8;
-    /** Respond to an interaction with a popup modal. */
-    public const RESPONSE_TYPE_MODAL = 9;
-    /**	Deprecated; respond to an interaction with an upgrade button, only available for apps with monetization enabled. */
-    public const RESPONSE_TYPE_PREMIUM_REQUIRED = 10;
-    /** Launch the Activity associated with the app. Only available for apps with Activities enabled. */
-    public const RESPONSE_TYPE_LAUNCH_ACTIVITY = 12;
-
-    /** Interaction can be used within servers. */
-    public const CONTEXT_TYPE_GUILD = 0;
-    /** Interaction can be used within DMs with the app's bot user. */
-    public const CONTEXT_TYPE_BOT_DM = 1;
-    /** Interaction can be used within Group DMs and DMs other than the app's bot user. */
-    public const CONTEXT_TYPE_PRIVATE_CHANNEL = 2;
 
     /**
      * Returns true if this interaction has been internally responded.
