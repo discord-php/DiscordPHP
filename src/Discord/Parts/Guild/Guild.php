@@ -1301,10 +1301,10 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen
      *
-     * @param array                          $options                     An array of options. All fields are optional.
-     * @param bool|null                      $options['enabled']          Whether the welcome screen is enabled.
+     * @param array                 $options                     An array of options. All fields are optional.
+     * @param bool|null             $options['enabled']          Whether the welcome screen is enabled.
      * @param WelcomeChannel[]|null $options['welcome_channels'] Channels linked in the welcome screen and their display options (maximum 5).
-     * @param string|null                    $options['description']      The server description to show in the welcome screen (maximum 140).
+     * @param string|null           $options['description']      The server description to show in the welcome screen (maximum 140).
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *

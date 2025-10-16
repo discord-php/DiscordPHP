@@ -23,9 +23,9 @@ use Discord\Parts\OAuth\ApplicationRoleConnectionMetadata;
  *
  * @since 10.33.0
  *
- * @property ?string $platform_name     The vanity name of the platform a bot has connected (max 50 characters).
- * @property ?string $platform_username The username on the platform a bot has connected (max 100 characters).
- * @property object  $metadata          Object mapping application role connection metadata keys to their string-ified value (max 100 characters) for the user on the platform a bot has connected.
+ * @property ?string                           $platform_name     The vanity name of the platform a bot has connected (max 50 characters).
+ * @property ?string                           $platform_username The username on the platform a bot has connected (max 100 characters).
+ * @property ApplicationRoleConnectionMetadata $metadata          Object mapping application role connection metadata keys to their string-ified value (max 100 characters) for the user on the platform a bot has connected.
  */
 class ApplicationRoleConnection extends Part
 {

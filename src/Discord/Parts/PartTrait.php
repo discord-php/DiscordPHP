@@ -19,7 +19,6 @@ use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Http;
-use Discord\Parts\Channel\Message\Component;
 use React\Promise\PromiseInterface;
 
 /**
