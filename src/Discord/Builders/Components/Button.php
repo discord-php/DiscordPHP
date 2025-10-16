@@ -45,11 +45,17 @@ class Button extends Interactive
 {
     public const USAGE = ['Message'];
 
+    /** The most important or recommended action in a group of options. */
     public const STYLE_PRIMARY = 1;
+    /** Alternative or supporting actions. */
     public const STYLE_SECONDARY = 2;
+    /**	Positive confirmation or completion actions. */
     public const STYLE_SUCCESS = 3;
+    /** An action with irreversible consequences. */
     public const STYLE_DANGER = 4;
+    /** Navigates to a URL. */
     public const STYLE_LINK = 5;
+    /** Purchase. */
     public const STYLE_PREMIUM = 6;
 
     /**

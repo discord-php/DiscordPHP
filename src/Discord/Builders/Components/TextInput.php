@@ -35,7 +35,9 @@ class TextInput extends Interactive
 {
     public const USAGE = ['Message', 'Modal'];
 
+    /** Single-line input. */
     public const STYLE_SHORT = 1;
+    /** Multi-line input. */
     public const STYLE_PARAGRAPH = 2;
 
     /**
