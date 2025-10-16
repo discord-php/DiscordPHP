@@ -33,8 +33,11 @@ use JsonSerializable;
  */
 class AllowedMentions implements JsonSerializable
 {
+    /** Controls role mentions. */
     public const TYPE_ROLE = 'roles';
+    /** Controls user mentions. */
     public const TYPE_USER = 'users';
+    /** Controls @everyone and @here mentions. */
     public const TYPE_EVERYONE = 'everyone';
 
     /**

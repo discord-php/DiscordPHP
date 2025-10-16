@@ -37,7 +37,9 @@ use Discord\Parts\Part;
  */
 class MessageReference extends Part
 {
+    /** A standard reference used by replies. */
     public const TYPE_DEFAULT = 0;
+    /**	Reference used to point to a message at a point in time. */
     public const TYPE_FORWARD = 1;
 
     /**

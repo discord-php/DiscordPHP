@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Embed;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 
 /**
@@ -44,6 +43,11 @@ class EmbedPollResult extends Embed
 {
     public const TYPE = self::TYPE_POLL_RESULT;
 
+    /**
+     * Gets the poll fields attribute.
+     *
+     * @return array The poll fields attribute.
+     */
     protected function getPollFieldsAttribute(): array
     {
         $fields = [];

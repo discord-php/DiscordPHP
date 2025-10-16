@@ -56,12 +56,19 @@ class Embed extends Part
         self::TYPE_POLL_RESULT => EmbedPollResult::class,
     ];
 
+    /** Generic embed rendered from embed attributes. */
     public const TYPE_RICH = 'rich';
+    /** Image embed. */
     public const TYPE_IMAGE = 'image';
+    /** Video embed. */
     public const TYPE_VIDEO = 'video';
+    /** Animated gif image embed rendered as a video embed. */
     public const TYPE_GIFV = 'gifv';
+    /** Article embed. */
     public const TYPE_ARTICLE = 'article';
+    /** Link embed. */
     public const TYPE_LINK = 'link';
+    /** Poll result embed. */
     public const TYPE_POLL_RESULT = 'poll_result';
 
     /**
