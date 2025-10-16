@@ -620,7 +620,7 @@ class Discord
     /**
      * Sends chunks of guild member requests.
      *
-     * @param &array $chunks
+     * @param array &$chunks
      */
     protected function sendChunks(array &$chunks = []): void
     {
