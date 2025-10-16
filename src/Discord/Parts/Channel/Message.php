@@ -219,7 +219,7 @@ class Message extends Part
     public const FLAG_HAS_SNAPSHOT = (1 << 14);
     /** @deprecated Use `Message::FLAG_IS_COMPONENTS_V2` instead. */
     public const FLAG_IS_V2_COMPONENTS = (1 << 15);
-    /** Allows you to create fully component-driven messages. */
+    /** Allows you to create fully component-driven messages. Once a message has been sent with this flag, it can't be removed from that message. */
     public const FLAG_IS_COMPONENTS_V2 = (1 << 15);
 
     /**
