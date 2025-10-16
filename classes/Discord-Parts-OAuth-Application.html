@@ -330,72 +330,84 @@
     <span>
         &nbsp;= 1 &lt;&lt; 6                            </span>
 </dt>
+<dd>Indicates if an app uses the Auto Moderation API.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#constant_APPLICATION_COMMAND_BADGE">APPLICATION_COMMAND_BADGE</a>
     <span>
         &nbsp;= 1 &lt;&lt; 23                            </span>
 </dt>
+<dd>Indicates if an app has registered global application commands.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#constant_EMBEDDED">EMBEDDED</a>
     <span>
         &nbsp;= 1 &lt;&lt; 17                            </span>
 </dt>
+<dd>Indicates if an app is embedded within the Discord client (currently unavailable publicly).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_GUILD_MEMBERS">GATEWAY_GUILD_MEMBERS</a>
     <span>
         &nbsp;= 1 &lt;&lt; 14                            </span>
 </dt>
+<dd>Intent required for bots in 100 or more servers to receive member-related events like `guild_member_add`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_GUILD_MEMBERS_LIMITED">GATEWAY_GUILD_MEMBERS_LIMITED</a>
     <span>
         &nbsp;= 1 &lt;&lt; 15                            </span>
 </dt>
+<dd>Intent required for bots in under 100 servers to receive member-related events like `guild_member_add`, found on the Bot page in your app&#039;s settings.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_MESSAGE_CONTENT">GATEWAY_MESSAGE_CONTENT</a>
     <span>
         &nbsp;= 1 &lt;&lt; 18                            </span>
 </dt>
+<dd>Intent required for bots in 100 or more servers to receive message content.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_MESSAGE_CONTENT_LIMITED">GATEWAY_MESSAGE_CONTENT_LIMITED</a>
     <span>
         &nbsp;= 1 &lt;&lt; 19                            </span>
 </dt>
+<dd>Intent required for bots in under 100 servers to receive message content, found on the Bot page in your app&#039;s settings.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_PRESENCE">GATEWAY_PRESENCE</a>
     <span>
         &nbsp;= 1 &lt;&lt; 12                            </span>
 </dt>
+<dd>Intent required for bots in 100 or more servers to receive `presence_update` events.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_PRESENCE_LIMITED">GATEWAY_PRESENCE_LIMITED</a>
     <span>
         &nbsp;= 1 &lt;&lt; 13                            </span>
 </dt>
+<dd>Intent required for bots in under 100 servers to receive `presence_update` events, found on the Bot page in your app&#039;s settings.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#constant_INTEGRATION_TYPE_GUILD_INSTALL">INTEGRATION_TYPE_GUILD_INSTALL</a>
     <span>
         &nbsp;= 0                            </span>
 </dt>
+<dd>App is installable to servers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#constant_INTEGRATION_TYPE_USER_INSTALL">INTEGRATION_TYPE_USER_INSTALL</a>
     <span>
         &nbsp;= 1                            </span>
 </dt>
+<dd>App is installable to users.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-OAuth-Application.html#constant_VERIFICATION_PENDING_GUILD_LIMIT">VERIFICATION_PENDING_GUILD_LIMIT</a>
     <span>
         &nbsp;= 1 &lt;&lt; 16                            </span>
 </dt>
+<dd>Indicates unusual growth of an app that prevents verification.</dd>
 
     </dl>
 
@@ -960,7 +972,7 @@ JSON. Used for JsonSerializable.</dd>
     <span>
                                 &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>    </span>
 </dt>
-<dd>Helps with getting Part attributes for components.</dd>
+<dd>Helps with getting Part attributes for classes with extended types.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a>
@@ -1067,7 +1079,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
     </aside>
 
@@ -1084,6 +1096,22 @@ JSON. Used for JsonSerializable.</dd>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-OAuth-Application.html#constant_ACTIVE#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Undocumented.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
     
 
@@ -1098,11 +1126,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Indicates if an app uses the Auto Moderation API.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1129,11 +1158,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">127</span>
+    <span class="phpdocumentor-element-found-in__line">137</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Indicates if an app has registered global application commands.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1160,11 +1190,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">131</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Indicates if an app is embedded within the Discord client (currently unavailable publicly).</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1191,11 +1222,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">121</span>
+    <span class="phpdocumentor-element-found-in__line">125</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Intent required for bots in 100 or more servers to receive member-related events like `guild_member_add`.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1222,11 +1254,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">122</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Intent required for bots in under 100 servers to receive member-related events like `guild_member_add`, found on the Bot page in your app&#039;s settings.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1253,11 +1286,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Intent required for bots in 100 or more servers to receive message content.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1284,11 +1318,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">126</span>
+    <span class="phpdocumentor-element-found-in__line">135</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Intent required for bots in under 100 servers to receive message content, found on the Bot page in your app&#039;s settings.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1315,11 +1350,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">121</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Intent required for bots in 100 or more servers to receive `presence_update` events.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1346,11 +1382,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">120</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Intent required for bots in under 100 servers to receive `presence_update` events, found on the Bot page in your app&#039;s settings.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1377,11 +1414,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">142</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">App is installable to servers.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1408,11 +1446,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">130</span>
+    <span class="phpdocumentor-element-found-in__line">144</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">App is installable to users.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1439,11 +1478,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">129</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Indicates unusual growth of an app that prevents verification.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -3355,7 +3395,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">135</span>
+    <span class="phpdocumentor-element-found-in__line">149</span>
 
     </aside>
 
@@ -3596,7 +3636,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">589</span>
+    <span class="phpdocumentor-element-found-in__line">588</span>
 
     </aside>
 
@@ -3676,7 +3716,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">240</span>
+    <span class="phpdocumentor-element-found-in__line">239</span>
 
     </aside>
 
@@ -3714,7 +3754,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">602</span>
+    <span class="phpdocumentor-element-found-in__line">601</span>
 
     </aside>
 
@@ -3787,7 +3827,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">561</span>
+    <span class="phpdocumentor-element-found-in__line">560</span>
 
     </aside>
 
@@ -3855,7 +3895,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">261</span>
+    <span class="phpdocumentor-element-found-in__line">260</span>
 
     </aside>
 
@@ -3899,7 +3939,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -3955,7 +3995,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -4017,7 +4057,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">204</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
@@ -4087,7 +4127,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">151</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -4152,7 +4192,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">546</span>
+    <span class="phpdocumentor-element-found-in__line">545</span>
 
     </aside>
 
@@ -4210,7 +4250,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">310</span>
+    <span class="phpdocumentor-element-found-in__line">324</span>
 
     </aside>
 
@@ -4274,7 +4314,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">335</span>
+    <span class="phpdocumentor-element-found-in__line">334</span>
 
     </aside>
 
@@ -4313,7 +4353,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">378</span>
+    <span class="phpdocumentor-element-found-in__line">377</span>
 
     </aside>
 
@@ -4352,7 +4392,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">232</span>
+    <span class="phpdocumentor-element-found-in__line">246</span>
 
     </aside>
 
@@ -4416,7 +4456,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">351</span>
+    <span class="phpdocumentor-element-found-in__line">365</span>
 
     </aside>
 
@@ -4471,7 +4511,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">288</span>
+    <span class="phpdocumentor-element-found-in__line">287</span>
 
     </aside>
 
@@ -4529,7 +4569,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">314</span>
+    <span class="phpdocumentor-element-found-in__line">313</span>
 
     </aside>
 
@@ -4572,7 +4612,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">363</span>
+    <span class="phpdocumentor-element-found-in__line">377</span>
 
     </aside>
 
@@ -4624,7 +4664,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">345</span>
+    <span class="phpdocumentor-element-found-in__line">344</span>
 
     </aside>
 
@@ -4663,7 +4703,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -4703,7 +4743,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">277</span>
+    <span class="phpdocumentor-element-found-in__line">276</span>
 
     </aside>
 
@@ -4772,7 +4812,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">201</span>
 
     </aside>
 
@@ -4827,7 +4867,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">188</span>
 
     </aside>
 
@@ -4910,7 +4950,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">215</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
@@ -4983,7 +5023,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">225</span>
+    <span class="phpdocumentor-element-found-in__line">224</span>
 
     </aside>
 
@@ -5030,7 +5070,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">235</span>
+    <span class="phpdocumentor-element-found-in__line">234</span>
 
     </aside>
 
@@ -5073,7 +5113,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">252</span>
+    <span class="phpdocumentor-element-found-in__line">251</span>
 
     </aside>
 
@@ -5137,7 +5177,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">176</span>
+    <span class="phpdocumentor-element-found-in__line">190</span>
 
     </aside>
 
@@ -5215,7 +5255,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -5250,7 +5290,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">446</span>
+    <span class="phpdocumentor-element-found-in__line">445</span>
 
     </aside>
 
@@ -5324,7 +5364,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">470</span>
+    <span class="phpdocumentor-element-found-in__line">469</span>
 
     </aside>
 
@@ -5416,7 +5456,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">528</span>
+    <span class="phpdocumentor-element-found-in__line">527</span>
 
     </aside>
 
@@ -5508,11 +5548,11 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">497</span>
+    <span class="phpdocumentor-element-found-in__line">496</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Helps with getting Part attributes for components.</p>
+        <p class="phpdocumentor-summary">Helps with getting Part attributes for classes with extended types.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -5568,7 +5608,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">100</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -5640,7 +5680,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">120</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -5712,7 +5752,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">139</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -5782,7 +5822,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">261</span>
+    <span class="phpdocumentor-element-found-in__line">275</span>
 
     </aside>
 
@@ -5825,7 +5865,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">329</span>
+    <span class="phpdocumentor-element-found-in__line">343</span>
 
     </aside>
 
@@ -5868,7 +5908,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">251</span>
+    <span class="phpdocumentor-element-found-in__line">265</span>
 
     </aside>
 
@@ -5911,7 +5951,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">339</span>
+    <span class="phpdocumentor-element-found-in__line">353</span>
 
     </aside>
 
@@ -5954,7 +5994,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">279</span>
+    <span class="phpdocumentor-element-found-in__line">293</span>
 
     </aside>
 
@@ -5997,7 +6037,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/OAuth/Application.php"><a href="files/src-discord-parts-oauth-application.html"><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">297</span>
+    <span class="phpdocumentor-element-found-in__line">311</span>
 
     </aside>
 
@@ -6040,7 +6080,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">359</span>
+    <span class="phpdocumentor-element-found-in__line">358</span>
 
     </aside>
 
@@ -6093,7 +6133,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">166</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -6149,7 +6189,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">419</span>
+    <span class="phpdocumentor-element-found-in__line">418</span>
 
     </aside>
 

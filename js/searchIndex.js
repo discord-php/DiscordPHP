@@ -568,32 +568,32 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003ASTYLE_PRIMARY",
             "name": "STYLE_PRIMARY",
-            "summary": "",
+            "summary": "The\u0020most\u0020important\u0020or\u0020recommended\u0020action\u0020in\u0020a\u0020group\u0020of\u0020options.",
             "url": "classes/Discord-Builders-Components-Button.html#constant_STYLE_PRIMARY"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003ASTYLE_SECONDARY",
             "name": "STYLE_SECONDARY",
-            "summary": "",
+            "summary": "Alternative\u0020or\u0020supporting\u0020actions.",
             "url": "classes/Discord-Builders-Components-Button.html#constant_STYLE_SECONDARY"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003ASTYLE_SUCCESS",
             "name": "STYLE_SUCCESS",
-            "summary": "",
+            "summary": "Positive\u0020confirmation\u0020or\u0020completion\u0020actions.",
             "url": "classes/Discord-Builders-Components-Button.html#constant_STYLE_SUCCESS"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003ASTYLE_DANGER",
             "name": "STYLE_DANGER",
-            "summary": "",
+            "summary": "An\u0020action\u0020with\u0020irreversible\u0020consequences.",
             "url": "classes/Discord-Builders-Components-Button.html#constant_STYLE_DANGER"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003ASTYLE_LINK",
             "name": "STYLE_LINK",
-            "summary": "",
+            "summary": "Navigates\u0020to\u0020a\u0020URL.",
             "url": "classes/Discord-Builders-Components-Button.html#constant_STYLE_LINK"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003ASTYLE_PREMIUM",
             "name": "STYLE_PREMIUM",
-            "summary": "",
+            "summary": "Purchase.",
             "url": "classes/Discord-Builders-Components-Button.html#constant_STYLE_PREMIUM"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button\u003A\u003A\u0024type",
@@ -908,7 +908,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Content",
             "name": "Content",
-            "summary": "Components\u0020allow\u0020you\u0020to\u0020style\u0020and\u0020structure\u0020your\u0020messages,\u0020modals,\u0020and\u0020interactions.",
+            "summary": "For\u0020displaying\u0020static\u0020text,\u0020images,\u0020and\u0020files\u0020\u0028Text\u0020Display,\u0020Media\u0020Gallery,\u0020Thumbnails\u0029.",
             "url": "classes/Discord-Builders-Components-Content.html"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Contracts\\ComponentV2",
@@ -1028,7 +1028,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Interactive",
             "name": "Interactive",
-            "summary": "Components\u0020allow\u0020you\u0020to\u0020style\u0020and\u0020structure\u0020your\u0020messages,\u0020modals,\u0020and\u0020interactions.",
+            "summary": "For\u0020user\u0020interactions\u0020\u0028Buttons,\u0020Select\u0020Menus,\u0020Text\u0020Input\u0029.",
             "url": "classes/Discord-Builders-Components-Interactive.html"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Interactive\u003A\u003AgetId\u0028\u0029",
@@ -1103,7 +1103,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Layout",
             "name": "Layout",
-            "summary": "Components\u0020allow\u0020you\u0020to\u0020style\u0020and\u0020structure\u0020your\u0020messages,\u0020modals,\u0020and\u0020interactions.",
+            "summary": "For\u0020organizing\u0020and\u0020structuring\u0020content\u0020\u0028Action\u0020Rows,\u0020Sections,\u0020Containers\u0029.",
             "url": "classes/Discord-Builders-Components-Layout.html"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\MediaGallery",
@@ -1793,12 +1793,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003ASTYLE_SHORT",
             "name": "STYLE_SHORT",
-            "summary": "",
+            "summary": "Single\u002Dline\u0020input.",
             "url": "classes/Discord-Builders-Components-TextInput.html#constant_STYLE_SHORT"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003ASTYLE_PARAGRAPH",
             "name": "STYLE_PARAGRAPH",
-            "summary": "",
+            "summary": "Multi\u002Dline\u0020input.",
             "url": "classes/Discord-Builders-Components-TextInput.html#constant_STYLE_PARAGRAPH"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003A\u0024type",
@@ -4428,12 +4428,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AVIDEO_QUALITY_AUTO",
             "name": "VIDEO_QUALITY_AUTO",
-            "summary": "",
+            "summary": "Discord\u0020chooses\u0020the\u0020quality\u0020for\u0020optimal\u0020performance.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_VIDEO_QUALITY_AUTO"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AVIDEO_QUALITY_FULL",
             "name": "VIDEO_QUALITY_FULL",
-            "summary": "",
+            "summary": "720p.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_VIDEO_QUALITY_FULL"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFLAG_PINNED",
@@ -4443,28 +4443,38 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFLAG_REQUIRE_TAG",
             "name": "FLAG_REQUIRE_TAG",
-            "summary": "",
+            "summary": "Whether\u0020a\u0020tag\u0020is\u0020required\u0020to\u0020be\u0020specified\u0020when\u0020creating\u0020a\u0020thread\u0020in\u0020a\u0020\u0060GUILD_FORUM\u0060\u0020or\u0020a\u0020\u0060GUILD_MEDIA\u0060\u0020channel.\u0020Tags\u0020are\u0020specified\u0020in\u0020the\u0020\u0060applied_tags\u0060\u0020field.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_FLAG_REQUIRE_TAG"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AHIDE_MEDIA_DOWNLOAD_OPTIONS",
+            "name": "HIDE_MEDIA_DOWNLOAD_OPTIONS",
+            "summary": "When\u0020set\u0020hides\u0020the\u0020embedded\u0020media\u0020download\u0020options.\u0020Available\u0020only\u0020for\u0020media\u0020channels.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_HIDE_MEDIA_DOWNLOAD_OPTIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ASORT_ORDER_LATEST_ACTIVITY",
             "name": "SORT_ORDER_LATEST_ACTIVITY",
-            "summary": "",
+            "summary": "Sort\u0020forum\u0020posts\u0020by\u0020activity.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_SORT_ORDER_LATEST_ACTIVITY"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ASORT_ORDER_CREATION_DATE",
             "name": "SORT_ORDER_CREATION_DATE",
-            "summary": "",
+            "summary": "Sort\u0020forum\u0020posts\u0020by\u0020creation\u0020time\u0020\u0028from\u0020most\u0020recent\u0020to\u0020oldest\u0029.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_SORT_ORDER_CREATION_DATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFORUM_LAYOUT_NOT_SET",
             "name": "FORUM_LAYOUT_NOT_SET",
-            "summary": "",
+            "summary": "No\u0020default\u0020has\u0020been\u0020set\u0020for\u0020forum\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_FORUM_LAYOUT_NOT_SET"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFORUM_LAYOUT_LIST_VIEW",
             "name": "FORUM_LAYOUT_LIST_VIEW",
-            "summary": "",
+            "summary": "Display\u0020posts\u0020as\u0020a\u0020list.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_FORUM_LAYOUT_LIST_VIEW"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFORUM_LAYOUT_GALLERY_VIEW",
+            "name": "FORUM_LAYOUT_GALLERY_VIEW",
+            "summary": "Display\u0020posts\u0020as\u0020a\u0020collection\u0020of\u0020tiles.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_FORUM_LAYOUT_GALLERY_VIEW"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFORUM_LAYOUT_GRID_VIEW",
             "name": "FORUM_LAYOUT_GRID_VIEW",
@@ -4733,7 +4743,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AFLAG_IS_GUEST_INVITE",
             "name": "FLAG_IS_GUEST_INVITE",
-            "summary": "",
+            "summary": "This\u0020invite\u0020is\u0020a\u0020guest\u0020invite\u0020for\u0020a\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Invite.html#constant_FLAG_IS_GUEST_INVITE"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003A\u0024fillable",
@@ -4888,17 +4898,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003ATYPE_ROLE",
             "name": "TYPE_ROLE",
-            "summary": "",
+            "summary": "Controls\u0020role\u0020mentions.",
             "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#constant_TYPE_ROLE"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003ATYPE_USER",
             "name": "TYPE_USER",
-            "summary": "",
+            "summary": "Controls\u0020user\u0020mentions.",
             "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#constant_TYPE_USER"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003ATYPE_EVERYONE",
             "name": "TYPE_EVERYONE",
-            "summary": "",
+            "summary": "Controls\u0020\u0040everyone\u0020and\u0020\u0040here\u0020mentions.",
             "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#constant_TYPE_EVERYONE"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003A\u0024parse",
@@ -4983,7 +4993,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Content",
             "name": "Content",
-            "summary": "Abstract\u0020class\u0020for\u0020content\u0020components.",
+            "summary": "For\u0020displaying\u0020static\u0020text,\u0020images,\u0020and\u0020files\u0020\u0028Text\u0020Display,\u0020Media\u0020Gallery,\u0020Thumbnails\u0029.",
             "url": "classes/Discord-Parts-Channel-Message-Content.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\DefaultValue",
@@ -5023,7 +5033,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Interactive",
             "name": "Interactive",
-            "summary": "Abstract\u0020class\u0020for\u0020interactive\u0020components.",
+            "summary": "For\u0020user\u0020interactions\u0020\u0028Buttons,\u0020Select\u0020Menus,\u0020Text\u0020Input\u0029.",
             "url": "classes/Discord-Parts-Channel-Message-Interactive.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Interactive\u003A\u003A\u0024fillable",
@@ -5048,7 +5058,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Layout",
             "name": "Layout",
-            "summary": "Abstract\u0020class\u0020for\u0020layout\u0020components.",
+            "summary": "For\u0020organizing\u0020and\u0020structuring\u0020content\u0020\u0028Action\u0020Rows,\u0020Sections,\u0020Containers\u0029.",
             "url": "classes/Discord-Parts-Channel-Message-Layout.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\MediaGallery",
@@ -5243,12 +5253,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageReference\u003A\u003ATYPE_DEFAULT",
             "name": "TYPE_DEFAULT",
-            "summary": "",
+            "summary": "A\u0020standard\u0020reference\u0020used\u0020by\u0020replies.",
             "url": "classes/Discord-Parts-Channel-Message-MessageReference.html#constant_TYPE_DEFAULT"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageReference\u003A\u003ATYPE_FORWARD",
             "name": "TYPE_FORWARD",
-            "summary": "",
+            "summary": "Reference\u0020used\u0020to\u0020point\u0020to\u0020a\u0020message\u0020at\u0020a\u0020point\u0020in\u0020time.",
             "url": "classes/Discord-Parts-Channel-Message-MessageReference.html#constant_TYPE_FORWARD"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\MessageReference\u003A\u003A\u0024fillable",
@@ -5891,10 +5901,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_POLL_RESULT"
         },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AEMOJI_ADDED",
-            "name": "EMOJI_ADDED",
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003ATYPE_EMOJI_ADDED",
+            "name": "TYPE_EMOJI_ADDED",
             "summary": "",
-            "url": "classes/Discord-Parts-Channel-Message.html#constant_EMOJI_ADDED"
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_EMOJI_ADDED"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AGUILD_MEMBER_JOIN",
             "name": "GUILD_MEMBER_JOIN",
@@ -5993,12 +6003,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AREFERENCE_DEFAULT",
             "name": "REFERENCE_DEFAULT",
-            "summary": "",
+            "summary": "A\u0020standard\u0020reference\u0020used\u0020by\u0020replies.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_REFERENCE_DEFAULT"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AREFERENCE_FORWARD",
             "name": "REFERENCE_FORWARD",
-            "summary": "",
+            "summary": "Reference\u0020used\u0020to\u0020point\u0020to\u0020a\u0020message\u0020at\u0020a\u0020point\u0020in\u0020time.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_REFERENCE_FORWARD"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_CROSSPOSTED",
@@ -6073,7 +6083,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_IS_COMPONENTS_V2",
             "name": "FLAG_IS_COMPONENTS_V2",
-            "summary": "Allows\u0020you\u0020to\u0020create\u0020fully\u0020component\u002Ddriven\u0020messages.",
+            "summary": "Allows\u0020you\u0020to\u0020create\u0020fully\u0020component\u002Ddriven\u0020messages.\u0020Once\u0020a\u0020message\u0020has\u0020been\u0020sent\u0020with\u0020this\u0020flag,\u0020it\u0020can\u0027t\u0020be\u0020removed\u0020from\u0020that\u0020message.",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_IS_COMPONENTS_V2"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003A\u0024fillable",
@@ -6713,37 +6723,37 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003ATYPE_RICH",
             "name": "TYPE_RICH",
-            "summary": "",
+            "summary": "Generic\u0020embed\u0020rendered\u0020from\u0020embed\u0020attributes.",
             "url": "classes/Discord-Parts-Embed-Embed.html#constant_TYPE_RICH"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003ATYPE_IMAGE",
             "name": "TYPE_IMAGE",
-            "summary": "",
+            "summary": "Image\u0020embed.",
             "url": "classes/Discord-Parts-Embed-Embed.html#constant_TYPE_IMAGE"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003ATYPE_VIDEO",
             "name": "TYPE_VIDEO",
-            "summary": "",
+            "summary": "Video\u0020embed.",
             "url": "classes/Discord-Parts-Embed-Embed.html#constant_TYPE_VIDEO"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003ATYPE_GIFV",
             "name": "TYPE_GIFV",
-            "summary": "",
+            "summary": "Animated\u0020gif\u0020image\u0020embed\u0020rendered\u0020as\u0020a\u0020video\u0020embed.",
             "url": "classes/Discord-Parts-Embed-Embed.html#constant_TYPE_GIFV"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003ATYPE_ARTICLE",
             "name": "TYPE_ARTICLE",
-            "summary": "",
+            "summary": "Article\u0020embed.",
             "url": "classes/Discord-Parts-Embed-Embed.html#constant_TYPE_ARTICLE"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003ATYPE_LINK",
             "name": "TYPE_LINK",
-            "summary": "",
+            "summary": "Link\u0020embed.",
             "url": "classes/Discord-Parts-Embed-Embed.html#constant_TYPE_LINK"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003ATYPE_POLL_RESULT",
             "name": "TYPE_POLL_RESULT",
-            "summary": "",
+            "summary": "Poll\u0020result\u0020embed.",
             "url": "classes/Discord-Parts-Embed-Embed.html#constant_TYPE_POLL_RESULT"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003A\u0024fillable",
@@ -6798,7 +6808,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\EmbedPollResult\u003A\u003AgetPollFieldsAttribute\u0028\u0029",
             "name": "getPollFieldsAttribute",
-            "summary": "",
+            "summary": "Gets\u0020the\u0020poll\u0020fields\u0020attribute.",
             "url": "classes/Discord-Parts-Embed-EmbedPollResult.html#method_getPollFieldsAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\EmbedPollResult\u003A\u003ATYPE",
@@ -7378,22 +7388,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Action\u003A\u003ATYPE_BLOCK_MESSAGE",
             "name": "TYPE_BLOCK_MESSAGE",
-            "summary": "",
+            "summary": "Blocks\u0020a\u0020member\u0027s\u0020message\u0020and\u0020prevents\u0020it\u0020from\u0020being\u0020posted.\u0020A\u0020custom\u0020explanation\u0020can\u0020be\u0020specified\u0020and\u0020shown\u0020to\u0020members\u0020whenever\u0020their\u0020message\u0020is\u0020blocked.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Action.html#constant_TYPE_BLOCK_MESSAGE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Action\u003A\u003ATYPE_SEND_ALERT_MESSAGE",
             "name": "TYPE_SEND_ALERT_MESSAGE",
-            "summary": "",
+            "summary": "Logs\u0020user\u0020content\u0020to\u0020a\u0020specified\u0020channel.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Action.html#constant_TYPE_SEND_ALERT_MESSAGE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Action\u003A\u003ATYPE_TIMEOUT",
             "name": "TYPE_TIMEOUT",
-            "summary": "",
+            "summary": "Timeout\u0020user\u0020for\u0020a\u0020specified\u0020duration.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Action.html#constant_TYPE_TIMEOUT"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Action\u003A\u003ATYPE_BLOCK_MEMBER_INTERACTION",
             "name": "TYPE_BLOCK_MEMBER_INTERACTION",
-            "summary": "",
+            "summary": "Prevents\u0020a\u0020member\u0020from\u0020using\u0020text,\u0020voice,\u0020or\u0020other\u0020interactions.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Action.html#constant_TYPE_BLOCK_MEMBER_INTERACTION"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Action\u003A\u003A\u0024fillable",
@@ -7468,48 +7478,53 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003ATRIGGER_TYPE_KEYWORD",
             "name": "TRIGGER_TYPE_KEYWORD",
-            "summary": "",
+            "summary": "Check\u0020if\u0020content\u0020contains\u0020words\u0020from\u0020a\u0020user\u0020defined\u0020list\u0020of\u0020keywords.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_TRIGGER_TYPE_KEYWORD"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003ATRIGGER_TYPE_SPAM",
             "name": "TRIGGER_TYPE_SPAM",
-            "summary": "",
+            "summary": "Check\u0020if\u0020content\u0020represents\u0020generic\u0020spam.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_TRIGGER_TYPE_SPAM"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003ATRIGGER_TYPE_KEYWORD_PRESET",
             "name": "TRIGGER_TYPE_KEYWORD_PRESET",
-            "summary": "",
+            "summary": "Check\u0020if\u0020content\u0020contains\u0020words\u0020from\u0020internal\u0020pre\u002Ddefined\u0020wordsets.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_TRIGGER_TYPE_KEYWORD_PRESET"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003ATRIGGER_TYPE_MENTION_SPAM",
             "name": "TRIGGER_TYPE_MENTION_SPAM",
-            "summary": "",
+            "summary": "Check\u0020if\u0020content\u0020contains\u0020more\u0020unique\u0020mentions\u0020than\u0020allowed.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_TRIGGER_TYPE_MENTION_SPAM"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003ATRIGGER_TYPE_PROFILE",
             "name": "TRIGGER_TYPE_PROFILE",
-            "summary": "",
+            "summary": "Check\u0020if\u0020member\u0020profile\u0020contains\u0020words\u0020from\u0020a\u0020user\u0020defined\u0020list\u0020of\u0020keywords.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_TRIGGER_TYPE_PROFILE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AKEYWORD_PRESET_TYPE_PROFANITY",
             "name": "KEYWORD_PRESET_TYPE_PROFANITY",
-            "summary": "",
+            "summary": "Words\u0020that\u0020may\u0020be\u0020considered\u0020forms\u0020of\u0020swearing\u0020or\u0020cursing.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_KEYWORD_PRESET_TYPE_PROFANITY"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AKEYWORD_PRESET_TYPE_SEXUAL_CONTENT",
             "name": "KEYWORD_PRESET_TYPE_SEXUAL_CONTENT",
-            "summary": "",
+            "summary": "Words\u0020that\u0020refer\u0020to\u0020sexually\u0020explicit\u0020behavior\u0020or\u0020activity.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_KEYWORD_PRESET_TYPE_SEXUAL_CONTENT"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AKEYWORD_PRESET_TYPE_SLURS",
             "name": "KEYWORD_PRESET_TYPE_SLURS",
-            "summary": "",
+            "summary": "Personal\u0020insults\u0020or\u0020words\u0020that\u0020may\u0020be\u0020considered\u0020hate\u0020speech.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_KEYWORD_PRESET_TYPE_SLURS"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AEVENT_TYPE_MESSAGE_SEND",
             "name": "EVENT_TYPE_MESSAGE_SEND",
-            "summary": "",
+            "summary": "When\u0020a\u0020member\u0020sends\u0020or\u0020edits\u0020a\u0020message\u0020in\u0020the\u0020guild.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_EVENT_TYPE_MESSAGE_SEND"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AEVENT_TYPE_MEMBER_UPDATE",
+            "name": "EVENT_TYPE_MEMBER_UPDATE",
+            "summary": "When\u0020a\u0020member\u0020edits\u0020their\u0020profile.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_EVENT_TYPE_MEMBER_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -7873,38 +7888,43 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ANOTIFICATION_ALL_MESSAGES",
             "name": "NOTIFICATION_ALL_MESSAGES",
-            "summary": "",
+            "summary": "Members\u0020will\u0020receive\u0020notifications\u0020for\u0020all\u0020messages\u0020by\u0020default.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_NOTIFICATION_ALL_MESSAGES"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ANOTIFICATION_ONLY_MENTIONS",
             "name": "NOTIFICATION_ONLY_MENTIONS",
-            "summary": "",
+            "summary": "Members\u0020will\u0020receive\u0020notifications\u0020only\u0020for\u0020messages\u0020that\u0020\u0040mention\u0020them\u0020by\u0020default.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_NOTIFICATION_ONLY_MENTIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AEXPLICIT_CONTENT_FILTER_DISABLED",
             "name": "EXPLICIT_CONTENT_FILTER_DISABLED",
-            "summary": "",
+            "summary": "Media\u0020content\u0020will\u0020not\u0020be\u0020scanned.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_EXPLICIT_CONTENT_FILTER_DISABLED"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AEXPLICIT_CONTENT_FILTER_MEMBERS_WITHOUT_ROLES",
             "name": "EXPLICIT_CONTENT_FILTER_MEMBERS_WITHOUT_ROLES",
-            "summary": "",
+            "summary": "Media\u0020content\u0020sent\u0020by\u0020members\u0020without\u0020roles\u0020will\u0020be\u0020scanned.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_EXPLICIT_CONTENT_FILTER_MEMBERS_WITHOUT_ROLES"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AEXPLICIT_CONTENT_FILTER_ALL_MEMBERS",
             "name": "EXPLICIT_CONTENT_FILTER_ALL_MEMBERS",
-            "summary": "",
+            "summary": "Media\u0020content\u0020sent\u0020by\u0020all\u0020members\u0020will\u0020be\u0020scanned.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_EXPLICIT_CONTENT_FILTER_ALL_MEMBERS"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AMFA_NONE",
             "name": "MFA_NONE",
-            "summary": "",
+            "summary": "Guild\u0020has\u0020no\u0020MFA\/2FA\u0020requirement\u0020for\u0020moderation\u0020actions.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_MFA_NONE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AMFA_ELEVATED",
             "name": "MFA_ELEVATED",
-            "summary": "",
+            "summary": "Guild\u0020has\u0020a\u00202FA\u0020requirement\u0020for\u0020moderation\u0020actions.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_MFA_ELEVATED"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ALEVEL_NONE",
+            "name": "LEVEL_NONE",
+            "summary": "Unrestricted.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#constant_LEVEL_NONE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ALEVEL_OFF",
             "name": "LEVEL_OFF",
@@ -7913,18 +7933,28 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ALEVEL_LOW",
             "name": "LEVEL_LOW",
-            "summary": "",
+            "summary": "Must\u0020have\u0020verified\u0020email\u0020on\u0020account.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_LEVEL_LOW"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ALEVEL_MEDIUM",
             "name": "LEVEL_MEDIUM",
-            "summary": "",
+            "summary": "Must\u0020be\u0020registered\u0020on\u0020Discord\u0020for\u0020longer\u0020than\u00205\u0020minutes.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_LEVEL_MEDIUM"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ALEVEL_HIGH",
+            "name": "LEVEL_HIGH",
+            "summary": "Must\u0020be\u0020a\u0020member\u0020of\u0020the\u0020server\u0020for\u0020longer\u0020than\u002010\u0020minutes.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#constant_LEVEL_HIGH"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ALEVEL_TABLEFLIP",
             "name": "LEVEL_TABLEFLIP",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_LEVEL_TABLEFLIP"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ALEVEL_VERY_HIGH",
+            "name": "LEVEL_VERY_HIGH",
+            "summary": "Must\u0020have\u0020a\u0020verified\u0020phone\u0020number.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#constant_LEVEL_VERY_HIGH"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ALEVEL_DOUBLE_TABLEFLIP",
             "name": "LEVEL_DOUBLE_TABLEFLIP",
@@ -7953,22 +7983,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003APREMIUM_NONE",
             "name": "PREMIUM_NONE",
-            "summary": "",
+            "summary": "Guild\u0020has\u0020not\u0020unlocked\u0020any\u0020Server\u0020Boost\u0020perks.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_PREMIUM_NONE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003APREMIUM_TIER_1",
             "name": "PREMIUM_TIER_1",
-            "summary": "",
+            "summary": "Guild\u0020has\u0020unlocked\u0020Server\u0020Boost\u0020level\u00201\u0020perks.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_PREMIUM_TIER_1"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003APREMIUM_TIER_2",
             "name": "PREMIUM_TIER_2",
-            "summary": "",
+            "summary": "Guild\u0020has\u0020unlocked\u0020Server\u0020Boost\u0020level\u00202\u0020perks.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_PREMIUM_TIER_2"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003APREMIUM_TIER_3",
             "name": "PREMIUM_TIER_3",
-            "summary": "",
+            "summary": "Guild\u0020has\u0020unlocked\u0020Server\u0020Boost\u0020level\u00203\u0020perks.",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_PREMIUM_TIER_3"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003ASUPPRESS_JOIN_NOTIFICATIONS",
@@ -8531,6 +8561,11 @@ Search.appendIndex(
             "summary": "Returns\u0020a\u0020formatted\u0020mention.",
             "url": "classes/Discord-Parts-Guild-Role.html#method___toString"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003AFLAG_IN_PROMPT",
+            "name": "FLAG_IN_PROMPT",
+            "summary": "Role\u0020can\u0020be\u0020selected\u0020by\u0020members\u0020in\u0020an\u0020onboarding\u0020prompt.",
+            "url": "classes/Discord-Parts-Guild-Role.html#constant_FLAG_IN_PROMPT"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003AIN_PROMPT",
             "name": "IN_PROMPT",
             "summary": "",
@@ -8638,7 +8673,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003APRIVACY_LEVEL_GUILD_ONLY",
             "name": "PRIVACY_LEVEL_GUILD_ONLY",
-            "summary": "",
+            "summary": "The\u0020scheduled\u0020event\u0020is\u0020only\u0020accessible\u0020to\u0020guild\u0020members.",
             "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#constant_PRIVACY_LEVEL_GUILD_ONLY"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AENTITY_TYPE_STAGE_INSTANCE",
@@ -8763,12 +8798,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Sticker\u003A\u003ATYPE_STANDARD",
             "name": "TYPE_STANDARD",
-            "summary": "",
+            "summary": "An\u0020official\u0020sticker\u0020in\u0020a\u0020pack.",
             "url": "classes/Discord-Parts-Guild-Sticker.html#constant_TYPE_STANDARD"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Sticker\u003A\u003ATYPE_GUILD",
             "name": "TYPE_GUILD",
-            "summary": "",
+            "summary": "A\u0020sticker\u0020uploaded\u0020to\u0020a\u0020guild\u0020for\u0020the\u0020guild\u0027s\u0020members.",
             "url": "classes/Discord-Parts-Guild-Sticker.html#constant_TYPE_GUILD"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Sticker\u003A\u003AFORMAT_TYPE_PNG",
@@ -8858,27 +8893,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE_SHIELD",
             "name": "STYLE_SHIELD",
-            "summary": "shield\u0020style\u0020widget\u0020with\u0020Discord\u0020icon\u0020and\u0020guild\u0020members\u0020online\u0020count.",
+            "summary": "Shield\u0020style\u0020widget\u0020with\u0020Discord\u0020icon\u0020and\u0020guild\u0020members\u0020online\u0020count.",
             "url": "classes/Discord-Parts-Guild-Widget.html#constant_STYLE_SHIELD"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE_BANNER1",
             "name": "STYLE_BANNER1",
-            "summary": "large\u0020image\u0020with\u0020guild\u0020icon,\u0020name\u0020and\u0020online\u0020count.\u0020\u0022POWERED\u0020BY\u0020DISCORD\u0022\nas\u0020the\u0020footer\u0020of\u0020the\u0020widget.",
+            "summary": "Large\u0020image\u0020with\u0020guild\u0020icon,\u0020name\u0020and\u0020online\u0020count.\u0020\u0022POWERED\u0020BY\u0020DISCORD\u0022\u0020as\u0020the\u0020footer\u0020of\u0020the\u0020widget.",
             "url": "classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER1"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE_BANNER2",
             "name": "STYLE_BANNER2",
-            "summary": "smaller\u0020widget\u0020style\u0020with\u0020guild\u0020icon,\u0020name\u0020and\u0020online\u0020count.\u0020Split\u0020on\u0020the\nright\u0020with\u0020Discord\u0020logo.",
+            "summary": "\u002A\u0020Smaller\u0020widget\u0020style\u0020with\u0020guild\u0020icon,\u0020name\u0020and\u0020online\u0020count.\u0020Split\u0020on\u0020the\u0020right\u0020with\u0020Discord\u0020logo.",
             "url": "classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER2"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE_BANNER3",
             "name": "STYLE_BANNER3",
-            "summary": "large\u0020image\u0020with\u0020guild\u0020icon,\u0020name\u0020and\u0020online\u0020count.\u0020In\u0020the\u0020footer,\nDiscord\u0020logo\u0020on\u0020the\u0020left\u0020and\u0020\u0022Chat\u0020Now\u0022\u0020on\u0020the\u0020right.",
+            "summary": "Large\u0020image\u0020with\u0020guild\u0020icon,\u0020name\u0020and\u0020online\u0020count.\u0020In\u0020the\u0020footer,\u0020Discord\u0020logo\u0020on\u0020the\u0020left\u0020and\u0020\u0022Chat\u0020Now\u0022\u0020on\u0020the\u0020right.",
             "url": "classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER3"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE_BANNER4",
             "name": "STYLE_BANNER4",
-            "summary": "large\u0020Discord\u0020logo\u0020at\u0020the\u0020top\u0020of\u0020the\u0020widget.\u0020Guild\u0020icon,\u0020name\u0020and\u0020online\ncount\u0020in\u0020the\u0020middle\u0020portion\u0020of\u0020the\u0020widget\u0020and\u0020a\u0020\u0022JOIN\u0020MY\u0020SERVER\u0022\u0020button\nat\u0020the\u0020bottom.",
+            "summary": "Large\u0020Discord\u0020logo\u0020at\u0020the\u0020top\u0020of\u0020the\u0020widget.\u0020Guild\u0020icon,\u0020name\u0020and\u0020online\ncount\u0020in\u0020the\u0020middle\u0020portion\u0020of\u0020the\u0020widget\u0020and\u0020a\u0020\u0022JOIN\u0020MY\u0020SERVER\u0022\u0020button\nat\u0020the\u0020bottom.",
             "url": "classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER4"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE",
@@ -9138,7 +9173,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AINTEGER",
             "name": "INTEGER",
-            "summary": "",
+            "summary": "Any\u0020integer\u0020between\u0020\u002D2\u005E53\u002B1\u0020and\u00202\u005E53\u002D1.",
             "url": "classes/Discord-Parts-Interactions-Command-Option.html#constant_INTEGER"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003ABOOLEAN",
@@ -9153,7 +9188,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003ACHANNEL",
             "name": "CHANNEL",
-            "summary": "",
+            "summary": "Includes\u0020all\u0020channel\u0020types\u0020\u002B\u0020categories.",
             "url": "classes/Discord-Parts-Interactions-Command-Option.html#constant_CHANNEL"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AROLE",
@@ -9163,17 +9198,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AMENTIONABLE",
             "name": "MENTIONABLE",
-            "summary": "",
+            "summary": "Includes\u0020users\u0020and\u0020roles.",
             "url": "classes/Discord-Parts-Interactions-Command-Option.html#constant_MENTIONABLE"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003ANUMBER",
             "name": "NUMBER",
-            "summary": "",
+            "summary": "Any\u0020double\u0020between\u0020\u002D2\u005E53\u0020and\u00202\u005E53.",
             "url": "classes/Discord-Parts-Interactions-Command-Option.html#constant_NUMBER"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AATTACHMENT",
             "name": "ATTACHMENT",
-            "summary": "",
+            "summary": "Attachment\u0020object.",
             "url": "classes/Discord-Parts-Interactions-Command-Option.html#constant_ATTACHMENT"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003A\u0024fillable",
@@ -9693,42 +9728,42 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003APURCHASE",
             "name": "PURCHASE",
-            "summary": "",
+            "summary": "Entitlement\u0020was\u0020purchased\u0020by\u0020user.",
             "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_PURCHASE"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003APREMIUM_SUBSCRIPTION",
             "name": "PREMIUM_SUBSCRIPTION",
-            "summary": "",
+            "summary": "Entitlement\u0020for\u0020Discord\u0020Nitro\u0020subscription.",
             "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_PREMIUM_SUBSCRIPTION"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003ADEVELOPER_GIFT",
             "name": "DEVELOPER_GIFT",
-            "summary": "",
+            "summary": "Entitlement\u0020was\u0020gifted\u0020by\u0020developer.",
             "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_DEVELOPER_GIFT"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003ATEST_MODE_PURCHASE",
             "name": "TEST_MODE_PURCHASE",
-            "summary": "",
+            "summary": "Entitlement\u0020was\u0020purchased\u0020by\u0020a\u0020dev\u0020in\u0020application\u0020test\u0020mode.",
             "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_TEST_MODE_PURCHASE"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003AFREE_PURCHASE",
             "name": "FREE_PURCHASE",
-            "summary": "",
+            "summary": "Entitlement\u0020was\u0020granted\u0020when\u0020the\u0020SKU\u0020was\u0020free.",
             "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_FREE_PURCHASE"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003AUSER_GIFT",
             "name": "USER_GIFT",
-            "summary": "",
+            "summary": "Entitlement\u0020was\u0020gifted\u0020by\u0020another\u0020user.",
             "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_USER_GIFT"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003APREMIUM_PURCHASE",
             "name": "PREMIUM_PURCHASE",
-            "summary": "",
+            "summary": "Entitlement\u0020was\u0020claimed\u0020by\u0020user\u0020for\u0020free\u0020as\u0020a\u0020Nitro\u0020Subscriber.",
             "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_PREMIUM_PURCHASE"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003AAPPLICATION_SUBSCRIPTION",
             "name": "APPLICATION_SUBSCRIPTION",
-            "summary": "",
+            "summary": "Entitlement\u0020was\u0020purchased\u0020as\u0020an\u0020app\u0020subscription.",
             "url": "classes/Discord-Parts-Monetization-Entitlement.html#constant_APPLICATION_SUBSCRIPTION"
         },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003A\u0024fillable",
@@ -9948,52 +9983,52 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AAPPLICATION_AUTO_MODERATION_RULE_CREATE_BADGE",
             "name": "APPLICATION_AUTO_MODERATION_RULE_CREATE_BADGE",
-            "summary": "",
+            "summary": "Indicates\u0020if\u0020an\u0020app\u0020uses\u0020the\u0020Auto\u0020Moderation\u0020API.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_APPLICATION_AUTO_MODERATION_RULE_CREATE_BADGE"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AGATEWAY_PRESENCE",
             "name": "GATEWAY_PRESENCE",
-            "summary": "",
+            "summary": "Intent\u0020required\u0020for\u0020bots\u0020in\u0020100\u0020or\u0020more\u0020servers\u0020to\u0020receive\u0020\u0060presence_update\u0060\u0020events.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_PRESENCE"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AGATEWAY_PRESENCE_LIMITED",
             "name": "GATEWAY_PRESENCE_LIMITED",
-            "summary": "",
+            "summary": "Intent\u0020required\u0020for\u0020bots\u0020in\u0020under\u0020100\u0020servers\u0020to\u0020receive\u0020\u0060presence_update\u0060\u0020events,\u0020found\u0020on\u0020the\u0020Bot\u0020page\u0020in\u0020your\u0020app\u0027s\u0020settings.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_PRESENCE_LIMITED"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AGATEWAY_GUILD_MEMBERS",
             "name": "GATEWAY_GUILD_MEMBERS",
-            "summary": "",
+            "summary": "Intent\u0020required\u0020for\u0020bots\u0020in\u0020100\u0020or\u0020more\u0020servers\u0020to\u0020receive\u0020member\u002Drelated\u0020events\u0020like\u0020\u0060guild_member_add\u0060.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_GUILD_MEMBERS"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AGATEWAY_GUILD_MEMBERS_LIMITED",
             "name": "GATEWAY_GUILD_MEMBERS_LIMITED",
-            "summary": "",
+            "summary": "Intent\u0020required\u0020for\u0020bots\u0020in\u0020under\u0020100\u0020servers\u0020to\u0020receive\u0020member\u002Drelated\u0020events\u0020like\u0020\u0060guild_member_add\u0060,\u0020found\u0020on\u0020the\u0020Bot\u0020page\u0020in\u0020your\u0020app\u0027s\u0020settings.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_GUILD_MEMBERS_LIMITED"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AVERIFICATION_PENDING_GUILD_LIMIT",
             "name": "VERIFICATION_PENDING_GUILD_LIMIT",
-            "summary": "",
+            "summary": "Indicates\u0020unusual\u0020growth\u0020of\u0020an\u0020app\u0020that\u0020prevents\u0020verification.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_VERIFICATION_PENDING_GUILD_LIMIT"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AEMBEDDED",
             "name": "EMBEDDED",
-            "summary": "",
+            "summary": "Indicates\u0020if\u0020an\u0020app\u0020is\u0020embedded\u0020within\u0020the\u0020Discord\u0020client\u0020\u0028currently\u0020unavailable\u0020publicly\u0029.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_EMBEDDED"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AGATEWAY_MESSAGE_CONTENT",
             "name": "GATEWAY_MESSAGE_CONTENT",
-            "summary": "",
+            "summary": "Intent\u0020required\u0020for\u0020bots\u0020in\u0020100\u0020or\u0020more\u0020servers\u0020to\u0020receive\u0020message\u0020content.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_MESSAGE_CONTENT"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AGATEWAY_MESSAGE_CONTENT_LIMITED",
             "name": "GATEWAY_MESSAGE_CONTENT_LIMITED",
-            "summary": "",
+            "summary": "Intent\u0020required\u0020for\u0020bots\u0020in\u0020under\u0020100\u0020servers\u0020to\u0020receive\u0020message\u0020content,\u0020found\u0020on\u0020the\u0020Bot\u0020page\u0020in\u0020your\u0020app\u0027s\u0020settings.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_MESSAGE_CONTENT_LIMITED"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AAPPLICATION_COMMAND_BADGE",
             "name": "APPLICATION_COMMAND_BADGE",
-            "summary": "",
+            "summary": "Indicates\u0020if\u0020an\u0020app\u0020has\u0020registered\u0020global\u0020application\u0020commands.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_APPLICATION_COMMAND_BADGE"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AACTIVE",
@@ -10003,12 +10038,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AINTEGRATION_TYPE_GUILD_INSTALL",
             "name": "INTEGRATION_TYPE_GUILD_INSTALL",
-            "summary": "",
+            "summary": "App\u0020is\u0020installable\u0020to\u0020servers.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_INTEGRATION_TYPE_GUILD_INSTALL"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AINTEGRATION_TYPE_USER_INSTALL",
             "name": "INTEGRATION_TYPE_USER_INSTALL",
-            "summary": "",
+            "summary": "App\u0020is\u0020installable\u0020to\u0020users.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_INTEGRATION_TYPE_USER_INSTALL"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003A\u0024fillable",
@@ -10448,7 +10483,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AattributeTypedCollectionHelper\u0028\u0029",
             "name": "attributeTypedCollectionHelper",
-            "summary": "Helps\u0020with\u0020getting\u0020Part\u0020attributes\u0020for\u0020components.",
+            "summary": "Helps\u0020with\u0020getting\u0020Part\u0020attributes\u0020for\u0020classes\u0020with\u0020extended\u0020types.",
             "url": "classes/Discord-Parts-PartTrait.html#method_attributeTypedCollectionHelper"
         },                {
             "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AattributePartHelper\u0028\u0029",
@@ -10988,7 +11023,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AFLAG_PINNED",
             "name": "FLAG_PINNED",
-            "summary": "",
+            "summary": "This\u0020thread\u0020is\u0020pinned\u0020to\u0020the\u0020top\u0020of\u0020its\u0020parent\u0020GUILD_FORUM\u0020or\u0020GUILD_MEDIA\u0020channel.",
             "url": "classes/Discord-Parts-Thread-Thread.html#constant_FLAG_PINNED"
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003A\u0024fillable",
@@ -11051,9 +11086,14 @@ Search.appendIndex(
             "summary": "Converts\u0020the\u0020activity\u0020to\u0020a\u0020string.",
             "url": "classes/Discord-Parts-User-Activity.html#method___toString"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ATYPE_PLAYING",
+            "name": "TYPE_PLAYING",
+            "summary": "Playing\u0020\u007Bname\u007D",
+            "url": "classes/Discord-Parts-User-Activity.html#constant_TYPE_PLAYING"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ATYPE_GAME",
             "name": "TYPE_GAME",
-            "summary": "Playing\u0020\u007Bname\u007D",
+            "summary": "",
             "url": "classes/Discord-Parts-User-Activity.html#constant_TYPE_GAME"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ATYPE_STREAMING",
@@ -11080,11 +11120,6 @@ Search.appendIndex(
             "name": "TYPE_COMPETING",
             "summary": "Competing\u0020in\u0020\u007Bname\u007D",
             "url": "classes/Discord-Parts-User-Activity.html#constant_TYPE_COMPETING"
-        },                {
-            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ATYPE_PLAYING",
-            "name": "TYPE_PLAYING",
-            "summary": "",
-            "url": "classes/Discord-Parts-User-Activity.html#constant_TYPE_PLAYING"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003AFLAG_INSTANCE",
             "name": "FLAG_INSTANCE",
@@ -11133,37 +11168,42 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ASTATUS_ONLINE",
             "name": "STATUS_ONLINE",
-            "summary": "",
+            "summary": "Online.",
             "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_ONLINE"
-        },                {
-            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ASTATUS_IDLE",
-            "name": "STATUS_IDLE",
-            "summary": "",
-            "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_IDLE"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ASTATUS_DND",
             "name": "STATUS_DND",
-            "summary": "",
+            "summary": "Do\u0020Not\u0020Disturb.",
             "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_DND"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ASTATUS_IDLE",
+            "name": "STATUS_IDLE",
+            "summary": "AFK.",
+            "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_IDLE"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ASTATUS_INVISIBLE",
             "name": "STATUS_INVISIBLE",
-            "summary": "",
+            "summary": "Invisible\u0020and\u0020shown\u0020as\u0020offline.",
             "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_INVISIBLE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ASTATUS_OFFLINE",
+            "name": "STATUS_OFFLINE",
+            "summary": "Offline.",
+            "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_OFFLINE"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ASTATUS_DISPLAY_TYPE_NAME",
             "name": "STATUS_DISPLAY_TYPE_NAME",
-            "summary": "",
+            "summary": "\u0022Listening\u0020to\u0020Spotify\u0022",
             "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_NAME"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ASTATUS_DISPLAY_TYPE_STATE",
             "name": "STATUS_DISPLAY_TYPE_STATE",
-            "summary": "",
+            "summary": "\u0022Listening\u0020to\u0020Rick\u0020Astley\u0022",
             "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_STATE"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003ASTATUS_DISPLAY_TYPE_DETAILS",
             "name": "STATUS_DISPLAY_TYPE_DETAILS",
-            "summary": "",
+            "summary": "\u0022Listening\u0020to\u0020Never\u0020Gonna\u0020Give\u0020You\u0020Up\u0022",
             "url": "classes/Discord-Parts-User-Activity.html#constant_STATUS_DISPLAY_TYPE_DETAILS"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity\u003A\u003A\u0024fillable",
@@ -11736,15 +11776,30 @@ Search.appendIndex(
             "summary": "Returns\u0020a\u0020formatted\u0020mention.",
             "url": "classes/Discord-Parts-User-User.html#method___toString"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_STAFF",
+            "name": "FLAG_STAFF",
+            "summary": "Discord\u0020Employee.",
+            "url": "classes/Discord-Parts-User-User.html#constant_FLAG_STAFF"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_DISCORD_EMPLOYEE",
             "name": "FLAG_DISCORD_EMPLOYEE",
             "summary": "",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_EMPLOYEE"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_PARTNER",
+            "name": "FLAG_PARTNER",
+            "summary": "Partnered\u0020Server\u0020Owner.",
+            "url": "classes/Discord-Parts-User-User.html#constant_FLAG_PARTNER"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_DISCORD_PARTNER",
             "name": "FLAG_DISCORD_PARTNER",
             "summary": "",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_PARTNER"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_HYPESQUAD",
+            "name": "FLAG_HYPESQUAD",
+            "summary": "HypeSquad\u0020Events\u0020Member.",
+            "url": "classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_HYPESQUAD_EVENTS",
             "name": "FLAG_HYPESQUAD_EVENTS",
@@ -11753,28 +11808,53 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_BUG_HUNTER_LEVEL_1",
             "name": "FLAG_BUG_HUNTER_LEVEL_1",
-            "summary": "",
+            "summary": "Bug\u0020Hunter\u0020Level\u00201.",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_BUG_HUNTER_LEVEL_1"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AHYPESQUAD_ONLINE_HOUSE_1",
+            "name": "HYPESQUAD_ONLINE_HOUSE_1",
+            "summary": "House\u0020Bravery\u0020Member.",
+            "url": "classes/Discord-Parts-User-User.html#constant_HYPESQUAD_ONLINE_HOUSE_1"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_HOUSE_BRAVERY",
             "name": "FLAG_HOUSE_BRAVERY",
-            "summary": "",
+            "summary": "House\u0020Bravery\u0020Member.",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_HOUSE_BRAVERY"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_HYPESQUAD_ONLINE_HOUSE_2",
+            "name": "FLAG_HYPESQUAD_ONLINE_HOUSE_2",
+            "summary": "House\u0020Brilliance\u0020Member.",
+            "url": "classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_ONLINE_HOUSE_2"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_HOUSE_BRILLIANCE",
             "name": "FLAG_HOUSE_BRILLIANCE",
-            "summary": "",
+            "summary": "House\u0020Brilliance\u0020Member.",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_HOUSE_BRILLIANCE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_HYPESQUAD_ONLINE_HOUSE_3",
+            "name": "FLAG_HYPESQUAD_ONLINE_HOUSE_3",
+            "summary": "House\u0020Balance\u0020Member.",
+            "url": "classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_ONLINE_HOUSE_3"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_HOUSE_BALANCE",
             "name": "FLAG_HOUSE_BALANCE",
-            "summary": "",
+            "summary": "House\u0020Balance\u0020Member.",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_HOUSE_BALANCE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_PREMIUM_EARLY_SUPPORTER",
+            "name": "FLAG_PREMIUM_EARLY_SUPPORTER",
+            "summary": "Early\u0020Nitro\u0020Supporter.",
+            "url": "classes/Discord-Parts-User-User.html#constant_FLAG_PREMIUM_EARLY_SUPPORTER"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_EARLY_SUPPORTER",
             "name": "FLAG_EARLY_SUPPORTER",
             "summary": "",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_EARLY_SUPPORTER"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_TEAM_PSEUDO_USER",
+            "name": "FLAG_TEAM_PSEUDO_USER",
+            "summary": "User\u0020is\u0020a\u0020team.",
+            "url": "classes/Discord-Parts-User-User.html#constant_FLAG_TEAM_PSEUDO_USER"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_TEAM_USER",
             "name": "FLAG_TEAM_USER",
@@ -11788,28 +11868,38 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_BUG_HUNTER_LEVEL_2",
             "name": "FLAG_BUG_HUNTER_LEVEL_2",
-            "summary": "",
+            "summary": "Bug\u0020Hunter\u0020Level\u00202.",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_BUG_HUNTER_LEVEL_2"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_VERIFIED_BOT",
             "name": "FLAG_VERIFIED_BOT",
-            "summary": "",
+            "summary": "Verified\u0020Bot.",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_VERIFIED_BOT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_VERIFIED_DEVELOPER",
+            "name": "FLAG_VERIFIED_DEVELOPER",
+            "summary": "Early\u0020Verified\u0020Bot\u0020Developer.",
+            "url": "classes/Discord-Parts-User-User.html#constant_FLAG_VERIFIED_DEVELOPER"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_VERIFIED_BOT_DEVELOPER",
             "name": "FLAG_VERIFIED_BOT_DEVELOPER",
             "summary": "",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_VERIFIED_BOT_DEVELOPER"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_CERTIFIED_MODERATOR",
+            "name": "FLAG_CERTIFIED_MODERATOR",
+            "summary": "Moderator\u0020Programs\u0020Alumni.",
+            "url": "classes/Discord-Parts-User-User.html#constant_FLAG_CERTIFIED_MODERATOR"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_DISCORD_CERTIFIED_MODERATOR",
             "name": "FLAG_DISCORD_CERTIFIED_MODERATOR",
             "summary": "",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_CERTIFIED_MODERATOR"
         },                {
-            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003ABOT_HTTP_INTERACTIONS",
-            "name": "BOT_HTTP_INTERACTIONS",
-            "summary": "",
-            "url": "classes/Discord-Parts-User-User.html#constant_BOT_HTTP_INTERACTIONS"
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_BOT_HTTP_INTERACTIONS",
+            "name": "FLAG_BOT_HTTP_INTERACTIONS",
+            "summary": "Bot\u0020uses\u0020only\u0020HTTP\u0020interactions\u0020and\u0020is\u0020shown\u0020in\u0020the\u0020online\u0020member\u0020list.",
+            "url": "classes/Discord-Parts-User-User.html#constant_FLAG_BOT_HTTP_INTERACTIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_SUSPECTED_SPAM",
             "name": "FLAG_SUSPECTED_SPAM",
@@ -11818,7 +11908,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_ACTIVE_DEVELOPER",
             "name": "FLAG_ACTIVE_DEVELOPER",
-            "summary": "",
+            "summary": "User\u0020is\u0020an\u0020Active\u0020Developer.",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_ACTIVE_DEVELOPER"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003APREMIUM_NONE",
@@ -15925,6 +16015,21 @@ Search.appendIndex(
             "name": "CLOSE_VOICE_UNKNOWN_ENCRYPT",
             "summary": "Unknown\u0020encryption\u0020mode.",
             "url": "classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_UNKNOWN_ENCRYPT"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003ACLOSE_VOICE_BAD_REQUEST",
+            "name": "CLOSE_VOICE_BAD_REQUEST",
+            "summary": "You\u0020sent\u0020a\u0020malformed\u0020request.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_BAD_REQUEST"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003ACLOSE_VOICE_DISCONNECTED_RATE_LIMITED",
+            "name": "CLOSE_VOICE_DISCONNECTED_RATE_LIMITED",
+            "summary": "Disconnect\u0020due\u0020to\u0020rate\u0020limit\u0020exceeded.\u0020Should\u0020not\u0020reconnect.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED_RATE_LIMITED"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003ACLOSE_VOICE_DISCONNECTED_CALL_TERMINATED",
+            "name": "CLOSE_VOICE_DISCONNECTED_CALL_TERMINATED",
+            "summary": "Disconnect\u0020all\u0020clients\u0020due\u0020to\u0020call\u0020terminated\u0020\u0028channel\u0020deleted,\u0020voice\u0020server\u0020changed,\u0020etc.\u0029.\u0020Should\u0020not\u0020reconnect.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED_CALL_TERMINATED"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Payload",
             "name": "Payload",

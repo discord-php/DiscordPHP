@@ -428,11 +428,32 @@
 <dd>Unknown error.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_BAD_REQUEST">CLOSE_VOICE_BAD_REQUEST</a>
+    <span>
+        &nbsp;= 4020                            </span>
+</dt>
+<dd>You sent a malformed request.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED">CLOSE_VOICE_DISCONNECTED</a>
     <span>
         &nbsp;= 4014                            </span>
 </dt>
 <dd>Disconnected from channel.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED_CALL_TERMINATED">CLOSE_VOICE_DISCONNECTED_CALL_TERMINATED</a>
+    <span>
+        &nbsp;= 4022                            </span>
+</dt>
+<dd>Disconnect all clients due to call terminated (channel deleted, voice server changed, etc.). Should not reconnect.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED_RATE_LIMITED">CLOSE_VOICE_DISCONNECTED_RATE_LIMITED</a>
+    <span>
+        &nbsp;= 4021                            </span>
+</dt>
+<dd>Disconnect due to rate limit exceeded. Should not reconnect.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_SERVER_CRASH">CLOSE_VOICE_SERVER_CRASH</a>
@@ -1299,6 +1320,38 @@
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_VOICE_BAD_REQUEST">
+        CLOSE_VOICE_BAD_REQUEST
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_BAD_REQUEST" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">191</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">You sent a malformed request.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_VOICE_BAD_REQUEST</span>
+    = <span class="phpdocumentor-signature__default-value">4020</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_CLOSE_VOICE_DISCONNECTED">
         CLOSE_VOICE_DISCONNECTED
         <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1320,6 +1373,70 @@
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">CLOSE_VOICE_DISCONNECTED</span>
     = <span class="phpdocumentor-signature__default-value">4014</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_VOICE_DISCONNECTED_CALL_TERMINATED">
+        CLOSE_VOICE_DISCONNECTED_CALL_TERMINATED
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED_CALL_TERMINATED" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">195</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Disconnect all clients due to call terminated (channel deleted, voice server changed, etc.). Should not reconnect.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_VOICE_DISCONNECTED_CALL_TERMINATED</span>
+    = <span class="phpdocumentor-signature__default-value">4022</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_CLOSE_VOICE_DISCONNECTED_RATE_LIMITED">
+        CLOSE_VOICE_DISCONNECTED_RATE_LIMITED
+        <a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED_RATE_LIMITED" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">193</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Disconnect due to rate limit exceeded. Should not reconnect.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">CLOSE_VOICE_DISCONNECTED_RATE_LIMITED</span>
+    = <span class="phpdocumentor-signature__default-value">4021</span>
 </code>
 
 
@@ -2856,7 +2973,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">196</span>
+    <span class="phpdocumentor-element-found-in__line">202</span>
 
     </aside>
 
@@ -2895,7 +3012,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Op.php"><a href="files/src-discord-websockets-op.html"><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">213</span>
+    <span class="phpdocumentor-element-found-in__line">219</span>
 
     </aside>
 
@@ -3050,7 +3167,10 @@
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_SHARDING_REQUIRED">CLOSE_SHARDING_REQUIRED</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_TOO_MANY_MSG">CLOSE_TOO_MANY_MSG</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_UNKNOWN_ERROR">CLOSE_UNKNOWN_ERROR</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_BAD_REQUEST">CLOSE_VOICE_BAD_REQUEST</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED">CLOSE_VOICE_DISCONNECTED</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED_CALL_TERMINATED">CLOSE_VOICE_DISCONNECTED_CALL_TERMINATED</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED_RATE_LIMITED">CLOSE_VOICE_DISCONNECTED_RATE_LIMITED</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_SERVER_CRASH">CLOSE_VOICE_SERVER_CRASH</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_SERVER_NOT_FOUND">CLOSE_VOICE_SERVER_NOT_FOUND</a></li>
                                                     <li class=""><a href="classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_UNKNOWN_ENCRYPT">CLOSE_VOICE_UNKNOWN_ENCRYPT</a></li>

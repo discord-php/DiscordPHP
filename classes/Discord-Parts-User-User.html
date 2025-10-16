@@ -402,49 +402,60 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-User.html#constant_BOT_HTTP_INTERACTIONS">BOT_HTTP_INTERACTIONS</a>
-    <span>
-        &nbsp;= 1 &lt;&lt; 19                            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_ACTIVE_DEVELOPER">FLAG_ACTIVE_DEVELOPER</a>
     <span>
         &nbsp;= 1 &lt;&lt; 22                            </span>
 </dt>
+<dd>User is an Active Developer.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_BOT_HTTP_INTERACTIONS">FLAG_BOT_HTTP_INTERACTIONS</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 19                            </span>
+</dt>
+<dd>Bot uses only HTTP interactions and is shown in the online member list.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_BUG_HUNTER_LEVEL_1">FLAG_BUG_HUNTER_LEVEL_1</a>
     <span>
         &nbsp;= 1 &lt;&lt; 3                            </span>
 </dt>
+<dd>Bug Hunter Level 1.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_BUG_HUNTER_LEVEL_2">FLAG_BUG_HUNTER_LEVEL_2</a>
     <span>
         &nbsp;= 1 &lt;&lt; 14                            </span>
 </dt>
+<dd>Bug Hunter Level 2.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_CERTIFIED_MODERATOR">FLAG_DISCORD_CERTIFIED_MODERATOR</a>
+    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_CERTIFIED_MODERATOR">FLAG_CERTIFIED_MODERATOR</a>
     <span>
         &nbsp;= 1 &lt;&lt; 18                            </span>
 </dt>
+<dd>Moderator Programs Alumni.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_EMPLOYEE">FLAG_DISCORD_EMPLOYEE</a>
+    <a class="-deprecated" href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_CERTIFIED_MODERATOR">FLAG_DISCORD_CERTIFIED_MODERATOR</a>
     <span>
-        &nbsp;= 1 &lt;&lt; 0                            </span>
+        &nbsp;= self::FLAG_CERTIFIED_MODERATOR                            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_PARTNER">FLAG_DISCORD_PARTNER</a>
+    <a class="-deprecated" href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_EMPLOYEE">FLAG_DISCORD_EMPLOYEE</a>
     <span>
-        &nbsp;= 1 &lt;&lt; 1                            </span>
+        &nbsp;= self::FLAG_STAFF                            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_EARLY_SUPPORTER">FLAG_EARLY_SUPPORTER</a>
+    <a class="-deprecated" href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_PARTNER">FLAG_DISCORD_PARTNER</a>
+    <span>
+        &nbsp;= self::FLAG_PARTNER                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="-deprecated" href="classes/Discord-Parts-User-User.html#constant_FLAG_EARLY_SUPPORTER">FLAG_EARLY_SUPPORTER</a>
     <span>
         &nbsp;= 1 &lt;&lt; 9                            </span>
 </dt>
@@ -452,26 +463,71 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_HOUSE_BALANCE">FLAG_HOUSE_BALANCE</a>
     <span>
-        &nbsp;= 1 &lt;&lt; 8                            </span>
+        &nbsp;= self::FLAG_HYPESQUAD_ONLINE_HOUSE_3                            </span>
 </dt>
+<dd>House Balance Member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_HOUSE_BRAVERY">FLAG_HOUSE_BRAVERY</a>
     <span>
-        &nbsp;= 1 &lt;&lt; 6                            </span>
+        &nbsp;= self::HYPESQUAD_ONLINE_HOUSE_1                            </span>
 </dt>
+<dd>House Bravery Member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_HOUSE_BRILLIANCE">FLAG_HOUSE_BRILLIANCE</a>
     <span>
-        &nbsp;= 1 &lt;&lt; 7                            </span>
+        &nbsp;= self::FLAG_HYPESQUAD_ONLINE_HOUSE_2                            </span>
 </dt>
+<dd>House Brilliance Member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_EVENTS">FLAG_HYPESQUAD_EVENTS</a>
+    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD">FLAG_HYPESQUAD</a>
     <span>
         &nbsp;= 1 &lt;&lt; 2                            </span>
 </dt>
+<dd>HypeSquad Events Member.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="-deprecated" href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_EVENTS">FLAG_HYPESQUAD_EVENTS</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 2                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_ONLINE_HOUSE_2">FLAG_HYPESQUAD_ONLINE_HOUSE_2</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 7                            </span>
+</dt>
+<dd>House Brilliance Member.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_ONLINE_HOUSE_3">FLAG_HYPESQUAD_ONLINE_HOUSE_3</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 8                            </span>
+</dt>
+<dd>House Balance Member.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_PARTNER">FLAG_PARTNER</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 1                            </span>
+</dt>
+<dd>Partnered Server Owner.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_PREMIUM_EARLY_SUPPORTER">FLAG_PREMIUM_EARLY_SUPPORTER</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 9                            </span>
+</dt>
+<dd>Early Nitro Supporter.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_STAFF">FLAG_STAFF</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 0                            </span>
+</dt>
+<dd>Discord Employee.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_SUSPECTED_SPAM">FLAG_SUSPECTED_SPAM</a>
@@ -486,7 +542,14 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_TEAM_USER">FLAG_TEAM_USER</a>
+    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_TEAM_PSEUDO_USER">FLAG_TEAM_PSEUDO_USER</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 10                            </span>
+</dt>
+<dd>User is a team.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="-deprecated" href="classes/Discord-Parts-User-User.html#constant_FLAG_TEAM_USER">FLAG_TEAM_USER</a>
     <span>
         &nbsp;= 1 &lt;&lt; 10                            </span>
 </dt>
@@ -496,12 +559,27 @@
     <span>
         &nbsp;= 1 &lt;&lt; 16                            </span>
 </dt>
+<dd>Verified Bot.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_VERIFIED_BOT_DEVELOPER">FLAG_VERIFIED_BOT_DEVELOPER</a>
+    <a class="-deprecated" href="classes/Discord-Parts-User-User.html#constant_FLAG_VERIFIED_BOT_DEVELOPER">FLAG_VERIFIED_BOT_DEVELOPER</a>
+    <span>
+        &nbsp;= self::FLAG_VERIFIED_DEVELOPER                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-User-User.html#constant_FLAG_VERIFIED_DEVELOPER">FLAG_VERIFIED_DEVELOPER</a>
     <span>
         &nbsp;= 1 &lt;&lt; 17                            </span>
 </dt>
+<dd>Early Verified Bot Developer.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-User-User.html#constant_HYPESQUAD_ONLINE_HOUSE_1">HYPESQUAD_ONLINE_HOUSE_1</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 6                            </span>
+</dt>
+<dd>House Bravery Member.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-User-User.html#constant_PREMIUM_NITRO">PREMIUM_NITRO</a>
@@ -986,7 +1064,7 @@ JSON. Used for JsonSerializable.</dd>
     <span>
                                 &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>    </span>
 </dt>
-<dd>Helps with getting Part attributes for components.</dd>
+<dd>Helps with getting Part attributes for classes with extended types.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a>
@@ -1070,26 +1148,27 @@ JSON. Used for JsonSerializable.</dd>
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_BOT_HTTP_INTERACTIONS">
-        BOT_HTTP_INTERACTIONS
-        <a href="classes/Discord-Parts-User-User.html#constant_BOT_HTTP_INTERACTIONS" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_ACTIVE_DEVELOPER">
+        FLAG_ACTIVE_DEVELOPER
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_ACTIVE_DEVELOPER" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">User is an Active Developer.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">BOT_HTTP_INTERACTIONS</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 19</span>
+    <span class="phpdocumentor-signature__name">FLAG_ACTIVE_DEVELOPER</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 22</span>
 </code>
 
 
@@ -1101,26 +1180,27 @@ JSON. Used for JsonSerializable.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_ACTIVE_DEVELOPER">
-        FLAG_ACTIVE_DEVELOPER
-        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_ACTIVE_DEVELOPER" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_BOT_HTTP_INTERACTIONS">
+        FLAG_BOT_HTTP_INTERACTIONS
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_BOT_HTTP_INTERACTIONS" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">113</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Bot uses only HTTP interactions and is shown in the online member list.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_ACTIVE_DEVELOPER</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 22</span>
+    <span class="phpdocumentor-signature__name">FLAG_BOT_HTTP_INTERACTIONS</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 19</span>
 </code>
 
 
@@ -1141,11 +1221,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Bug Hunter Level 1.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1172,11 +1253,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Bug Hunter Level 2.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1194,25 +1276,26 @@ JSON. Used for JsonSerializable.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_DISCORD_CERTIFIED_MODERATOR">
-        FLAG_DISCORD_CERTIFIED_MODERATOR
-        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_CERTIFIED_MODERATOR" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_CERTIFIED_MODERATOR">
+        FLAG_CERTIFIED_MODERATOR
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_CERTIFIED_MODERATOR" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">109</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Moderator Programs Alumni.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_DISCORD_CERTIFIED_MODERATOR</span>
+    <span class="phpdocumentor-signature__name">FLAG_CERTIFIED_MODERATOR</span>
     = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 18</span>
 </code>
 
@@ -1224,7 +1307,45 @@ JSON. Used for JsonSerializable.</dd>
     
 
 </article>
-                    <article class="phpdocumentor-element -constant -public ">
+                    <article class="phpdocumentor-element -constant -public -deprecated">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_DISCORD_CERTIFIED_MODERATOR">
+        FLAG_DISCORD_CERTIFIED_MODERATOR
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_CERTIFIED_MODERATOR" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">111</span>
+
+    </aside>
+
+    
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>use <code class="prettyprint">User::FLAG_CERTIFIED_MODERATOR</code></p>
+
+            </article>
+        </div>
+    
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_DISCORD_CERTIFIED_MODERATOR</span>
+    = <span class="phpdocumentor-signature__default-value">self::FLAG_CERTIFIED_MODERATOR</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_FLAG_DISCORD_EMPLOYEE">
         FLAG_DISCORD_EMPLOYEE
         <a href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_EMPLOYEE" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1234,17 +1355,24 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
     
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>use <code class="prettyprint">User::FLAG_STAFF</code></p>
+
+            </article>
+        </div>
     
-    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">FLAG_DISCORD_EMPLOYEE</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 0</span>
+    = <span class="phpdocumentor-signature__default-value">self::FLAG_STAFF</span>
 </code>
 
 
@@ -1255,41 +1383,10 @@ JSON. Used for JsonSerializable.</dd>
     
 
 </article>
-                    <article class="phpdocumentor-element -constant -public ">
+                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_FLAG_DISCORD_PARTNER">
         FLAG_DISCORD_PARTNER
         <a href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_PARTNER" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">65</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_DISCORD_PARTNER</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 1</span>
-</code>
-
-
-    
-    
-    
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_EARLY_SUPPORTER">
-        FLAG_EARLY_SUPPORTER
-        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_EARLY_SUPPORTER" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
@@ -1301,8 +1398,53 @@ JSON. Used for JsonSerializable.</dd>
     </aside>
 
     
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>use <code class="prettyprint">User::FLAG_PARTNER</code></p>
+
+            </article>
+        </div>
     
-    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_DISCORD_PARTNER</span>
+    = <span class="phpdocumentor-signature__default-value">self::FLAG_PARTNER</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public -deprecated">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_EARLY_SUPPORTER">
+        FLAG_EARLY_SUPPORTER
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_EARLY_SUPPORTER" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">93</span>
+
+    </aside>
+
+    
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>use <code class="prettyprint">User::FLAG_PREMIUM_EARLY_SUPPORTER</code></p>
+
+            </article>
+        </div>
+    
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">FLAG_EARLY_SUPPORTER</span>
@@ -1327,17 +1469,18 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">House Balance Member.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">FLAG_HOUSE_BALANCE</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 8</span>
+    = <span class="phpdocumentor-signature__default-value">self::FLAG_HYPESQUAD_ONLINE_HOUSE_3</span>
 </code>
 
 
@@ -1358,17 +1501,18 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">House Bravery Member.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">FLAG_HOUSE_BRAVERY</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 6</span>
+    = <span class="phpdocumentor-signature__default-value">self::HYPESQUAD_ONLINE_HOUSE_1</span>
 </code>
 
 
@@ -1389,16 +1533,119 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">69</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">House Brilliance Member.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">FLAG_HOUSE_BRILLIANCE</span>
+    = <span class="phpdocumentor-signature__default-value">self::FLAG_HYPESQUAD_ONLINE_HOUSE_2</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_HYPESQUAD">
+        FLAG_HYPESQUAD
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">73</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">HypeSquad Events Member.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_HYPESQUAD</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 2</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public -deprecated">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_HYPESQUAD_EVENTS">
+        FLAG_HYPESQUAD_EVENTS
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_EVENTS" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">75</span>
+
+    </aside>
+
+    
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>use <code class="prettyprint">User::FLAG_HYPESQUAD</code></p>
+
+            </article>
+        </div>
+    
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_HYPESQUAD_EVENTS</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 2</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_HYPESQUAD_ONLINE_HOUSE_2">
+        FLAG_HYPESQUAD_ONLINE_HOUSE_2
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_ONLINE_HOUSE_2" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">83</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">House Brilliance Member.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_HYPESQUAD_ONLINE_HOUSE_2</span>
     = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 7</span>
 </code>
 
@@ -1411,26 +1658,123 @@ JSON. Used for JsonSerializable.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_FLAG_HYPESQUAD_EVENTS">
-        FLAG_HYPESQUAD_EVENTS
-        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_EVENTS" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_HYPESQUAD_ONLINE_HOUSE_3">
+        FLAG_HYPESQUAD_ONLINE_HOUSE_3
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_ONLINE_HOUSE_3" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">House Balance Member.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_HYPESQUAD_EVENTS</span>
-    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 2</span>
+    <span class="phpdocumentor-signature__name">FLAG_HYPESQUAD_ONLINE_HOUSE_3</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 8</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_PARTNER">
+        FLAG_PARTNER
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_PARTNER" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">69</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Partnered Server Owner.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_PARTNER</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 1</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_PREMIUM_EARLY_SUPPORTER">
+        FLAG_PREMIUM_EARLY_SUPPORTER
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_PREMIUM_EARLY_SUPPORTER" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">91</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Early Nitro Supporter.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_PREMIUM_EARLY_SUPPORTER</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 9</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_STAFF">
+        FLAG_STAFF
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_STAFF" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">65</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Discord Employee.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_STAFF</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 0</span>
 </code>
 
 
@@ -1451,7 +1795,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">115</span>
 
     </aside>
 
@@ -1468,6 +1812,22 @@ JSON. Used for JsonSerializable.</dd>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_SUSPECTED_SPAM#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Undocumented.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
     
 
@@ -1482,7 +1842,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -1499,11 +1859,59 @@ JSON. Used for JsonSerializable.</dd>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_SYSTEM#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Undocumented.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
     
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_TEAM_PSEUDO_USER">
+        FLAG_TEAM_PSEUDO_USER
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_TEAM_PSEUDO_USER" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">95</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">User is a team.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_TEAM_PSEUDO_USER</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 10</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_FLAG_TEAM_USER">
         FLAG_TEAM_USER
         <a href="classes/Discord-Parts-User-User.html#constant_FLAG_TEAM_USER" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1513,13 +1921,20 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
     
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>use <code class="prettyprint">User::FLAG_TEAM_PSEUDO_USER</code></p>
+
+            </article>
+        </div>
     
-    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">FLAG_TEAM_USER</span>
@@ -1544,11 +1959,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Verified Bot.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1565,7 +1981,7 @@ JSON. Used for JsonSerializable.</dd>
     
 
 </article>
-                    <article class="phpdocumentor-element -constant -public ">
+                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_FLAG_VERIFIED_BOT_DEVELOPER">
         FLAG_VERIFIED_BOT_DEVELOPER
         <a href="classes/Discord-Parts-User-User.html#constant_FLAG_VERIFIED_BOT_DEVELOPER" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1575,17 +1991,88 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
     
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>use <code class="prettyprint">User::FLAG_VERIFIED_DEVELOPER</code></p>
+
+            </article>
+        </div>
+    
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_VERIFIED_BOT_DEVELOPER</span>
+    = <span class="phpdocumentor-signature__default-value">self::FLAG_VERIFIED_DEVELOPER</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_VERIFIED_DEVELOPER">
+        FLAG_VERIFIED_DEVELOPER
+        <a href="classes/Discord-Parts-User-User.html#constant_FLAG_VERIFIED_DEVELOPER" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">105</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Early Verified Bot Developer.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">FLAG_VERIFIED_BOT_DEVELOPER</span>
+    <span class="phpdocumentor-signature__name">FLAG_VERIFIED_DEVELOPER</span>
     = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 17</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_HYPESQUAD_ONLINE_HOUSE_1">
+        HYPESQUAD_ONLINE_HOUSE_1
+        <a href="classes/Discord-Parts-User-User.html#constant_HYPESQUAD_ONLINE_HOUSE_1" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">79</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">House Bravery Member.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">HYPESQUAD_ONLINE_HOUSE_1</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 6</span>
 </code>
 
 
@@ -1606,7 +2093,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">121</span>
 
     </aside>
 
@@ -1637,7 +2124,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -1668,7 +2155,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
@@ -1699,7 +2186,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -2598,7 +3085,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -2962,7 +3449,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">589</span>
+    <span class="phpdocumentor-element-found-in__line">588</span>
 
     </aside>
 
@@ -3042,7 +3529,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">240</span>
+    <span class="phpdocumentor-element-found-in__line">239</span>
 
     </aside>
 
@@ -3080,7 +3567,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">602</span>
+    <span class="phpdocumentor-element-found-in__line">601</span>
 
     </aside>
 
@@ -3153,7 +3640,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">352</span>
+    <span class="phpdocumentor-element-found-in__line">389</span>
 
     </aside>
 
@@ -3196,7 +3683,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">261</span>
+    <span class="phpdocumentor-element-found-in__line">260</span>
 
     </aside>
 
@@ -3240,7 +3727,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">165</span>
+    <span class="phpdocumentor-element-found-in__line">202</span>
 
     </aside>
 
@@ -3301,7 +3788,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">332</span>
+    <span class="phpdocumentor-element-found-in__line">369</span>
 
     </aside>
 
@@ -3340,7 +3827,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -3396,7 +3883,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -3458,7 +3945,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">188</span>
+    <span class="phpdocumentor-element-found-in__line">225</span>
 
     </aside>
 
@@ -3522,7 +4009,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">272</span>
+    <span class="phpdocumentor-element-found-in__line">309</span>
 
     </aside>
 
@@ -3586,7 +4073,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">304</span>
+    <span class="phpdocumentor-element-found-in__line">341</span>
 
     </aside>
 
@@ -3641,7 +4128,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">294</span>
+    <span class="phpdocumentor-element-found-in__line">331</span>
 
     </aside>
 
@@ -3684,7 +4171,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">220</span>
+    <span class="phpdocumentor-element-found-in__line">257</span>
 
     </aside>
 
@@ -3727,7 +4214,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">233</span>
+    <span class="phpdocumentor-element-found-in__line">270</span>
 
     </aside>
 
@@ -3791,7 +4278,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">546</span>
+    <span class="phpdocumentor-element-found-in__line">545</span>
 
     </aside>
 
@@ -3849,7 +4336,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">335</span>
+    <span class="phpdocumentor-element-found-in__line">334</span>
 
     </aside>
 
@@ -3888,7 +4375,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">378</span>
+    <span class="phpdocumentor-element-found-in__line">377</span>
 
     </aside>
 
@@ -3927,7 +4414,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">156</span>
 
     </aside>
 
@@ -3980,7 +4467,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">288</span>
+    <span class="phpdocumentor-element-found-in__line">287</span>
 
     </aside>
 
@@ -4038,7 +4525,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">314</span>
+    <span class="phpdocumentor-element-found-in__line">313</span>
 
     </aside>
 
@@ -4081,7 +4568,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">340</span>
+    <span class="phpdocumentor-element-found-in__line">377</span>
 
     </aside>
 
@@ -4133,7 +4620,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">345</span>
+    <span class="phpdocumentor-element-found-in__line">344</span>
 
     </aside>
 
@@ -4172,7 +4659,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -4212,7 +4699,7 @@ be fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">277</span>
+    <span class="phpdocumentor-element-found-in__line">276</span>
 
     </aside>
 
@@ -4281,7 +4768,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">201</span>
 
     </aside>
 
@@ -4336,7 +4823,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">188</span>
 
     </aside>
 
@@ -4419,7 +4906,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">215</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
@@ -4492,7 +4979,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">225</span>
+    <span class="phpdocumentor-element-found-in__line">224</span>
 
     </aside>
 
@@ -4539,7 +5026,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">149</span>
+    <span class="phpdocumentor-element-found-in__line">186</span>
 
     </aside>
 
@@ -4643,7 +5130,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">235</span>
+    <span class="phpdocumentor-element-found-in__line">234</span>
 
     </aside>
 
@@ -4686,7 +5173,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">252</span>
+    <span class="phpdocumentor-element-found-in__line">251</span>
 
     </aside>
 
@@ -4750,7 +5237,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -4785,7 +5272,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">446</span>
+    <span class="phpdocumentor-element-found-in__line">445</span>
 
     </aside>
 
@@ -4859,7 +5346,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">470</span>
+    <span class="phpdocumentor-element-found-in__line">469</span>
 
     </aside>
 
@@ -4951,7 +5438,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">528</span>
+    <span class="phpdocumentor-element-found-in__line">527</span>
 
     </aside>
 
@@ -5043,11 +5530,11 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">497</span>
+    <span class="phpdocumentor-element-found-in__line">496</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Helps with getting Part attributes for components.</p>
+        <p class="phpdocumentor-summary">Helps with getting Part attributes for classes with extended types.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -5103,7 +5590,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">100</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -5175,7 +5662,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">120</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -5247,7 +5734,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">139</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -5317,7 +5804,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">259</span>
+    <span class="phpdocumentor-element-found-in__line">296</span>
 
     </aside>
 
@@ -5372,7 +5859,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">314</span>
+    <span class="phpdocumentor-element-found-in__line">351</span>
 
     </aside>
 
@@ -5427,7 +5914,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">175</span>
+    <span class="phpdocumentor-element-found-in__line">212</span>
 
     </aside>
 
@@ -5470,7 +5957,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/User/User.php"><a href="files/src-discord-parts-user-user.html"><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">322</span>
+    <span class="phpdocumentor-element-found-in__line">359</span>
 
     </aside>
 
@@ -5509,7 +5996,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">359</span>
+    <span class="phpdocumentor-element-found-in__line">358</span>
 
     </aside>
 
@@ -5562,7 +6049,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">166</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -5618,7 +6105,7 @@ is an instance of <code class="prettyprint">MessageBuilder</code>, the rest of t
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/PartTrait.php"><a href="files/src-discord-parts-parttrait.html"><abbr title="src/Discord/Parts/PartTrait.php">PartTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">419</span>
+    <span class="phpdocumentor-element-found-in__line">418</span>
 
     </aside>
 
@@ -5790,23 +6277,33 @@ static as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_BOT_HTTP_INTERACTIONS">BOT_HTTP_INTERACTIONS</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_ACTIVE_DEVELOPER">FLAG_ACTIVE_DEVELOPER</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_BOT_HTTP_INTERACTIONS">FLAG_BOT_HTTP_INTERACTIONS</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_BUG_HUNTER_LEVEL_1">FLAG_BUG_HUNTER_LEVEL_1</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_BUG_HUNTER_LEVEL_2">FLAG_BUG_HUNTER_LEVEL_2</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_CERTIFIED_MODERATOR">FLAG_DISCORD_CERTIFIED_MODERATOR</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_EMPLOYEE">FLAG_DISCORD_EMPLOYEE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_PARTNER">FLAG_DISCORD_PARTNER</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_EARLY_SUPPORTER">FLAG_EARLY_SUPPORTER</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_CERTIFIED_MODERATOR">FLAG_CERTIFIED_MODERATOR</a></li>
+                                                    <li class="-deprecated"><a href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_CERTIFIED_MODERATOR">FLAG_DISCORD_CERTIFIED_MODERATOR</a></li>
+                                                    <li class="-deprecated"><a href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_EMPLOYEE">FLAG_DISCORD_EMPLOYEE</a></li>
+                                                    <li class="-deprecated"><a href="classes/Discord-Parts-User-User.html#constant_FLAG_DISCORD_PARTNER">FLAG_DISCORD_PARTNER</a></li>
+                                                    <li class="-deprecated"><a href="classes/Discord-Parts-User-User.html#constant_FLAG_EARLY_SUPPORTER">FLAG_EARLY_SUPPORTER</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_HOUSE_BALANCE">FLAG_HOUSE_BALANCE</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_HOUSE_BRAVERY">FLAG_HOUSE_BRAVERY</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_HOUSE_BRILLIANCE">FLAG_HOUSE_BRILLIANCE</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_EVENTS">FLAG_HYPESQUAD_EVENTS</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD">FLAG_HYPESQUAD</a></li>
+                                                    <li class="-deprecated"><a href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_EVENTS">FLAG_HYPESQUAD_EVENTS</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_ONLINE_HOUSE_2">FLAG_HYPESQUAD_ONLINE_HOUSE_2</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_HYPESQUAD_ONLINE_HOUSE_3">FLAG_HYPESQUAD_ONLINE_HOUSE_3</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_PARTNER">FLAG_PARTNER</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_PREMIUM_EARLY_SUPPORTER">FLAG_PREMIUM_EARLY_SUPPORTER</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_STAFF">FLAG_STAFF</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_SUSPECTED_SPAM">FLAG_SUSPECTED_SPAM</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_SYSTEM">FLAG_SYSTEM</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_TEAM_USER">FLAG_TEAM_USER</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_TEAM_PSEUDO_USER">FLAG_TEAM_PSEUDO_USER</a></li>
+                                                    <li class="-deprecated"><a href="classes/Discord-Parts-User-User.html#constant_FLAG_TEAM_USER">FLAG_TEAM_USER</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_VERIFIED_BOT">FLAG_VERIFIED_BOT</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_VERIFIED_BOT_DEVELOPER">FLAG_VERIFIED_BOT_DEVELOPER</a></li>
+                                                    <li class="-deprecated"><a href="classes/Discord-Parts-User-User.html#constant_FLAG_VERIFIED_BOT_DEVELOPER">FLAG_VERIFIED_BOT_DEVELOPER</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_FLAG_VERIFIED_DEVELOPER">FLAG_VERIFIED_DEVELOPER</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-User-User.html#constant_HYPESQUAD_ONLINE_HOUSE_1">HYPESQUAD_ONLINE_HOUSE_1</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-User.html#constant_PREMIUM_NITRO">PREMIUM_NITRO</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-User.html#constant_PREMIUM_NITRO_BASIC">PREMIUM_NITRO_BASIC</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-User-User.html#constant_PREMIUM_NITRO_CLASSIC">PREMIUM_NITRO_CLASSIC</a></li>
