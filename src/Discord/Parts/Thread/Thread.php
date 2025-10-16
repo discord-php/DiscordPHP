@@ -52,6 +52,7 @@ class Thread extends Part implements Stringable
 {
     use ChannelTrait;
 
+    /** This thread is pinned to the top of its parent GUILD_FORUM or GUILD_MEDIA channel. */
     public const FLAG_PINNED = (1 << 1);
 
     /**

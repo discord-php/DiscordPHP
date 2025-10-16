@@ -36,13 +36,21 @@ use Discord\Parts\Part;
  */
 class Entitlement extends Part
 {
+    /** Entitlement was purchased by user. */
     public const PURCHASE = 1;
+    /** Entitlement for Discord Nitro subscription. */
     public const PREMIUM_SUBSCRIPTION = 2;
+    /** Entitlement was gifted by developer. */
     public const DEVELOPER_GIFT = 3;
+    /** Entitlement was purchased by a dev in application test mode. */
     public const TEST_MODE_PURCHASE = 4;
+    /** Entitlement was granted when the SKU was free. */
     public const FREE_PURCHASE = 5;
+    /** Entitlement was gifted by another user. */
     public const USER_GIFT = 6;
+    /** Entitlement was claimed by user for free as a Nitro Subscriber. */
     public const PREMIUM_PURCHASE = 7;
+    /** Entitlement was purchased as an app subscription. */
     public const APPLICATION_SUBSCRIPTION = 8;
 
     /**

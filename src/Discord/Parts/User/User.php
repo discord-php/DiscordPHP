@@ -61,22 +61,59 @@ use function React\Promise\resolve;
  */
 class User extends Part implements Stringable
 {
-    public const FLAG_DISCORD_EMPLOYEE = (1 << 0);
-    public const FLAG_DISCORD_PARTNER = (1 << 1);
+    /** Discord Employee. */
+    public const FLAG_STAFF = (1 << 0);
+    /** @deprecated 10.36.32 use `User::FLAG_STAFF` */
+    public const FLAG_DISCORD_EMPLOYEE = self::FLAG_STAFF;
+    /** Partnered Server Owner. */
+    public const FLAG_PARTNER = (1 << 1);
+    /** @deprecated 10.36.32 use `User::FLAG_PARTNER` */
+    public const FLAG_DISCORD_PARTNER = self::FLAG_PARTNER;
+    /** HypeSquad Events Member. */
+    public const FLAG_HYPESQUAD = (1 << 2);
+    /** @deprecated 10.36.32 use `User::FLAG_HYPESQUAD` */
     public const FLAG_HYPESQUAD_EVENTS = (1 << 2);
+    /** Bug Hunter Level 1. */
     public const FLAG_BUG_HUNTER_LEVEL_1 = (1 << 3);
-    public const FLAG_HOUSE_BRAVERY = (1 << 6);
-    public const FLAG_HOUSE_BRILLIANCE = (1 << 7);
-    public const FLAG_HOUSE_BALANCE = (1 << 8);
+    /** House Bravery Member. */
+    public const HYPESQUAD_ONLINE_HOUSE_1 = (1 << 6);
+    /** House Bravery Member. */
+    public const FLAG_HOUSE_BRAVERY = self::HYPESQUAD_ONLINE_HOUSE_1;
+    /** House Brilliance Member. */
+    public const FLAG_HYPESQUAD_ONLINE_HOUSE_2 = (1 << 7);
+    /** House Brilliance Member. */
+    public const FLAG_HOUSE_BRILLIANCE = self::FLAG_HYPESQUAD_ONLINE_HOUSE_2;
+    /** House Balance Member. */
+    public const FLAG_HYPESQUAD_ONLINE_HOUSE_3 = (1 << 8);
+    /** House Balance Member. */
+    public const FLAG_HOUSE_BALANCE = self::FLAG_HYPESQUAD_ONLINE_HOUSE_3;
+    /** Early Nitro Supporter. */
+    public const FLAG_PREMIUM_EARLY_SUPPORTER = (1 << 9);
+    /** @deprecated 10.36.32 use `User::FLAG_PREMIUM_EARLY_SUPPORTER` */
     public const FLAG_EARLY_SUPPORTER = (1 << 9);
+    /** User is a team. */
+    public const FLAG_TEAM_PSEUDO_USER = (1 << 10);
+    /** @deprecated 10.36.32 use `User::FLAG_TEAM_PSEUDO_USER` */
     public const FLAG_TEAM_USER = (1 << 10);
+    /** @todo Undocumented. */
     public const FLAG_SYSTEM = (1 << 12);
+    /** Bug Hunter Level 2. */
     public const FLAG_BUG_HUNTER_LEVEL_2 = (1 << 14);
+    /** Verified Bot. */
     public const FLAG_VERIFIED_BOT = (1 << 16);
-    public const FLAG_VERIFIED_BOT_DEVELOPER = (1 << 17);
-    public const FLAG_DISCORD_CERTIFIED_MODERATOR = (1 << 18);
-    public const BOT_HTTP_INTERACTIONS = (1 << 19);
+    /** Early Verified Bot Developer. */
+    public const FLAG_VERIFIED_DEVELOPER = (1 << 17);
+    /** @deprecated 10.36.32 use `User::FLAG_VERIFIED_DEVELOPER` */
+    public const FLAG_VERIFIED_BOT_DEVELOPER = self::FLAG_VERIFIED_DEVELOPER;
+    /** Moderator Programs Alumni. */
+    public const FLAG_CERTIFIED_MODERATOR = (1 << 18);
+    /** @deprecated 10.36.32 use `User::FLAG_CERTIFIED_MODERATOR` */
+    public const FLAG_DISCORD_CERTIFIED_MODERATOR = self::FLAG_CERTIFIED_MODERATOR;
+    /** Bot uses only HTTP interactions and is shown in the online member list. */
+    public const FLAG_BOT_HTTP_INTERACTIONS = (1 << 19);
+    /** @todo Undocumented. */
     public const FLAG_SUSPECTED_SPAM = (1 << 20); // Not documented
+    /** User is an Active Developer. */
     public const FLAG_ACTIVE_DEVELOPER = (1 << 22);
 
     public const PREMIUM_NONE = 0;
