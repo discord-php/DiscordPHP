@@ -181,7 +181,7 @@ class Application extends Part
      *
      * @link https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
      *
-     * @since v10.29.0
+     * @since 10.29.0
      *
      * @param ApplicationRoleConnectionMetadata[] $data The new metadata records.
      *

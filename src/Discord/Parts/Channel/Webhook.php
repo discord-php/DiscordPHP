@@ -135,7 +135,7 @@ class Webhook extends Part
      * @param ?string|int $queryparams['thread_id'] Id of the thread to send the message in.
      * @param ?bool       $queryparams['wait']      Waits for server confirmation of message send before response (defaults to `true`; when `false` a message that is not saved does not return an error)
      *
-     * @since v10.27.0
+     * @since 10.27.0
      */
     public function executeSlack($data, array $queryparams = []): PromiseInterface
     {
@@ -178,7 +178,7 @@ class Webhook extends Part
      * @param ?string|int $queryparams['thread_id'] Id of the thread to send the message in.
      * @param ?bool       $queryparams['wait']      Waits for server confirmation of message send before response (defaults to `true`; when `false` a message that is not saved does not return an error)
      *
-     * @since v10.27.0
+     * @since 10.27.0
      */
     public function executeGitHub($data, array $queryparams = []): PromiseInterface
     {

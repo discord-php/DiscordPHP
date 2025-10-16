@@ -1151,7 +1151,7 @@ class Discord
      *
      * @throws \InvalidArgumentException Either query or user_ids must be set.
      *
-     * @since v10.19.0
+     * @since 10.19.0
      */
     public function requestGuildMembers($guild_id, array $options = []): void
     {
