@@ -35,9 +35,19 @@ class Action extends Part
         'metadata',
     ];
 
+    /** Blocks a member's message and prevents it from being posted. A custom explanation can be specified and shown to members whenever their message is blocked. */
     public const TYPE_BLOCK_MESSAGE = 1;
+    /** Logs user content to a specified channel. */
     public const TYPE_SEND_ALERT_MESSAGE = 2;
+    /**
+     * Timeout user for a specified duration.
+     *
+     * TIMEOUT action can only be set up for KEYWORD and MENTION_SPAM rules.
+     * The MODERATE_MEMBERS permission is required to use the TIMEOUT action type.
+     */
     public const TYPE_TIMEOUT = 3;
+
+    /** Prevents a member from using text, voice, or other interactions. */
     public const TYPE_BLOCK_MEMBER_INTERACTION = 4;
 
     /**

@@ -172,8 +172,6 @@ class Entry extends Part
     /** Guild Server Guide was updated. */
     public const HOME_SETTINGS_UPDATE = 191;
 
-    // AUDIT LOG ENTRY TYPES
-
     /**
      * @inheritDoc
      */

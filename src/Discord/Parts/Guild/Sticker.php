@@ -40,7 +40,9 @@ use Stringable;
  */
 class Sticker extends Part implements Stringable
 {
+    /** An official sticker in a pack. */
     public const TYPE_STANDARD = 1;
+    /** A sticker uploaded to a guild for the guild's members. */
     public const TYPE_GUILD = 2;
 
     public const FORMAT_TYPE_PNG = 1;

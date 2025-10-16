@@ -54,6 +54,7 @@ use function React\Promise\reject;
  */
 class ScheduledEvent extends Part
 {
+    /** The scheduled event is only accessible to guild members. */
     public const PRIVACY_LEVEL_GUILD_ONLY = 2;
 
     public const ENTITY_TYPE_STAGE_INSTANCE = 1;

@@ -45,8 +45,10 @@ use Stringable;
  */
 class Role extends Part implements Stringable
 {
-    // Flags
-    public const IN_PROMPT = 1 << 0; // Role can be selected by members in an onboarding prompt.
+    /** Role can be selected by members in an onboarding prompt. */
+    public const FLAG_IN_PROMPT = 1 << 0;
+    /** @deprecated 10.36.32 use `Role::FLAG_IN_PROMPT` */
+    public const IN_PROMPT = self::FLAG_IN_PROMPT;
 
     /**
      * @inheritDoc

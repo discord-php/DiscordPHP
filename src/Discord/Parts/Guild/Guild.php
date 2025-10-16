@@ -173,30 +173,52 @@ class Guild extends Part
 
     public const REGION_DEFAULT = 'us_west';
 
+    /** Members will receive notifications for all messages by default. */
     public const NOTIFICATION_ALL_MESSAGES = 0;
+    /** Members will receive notifications only for messages that @mention them by default. */
     public const NOTIFICATION_ONLY_MENTIONS = 1;
 
+    /** Media content will not be scanned. */
     public const EXPLICIT_CONTENT_FILTER_DISABLED = 0;
+    /** Media content sent by members without roles will be scanned. */
     public const EXPLICIT_CONTENT_FILTER_MEMBERS_WITHOUT_ROLES = 1;
+    /** Media content sent by all members will be scanned. */
     public const EXPLICIT_CONTENT_FILTER_ALL_MEMBERS = 2;
 
+    /** Guild has no MFA/2FA requirement for moderation actions. */
     public const MFA_NONE = 0;
+    /** Guild has a 2FA requirement for moderation actions. */
     public const MFA_ELEVATED = 1;
 
+    /** Unrestricted. */
+    public const LEVEL_NONE = 0;
+    /** @deprecated 10.36.32 use `GUILD::LEVEL_NONE` */
     public const LEVEL_OFF = 0;
+    /** Must have verified email on account. */
     public const LEVEL_LOW = 1;
+    /** Must be registered on Discord for longer than 5 minutes. */
     public const LEVEL_MEDIUM = 2;
-    public const LEVEL_TABLEFLIP = 3;
-    public const LEVEL_DOUBLE_TABLEFLIP = 4;
+    /** Must be a member of the server for longer than 10 minutes. */
+    public const LEVEL_HIGH = 3;
+    /** @deprecated 10.36.32 use `GUILD::LEVEL_HIGH` */
+    public const LEVEL_TABLEFLIP = self::LEVEL_HIGH;
+    /** Must have a verified phone number. */
+    public const LEVEL_VERY_HIGH = 4;
+    /** @deprecated 10.36.32 use `GUILD::LEVEL_VERY_HIGH` */
+    public const LEVEL_DOUBLE_TABLEFLIP = self::LEVEL_VERY_HIGH;
 
     public const NSFW_DEFAULT = 0;
     public const NSFW_EXPLICIT = 1;
     public const NSFW_SAFE = 2;
     public const NSFW_AGE_RESTRICTED = 3;
 
+    /** Guild has not unlocked any Server Boost perks. */
     public const PREMIUM_NONE = 0;
+    /** Guild has unlocked Server Boost level 1 perks. */
     public const PREMIUM_TIER_1 = 1;
+    /** Guild has unlocked Server Boost level 2 perks. */
     public const PREMIUM_TIER_2 = 2;
+    /** Guild has unlocked Server Boost level 3 perks. */
     public const PREMIUM_TIER_3 = 3;
 
     /** Suppress member join notifications. */
