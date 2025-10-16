@@ -128,7 +128,10 @@ class Channel extends Part implements Stringable
 
     /** @deprecated 10.0.0 Use `Thread::FLAG_PINNED` */
     public const FLAG_PINNED = (1 << 1);
+    /** Whether a tag is required to be specified when creating a thread in a `GUILD_FORUM` or a `GUILD_MEDIA` channel. Tags are specified in the `applied_tags` field. */
     public const FLAG_REQUIRE_TAG = (1 << 4);
+    /** When set hides the embedded media download options. Available only for media channels. */
+    public const HIDE_MEDIA_DOWNLOAD_OPTIONS = (1 << 15);
 
     public const SORT_ORDER_LATEST_ACTIVITY = 0;
     public const SORT_ORDER_CREATION_DATE = 1;
