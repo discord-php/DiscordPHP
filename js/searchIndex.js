@@ -9368,62 +9368,62 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_PONG",
             "name": "RESPONSE_TYPE_PONG",
-            "summary": "",
+            "summary": "ACK\u0020a\u0020\u0060Ping\u0060.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_PONG"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE",
             "name": "RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE",
-            "summary": "",
+            "summary": "Respond\u0020to\u0020an\u0020interaction\u0020with\u0020a\u0020message.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE",
             "name": "RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE",
-            "summary": "",
+            "summary": "ACK\u0020an\u0020interaction\u0020and\u0020edit\u0020a\u0020response\u0020later,\u0020the\u0020user\u0020sees\u0020a\u0020loading\u0020state.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE",
             "name": "RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE",
-            "summary": "",
+            "summary": "For\u0020components,\u0020ACK\u0020an\u0020interaction\u0020and\u0020edit\u0020the\u0020original\u0020message\u0020later\u003B\u0020the\u0020user\u0020does\u0020not\u0020see\u0020a\u0020loading\u0020state.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_UPDATE_MESSAGE",
             "name": "RESPONSE_TYPE_UPDATE_MESSAGE",
-            "summary": "",
+            "summary": "For\u0020components,\u0020edit\u0020the\u0020message\u0020the\u0020component\u0020was\u0020attached\u0020to.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_UPDATE_MESSAGE"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT",
             "name": "RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT",
-            "summary": "",
+            "summary": "Respond\u0020to\u0020an\u0020autocomplete\u0020interaction\u0020with\u0020suggested\u0020choices.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_MODAL",
             "name": "RESPONSE_TYPE_MODAL",
-            "summary": "",
+            "summary": "Respond\u0020to\u0020an\u0020interaction\u0020with\u0020a\u0020popup\u0020modal.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_MODAL"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_PREMIUM_REQUIRED",
             "name": "RESPONSE_TYPE_PREMIUM_REQUIRED",
-            "summary": "",
+            "summary": "Deprecated\u003B\u0020respond\u0020to\u0020an\u0020interaction\u0020with\u0020an\u0020upgrade\u0020button,\u0020only\u0020available\u0020for\u0020apps\u0020with\u0020monetization\u0020enabled.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_PREMIUM_REQUIRED"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ARESPONSE_TYPE_LAUNCH_ACTIVITY",
             "name": "RESPONSE_TYPE_LAUNCH_ACTIVITY",
-            "summary": "",
+            "summary": "Launch\u0020the\u0020Activity\u0020associated\u0020with\u0020the\u0020app.\u0020Only\u0020available\u0020for\u0020apps\u0020with\u0020Activities\u0020enabled.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_RESPONSE_TYPE_LAUNCH_ACTIVITY"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ACONTEXT_TYPE_GUILD",
             "name": "CONTEXT_TYPE_GUILD",
-            "summary": "",
+            "summary": "Interaction\u0020can\u0020be\u0020used\u0020within\u0020servers.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_CONTEXT_TYPE_GUILD"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ACONTEXT_TYPE_BOT_DM",
             "name": "CONTEXT_TYPE_BOT_DM",
-            "summary": "",
+            "summary": "Interaction\u0020can\u0020be\u0020used\u0020within\u0020DMs\u0020with\u0020the\u0020app\u0027s\u0020bot\u0020user.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_CONTEXT_TYPE_BOT_DM"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003ACONTEXT_TYPE_PRIVATE_CHANNEL",
             "name": "CONTEXT_TYPE_PRIVATE_CHANNEL",
-            "summary": "",
+            "summary": "Interaction\u0020can\u0020be\u0020used\u0020within\u0020Group\u0020DMs\u0020and\u0020DMs\u0020other\u0020than\u0020the\u0020app\u0027s\u0020bot\u0020user.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#constant_CONTEXT_TYPE_PRIVATE_CHANNEL"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003A\u0024fillable",
@@ -10445,6 +10445,11 @@ Search.appendIndex(
             "name": "attributeCollectionHelper",
             "summary": "Helps\u0020with\u0020getting\u0020Part\u0020attributes.",
             "url": "classes/Discord-Parts-PartTrait.html#method_attributeCollectionHelper"
+        },                {
+            "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AattributeTypedCollectionHelper\u0028\u0029",
+            "name": "attributeTypedCollectionHelper",
+            "summary": "Helps\u0020with\u0020getting\u0020Part\u0020attributes\u0020for\u0020components.",
+            "url": "classes/Discord-Parts-PartTrait.html#method_attributeTypedCollectionHelper"
         },                {
             "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AattributePartHelper\u0028\u0029",
             "name": "attributePartHelper",
