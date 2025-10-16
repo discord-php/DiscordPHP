@@ -624,13 +624,20 @@ class Message extends Part
      */
     protected function getEmbedsAttribute(): ExCollectionInterface
     {
-        $embeds = Collection::for(Embed::class, null);
+        $collection = Collection::for(Embed::class, null);
 
-        foreach ($this->attributes['embeds'] ?? [] as $embed) {
-            $embeds->pushItem($this->createOf(Embed::TYPES[$embed->type ?? 0], $embed));
+        if (empty($this->attributes['embeds'])) {
+            return $collection;
         }
 
-        return $embeds;
+        foreach ($this->attributes['embeds'] as &$embed) {
+            if (! $embed instanceof Embed) {
+                $embed = $this->createOf(Embed::TYPES[$embed->type ?? 0], $embed);
+            }
+            $collection->pushItem($embed);
+        }
+
+        return $collection;
     }
 
     /**
@@ -781,20 +788,7 @@ class Message extends Part
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        $components = Collection::for(Component::class);
-
-        if (! isset($this->attributes['components'])) {
-            return $components;
-        }
-
-        foreach ($this->attributes['components'] as &$component) {
-            if (! $component instanceof Component) {
-                $component = $this->createOf(Component::TYPES[$component->type ?? 0], $component);
-            }
-            $components->pushItem($component);
-        }
-
-        return $components;
+        return $this->attributeComponentCollectionHelper();
     }
 
     /**

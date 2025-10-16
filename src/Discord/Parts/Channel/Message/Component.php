@@ -75,20 +75,7 @@ class Component extends Part
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        $components = Collection::for(Component::class);
-
-        if (! isset($this->attributes['components'])) {
-            return $components;
-        }
-
-        foreach ($this->attributes['components'] as &$component) {
-            if (! $component instanceof Component) {
-                $component = $this->createOf(Component::TYPES[$component->type ?? 0], $component);
-            }
-            $components->pushItem($component);
-        }
-
-        return $components;
+        return $this->attributeComponentCollectionHelper();
     }
 
     /**

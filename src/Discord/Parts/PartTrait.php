@@ -19,6 +19,7 @@ use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Http;
+use Discord\Parts\Channel\Message\Component;
 use React\Promise\PromiseInterface;
 
 /**
@@ -480,6 +481,31 @@ trait PartTrait
                     ? $part
                     : $part = $this->createOf($class, $part)
             );
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Helps with getting Part attributes for components.
+     *
+     * @param string $key The attribute key.
+     *
+     * @return ExCollectionInterface<Component>|Component[]
+     */
+    protected function attributeComponentCollectionHelper($key = 'components'): ExCollectionInterface
+    {
+        $collection = Collection::for(Component::class);
+
+        if (empty($this->attributes[$key])) {
+            return $collection;
+        }
+
+        foreach ($this->attributes[$key] as &$component) {
+            if (! $component instanceof Component) {
+                $component = $this->createOf(Component::TYPES[$component->type ?? 0], $component);
+            }
+            $collection->pushItem($component);
         }
 
         return $collection;
