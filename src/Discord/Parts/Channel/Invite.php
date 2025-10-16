@@ -62,6 +62,11 @@ class Invite extends Part implements Stringable
     public const TYPE_GROUP_DM = 1;
     public const TYPE_FRIEND = 2;
 
+    public const TARGET_TYPE_STREAM = 1;
+    public const TARGET_TYPE_EMBEDDED_APPLICATION = 2;
+
+    public const FLAG_IS_GUEST_INVITE = 1 << 0; // This invite is a guest invite for a voice channel
+
     /**
      * @inheritDoc
      */
@@ -93,11 +98,6 @@ class Invite extends Part implements Stringable
         'guild_id',
         'channel_id',
     ];
-
-    public const TARGET_TYPE_STREAM = 1;
-    public const TARGET_TYPE_EMBEDDED_APPLICATION = 2;
-
-    public const FLAG_IS_GUEST_INVITE = 1 << 0; // This invite is a guest invite for a voice channel
 
     /**
      * Returns the id attribute.
