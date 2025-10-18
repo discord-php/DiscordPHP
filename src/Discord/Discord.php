@@ -356,7 +356,7 @@ class Discord
     /**
      * An array of registered slash commands.
      *
-     * @var RegisteredCommand[]
+     * @var ExCollectionInterface<RegisteredCommand>|RegisteredCommand[]
      */
     protected $application_commands;
 
@@ -401,6 +401,7 @@ class Discord
         $this->token = $options['token'];
         $this->loop = $options['loop'];
         $this->logger = $options['logger'];
+        $this->application_commands = Collection::for(RegisteredCommand::class, 'name');
 
         if (! in_array(php_sapi_name(), ['cli', 'micro'])) {
             $this->logger->critical('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.');
