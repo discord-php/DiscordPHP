@@ -16,6 +16,7 @@ namespace Discord\Repository\Guild;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Role;
 use Discord\Repository\AbstractRepository;
+use React\Promise\PromiseInterface;
 
 /**
  * Contains roles of a guild.
@@ -48,4 +49,14 @@ class RoleRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $class = Role::class;
+
+    /**
+     * Get member counts for every role in the guild.
+     *
+     * @return PromiseInterface<array<string, int>> [role_id => member_count]
+     */
+    public function getMemberCounts(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_ROLES_MEMBER_COUNTS, $this->vars['guild_id']))->then(fn ($response) => (array) $response);
+    }
 }
