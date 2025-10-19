@@ -13081,6 +13081,11 @@ Search.appendIndex(
             "summary": "Contains\u0020roles\u0020of\u0020a\u0020guild.",
             "url": "classes/Discord-Repository-Guild-RoleRepository.html"
         },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\RoleRepository\u003A\u003AgetMemberCounts\u0028\u0029",
+            "name": "getMemberCounts",
+            "summary": "Get\u0020member\u0020counts\u0020for\u0020every\u0020role\u0020in\u0020the\u0020guild.",
+            "url": "classes/Discord-Repository-Guild-RoleRepository.html#method_getMemberCounts"
+        },                {
             "fqsen": "\\Discord\\Repository\\Guild\\RoleRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
             "summary": "",
