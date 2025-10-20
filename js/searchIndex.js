@@ -698,93 +698,98 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_ACTION_ROW",
             "name": "TYPE_ACTION_ROW",
-            "summary": "",
+            "summary": "Container\u0020to\u0020display\u0020a\u0020row\u0020of\u0020interactive\u0020components.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_ACTION_ROW"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_BUTTON",
             "name": "TYPE_BUTTON",
-            "summary": "",
+            "summary": "Button\u0020object.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_BUTTON"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_STRING_SELECT",
             "name": "TYPE_STRING_SELECT",
-            "summary": "",
+            "summary": "Select\u0020menu\u0020for\u0020picking\u0020from\u0020defined\u0020text\u0020options.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_STRING_SELECT"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_TEXT_INPUT",
             "name": "TYPE_TEXT_INPUT",
-            "summary": "",
+            "summary": "Text\u0020input\u0020object.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_TEXT_INPUT"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_USER_SELECT",
             "name": "TYPE_USER_SELECT",
-            "summary": "",
+            "summary": "Select\u0020menu\u0020for\u0020users.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_USER_SELECT"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_ROLE_SELECT",
             "name": "TYPE_ROLE_SELECT",
-            "summary": "",
+            "summary": "Select\u0020menu\u0020for\u0020roles.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_ROLE_SELECT"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_MENTIONABLE_SELECT",
             "name": "TYPE_MENTIONABLE_SELECT",
-            "summary": "",
+            "summary": "Select\u0020menu\u0020for\u0020mentionables\u0020\u0028users\u0020and\u0020roles\u0029.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_MENTIONABLE_SELECT"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_CHANNEL_SELECT",
             "name": "TYPE_CHANNEL_SELECT",
-            "summary": "",
+            "summary": "Select\u0020menu\u0020for\u0020channels.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_CHANNEL_SELECT"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_SECTION",
             "name": "TYPE_SECTION",
-            "summary": "",
+            "summary": "Container\u0020to\u0020display\u0020text\u0020alongside\u0020an\u0020accessory\u0020component.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_SECTION"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_TEXT_DISPLAY",
             "name": "TYPE_TEXT_DISPLAY",
-            "summary": "",
+            "summary": "Markdown\u0020text.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_TEXT_DISPLAY"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_THUMBNAIL",
             "name": "TYPE_THUMBNAIL",
-            "summary": "",
+            "summary": "Small\u0020image\u0020that\u0020can\u0020be\u0020used\u0020as\u0020an\u0020accessory.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_THUMBNAIL"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_MEDIA_GALLERY",
             "name": "TYPE_MEDIA_GALLERY",
-            "summary": "",
+            "summary": "Display\u0020images\u0020and\u0020other\u0020media.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_MEDIA_GALLERY"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_FILE",
             "name": "TYPE_FILE",
-            "summary": "",
+            "summary": "Displays\u0020an\u0020attached\u0020file.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_FILE"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_SEPARATOR",
             "name": "TYPE_SEPARATOR",
-            "summary": "",
+            "summary": "Component\u0020to\u0020add\u0020vertical\u0020padding\u0020between\u0020other\u0020components.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_SEPARATOR"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_CONTENT_INVENTORY_ENTRY",
             "name": "TYPE_CONTENT_INVENTORY_ENTRY",
-            "summary": "",
+            "summary": "Undocumented.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_CONTENT_INVENTORY_ENTRY"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_CONTAINER",
             "name": "TYPE_CONTAINER",
-            "summary": "",
+            "summary": "Container\u0020that\u0020visually\u0020groups\u0020a\u0020set\u0020of\u0020components.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_CONTAINER"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_LABEL",
             "name": "TYPE_LABEL",
-            "summary": "",
+            "summary": "Container\u0020associating\u0020a\u0020label\u0020and\u0020description\u0020with\u0020a\u0020component.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_LABEL"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_FILE_UPLOAD",
             "name": "TYPE_FILE_UPLOAD",
-            "summary": "",
+            "summary": "Component\u0020for\u0020uploading\u0020files.",
             "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_FILE_UPLOAD"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_CHECKPOINT_CARD",
+            "name": "TYPE_CHECKPOINT_CARD",
+            "summary": "Undocumented.",
+            "url": "classes/Discord-Builders-Components-Component.html#constant_TYPE_CHECKPOINT_CARD"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component\u003A\u003ATYPE_SELECT_MENU",
             "name": "TYPE_SELECT_MENU",
