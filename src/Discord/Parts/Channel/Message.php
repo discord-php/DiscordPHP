@@ -467,8 +467,7 @@ class Message extends Part
             }
         }
 
-        // @todo potentially slow
-        if ($channel = $this->discord->getChannel($this->channel_id)) {
+        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
             return $channel;
         }
 
@@ -684,9 +683,8 @@ class Message extends Part
                     $channel = $guild->channels->get('id', $reference->channel_id);
                 }
 
-                // @todo potentially slow
                 if (! $channel && ! isset($this->attributes['referenced_message'])) {
-                    $channel = $this->discord->getChannel($reference->channel_id);
+                    $channel = $this->discord->private_channels->get('id', $reference->channel_id);
                 }
 
                 if ($channel) {
