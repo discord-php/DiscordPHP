@@ -427,15 +427,10 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
      *
-     * @todo Update type hint to ComponentObject
-     *
      * @return $this
      */
-    public function addComponent(Component $component): self
+    public function addComponent(ComponentObject $component): self
     {
-        if (! $component instanceof ComponentObject) {
-            throw new \InvalidArgumentException('You can only add component objects to a message.');
-        }
 
         /*
         if (! in_array($component::USAGE, ['Message'])) {
@@ -507,7 +502,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @throws \OverflowException        If more than 5 components are added.
      * @throws \InvalidArgumentException If a component is not an ActionRow or is not properly wrapped.
      */
-    protected function enforceV1Limits(Component $component): void
+    protected function enforceV1Limits(ComponentObject $component): void
     {
         if (! $component instanceof ActionRow) {
             throw new \InvalidArgumentException('You can only add action rows as components to v1 messages. Put your other components inside an action row.');
