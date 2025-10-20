@@ -32,8 +32,6 @@ use function Discord\poly_strlen;
  *
  * @since 10.0.0 Renamed from SelectMenu to StringSelect and made SelectMenu abstract
  * @since 10.9.0 Extends Interactive instead of Component
- *
- * @deprecated 10.0.0 Use `StringSelect`
  */
 abstract class SelectMenu extends Interactive
 {
