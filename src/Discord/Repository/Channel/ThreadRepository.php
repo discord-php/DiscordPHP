@@ -61,7 +61,7 @@ class ThreadRepository extends AbstractRepository
         foreach ($response->threads as $value) {
             $value = array_merge($this->vars, (array) $value);
             /** @var Thread */
-            $part = $this->factory->create($this->class, $value, true);
+            $part = $this->factory->part($this->class, $value, true);
             $items[$part->{$this->discrim}] = $part;
         }
 

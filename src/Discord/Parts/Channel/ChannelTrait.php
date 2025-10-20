@@ -393,7 +393,7 @@ trait ChannelTrait
         }
 
         return $this->http->get($endpoint)
-            ->then(fn ($responses) => $this->factory->create(MessagePinData::class, $responses));
+            ->then(fn ($response) => $this->factory->part(MessagePinData::class, $response, true));
     }
 
     /**

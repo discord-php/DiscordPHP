@@ -69,7 +69,7 @@ class SoundRepository extends AbstractRepository
         foreach ($response as $value) {
             foreach ($value as $value) {
                 $value = array_merge($this->vars, (array) $value);
-                $part = $this->factory->create($this->class, $value, true);
+                $part = $this->factory->part($this->class, $value, true);
                 $items[$part->{$this->discrim}] = $part;
             }
         }

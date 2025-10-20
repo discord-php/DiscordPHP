@@ -91,7 +91,7 @@ class GuildRepository extends AbstractRepository
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_PREVIEW, $guild_id))
-            ->then(fn ($data) => $data ? $this->factory->create(GuildPreview::class, $data, true) : null);
+            ->then(fn ($data) => $data ? $this->factory->part(GuildPreview::class, $data, true) : null);
     }
 
     /**
@@ -138,7 +138,7 @@ class GuildRepository extends AbstractRepository
                             return $this->cache->set($data->id, $part->fill($data));
                         }
 
-                        return $this->cache->set($data->id, $this->factory->create(Guild::class, $data, true));
+                        return $this->cache->set($data->id, $this->factory->part($this->class, $data, true));
                     });
             }
 

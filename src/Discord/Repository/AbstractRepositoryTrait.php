@@ -157,7 +157,7 @@ trait AbstractRepositoryTrait
     {
         foreach ($response as $value) {
             $value = array_merge($this->vars, (array) $value);
-            $part = $this->factory->create($this->class, $value, true);
+            $part = $this->factory->part($this->class, $value, true);
             $items[$part->{$this->discrim}] = $part;
         }
 
@@ -230,10 +230,8 @@ trait AbstractRepositoryTrait
 
                     return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
                 default: // Create new part
-                    $newPart = $this->factory->create($this->class, (array) $response, true);
-                    $newPart->created = true;
-
-                    return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
+                    $newPart = $this->factory->part($this->class, (array) $response, true);
+                    return $this->cache->set($newPart->{$this->discrim}, $newPart)->then(fn ($success) => $newPart);
             }
         });
     }

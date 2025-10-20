@@ -96,7 +96,7 @@ class MemberRepository extends AbstractRepository
     protected function __getCurrentUserGuildMember($guild): PromiseInterface
     {
         return $this->http->get(Endpoint::bind(Endpoint::USER_CURRENT_MEMBER, $guild))->then(function ($response) {
-            $part = $this->factory->create(Member::class, $response, true);
+            $part = $this->factory->part($this->class, $response, true);
 
             return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
         });
