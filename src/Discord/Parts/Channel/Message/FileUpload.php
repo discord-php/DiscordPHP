@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 /**
- * A File Upload is an interactive component that allows users to upload files in modals..
+ * A File Upload is an interactive component that allows users to upload files in modals.
  *
  * @link https://discord.com/developers/docs/components/reference#file-upload
  *
