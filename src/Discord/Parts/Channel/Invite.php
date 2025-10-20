@@ -158,8 +158,7 @@ class Invite extends Part implements Stringable
                 }
             }
 
-            // @todo potentially slow code
-            if ($channel = $this->discord->getChannel($channelId)) {
+            if ($channel = $this->discord->private_channels->get('id', $channelId)) {
                 return $channel;
             }
         }

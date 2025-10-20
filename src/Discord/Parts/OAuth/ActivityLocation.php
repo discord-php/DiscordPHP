@@ -66,8 +66,7 @@ class ActivityLocation extends Part
             }
         }
 
-        // @todo potentially slow code
-        if ($channel = $this->discord->getChannel($this->attributes['channel_id'])) {
+        if ($channel = $this->discord->private_channels->get('id', $this->attributes['channel_id'])) {
             return $channel;
         }
 
