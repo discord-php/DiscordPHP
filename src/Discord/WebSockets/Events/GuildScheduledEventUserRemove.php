@@ -27,7 +27,7 @@ class GuildScheduledEventUserRemove extends Event
      */
     public function handle($data)
     {
-        // TODO: Create WebSockets Event Part
+        /** @todo Create WebSockets Event Part */
         return $data;
     }
 }

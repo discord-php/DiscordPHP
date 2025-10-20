@@ -25,6 +25,8 @@ use Discord\Parts\User\Member;
  *
  * @link TODO
  *
+ * @todo
+ *
  * @property string                                   $analytics_id
  * @property ExCollectionInterface<Message>|Message[] $messages
  * @property bool                                     $doing_deep_historical_index
