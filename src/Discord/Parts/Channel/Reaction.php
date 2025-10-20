@@ -103,7 +103,7 @@ class Reaction extends Part
      */
     protected function setIdAttribute(string $value): void
     {
-        if (! isset($this->attributes['emoji'])) {
+        if ($this->emoji === null) {
             $this->attributes['emoji'] = new Emoji($this->discord);
         }
 
