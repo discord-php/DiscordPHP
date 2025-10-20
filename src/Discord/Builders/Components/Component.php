@@ -66,7 +66,7 @@ abstract class Component extends Builder implements JsonSerializable
     public const TYPE_LABEL = 18;
     /** Component for uploading files. */
     public const TYPE_FILE_UPLOAD = 19;
-    /** @todo Documentation. */
+    /** Undocumented. */
     public const TYPE_CHECKPOINT_CARD = 20;
 
     /** @deprecated 7.4.0 Use `Component::TYPE_STRING_SELECT` */
