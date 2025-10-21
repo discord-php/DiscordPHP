@@ -236,8 +236,9 @@ class Role extends Part implements Stringable
     public function save(): PromiseInterface
     {
         if (isset($this->attributes['guild_id'])) {
-            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
             /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
             return $guild->roles->save($this);
         }
 
