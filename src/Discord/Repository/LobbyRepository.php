@@ -59,10 +59,32 @@ class LobbyRepository extends AbstractRepository
      * @param ?array    $data['metadata']             Optional dictionary of string key/value pairs. The max total length is 1000.
      * @param ?Member[] $data['members']              Optional array of up to 25 users to be added to the lobby.
      * @param ?int      $data['idle_timeout_seconds'] Seconds to wait before shutting down a lobby after it becomes idle. Value can be between 5 and 604800 (7 days). See LobbyHandle for more details on this behavior.
+     *
+     * @return PromiseInterface<Lobby>
      */
-    public function createLobby($data = [])
+    public function createLobby($data = []): PromiseInterface
     {
         return $this->http->post(Endpoint::LOBBIES, $data)
+            ->then(fn ($response) => $this->factory->part($this->class, $response, true));
+    }
+
+    /**
+     * Modifies the specified lobby with new values, if provided.
+     *
+     * @param array     $data
+     * @param ?array    $data['metadata']             Optional dictionary of string key/value pairs. The max total length is 1000.
+     * @param ?Member[] $data['members']              Optional array of up to 25 users to be added to the lobby.
+     * @param ?int      $data['idle_timeout_seconds'] Seconds to wait before shutting down a lobby after it becomes idle. Value can be between 5 and 604800 (7 days). See LobbyHandle for more details on this behavior.
+     *
+     * @return PromiseInterface<Lobby>
+     */
+    public function modifyLobby($lobby, $data = []): PromiseInterface
+    {
+        if (! is_string($lobby)) {
+            $lobby = $lobby->id;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::LOBBY, $lobby->id), $data)
             ->then(fn ($response) => $this->factory->part($this->class, $response, true));
     }
 
