@@ -31,11 +31,11 @@ use function React\Promise\resolve;
  *
  * @since 10.34.0
  *
- * @method User|null get(string $discrim, $key)
- * @method User|null pull(string|int $key, $default = null)
- * @method User|null first()
- * @method User|null last()
- * @method User|null find(callable $callback)
+ * @method VoiceStateUpdate|null get(string $discrim, $key)
+ * @method VoiceStateUpdate|null pull(string|int $key, $default = null)
+ * @method VoiceStateUpdate|null first()
+ * @method VoiceStateUpdate|null last()
+ * @method VoiceStateUpdate|null find(callable $callback)
  */
 class VoiceStateRepository extends AbstractRepository
 {
