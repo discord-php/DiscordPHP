@@ -143,13 +143,13 @@ class VoiceStateUpdate extends Part
     /**
      * @inheritDoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         if (isset($this->attributes['guild_id'], $this->attributes['user_id'])) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
-            return $guild->voice_states->save($this);
+            return $guild->voice_states->save($this, $reason);
         }
 
         return parent::save();

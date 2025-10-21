@@ -449,7 +449,7 @@ class Thread extends Part implements Stringable
     /**
      * @inheritDoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         if ($botperms = $this->getBotPermissions()) {
             if (! $botperms->manage_threads) {
@@ -462,7 +462,7 @@ class Thread extends Part implements Stringable
         }
 
         if ($channel = $this->discord->getChannel($this->parent_id)) {
-            return $channel->threads->save($this);
+            return $channel->threads->save($this, $reason);
         }
 
         return parent::save();

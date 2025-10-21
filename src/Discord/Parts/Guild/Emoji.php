@@ -156,7 +156,7 @@ class Emoji extends Part implements Stringable
     /**
      * @inheritDoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         if (isset($this->attributes['guild_id'])) {
             /** @var Guild $guild */
@@ -173,10 +173,10 @@ class Emoji extends Part implements Stringable
                 }
             }
 
-            return $guild->emojis->save($this);
+            return $guild->emojis->save($this, $reason);
         }
 
-        return $this->discord->emojis->save($this);
+        return $this->discord->emojis->save($this, $reason);
     }
 
     /**

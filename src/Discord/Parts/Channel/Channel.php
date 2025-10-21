@@ -1186,14 +1186,8 @@ class Channel extends Part implements Stringable
     /**
      * @inheritDoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
-        if (isset($this->attributes['channel_id'])) {
-            if ($channel = $this->discord->getChannel($this->attributes['channel_id'])) {
-                return $channel->save($this);
-            }
-        }
-
         if (isset($this->attributes['guild_id'])) {
             if ($botperms = $this->getBotPermissions()) {
                 if (! $botperms->manage_channels) {
@@ -1203,10 +1197,12 @@ class Channel extends Part implements Stringable
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
-            return $guild->channels->save($this);
+            return $guild->channels->save($this, $reason);
+        } elseif ($this->created && $this->discord->private_channels->get('id', $this->id)) {
+            return $this->discord->private_channels->save($this, $reason);
         }
 
-        return parent::save();
+        return parent::save($reason);
     }
 
     /**

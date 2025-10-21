@@ -379,11 +379,11 @@ class Webhook extends Part
     /**
      * @inheritDoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
 
-        return $channel->webhooks->save($this);
+        return $channel->webhooks->save($this, $reason);
     }
 
     /**

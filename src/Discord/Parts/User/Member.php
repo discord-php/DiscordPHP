@@ -997,7 +997,7 @@ class Member extends Part implements Stringable
     /**
      * @inheritDoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         if (! isset($this->attributes['guild_id'])) {
             return parent::save();
@@ -1005,7 +1005,7 @@ class Member extends Part implements Stringable
 
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
-        return $guild->members->save($this);
+        return $guild->members->save($this, $reason);
     }
 
     /**

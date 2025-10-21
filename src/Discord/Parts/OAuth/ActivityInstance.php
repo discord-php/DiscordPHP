@@ -77,8 +77,8 @@ class ActivityInstance extends Part
     /**
      * @inheritDoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
-        return $this->discord->application->activity_instances->save($this);
+        return $this->discord->application->activity_instances->save($this, $reason);
     }
 }

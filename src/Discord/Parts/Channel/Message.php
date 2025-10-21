@@ -1390,7 +1390,7 @@ class Message extends Part
     /**
      * @inheritDoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         if (isset($this->attributes['channel_id'])) {
             /** @var Channel $channel */
@@ -1412,11 +1412,11 @@ class Message extends Part
                     return reject(new \Exception('Cannot find the webhook for this message (missing token).'));
                 }
 
-                return $webhook->messages->save($this);
+                return $webhook->messages->save($this, $reason);
             }
 
             /** @var Channel $channel */
-            return $channel->messages->save($this);
+            return $channel->messages->save($this, $reason);
         }
 
         return parent::save();

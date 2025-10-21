@@ -48,11 +48,13 @@ trait PartTrait
     /**
      * Save the part with its originating repository.
      *
+     * @param string|null $reason The reason for the audit log, if supported.
+     *
      * @throws \Exception If the part does not support saving.
      *
      * @return PromiseInterface<Part> Resolves with the saved part.
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         return reject(new \Exception('This part does not support saving.'));
     }

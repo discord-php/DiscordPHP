@@ -195,7 +195,7 @@ trait AbstractRepositoryTrait
      *
      * @throws \Exception
      *
-     * @deprecated v10.38.0 Use `Part->save()`
+     * @deprecated v10.38.0 Use `Part->save($reason)`
      */
     public function save(Part $part, ?string $reason = null): PromiseInterface
     {

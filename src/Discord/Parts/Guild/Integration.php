@@ -163,13 +163,13 @@ class Integration extends Part
     /**
      * @inheritDoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         if (isset($this->attributes['guild_id'])) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
-            return $guild->integrations->save($this);
+            return $guild->integrations->save($this, $reason);
         }
 
         return parent::save();

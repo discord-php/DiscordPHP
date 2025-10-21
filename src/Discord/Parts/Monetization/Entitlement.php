@@ -99,7 +99,7 @@ class Entitlement extends Part
     /**
      * @inheritdoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         if (isset($this->attributes['id']) || $this->created) {
             return reject(new \DomainException('Entitlements cannot be modified once created.'));

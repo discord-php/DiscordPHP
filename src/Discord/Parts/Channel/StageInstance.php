@@ -127,7 +127,7 @@ class StageInstance extends Part
     /**
      * @inheritDoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         if (isset($this->attributes['channel_id'])) {
             /** @var Channel $channel */
@@ -138,7 +138,7 @@ class StageInstance extends Part
                 }
             }
 
-            return $channel->stage_instances->save($this);
+            return $channel->stage_instances->save($this, $reason);
         }
 
         return parent::save();

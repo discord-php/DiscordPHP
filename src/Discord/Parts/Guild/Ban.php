@@ -94,7 +94,7 @@ class Ban extends Part
     /**
      * @inheritDoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         if (isset($this->attributes['guild_id'])) {
             /** @var Guild $guild */
@@ -105,7 +105,7 @@ class Ban extends Part
                 }
             }
 
-            return $guild->bans->save($this);
+            return $guild->bans->save($this, $reason);
         }
 
         return parent::save();

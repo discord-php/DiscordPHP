@@ -317,7 +317,7 @@ class Invite extends Part implements Stringable
     /**
      * @inheritDoc
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         if (isset($this->attributes['channel_id'])) {
             /** @var Channel $channel */
@@ -328,7 +328,7 @@ class Invite extends Part implements Stringable
                 }
             }
 
-            return $channel->invites->save($this);
+            return $channel->invites->save($this, $reason);
         }
 
         return parent::save();
