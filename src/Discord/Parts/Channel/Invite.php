@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Profile;
 use Discord\Parts\Guild\ScheduledEvent;
@@ -22,6 +23,8 @@ use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
 use Stringable;
+
+use function React\Promise\reject;
 
 /**
  * An invite to a Channel and Guild.
@@ -319,6 +322,11 @@ class Invite extends Part implements Stringable
         if (isset($this->attributes['channel_id'])) {
             /** @var Channel $channel */
             $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+            if ($botperms = $channel->getBotPermissions()) {
+                if (! $botperms->create_instant_invite) {
+                    return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$channel->id}."));
+                }
+            }
 
             return $channel->invites->save($this);
         }
