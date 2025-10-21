@@ -1396,6 +1396,17 @@ class Message extends Part
             /** @var Channel $channel */
             $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
 
+            if ($botperms = $channel->getBotPermissions()) {
+                if (! $this->created) {
+                    if (! $botperms->send_messages) {
+                        return reject(new NoPermissionsException("You do not have permission to send messages in channel {$channel->id}."));
+                    }
+                }
+                if (! $botperms->manage_messages) {
+                    return reject(new NoPermissionsException("You do not have permission to manage messages in channel {$channel->id}."));
+                }
+            }
+
             if (isset($this->attributes['webhook_id'])) {
                 if (! $webhook = $channel->webhooks->get('id', $this->attributes['webhook_id'])) {
                     return reject(new \Exception('Cannot find the webhook for this message (missing token).'));
