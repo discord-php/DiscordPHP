@@ -323,6 +323,7 @@ class Invite extends Part implements Stringable
         if (! $channel = $this->channel) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
             return $guild->invites->save($this);
         }
 
