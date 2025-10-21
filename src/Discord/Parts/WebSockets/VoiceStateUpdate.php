@@ -138,4 +138,16 @@ class VoiceStateUpdate extends Part
     {
         return $this->attributeCarbonHelper('request_to_speak_timestamp');
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'guild_id' => $this->guild_id,
+            'user_id' => $this->user_id,
+            'channel_id' => $this->channel_id,
+        ];
+    }
 }
