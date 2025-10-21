@@ -16,6 +16,7 @@ namespace Discord\Parts\Interactions\Command;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use React\Promise\PromiseInterface;
 use Stringable;
 
 /**
@@ -168,6 +169,21 @@ class Command extends Part implements Stringable
         }
 
         return $attr;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->commands->save($this);
+        }
+
+        return $this->discord->commands->save($this);
     }
 
     /**
