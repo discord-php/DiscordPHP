@@ -1394,6 +1394,7 @@ class Message extends Part
     {
         if (isset($this->attributes['channel_id'])) {
             $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+
             /** @var Channel $channel */
             return $channel->messages->save($this);
         }
