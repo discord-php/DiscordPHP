@@ -24,7 +24,7 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\OverwriteRepository;
-use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
+use Discord\Repository\Channel\VoiceMemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
@@ -195,7 +195,7 @@ class Channel extends Part implements Stringable
      */
     protected $repositories = [
         'overwrites' => OverwriteRepository::class,
-        'members' => MemberRepository::class,
+        'members' => VoiceMemberRepository::class,
         'messages' => MessageRepository::class,
         'webhooks' => WebhookRepository::class,
         'threads' => ThreadRepository::class,
