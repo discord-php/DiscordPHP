@@ -1195,6 +1195,11 @@ class Channel extends Part implements Stringable
         }
 
         if (isset($this->attributes['guild_id'])) {
+            if ($botperms = $this->getBotPermissions()) {
+                if (! $botperms->manage_channels) {
+                    return reject(new NoPermissionsException("You do not have permission to manage channels in the guild {$this->attributes['guild_id']}."));
+                }
+            }
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
