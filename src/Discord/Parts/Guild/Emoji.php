@@ -17,6 +17,7 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 use Stringable;
 
 /**
@@ -148,6 +149,21 @@ class Emoji extends Part implements Stringable
             'name' => $this->name,
             'roles' => $this->attributes['roles'] ?? null,
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->emojis->save($this);
+        }
+
+        return $this->discord->emojis->save($this);
     }
 
     /**
