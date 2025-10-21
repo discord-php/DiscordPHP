@@ -1626,10 +1626,6 @@ class Guild extends Part
      */
     public function save(): PromiseInterface
     {
-        if ($this->id === null) {
-            return parent::save();
-        }
-
         return $this->discord->guilds->save($this);
     }
 
