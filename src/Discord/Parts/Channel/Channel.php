@@ -31,6 +31,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Forum\Reaction;
 use Discord\Parts\Channel\Forum\Tag;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\InviteRepository;
 use Discord\Repository\Channel\StageInstanceRepository;
@@ -1166,6 +1167,27 @@ class Channel extends Part implements Stringable
         }
 
         return $attr;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(): PromiseInterface
+    {
+        if (isset($this->attributes['channel_id'])) {
+            if ($channel = $this->discord->getChannel($this->attributes['channel_id'])) {
+                return $channel->save($this);
+            }
+        }
+
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->channels->save($this);
+        }
+
+        return parent::save();
     }
 
     /**
