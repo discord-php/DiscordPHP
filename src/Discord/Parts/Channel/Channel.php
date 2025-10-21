@@ -36,7 +36,6 @@ use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Repository\Channel\InviteRepository;
 use Discord\Repository\Channel\StageInstanceRepository;
 use Discord\Repository\Channel\ThreadRepository;
-use Discord\Repository\VoiceStateRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
