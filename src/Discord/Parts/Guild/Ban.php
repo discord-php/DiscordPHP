@@ -15,6 +15,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 
 /**
  * A Ban is a ban on a user specific to a guild. It is also IP based.
@@ -86,6 +87,21 @@ class Ban extends Part
         }
 
         return $this->attributePartHelper('user', User::class);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->bans->save($this);
+        }
+
+        return parent::save();
     }
 
     /**
