@@ -1390,6 +1390,20 @@ class Message extends Part
     /**
      * @inheritDoc
      */
+    public function save(): PromiseInterface
+    {
+        if (isset($this->attributes['channel_id'])) {
+            $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+            /** @var Channel $channel */
+            return $channel->messages->save($this);
+        }
+
+        return parent::save();
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getRepositoryAttributes(): array
     {
         return [
