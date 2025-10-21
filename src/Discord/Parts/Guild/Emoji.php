@@ -17,7 +17,10 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 use Stringable;
+
+use function React\Promise\reject;
 
 /**
  * An emoji object represents a custom emoji.
@@ -148,6 +151,32 @@ class Emoji extends Part implements Stringable
             'name' => $this->name,
             'roles' => $this->attributes['roles'] ?? null,
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+            if ($botperms = $guild->getBotPermissions()) {
+                if ($this->created) {
+                    if (! $botperms->create_guild_expressions) {
+                        return reject(new \DomainException("You do not have permission to create emojis in the guild {$guild->id}."));
+                    }
+                } elseif (! $botperms->manage_guild_expressions) {
+                    return reject(new \DomainException("You do not have permission to manage emojis in the guild {$guild->id}."));
+                } elseif ($this->user->id === $this->discord->id && ! $botperms->create_guild_expressions) {
+                    return reject(new \DomainException("You do not have permission to create or manage emojis in the guild {$guild->id}."));
+                }
+            }
+
+            return $guild->emojis->save($this, $reason);
+        }
+
+        return $this->discord->emojis->save($this, $reason);
     }
 
     /**

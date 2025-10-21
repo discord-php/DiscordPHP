@@ -194,6 +194,8 @@ trait AbstractRepositoryTrait
      * @return PromiseInterface<Part>
      *
      * @throws \Exception
+     *
+     * @deprecated v10.38.0 Use `Part->save($reason)` to ensure permissions are checked.
      */
     public function save(Part $part, ?string $reason = null): PromiseInterface
     {
@@ -231,6 +233,7 @@ trait AbstractRepositoryTrait
                     return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
                 default: // Create new part
                     $newPart = $this->factory->part($this->class, (array) $response, true);
+
                     return $this->cache->set($newPart->{$this->discrim}, $newPart)->then(fn ($success) => $newPart);
             }
         });

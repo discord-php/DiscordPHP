@@ -20,6 +20,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 
 /**
  * Auto Moderation is a feature which allows each guild to set up rules that
@@ -227,6 +228,21 @@ class Rule extends Part
         }
 
         return $attr;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->autoModerationRules->save($this, $reason);
+        }
+
+        return parent::save();
     }
 
     /**

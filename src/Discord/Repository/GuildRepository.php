@@ -41,7 +41,6 @@ class GuildRepository extends AbstractRepository
     protected $endpoints = [
         'all' => Endpoint::USER_CURRENT_GUILDS,
         'get' => Endpoint::GUILD,
-        'create' => Endpoint::GUILDS,
         'update' => Endpoint::GUILD,
         'delete' => Endpoint::GUILD,
         'leave' => Endpoint::USER_CURRENT_GUILD,

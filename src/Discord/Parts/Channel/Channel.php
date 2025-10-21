@@ -24,14 +24,15 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\OverwriteRepository;
-use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Forum\Reaction;
 use Discord\Parts\Channel\Forum\Tag;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
+use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Repository\Channel\InviteRepository;
 use Discord\Repository\Channel\StageInstanceRepository;
 use Discord\Repository\Channel\ThreadRepository;
@@ -194,7 +195,6 @@ class Channel extends Part implements Stringable
      */
     protected $repositories = [
         'overwrites' => OverwriteRepository::class,
-        'members' => MemberRepository::class,
         'messages' => MessageRepository::class,
         'webhooks' => WebhookRepository::class,
         'threads' => ThreadRepository::class,
@@ -997,6 +997,21 @@ class Channel extends Part implements Stringable
             return $threadPart;
         });
     }
+
+    /**
+     * Gets the members currently in the voice channel.
+     *
+     * @return ExCollectionInterface<VoiceStateUpdate>|VoiceStateUpdate[] Members in the voice channel.
+     */
+    public function getMembersAttribute(): ExCollectionInterface
+    {
+        if ($guild = $this->guild) {
+            return $guild->voice_states->filter(fn (VoiceStateUpdate $voice_state) => $voice_state->channel_id === $this->id);
+        }
+
+        return Collection::for(VoiceStateUpdate::class, 'user_id');
+    }
+
     /**
      * @inheritDoc
      *
@@ -1166,6 +1181,28 @@ class Channel extends Part implements Stringable
         }
 
         return $attr;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            if ($botperms = $this->getBotPermissions()) {
+                if (! $botperms->manage_channels) {
+                    return reject(new NoPermissionsException("You do not have permission to manage channels in the guild {$this->attributes['guild_id']}."));
+                }
+            }
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->channels->save($this, $reason);
+        } elseif ($this->created && $this->discord->private_channels->get('id', $this->id)) {
+            return $this->discord->private_channels->save($this, $reason);
+        }
+
+        return parent::save($reason);
     }
 
     /**

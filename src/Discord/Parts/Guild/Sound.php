@@ -15,6 +15,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 use Stringable;
 
 /**
@@ -119,6 +120,21 @@ class Sound extends Part implements Stringable
             'emoji_id' => $this->emoji_id,
             'emoji_name' => $this->emoji_name,
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->sounds->save($this, $reason);
+        }
+
+        return $this->discord->sounds->save($this, $reason);
     }
 
     /**

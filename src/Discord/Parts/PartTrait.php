@@ -21,6 +21,8 @@ use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Http;
 use React\Promise\PromiseInterface;
 
+use function React\Promise\reject;
+
 /**
  * @property Http    $http               The HTTP client.
  * @property Factory $factory            The factory instance.
@@ -41,6 +43,21 @@ trait PartTrait
      */
     protected function afterConstruct(): void
     {
+    }
+
+    /**
+     * Save the part with its originating repository.
+     *
+     * @param string|null $reason The reason for the audit log, if supported.
+     *
+     * @throws \Exception If the part does not support saving.
+     * @throws NoPermissionsException Missing permission.
+     *
+     * @return PromiseInterface<Part> Resolves with the saved part.
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        return reject(new \Exception('This part does not support saving.'));
     }
 
     /**

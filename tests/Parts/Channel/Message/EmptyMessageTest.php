@@ -72,7 +72,7 @@ final class EmptyMessageTest extends DiscordTestCase
                 ->then(function (Message $message) use ($content) {
                     $message->content = $content;
 
-                    return $message->channel->messages->save($message)->then(function (Message $message) use ($content) {
+                    return $message->channel->messages->save($message, $content)->then(function (Message $message) use ($content) {
                         $this->assertEquals($content, $message->content);
                         $this->assertNotNull($message->edited_timestamp);
 

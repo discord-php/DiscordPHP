@@ -223,6 +223,21 @@ class GuildTemplate extends Part implements Stringable
     /**
      * @inheritDoc
      */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['source_guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['source_guild_id']], true);
+
+            return $guild->templates->save($this, $reason);
+        }
+
+        return parent::save();
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getRepositoryAttributes(): array
     {
         return [

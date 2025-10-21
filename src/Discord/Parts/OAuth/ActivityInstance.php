@@ -17,6 +17,7 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 
 /**
  * Represents an Activity Instance.
@@ -71,5 +72,13 @@ class ActivityInstance extends Part
         $this->attributes['users'] = $collection;
 
         return $collection;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        return $this->discord->application->activity_instances->save($this, $reason);
     }
 }

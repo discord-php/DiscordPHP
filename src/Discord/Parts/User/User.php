@@ -374,6 +374,14 @@ class User extends Part implements Stringable
     /**
      * @inheritDoc
      */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        return $this->discord->users->save($this, $reason);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getRepositoryAttributes(): array
     {
         return [

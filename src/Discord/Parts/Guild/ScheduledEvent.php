@@ -332,6 +332,21 @@ class ScheduledEvent extends Part
     /**
      * @inheritDoc
      */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->guild_scheduled_events->save($this, $reason);
+        }
+
+        return parent::save();
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getRepositoryAttributes(): array
     {
         return [

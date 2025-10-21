@@ -79,7 +79,7 @@ class DiscordCommandClient extends Discord
                 }
 
                 if ($withoutPrefix = $this->checkForPrefix($message->content)) {
-                    $args = str_getcsv($withoutPrefix, ' ', '"', "\\");
+                    $args = str_getcsv($withoutPrefix, ' ', '"', '\\');
                     $command = array_shift($args);
 
                     if (null !== $command && $this->commandClientOptions['caseInsensitiveCommands']) {

@@ -14,13 +14,17 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Profile;
 use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 use Stringable;
+
+use function React\Promise\reject;
 
 /**
  * An invite to a Channel and Guild.
@@ -117,9 +121,11 @@ class Invite extends Part implements Stringable
      */
     protected function getGuildAttribute(): ?Guild
     {
-        $guildId = $this->guild_id;
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
 
-        if ($guildId && $guild = $this->discord->guilds->get('id', $guildId)) {
+        if ($guild = $this->discord->guilds->get('id', $this->attributes['guild_id'])) {
             return $guild;
         }
 
@@ -306,6 +312,26 @@ class Invite extends Part implements Stringable
     protected function getInviteUrlAttribute(): string
     {
         return 'https://discord.gg/'.$this->code;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['channel_id'])) {
+            /** @var Channel $channel */
+            $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+            if ($botperms = $channel->getBotPermissions()) {
+                if (! $botperms->create_instant_invite) {
+                    return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$channel->id}."));
+                }
+            }
+
+            return $channel->invites->save($this, $reason);
+        }
+
+        return parent::save();
     }
 
     /**

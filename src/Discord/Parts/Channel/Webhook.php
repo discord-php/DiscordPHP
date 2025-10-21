@@ -24,8 +24,9 @@ use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Webhooks are a low-effort way to post messages to channels in Discord. They
- * do not require a bot user or authentication to use.
+ * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
+ *
+ * Apps can also subscribe to webhook events (i.e. outgoing webhooks) when events happen in Discord, which is detailed in the Webhook Events documentation.
  *
  * @link https://discord.com/developers/docs/resources/webhook#webhook-resource
  *
@@ -373,6 +374,16 @@ class Webhook extends Part
             'channel_id' => $this->channel_id,
             'avatar' => $this->avatar,
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
+
+        return $channel->webhooks->save($this, $reason);
     }
 
     /**

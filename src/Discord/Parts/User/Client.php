@@ -304,7 +304,7 @@ class Client extends Part
      *
      * @return PromiseInterface
      */
-    public function save(): PromiseInterface
+    public function save(?string $reason = null): PromiseInterface
     {
         return $this->http->patch(Endpoint::USER_CURRENT, $this->getUpdatableAttributes());
     }

@@ -1622,6 +1622,14 @@ class Guild extends Part
     }
 
     /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        return $this->discord->guilds->save($this, $reason);
+    }
+
+    /**
      * Returns the timestamp of when the guild was created.
      *
      * @return ?float
