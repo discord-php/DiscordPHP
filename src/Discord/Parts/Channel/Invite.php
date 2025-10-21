@@ -20,7 +20,10 @@ use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 use Stringable;
+
+use function React\Promise\reject;
 
 /**
  * An invite to a Channel and Guild.
@@ -306,6 +309,22 @@ class Invite extends Part implements Stringable
     protected function getInviteUrlAttribute(): string
     {
         return 'https://discord.gg/'.$this->code;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(): PromiseInterface
+    {
+        if (! $guild = $this->guild) {
+            return parent::save();
+        }
+
+        if (! $channel = $this->channel) {
+            return $guild->invites->save($this);
+        }
+
+        return $channel->invites->save($this);
     }
 
     /**
