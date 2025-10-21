@@ -997,6 +997,20 @@ class Member extends Part implements Stringable
     /**
      * @inheritDoc
      */
+    public function save(): PromiseInterface
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return parent::save();
+        }
+
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->members->save($this);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getRepositoryAttributes(): array
     {
         return [
