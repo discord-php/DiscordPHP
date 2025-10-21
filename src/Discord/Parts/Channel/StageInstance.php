@@ -13,9 +13,12 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * A Stage Instance holds information about a live stage.
@@ -129,6 +132,11 @@ class StageInstance extends Part
         if (isset($this->attributes['channel_id'])) {
             /** @var Channel $channel */
             $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
+            if ($botperms = $channel->getBotPermissions()) {
+                if ($botperms->manage_channels && $botperms->mute_members && $botperms->move_members) {
+                    return reject(new NoPermissionsException("You do not have permission to moderate members in the channel {$channel->id}."));
+                }
+            }
 
             return $channel->stage_instances->save($this);
         }
