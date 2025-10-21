@@ -15,6 +15,7 @@ namespace Discord\Parts\Channel;
 
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use React\Promise\PromiseInterface;
 
 /**
  * A Stage Instance holds information about a live stage.
@@ -118,6 +119,21 @@ class StageInstance extends Part
             'topic' => $this->topic,
             'privacy_level' => $this->privacy_level,
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(): PromiseInterface
+    {
+        if (isset($this->attributes['channel_id'])) {
+            /** @var Channel $channel */
+            $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
+
+            return $channel->stage_instances->save($this);
+        }
+
+        return parent::save();
     }
 
     /**
