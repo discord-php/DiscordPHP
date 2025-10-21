@@ -18,7 +18,6 @@ use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
 use JsonSerializable;
-use React\Promise\PromiseInterface;
 
 /**
  * This class is the base of all objects that are returned. All "Parts" extend
@@ -128,15 +127,6 @@ abstract class Part implements PartInterface, ArrayAccess, JsonSerializable
 
         $this->afterConstruct();
     }
-
-    /**
-     * Save the part with its originating repository.
-     *
-     * @throws \Exception If the part does not support saving.
-     *
-     * @return PromiseInterface<Part> Resolves with the saved part.
-     */
-    abstract function save(): PromiseInterface;
 
     /** @return array */
     public function __debugInfo(): array
