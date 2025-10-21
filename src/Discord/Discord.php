@@ -39,6 +39,7 @@ use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\LobbyRepository;
 use Discord\Repository\PrivateChannelRepository;
+use Discord\Repository\SoundRepository;
 use Discord\Repository\UserRepository;
 use Discord\Voice\Region;
 use Discord\Voice\VoiceClient;
