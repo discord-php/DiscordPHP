@@ -4296,6 +4296,11 @@ Search.appendIndex(
             "summary": "Starts\u0020a\u0020thread\u0020in\u0020the\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_startThread"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetMembersAttribute\u0028\u0029",
+            "name": "getMembersAttribute",
+            "summary": "Gets\u0020the\u0020members\u0020currently\u0020in\u0020the\u0020voice\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#method_getMembersAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetCreatableAttributes\u0028\u0029",
             "name": "getCreatableAttributes",
             "summary": "",
@@ -4305,6 +4310,11 @@ Search.appendIndex(
             "name": "getUpdatableAttributes",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_getUpdatableAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Channel.html#method_save"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
@@ -4710,6 +4720,11 @@ Search.appendIndex(
             "name": "getInviteUrlAttribute",
             "summary": "Returns\u0020the\u0020invite\u0020URL\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Invite.html#method_getInviteUrlAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Invite.html#method_save"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
@@ -5716,6 +5731,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#method_getUpdatableAttributes"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_save"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "",
@@ -6431,6 +6451,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-StageInstance.html#method_getUpdatableAttributes"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\StageInstance\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-StageInstance.html#method_save"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\StageInstance\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "",
@@ -6468,7 +6493,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Webhook",
             "name": "Webhook",
-            "summary": "Webhooks\u0020are\u0020a\u0020low\u002Deffort\u0020way\u0020to\u0020post\u0020messages\u0020to\u0020channels\u0020in\u0020Discord.\u0020They\ndo\u0020not\u0020require\u0020a\u0020bot\u0020user\u0020or\u0020authentication\u0020to\u0020use.",
+            "summary": "Webhooks\u0020are\u0020a\u0020low\u002Deffort\u0020way\u0020to\u0020post\u0020messages\u0020to\u0020channels\u0020in\u0020Discord.\u0020They\u0020do\u0020not\u0020require\u0020a\u0020bot\u0020user\u0020or\u0020authentication\u0020to\u0020use.",
             "url": "classes/Discord-Parts-Channel-Webhook.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003Aexecute\u0028\u0029",
@@ -6530,6 +6555,11 @@ Search.appendIndex(
             "name": "getUpdatableAttributes",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Webhook.html#method_getUpdatableAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Webhook.html#method_save"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Webhook\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
@@ -7476,6 +7506,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getUpdatableAttributes"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_save"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "",
@@ -7566,6 +7601,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020user\u0020attribute\u0020of\u0020the\u0020ban.",
             "url": "classes/Discord-Parts-Guild-Ban.html#method_getUserAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Ban\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Ban.html#method_save"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Ban\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "",
@@ -7655,6 +7695,11 @@ Search.appendIndex(
             "name": "getUpdatableAttributes",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Emoji.html#method_getUpdatableAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Emoji\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Emoji.html#method_save"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Emoji\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
@@ -7880,6 +7925,11 @@ Search.appendIndex(
             "name": "getUpdatableAttributes",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getUpdatableAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_save"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AcreatedTimestamp\u0028\u0029",
             "name": "createdTimestamp",
@@ -8170,6 +8220,11 @@ Search.appendIndex(
             "name": "getUpdatableAttributes",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-GuildTemplate.html#method_getUpdatableAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTemplate\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTemplate.html#method_save"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildTemplate\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
@@ -8466,6 +8521,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020\u0022subscribers\u0022\u0020role\u0020that\u0020this\u0020integration\u0020used\u0020only\u0020if\u0020guild\u0020is\u0020cached.",
             "url": "classes/Discord-Parts-Guild-Integration.html#method_getRoleAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Integration\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Integration.html#method_save"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Integration\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "",
@@ -8555,6 +8615,11 @@ Search.appendIndex(
             "name": "getUpdatableAttributes",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Role.html#method_getUpdatableAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Role.html#method_save"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
@@ -8671,6 +8736,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_getUpdatableAttributes"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_save"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "",
@@ -8751,6 +8821,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Sound.html#method_getUpdatableAttributes"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Sound\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Sound.html#method_save"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Sound\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "",
@@ -8795,6 +8870,11 @@ Search.appendIndex(
             "name": "getUpdatableAttributes",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Sticker.html#method_getUpdatableAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Sticker\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Sticker.html#method_save"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Sticker\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
@@ -9020,6 +9100,11 @@ Search.appendIndex(
             "name": "getUpdatableAttributes",
             "summary": "",
             "url": "classes/Discord-Parts-Interactions-Command-Command.html#method_getUpdatableAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Command\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Interactions-Command-Command.html#method_save"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Command\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
@@ -9731,6 +9816,11 @@ Search.appendIndex(
             "summary": "Return\u0020the\u0020ends_at\u0020attribute.",
             "url": "classes/Discord-Parts-Monetization-Entitlement.html#method_getEndsAtAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Monetization-Entitlement.html#method_save"
+        },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\Entitlement\u003A\u003APURCHASE",
             "name": "PURCHASE",
             "summary": "Entitlement\u0020was\u0020purchased\u0020by\u0020user.",
@@ -9880,6 +9970,11 @@ Search.appendIndex(
             "name": "getUsersAttribute",
             "summary": "Returns\u0020a\u0020collection\u0020of\u0020users\u0020currently\u0020connected\u0020to\u0020the\u0020instance.",
             "url": "classes/Discord-Parts-OAuth-ActivityInstance.html#method_getUsersAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\ActivityInstance\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-OAuth-ActivityInstance.html#method_save"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\ActivityInstance\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -10355,6 +10450,11 @@ Search.appendIndex(
             "name": "afterConstruct",
             "summary": "Called\u0020after\u0020the\u0020part\u0020has\u0020been\u0020constructed.",
             "url": "classes/Discord-Parts-PartTrait.html#method_afterConstruct"
+        },                {
+            "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "Save\u0020the\u0020part\u0020with\u0020its\u0020originating\u0020repository.",
+            "url": "classes/Discord-Parts-PartTrait.html#method_save"
         },                {
             "fqsen": "\\Discord\\Parts\\PartTrait\u003A\u003AisPartial\u0028\u0029",
             "name": "isPartial",
@@ -11016,6 +11116,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_getUpdatableAttributes"
         },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_save"
+        },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "",
@@ -11566,6 +11671,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-User-Member.html#method_getUpdatableAttributes"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-User-Member.html#method_save"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "",
@@ -11770,6 +11880,11 @@ Search.appendIndex(
             "name": "createdTimestamp",
             "summary": "Returns\u0020a\u0020timestamp\u0020for\u0020when\u0020a\u0020user\u0027s\u0020account\u0020was\u0020created.",
             "url": "classes/Discord-Parts-User-User.html#method_createdTimestamp"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-User-User.html#method_save"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
@@ -12215,6 +12330,16 @@ Search.appendIndex(
             "name": "getRequestToSpeakTimestampAttribute",
             "summary": "Gets\u0020the\u0020request_to_speak_timestamp\u0020attribute.",
             "url": "classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_getRequestToSpeakTimestampAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceStateUpdate\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "",
+            "url": "classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_save"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceStateUpdate\u003A\u003AgetRepositoryAttributes\u0028\u0029",
+            "name": "getRepositoryAttributes",
+            "summary": "",
+            "url": "classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_getRepositoryAttributes"
         },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\VoiceStateUpdate\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -12736,26 +12861,6 @@ Search.appendIndex(
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-Channel-ThreadRepository.html#property_class"
         },                {
-            "fqsen": "\\Discord\\Repository\\Channel\\VoiceMemberRepository",
-            "name": "VoiceMemberRepository",
-            "summary": "Contains\u0020voice\u0020states\u0020for\u0020users\u0020in\u0020the\u0020voice\u0020channel.",
-            "url": "classes/Discord-Repository-Channel-VoiceMemberRepository.html"
-        },                {
-            "fqsen": "\\Discord\\Repository\\Channel\\VoiceMemberRepository\u003A\u003A\u0024discrim",
-            "name": "discrim",
-            "summary": "The\u0020collection\u0020discriminator.",
-            "url": "classes/Discord-Repository-Channel-VoiceMemberRepository.html#property_discrim"
-        },                {
-            "fqsen": "\\Discord\\Repository\\Channel\\VoiceMemberRepository\u003A\u003A\u0024endpoints",
-            "name": "endpoints",
-            "summary": "",
-            "url": "classes/Discord-Repository-Channel-VoiceMemberRepository.html#property_endpoints"
-        },                {
-            "fqsen": "\\Discord\\Repository\\Channel\\VoiceMemberRepository\u003A\u003A\u0024class",
-            "name": "class",
-            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
-            "url": "classes/Discord-Repository-Channel-VoiceMemberRepository.html#property_class"
-        },                {
             "fqsen": "\\Discord\\Repository\\Channel\\WebhookMessageRepository",
             "name": "WebhookMessageRepository",
             "summary": "Contains\u0020messages\u0020sent\u0020to\u0020a\u0020channel\u0020from\u0020the\u0020webhook.",
@@ -13215,6 +13320,11 @@ Search.appendIndex(
             "name": "createLobby",
             "summary": "Creates\u0020a\u0020new\u0020lobby,\u0020adding\u0020any\u0020of\u0020the\u0020specified\u0020members\u0020to\u0020it,\u0020if\u0020provided.",
             "url": "classes/Discord-Repository-LobbyRepository.html#method_createLobby"
+        },                {
+            "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003AmodifyLobby\u0028\u0029",
+            "name": "modifyLobby",
+            "summary": "Modifies\u0020the\u0020specified\u0020lobby\u0020with\u0020new\u0020values,\u0020if\u0020provided.",
+            "url": "classes/Discord-Repository-LobbyRepository.html#method_modifyLobby"
         },                {
             "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003AaddMember\u0028\u0029",
             "name": "addMember",
