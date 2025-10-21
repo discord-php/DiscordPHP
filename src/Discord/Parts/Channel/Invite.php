@@ -118,9 +118,11 @@ class Invite extends Part implements Stringable
      */
     protected function getGuildAttribute(): ?Guild
     {
-        $guildId = $this->guild_id;
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
 
-        if ($guildId && $guild = $this->discord->guilds->get('id', $guildId)) {
+        if ($guild = $this->discord->guilds->get('id', $this->attributes['guild_id'])) {
             return $guild;
         }
 
@@ -314,11 +316,13 @@ class Invite extends Part implements Stringable
      */
     public function save(): PromiseInterface
     {
-        if (! $guild = $this->guild) {
+        if (! isset($this->attributes['guild_id'])) {
             return parent::save();
         }
 
         if (! $channel = $this->channel) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
             return $guild->invites->save($this);
         }
 
