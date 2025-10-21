@@ -15,6 +15,9 @@ namespace Discord\Parts\Monetization;
 
 use Carbon\Carbon;
 use Discord\Parts\Part;
+use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * Entitlements in Discord represent that a user or guild has access to a premium offering in your application.
@@ -91,5 +94,25 @@ class Entitlement extends Part
     protected function getEndsAtAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('ends_at');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function save(): PromiseInterface
+    {
+        if (isset($this->attributes['id']) || $this->created) {
+            return reject(new \DomainException('Entitlements cannot be modified once created.'));
+        }
+
+        if (! isset($this->attributes['user_id']) && ! isset($this->attributes['guild_id'])) {
+            return reject(new \DomainException('Entitlements must have either a user_id or guild_id.'));
+        }
+
+        $data = ['sku_id' => (string) $this->attributes['sku_id']];
+        $data['owner_id'] = (string) $this->attributes['user_id'] ?? (string) $this->attributes['guild_id'];
+        $data['owner_type'] = isset($this->attributes['user_id']) ? 'user' : 'guild';
+
+        return $this->discord->application->entitlements->createTestEntitlement($data);
     }
 }
