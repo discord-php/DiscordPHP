@@ -431,7 +431,6 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function addComponent(ComponentObject $component): self
     {
-
         /*
         if (! in_array($component::USAGE, ['Message'])) {
             throw new \InvalidArgumentException('Invalid component type for messages.');

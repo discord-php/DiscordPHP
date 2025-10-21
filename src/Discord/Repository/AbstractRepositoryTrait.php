@@ -231,6 +231,7 @@ trait AbstractRepositoryTrait
                     return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
                 default: // Create new part
                     $newPart = $this->factory->part($this->class, (array) $response, true);
+
                     return $this->cache->set($newPart->{$this->discrim}, $newPart)->then(fn ($success) => $newPart);
             }
         });

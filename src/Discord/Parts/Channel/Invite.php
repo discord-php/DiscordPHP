@@ -23,8 +23,6 @@ use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
 use Stringable;
 
-use function React\Promise\reject;
-
 /**
  * An invite to a Channel and Guild.
  *
