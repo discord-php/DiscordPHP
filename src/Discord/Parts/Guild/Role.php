@@ -15,6 +15,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
+use React\Promise\PromiseInterface;
 use Stringable;
 
 /**
@@ -227,6 +228,20 @@ class Role extends Part implements Stringable
             'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+            /** @var Guild $guild */
+            return $guild->roles->save($this);
+        }
+
+        return parent::save();
     }
 
     /**
