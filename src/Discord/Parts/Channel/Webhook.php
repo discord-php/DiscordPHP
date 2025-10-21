@@ -379,6 +379,16 @@ class Webhook extends Part
     /**
      * @inheritDoc
      */
+    public function save(): PromiseInterface
+    {
+        $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
+
+        return $channel->webhooks->save($this);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getRepositoryAttributes(): array
     {
         $attr = [
