@@ -24,7 +24,6 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\OverwriteRepository;
-use Discord\Repository\Channel\VoiceMemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
@@ -33,9 +32,11 @@ use Discord\Parts\Channel\Forum\Reaction;
 use Discord\Parts\Channel\Forum\Tag;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
+use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Repository\Channel\InviteRepository;
 use Discord\Repository\Channel\StageInstanceRepository;
 use Discord\Repository\Channel\ThreadRepository;
+use Discord\Repository\VoiceStateRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -195,7 +196,6 @@ class Channel extends Part implements Stringable
      */
     protected $repositories = [
         'overwrites' => OverwriteRepository::class,
-        'members' => VoiceMemberRepository::class,
         'messages' => MessageRepository::class,
         'webhooks' => WebhookRepository::class,
         'threads' => ThreadRepository::class,
@@ -998,6 +998,21 @@ class Channel extends Part implements Stringable
             return $threadPart;
         });
     }
+
+    /**
+     * Gets the members currently in the voice channel.
+     *
+     * @return ExCollectionInterface<VoiceStateUpdate>|VoiceStateUpdate[] Members in the voice channel.
+     */
+    public function getMembersAttribute(): ExCollectionInterface
+    {
+        if ($guild = $this->guild) {
+            return $guild->voice_states->filter(fn (VoiceStateUpdate $voice_state) => $voice_state->channel_id === $this->id);
+        }
+
+        return Collection::for(VoiceStateUpdate::class, 'user_id');
+    }
+
     /**
      * @inheritDoc
      *
