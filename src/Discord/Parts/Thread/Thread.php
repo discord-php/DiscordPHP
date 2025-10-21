@@ -15,6 +15,7 @@ namespace Discord\Parts\Thread;
 
 use Carbon\Carbon;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\ChannelTrait;
 use Discord\Parts\Channel\ThreadMetadata;
@@ -26,6 +27,8 @@ use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Thread\MemberRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
+
+use function React\Promise\reject;
 
 /**
  * Represents a Discord thread.
@@ -441,6 +444,28 @@ class Thread extends Part implements Stringable
         ]);
 
         return $attr;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(): PromiseInterface
+    {
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_threads) {
+                return reject(new NoPermissionsException('The bot is missing the MANAGE_THREADS permission to save this thread.'));
+            }
+        }
+
+        if (! isset($this->attributes['id']) || ! $this->created) {
+            return reject(new \RuntimeException('Please use Channel::startThread() instead.'));
+        }
+
+        if ($channel = $this->discord->getChannel($this->parent_id)) {
+            return $channel->threads->save($this);
+        }
+
+        return parent::save();
     }
 
     /**
