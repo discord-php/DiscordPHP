@@ -195,7 +195,7 @@ trait AbstractRepositoryTrait
      *
      * @throws \Exception
      *
-     * @deprecated v10.38.0 Use `Part->save($reason)`
+     * @deprecated v10.38.0 Use `Part->save($reason)` to ensure permissions are checked.
      */
     public function save(Part $part, ?string $reason = null): PromiseInterface
     {
