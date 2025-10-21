@@ -1393,7 +1393,16 @@ class Message extends Part
     public function save(): PromiseInterface
     {
         if (isset($this->attributes['channel_id'])) {
+            /** @var Channel $channel */
             $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+
+            if (isset($this->attributes['webhook_id'])) {
+                if (! $webhook = $channel->webhooks->get('id', $this->attributes['webhook_id'])) {
+                    return reject(new \Exception('Cannot find the webhook for this message (missing token).'));
+                }
+
+                return $webhook->messages->save($this);
+            }
 
             /** @var Channel $channel */
             return $channel->messages->save($this);
