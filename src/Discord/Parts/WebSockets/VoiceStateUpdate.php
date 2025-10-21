@@ -19,6 +19,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 
 /**
  * Notifies the client of voice state updates about users.
@@ -142,12 +143,26 @@ class VoiceStateUpdate extends Part
     /**
      * @inheritDoc
      */
+    public function save(): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'], $this->attributes['user_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->voice_states->save($this);
+        }
+
+        return parent::save();
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getRepositoryAttributes(): array
     {
         return [
             'guild_id' => $this->guild_id,
             'user_id' => $this->user_id,
-            'channel_id' => $this->channel_id,
         ];
     }
 }
