@@ -1626,6 +1626,11 @@ class Guild extends Part
      */
     public function save(?string $reason = null): PromiseInterface
     {
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_guild) {
+                return reject(new NoPermissionsException("You do not have permission to save changes to the guild {$this->id}."));
+            }
+        }
         return $this->discord->guilds->save($this, $reason);
     }
 
