@@ -49,6 +49,8 @@ use function React\Promise\resolve;
  *
  * @link https://discord.com/developers/docs/resources/channel#channel-object
  *
+ * @todo Class will be abstract and deprecated for userland in v11.
+ *
  * @since 2.0.0 Refactored as Part
  * @since 1.0.0
  *
