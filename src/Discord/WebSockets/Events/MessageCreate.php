@@ -41,6 +41,8 @@ class MessageCreate extends Event
         $channel = $messagePart->channel;
         if ($channel->type === Channel::TYPE_DM || $channel->type === Channel::TYPE_GROUP_DM) {
             $this->discord->private_channels->set($channel->id, $channel);
+        } else {
+            unset($channel); // Force reload below
         }
 
         /** @var ?Guild */
