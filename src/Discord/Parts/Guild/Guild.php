@@ -1631,6 +1631,7 @@ class Guild extends Part
                 return reject(new NoPermissionsException("You do not have permission to save changes to the guild {$this->id}."));
             }
         }
+
         return $this->discord->guilds->save($this, $reason);
     }
 
