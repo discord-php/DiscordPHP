@@ -853,7 +853,7 @@ class Message extends Part
      * @param ?int|null   $options['rate_limit_per_user']   Amount of seconds a user has to wait before sending another message (0-21600).
      * @param string|null $reason                           Reason for Audit Log.
      *
-     * @throws \RuntimeException      Channel type is not guild text or news.
+     * @throws \RuntimeException      Channel type is not guild text or announcement.
      * @throws NoPermissionsException Missing create_public_threads permission to create or manage_threads permission to set rate_limit_per_user.
      *
      * @return PromiseInterface<Thread>
@@ -892,7 +892,7 @@ class Message extends Part
         $channel = $this->channel;
         if ($channel) {
             if (! in_array($channel->type, [Channel::TYPE_GUILD_TEXT, Channel::TYPE_GUILD_ANNOUNCEMENT, null])) {
-                return reject(new \RuntimeException('You can only start threads on guild text channels or news channels.'));
+                return reject(new \RuntimeException('You can only start threads on guild text channels or announcement channels.'));
             }
 
             $botperms = $channel->getBotPermissions();

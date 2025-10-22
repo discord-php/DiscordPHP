@@ -845,7 +845,7 @@ class Channel extends Part implements Stringable
      * @link https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
      *
      * @param array          $options                          Thread params.
-     * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in a news channel. Ignored in forum channel.
+     * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in an announcement channel. Ignored in forum channel.
      * @param string         $options['name']                  The name of the thread.
      * @param int|null       $options['auto_archive_duration'] Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
      * @param bool|null      $options['invitable']             Whether non-moderators can add other non-moderators to a thread; only available when creating a private thread.
@@ -944,7 +944,7 @@ class Channel extends Part implements Stringable
 
             if ($this->type === self::TYPE_GUILD_ANNOUNCEMENT) {
                 if ($options['private']) {
-                    return reject(new \RuntimeException('You cannot start a private thread within a news channel.'));
+                    return reject(new \RuntimeException('You cannot start a private thread within an announcement channel.'));
                 }
 
                 $options['type'] = self::TYPE_ANNOUNCEMENT_THREAD;
