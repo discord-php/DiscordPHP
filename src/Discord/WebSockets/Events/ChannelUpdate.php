@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Builders\ChannelBuilder;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 
@@ -31,7 +32,8 @@ class ChannelUpdate extends Event
         $oldChannel = $repository = null;
 
         /** @var Channel */
-        $channelPart = $this->factory->part(Channel::class, (array) $data, true);
+        $channelPart = $this->factory->part(ChannelBuilder::TYPES[$data->type ?? Channel::class], (array) $data, true);
+
 
         if ($channelPart->is_private) {
             /** @var ?Channel */

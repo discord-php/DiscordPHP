@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Builders\ChannelBuilder;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
 
 /**
@@ -36,6 +38,6 @@ class ThreadDelete extends Event
             }
         }
 
-        return $threadPart ?? $data;
+        return $threadPart ?? $threadPart = $this->factory->part(ChannelBuilder::TYPES[$data->type ?? Thread::class], (array) $data, true);;
     }
 }

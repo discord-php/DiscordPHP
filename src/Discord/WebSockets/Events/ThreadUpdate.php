@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Builders\ChannelBuilder;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
@@ -46,7 +47,7 @@ class ThreadUpdate extends Event
 
         if ($threadPart === null) {
             /** @var Thread */
-            $threadPart = $this->factory->part(Thread::class, (array) $data, true);
+            $threadPart = $this->factory->part(ChannelBuilder::TYPES[$data->type ?? Thread::class], (array) $data, true);
         }
 
         if (isset($parent)) {
