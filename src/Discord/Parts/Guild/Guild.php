@@ -120,19 +120,15 @@ use function React\Promise\resolve;
  * @property-read bool $feature_developer_support_server                  Guild has been set as a support server on the App Directory.
  * @property-read bool $feature_discoverable                              Guild is able to be discovered in the directory.
  * @property-read bool $feature_featurable                                Guild is able to be featured in the directory.
- * @property-read bool $feature_has_directory_entry                       Guild is listed in a directory channel.
  * @property-read bool $feature_invites_disabled                          Guild has paused invites, preventing new users from joining.
  * @property-read bool $feature_invite_splash                             Guild has access to set an invite splash background.
- * @property-read bool $feature_linked_to_hub                             Guild is in a Student Hub.
  * @property-read bool $feature_member_verification_gate_enabled          Guild has enabled membership screening.
  * @property-read bool $feature_monetization_enabled                      Guild has enabled monetization.
  * @property-read bool $feature_more_soundboard                           Guild has increased custom soundboard sound slots.
  * @property-read bool $feature_more_stickers                             Guild has increased custom sticker slots.
- * @property-read bool $feature_news                                      Guild has access to create news channels.
+ * @property-read bool $feature_news                                      Guild has access to create announcement channels.
  * @property-read bool $feature_partnered                                 Guild is partnered.
  * @property-read bool $feature_preview_enabled                           Guild can be previewed before joining via membership screening or the directory.
- * @property-read bool $feature_private_threads                           Guild has access to create private threads.
- * @property-read bool $feature_raid_alerts_enabled                       Guild has enabled alerts for join raids in the configured safety alerts channel.
  * @property-read bool $feature_raid_alerts_disabled                      Guild has disabled alerts for join raids in the configured safety alerts channel.
  * @property-read bool $feature_role_icons                                Guild is able to set role icons.
  * @property-read bool $feature_role_subscriptions_available_for_purchase Guild has role subscriptions that can be purchased.
@@ -144,6 +140,7 @@ use function React\Promise\resolve;
  * @property-read bool $feature_vip_regions                               Guild has access to set 384kbps bitrate in voice.
  * @property-read bool $feature_welcome_screen_enabled                    Guild has enabled the welcome screen.
  * @property-read bool $feature_guests_enabled                            Guild has access to guest invites.
+ * @property-read bool $feature_guild_tags                                Guild access to set guild tags.
  * @property-read bool $feature_enhanced_role_colors                      Guild is able to set gradient colors to roles.
  *
  * @property Carbon|null              $joined_at              A timestamp of when the current user joined the guild.
@@ -312,20 +309,14 @@ class Guild extends Part
         'feature_developer_support_server',
         'feature_discoverable',
         'feature_featurable',
-        'feature_has_directory_entry',
         'feature_invites_disabled',
         'feature_invite_splash',
-        'feature_linked_to_hub',
         'feature_member_verification_gate_enabled',
         'feature_more_soundboard',
-        'feature_more_stickers',
-        'feature_monetization_enabled',
         'feature_more_stickers',
         'feature_news',
         'feature_partnered',
         'feature_preview_enabled',
-        'feature_private_threads',
-        'feature_raid_alerts_enabled',
         'feature_raid_alerts_disabled',
         'feature_role_icons',
         'feature_role_subscriptions_available_for_purchase',
@@ -336,7 +327,8 @@ class Guild extends Part
         'feature_verified',
         'feature_vip_regions',
         'feature_welcome_screen_enabled',
-        'feature_guest_enabled',
+        'feature_guests_enabled',
+        'feature_guild_tags',
         'feature_enhanced_role_colors',
     ];
 
