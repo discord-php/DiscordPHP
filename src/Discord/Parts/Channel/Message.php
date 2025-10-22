@@ -474,6 +474,7 @@ class Message extends Part
         return $this->factory->part(DM::class, [
             'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
+            'recipients' => [$this->author],
         ], true);
     }
 
