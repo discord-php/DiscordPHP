@@ -41,9 +41,9 @@ abstract class Builder
         $attributes = $part->getRawAttributes();
 
         foreach ($attributes as $key => $value) {
-            if (property_exists($builder, $key)) {
-                $builder->{$key} = $value;
-            }
+            property_exists($builder, $key)
+                ? $builder->{$key} = $value
+                : $builder->setProperty($key, $value);
         }
 
         return $builder;
