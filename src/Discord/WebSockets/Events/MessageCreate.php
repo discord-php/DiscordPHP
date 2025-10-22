@@ -38,7 +38,8 @@ class MessageCreate extends Event
         /** @var Message */
         $messagePart = $this->factory->part(Message::class, (array) $data, true);
 
-        if (! $messagePart->member) {
+        /** @todo Fix this */
+        if (! $messagePart->is_private) {
             /** @var Channel */
             $channel = $this->factory->part(DM::class, [
                 'id' => $data->channel_id,
