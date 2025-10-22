@@ -16,6 +16,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\DM;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Intents;
@@ -37,9 +38,9 @@ class MessageCreate extends Event
         /** @var Message */
         $messagePart = $this->factory->part(Message::class, (array) $data, true);
 
-        if ($messagePart->is_private) {
+        if (! $messagePart->member) {
             /** @var Channel */
-            $channel = $this->factory->part(Channel::class, [
+            $channel = $this->factory->part(DM::class, [
                 'id' => $data->channel_id,
                 'type' => Channel::TYPE_DM,
                 'last_message_id' => $data->id,
