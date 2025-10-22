@@ -14,8 +14,21 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Http\Exceptions\RequestFailedException;
+use Discord\Parts\Channel\AnnouncementThread;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\DM;
+use Discord\Parts\Channel\GroupDM;
+use Discord\Parts\Channel\GuildAnnouncement;
+use Discord\Parts\Channel\GuildCategory;
+use Discord\Parts\Channel\GuildDirectory;
+use Discord\Parts\Channel\GuildForum;
+use Discord\Parts\Channel\GuildMedia;
+use Discord\Parts\Channel\GuildStageVoice;
+use Discord\Parts\Channel\GuildText;
+use Discord\Parts\Channel\GuildVoice;
 use Discord\Parts\Channel\Overwrite;
+use Discord\Parts\Channel\PrivateThread;
+use Discord\Parts\Channel\PublicThread;
 use Discord\Parts\Guild\Emoji;
 use Discord\Voice\Region;
 use JsonSerializable;
@@ -31,6 +44,22 @@ use function Discord\poly_strlen;
  */
 class ChannelBuilder extends Builder implements JsonSerializable
 {
+    public const TYPES = [
+        0 => GuildText::class, // A text channel within a server
+        1 => DM::class, // A direct message between users
+        2 => GuildVoice::class, // A voice channel within a server
+        3 => GroupDM::class, // A direct message between multiple users
+        4 => GuildCategory::class, // An organizational category that contains up to 50 channels
+        5 => GuildAnnouncement::class, // A channel that users can follow and crosspost into their own server (formerly news channels)
+        10 => AnnouncementThread::class, // A temporary sub-channel within a GUILD_ANNOUNCEMENT channel
+        11 => PublicThread::class, // A temporary sub-channel within a GUILD_TEXT or GUILD_FORUM channel
+        12 => PrivateThread::class, // A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission
+        13 => GuildStageVoice::class, // A voice channel for hosting events with an audience
+        14 => GuildDirectory::class, // The channel in a hub containing the listed servers
+        15 => GuildForum::class, // Channel that can only contain threads
+        16 => GuildMedia::class, // Channel that can only contain threads, similar to GUILD_FORUM channels
+    ];
+
     protected string $name;
     protected ?int $type;
     protected ?string $topic; // Text, Announcement, Forum, Media
