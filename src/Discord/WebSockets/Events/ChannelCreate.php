@@ -31,7 +31,7 @@ class ChannelCreate extends Event
     public function handle($data)
     {
         /** @var Channel */
-        $channelPart = $this->factory->part(ChannelBuilder::TYPES[$data->type ?? Channel::class], (array) $data, true);
+        $channelPart = $this->factory->part(ChannelBuilder::TYPES[$data->type] ?? Channel::class, (array) $data, true);
 
         if ($channelPart->is_private) {
             $this->discord->private_channels->set($data->id, $channelPart);

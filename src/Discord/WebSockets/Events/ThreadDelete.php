@@ -38,6 +38,6 @@ class ThreadDelete extends Event
             }
         }
 
-        return $threadPart ?? $threadPart = $this->factory->part(ChannelBuilder::TYPES[$data->type ?? Thread::class], (array) $data, true);;
+        return $threadPart ?? $threadPart = $this->factory->part(ChannelBuilder::TYPES[$data->type] ?? Thread::class, (array) $data, true);;
     }
 }

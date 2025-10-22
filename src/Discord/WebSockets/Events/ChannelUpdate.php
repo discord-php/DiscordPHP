@@ -32,7 +32,7 @@ class ChannelUpdate extends Event
         $oldChannel = $repository = null;
 
         /** @var Channel */
-        $channelPart = $this->factory->part(ChannelBuilder::TYPES[$data->type ?? Channel::class], (array) $data, true);
+        $channelPart = $this->factory->part(ChannelBuilder::TYPES[$data->type] ?? Channel::class, (array) $data, true);
 
 
         if ($channelPart->is_private) {

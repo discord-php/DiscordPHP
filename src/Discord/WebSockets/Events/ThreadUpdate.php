@@ -47,7 +47,7 @@ class ThreadUpdate extends Event
 
         if ($threadPart === null) {
             /** @var Thread */
-            $threadPart = $this->factory->part(ChannelBuilder::TYPES[$data->type ?? Thread::class], (array) $data, true);
+            $threadPart = $this->factory->part(ChannelBuilder::TYPES[$data->type] ?? Thread::class, (array) $data, true);
         }
 
         if (isset($parent)) {

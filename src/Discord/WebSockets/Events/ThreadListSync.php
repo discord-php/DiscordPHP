@@ -39,8 +39,9 @@ class ThreadListSync extends Event
             }
 
             foreach ($data->threads as $thread) {
+                /** @var Thread $thread */
                 /** @var Thread */
-                $threadPart = $this->factory->part(ChannelBuilder::TYPES[$data->type ?? Thread::class], (array) $thread, true);
+                $threadPart = $this->factory->part(ChannelBuilder::TYPES[$thread->type ?? Thread::class], (array) $thread, true);
                 /** @var ?Channel */
                 if ($channel = $channels[$thread->parent_id] ?? null) {
                     /** @var ?Thread */

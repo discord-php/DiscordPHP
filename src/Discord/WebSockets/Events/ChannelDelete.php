@@ -40,6 +40,6 @@ class ChannelDelete extends Event
             }
         }
 
-        return $channelPart ?? $this->factory->part(ChannelBuilder::TYPES[$data->type ?? Channel::class], (array) $data);
+        return $channelPart ?? $this->factory->part(ChannelBuilder::TYPES[$data->type] ?? Channel::class, (array) $data);
     }
 }
