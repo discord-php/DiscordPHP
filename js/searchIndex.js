@@ -8271,10 +8271,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureAnimatedIconAttribute"
         },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureApplicationCommandPermissionsV2\u0028\u0029",
-            "name": "getFeatureApplicationCommandPermissionsV2",
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureApplicationCommandPermissionsV2Attribute\u0028\u0029",
+            "name": "getFeatureApplicationCommandPermissionsV2Attribute",
             "summary": "",
-            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureApplicationCommandPermissionsV2"
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureApplicationCommandPermissionsV2Attribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureAutoModerationAttribute\u0028\u0029",
             "name": "getFeatureAutoModerationAttribute",
@@ -8431,10 +8431,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureWelcomeScreenEnabledAttribute"
         },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureGuestEnabledAttribute\u0028\u0029",
-            "name": "getFeatureGuestEnabledAttribute",
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureGuestsEnabledAttribute\u0028\u0029",
+            "name": "getFeatureGuestsEnabledAttribute",
             "summary": "",
-            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuestEnabledAttribute"
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuestsEnabledAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureGuildTagsAttribute\u0028\u0029",
+            "name": "getFeatureGuildTagsAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuildTagsAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildTrait\u003A\u003AgetFeatureEnhancedRoleColorsAttribute\u0028\u0029",
             "name": "getFeatureEnhancedRoleColorsAttribute",

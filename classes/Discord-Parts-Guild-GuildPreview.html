@@ -268,7 +268,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/GuildPreview.php"><a href="files/src-discord-parts-guild-guildpreview.html"><abbr title="src/Discord/Parts/Guild/GuildPreview.php">GuildPreview.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
@@ -295,7 +295,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null      $icon_hash                                         The icon hash for the guild.</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null $icon_hash                  The icon hash for the guild.</p>
 </section>
 
                                     </dd>
@@ -304,7 +304,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?string|null      $splash_hash                                       The splash hash for the guild.</p>
+                                                 <section class="phpdocumentor-description"><p>?string|null $splash_hash                The splash hash for the guild.</p>
 </section>
 
                                     </dd>
@@ -450,7 +450,7 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_has_directory_entry">$feature_has_directory_entry</a>
+    <a class="" href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_guild_tags">$feature_guild_tags</a>
     <span>
                         &nbsp;: bool            </span>
 </dt>
@@ -463,12 +463,6 @@
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_invites_disabled">$feature_invites_disabled</a>
-    <span>
-                        &nbsp;: bool            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_linked_to_hub">$feature_linked_to_hub</a>
     <span>
                         &nbsp;: bool            </span>
 </dt>
@@ -516,19 +510,7 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_private_threads">$feature_private_threads</a>
-    <span>
-                        &nbsp;: bool            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_raid_alerts_disabled">$feature_raid_alerts_disabled</a>
-    <span>
-                        &nbsp;: bool            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_raid_alerts_enabled">$feature_raid_alerts_enabled</a>
     <span>
                         &nbsp;: bool            </span>
 </dt>
@@ -957,7 +939,7 @@ JSON. Used for JsonSerializable.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureApplicationCommandPermissionsV2">getFeatureApplicationCommandPermissionsV2()</a>
+    <a class="" href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureApplicationCommandPermissionsV2Attribute">getFeatureApplicationCommandPermissionsV2Attribute()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
@@ -1017,7 +999,13 @@ JSON. Used for JsonSerializable.</dd>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuestEnabledAttribute">getFeatureGuestEnabledAttribute()</a>
+    <a class="" href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuestsEnabledAttribute">getFeatureGuestsEnabledAttribute()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuildTagsAttribute">getFeatureGuildTagsAttribute()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
@@ -1976,9 +1964,9 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                 -read-only                    "
 >
-    <h4 class="phpdocumentor-element__name" id="property_feature_has_directory_entry">
-        $feature_has_directory_entry
-        <a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_has_directory_entry" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_feature_guild_tags">
+        $feature_guild_tags
+        <a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_guild_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                         <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
@@ -1995,10 +1983,10 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$feature_has_directory_entry</span>
+    <span class="phpdocumentor-signature__name">$feature_guild_tags</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Guild is listed in a directory channel.</p>
+        <section class="phpdocumentor-description"><p>Guild access to set guild tags.</p>
 </section>
 
     
@@ -2079,46 +2067,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Guild has paused invites, preventing new users from joining.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                -read-only                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_feature_linked_to_hub">
-        $feature_linked_to_hub
-        <a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_linked_to_hub" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/GuildPreview.php"><a href="files/src-discord-parts-guild-guildpreview.html"><abbr title="src/Discord/Parts/Guild/GuildPreview.php">GuildPreview.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$feature_linked_to_hub</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Guild is in a Student Hub.</p>
 </section>
 
     
@@ -2318,7 +2266,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$feature_news</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Guild has access to create news channels.</p>
+        <section class="phpdocumentor-description"><p>Guild has access to create announcement channels.</p>
 </section>
 
     
@@ -2416,46 +2364,6 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                 -read-only                    "
 >
-    <h4 class="phpdocumentor-element__name" id="property_feature_private_threads">
-        $feature_private_threads
-        <a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_private_threads" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/GuildPreview.php"><a href="files/src-discord-parts-guild-guildpreview.html"><abbr title="src/Discord/Parts/Guild/GuildPreview.php">GuildPreview.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$feature_private_threads</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Guild has access to create private threads.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                -read-only                    "
->
     <h4 class="phpdocumentor-element__name" id="property_feature_raid_alerts_disabled">
         $feature_raid_alerts_disabled
         <a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_raid_alerts_disabled" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2479,46 +2387,6 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Guild has disabled alerts for join raids in the configured safety alerts channel.</p>
-</section>
-
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                -read-only                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_feature_raid_alerts_enabled">
-        $feature_raid_alerts_enabled
-        <a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_raid_alerts_enabled" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/GuildPreview.php"><a href="files/src-discord-parts-guild-guildpreview.html"><abbr title="src/Discord/Parts/Guild/GuildPreview.php">GuildPreview.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$feature_raid_alerts_enabled</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>Guild has enabled alerts for join raids in the configured safety alerts channel.</p>
 </section>
 
     
@@ -3317,7 +3185,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/GuildPreview.php"><a href="files/src-discord-parts-guild-guildpreview.html"><abbr title="src/Discord/Parts/Guild/GuildPreview.php">GuildPreview.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
@@ -3454,7 +3322,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/GuildPreview.php"><a href="files/src-discord-parts-guild-guildpreview.html"><abbr title="src/Discord/Parts/Guild/GuildPreview.php">GuildPreview.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">142</span>
+    <span class="phpdocumentor-element-found-in__line">136</span>
 
     </aside>
 
@@ -3548,7 +3416,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/GuildPreview.php"><a href="files/src-discord-parts-guild-guildpreview.html"><abbr title="src/Discord/Parts/Guild/GuildPreview.php">GuildPreview.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">99</span>
+    <span class="phpdocumentor-element-found-in__line">98</span>
 
     </aside>
 
@@ -3559,7 +3427,7 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$visible</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;feature_animated_banner&#039;, &#039;feature_animated_icon&#039;, &#039;feature_application_command_permissions_v2&#039;, &#039;feature_auto_moderation&#039;, &#039;feature_banner&#039;, &#039;feature_community&#039;, &#039;feature_creator_monetizable_provisional&#039;, &#039;feature_creator_store_page&#039;, &#039;feature_developer_support_server&#039;, &#039;feature_discoverable&#039;, &#039;feature_featurable&#039;, &#039;feature_has_directory_entry&#039;, &#039;feature_invites_disabled&#039;, &#039;feature_invite_splash&#039;, &#039;feature_linked_to_hub&#039;, &#039;feature_member_verification_gate_enabled&#039;, &#039;feature_more_soundboard&#039;, &#039;feature_more_stickers&#039;, &#039;feature_monetization_enabled&#039;, &#039;feature_more_stickers&#039;, &#039;feature_news&#039;, &#039;feature_partnered&#039;, &#039;feature_preview_enabled&#039;, &#039;feature_private_threads&#039;, &#039;feature_raid_alerts_enabled&#039;, &#039;feature_raid_alerts_disabled&#039;, &#039;feature_role_icons&#039;, &#039;feature_role_subscriptions_available_for_purchase&#039;, &#039;feature_role_subscriptions_enabled&#039;, &#039;feature_soundboard&#039;, &#039;feature_ticketed_events_enabled&#039;, &#039;feature_vanity_url&#039;, &#039;feature_verified&#039;, &#039;feature_vip_regions&#039;, &#039;feature_welcome_screen_enabled&#039;, &#039;feature_guest_enabled&#039;, &#039;feature_enhanced_role_colors&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;feature_animated_banner&#039;, &#039;feature_animated_icon&#039;, &#039;feature_application_command_permissions_v2&#039;, &#039;feature_auto_moderation&#039;, &#039;feature_banner&#039;, &#039;feature_community&#039;, &#039;feature_creator_monetizable_provisional&#039;, &#039;feature_creator_store_page&#039;, &#039;feature_developer_support_server&#039;, &#039;feature_discoverable&#039;, &#039;feature_featurable&#039;, &#039;feature_invites_disabled&#039;, &#039;feature_invite_splash&#039;, &#039;feature_member_verification_gate_enabled&#039;, &#039;feature_more_soundboard&#039;, &#039;feature_more_stickers&#039;, &#039;feature_news&#039;, &#039;feature_partnered&#039;, &#039;feature_preview_enabled&#039;, &#039;feature_raid_alerts_disabled&#039;, &#039;feature_role_icons&#039;, &#039;feature_role_subscriptions_available_for_purchase&#039;, &#039;feature_role_subscriptions_enabled&#039;, &#039;feature_soundboard&#039;, &#039;feature_ticketed_events_enabled&#039;, &#039;feature_vanity_url&#039;, &#039;feature_verified&#039;, &#039;feature_vip_regions&#039;, &#039;feature_welcome_screen_enabled&#039;, &#039;feature_guests_enabled&#039;, &#039;feature_guild_tags&#039;, &#039;feature_enhanced_role_colors&#039;]</span></code>
 
     
     
@@ -4431,7 +4299,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/GuildTrait.php"><a href="files/src-discord-parts-guild-guildtrait.html"><abbr title="src/Discord/Parts/Guild/GuildTrait.php">GuildTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">273</span>
+    <span class="phpdocumentor-element-found-in__line">278</span>
 
     </aside>
 
@@ -5777,9 +5645,9 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getFeatureApplicationCommandPermissionsV2">
-        getFeatureApplicationCommandPermissionsV2()
-        <a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureApplicationCommandPermissionsV2" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getFeatureApplicationCommandPermissionsV2Attribute">
+        getFeatureApplicationCommandPermissionsV2Attribute()
+        <a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureApplicationCommandPermissionsV2Attribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
@@ -5792,7 +5660,7 @@ JSON. Used for JsonSerializable.</p>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getFeatureApplicationCommandPermissionsV2</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">getFeatureApplicationCommandPermissionsV2Attribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -6089,7 +5957,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/GuildTrait.php"><a href="files/src-discord-parts-guild-guildtrait.html"><abbr title="src/Discord/Parts/Guild/GuildTrait.php">GuildTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">265</span>
+    <span class="phpdocumentor-element-found-in__line">270</span>
 
     </aside>
 
@@ -6157,9 +6025,9 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getFeatureGuestEnabledAttribute">
-        getFeatureGuestEnabledAttribute()
-        <a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuestEnabledAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getFeatureGuestsEnabledAttribute">
+        getFeatureGuestsEnabledAttribute()
+        <a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuestsEnabledAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
@@ -6172,7 +6040,45 @@ JSON. Used for JsonSerializable.</p>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getFeatureGuestEnabledAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">getFeatureGuestsEnabledAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getFeatureGuildTagsAttribute">
+        getFeatureGuildTagsAttribute()
+        <a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuildTagsAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/GuildTrait.php"><a href="files/src-discord-parts-guild-guildtrait.html"><abbr title="src/Discord/Parts/Guild/GuildTrait.php">GuildTrait.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">265</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getFeatureGuildTagsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -7463,10 +7369,9 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_enhanced_role_colors">$feature_enhanced_role_colors</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_featurable">$feature_featurable</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_guests_enabled">$feature_guests_enabled</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_has_directory_entry">$feature_has_directory_entry</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_guild_tags">$feature_guild_tags</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_invite_splash">$feature_invite_splash</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_invites_disabled">$feature_invites_disabled</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_linked_to_hub">$feature_linked_to_hub</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_member_verification_gate_enabled">$feature_member_verification_gate_enabled</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_monetization_enabled">$feature_monetization_enabled</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_more_soundboard">$feature_more_soundboard</a></li>
@@ -7474,9 +7379,7 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_news">$feature_news</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_partnered">$feature_partnered</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_preview_enabled">$feature_preview_enabled</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_private_threads">$feature_private_threads</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_raid_alerts_disabled">$feature_raid_alerts_disabled</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_raid_alerts_enabled">$feature_raid_alerts_enabled</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_role_icons">$feature_role_icons</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_role_subscriptions_available_for_purchase">$feature_role_subscriptions_available_for_purchase</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Guild-GuildPreview.html#property_feature_role_subscriptions_enabled">$feature_role_subscriptions_enabled</a></li>
@@ -7545,7 +7448,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureAnimatedBannerAttribute">getFeatureAnimatedBannerAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureAnimatedIconAttribute">getFeatureAnimatedIconAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureApplicationCommandPermissionsV2">getFeatureApplicationCommandPermissionsV2()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureApplicationCommandPermissionsV2Attribute">getFeatureApplicationCommandPermissionsV2Attribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureAutoModerationAttribute">getFeatureAutoModerationAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureBannerAttribute">getFeatureBannerAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureCommunityAttribute">getFeatureCommunityAttribute()</a></li>
@@ -7555,7 +7458,8 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureDiscoverableAttribute">getFeatureDiscoverableAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureEnhancedRoleColorsAttribute">getFeatureEnhancedRoleColorsAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureFeaturableAttribute">getFeatureFeaturableAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuestEnabledAttribute">getFeatureGuestEnabledAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuestsEnabledAttribute">getFeatureGuestsEnabledAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureGuildTagsAttribute">getFeatureGuildTagsAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureHasDirectoryEntryAttribute">getFeatureHasDirectoryEntryAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureInvitesDisabledAttribute">getFeatureInvitesDisabledAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-GuildTrait.html#method_getFeatureInviteSplashAttribute">getFeatureInviteSplashAttribute()</a></li>
