@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
-class AnnouncementThread extends Channel
+use Discord\Parts\Thread\Thread;
+
+class AnnouncementThread extends Thread
 {
 }
