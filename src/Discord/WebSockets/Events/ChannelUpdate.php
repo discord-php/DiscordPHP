@@ -34,7 +34,6 @@ class ChannelUpdate extends Event
         /** @var Channel */
         $channelPart = $this->factory->part(ChannelBuilder::TYPES[$data->type] ?? Channel::class, (array) $data, true);
 
-
         if ($channelPart->is_private) {
             /** @var ?Channel */
             if (! $oldChannel = yield $this->discord->private_channels->cacheGet($data->id)) {
