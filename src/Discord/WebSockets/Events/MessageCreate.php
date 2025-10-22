@@ -38,17 +38,10 @@ class MessageCreate extends Event
         /** @var Message */
         $messagePart = $this->factory->part(Message::class, (array) $data, true);
 
-        /** @todo Fix this */
-        if (! $messagePart->is_private) {
-            /** @var Channel */
-            $channel = $this->factory->part(DM::class, [
-                'id' => $data->channel_id,
-                'type' => Channel::TYPE_DM,
-                'last_message_id' => $data->id,
-                'recipients' => [$data->author],
-            ], true);
-
-            $this->discord->private_channels->set($data->channel_id, $channel);
+        if ($channel = $messagePart->channel) {
+            if ($channel->type === Channel::TYPE_DM || $channel->type === Channel::TYPE_GROUP_DM) {
+                $this->discord->private_channels->set($channel->id, $channel);
+            }
         }
 
         /** @var ?Guild */
