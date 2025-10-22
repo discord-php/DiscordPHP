@@ -13,10 +13,13 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
 use Stringable;
+
+use function React\Promise\reject;
 
 /**
  * An sound object represents a soundboard sound.
@@ -130,11 +133,26 @@ class Sound extends Part implements Stringable
         if (isset($this->attributes['guild_id'])) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+            if ($botperms = $guild->getBotPermissions()) {
+                if ($this->created) {
+                    if ($this->user->id === $this->discord->id) {
+                        if (! $botperms->create_guild_expressions && ! $botperms->manage_guild_expressions) {
+                            return reject(new NoPermissionsException("You do not have permission to save changes to the sound {$this->id} in guild {$guild->id}."));
+                        }
+                    } else {
+                        if (! $botperms->manage_guild_expressions) {
+                            return reject(new NoPermissionsException("You do not have permission to save changes to the sound {$this->id} in guild {$guild->id}."));
+                        }
+                    }
+                } elseif (! $botperms->create_guild_expressions) {
+                    return reject(new NoPermissionsException("You do not have permission to save the sound {$this->id} in guild {$guild->id}."));
+                }
+            }
 
             return $guild->sounds->save($this, $reason);
         }
 
-        return $this->discord->sounds->save($this, $reason);
+        return parent::save($reason);
     }
 
     /**

@@ -50,7 +50,7 @@ trait PartTrait
      *
      * @param string|null $reason The reason for the audit log, if supported.
      *
-     * @throws \Exception If the part does not support saving.
+     * @throws \Exception             If the part does not support saving.
      * @throws NoPermissionsException Missing permission.
      *
      * @return PromiseInterface<Part> Resolves with the saved part.
