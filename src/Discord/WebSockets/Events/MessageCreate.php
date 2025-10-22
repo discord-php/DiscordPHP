@@ -16,7 +16,6 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\DM;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Intents;
@@ -40,6 +39,7 @@ class MessageCreate extends Event
 
         $channel = $messagePart->channel;
         if ($channel->type === Channel::TYPE_DM || $channel->type === Channel::TYPE_GROUP_DM) {
+            $channel->last_message_id = $data->id;
             $this->discord->private_channels->set($channel->id, $channel);
         } else {
             unset($channel); // Force reload below
