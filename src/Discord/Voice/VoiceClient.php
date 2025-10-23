@@ -75,17 +75,6 @@ class VoiceClient extends EventEmitter
         'aead_xchacha20_poly1305_rtpsize',
     ];
 
-    public const DEPRECATED_MODES = [
-        'xsalsa20_poly1305',
-    ];
-
-    public const UNSUPPORTED_MODES = [
-        'xsalsa20_poly1305_lite_rtpsize',
-        'aead_aes256_gcm',
-        'xsalsa20_poly1305_suffix',
-        'xsalsa20_poly1305_lite',
-    ];
-
     public const VOICE_OP_HANDLERS = [
         Op::VOICE_READY => 'handleReady',
         Op::VOICE_SESSION_DESCRIPTION => 'handleSessionDescription',
@@ -447,14 +436,7 @@ class VoiceClient extends EventEmitter
             return;
         }
 
-        if (in_array($mode, self::DEPRECATED_MODES)) {
-            $this->discord->logger->warning("{$mode} is a deprecated transport encryption connection mode. Please use a supported mode: ".implode(', ', self::SUPPORTED_MODES));
-            $this->mode = $mode;
-
-            return;
-        }
-
-        $this->discord->logger->error("{$mode} is not a supported transport encryption connection mode.");
+        $this->discord->logger->error("{$mode} is either a deprecated or unsupported transport encryption connection mode. Please use a supported mode: ".implode(', ', self::SUPPORTED_MODES));
 
         throw new \InvalidArgumentException("Invalid transport encryption mode: {$mode}");
     }
@@ -1882,12 +1864,6 @@ class VoiceClient extends EventEmitter
                 return \sodium_crypto_aead_xchacha20poly1305_ietf_decrypt(
                     $ciphertext,
                     '', // no additional data
-                    (string) $nonce,
-                    $this->secret_key
-                );
-            case 'xsalsa20_poly1305': // deprecated
-                return \sodium_crypto_secretbox_open(
-                    $voicePacket->getData(),
                     (string) $nonce,
                     $this->secret_key
                 );
