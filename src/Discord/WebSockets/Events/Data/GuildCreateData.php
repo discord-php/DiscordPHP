@@ -24,7 +24,7 @@ use Discord\Parts\WebSockets\PresenceUpdate;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 
 /**
- * An available or unavailable guild with extra fields.
+ * Raw data received from the `GUILD_CREATE` event.
  *
  * @see \Discord\Websockets\Events\GuildCreate
  *
