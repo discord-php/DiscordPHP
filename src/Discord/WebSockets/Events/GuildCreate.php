@@ -19,12 +19,25 @@ use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Discord\Http\Endpoint;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
+use Discord\WebSockets\Events\Data\GuildCreateData;
 use React\Promise\Deferred;
 
 use function React\Promise\all;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#guild-create
+ * The inner payload is either a guild object or an unavailable guild object.
+ *
+ * This event can be sent in three different scenarios:
+ * 1. When a user is initially connecting, to lazily load and backfill information for all unavailable guilds sent in the Ready event. Guilds that are unavailable due to an outage will send a Guild Delete event.
+ * 2. When a Guild becomes available again to the client.
+ * 3. When the current user joins a new Guild.
+ * During an outage, the guild object in scenarios 1 and 3 may be marked as unavailable.
+ *
+ * If you don't have the `GUILD_PRESENCES` Gateway Intent, or if the guild is over 75k members, it will only send members who are in voice, plus the member for you (the connecting user).
+ * Otherwise, if a guild has over `large_threshold` members (configurable in Gateway Identify), it will only send members who are online, have a role, have a nickname, or are in a voice channel.
+ * Otherwise (if it has under `large_threshold` members), it will send all members.
+ *
+ * @link https://discord.com/developers/docs/events/gateway-events#guild-create
  *
  * @since 2.1.3
  */
@@ -32,6 +45,8 @@ class GuildCreate extends Event
 {
     /**
      * @inheritDoc
+     *
+     * @param GuildCreateData $data
      */
     public function handle($data)
     {
