@@ -34,6 +34,7 @@ use Discord\Parts\User\Client;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\VoiceServerUpdate;
+use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Repository\AbstractRepository;
 use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
@@ -110,7 +111,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v10.38.0';
+    public const VERSION = 'v10.39.0';
 
     public const REFERRER = 'https://github.com/discord-php/DiscordPHP';
 
@@ -212,7 +213,12 @@ class Discord
      */
     protected $voiceClients = [];
 
-    public $voiceSessions = [];
+    /**
+    * An array of voice session IDs.
+    *
+    * @var string[] Voice Sessions.
+    */
+    protected $voice_sessions = [];
 
     /**
      * An array of large guilds that need to be requested for members.
@@ -653,13 +659,16 @@ class Discord
      */
     protected function handleVoiceStateUpdate(Payload $data): void
     {
-        $this->logger->debug('voice state update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
-        if (! isset($this->voiceClients[$data->d->guild_id])) {
-            $this->logger->warning('voice client not found', ['guild' => $data->d->guild_id]);
+        /** @var VoiceStateUpdate $d */
+        $d = $data->d;
+
+        $this->logger->debug('voice state update received', ['guild' => $d->guild_id, 'data' => $d]);
+        if (! isset($this->voiceClients[$d->guild_id])) {
+            $this->logger->warning('voice client not found', ['guild' => $d->guild_id]);
 
             return;
         }
-        $this->voiceClients[$data->d->guild_id]->handleVoiceStateUpdate($data);
+        $this->voiceClients[$d->guild_id]->handleVoiceStateUpdate($data);
     }
 
     /**
@@ -1501,7 +1510,7 @@ class Discord
         if ($vs->guild_id !== $channel->guild_id) {
             return; // This voice state update isn't for our guild.
         }
-        $this->voiceSessions[$channel->guild_id] = $vs->session_id;
+        $this->voice_sessions[$channel->guild_id] = $vs->session_id;
         $this->removeListener(Event::VOICE_STATE_UPDATE, fn () => $this->voiceStateUpdate($vs, $channel, $data));
     }
 
@@ -1518,7 +1527,7 @@ class Discord
         $data['dnsConfig'] = $this->options['dnsConfig'];
         $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-        $vc = new VoiceClient($this->ws, $this->loop, $channel, $this->logger, $data, $this->voiceSessions);
+        $vc = new VoiceClient($this, $this->ws, $channel, $data);
 
         $vc->once('ready', function () use ($vc, $deferred, $channel) {
             $this->logger->info('voice client is ready');
@@ -1886,7 +1895,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
+        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'voice_sessions'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};
