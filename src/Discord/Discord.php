@@ -214,10 +214,10 @@ class Discord
     protected $voiceClients = [];
 
     /**
-    * An array of voice session IDs.
-    *
-    * @var string[] Voice Sessions.
-    */
+     * An array of voice session IDs.
+     *
+     * @var string[] Voice Sessions.
+     */
     protected $voice_sessions = [];
 
     /**

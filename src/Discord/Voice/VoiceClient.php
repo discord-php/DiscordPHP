@@ -30,8 +30,6 @@ use Ratchet\Client\WebSocket;
 use React\Datagram\Factory as DatagramFactory;
 use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DNSFactory;
-use React\EventLoop\LoopInterface;
-use Psr\Log\LoggerInterface;
 use React\ChildProcess\Process;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
@@ -416,10 +414,10 @@ class VoiceClient extends EventEmitter
     /**
      * Constructs the Voice Client instance.
      *
-     * @param Discord         &$discord      The Discord client.
-     * @param WebSocket       &$websocket    The main WebSocket client.
-     * @param Channel         $channel       The channel we are connecting to.
-     * @param array           $data          More information related to the voice client.
+     * @param Discord   &$discord   The Discord client.
+     * @param WebSocket &$websocket The main WebSocket client.
+     * @param Channel   $channel    The channel we are connecting to.
+     * @param array     $data       More information related to the voice client.
      */
     public function __construct(Discord &$discord, WebSocket &$websocket, Channel $channel, array $data)
     {
