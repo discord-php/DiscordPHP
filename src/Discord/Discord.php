@@ -1362,16 +1362,15 @@ class Discord
     {
         // Wait until payload count has been reset
         // Keep 5 payloads for heartbeats as required
-        if ($this->payloadCount >= 115 && ! $force) {
+        if (! $force && $this->payloadCount >= 115) {
             $this->logger->debug('payload not sent, waiting', ['payload' => $data]);
-            $this->once('payload_count_reset', function () use ($data) {
-                $this->send($data);
-            });
-        } else {
-            ++$this->payloadCount;
-            $data = json_encode($data);
-            $this->ws->send($data);
+            $this->once('payload_count_reset', fn () => $this->send($data));
+
+            return;
         }
+
+        ++$this->payloadCount;
+        $this->ws->send(json_encode($data));
     }
 
     /**
