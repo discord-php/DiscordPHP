@@ -44,6 +44,7 @@ use Discord\Repository\UserRepository;
 use Discord\Voice\Region;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
+use Discord\WebSockets\Events\Data\GuildMembersChunkData;
 use Discord\WebSockets\Events\GuildCreate;
 use Discord\WebSockets\Payload;
 use Discord\WebSockets\Handlers;
@@ -908,29 +909,32 @@ class Discord
     /**
      * Handles `GUILD_MEMBERS_CHUNK` packets.
      *
-     * @param  object     $data Packet data.
+     * @param  Payload    $data Packet data.
      * @throws \Exception
      */
     protected function handleGuildMembersChunk(Payload $data): void
     {
-        if (! $guild = $this->guilds->get('id', $data->d->guild_id)) {
-            $this->logger->warning('not chunking member, Guild is not cached.', ['guild_id' => $data->d->guild_id]);
+        /** @var GuildMembersChunkData $d */
+        $d = $data->d;
+
+        if (! $guild = $this->guilds->get('id', $d->guild_id)) {
+            $this->logger->warning('not chunking member, Guild is not cached.', ['guild_id' => $d->guild_id]);
 
             return;
         }
 
-        $this->logger->debug('received guild member chunk', ['guild_id' => $data->d->guild_id, 'guild_name' => $guild->name, 'chunk_count' => count($data->d->members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count, 'progress' => [$data->d->chunk_index + 1, $data->d->chunk_count]]);
+        $this->logger->debug('received guild member chunk', ['guild_id' => $d->guild_id, 'guild_name' => $guild->name, 'chunk_count' => count($d->members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count, 'progress' => [$d->chunk_index + 1, $d->chunk_count]]);
 
         $count = $skipped = 0;
         $await = [];
-        foreach ($data->d->members as $member) {
+        foreach ($d->members as $member) {
             $userId = $member->user->id;
             if ($guild->members->offsetExists($userId)) {
                 continue;
             }
 
             $member = (array) $member;
-            $member['guild_id'] = $data->d->guild_id;
+            $member['guild_id'] = $d->guild_id;
             $member['status'] = 'offline';
             $await[] = $guild->members->cache->set($userId, $this->factory->part(Member::class, $member, true));
 
