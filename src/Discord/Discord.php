@@ -1148,6 +1148,10 @@ class Discord
      *
      * Ratelimited, once every 30 seconds per guild.
      *
+     * The server will send Guild Members Chunk events in response with up to 1000 members per chunk until all members that match the request have been sent.
+     *
+     * @see self::handleGuildMembersChunk()
+     *
      * @link https://discord.com/developers/docs/events/gateway-events#request-guild-members
      *
      * @param Guild|string       $guild_id             ID of the guild or Guild object. Required.
