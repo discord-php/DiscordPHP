@@ -1142,6 +1142,8 @@ class Discord
      * Requests guild members from the Discord gateway.
      * Ratelimited, once every 30 seconds per guild.
      *
+     * @link https://discord.com/developers/docs/events/gateway-events#request-guild-members
+     *
      * @param Guild|string       $guild_id             ID of the guild or Guild object. Required.
      * @param array              $options
      * @param string             $options['query']     String that username starts with, or an empty string to return all members. Required when not including user_ids.
