@@ -265,13 +265,24 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/GuildCreate.php"><a href="files/src-discord-websockets-events-guildcreate.html"><abbr title="src/Discord/WebSockets/Events/GuildCreate.php">GuildCreate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Contains constants for WebSocket events as well as handlers for the events.</p>
+            <p class="phpdocumentor-summary">The inner payload is either a guild object or an unavailable guild object.</p>
 
 
+    <section class="phpdocumentor-description"><p>This event can be sent in three different scenarios:</p>
+<ol>
+<li>When a user is initially connecting, to lazily load and backfill information for all unavailable guilds sent in the Ready event. Guilds that are unavailable due to an outage will send a Guild Delete event.</li>
+<li>When a Guild becomes available again to the client.</li>
+<li>When the current user joins a new Guild.
+During an outage, the guild object in scenarios 1 and 3 may be marked as unavailable.</li>
+</ol>
+<p>If you don't have the <code class="prettyprint">GUILD_PRESENCES</code> Gateway Intent, or if the guild is over 75k members, it will only send members who are in voice, plus the member for you (the connecting user).
+Otherwise, if a guild has over <code class="prettyprint">large_threshold</code> members (configurable in Gateway Identify), it will only send members who are online, have a role, have a nickname, or are in a voice channel.
+Otherwise (if it has under <code class="prettyprint">large_threshold</code> members), it will send all members.</p>
+</section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
@@ -284,7 +295,7 @@
                     <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/topics/gateway-events#guild-create"> https://discord.com/developers/docs/topics/gateway-events#guild-create </a>
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/events/gateway-events#guild-create"> https://discord.com/developers/docs/events/gateway-events#guild-create </a>
                     
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
@@ -3307,7 +3318,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/GuildCreate.php"><a href="files/src-discord-websockets-events-guildcreate.html"><abbr title="src/Discord/WebSockets/Events/GuildCreate.php">GuildCreate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -3315,7 +3326,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">handle</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Generator">Generator</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">handle</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-WebSockets-Events-Data-GuildCreateData.html"><abbr title="\Discord\WebSockets\Events\Data\GuildCreateData">GuildCreateData</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Generator">Generator</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3325,12 +3336,10 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$data</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-WebSockets-Events-Data-GuildCreateData.html"><abbr title="\Discord\WebSockets\Events\Data\GuildCreateData">GuildCreateData</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The data that was sent with the WebSocket.</p>
-</section>
-
+                
             </dd>
             </dl>
 

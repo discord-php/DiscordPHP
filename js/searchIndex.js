@@ -2638,22 +2638,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003ArequestGuildMembers\u0028\u0029",
             "name": "requestGuildMembers",
-            "summary": "Requests\u0020guild\u0020members\u0020from\u0020the\u0020Discord\u0020gateway.",
+            "summary": "Used\u0020to\u0020request\u0020all\u0020members\u0020for\u0020a\u0020guild\u0020or\u0020a\u0020list\u0020of\u0020guilds.",
             "url": "classes/Discord-Discord.html#method_requestGuildMembers"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003ArequestSoundboardSounds\u0028\u0029",
             "name": "requestSoundboardSounds",
-            "summary": "Requests\u0020soundboard\u0020sounds\u0020for\u0020the\u0020specified\u0020guilds.",
+            "summary": "Used\u0020to\u0020request\u0020soundboard\u0020sounds\u0020for\u0020a\u0020list\u0020of\u0020guilds.\u0020The\u0020server\u0020will\u0020send\u0020Soundboard\u0020Sounds\u0020events\u0020for\u0020each\u0020guild\u0020in\u0020response.",
             "url": "classes/Discord-Discord.html#method_requestSoundboardSounds"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AupdateVoiceState\u0028\u0029",
             "name": "updateVoiceState",
-            "summary": "Updates\u0020the\u0020client\u0027s\u0020voice\u0020state\u0020in\u0020a\u0020guild.",
+            "summary": "Sent\u0020when\u0020a\u0020client\u0020wants\u0020to\u0020join,\u0020move,\u0020or\u0020disconnect\u0020from\u0020a\u0020voice\u0020channel.",
             "url": "classes/Discord-Discord.html#method_updateVoiceState"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AupdatePresence\u0028\u0029",
             "name": "updatePresence",
-            "summary": "Updates\u0020the\u0020clients\u0020presence.",
+            "summary": "Sent\u0020by\u0020the\u0020client\u0020to\u0020indicate\u0020a\u0020presence\u0020or\u0020status\u0020update.",
             "url": "classes/Discord-Discord.html#method_updatePresence"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AsetupHeartbeat\u0028\u0029",
@@ -15041,6 +15041,16 @@ Search.appendIndex(
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-ChannelUpdate.html#method_handle"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildCreateData",
+            "name": "GuildCreateData",
+            "summary": "Raw\u0020data\u0020received\u0020from\u0020the\u0020\u0060GUILD_CREATE\u0060\u0020event.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildCreateData.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildMembersChunkData",
+            "name": "GuildMembersChunkData",
+            "summary": "Raw\u0020data\u0020received\u0020from\u0020the\u0020\u0060GUILD_MEMBERS_CHUNK\u0060\u0020event.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildMembersChunkData.html"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\EntitlementCreate",
             "name": "EntitlementCreate",
             "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
@@ -15103,7 +15113,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildCreate",
             "name": "GuildCreate",
-            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "summary": "The\u0020inner\u0020payload\u0020is\u0020either\u0020a\u0020guild\u0020object\u0020or\u0020an\u0020unavailable\u0020guild\u0020object.",
             "url": "classes/Discord-WebSockets-Events-GuildCreate.html"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildCreate\u003A\u003Ahandle\u0028\u0029",
@@ -16400,5 +16410,10 @@ Search.appendIndex(
             "name": "Events",
             "summary": "",
             "url": "namespaces/discord-websockets-events.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data",
+            "name": "Data",
+            "summary": "",
+            "url": "namespaces/discord-websockets-events-data.html"
         }            ]
 );
