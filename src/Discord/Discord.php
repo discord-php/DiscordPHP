@@ -1043,6 +1043,8 @@ class Discord
 
     /**
      * Used to trigger the initial handshake with the gateway.
+     *
+     * @link https://discord.com/developers/docs/events/gateway#identifying
      */
     public function identify(): void
     {
@@ -1094,6 +1096,9 @@ class Discord
     /**
      * Used to replay missed events when a disconnected client resumes.
      *
+     * @link https://discord.com/developers/docs/events/gateway-events#resume
+     * @link https://discord.com/developers/docs/events/gateway#resuming
+     *
      * @since 10.19.0
      */
     public function resume(string $token, string $session_id, int $seq): void
@@ -1139,7 +1144,8 @@ class Discord
     }
 
     /**
-     * Requests guild members from the Discord gateway.
+     * Used to request all members for a guild or a list of guilds.
+     *
      * Ratelimited, once every 30 seconds per guild.
      *
      * @link https://discord.com/developers/docs/events/gateway-events#request-guild-members
@@ -1201,7 +1207,11 @@ class Discord
     }
 
     /**
-     * Requests soundboard sounds for the specified guilds.
+     * Used to request soundboard sounds for a list of guilds. The server will send Soundboard Sounds events for each guild in response.
+     *
+     * @see \Discord\WebSockets\Events\SoundboardSounds
+     *
+     * @link https://discord.com/developers/docs/events/gateway-events#request-soundboard-sounds
      *
      * @param array $guildIds Array of guild IDs.
      */
@@ -1218,7 +1228,9 @@ class Discord
     }
 
     /**
-     * Updates the client's voice state in a guild.
+     * Sent when a client wants to join, move, or disconnect from a voice channel.
+     *
+     * @link https://discord.com/developers/docs/events/gateway-events#update-voice-state
      *
      * @param Guild|string        $guild_id   ID of the guild.
      * @param Channel|string|null $channel_id ID of the voice channel to join, or null to disconnect.
@@ -1251,7 +1263,9 @@ class Discord
     }
 
     /**
-     * Updates the clients presence.
+     * Sent by the client to indicate a presence or status update.
+     *
+     * @link https://discord.com/developers/docs/events/gateway-events#update-presence
      *
      * @param Activity|null $activity The current client activity, or null.
      *                                Note: Both name and state must be set to use custom, and the only valid fields are `name`, `state`, `type` and `url`.
