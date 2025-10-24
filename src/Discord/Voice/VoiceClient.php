@@ -97,13 +97,6 @@ class VoiceClient extends EventEmitter
     protected $ready = false;
 
     /**
-     * The DCA binary name that we will use.
-     *
-     * @var string The DCA binary name that will be run.
-     */
-    protected $dca;
-
-    /**
      * The FFmpeg binary location.
      *
      * @var string
