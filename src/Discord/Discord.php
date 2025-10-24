@@ -1527,7 +1527,7 @@ class Discord
         $data['dnsConfig'] = $this->options['dnsConfig'];
         $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-        $vc = new VoiceClient($this, $this->ws, $channel, $data);
+        $vc = new VoiceClient($this, $this->ws, $this->voice_sessions, $channel, $data);
 
         $vc->once('ready', function () use ($vc, $deferred, $channel) {
             $this->logger->info('voice client is ready');

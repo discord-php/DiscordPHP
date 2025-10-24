@@ -106,6 +106,13 @@ class VoiceClient extends EventEmitter
     protected $ffmpeg;
 
     /**
+     * The voice sessions.
+     *
+     * @var array The voice sessions.
+     */
+    protected $voice_sessions;
+
+    /**
      * The main WebSocket instance.
      *
      * @var WebSocket The main WebSocket client.
@@ -395,10 +402,11 @@ class VoiceClient extends EventEmitter
      * @param Channel   $channel    The channel we are connecting to.
      * @param array     $data       More information related to the voice client.
      */
-    public function __construct(Discord &$discord, WebSocket &$websocket, Channel $channel, array $data)
+    public function __construct(Discord &$discord, WebSocket &$websocket, array &$voice_sessions, Channel $channel, array $data)
     {
         $this->discord = $discord;
         $this->mainWebsocket = $websocket;
+        $this->voice_sessions = $voice_sessions;
         $this->channel = $channel;
         $this->data = $data;
         $this->deaf = $data['deaf'];
@@ -471,8 +479,8 @@ class VoiceClient extends EventEmitter
             'user_id' => $this->data['user_id'],
             'token' => $this->data['token'],
         ];
-        if (isset($this->discord->voice_sessions[$this->channel->guild_id])) {
-            $data['session_id'] = $this->discord->voice_sessions[$this->channel->guild_id];
+        if (isset($this->voice_sessions[$this->channel->guild_id])) {
+            $data['session_id'] = $this->voice_sessions[$this->channel->guild_id];
         }
 
         $payload = Payload::new(
@@ -821,7 +829,7 @@ class VoiceClient extends EventEmitter
             Op::VOICE_RESUME,
             [
                 'server_id' => $this->channel->guild_id,
-                'session_id' => $this->discord->voice_sessions[$this->channel->guild_id],
+                'session_id' => $this->voice_sessions[$this->channel->guild_id],
                 'token' => $this->data['token'],
                 'seq_ack' => $this->data['seq'],
             ]
@@ -873,7 +881,7 @@ class VoiceClient extends EventEmitter
         } elseif (isset(
             $this->data['token'],
             $this->data['seq'],
-            $this->discord->voice_sessions[$this->channel->guild_id]
+            $this->voice_sessions[$this->channel->guild_id]
         )) {
             $this->resume();
         } else {
@@ -957,7 +965,7 @@ class VoiceClient extends EventEmitter
         // Remove voice session when leaving.
         if ($op === Op::CLOSE_VOICE_DISCONNECTED) {
             $this->discord->logger->info('voice client disconnected from channel', ['channel_id' => $this->channel->id]);
-            $this->discord->voice_sessions[$this->channel->guild_id] = null;
+            $this->voice_sessions[$this->channel->guild_id] = null;
 
             return;
         }
@@ -965,7 +973,7 @@ class VoiceClient extends EventEmitter
         // Don't reconnect on a critical opcode or if closed by user.
         if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this->userClose) {
             $this->discord->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
-            $this->discord->voice_sessions[$this->channel->guild_id] = null;
+            $this->voice_sessions[$this->channel->guild_id] = null;
             $this->emit('close');
         } else {
             $this->discord->logger->warning('reconnecting in 2 seconds');
