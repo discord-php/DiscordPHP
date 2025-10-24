@@ -89,15 +89,6 @@ class GuildCreate extends Event
 
         foreach ($data->voice_states as $voice_state) {
             $await[] = $guildPart->voice_states->cache->set($voice_state->user_id, $this->factory->part(VoiceStateUpdate::class, (array) $voice_state, true));
-            /** @var ?Channel */
-            if ($voiceChannel = $guildPart->channels->offsetGet($voice_state->channel_id)) {
-                $userId = $voice_state->user_id;
-                $voice_state->guild_id = $data->id;
-                if (! isset($voice_state->member) && isset($rawMembers[$userId])) {
-                    $voice_state->member = $rawMembers[$userId];
-                }
-                $await[] = $voiceChannel->members->cache->set($userId, $voiceChannel->members->create($voice_state, true));
-            }
         }
 
         foreach ($data->threads as $thread) {
