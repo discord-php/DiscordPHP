@@ -690,15 +690,14 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Handles the undocumented voice opcode 15.
-     * Not intended for use by bots.
+     * Handles the undocumented voice opcode 15. Not intended for use by bots.
+     *
      * @param Payload $data
-     * 
+     *
      * @since 10.39.2
      */
     protected function handleVideo(object $data): void
     {
-        return;
     }
 
     protected function handleDavePrepareTransition(object $data): void
@@ -1619,7 +1618,7 @@ class VoiceClient extends EventEmitter
      * @param int|string $id Either a SSRC or User ID.
      *
      * @return RecieveStream
-     * 
+     *
      * @deprecated use self::getReceiveStream()
      */
     public function getRecieveStream($id): ?RecieveStream
@@ -1704,7 +1703,7 @@ class VoiceClient extends EventEmitter
 
     /**
      * Creates and starts a decoder process for the given stream source.
-     * 
+     *
      * @todo Implement MLS decoding and use the appropriate decoder here.
      *
      * @param object $ss The stream source object containing ssrc and user_id properties.
@@ -1734,7 +1733,7 @@ class VoiceClient extends EventEmitter
      * Decrypts a voice packet received from Discord.
      *
      * @param VoicePacket $voicePacket The voice packet to decrypt.
-     * 
+     *
      * @return string|false The decrypted voice data as a string, or false if decryption fails
      *                      (e.g., when AEAD payload is too short)
      */

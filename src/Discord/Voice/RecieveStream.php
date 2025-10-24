@@ -17,7 +17,7 @@ namespace Discord\Voice;
  * Handles recieving audio from Discord.
  *
  * @since 3.2.0
- * 
+ *
  * @deprecated use ReceiveStream
  */
 class RecieveStream extends RecieveStream
