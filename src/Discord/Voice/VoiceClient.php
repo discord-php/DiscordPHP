@@ -1614,14 +1614,29 @@ class VoiceClient extends EventEmitter
         unset($this->voiceDecoders[$ss->ssrc]);
         unset($this->speakingStatus[$ss->ssrc]);
     }
+
     /**
      * Gets a receive voice stream.
      *
      * @param int|string $id Either a SSRC or User ID.
      *
      * @return RecieveStream
+     * 
+     * @deprecated use self::getReceiveStream()
      */
     public function getRecieveStream($id): ?RecieveStream
+    {
+        return $this->getReceiveStream($id);
+    }
+
+    /**
+     * Gets a receive voice stream.
+     *
+     * @param int|string $id Either a SSRC or User ID.
+     *
+     * @return ReceiveStream
+     */
+    public function getReceiveStream($id): ?ReceiveStream
     {
         if (isset($this->receiveStreams[$id])) {
             return $this->receiveStreams[$id];
@@ -1668,7 +1683,7 @@ class VoiceClient extends EventEmitter
         if (! $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null) {
             // make a decoder
             if (! isset($this->receiveStreams[$ss->ssrc])) {
-                $this->receiveStreams[$ss->ssrc] = new RecieveStream();
+                $this->receiveStreams[$ss->ssrc] = new ReceiveStream();
 
                 $this->receiveStreams[$ss->ssrc]->on('pcm', function ($d) {
                     $this->emit('channel-pcm', [$d, $this]);
