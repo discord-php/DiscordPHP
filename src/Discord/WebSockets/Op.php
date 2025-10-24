@@ -105,7 +105,7 @@ class Op
     public const VOICE_FIFTEEN = 15;
     /** Undocumented. */
     public const VOICE_EIGHTEEN = 18;
-    /** Undocumented. */
+    /** Undocumented. Assumed to be the platform type in which the user is. */
     public const VOICE_TWENTY = 20;
 
     /** A downgrade from the DAVE protocol is upcoming. */
