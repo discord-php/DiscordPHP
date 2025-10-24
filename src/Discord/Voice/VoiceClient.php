@@ -57,13 +57,6 @@ class VoiceClient extends EventEmitter
     protected $discord;
 
     /**
-     * The DCA version the client is using.
-     *
-     * @var string The DCA version.
-     */
-    public const DCA_VERSION = 'DCA1';
-
-    /**
      * The Opus Silence Frame.
      *
      * @var string The silence frame.
