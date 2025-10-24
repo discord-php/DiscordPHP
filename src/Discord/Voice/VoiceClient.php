@@ -322,11 +322,11 @@ class VoiceClient extends EventEmitter
     protected $voiceDecoders;
 
     /**
-     * Voice audio recieve streams.
+     * Voice audio receive streams.
      *
-     * @var array Voice audio recieve streams.
+     * @var array Voice audio receive streams.
      */
-    protected $recieveStreams;
+    protected $receiveStreams;
 
     /**
      * The volume the audio will be encoded with.
@@ -1615,7 +1615,7 @@ class VoiceClient extends EventEmitter
         unset($this->speakingStatus[$ss->ssrc]);
     }
     /**
-     * Gets a recieve voice stream.
+     * Gets a receive voice stream.
      *
      * @param int|string $id Either a SSRC or User ID.
      *
@@ -1623,13 +1623,13 @@ class VoiceClient extends EventEmitter
      */
     public function getRecieveStream($id): ?RecieveStream
     {
-        if (isset($this->recieveStreams[$id])) {
-            return $this->recieveStreams[$id];
+        if (isset($this->receiveStreams[$id])) {
+            return $this->receiveStreams[$id];
         }
 
         foreach ($this->speakingStatus as $status) {
             if ($status->user_id === $id) {
-                return $this->recieveStreams[$status->ssrc];
+                return $this->receiveStreams[$status->ssrc];
             }
         }
 
@@ -1667,14 +1667,14 @@ class VoiceClient extends EventEmitter
 
         if (! $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null) {
             // make a decoder
-            if (! isset($this->recieveStreams[$ss->ssrc])) {
-                $this->recieveStreams[$ss->ssrc] = new RecieveStream();
+            if (! isset($this->receiveStreams[$ss->ssrc])) {
+                $this->receiveStreams[$ss->ssrc] = new RecieveStream();
 
-                $this->recieveStreams[$ss->ssrc]->on('pcm', function ($d) {
+                $this->receiveStreams[$ss->ssrc]->on('pcm', function ($d) {
                     $this->emit('channel-pcm', [$d, $this]);
                 });
 
-                $this->recieveStreams[$ss->ssrc]->on('opus', function ($d) {
+                $this->receiveStreams[$ss->ssrc]->on('opus', function ($d) {
                     $this->emit('channel-opus', [$d, $this]);
                 });
             }
@@ -1701,7 +1701,7 @@ class VoiceClient extends EventEmitter
         $decoder = $this->dcaDecode();
         $decoder->start($this->discord->loop);
         $decoder->stdout->on('data', function ($data) use ($ss) {
-            $this->recieveStreams[$ss->ssrc]->writePCM($data);
+            $this->receiveStreams[$ss->ssrc]->writePCM($data);
         });
         $decoder->stderr->on('data', function ($data) use ($ss) {
             $this->emit("voice.{$ss->ssrc}.stderr", [$data, $this]);
