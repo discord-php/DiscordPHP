@@ -1691,6 +1691,8 @@ class VoiceClient extends EventEmitter
 
     /**
      * Creates and starts a decoder process for the given stream source.
+     * 
+     * @todo Implement MLS decoding and use the appropriate decoder here.
      *
      * @param object $ss The stream source object containing ssrc and user_id properties.
      */
