@@ -264,7 +264,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -327,7 +327,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-VoiceClient.html#constant_VOICE_OP_HANDLERS">VOICE_OP_HANDLERS</a>
     <span>
-        &nbsp;= [\Discord\WebSockets\Op::VOICE_READY =&gt; &#039;handleReady&#039;, \Discord\WebSockets\Op::VOICE_SESSION_DESCRIPTION =&gt; &#039;handleSessionDescription&#039;, \Discord\WebSockets\Op::VOICE_SPEAKING =&gt; &#039;handleSpeaking&#039;, \Discord\WebSockets\Op::VOICE_HEARTBEAT_ACK =&gt; &#039;heartbeatAck&#039;, \Discord\WebSockets\Op::VOICE_HELLO =&gt; &#039;handleHello&#039;, \Discord\WebSockets\Op::VOICE_RESUMED =&gt; &#039;handleResumed&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_CONNECT =&gt; &#039;handleClientConnect&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_DISCONNECT =&gt; &#039;handleClientDisconnect&#039;, \Discord\WebSockets\Op::VOICE_DAVE_PREPARE_TRANSITION =&gt; &#039;handleDavePrepareTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_EXECUTE_TRANSITION =&gt; &#039;handleDaveExecuteTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_TRANSITION_READY =&gt; &#039;handleDaveTransitionReady&#039;, \Discord\WebSockets\Op::VOICE_DAVE_PREPARE_EPOCH =&gt; &#039;handleDavePrepareEpoch&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_EXTERNAL_SENDER =&gt; &#039;handleDaveMlsExternalSender&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_KEY_PACKAGE =&gt; &#039;handleDaveMlsKeyPackage&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_PROPOSALS =&gt; &#039;handleDaveMlsProposals&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_COMMIT_WELCOME =&gt; &#039;handleDaveMlsCommitWelcome&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION =&gt; &#039;handleDaveMlsAnnounceCommitTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_WELCOME =&gt; &#039;handleDaveMlsWelcome&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME =&gt; &#039;handleDaveMlsInvalidCommitWelcome&#039;]                            </span>
+        &nbsp;= [\Discord\WebSockets\Op::VOICE_READY =&gt; &#039;handleReady&#039;, \Discord\WebSockets\Op::VOICE_SESSION_DESCRIPTION =&gt; &#039;handleSessionDescription&#039;, \Discord\WebSockets\Op::VOICE_SPEAKING =&gt; &#039;handleSpeaking&#039;, \Discord\WebSockets\Op::VOICE_HEARTBEAT_ACK =&gt; &#039;heartbeatAck&#039;, \Discord\WebSockets\Op::VOICE_HELLO =&gt; &#039;handleHello&#039;, \Discord\WebSockets\Op::VOICE_RESUMED =&gt; &#039;handleResumed&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_CONNECT =&gt; &#039;handleClientConnect&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_DISCONNECT =&gt; &#039;handleClientDisconnect&#039;, \Discord\WebSockets\Op::VOICE_FIFTEEN =&gt; &#039;handleUndocumented&#039;, \Discord\WebSockets\Op::VOICE_EIGHTEEN =&gt; &#039;handleUndocumented&#039;, \Discord\WebSockets\Op::VOICE_TWENTY =&gt; &#039;handleUndocumented&#039;, \Discord\WebSockets\Op::VOICE_DAVE_PREPARE_TRANSITION =&gt; &#039;handleDavePrepareTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_EXECUTE_TRANSITION =&gt; &#039;handleDaveExecuteTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_TRANSITION_READY =&gt; &#039;handleDaveTransitionReady&#039;, \Discord\WebSockets\Op::VOICE_DAVE_PREPARE_EPOCH =&gt; &#039;handleDavePrepareEpoch&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_EXTERNAL_SENDER =&gt; &#039;handleDaveMlsExternalSender&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_KEY_PACKAGE =&gt; &#039;handleDaveMlsKeyPackage&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_PROPOSALS =&gt; &#039;handleDaveMlsProposals&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_COMMIT_WELCOME =&gt; &#039;handleDaveMlsCommitWelcome&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION =&gt; &#039;handleDaveMlsAnnounceCommitTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_WELCOME =&gt; &#039;handleDaveMlsWelcome&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME =&gt; &#039;handleDaveMlsInvalidCommitWelcome&#039;]                            </span>
 </dt>
 
     </dl>
@@ -618,6 +618,13 @@
                         &nbsp;: int            </span>
 </dt>
 <dd>The Discord voice gateway version.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Discord-Voice-VoiceClient.html#property_voice_sessions">$voice_sessions</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+<dd>The voice sessions.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Voice-VoiceClient.html#property_voiceDecoders">$voiceDecoders</a>
@@ -1049,6 +1056,13 @@ Opus format.</dd>
 <dd>Handles the speaking state of a user.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Voice-VoiceClient.html#method_handleUndocumented">handleUndocumented()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Handles undocumented voice opcodes not intended for use by bots.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Voice-VoiceClient.html#method_heartbeat">heartbeat()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -1146,7 +1160,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -1180,7 +1194,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -1211,7 +1225,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
@@ -1221,7 +1235,7 @@ Opus format.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">VOICE_OP_HANDLERS</span>
-    = <span class="phpdocumentor-signature__default-value">[\Discord\WebSockets\Op::VOICE_READY =&gt; &#039;handleReady&#039;, \Discord\WebSockets\Op::VOICE_SESSION_DESCRIPTION =&gt; &#039;handleSessionDescription&#039;, \Discord\WebSockets\Op::VOICE_SPEAKING =&gt; &#039;handleSpeaking&#039;, \Discord\WebSockets\Op::VOICE_HEARTBEAT_ACK =&gt; &#039;heartbeatAck&#039;, \Discord\WebSockets\Op::VOICE_HELLO =&gt; &#039;handleHello&#039;, \Discord\WebSockets\Op::VOICE_RESUMED =&gt; &#039;handleResumed&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_CONNECT =&gt; &#039;handleClientConnect&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_DISCONNECT =&gt; &#039;handleClientDisconnect&#039;, \Discord\WebSockets\Op::VOICE_DAVE_PREPARE_TRANSITION =&gt; &#039;handleDavePrepareTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_EXECUTE_TRANSITION =&gt; &#039;handleDaveExecuteTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_TRANSITION_READY =&gt; &#039;handleDaveTransitionReady&#039;, \Discord\WebSockets\Op::VOICE_DAVE_PREPARE_EPOCH =&gt; &#039;handleDavePrepareEpoch&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_EXTERNAL_SENDER =&gt; &#039;handleDaveMlsExternalSender&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_KEY_PACKAGE =&gt; &#039;handleDaveMlsKeyPackage&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_PROPOSALS =&gt; &#039;handleDaveMlsProposals&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_COMMIT_WELCOME =&gt; &#039;handleDaveMlsCommitWelcome&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION =&gt; &#039;handleDaveMlsAnnounceCommitTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_WELCOME =&gt; &#039;handleDaveMlsWelcome&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME =&gt; &#039;handleDaveMlsInvalidCommitWelcome&#039;]</span>
+    = <span class="phpdocumentor-signature__default-value">[\Discord\WebSockets\Op::VOICE_READY =&gt; &#039;handleReady&#039;, \Discord\WebSockets\Op::VOICE_SESSION_DESCRIPTION =&gt; &#039;handleSessionDescription&#039;, \Discord\WebSockets\Op::VOICE_SPEAKING =&gt; &#039;handleSpeaking&#039;, \Discord\WebSockets\Op::VOICE_HEARTBEAT_ACK =&gt; &#039;heartbeatAck&#039;, \Discord\WebSockets\Op::VOICE_HELLO =&gt; &#039;handleHello&#039;, \Discord\WebSockets\Op::VOICE_RESUMED =&gt; &#039;handleResumed&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_CONNECT =&gt; &#039;handleClientConnect&#039;, \Discord\WebSockets\Op::VOICE_CLIENT_DISCONNECT =&gt; &#039;handleClientDisconnect&#039;, \Discord\WebSockets\Op::VOICE_FIFTEEN =&gt; &#039;handleUndocumented&#039;, \Discord\WebSockets\Op::VOICE_EIGHTEEN =&gt; &#039;handleUndocumented&#039;, \Discord\WebSockets\Op::VOICE_TWENTY =&gt; &#039;handleUndocumented&#039;, \Discord\WebSockets\Op::VOICE_DAVE_PREPARE_TRANSITION =&gt; &#039;handleDavePrepareTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_EXECUTE_TRANSITION =&gt; &#039;handleDaveExecuteTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_TRANSITION_READY =&gt; &#039;handleDaveTransitionReady&#039;, \Discord\WebSockets\Op::VOICE_DAVE_PREPARE_EPOCH =&gt; &#039;handleDavePrepareEpoch&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_EXTERNAL_SENDER =&gt; &#039;handleDaveMlsExternalSender&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_KEY_PACKAGE =&gt; &#039;handleDaveMlsKeyPackage&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_PROPOSALS =&gt; &#039;handleDaveMlsProposals&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_COMMIT_WELCOME =&gt; &#039;handleDaveMlsCommitWelcome&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION =&gt; &#039;handleDaveMlsAnnounceCommitTransition&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_WELCOME =&gt; &#039;handleDaveMlsWelcome&#039;, \Discord\WebSockets\Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME =&gt; &#039;handleDaveMlsInvalidCommitWelcome&#039;]</span>
 </code>
 
 
@@ -1258,7 +1272,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
@@ -1299,7 +1313,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">209</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
@@ -1340,7 +1354,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">330</span>
+    <span class="phpdocumentor-element-found-in__line">339</span>
 
     </aside>
 
@@ -1383,7 +1397,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">337</span>
+    <span class="phpdocumentor-element-found-in__line">346</span>
 
     </aside>
 
@@ -1424,7 +1438,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">386</span>
+    <span class="phpdocumentor-element-found-in__line">395</span>
 
     </aside>
 
@@ -1465,7 +1479,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">132</span>
+    <span class="phpdocumentor-element-found-in__line">141</span>
 
     </aside>
 
@@ -1506,7 +1520,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">139</span>
+    <span class="phpdocumentor-element-found-in__line">148</span>
 
     </aside>
 
@@ -1547,7 +1561,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">258</span>
+    <span class="phpdocumentor-element-found-in__line">267</span>
 
     </aside>
 
@@ -1588,7 +1602,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -1629,7 +1643,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">365</span>
+    <span class="phpdocumentor-element-found-in__line">374</span>
 
     </aside>
 
@@ -1668,7 +1682,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">146</span>
+    <span class="phpdocumentor-element-found-in__line">155</span>
 
     </aside>
 
@@ -1709,7 +1723,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">104</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
@@ -1748,7 +1762,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">293</span>
+    <span class="phpdocumentor-element-found-in__line">302</span>
 
     </aside>
 
@@ -1789,7 +1803,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">188</span>
+    <span class="phpdocumentor-element-found-in__line">197</span>
 
     </aside>
 
@@ -1830,7 +1844,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">190</span>
 
     </aside>
 
@@ -1871,7 +1885,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">211</span>
 
     </aside>
 
@@ -1912,7 +1926,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">111</span>
+    <span class="phpdocumentor-element-found-in__line">120</span>
 
     </aside>
 
@@ -1953,7 +1967,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">230</span>
+    <span class="phpdocumentor-element-found-in__line">239</span>
 
     </aside>
 
@@ -1994,7 +2008,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">251</span>
+    <span class="phpdocumentor-element-found-in__line">260</span>
 
     </aside>
 
@@ -2035,7 +2049,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">265</span>
+    <span class="phpdocumentor-element-found-in__line">274</span>
 
     </aside>
 
@@ -2076,7 +2090,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">153</span>
+    <span class="phpdocumentor-element-found-in__line">162</span>
 
     </aside>
 
@@ -2117,7 +2131,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">379</span>
+    <span class="phpdocumentor-element-found-in__line">388</span>
 
     </aside>
 
@@ -2158,7 +2172,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -2199,7 +2213,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">314</span>
+    <span class="phpdocumentor-element-found-in__line">323</span>
 
     </aside>
 
@@ -2240,7 +2254,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">344</span>
+    <span class="phpdocumentor-element-found-in__line">353</span>
 
     </aside>
 
@@ -2281,7 +2295,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">237</span>
+    <span class="phpdocumentor-element-found-in__line">246</span>
 
     </aside>
 
@@ -2322,7 +2336,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">272</span>
+    <span class="phpdocumentor-element-found-in__line">281</span>
 
     </aside>
 
@@ -2363,7 +2377,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">216</span>
+    <span class="phpdocumentor-element-found-in__line">225</span>
 
     </aside>
 
@@ -2404,7 +2418,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">372</span>
+    <span class="phpdocumentor-element-found-in__line">381</span>
 
     </aside>
 
@@ -2445,7 +2459,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">244</span>
+    <span class="phpdocumentor-element-found-in__line">253</span>
 
     </aside>
 
@@ -2486,7 +2500,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">300</span>
+    <span class="phpdocumentor-element-found-in__line">309</span>
 
     </aside>
 
@@ -2527,7 +2541,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">279</span>
+    <span class="phpdocumentor-element-found-in__line">288</span>
 
     </aside>
 
@@ -2568,7 +2582,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">286</span>
+    <span class="phpdocumentor-element-found-in__line">295</span>
 
     </aside>
 
@@ -2609,7 +2623,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">174</span>
+    <span class="phpdocumentor-element-found-in__line">183</span>
 
     </aside>
 
@@ -2650,7 +2664,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">223</span>
+    <span class="phpdocumentor-element-found-in__line">232</span>
 
     </aside>
 
@@ -2691,7 +2705,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">195</span>
+    <span class="phpdocumentor-element-found-in__line">204</span>
 
     </aside>
 
@@ -2732,7 +2746,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">160</span>
+    <span class="phpdocumentor-element-found-in__line">169</span>
 
     </aside>
 
@@ -2773,7 +2787,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">167</span>
+    <span class="phpdocumentor-element-found-in__line">176</span>
 
     </aside>
 
@@ -2814,7 +2828,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">351</span>
+    <span class="phpdocumentor-element-found-in__line">360</span>
 
     </aside>
 
@@ -2855,7 +2869,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">358</span>
+    <span class="phpdocumentor-element-found-in__line">367</span>
 
     </aside>
 
@@ -2886,6 +2900,47 @@ Opus format.</dd>
             -protected
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_voice_sessions">
+        $voice_sessions
+        <a href="classes/Discord-Voice-VoiceClient.html#property_voice_sessions" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">113</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The voice sessions.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$voice_sessions</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"><p>The voice sessions.</p>
+</section>
+
+    
+
+    
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_voiceDecoders">
         $voiceDecoders
         <a href="classes/Discord-Voice-VoiceClient.html#property_voiceDecoders" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2896,7 +2951,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">307</span>
+    <span class="phpdocumentor-element-found-in__line">316</span>
 
     </aside>
 
@@ -2937,7 +2992,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -2978,7 +3033,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">321</span>
+    <span class="phpdocumentor-element-found-in__line">330</span>
 
     </aside>
 
@@ -3024,7 +3079,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">396</span>
+    <span class="phpdocumentor-element-found-in__line">405</span>
 
     </aside>
 
@@ -3032,7 +3087,7 @@ Opus format.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$discord</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Ratchet\Client\WebSocket">WebSocket</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$websocket</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$channel</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$discord</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Ratchet\Client\WebSocket">WebSocket</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$websocket</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$voice_sessions</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$channel</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3057,6 +3112,13 @@ Opus format.</dd>
                     <section class="phpdocumentor-description"><p>The main WebSocket client.</p>
 </section>
 
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$voice_sessions</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$channel</span>
@@ -3098,7 +3160,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1481</span>
+    <span class="phpdocumentor-element-found-in__line">1502</span>
 
     </aside>
 
@@ -3148,7 +3210,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1894</span>
+    <span class="phpdocumentor-element-found-in__line">1929</span>
 
     </aside>
 
@@ -3212,7 +3274,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1851</span>
+    <span class="phpdocumentor-element-found-in__line">1886</span>
 
     </aside>
 
@@ -3286,7 +3348,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1913</span>
+    <span class="phpdocumentor-element-found-in__line">1948</span>
 
     </aside>
 
@@ -3329,7 +3391,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1624</span>
+    <span class="phpdocumentor-element-found-in__line">1645</span>
 
     </aside>
 
@@ -3380,7 +3442,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1612</span>
+    <span class="phpdocumentor-element-found-in__line">1633</span>
 
     </aside>
 
@@ -3438,7 +3500,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">975</span>
+    <span class="phpdocumentor-element-found-in__line">996</span>
 
     </aside>
 
@@ -3485,7 +3547,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1571</span>
+    <span class="phpdocumentor-element-found-in__line">1592</span>
 
     </aside>
 
@@ -3549,7 +3611,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">923</span>
+    <span class="phpdocumentor-element-found-in__line">944</span>
 
     </aside>
 
@@ -3601,7 +3663,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">827</span>
+    <span class="phpdocumentor-element-found-in__line">848</span>
 
     </aside>
 
@@ -3648,7 +3710,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">911</span>
+    <span class="phpdocumentor-element-found-in__line">932</span>
 
     </aside>
 
@@ -3695,7 +3757,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">449</span>
+    <span class="phpdocumentor-element-found-in__line">459</span>
 
     </aside>
 
@@ -3730,7 +3792,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1557</span>
+    <span class="phpdocumentor-element-found-in__line">1578</span>
 
     </aside>
 
@@ -3773,7 +3835,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1781</span>
+    <span class="phpdocumentor-element-found-in__line">1802</span>
 
     </aside>
 
@@ -3816,7 +3878,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1537</span>
+    <span class="phpdocumentor-element-found-in__line">1558</span>
 
     </aside>
 
@@ -3871,7 +3933,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1418</span>
+    <span class="phpdocumentor-element-found-in__line">1439</span>
 
     </aside>
 
@@ -3925,7 +3987,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1012</span>
+    <span class="phpdocumentor-element-found-in__line">1033</span>
 
     </aside>
 
@@ -4008,7 +4070,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1099</span>
+    <span class="phpdocumentor-element-found-in__line">1120</span>
 
     </aside>
 
@@ -4082,7 +4144,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1052</span>
+    <span class="phpdocumentor-element-found-in__line">1073</span>
 
     </aside>
 
@@ -4176,7 +4238,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1344</span>
+    <span class="phpdocumentor-element-found-in__line">1365</span>
 
     </aside>
 
@@ -4246,7 +4308,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1302</span>
+    <span class="phpdocumentor-element-found-in__line">1323</span>
 
     </aside>
 
@@ -4316,7 +4378,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">416</span>
+    <span class="phpdocumentor-element-found-in__line">426</span>
 
     </aside>
 
@@ -4380,7 +4442,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1391</span>
+    <span class="phpdocumentor-element-found-in__line">1412</span>
 
     </aside>
 
@@ -4451,7 +4513,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1247</span>
+    <span class="phpdocumentor-element-found-in__line">1268</span>
 
     </aside>
 
@@ -4513,7 +4575,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1323</span>
+    <span class="phpdocumentor-element-found-in__line">1344</span>
 
     </aside>
 
@@ -4583,7 +4645,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">434</span>
+    <span class="phpdocumentor-element-found-in__line">444</span>
 
     </aside>
 
@@ -4622,7 +4684,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1464</span>
+    <span class="phpdocumentor-element-found-in__line">1485</span>
 
     </aside>
 
@@ -4676,7 +4738,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1275</span>
+    <span class="phpdocumentor-element-found-in__line">1296</span>
 
     </aside>
 
@@ -4738,7 +4800,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1441</span>
+    <span class="phpdocumentor-element-found-in__line">1462</span>
 
     </aside>
 
@@ -4792,7 +4854,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1938</span>
+    <span class="phpdocumentor-element-found-in__line">1973</span>
 
     </aside>
 
@@ -4839,7 +4901,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1825</span>
+    <span class="phpdocumentor-element-found-in__line">1846</span>
 
     </aside>
 
@@ -4888,7 +4950,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1791</span>
+    <span class="phpdocumentor-element-found-in__line">1812</span>
 
     </aside>
 
@@ -4931,7 +4993,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1808</span>
+    <span class="phpdocumentor-element-found-in__line">1829</span>
 
     </aside>
 
@@ -4970,7 +5032,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1699</span>
+    <span class="phpdocumentor-element-found-in__line">1720</span>
 
     </aside>
 
@@ -5033,7 +5095,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">879</span>
+    <span class="phpdocumentor-element-found-in__line">900</span>
 
     </aside>
 
@@ -5080,7 +5142,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1728</span>
+    <span class="phpdocumentor-element-found-in__line">1749</span>
 
     </aside>
 
@@ -5136,7 +5198,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1766</span>
+    <span class="phpdocumentor-element-found-in__line">1787</span>
 
     </aside>
 
@@ -5170,7 +5232,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1761</span>
+    <span class="phpdocumentor-element-found-in__line">1782</span>
 
     </aside>
 
@@ -5204,7 +5266,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1771</span>
+    <span class="phpdocumentor-element-found-in__line">1792</span>
 
     </aside>
 
@@ -5238,7 +5300,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1644</span>
+    <span class="phpdocumentor-element-found-in__line">1665</span>
 
     </aside>
 
@@ -5285,7 +5347,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">674</span>
+    <span class="phpdocumentor-element-found-in__line">684</span>
 
     </aside>
 
@@ -5345,7 +5407,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">686</span>
+    <span class="phpdocumentor-element-found-in__line">696</span>
 
     </aside>
 
@@ -5405,7 +5467,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">703</span>
+    <span class="phpdocumentor-element-found-in__line">724</span>
 
     </aside>
 
@@ -5449,7 +5511,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">760</span>
+    <span class="phpdocumentor-element-found-in__line">781</span>
 
     </aside>
 
@@ -5493,7 +5555,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">754</span>
+    <span class="phpdocumentor-element-found-in__line">775</span>
 
     </aside>
 
@@ -5537,7 +5599,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">729</span>
+    <span class="phpdocumentor-element-found-in__line">750</span>
 
     </aside>
 
@@ -5581,7 +5643,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">772</span>
+    <span class="phpdocumentor-element-found-in__line">793</span>
 
     </aside>
 
@@ -5625,7 +5687,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">735</span>
+    <span class="phpdocumentor-element-found-in__line">756</span>
 
     </aside>
 
@@ -5669,7 +5731,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">741</span>
+    <span class="phpdocumentor-element-found-in__line">762</span>
 
     </aside>
 
@@ -5713,7 +5775,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">766</span>
+    <span class="phpdocumentor-element-found-in__line">787</span>
 
     </aside>
 
@@ -5757,7 +5819,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">716</span>
+    <span class="phpdocumentor-element-found-in__line">737</span>
 
     </aside>
 
@@ -5801,7 +5863,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">691</span>
+    <span class="phpdocumentor-element-found-in__line">712</span>
 
     </aside>
 
@@ -5845,7 +5907,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">710</span>
+    <span class="phpdocumentor-element-found-in__line">731</span>
 
     </aside>
 
@@ -5889,7 +5951,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">533</span>
+    <span class="phpdocumentor-element-found-in__line">543</span>
 
     </aside>
 
@@ -5949,7 +6011,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">585</span>
+    <span class="phpdocumentor-element-found-in__line">595</span>
 
     </aside>
 
@@ -6017,7 +6079,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">662</span>
+    <span class="phpdocumentor-element-found-in__line">672</span>
 
     </aside>
 
@@ -6064,7 +6126,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">635</span>
+    <span class="phpdocumentor-element-found-in__line">645</span>
 
     </aside>
 
@@ -6124,7 +6186,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">790</span>
+    <span class="phpdocumentor-element-found-in__line">811</span>
 
     </aside>
 
@@ -6163,6 +6225,66 @@ input filename.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_handleUndocumented">
+        handleUndocumented()
+        <a href="classes/Discord-Voice-VoiceClient.html#method_handleUndocumented" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">708</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Handles undocumented voice opcodes not intended for use by bots.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">handleUndocumented</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-WebSockets-Payload.html"><abbr title="\Discord\WebSockets\Payload">Payload</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$data</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-WebSockets-Payload.html"><abbr title="\Discord\WebSockets\Payload">Payload</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Voice-VoiceClient.html#method_handleUndocumented#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.39.2</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_heartbeat">
         heartbeat()
         <a href="classes/Discord-Voice-VoiceClient.html#method_heartbeat" class="headerlink"><i class="fas fa-link"></i></a>
@@ -6171,7 +6293,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">493</span>
+    <span class="phpdocumentor-element-found-in__line">503</span>
 
     </aside>
 
@@ -6228,7 +6350,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">517</span>
+    <span class="phpdocumentor-element-found-in__line">527</span>
 
     </aside>
 
@@ -6288,7 +6410,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">465</span>
+    <span class="phpdocumentor-element-found-in__line">475</span>
 
     </aside>
 
@@ -6345,7 +6467,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1925</span>
+    <span class="phpdocumentor-element-found-in__line">1960</span>
 
     </aside>
 
@@ -6402,7 +6524,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1376</span>
+    <span class="phpdocumentor-element-found-in__line">1397</span>
 
     </aside>
 
@@ -6449,7 +6571,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1592</span>
+    <span class="phpdocumentor-element-found-in__line">1613</span>
 
     </aside>
 
@@ -6494,7 +6616,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1207</span>
+    <span class="phpdocumentor-element-found-in__line">1228</span>
 
     </aside>
 
@@ -6529,7 +6651,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">805</span>
+    <span class="phpdocumentor-element-found-in__line">826</span>
 
     </aside>
 
@@ -6579,7 +6701,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">548</span>
+    <span class="phpdocumentor-element-found-in__line">558</span>
 
     </aside>
 
@@ -6650,7 +6772,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1364</span>
+    <span class="phpdocumentor-element-found-in__line">1385</span>
 
     </aside>
 
@@ -6697,7 +6819,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1226</span>
+    <span class="phpdocumentor-element-found-in__line">1247</span>
 
     </aside>
 
@@ -6894,6 +7016,7 @@ input filename.</p>
                                                     <li class=""><a href="classes/Discord-Voice-VoiceClient.html#property_udpPort">$udpPort</a></li>
                                                     <li class=""><a href="classes/Discord-Voice-VoiceClient.html#property_userClose">$userClose</a></li>
                                                     <li class=""><a href="classes/Discord-Voice-VoiceClient.html#property_version">$version</a></li>
+                                                    <li class=""><a href="classes/Discord-Voice-VoiceClient.html#property_voice_sessions">$voice_sessions</a></li>
                                                     <li class=""><a href="classes/Discord-Voice-VoiceClient.html#property_voiceDecoders">$voiceDecoders</a></li>
                                                     <li class=""><a href="classes/Discord-Voice-VoiceClient.html#property_voiceWebsocket">$voiceWebsocket</a></li>
                                                     <li class=""><a href="classes/Discord-Voice-VoiceClient.html#property_volume">$volume</a></li>
@@ -6962,6 +7085,7 @@ input filename.</p>
                                             <li class=""><a href="classes/Discord-Voice-VoiceClient.html#method_handleResumed">handleResumed()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoiceClient.html#method_handleSessionDescription">handleSessionDescription()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoiceClient.html#method_handleSpeaking">handleSpeaking()</a></li>
+                                            <li class=""><a href="classes/Discord-Voice-VoiceClient.html#method_handleUndocumented">handleUndocumented()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoiceClient.html#method_heartbeat">heartbeat()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoiceClient.html#method_heartbeatAck">heartbeatAck()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoiceClient.html#method_identify">identify()</a></li>

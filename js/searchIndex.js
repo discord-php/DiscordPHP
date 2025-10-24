@@ -13886,6 +13886,11 @@ Search.appendIndex(
             "summary": "Handles\u0020the\u0020event\u0020when\u0020a\u0020client\u0020disconnects\u0020from\u0020the\u0020voice\u0020server.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_handleClientDisconnect"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleUndocumented\u0028\u0029",
+            "name": "handleUndocumented",
+            "summary": "Handles\u0020undocumented\u0020voice\u0020opcodes\u0020not\u0020intended\u0020for\u0020use\u0020by\u0020bots.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_handleUndocumented"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleDavePrepareTransition\u0028\u0029",
             "name": "handleDavePrepareTransition",
             "summary": "",
@@ -14195,6 +14200,11 @@ Search.appendIndex(
             "name": "ffmpeg",
             "summary": "The\u0020FFmpeg\u0020binary\u0020location.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_ffmpeg"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024voice_sessions",
+            "name": "voice_sessions",
+            "summary": "The\u0020voice\u0020sessions.",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_voice_sessions"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024mainWebsocket",
             "name": "mainWebsocket",
@@ -15955,6 +15965,21 @@ Search.appendIndex(
             "name": "VOICE_CLIENT_DISCONNECT",
             "summary": "A\u0020client\u0020has\u0020disconnected\u0020from\u0020the\u0020voice\u0020channel.",
             "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_CLIENT_DISCONNECT"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_FIFTEEN",
+            "name": "VOICE_FIFTEEN",
+            "summary": "Undocumented.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_FIFTEEN"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_EIGHTEEN",
+            "name": "VOICE_EIGHTEEN",
+            "summary": "Undocumented.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_EIGHTEEN"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_TWENTY",
+            "name": "VOICE_TWENTY",
+            "summary": "Undocumented.\u0020Assumed\u0020to\u0020be\u0020the\u0020platform\u0020type\u0020in\u0020which\u0020the\u0020user\u0020is.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_VOICE_TWENTY"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003AVOICE_DAVE_PREPARE_TRANSITION",
             "name": "VOICE_DAVE_PREPARE_TRANSITION",
