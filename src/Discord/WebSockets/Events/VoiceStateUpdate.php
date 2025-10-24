@@ -39,39 +39,6 @@ class VoiceStateUpdate extends Event
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var Guild $guild */
-
-            // Preload target new voice state channel
-            yield $guild->channels->cacheGet($data->channel_id);
-
-            foreach ($guild->channels as $channel) {
-                /** @var Channel $channel */
-                if (! $channel->isVoiceBased()) {
-                    continue;
-                }
-
-                /** @var ?VoiceStateUpdatePart */
-                if ($cachedVoiceState = yield $channel->members->cacheGet($data->user_id)) {
-                    /** @var VoiceStateUpdatePart $cachedVoiceState*/
-
-                    // Copy
-                    $oldVoiceState = clone $cachedVoiceState;
-                    if ($cachedVoiceState->channel_id === $data->channel_id) {
-                        // Move
-                        $statePart = $cachedVoiceState;
-                        // Update
-                        $statePart->fill((array) $data);
-                    }
-                }
-
-                if ($channel->id === $data->channel_id) {
-                    // Add/update this member to the voice channel
-                    yield $channel->members->cache->set($data->user_id, $statePart);
-                } else {
-                    // Remove each voice channels containing this member
-                    yield $channel->members->cache->delete($data->user_id);
-                }
-            }
-
             if (isset($data->member)) {
                 $this->cacheMember($guild->members, (array) $data->member);
                 $this->cacheUser($data->member->user);
