@@ -16,8 +16,6 @@ namespace Discord\Voice;
 use ArrayAccess;
 use TrafficCophp\ByteBuffer\Buffer as BaseBuffer;
 
-use function Discord\poly_strlen;
-
 /**
  * A Byte Buffer similar to Buffer in NodeJS.
  *
@@ -135,7 +133,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      */
     public function writeRawString(string $value, int $offset): void
     {
-        for ($i = 0; $i < poly_strlen($value); ++$i) {
+        for ($i = 0; $i < strlen($value); ++$i) {
             $this->buffer[$offset++] = $value[$i];
         }
     }
