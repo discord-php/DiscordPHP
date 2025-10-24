@@ -1717,6 +1717,14 @@ class VoiceClient extends EventEmitter
         $this->voiceDecoders[$ss->ssrc] = $decoder;
     }
 
+    /**
+     * Decrypts a voice packet received from Discord.
+     *
+     * @param VoicePacket $voicePacket The voice packet to decrypt.
+     * 
+     * @return string|false The decrypted voice data as a string, or false if decryption fails
+     *                      (e.g., when AEAD payload is too short)
+     */
     protected function decryptVoicePacket(VoicePacket $voicePacket): string|false
     {
         // AEAD modes use a nonce that is a 32-bit integer appended to the payload.
