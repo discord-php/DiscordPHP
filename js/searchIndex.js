@@ -3141,11 +3141,6 @@ Search.appendIndex(
             "summary": "Thrown\u0020when\u0020FFmpeg\u0020is\u0020not\u0020compiled\u0020with\u0020libopus.",
             "url": "classes/Discord-Exceptions-OpusNotFoundException.html"
         },                {
-            "fqsen": "\\Discord\\Exceptions\\OutdatedDCAException",
-            "name": "OutdatedDCAException",
-            "summary": "Thrown\u0020when\u0020the\u0020installed\u0020DCA\u0020version\u0020is\u0020outdated.",
-            "url": "classes/Discord-Exceptions-OutdatedDCAException.html"
-        },                {
             "fqsen": "\\Discord\\Exceptions\\PartRequestFailedException",
             "name": "PartRequestFailedException",
             "summary": "Thrown\u0020when\u0020a\u0020request\u0020that\u0020was\u0020executed\u0020from\u0020a\u0020part\u0020failed.",
@@ -14171,11 +14166,6 @@ Search.appendIndex(
             "summary": "Inserts\u0020silence\u0020frames\u0020recursively.",
             "url": "classes/Discord-Voice-VoiceClient.html#method___insertSilence"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ADCA_VERSION",
-            "name": "DCA_VERSION",
-            "summary": "The\u0020DCA\u0020version\u0020the\u0020client\u0020is\u0020using.",
-            "url": "classes/Discord-Voice-VoiceClient.html#constant_DCA_VERSION"
-        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ASILENCE_FRAME",
             "name": "SILENCE_FRAME",
             "summary": "The\u0020Opus\u0020Silence\u0020Frame.",
@@ -14200,11 +14190,6 @@ Search.appendIndex(
             "name": "ready",
             "summary": "Is\u0020the\u0020voice\u0020client\u0020ready\u003F",
             "url": "classes/Discord-Voice-VoiceClient.html#property_ready"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024dca",
-            "name": "dca",
-            "summary": "The\u0020DCA\u0020binary\u0020name\u0020that\u0020we\u0020will\u0020use.",
-            "url": "classes/Discord-Voice-VoiceClient.html#property_dca"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024ffmpeg",
             "name": "ffmpeg",
