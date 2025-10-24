@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Builders\ChannelBuilder;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
@@ -32,7 +33,7 @@ class ThreadCreate extends Event
     public function handle($data)
     {
         /** @var Thread */
-        $threadPart = $this->factory->part(Thread::class, (array) $data, true);
+        $threadPart = $this->factory->part(ChannelBuilder::TYPES[$data->type] ?? Thread::class, (array) $data, true);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

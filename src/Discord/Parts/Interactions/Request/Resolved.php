@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Request;
 
+use Discord\Builders\ChannelBuilder;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Attachment;
@@ -186,11 +187,7 @@ class Resolved extends Part
             }
 
             if (! isset($channelPart)) {
-                if (in_array($channel->type, [Channel::TYPE_ANNOUNCEMENT_THREAD, Channel::TYPE_PRIVATE_THREAD, Channel::TYPE_PUBLIC_THREAD])) {
-                    $channelPart = $this->factory->part(Thread::class, (array) $channel + ['guild_id' => $this->guild_id], true);
-                } else {
-                    $channelPart = $this->factory->part(Channel::class, (array) $channel + ['guild_id' => $this->guild_id], true);
-                }
+                $channelPart = $this->factory->part(ChannelBuilder::TYPES[$channel->type] ?? Channel::class, (array) $channel + ['guild_id' => $this->guild_id], true);
             }
 
             $collection->pushItem($channelPart);

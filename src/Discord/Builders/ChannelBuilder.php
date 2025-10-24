@@ -14,8 +14,21 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Http\Exceptions\RequestFailedException;
+use Discord\Parts\Channel\AnnouncementThread;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\DM;
+use Discord\Parts\Channel\GroupDM;
+use Discord\Parts\Channel\GuildAnnouncement;
+use Discord\Parts\Channel\GuildCategory;
+use Discord\Parts\Channel\GuildDirectory;
+use Discord\Parts\Channel\GuildForum;
+use Discord\Parts\Channel\GuildMedia;
+use Discord\Parts\Channel\GuildStageVoice;
+use Discord\Parts\Channel\GuildText;
+use Discord\Parts\Channel\GuildVoice;
 use Discord\Parts\Channel\Overwrite;
+use Discord\Parts\Channel\PrivateThread;
+use Discord\Parts\Channel\PublicThread;
 use Discord\Parts\Guild\Emoji;
 use Discord\Voice\Region;
 use JsonSerializable;
@@ -31,6 +44,22 @@ use function Discord\poly_strlen;
  */
 class ChannelBuilder extends Builder implements JsonSerializable
 {
+    public const TYPES = [
+        Channel::TYPE_GUILD_TEXT => GuildText::class, // A text channel within a server
+        Channel::TYPE_DM => DM::class, // A direct message between users
+        Channel::TYPE_GUILD_VOICE => GuildVoice::class, // A voice channel within a server
+        Channel::TYPE_GROUP_DM => GroupDM::class, // A direct message between multiple users
+        Channel::TYPE_GUILD_CATEGORY => GuildCategory::class, // An organizational category that contains up to 50 channels
+        Channel::TYPE_GUILD_ANNOUNCEMENT => GuildAnnouncement::class, // A channel that users can follow and crosspost into their own server (formerly news channels)
+        Channel::TYPE_ANNOUNCEMENT_THREAD => AnnouncementThread::class, // A temporary sub-channel within a GUILD_ANNOUNCEMENT channel
+        Channel::TYPE_PUBLIC_THREAD => PublicThread::class, // A temporary sub-channel within a GUILD_TEXT or GUILD_FORUM channel
+        Channel::TYPE_PRIVATE_THREAD => PrivateThread::class, // A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission
+        Channel::TYPE_GUILD_STAGE_VOICE => GuildStageVoice::class, // A voice channel for hosting events with an audience
+        Channel::TYPE_GUILD_DIRECTORY => GuildDirectory::class, // The channel in a hub containing the listed servers
+        Channel::TYPE_GUILD_FORUM => GuildForum::class, // Channel that can only contain threads
+        Channel::TYPE_GUILD_MEDIA => GuildMedia::class, // Channel that can only contain threads, similar to GUILD_FORUM channels
+    ];
+
     protected string $name;
     protected ?int $type;
     protected ?string $topic; // Text, Announcement, Forum, Media

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Builders\ChannelBuilder;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 
@@ -39,6 +40,6 @@ class ChannelDelete extends Event
             }
         }
 
-        return $channelPart ?? $this->factory->part(Channel::class, (array) $data);
+        return $channelPart ?? $this->factory->part(ChannelBuilder::TYPES[$data->type] ?? Channel::class, (array) $data);
     }
 }
