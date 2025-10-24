@@ -2886,10 +2886,10 @@ Search.appendIndex(
             "summary": "An\u0020array\u0020of\u0020voice\u0020clients\u0020that\u0020are\u0020currently\u0020connected.",
             "url": "classes/Discord-Discord.html#property_voiceClients"
         },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024voiceSessions",
-            "name": "voiceSessions",
-            "summary": "",
-            "url": "classes/Discord-Discord.html#property_voiceSessions"
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024voice_sessions",
+            "name": "voice_sessions",
+            "summary": "An\u0020array\u0020of\u0020voice\u0020session\u0020IDs.",
+            "url": "classes/Discord-Discord.html#property_voice_sessions"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024largeGuilds",
             "name": "largeGuilds",
@@ -13661,105 +13661,110 @@ Search.appendIndex(
             "summary": "Unsets\u0020an\u0020attribute\u0020via\u0020key.\u0020Used\u0020for\u0020ArrayAccess.",
             "url": "classes/Discord-Voice-Buffer.html#method_offsetUnset"
         },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream",
+            "name": "ReceiveStream",
+            "summary": "Handles\u0020receiving\u0020audio\u0020from\u0020Discord.",
+            "url": "classes/Discord-Voice-ReceiveStream.html"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructs\u0020a\u0020stream.",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003AwritePCM\u0028\u0029",
+            "name": "writePCM",
+            "summary": "Writes\u0020PCM\u0020audio\u0020data.",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method_writePCM"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003AwriteOpus\u0028\u0029",
+            "name": "writeOpus",
+            "summary": "Writes\u0020Opus\u0020audio\u0020data.",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method_writeOpus"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003AisReadable\u0028\u0029",
+            "name": "isReadable",
+            "summary": "",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method_isReadable"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003AisWritable\u0028\u0029",
+            "name": "isWritable",
+            "summary": "",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method_isWritable"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003Awrite\u0028\u0029",
+            "name": "write",
+            "summary": "",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method_write"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003Aend\u0028\u0029",
+            "name": "end",
+            "summary": "",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method_end"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003Aclose\u0028\u0029",
+            "name": "close",
+            "summary": "",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method_close"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003Apause\u0028\u0029",
+            "name": "pause",
+            "summary": "",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method_pause"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003Aresume\u0028\u0029",
+            "name": "resume",
+            "summary": "",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method_resume"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003Apipe\u0028\u0029",
+            "name": "pipe",
+            "summary": "",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method_pipe"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003ApipePCM\u0028\u0029",
+            "name": "pipePCM",
+            "summary": "Pipes\u0020PCM\u0020to\u0020a\u0020destination\u0020stream.",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method_pipePCM"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003ApipeOpus\u0028\u0029",
+            "name": "pipeOpus",
+            "summary": "Pipes\u0020Opus\u0020to\u0020a\u0020destination\u0020stream.",
+            "url": "classes/Discord-Voice-ReceiveStream.html#method_pipeOpus"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003A\u0024pcmData",
+            "name": "pcmData",
+            "summary": "Contains\u0020PCM\u0020data.",
+            "url": "classes/Discord-Voice-ReceiveStream.html#property_pcmData"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003A\u0024opusData",
+            "name": "opusData",
+            "summary": "Contains\u0020Opus\u0020data.",
+            "url": "classes/Discord-Voice-ReceiveStream.html#property_opusData"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003A\u0024isPaused",
+            "name": "isPaused",
+            "summary": "Is\u0020the\u0020stream\u0020paused\u003F",
+            "url": "classes/Discord-Voice-ReceiveStream.html#property_isPaused"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003A\u0024isClosed",
+            "name": "isClosed",
+            "summary": "Whether\u0020the\u0020stream\u0020is\u0020closed.",
+            "url": "classes/Discord-Voice-ReceiveStream.html#property_isClosed"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003A\u0024pcmPauseBuffer",
+            "name": "pcmPauseBuffer",
+            "summary": "The\u0020PCM\u0020pause\u0020buffer.",
+            "url": "classes/Discord-Voice-ReceiveStream.html#property_pcmPauseBuffer"
+        },                {
+            "fqsen": "\\Discord\\Voice\\ReceiveStream\u003A\u003A\u0024opusPauseBuffer",
+            "name": "opusPauseBuffer",
+            "summary": "The\u0020pause\u0020buffer.",
+            "url": "classes/Discord-Voice-ReceiveStream.html#property_opusPauseBuffer"
+        },                {
             "fqsen": "\\Discord\\Voice\\RecieveStream",
             "name": "RecieveStream",
             "summary": "Handles\u0020recieving\u0020audio\u0020from\u0020Discord.",
             "url": "classes/Discord-Voice-RecieveStream.html"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "Constructs\u0020a\u0020stream.",
-            "url": "classes/Discord-Voice-RecieveStream.html#method___construct"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003AwritePCM\u0028\u0029",
-            "name": "writePCM",
-            "summary": "Writes\u0020PCM\u0020audio\u0020data.",
-            "url": "classes/Discord-Voice-RecieveStream.html#method_writePCM"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003AwriteOpus\u0028\u0029",
-            "name": "writeOpus",
-            "summary": "Writes\u0020Opus\u0020audio\u0020data.",
-            "url": "classes/Discord-Voice-RecieveStream.html#method_writeOpus"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003AisReadable\u0028\u0029",
-            "name": "isReadable",
-            "summary": "",
-            "url": "classes/Discord-Voice-RecieveStream.html#method_isReadable"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003AisWritable\u0028\u0029",
-            "name": "isWritable",
-            "summary": "",
-            "url": "classes/Discord-Voice-RecieveStream.html#method_isWritable"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003Awrite\u0028\u0029",
-            "name": "write",
-            "summary": "",
-            "url": "classes/Discord-Voice-RecieveStream.html#method_write"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003Aend\u0028\u0029",
-            "name": "end",
-            "summary": "",
-            "url": "classes/Discord-Voice-RecieveStream.html#method_end"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003Aclose\u0028\u0029",
-            "name": "close",
-            "summary": "",
-            "url": "classes/Discord-Voice-RecieveStream.html#method_close"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003Apause\u0028\u0029",
-            "name": "pause",
-            "summary": "",
-            "url": "classes/Discord-Voice-RecieveStream.html#method_pause"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003Aresume\u0028\u0029",
-            "name": "resume",
-            "summary": "",
-            "url": "classes/Discord-Voice-RecieveStream.html#method_resume"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003Apipe\u0028\u0029",
-            "name": "pipe",
-            "summary": "",
-            "url": "classes/Discord-Voice-RecieveStream.html#method_pipe"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003ApipePCM\u0028\u0029",
-            "name": "pipePCM",
-            "summary": "Pipes\u0020PCM\u0020to\u0020a\u0020destination\u0020stream.",
-            "url": "classes/Discord-Voice-RecieveStream.html#method_pipePCM"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003ApipeOpus\u0028\u0029",
-            "name": "pipeOpus",
-            "summary": "Pipes\u0020Opus\u0020to\u0020a\u0020destination\u0020stream.",
-            "url": "classes/Discord-Voice-RecieveStream.html#method_pipeOpus"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003A\u0024pcmData",
-            "name": "pcmData",
-            "summary": "Contains\u0020PCM\u0020data.",
-            "url": "classes/Discord-Voice-RecieveStream.html#property_pcmData"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003A\u0024opusData",
-            "name": "opusData",
-            "summary": "Contains\u0020Opus\u0020data.",
-            "url": "classes/Discord-Voice-RecieveStream.html#property_opusData"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003A\u0024isPaused",
-            "name": "isPaused",
-            "summary": "Is\u0020the\u0020stream\u0020paused\u003F",
-            "url": "classes/Discord-Voice-RecieveStream.html#property_isPaused"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003A\u0024isClosed",
-            "name": "isClosed",
-            "summary": "Whether\u0020the\u0020stream\u0020is\u0020closed.",
-            "url": "classes/Discord-Voice-RecieveStream.html#property_isClosed"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003A\u0024pcmPauseBuffer",
-            "name": "pcmPauseBuffer",
-            "summary": "The\u0020PCM\u0020pause\u0020buffer.",
-            "url": "classes/Discord-Voice-RecieveStream.html#property_pcmPauseBuffer"
-        },                {
-            "fqsen": "\\Discord\\Voice\\RecieveStream\u003A\u003A\u0024opusPauseBuffer",
-            "name": "opusPauseBuffer",
-            "summary": "The\u0020pause\u0020buffer.",
-            "url": "classes/Discord-Voice-RecieveStream.html#property_opusPauseBuffer"
         },                {
             "fqsen": "\\Discord\\Voice\\Region",
             "name": "Region",
@@ -13991,11 +13996,6 @@ Search.appendIndex(
             "summary": "Plays\u0020an\u0020Ogg\u0020Opus\u0020stream.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_playOggStream"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AplayDCAStream\u0028\u0029",
-            "name": "playDCAStream",
-            "summary": "Plays\u0020a\u0020DCA\u0020stream.",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_playDCAStream"
-        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003Areset\u0028\u0029",
             "name": "reset",
             "summary": "Resets\u0020the\u0020voice\u0020client.",
@@ -14088,8 +14088,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AgetRecieveStream\u0028\u0029",
             "name": "getRecieveStream",
-            "summary": "Gets\u0020a\u0020recieve\u0020voice\u0020stream.",
+            "summary": "Gets\u0020a\u0020receive\u0020voice\u0020stream.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_getRecieveStream"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AgetReceiveStream\u0028\u0029",
+            "name": "getReceiveStream",
+            "summary": "Gets\u0020a\u0020receive\u0020voice\u0020stream.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_getReceiveStream"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AhandleAudioData\u0028\u0029",
             "name": "handleAudioData",
@@ -14103,7 +14108,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AdecryptVoicePacket\u0028\u0029",
             "name": "decryptVoicePacket",
-            "summary": "",
+            "summary": "Decrypts\u0020a\u0020voice\u0020packet\u0020received\u0020from\u0020Discord.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_decryptVoicePacket"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AgenerateKeyPackage\u0028\u0029",
@@ -14181,20 +14186,15 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Voice-VoiceClient.html#constant_SUPPORTED_MODES"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ADEPRECATED_MODES",
-            "name": "DEPRECATED_MODES",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#constant_DEPRECATED_MODES"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AUNSUPPORTED_MODES",
-            "name": "UNSUPPORTED_MODES",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#constant_UNSUPPORTED_MODES"
-        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AVOICE_OP_HANDLERS",
             "name": "VOICE_OP_HANDLERS",
             "summary": "",
             "url": "classes/Discord-Voice-VoiceClient.html#constant_VOICE_OP_HANDLERS"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024discord",
+            "name": "discord",
+            "summary": "The\u0020Discord\u0020client.",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_discord"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024ready",
             "name": "ready",
@@ -14210,16 +14210,6 @@ Search.appendIndex(
             "name": "ffmpeg",
             "summary": "The\u0020FFmpeg\u0020binary\u0020location.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_ffmpeg"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024voiceSessions",
-            "name": "voiceSessions",
-            "summary": "The\u0020voice\u0020sessions.",
-            "url": "classes/Discord-Voice-VoiceClient.html#property_voiceSessions"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024loop",
-            "name": "loop",
-            "summary": "The\u0020ReactPHP\u0020event\u0020loop.",
-            "url": "classes/Discord-Voice-VoiceClient.html#property_loop"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024mainWebsocket",
             "name": "mainWebsocket",
@@ -14361,10 +14351,10 @@ Search.appendIndex(
             "summary": "Collection\u0020of\u0020voice\u0020decoders.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_voiceDecoders"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024recieveStreams",
-            "name": "recieveStreams",
-            "summary": "Voice\u0020audio\u0020recieve\u0020streams.",
-            "url": "classes/Discord-Voice-VoiceClient.html#property_recieveStreams"
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024receiveStreams",
+            "name": "receiveStreams",
+            "summary": "Voice\u0020audio\u0020receive\u0020streams.",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_receiveStreams"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024volume",
             "name": "volume",
@@ -14390,11 +14380,6 @@ Search.appendIndex(
             "name": "userClose",
             "summary": "Is\u0020the\u0020voice\u0020client\u0020being\u0020closed\u0020by\u0020user\u003F",
             "url": "classes/Discord-Voice-VoiceClient.html#property_userClose"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024logger",
-            "name": "logger",
-            "summary": "The\u0020logger.",
-            "url": "classes/Discord-Voice-VoiceClient.html#property_logger"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024version",
             "name": "version",
