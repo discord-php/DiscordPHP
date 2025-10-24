@@ -1843,7 +1843,16 @@ class VoiceClient extends EventEmitter
         if (strtoupper($systemOs) === 'WIN') {
             $which = 'where';
         }
+
         $shellExecutable = shell_exec("$which $executable");
+        if ($shellExecutable === false) {
+            // Unable to establish pipe
+            return null;
+        }
+        if ($shellExecutable === null) {
+            // Error or the command produced no output
+            return null;
+        }
         $executable = rtrim((string) explode(PHP_EOL, $shellExecutable)[0]);
 
         return is_executable($executable) ? $executable : null;
