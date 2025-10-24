@@ -18,9 +18,10 @@ use React\Stream\DuplexStreamInterface;
 use React\Stream\WritableStreamInterface;
 
 /**
- * Handles recieving audio from Discord.
+ * Handles receiving audio from Discord.
  *
- * @since 10.39.0
+ * @since 10.39.0 Renamed from RecieveStream to ReceiveStream.
+ * @since 3.2.0
  */
 class ReceiveStream extends EventEmitter implements DuplexStreamInterface
 {
