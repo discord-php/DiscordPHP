@@ -1838,8 +1838,13 @@ class VoiceClient extends EventEmitter
      */
     protected static function checkForExecutable(string $executable): ?string
     {
-        $which = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'where' : 'command -v';
-        $executable = rtrim((string) explode(PHP_EOL, shell_exec("{$which} {$executable}"))[0]);
+        $systemOs = substr(PHP_OS, 0, 3);
+        $which = 'command -v';
+        if (strtoupper($systemOs) === 'WIN') {
+            $which = 'where';
+        }
+        $shellExecutable = shell_exec("$which $executable");
+        $executable = rtrim((string) explode(PHP_EOL, $shellExecutable)[0]);
 
         return is_executable($executable) ? $executable : null;
     }
