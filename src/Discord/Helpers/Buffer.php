@@ -15,6 +15,7 @@ namespace Discord\Helpers;
 
 use Discord\Exceptions\BufferTimedOutException;
 use Evenement\EventEmitter;
+use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
@@ -32,33 +33,33 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      *
      * @var string
      */
-    private $buffer = '';
+    protected $buffer = '';
 
     /**
      * Array of deferred reads waiting to be resolved.
      *
      * @var Deferred[]|int[]
      */
-    private $reads = [];
+    protected $reads = [];
 
     /**
      * Whether the buffer has been closed.
      *
      * @var bool
      */
-    private $closed = false;
+    protected $closed = false;
 
     /**
      * ReactPHP event loop.
      * Required for timeouts.
      *
-     * @var LoopInterface
+     * @var LoopInterface|null
      */
-    private $loop;
+    protected $loop;
 
-    public function __construct(LoopInterface $loop = null)
+    public function __construct(?LoopInterface $loop = null)
     {
-        $this->loop = $loop;
+        $this->loop = $loop ?? Loop::get();
     }
 
     /**
@@ -90,7 +91,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      *
      * @return string|bool The bytes read, or false if not enough bytes are present.
      */
-    private function readRaw(int $length)
+    protected function readRaw(int $length)
     {
         if (poly_strlen($this->buffer) >= $length) {
             $output = substr($this->buffer, 0, $length);
