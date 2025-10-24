@@ -17,7 +17,6 @@ use Discord\Discord;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\LibSodiumNotFoundException;
-use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Buffer as RealBuffer;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
