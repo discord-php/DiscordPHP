@@ -37,7 +37,6 @@ use React\EventLoop\TimerInterface;
 use React\Stream\ReadableResourceStream;
 use React\Stream\ReadableStreamInterface;
 
-use function Discord\poly_strlen;
 use function React\Promise\reject;
 use function React\Promise\resolve;
 
@@ -1086,7 +1085,7 @@ class VoiceClient extends EventEmitter
         }
 
         if (is_resource($stream)) {
-            $stream = new Stream($stream, $this->discord->loop);
+            $stream = new Stream($stream);
         }
 
         $process = $this->ffmpegEncode(preArgs: [
@@ -1696,8 +1695,8 @@ class VoiceClient extends EventEmitter
             $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
         }
 
-        $buff = new Buffer(poly_strlen($vp->getData(), '8bit') + 2);
-        $buff->write(pack('s', poly_strlen($vp->getData(), '8bit')), 0);
+        $buff = new Buffer(strlen($vp->getData()) + 2);
+        $buff->write(pack('s', strlen($vp->getData())), 0);
         $buff->write($vp->getData(), 2);
 
         $decoder->stdin->write((string) $buff);
@@ -1745,7 +1744,7 @@ class VoiceClient extends EventEmitter
         $data = $voicePacket->getData();
         $nonce = str_repeat("\x00", 12); // 12-byte nonce for AES-GCM
         // The last 4 bytes of the payload are the nonce (32-bit LE integer)
-        if (poly_strlen($data, '8bit') < 4) {
+        if (strlen($data) < 4) {
             return false;
         }
         $ciphertext = substr($data, 0, -4);
