@@ -76,7 +76,9 @@ class VoiceClient extends EventEmitter
         Op::VOICE_RESUMED => 'handleResumed',
         Op::VOICE_CLIENT_CONNECT => 'handleClientConnect',
         Op::VOICE_CLIENT_DISCONNECT => 'handleClientDisconnect',
-        Op::VOICE_VIDEO => 'handleVideo',
+        Op::VOICE_FIFTEEN => 'handleUndocumented',
+        Op::VOICE_EIGHTEEN => 'handleUndocumented',
+        Op::VOICE_TWENTY => 'handleUndocumented',
         Op::VOICE_DAVE_PREPARE_TRANSITION => 'handleDavePrepareTransition',
         Op::VOICE_DAVE_EXECUTE_TRANSITION => 'handleDaveExecuteTransition',
         Op::VOICE_DAVE_TRANSITION_READY => 'handleDaveTransitionReady',
@@ -690,13 +692,13 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Handles the undocumented voice opcode 15. Not intended for use by bots.
+     * Handles undocumented voice opcodes not intended for use by bots.
      *
      * @param Payload $data
      *
      * @since 10.39.2
      */
-    protected function handleVideo(object $data): void
+    protected function handleUndocumented(object $data): void
     {
     }
 

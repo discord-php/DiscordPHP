@@ -102,7 +102,12 @@ class Op
     /** A client has disconnected from the voice channel. */
     public const VOICE_CLIENT_DISCONNECT = 13;
     /** Undocumented. */
-    public const VOICE_VIDEO = 15;
+    public const VOICE_FIFTEEN = 15;
+    /** Undocumented. */
+    public const VOICE_EIGHTEEN = 18;
+    /** Undocumented. */
+    public const VOICE_TWENTY = 20;
+
     /** A downgrade from the DAVE protocol is upcoming. */
     public const VOICE_DAVE_PREPARE_TRANSITION = 21;
     /** Execute a previously announced protocol transition. */
