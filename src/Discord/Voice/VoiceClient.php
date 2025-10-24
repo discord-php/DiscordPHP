@@ -76,6 +76,7 @@ class VoiceClient extends EventEmitter
         Op::VOICE_RESUMED => 'handleResumed',
         Op::VOICE_CLIENT_CONNECT => 'handleClientConnect',
         Op::VOICE_CLIENT_DISCONNECT => 'handleClientDisconnect',
+        Op::VOICE_FIFTEEN => 'handleFifteen',
         Op::VOICE_DAVE_PREPARE_TRANSITION => 'handleDavePrepareTransition',
         Op::VOICE_DAVE_EXECUTE_TRANSITION => 'handleDaveExecuteTransition',
         Op::VOICE_DAVE_TRANSITION_READY => 'handleDaveTransitionReady',
@@ -686,6 +687,17 @@ class VoiceClient extends EventEmitter
     protected function handleClientDisconnect(object $data): void
     {
         $this->discord->logger->debug('received client disconnect packet', ['data' => $data]);
+    }
+
+    /**
+     * Handles the undocumented voice opcode 15.
+     * Not intended for use by bots.
+     * 
+     * @since 10.39.2
+     */
+    protected function handleFifteen(): void
+    {
+        return;
     }
 
     protected function handleDavePrepareTransition(object $data): void
