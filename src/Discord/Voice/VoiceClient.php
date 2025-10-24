@@ -1728,20 +1728,15 @@ class VoiceClient extends EventEmitter
     protected function decryptVoicePacket(VoicePacket $voicePacket): string|false
     {
         // AEAD modes use a nonce that is a 32-bit integer appended to the payload.
-        if (strpos($this->mode, 'aead') !== false) {
-            $data = $voicePacket->getData();
-            $nonce = str_repeat("\x00", 12); // 12-byte nonce for AES-GCM
-            // The last 4 bytes of the payload are the nonce (32-bit LE integer)
-            if (poly_strlen($data, '8bit') < 4) {
-                return false;
-            }
-            $ciphertext = substr($data, 0, -4);
-            $nonceInt = unpack('V', substr($data, -4))[1];
-            $nonce = str_pad(pack('V', $nonceInt), 12, "\x00", STR_PAD_RIGHT);
-        } else {
-            $nonce = new Buffer(24);
-            $nonce->write($voicePacket->getHeader(), 0);
+        $data = $voicePacket->getData();
+        $nonce = str_repeat("\x00", 12); // 12-byte nonce for AES-GCM
+        // The last 4 bytes of the payload are the nonce (32-bit LE integer)
+        if (poly_strlen($data, '8bit') < 4) {
+            return false;
         }
+        $ciphertext = substr($data, 0, -4);
+        $nonceInt = unpack('V', substr($data, -4))[1];
+        $nonce = str_pad(pack('V', $nonceInt), 12, "\x00", STR_PAD_RIGHT);
 
         switch ($this->mode) {
             case 'aead_aes256_gcm_rtpsize': // preferred
