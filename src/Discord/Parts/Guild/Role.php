@@ -13,10 +13,13 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
 use React\Promise\PromiseInterface;
 use Stringable;
+
+use function React\Promise\reject;
 
 /**
  * A role defines permissions for the guild. Members can be added to the role.
@@ -238,6 +241,12 @@ class Role extends Part implements Stringable
         if (isset($this->attributes['guild_id'])) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            if ($botperms = $this->guild->getBotPermissions()) {
+                if (! $botperms->manage_roles) {
+                    return reject(new NoPermissionsException("The bot does not have permission to manage roles in guild {$this->guild_id}."));
+                }
+            }
 
             return $guild->roles->save($this, $reason);
         }
