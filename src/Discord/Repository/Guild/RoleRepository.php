@@ -62,9 +62,9 @@ class RoleRepository extends AbstractRepository
 
     /**
      * Gets the highest role in the guild for the bot.
-     * 
+     *
      * @return Role|null The highest role or null if guild is not available.
-     * 
+     *
      * @since 10.40.0
      */
     public function getCurrentMemberHighestRole(): ?Role
