@@ -8571,6 +8571,11 @@ Search.appendIndex(
             "summary": "A\u0020role\u0020defines\u0020permissions\u0020for\u0020the\u0020guild.\u0020Members\u0020can\u0020be\u0020added\u0020to\u0020the\u0020role.",
             "url": "classes/Discord-Parts-Guild-Role.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003AcomparePosition\u0028\u0029",
+            "name": "comparePosition",
+            "summary": "Compares\u0020this\u0020role\u0020to\u0020another\u0020role\u0020to\u0020determine\u0020relative\u0020ordering.",
+            "url": "classes/Discord-Parts-Guild-Role.html#method_comparePosition"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Role\u003A\u003AgetColorsAttribute\u0028\u0029",
             "name": "getColorsAttribute",
             "summary": "Gets\u0020the\u0020colors\u0020attribute.",
@@ -13210,6 +13215,11 @@ Search.appendIndex(
             "name": "getMemberCounts",
             "summary": "Get\u0020member\u0020counts\u0020for\u0020every\u0020role\u0020in\u0020the\u0020guild.",
             "url": "classes/Discord-Repository-Guild-RoleRepository.html#method_getMemberCounts"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\RoleRepository\u003A\u003AgetCurrentMemberHighestRole\u0028\u0029",
+            "name": "getCurrentMemberHighestRole",
+            "summary": "Gets\u0020the\u0020highest\u0020role\u0020in\u0020the\u0020guild\u0020for\u0020the\u0020bot.",
+            "url": "classes/Discord-Repository-Guild-RoleRepository.html#method_getCurrentMemberHighestRole"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\RoleRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",

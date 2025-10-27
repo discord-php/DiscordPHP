@@ -587,6 +587,13 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Guild-Role.html#method_comparePosition">comparePosition()</a>
+    <span>
+                                &nbsp;: int    </span>
+</dt>
+<dd>Compares this role to another role to determine relative ordering.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;    </span>
@@ -2293,7 +2300,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">272</span>
+    <span class="phpdocumentor-element-found-in__line">305</span>
 
     </aside>
 
@@ -2365,6 +2372,88 @@ JSON. Used for JsonSerializable.</dd>
     
 
     
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_comparePosition">
+        comparePosition()
+        <a href="classes/Discord-Parts-Guild-Role.html#method_comparePosition" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">97</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Compares this role to another role to determine relative ordering.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">comparePosition</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$role</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Ordering rules:</p>
+<ul>
+<li>Primary: ascending by position (lower position comes first).</li>
+<li>Tiebreaker: descending by ID (higher ID comes first when positions are equal).</li>
+</ul>
+<p>Returns:</p>
+<ul>
+<li>-1 if this role should come before the given role,</li>
+<li>0 if both roles are considered equal in ordering,</li>
+<li>1 if this role should come after the given role.</li>
+</ul>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$role</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The role to compare against.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Guild-Role.html#method_comparePosition#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.40.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">int</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Comparison result suitable for use with sorting functions.</p>
+</section>
+
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -2556,7 +2645,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">205</span>
+    <span class="phpdocumentor-element-found-in__line">232</span>
 
     </aside>
 
@@ -2654,7 +2743,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">163</span>
+    <span class="phpdocumentor-element-found-in__line">190</span>
 
     </aside>
 
@@ -2819,7 +2908,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">260</span>
+    <span class="phpdocumentor-element-found-in__line">293</span>
 
     </aside>
 
@@ -2871,7 +2960,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">223</span>
+    <span class="phpdocumentor-element-found-in__line">250</span>
 
     </aside>
 
@@ -3297,7 +3386,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">239</span>
+    <span class="phpdocumentor-element-found-in__line">266</span>
 
     </aside>
 
@@ -3402,7 +3491,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">122</span>
+    <span class="phpdocumentor-element-found-in__line">149</span>
 
     </aside>
 
@@ -3474,7 +3563,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">168</span>
 
     </aside>
 
@@ -4189,7 +4278,7 @@ primary_color = 11127295, secondary_color = 16759788, and tertiary_color = 16761
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">113</span>
 
     </aside>
 
@@ -4247,7 +4336,7 @@ primary_color = 11127295, secondary_color = 16759788, and tertiary_color = 16761
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">108</span>
+    <span class="phpdocumentor-element-found-in__line">135</span>
 
     </aside>
 
@@ -4290,7 +4379,7 @@ primary_color = 11127295, secondary_color = 16759788, and tertiary_color = 16761
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">183</span>
+    <span class="phpdocumentor-element-found-in__line">210</span>
 
     </aside>
 
@@ -4333,7 +4422,7 @@ primary_color = 11127295, secondary_color = 16759788, and tertiary_color = 16761
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">98</span>
+    <span class="phpdocumentor-element-found-in__line">125</span>
 
     </aside>
 
@@ -4393,7 +4482,7 @@ primary_color = 11127295, secondary_color = 16759788, and tertiary_color = 16761
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/Role.php"><a href="files/src-discord-parts-guild-role.html"><abbr title="src/Discord/Parts/Guild/Role.php">Role.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">195</span>
+    <span class="phpdocumentor-element-found-in__line">222</span>
 
     </aside>
 
@@ -4778,6 +4867,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___set">__set()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Guild-Role.html#method___toString">__toString()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___unserialize">__unserialize()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Guild-Role.html#method_comparePosition">comparePosition()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getConstants">getConstants()</a></li>
