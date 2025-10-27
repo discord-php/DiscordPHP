@@ -53,7 +53,7 @@ class PrivateChannelRepository extends AbstractRepository
      * @param array          $params
      *
      * @return PromiseInterface
-     * 
+     *
      * @since 10.40.0
      */
     public function modifyGroupDM($channel, array $params = []): PromiseInterface

@@ -230,6 +230,8 @@ class GuildTemplate extends Part implements Stringable
      * @link https://discord.com/developers/docs/resources/guild-template#sync-guild-template
      *
      * @return PromiseInterface<GuildTemplate>
+     *
+     * @since 10.40.0
      */
     public function sync(): PromiseInterface
     {
