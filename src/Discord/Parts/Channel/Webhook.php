@@ -15,6 +15,7 @@ namespace Discord\Parts\Channel;
 
 use Discord\Builders\MessageBuilder;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
@@ -22,6 +23,8 @@ use Discord\Parts\User\User;
 use Discord\Repository\Channel\WebhookMessageRepository;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use function React\Promise\reject;
 
 /**
  * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
@@ -381,7 +384,14 @@ class Webhook extends Part
      */
     public function save(?string $reason = null): PromiseInterface
     {
+        /** @var Channel */
         $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
+
+        if ($botperms = $channel->getBotPermissions()) {
+            if (! $botperms->manage_webhooks) {
+                return reject(new NoPermissionsException("You do not have permission to manage webhooks in the channel {$channel->id}."));
+            }
+        }
 
         return $channel->webhooks->save($this, $reason);
     }
