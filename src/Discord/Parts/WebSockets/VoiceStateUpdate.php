@@ -14,12 +14,15 @@ declare(strict_types=1);
 namespace Discord\Parts\WebSockets;
 
 use Carbon\Carbon;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * Notifies the client of voice state updates about users.
@@ -148,6 +151,14 @@ class VoiceStateUpdate extends Part
         if (isset($this->attributes['guild_id'], $this->attributes['user_id'])) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            if ($this->user_id !== $this->discord->id) {
+                if ($botperms = $guild->getBotPermissions()) {
+                    if (! $botperms->mute_members) {
+                        return reject(new NoPermissionsException("You do not have permission to mute members in the guild {$guild->id}."));
+                    }
+                }
+            }
 
             return $guild->voice_states->save($this, $reason);
         }
