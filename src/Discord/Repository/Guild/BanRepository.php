@@ -106,7 +106,7 @@ class BanRepository extends AbstractRepository
             $banned_users = [];
             foreach ($response['banned_users'] ?? [] as $user_id) {
                 /** @var Ban */
-                $banned_users[$user_id] = $ban = $this->factory->part(Ban::class, [
+                $banned_users[$user_id] = $ban = $this->factory->part($this->class, [
                     'user_id' => $user_id,
                     'reason' => $reason,
                     'guild_id' => $this->vars['guild_id'],
