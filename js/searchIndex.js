@@ -8216,6 +8216,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-GuildTemplate.html#method_getUpdatableAttributes"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\GuildTemplate\u003A\u003Async\u0028\u0029",
+            "name": "sync",
+            "summary": "Syncs\u0020the\u0020template\u0020to\u0020the\u0020guild\u0027s\u0020current\u0020state.\u0020Requires\u0020the\u0020MANAGE_GUILD\u0020permission.",
+            "url": "classes/Discord-Parts-Guild-GuildTemplate.html#method_sync"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildTemplate\u003A\u003Asave\u0028\u0029",
             "name": "save",
             "summary": "",
@@ -8850,6 +8855,11 @@ Search.appendIndex(
             "name": "getGuildAttribute",
             "summary": "Returns\u0020the\u0020guild\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-Sticker.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Sticker\u003A\u003AgetUserIdAttribute\u0028\u0029",
+            "name": "getUserIdAttribute",
+            "summary": "Returns\u0020the\u0020user_id\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-Sticker.html#method_getUserIdAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Sticker\u003A\u003AgetUserAttribute\u0028\u0029",
             "name": "getUserAttribute",
@@ -12961,6 +12971,11 @@ Search.appendIndex(
             "summary": "Contains\u0020bans\u0020for\u0020users\u0020of\u0020a\u0020guild.",
             "url": "classes/Discord-Repository-Guild-BanRepository.html"
         },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\BanRepository\u003A\u003AbanBulk\u0028\u0029",
+            "name": "banBulk",
+            "summary": "Ban\u0020up\u0020to\u0020200\u0020users\u0020from\u0020a\u0020guild,\u0020and\u0020optionally\u0020delete\u0020previous\u0020messages\u0020sent\u0020by\u0020the\u0020banned\u0020users.",
+            "url": "classes/Discord-Repository-Guild-BanRepository.html#method_banBulk"
+        },                {
             "fqsen": "\\Discord\\Repository\\Guild\\BanRepository\u003A\u003Aban\u0028\u0029",
             "name": "ban",
             "summary": "Bans\u0020a\u0020member\u0020from\u0020the\u0020guild.",
@@ -13441,6 +13456,11 @@ Search.appendIndex(
             "summary": "Contains\u0020private\u0020channels\u0020and\u0020groups\u0020that\u0020the\u0020client\u0020has\u0020access\u0020to.",
             "url": "classes/Discord-Repository-PrivateChannelRepository.html"
         },                {
+            "fqsen": "\\Discord\\Repository\\PrivateChannelRepository\u003A\u003AmodifyGroupDM\u0028\u0029",
+            "name": "modifyGroupDM",
+            "summary": "Fires\u0020a\u0020Channel\u0020Update\u0020Gateway\u0020event.",
+            "url": "classes/Discord-Repository-PrivateChannelRepository.html#method_modifyGroupDM"
+        },                {
             "fqsen": "\\Discord\\Repository\\PrivateChannelRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
             "summary": "",
@@ -13655,6 +13675,31 @@ Search.appendIndex(
             "name": "offsetUnset",
             "summary": "Unsets\u0020an\u0020attribute\u0020via\u0020key.\u0020Used\u0020for\u0020ArrayAccess.",
             "url": "classes/Discord-Voice-Buffer.html#method_offsetUnset"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Processes\\OpusFFI",
+            "name": "OpusFFI",
+            "summary": "Handles\u0020the\u0020decoding\u0020of\u0020Opus\u0020audio\u0020data\u0020using\u0020FFI\u0020\u0028Foreign\u0020Function\u0020Interface\u0029.",
+            "url": "classes/Discord-Voice-Processes-OpusFFI.html"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Processes\\OpusFFI\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-Voice-Processes-OpusFFI.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Processes\\OpusFFI\u003A\u003Adecode\u0028\u0029",
+            "name": "decode",
+            "summary": "Creates\u0020a\u0020FFI\u0020instance\u0020\u0028code\u0020in\u0020C\u0029\u0020to\u0020decode\u0020Opus\u0020audio\u0020data.",
+            "url": "classes/Discord-Voice-Processes-OpusFFI.html#method_decode"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Processes\\OpusFFI\u003A\u003A__call\u0028\u0029",
+            "name": "__call",
+            "summary": "Magic\u0020method\u0020to\u0020redirect\u0020method\u0020calls\u0020to\u0020the\u0020FFI\u0020instance.",
+            "url": "classes/Discord-Voice-Processes-OpusFFI.html#method___call"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Processes\\OpusFFI\u003A\u003A\u0024ffi",
+            "name": "ffi",
+            "summary": "",
+            "url": "classes/Discord-Voice-Processes-OpusFFI.html#property_ffi"
         },                {
             "fqsen": "\\Discord\\Voice\\ReceiveStream",
             "name": "ReceiveStream",
@@ -16390,6 +16435,11 @@ Search.appendIndex(
             "name": "Voice",
             "summary": "",
             "url": "namespaces/discord-voice.html"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Processes",
+            "name": "Processes",
+            "summary": "",
+            "url": "namespaces/discord-voice-processes.html"
         },                {
             "fqsen": "\\Discord\\Voice\\Speaking",
             "name": "Speaking",
