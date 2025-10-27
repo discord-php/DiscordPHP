@@ -319,6 +319,10 @@ class Invite extends Part implements Stringable
      */
     public function save(?string $reason = null): PromiseInterface
     {
+        if (! $this->guild_id) {
+            return parent::save();
+        }
+        
         if (isset($this->attributes['channel_id'])) {
             /** @var Channel $channel */
             $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
