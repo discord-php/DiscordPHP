@@ -15,12 +15,15 @@ namespace Discord\Parts\Guild\AutoModeration;
 
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * Auto Moderation is a feature which allows each guild to set up rules that
@@ -239,7 +242,13 @@ class Rule extends Part
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
-            return $guild->autoModerationRules->save($this, $reason);
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->manage_guild) {
+                    return reject(new NoPermissionsException("You do not have permission to manage auto moderation rules in the guild {$guild->id}."));
+                }
+            }
+
+            return $guild->auto_moderation_rules->save($this, $reason);
         }
 
         return parent::save();
