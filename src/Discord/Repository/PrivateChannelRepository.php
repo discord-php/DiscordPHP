@@ -51,6 +51,8 @@ class PrivateChannelRepository extends AbstractRepository
      *
      * @param Channel|string $channel
      * @param array          $params
+     * @param string         $params['name'] 1-100 character channel name.
+     * @param string         $icon['icon']   Base64 encoded icon.
      *
      * @return PromiseInterface
      *
