@@ -376,6 +376,25 @@ class User extends Part implements Stringable
      */
     public function save(?string $reason = null): PromiseInterface
     {
+        if ($this->id === $this->discord->id) {
+            $data = [];
+            if ($this->username) {
+                $data['username'] = $this->username;
+            }
+            if ($this->avatar_hash) {
+                $data['avatar'] = $this->avatar_hash;
+            }
+            if ($this->banner_hash) {
+                $data['banner'] = $this->banner_hash;
+            }
+
+            return $this->discord->users->modifyCurrentUser($data, $reason)->then(function ($user) {
+                $this->fill((array) $user);
+
+                return $this;
+            });
+        }
+
         return $this->discord->users->save($this, $reason);
     }
 
