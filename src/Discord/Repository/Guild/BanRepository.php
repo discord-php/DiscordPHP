@@ -67,8 +67,9 @@ class BanRepository extends AbstractRepository
      * @param array           $options                           Array of Ban options 'delete_message_seconds'.
      * @param ?int            $options['delete_message_seconds'] Number of seconds to delete messages for (0-604800).
      *
-     * @return PromiseInterface<array{banned_users: array<string, Ban>, failed_users: array<string>}>
      * @throws \OverflowException If more than 200 user IDs are provided.
+     *
+     * @return PromiseInterface<array{banned_users: array<string, Ban>, failed_users: array<string>}>
      *
      * @since 10.40.0
      */
