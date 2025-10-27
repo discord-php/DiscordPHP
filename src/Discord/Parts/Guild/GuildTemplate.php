@@ -15,11 +15,14 @@ namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
 use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use function React\Promise\reject;
 
 /**
  * A Guild Template is a code that when used, creates a guild based on a
@@ -228,6 +231,12 @@ class GuildTemplate extends Part implements Stringable
         if (isset($this->attributes['source_guild_id'])) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['source_guild_id']], true);
+
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->manage_guild) {
+                    return reject(new NoPermissionsException("You do not have permission to save changes to the guild template {$this->code} in guild {$guild->id}."));
+                }
+            }
 
             return $guild->templates->save($this, $reason);
         }
