@@ -303,6 +303,11 @@ class Member extends Part implements Stringable
                     return reject(new NoPermissionsException("You do not have permission to add member role in the guild {$guild->id}."));
                 }
             }
+            if ($botHighestRole = $guild->roles->getCurrentMemberHighestRole()) {
+                if ($botHighestRole->comparePosition($this) <= 0) {
+                    return reject(new NoPermissionsException("The bot's highest role is not higher than the role {$this->id} in guild {$this->guild_id}."));
+                }
+            }
         }
 
         $headers = [];
@@ -340,6 +345,11 @@ class Member extends Part implements Stringable
             if ($botperms = $guild->getBotPermissions()) {
                 if (! $botperms->manage_roles) {
                     return reject(new NoPermissionsException("You do not have permission to remove member role in the guild {$guild->id}."));
+                }
+            }
+            if ($botHighestRole = $guild->roles->getCurrentMemberHighestRole()) {
+                if ($botHighestRole->comparePosition($this) <= 0) {
+                    return reject(new NoPermissionsException("The bot's highest role is not higher than the role {$this->id} in guild {$this->guild_id}."));
                 }
             }
         }
