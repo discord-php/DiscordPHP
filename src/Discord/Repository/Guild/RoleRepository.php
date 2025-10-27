@@ -59,4 +59,27 @@ class RoleRepository extends AbstractRepository
     {
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_ROLES_MEMBER_COUNTS, $this->vars['guild_id']))->then(fn ($response) => (array) $response);
     }
+
+    /**
+     * Gets the highest role in the guild for the bot.
+     * 
+     * @return Role|null The highest role or null if guild is not available.
+     * 
+     * @since 10.40.0
+     */
+    public function getCurrentMemberHighestRole(): ?Role
+    {
+        if (! $guild = $this->discord->guilds->get('id', $this->vars['guild_id'])) {
+            return null;
+        }
+
+        if (! $botMember = $guild->members->get('id', $this->discord->id)) {
+            return null;
+        }
+
+        return $guild->roles
+            ->filter(fn (Role $role) => $botMember->roles->has($role->id))
+            ->sort(fn (Role $a, Role $b) => $b->comparePosition($a))
+            ->shift();
+    }
 }
