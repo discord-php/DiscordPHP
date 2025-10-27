@@ -77,6 +77,33 @@ class Role extends Part implements Stringable
     ];
 
     /**
+     * Compares this role to another role to determine relative ordering.
+     *
+     * Ordering rules:
+     * - Primary: ascending by position (lower position comes first).
+     * - Tiebreaker: descending by ID (higher ID comes first when positions are equal).
+     *
+     * Returns:
+     * - -1 if this role should come before the given role,
+     * -  0 if both roles are considered equal in ordering,
+     * -  1 if this role should come after the given role.
+     *
+     * @param Role $role The role to compare against.
+     *
+     * @return int Comparison result suitable for use with sorting functions.
+     *
+     * @since 10.40.0
+     */
+    public function comparePosition($role): int
+    {
+        if ($this->position === $role->position) {
+            return $role->id <=> $this->id;
+        }
+
+        return $this->position <=> $role->position;
+    }
+
+    /**
      * Gets the colors attribute.
      *
      * @return Colors The role's colors.
@@ -245,6 +272,12 @@ class Role extends Part implements Stringable
             if ($botperms = $this->guild->getBotPermissions()) {
                 if (! $botperms->manage_roles) {
                     return reject(new NoPermissionsException("The bot does not have permission to manage roles in guild {$this->guild_id}."));
+                }
+            }
+
+            if ($botHighestRole = $guild->roles->getCurrentMemberHighestRole()) {
+                if ($botHighestRole->comparePosition($this) <= 0) {
+                    return reject(new NoPermissionsException("The bot's highest role is not higher than the role {$this->id} in guild {$this->guild_id}."));
                 }
             }
 
