@@ -1401,9 +1401,10 @@ class Message extends Part
                     if (! $botperms->send_messages) {
                         return reject(new NoPermissionsException("You do not have permission to send messages in channel {$channel->id}."));
                     }
-                }
-                if (! $botperms->manage_messages) {
-                    return reject(new NoPermissionsException("You do not have permission to manage messages in channel {$channel->id}."));
+                } elseif ($this->id !== $this->discord->id) {
+                    if (! $botperms->manage_messages) {
+                        return reject(new NoPermissionsException("You do not have permission to manage messages in channel {$channel->id}."));
+                    }
                 }
             }
 
