@@ -15,6 +15,7 @@ namespace Discord\Repository;
 
 use Discord\Parts\Channel\Channel;
 use Discord\Http\Endpoint;
+use React\Promise\PromiseInterface;
 
 /**
  * Contains private channels and groups that the client has access to.
@@ -42,4 +43,36 @@ class PrivateChannelRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $class = Channel::class;
+
+    /**
+     * Fires a Channel Update Gateway event.
+     *
+     * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-group-dm
+     *
+     * @param Channel|string $channel
+     * @param array          $params
+     *
+     * @return PromiseInterface
+     * 
+     * @since 10.40.0
+     */
+    public function modifyGroupDM($channel, array $params = []): PromiseInterface
+    {
+        if (! is_string($channel)) {
+            $channel = $channel->id;
+        }
+
+        $allowed = ['name', 'icon'];
+        $params = array_filter(
+            $params,
+            fn ($key) => in_array($key, $allowed, true),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        if (empty($params)) {
+            throw new \InvalidArgumentException('No valid parameters to update.');
+        }
+
+        return $this->http->patch(EndPoint::bind(Endpoint::CHANNEL, $channel), $params);
+    }
 }
