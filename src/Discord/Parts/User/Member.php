@@ -1003,7 +1003,29 @@ class Member extends Part implements Stringable
             return parent::save();
         }
 
+        /** @var Guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        if ($this->id === $this->discord->id) {
+            $data = [];
+            if ($this->nick) {
+                $data['nick'] = $this->nick;
+            }
+            if ($this->banner_hash) {
+                $data['banner'] = $this->banner_hash;
+            }
+            if ($this->avatar_hash) {
+                $data['avatar'] = $this->avatar_hash;
+            }
+            if ($this->bio) {
+                $data['bio'] = $this->bio;
+            }
+
+            return $guild->members->modifyCurrentMember($guild, $data, $reason);
+        }
+
+        // @todo Add more permission checks
+        // @link https://discord.com/developers/docs/resources/guild#modify-guild-member
 
         return $guild->members->save($this, $reason);
     }
