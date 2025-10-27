@@ -13,10 +13,13 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
 use Stringable;
+
+use function React\Promise\reject;
 
 /**
  * A sticker that can be sent in a Discord message.
@@ -36,6 +39,7 @@ use Stringable;
  * @property      bool|null   $available   Whether this guild sticker can be used, may be false due to loss of Server Boosts.
  * @property      string|null $guild_id    The identifier of the guild that owns the sticker.
  * @property-read Guild|null  $guild       The guild that owns the sticker.
+ * @property-read string|null $user_id     The identifier of the user that uploaded the guild sticker.
  * @property      User|null   $user        The user that uploaded the guild sticker.
  * @property      int|null    $sort_value  The standard sticker's sort order within its pack.
  */
@@ -94,6 +98,16 @@ class Sticker extends Part implements Stringable
         }
 
         return $this->discord->guilds->get('id', $this->guild_id);
+    }
+
+    /**
+     * Returns the user_id attribute.
+     *
+     * @return string|null The identifier of the user that uploaded the guild sticker.
+     */
+    protected function getUserIdAttribute(): ?string
+    {
+        return $this->attributes['user']->id ?? null;
     }
 
     /**
@@ -171,6 +185,16 @@ class Sticker extends Part implements Stringable
         if (isset($this->attributes['guild_id'])) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            if ($this->botperms = $guild->getBotPermissions()) {
+                if ($this->user_id === $this->discord->user->id) {
+                    if (! $this->botperms->create_guild_expressions && ! $this->botperms->manage_guild_expressions) {
+                        return reject(new NoPermissionsException("You do not have permission to save changes to the sticker {$this->id} in guild {$guild->id}."));
+                    }
+                } elseif (! $this->botperms->manage_guild_expressions) {
+                    return reject(new NoPermissionsException("You do not have permission to save changes to the sticker {$this->id} in guild {$guild->id}."));
+                }
+            }
 
             return $guild->stickers->save($this, $reason);
         }
