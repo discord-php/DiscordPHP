@@ -1201,7 +1201,15 @@ class Channel extends Part implements Stringable
 
             return $guild->channels->save($this, $reason);
         } elseif ($this->created && $this->discord->private_channels->get('id', $this->id)) {
-            return $this->discord->private_channels->save($this, $reason);
+            $data = [];
+            if ($this->name) {
+                $data['name'] = $this->name;
+            }
+            if ($this->icon) {
+                $data['icon'] = $this->icon;
+            }
+
+            return $this->discord->private_channels->modifyGroupDM($this, $data);
         }
 
         return parent::save($reason);
