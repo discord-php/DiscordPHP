@@ -63,7 +63,7 @@ class BanRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/guild#bulk-guild-ban
      *
-     * @param User[]|string[] $users                             An array of user IDs to ban (up to 200).
+     * @param Member[]|User[]|string[] $users                             An array of user IDs to ban (up to 200).
      * @param array           $options                           Array of Ban options 'delete_message_seconds'.
      * @param ?int            $options['delete_message_seconds'] Number of seconds to delete messages for (0-604800).
      *
