@@ -18,6 +18,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use DomainException;
 use React\Promise\PromiseInterface;
 use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -221,6 +222,31 @@ class GuildTemplate extends Part implements Stringable
             'name' => $this->name,
             'description' => $this->description,
         ]);
+    }
+
+    /**
+     * Syncs the template to the guild's current state. Requires the MANAGE_GUILD permission.
+     *
+     * @link https://discord.com/developers/docs/resources/guild-template#sync-guild-template
+     *
+     * @return PromiseInterface<GuildTemplate>
+     */
+    public function sync(): PromiseInterface
+    {
+        if (! isset($this->attributes['source_guild_id'])) {
+            return reject(new DomainException('Cannot sync a guild template that is not associated with a guild.'));
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['source_guild_id']], true);
+
+        if ($botperms = $guild->getBotPermissions()) {
+            if (! $botperms->manage_guild) {
+                return reject(new NoPermissionsException("You do not have permission to save changes to the guild template {$this->code} in guild {$guild->id}."));
+            }
+        }
+
+        return $guild->templates->sync($this->code);
     }
 
     /**
