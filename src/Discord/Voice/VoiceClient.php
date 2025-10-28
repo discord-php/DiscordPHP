@@ -1166,7 +1166,7 @@ class VoiceClient extends EventEmitter
 
         OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($deferred, $loops) {
             $this->startTime = microtime(true) + 0.5;
-            $this->readOpusTimer = $this->discord->loop->addTimer(0.5, fn() => $this->readOpus($deferred, $os, $loops));
+            $this->readOpusTimer = $this->discord->loop->addTimer(0.5, fn () => $this->readOpus($deferred, $os, $loops));
         });
 
         return $deferred->promise();
@@ -1179,7 +1179,6 @@ class VoiceClient extends EventEmitter
      * @param OggStream &$ogg     Reference to the OGG stream object to read packets from.
      * @param int       &$loops   Reference to the loop counter used for timing calculations.
      *
-     * @return void
      *
      * @throws \Exception If packet retrieval fails.
      */
@@ -1192,7 +1191,7 @@ class VoiceClient extends EventEmitter
         // If the client is paused, delay by frame size and check again.
         if ($this->paused) {
             $this->insertSilence();
-            $this->readOpusTimer = $this->discord->loop->addTimer($this->frameSize / 1000, fn() => $this->readOpus($deferred, $ogg, $loops));
+            $this->readOpusTimer = $this->discord->loop->addTimer($this->frameSize / 1000, fn () => $this->readOpus($deferred, $ogg, $loops));
 
             return;
         }
@@ -1223,7 +1222,7 @@ class VoiceClient extends EventEmitter
             $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
             $delay = $nextTime - microtime(true);
 
-            $this->readOpusTimer = $this->discord->loop->addTimer($delay, fn() => $this->readOpus($deferred, $ogg, $loops));
+            $this->readOpusTimer = $this->discord->loop->addTimer($delay, fn () => $this->readOpus($deferred, $ogg, $loops));
         }, function ($e) use ($deferred) {
             $this->reset();
             $deferred->resolve(null);
