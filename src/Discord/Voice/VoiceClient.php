@@ -1176,6 +1176,17 @@ class VoiceClient extends EventEmitter
         return $deferred->promise();
     }
 
+    /**
+     * Reads and processes Opus audio packets from an OGG stream.
+     *
+     * @param Deferred  $deferred The deferred promise that will be resolved when the stream ends.
+     * @param OggStream &$ogg     Reference to the OGG stream object to read packets from.
+     * @param int       &$loops   Reference to the loop counter used for timing calculations.
+     *
+     * @return void
+     *
+     * @throws \Exception If packet retrieval fails.
+     */
     public function readOpus(Deferred $deferred, OggStream &$ogg, int &$loops)
     {
         $this->readOpusTimer = null;
