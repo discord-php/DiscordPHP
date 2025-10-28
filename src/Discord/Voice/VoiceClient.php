@@ -1160,17 +1160,13 @@ class VoiceClient extends EventEmitter
             $this->buffer->write($d);
         });
 
-        /** @var OggStream */
-        $ogg = null;
-
         $loops = 0;
 
         $this->setSpeaking(true);
 
-        OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($deferred, &$ogg, $loops) {
-            $ogg = &$os;
+        OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($deferred, $loops) {
             $this->startTime = microtime(true) + 0.5;
-            $this->readOpusTimer = $this->discord->loop->addTimer(0.5, fn() => $this->readOpus($deferred, $ogg, $loops));
+            $this->readOpusTimer = $this->discord->loop->addTimer(0.5, fn() => $this->readOpus($deferred, $os, $loops));
         });
 
         return $deferred->promise();
