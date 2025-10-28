@@ -383,7 +383,7 @@ class VoiceClient extends EventEmitter
     /**
      * readopus Timer.
      *
-     * @var TimerInterface Timer
+     * @var ?TimerInterface Timer
      */
     protected $readOpusTimer;
 
