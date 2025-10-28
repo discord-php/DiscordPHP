@@ -42,30 +42,39 @@ use function React\Promise\resolve;
 
 /**
  * The Discord voice client.
+ * 
+ * @link https://discord.com/developers/docs/topics/voice-connections
  *
  * @since 3.2.0
  */
 class VoiceClient extends EventEmitter
 {
     /**
-     * The Discord client.
-     *
-     * @var Discord The Discord client.
-     */
-    protected $discord;
-
-    /**
      * The Opus Silence Frame.
+     * 
+     * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
      *
      * @var string The silence frame.
      */
     public const SILENCE_FRAME = "\xF8\xFF\xFE";
 
+    /**
+     * Supported encryption modes for voice connections.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes
+     *
+     * @var array<int, string>
+     */
     public const SUPPORTED_MODES = [
         'aead_aes256_gcm_rtpsize',
         'aead_xchacha20_poly1305_rtpsize',
     ];
 
+    /**
+     * Dispatch table mapping Discord Voice Gateway opcodes to handler methods.
+     *
+     * @var array<int,string> Method name indexed by opcode constant.
+     */
     public const VOICE_OP_HANDLERS = [
         Op::VOICE_READY => 'handleReady',
         Op::VOICE_SESSION_DESCRIPTION => 'handleSessionDescription',
@@ -90,6 +99,13 @@ class VoiceClient extends EventEmitter
         Op::VOICE_DAVE_MLS_WELCOME => 'handleDaveMlsWelcome',
         Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME => 'handleDaveMlsInvalidCommitWelcome',
     ];
+
+    /**
+     * The Discord client.
+     *
+     * @var Discord The Discord client.
+     */
+    protected $discord;
 
     /**
      * Is the voice client ready?
