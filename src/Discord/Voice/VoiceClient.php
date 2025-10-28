@@ -327,7 +327,7 @@ class VoiceClient extends EventEmitter
     /**
      * Collection of voice decoders.
      *
-     * @var ExCollectionInterface Voice decoders.
+     * @var array Voice decoders.
      */
     protected $voiceDecoders;
 
@@ -1742,7 +1742,8 @@ class VoiceClient extends EventEmitter
      */
     protected function createDecoder(object $ss)
     {
-        $decoder = $this->dcaDecode();
+        return; // @todo
+        //$decoder = $this->opusDecode();
         $decoder->start();
         $decoder->stdout->on('data', function ($data) use ($ss) {
             $this->receiveStreams[$ss->ssrc]->writePCM($data);
@@ -1939,28 +1940,6 @@ class VoiceClient extends EventEmitter
             ['socket'],
             ['socket'],
         ]);
-    }
-
-    /**
-     * Decodes a file from Opus with DCA.
-     *
-     * @param int      $channels  How many audio channels to decode with.
-     * @param int|null $frameSize The Opus packet frame size.
-     *
-     * @return Process A ReactPHP Child Process
-     */
-    public function dcaDecode(int $channels = 2, ?int $frameSize = null): Process
-    {
-        $flags = [
-            '-ac', $channels, // Channels
-            '-ab', round($this->bitrate / 1000), // Bitrate
-            '-as', $frameSize ?? round($this->frameSize * 48), // Frame Size
-            '-mode', 'decode', // Decode mode
-        ];
-
-        $flags = implode(' ', $flags);
-
-        return new Process("{$this->dca} {$flags}");
     }
 
     /**
