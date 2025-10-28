@@ -48,24 +48,31 @@ use function React\Promise\resolve;
 class VoiceClient extends EventEmitter
 {
     /**
-     * The Discord client.
-     *
-     * @var Discord The Discord client.
-     */
-    protected $discord;
-
-    /**
      * The Opus Silence Frame.
+     * 
+     * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
      *
      * @var string The silence frame.
      */
     public const SILENCE_FRAME = "\xF8\xFF\xFE";
 
+    /**
+     * Supported voice encryption modes for Discord voice connections.
+     * 
+     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes
+     *
+     * @var array<string> The supported transport encryption modes.
+     */
     public const SUPPORTED_MODES = [
         'aead_aes256_gcm_rtpsize',
         'aead_xchacha20_poly1305_rtpsize',
     ];
 
+    /**
+     * Mapping of voice opcodes to their respective handler methods.
+     * 
+     * @var array<int, string> The mapping of voice opcodes to handler methods.
+     */
     public const VOICE_OP_HANDLERS = [
         Op::VOICE_READY => 'handleReady',
         Op::VOICE_SESSION_DESCRIPTION => 'handleSessionDescription',
@@ -90,6 +97,13 @@ class VoiceClient extends EventEmitter
         Op::VOICE_DAVE_MLS_WELCOME => 'handleDaveMlsWelcome',
         Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME => 'handleDaveMlsInvalidCommitWelcome',
     ];
+
+    /**
+     * The Discord client.
+     *
+     * @var Discord The Discord client.
+     */
+    protected $discord;
 
     /**
      * Is the voice client ready?
