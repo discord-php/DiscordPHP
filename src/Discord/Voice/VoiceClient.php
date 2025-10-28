@@ -42,6 +42,8 @@ use function React\Promise\resolve;
 
 /**
  * The Discord voice client.
+ * 
+ * @link https://discord.com/developers/docs/topics/voice-connections
  *
  * @since 3.2.0
  */
