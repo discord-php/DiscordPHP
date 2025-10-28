@@ -42,39 +42,30 @@ use function React\Promise\resolve;
 
 /**
  * The Discord voice client.
- * 
- * @link https://discord.com/developers/docs/topics/voice-connections
  *
  * @since 3.2.0
  */
 class VoiceClient extends EventEmitter
 {
     /**
+     * The Discord client.
+     *
+     * @var Discord The Discord client.
+     */
+    protected $discord;
+
+    /**
      * The Opus Silence Frame.
-     * 
-     * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
      *
      * @var string The silence frame.
      */
     public const SILENCE_FRAME = "\xF8\xFF\xFE";
 
-    /**
-     * Supported voice encryption modes for Discord voice connections.
-     * 
-     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes
-     *
-     * @var array<string> The supported transport encryption modes.
-     */
     public const SUPPORTED_MODES = [
         'aead_aes256_gcm_rtpsize',
         'aead_xchacha20_poly1305_rtpsize',
     ];
 
-    /**
-     * Mapping of voice opcodes to their respective handler methods.
-     * 
-     * @var array<int, string> The mapping of voice opcodes to handler methods.
-     */
     public const VOICE_OP_HANDLERS = [
         Op::VOICE_READY => 'handleReady',
         Op::VOICE_SESSION_DESCRIPTION => 'handleSessionDescription',
@@ -99,13 +90,6 @@ class VoiceClient extends EventEmitter
         Op::VOICE_DAVE_MLS_WELCOME => 'handleDaveMlsWelcome',
         Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME => 'handleDaveMlsInvalidCommitWelcome',
     ];
-
-    /**
-     * The Discord client.
-     *
-     * @var Discord The Discord client.
-     */
-    protected $discord;
 
     /**
      * Is the voice client ready?
@@ -474,7 +458,7 @@ class VoiceClient extends EventEmitter
      */
     public function initSockets(): void
     {
-        $wsfac = new WsFactory($this->discord->loop);
+        $wsfac = new WsFactory();
         /** @var PromiseInterface */
         $promise = $wsfac("wss://{$this->endpoint}?v={$this->version}");
 
@@ -617,7 +601,7 @@ class VoiceClient extends EventEmitter
 
         $this->discord->logger->debug('received voice ready packet', ['data' => $data]);
 
-        $udpfac = new DatagramFactory(null, (new DNSFactory())->createCached($this->dnsConfig, $this->discord->loop));
+        $udpfac = new DatagramFactory(null, (new DNSFactory())->createCached($this->dnsConfig));
         $udpfac->createClient("{$this->udpIp}:".$this->udpPort)->then(function (Socket $client): void {
             $this->client = $client;
 
@@ -1069,7 +1053,7 @@ class VoiceClient extends EventEmitter
         }
 
         $process = $this->ffmpegEncode($file);
-        $process->start($this->discord->loop);
+        $process->start();
 
         return $this->playOggStream($process);
     }
@@ -1117,7 +1101,7 @@ class VoiceClient extends EventEmitter
             '-ac', $channels,
             '-ar', $audioRate,
         ]);
-        $process->start($this->discord->loop);
+        $process->start();
         $stream->pipe($process->stdin);
 
         return $this->playOggStream($process);
@@ -1162,7 +1146,7 @@ class VoiceClient extends EventEmitter
         }
 
         if (is_resource($stream)) {
-            $stream = new ReadableResourceStream($stream, $this->discord->loop);
+            $stream = new ReadableResourceStream($stream);
         }
 
         if (! ($stream instanceof ReadableStreamInterface)) {
@@ -1171,7 +1155,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $this->buffer = new RealBuffer($this->discord->loop);
+        $this->buffer = new RealBuffer();
         $stream->on('data', function ($d) {
             $this->buffer->write($d);
         });
@@ -1181,61 +1165,62 @@ class VoiceClient extends EventEmitter
 
         $loops = 0;
 
-        $readOpus = function () use ($deferred, &$ogg, &$readOpus, &$loops) {
-            $this->readOpusTimer = null;
+        $this->setSpeaking(true);
 
-            $loops += 1;
+        OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($deferred, &$ogg, $loops) {
+            $ogg = &$os;
+            $this->startTime = microtime(true) + 0.5;
+            $this->readOpusTimer = $this->discord->loop->addTimer(0.5, fn() => $this->readOpus($deferred, $ogg, $loops));
+        });
 
-            // If the client is paused, delay by frame size and check again.
-            if ($this->paused) {
-                $this->insertSilence();
-                $this->readOpusTimer = $this->discord->loop->addTimer($this->frameSize / 1000, $readOpus);
+        return $deferred->promise();
+    }
+
+    public function readOpus(Deferred $deferred, OggStream &$ogg, int &$loops)
+    {
+        $this->readOpusTimer = null;
+
+        $loops += 1;
+
+        // If the client is paused, delay by frame size and check again.
+        if ($this->paused) {
+            $this->insertSilence();
+            $this->readOpusTimer = $this->discord->loop->addTimer($this->frameSize / 1000, fn() => $this->readOpus($deferred, $ogg, $loops));
+
+            return;
+        }
+
+        $ogg->getPacket()->then(function (string|null $packet) use ($deferred, &$ogg, &$loops) {
+            // EOF for Ogg stream.
+            if ($packet === null) {
+                $this->reset();
+                $deferred->resolve(null);
 
                 return;
             }
 
-            $ogg->getPacket()->then(function ($packet) use (&$readOpus, &$loops, $deferred) {
-                // EOF for Ogg stream.
-                if ($packet === null) {
-                    $this->reset();
-                    $deferred->resolve(null);
+            // increment sequence
+            // uint16 overflow protection
+            if (++$this->seq >= 2 ** 16) {
+                $this->seq = 0;
+            }
 
-                    return;
-                }
+            $this->sendBuffer($packet);
 
-                // increment sequence
-                // uint16 overflow protection
-                if (++$this->seq >= 2 ** 16) {
-                    $this->seq = 0;
-                }
+            // increment timestamp
+            // uint32 overflow protection
+            if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
+                $this->timestamp = 0;
+            }
 
-                $this->sendBuffer($packet);
+            $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
+            $delay = $nextTime - microtime(true);
 
-                // increment timestamp
-                // uint32 overflow protection
-                if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
-                    $this->timestamp = 0;
-                }
-
-                $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
-                $delay = $nextTime - microtime(true);
-
-                $this->readOpusTimer = $this->discord->loop->addTimer($delay, $readOpus);
-            }, function ($e) use ($deferred) {
-                $this->reset();
-                $deferred->resolve(null);
-            });
-        };
-
-        $this->setSpeaking(true);
-
-        OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($readOpus, &$ogg) {
-            $ogg = $os;
-            $this->startTime = microtime(true) + 0.5;
-            $this->readOpusTimer = $this->discord->loop->addTimer(0.5, $readOpus);
+            $this->readOpusTimer = $this->discord->loop->addTimer($delay, fn() => $this->readOpus($deferred, $ogg, $loops));
+        }, function ($e) use ($deferred) {
+            $this->reset();
+            $deferred->resolve(null);
         });
-
-        return $deferred->promise();
     }
 
     /**
@@ -1736,7 +1721,7 @@ class VoiceClient extends EventEmitter
     protected function createDecoder(object $ss)
     {
         $decoder = $this->dcaDecode();
-        $decoder->start($this->discord->loop);
+        $decoder->start();
         $decoder->stdout->on('data', function ($data) use ($ss) {
             $this->receiveStreams[$ss->ssrc]->writePCM($data);
         });
