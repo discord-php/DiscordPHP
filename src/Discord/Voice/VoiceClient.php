@@ -1472,19 +1472,17 @@ class VoiceClient extends EventEmitter
      *
      * @param Payload|array $data The data to send to the voice WebSocket.
      */
-    protected function send(object|array $data): void
+    protected function send($data): void
     {
-        if (($json = json_encode($data)) !== false) {
-            $this->voiceWebsocket->send($json);
-        }
+        $this->voiceWebsocket->send(json_encode($data));
     }
 
     /**
      * Sends a message to the main websocket.
      *
-     * @param Payload $data The data to send to the main WebSocket.
+     * @param Payload|array $data The data to send to the main WebSocket.
      */
-    protected function mainSend(object $data): void
+    protected function mainSend($data): void
     {
         $this->mainWebsocket->send(json_encode($data));
     }
