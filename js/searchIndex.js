@@ -14381,10 +14381,10 @@ Search.appendIndex(
             "summary": "The\u0020UDP\u0020client.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_client"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024channel",
-            "name": "channel",
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024channel_id",
+            "name": "channel_id",
             "summary": "The\u0020Channel\u0020that\u0020we\u0020are\u0020connecting\u0020to.",
-            "url": "classes/Discord-Voice-VoiceClient.html#property_channel"
+            "url": "classes/Discord-Voice-VoiceClient.html#property_channel_id"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024guild_id",
             "name": "guild_id",
@@ -14508,7 +14508,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024voiceDecoders",
             "name": "voiceDecoders",
-            "summary": "Collection\u0020of\u0020voice\u0020decoders.",
+            "summary": "Array\u0020of\u0020voice\u0020decoders.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_voiceDecoders"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024receiveStreams",
