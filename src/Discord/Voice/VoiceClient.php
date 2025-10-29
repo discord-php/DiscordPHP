@@ -1707,9 +1707,9 @@ class VoiceClient extends EventEmitter
     /**
      * Decodes voice packet data.
      *
-     * @param VoicePacket $voicePacket The voice packet to decode.
-     * @param VoiceClient $vc          The voice client instance.
      * @param string|null $decrypted   The decrypted voice data or null if decryption failed.
+     * @param VoiceClient $vc          The voice client instance.
+     * @param VoicePacket $voicePacket The voice packet to decode.
      *
      * @todo
      */
