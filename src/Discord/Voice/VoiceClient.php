@@ -2023,6 +2023,8 @@ class VoiceClient extends EventEmitter
      * Returns the connected guild.
      * 
      * @return Guild The connected guild.
+     * 
+     * @since 10.41.0
      */
     public function getGuild(): Guild
     {
