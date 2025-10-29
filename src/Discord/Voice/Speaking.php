@@ -57,6 +57,11 @@ class Speaking extends Part
         return $this->discord->users->get('id', $this->attributes['user_id']) ?? $this->factory->part(User::class, ['id' => $this->attributes['user_id']], true);
     }
 
+    protected function getSpeakingAttribute(): bool
+    {
+        return (bool) $this->attributes['speaking'];
+    }
+
     /**
      * Get the delay attribute.
      *
