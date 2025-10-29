@@ -18,7 +18,7 @@ namespace Discord\Voice;
  *
  * Huge thanks to Austin and Michael from JDA for the constants and audio
  * packets. Check out their repo:
- * https://github.com/DV8FromTheWorld/JDA
+ * https://github.com/discord-jda/JDA
  *
  * @since 3.2.0
  */
