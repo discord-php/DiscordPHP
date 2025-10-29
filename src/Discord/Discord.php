@@ -209,7 +209,7 @@ class Discord
     /**
      * An array of voice clients that are currently connected.
      *
-     * @var array<VoiceClient> Voice Clients.
+     * @var VoiceClient[] Voice Clients.
      */
     protected $voiceClients = [];
 
@@ -449,7 +449,7 @@ class Discord
      *
      * @param Payload $data Packet data.
      */
-    protected function handleVoiceServerUpdate(Payload $data): void
+    protected function handleVoiceServerUpdate(object $data): void
     {
         if (isset($this->voiceClients[$data->d->guild_id])) {
             $this->logger->debug('voice server update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
@@ -462,7 +462,7 @@ class Discord
      *
      * @param Payload $data Packet data.
      */
-    protected function handleResume(Payload $data): void
+    protected function handleResume(object $data): void
     {
         $this->logger->info('websocket reconnected to discord');
         $this->emit('reconnected', [$this]);
@@ -476,7 +476,7 @@ class Discord
      * @return false|void
      * @throws \Exception
      */
-    protected function handleReady(Payload $data)
+    protected function handleReady(object $data)
     {
         $this->logger->debug('ready packet received');
 
@@ -657,18 +657,18 @@ class Discord
      *
      * @param Payload $data Packet data.
      */
-    protected function handleVoiceStateUpdate(Payload $data): void
+    protected function handleVoiceStateUpdate(object $data): void
     {
-        /** @var VoiceStateUpdate $d */
-        $d = $data->d;
+        /** @var VoiceStateUpdate */
+        $voiceStateUpdate = $this->factory->part(VoiceStateUpdate::class, (array) $data->d, true);
 
-        $this->logger->debug('voice state update received', ['guild' => $d->guild_id, 'data' => $d]);
-        if (! isset($this->voiceClients[$d->guild_id])) {
-            $this->logger->warning('voice client not found', ['guild' => $d->guild_id]);
+        $this->logger->debug('voice state update received', ['guild' => $voiceStateUpdate->guild_id, 'data' => $voiceStateUpdate]);
+        if (! isset($this->voiceClients[$voiceStateUpdate->guild_id])) {
+            $this->logger->warning('voice client not found', ['guild' => $voiceStateUpdate->guild_id]);
 
             return;
         }
-        $this->voiceClients[$d->guild_id]->handleVoiceStateUpdate($data);
+        $this->voiceClients[$voiceStateUpdate->guild_id]->handleVoiceStateUpdate($voiceStateUpdate);
     }
 
     /**
@@ -1375,7 +1375,7 @@ class Discord
      *
      * @param Payload|array $data Packet data.
      */
-    protected function send(Payload|array $data, bool $force = false): void
+    protected function send(object|array $data, bool $force = false): void
     {
         // Wait until payload count has been reset
         // Keep 5 payloads for heartbeats as required

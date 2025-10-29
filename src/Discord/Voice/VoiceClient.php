@@ -1472,7 +1472,7 @@ class VoiceClient extends EventEmitter
      *
      * @param Payload|array $data The data to send to the voice WebSocket.
      */
-    protected function send(Payload|array $data): void
+    protected function send(object|array $data): void
     {
         if (($json = json_encode($data)) !== false) {
             $this->voiceWebsocket->send($json);
@@ -1484,7 +1484,7 @@ class VoiceClient extends EventEmitter
      *
      * @param Payload $data The data to send to the main WebSocket.
      */
-    protected function mainSend(Payload $data): void
+    protected function mainSend(object $data): void
     {
         $this->mainWebsocket->send(json_encode($data));
     }
@@ -1676,19 +1676,15 @@ class VoiceClient extends EventEmitter
      *
      * @see \Discord\Parts\WebSockets\VoiceStateUpdate
      *
-     *
-     * @param Payload $data The WebSocket data.
+     * @param VoiceStateUpdate $data The WebSocket data.
      */
     public function handleVoiceStateUpdate(object $data): void
     {
-        /** @var VoiceStateUpdate $d */
-        $d = $this->discord->factory(VoiceStateUpdate::class, (array) $data->d, true);
-
-        if (! isset($d->user_id) || ! $ss = $this->speakingStatus->get('user_id', $d->user_id)) {
+        if (! isset($data->user_id) || ! $ss = $this->speakingStatus->get('user_id', $data->user_id)) {
             return; // not in our channel
         }
 
-        if ($d->channel_id && $d->channel_id === $this->channel_id) {
+        if ($data->channel_id && $data->channel_id === $this->channel_id) {
             return; // ignore, just a mute/deaf change
         }
 
