@@ -1726,13 +1726,13 @@ class VoiceClient extends EventEmitter
             $this->createDecoder($ss);
             $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
         }
-        */
 
         $buff = new Buffer(strlen($vp->getData()) + 2);
         $buff->write(pack('s', strlen($vp->getData())), 0);
         $buff->write($vp->getData(), 2);
 
         $decoder->stdin->write((string) $buff);
+        */
     }
 
     /**
