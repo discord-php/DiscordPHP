@@ -337,7 +337,7 @@ class VoiceClient extends EventEmitter
     /**
      * Collection of voice decoders.
      *
-     * @var array Voice decoders.
+     * @var Process[] Voice decoders.
      */
     public $voiceDecoders;
 
