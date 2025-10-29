@@ -1726,8 +1726,12 @@ class VoiceClient extends EventEmitter
                 $vc->receiveStreams[$ss->ssrc]->on('pcm', fn ($d) => $vc->emit('channel-pcm', [$d, $vc]));
                 $vc->receiveStreams[$ss->ssrc]->on('opus', fn ($d) => $vc->emit('channel-opus', [$d, $vc]));
             }
-            $vc->createDecoder($ss);
-            $decoder = $vc->voiceDecoders[$vp->getSSRC()] ?? null;
+            $decoder = $vc->createDecoder($ss);
+            $vc->voiceDecoders[$ss->ssrc] = $decoder;
+        }
+
+        if ($decoder === null) {
+            return; // decoder could not be created
         }
 
         $buff = new Buffer(strlen($vp->getData()) + 2);
@@ -1740,13 +1744,16 @@ class VoiceClient extends EventEmitter
     /**
      * Creates and starts a decoder process for the given stream source.
      *
-     * @todo Implement MLS decoding and use the appropriate decoder here.
+     * @todo Implement MLS decoding and use the appropriate decoder.
      *
      * @param object $ss The stream source object containing ssrc and user_id properties.
+     *
+     * @return Process|null The created decoder ReactPHP Child Process, or null if decoding is not implemented or supported.
      */
-    protected function createDecoder(object $ss)
+    protected function createDecoder(object $ss): ?Process
     {
-        return; // @todo
+        return null; // Decoding not implemented yet
+
         //$decoder = $this->opusDecode();
         $decoder->start();
         $decoder->stdout->on('data', function ($data) use ($ss) {
@@ -1763,7 +1770,7 @@ class VoiceClient extends EventEmitter
             }
         });
 
-        $this->voiceDecoders[$ss->ssrc] = $decoder;
+        return $decoder;
     }
 
     /**
