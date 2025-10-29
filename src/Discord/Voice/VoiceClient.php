@@ -436,7 +436,7 @@ class VoiceClient extends EventEmitter
             throw new \InvalidArgumentException('Could not retrieve voice channel to connect to: '.$channel);
         }
         static $allowed = [Channel::TYPE_GUILD_VOICE, Channel::TYPE_GUILD_STAGE_VOICE];
-        if (!in_array($channel->type, $allowed) || ! $channel->guild_id) {
+        if (! in_array($channel->type, $allowed) || ! $channel->guild_id) {
             throw new \InvalidArgumentException('Channel must be a guild voice or stage channel: '.$channel->id);
         }
         $this->channel_id = $channel->id;
@@ -1414,7 +1414,7 @@ class VoiceClient extends EventEmitter
      *
      * @throws \DomainException
      * @throws \RuntimeException
-     * 
+     *
      * @deprecated 10.40.0 This data is now taken from the Channel.
      */
     public function setBitrate(int $bitrate): void
@@ -2023,9 +2023,9 @@ class VoiceClient extends EventEmitter
 
     /**
      * Returns the connected guild.
-     * 
+     *
      * @return Guild The connected guild.
-     * 
+     *
      * @since 10.41.0
      */
     public function getGuild(): Guild

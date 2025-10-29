@@ -124,7 +124,7 @@ class ReceiveStream extends EventEmitter implements DuplexStreamInterface
      */
     public function isReadable()
     {
-        return $this->isPaused;
+        return ! $this->isPaused && ! $this->isClosed;
     }
 
     /**
@@ -132,7 +132,7 @@ class ReceiveStream extends EventEmitter implements DuplexStreamInterface
      */
     public function isWritable()
     {
-        return $this->isPaused;
+        return $this->isReadable();
     }
 
     /**
@@ -141,6 +141,7 @@ class ReceiveStream extends EventEmitter implements DuplexStreamInterface
     public function write($data)
     {
         $this->writePCM($data);
+        $this->writeOpus($data);
     }
 
     /**
@@ -217,6 +218,7 @@ class ReceiveStream extends EventEmitter implements DuplexStreamInterface
     public function pipe(WritableStreamInterface $dest, array $options = [])
     {
         $this->pipePCM($dest, $options);
+        $this->pipeOpus($dest, $options);
     }
 
     /**
