@@ -425,6 +425,7 @@ class VoiceClient extends EventEmitter
         $this->mainWebsocket = $websocket;
         $this->voice_sessions = $voice_sessions;
         $this->channel = $channel;
+        $this->bitrate = $channel->bitrate;
         $this->data = $data;
         $this->deaf = $data['deaf'];
         $this->mute = $data['mute'];
