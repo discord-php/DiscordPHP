@@ -24,7 +24,7 @@ use Discord\Parts\User\User;
  * @since 10.40.0
  *
  * @property      string|null $user_id  The user ID of the user that is speaking, or null if this bot is speaking.
- * @property-read User        $user     The user that is speaking.
+ * @property-read User|null   $user     The user that is speaking.
  * @property      int         $ssrc     The SSRC identifier for the user.
  * @property      bool        $speaking Whether the user is speaking or not.
  * @property      int         $delay    The delay property should be set to 0 for bots that use the voice gateway.
@@ -46,17 +46,22 @@ class Speaking extends Part
     /**
      * Get the user attribute.
      *
-     * @return User The user.
+     * @return User|null The user.
      */
-    protected function getUserAttribute(): User
+    protected function getUserAttribute(): ?User
     {
         if (! isset($this->attributes['user_id'])) {
             return $this->discord->user;
         }
 
-        return $this->discord->users->get('id', $this->attributes['user_id']) ?? $this->factory->part(User::class, ['id' => $this->attributes['user_id']], true);
+        return $this->discord->users->get('id', $this->attributes['user_id']);
     }
 
+    /**
+     * Get the speaking attribute.
+     * 
+     * @return bool Whether the user is speaking.
+     */
     protected function getSpeakingAttribute(): bool
     {
         return (bool) $this->attributes['speaking'];
