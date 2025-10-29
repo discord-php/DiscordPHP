@@ -1768,13 +1768,14 @@ class VoiceClient extends EventEmitter
                 $vc->receiveStreams[$ss->ssrc] = new ReceiveStream();
                 $vc->receiveStreams[$ss->ssrc]->on('pcm', fn ($d) => $vc->emit('channel-pcm', [$d, $vc]));
                 $vc->receiveStreams[$ss->ssrc]->on('opus', fn ($d) => $vc->emit('channel-opus', [$d, $vc]));
-            }
-            $decoder = $vc->createDecoder($ss);
-            $vc->voiceDecoders[$ss->ssrc] = $decoder;
-        }
 
-        if ($decoder === null) {
-            return; // decoder could not be created
+                $vc->emit('receiveStream', [$vc->receiveStreams[$ss->ssrc], $vc]);
+            }
+            if (! $decoder = $vc->createDecoder($ss)) {
+                return; // decoder could not be created
+            }
+
+            $vc->voiceDecoders[$ss->ssrc] = $decoder;
         }
 
         $buff = new Buffer(strlen($vp->getData()) + 2);
