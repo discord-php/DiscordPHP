@@ -157,7 +157,7 @@ class VoiceClient extends EventEmitter
      *
      * @var string The channel that we are connecting to.
      */
-    protected $channel;
+    protected $channel_id;
 
     /**
      * The ID of the Channel's Guild.
@@ -438,7 +438,7 @@ class VoiceClient extends EventEmitter
         if (!in_array($channel->type, $allowed) || ! $channel->guild_id) {
             throw new \InvalidArgumentException('Channel must be a guild voice or stage channel: '.$channel->id);
         }
-        $this->channel = $channel->id;
+        $this->channel_id = $channel->id;
         $this->guild_id = $channel->guild_id;
         
         $this->data = $data;
@@ -880,7 +880,7 @@ class VoiceClient extends EventEmitter
 
     protected function handleCloseVoiceDisconnected(): void
     {
-        $this->discord->logger->info('voice client disconnected from channel', ['channel_id' => $this->channel]);
+        $this->discord->logger->info('voice client disconnected from channel', ['channel_id' => $this->channel_id]);
         $this->voice_sessions[$this->guild_id] = null;
     }
 
@@ -1397,7 +1397,7 @@ class VoiceClient extends EventEmitter
             ],
         ));
 
-        $this->channel = $channel;
+        $this->channel_id = $channel;
     }
 
     /**
@@ -1507,7 +1507,7 @@ class VoiceClient extends EventEmitter
             Op::OP_UPDATE_VOICE_STATE,
             [
                 'guild_id' => $this->guild_id,
-                'channel_id' => $this->channel,
+                'channel_id' => $this->channel_id,
                 'self_mute' => $mute,
                 'self_deaf' => $deaf,
             ],
@@ -1685,7 +1685,7 @@ class VoiceClient extends EventEmitter
             return; // not in our channel
         }
 
-        if ($d->channel_id && $d->channel_id === $this->channel) {
+        if ($d->channel_id && $d->channel_id === $this->channel_id) {
             return; // ignore, just a mute/deaf change
         }
 
@@ -2025,7 +2025,7 @@ class VoiceClient extends EventEmitter
      */
     public function getChannel(): Channel
     {
-        return $this->discord->guilds->get('id', $this->guild_id)->channels->get('id', $this->channel);
+        return $this->discord->guilds->get('id', $this->guild_id)->channels->get('id', $this->channel_id);
     }
 
     /**
