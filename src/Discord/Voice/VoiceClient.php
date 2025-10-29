@@ -438,7 +438,7 @@ class VoiceClient extends EventEmitter
         if (!in_array($channel->type, $allowed) || ! $channel->guild_id) {
             throw new \InvalidArgumentException('Channel must be a guild voice or stage channel: '.$channel->id);
         }
-        $this->channel = $channel;
+        $this->channel = $channel->id;
         $this->guild_id = $channel->guild_id;
         
         $this->data = $data;
