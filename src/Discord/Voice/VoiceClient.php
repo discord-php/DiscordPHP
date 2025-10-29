@@ -20,6 +20,7 @@ use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Helpers\Buffer as RealBuffer;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\WebSockets\Payload;
 use Discord\WebSockets\Op;
@@ -2019,13 +2020,23 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Returns the connected guild.
+     * 
+     * @return Guild The connected guild.
+     */
+    public function getGuild(): Guild
+    {
+        return $this->discord->guilds->get('id', $this->guild_id);
+    }
+
+    /**
      * Returns the connected channel.
      *
      * @return Channel The connected channel.
      */
     public function getChannel(): Channel
     {
-        return $this->discord->guilds->get('id', $this->guild_id)->channels->get('id', $this->channel_id);
+        return $this->getGuild()->channels->get('id', $this->channel_id);
     }
 
     /**
