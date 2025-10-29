@@ -320,7 +320,7 @@ class VoiceClient extends EventEmitter
     /**
      * Collection of the status of people speaking.
      *
-     * @var ExCollectionInterface Status of people speaking.
+     * @var ExCollectionInterface<Speaking>|Speaking[] Status of people speaking.
      */
     protected $speakingStatus;
 
@@ -831,9 +831,7 @@ class VoiceClient extends EventEmitter
 
         $this->discord->logger->debug('received speaking packet', ['data' => $data]);
 
-        $speakingData = $this->discord->factory(Speaking::class, (array) $data->d, true);
-
-        $this->speakingStatus[$data->d['ssrc']] = $speakingData;
+        $this->speakingStatus[$data->d['ssrc']] = $this->discord->factory(Speaking::class, (array) $data->d, true);
     }
 
     /**
