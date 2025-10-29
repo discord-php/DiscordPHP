@@ -2025,7 +2025,7 @@ class VoiceClient extends EventEmitter
      */
     public function getChannel(): Channel
     {
-        return $this->discord->getChannel($this->channel);
+        return $this->discord->guilds->get('id', $this->guild_id)->channels->get('id', $this->channel);
     }
 
     /**
