@@ -86,7 +86,7 @@ class VoiceClient extends EventEmitter
         Op::VOICE_CLIENT_DISCONNECT => 'handleClientDisconnect',
         Op::VOICE_CLIENT_UNKNOWN_15 => 'handleUndocumented',
         Op::VOICE_CLIENT_UNKNOWN_18 => 'handleUndocumented',
-        Op::VOICE_CLIENT_PLATFORM => 'handleUndocumented',
+        Op::VOICE_CLIENT_PLATFORM => 'handlePlatform',
         Op::VOICE_DAVE_PREPARE_TRANSITION => 'handleDavePrepareTransition',
         Op::VOICE_DAVE_EXECUTE_TRANSITION => 'handleDaveExecuteTransition',
         Op::VOICE_DAVE_TRANSITION_READY => 'handleDaveTransitionReady',
@@ -712,6 +712,20 @@ class VoiceClient extends EventEmitter
     protected function handleClientDisconnect(object $data): void
     {
         $this->discord->logger->debug('received client disconnect packet', ['data' => $data]);
+    }
+
+    /**
+     * Handles the platform event from the voice server.
+     * 
+     * @param Payload $data
+     * 
+     * @since 10.40.0
+     */
+    protected function handlePlatform(object $data): void
+    {
+        $platform = $this->discord->factory(Platform::class, (array) $data->d, true);
+
+        $this->emit('platform', [$platform, $this]);
     }
 
     /**
