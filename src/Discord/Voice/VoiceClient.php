@@ -1430,7 +1430,7 @@ class VoiceClient extends EventEmitter
     public function setVolume(int $volume): void
     {
         if ($volume < 0 || $volume > 100) {
-            throw new \DomainException("{$volume}% is not a valid option. The bitrate must be between 0% and 100%.");
+            throw new \DomainException("{$volume}% is not a valid option. The volume must be between 0% and 100%.");
         }
 
         if ($this->speaking) {
