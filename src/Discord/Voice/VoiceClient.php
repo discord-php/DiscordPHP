@@ -1462,9 +1462,7 @@ class VoiceClient extends EventEmitter
      */
     protected function mainSend(Payload $data): void
     {
-        if (($json = json_encode($data)) !== false) {
-            $this->mainWebsocket->send($json);
-        }
+        $this->mainWebsocket->send(json_encode($data));
     }
 
     /**
