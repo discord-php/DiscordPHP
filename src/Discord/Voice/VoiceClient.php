@@ -882,7 +882,7 @@ class VoiceClient extends EventEmitter
     protected function handleCloseVoiceDisconnected(): void
     {
         $this->discord->logger->info('voice client disconnected from channel', ['channel_id' => $this->channel_id]);
-        $this->voice_sessions[$this->guild_id] = null;
+        unset($this->voice_sessions[$this->guild_id]);
     }
 
     /**
