@@ -1992,15 +1992,17 @@ class VoiceClient extends EventEmitter
             default => -40 + ($this->volume / 100) * 40,
         };
 
+        $bitrate = $this->getChannel()->bitrate;
+
         $flags = [
             '-i', $filename ?? 'pipe:0',
             '-map_metadata', '-1',
             '-f', 'opus',
             '-c:a', 'libopus',
-            '-ar', '48000',
+            '-ar', $bitrate,
             '-af', 'volume='.$dB.'dB',
             '-ac', '2',
-            '-b:a', $this->getChannel()->bitrate,
+            '-b:a', $bitrate,
             '-loglevel', 'warning',
             'pipe:1',
         ];
