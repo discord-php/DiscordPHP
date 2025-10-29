@@ -1532,9 +1532,6 @@ class Discord
         $vc->once('ready', function () use ($vc, $deferred, $channel) {
             $this->logger->info('voice client is ready');
             $this->voiceClients[$channel->guild_id] = $vc;
-
-            $vc->setBitrate($channel->bitrate);
-            $this->logger->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
             $deferred->resolve($vc);
         });
         $vc->once('error', function ($e) use ($deferred) {
