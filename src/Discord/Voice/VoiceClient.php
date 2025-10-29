@@ -1713,7 +1713,7 @@ class VoiceClient extends EventEmitter
      *
      * @todo
      */
-    public static function decodeVoicePacket(VoicePacket $voicePacket, VoiceClient $vc, ?string $decrypted): void
+    public static function decodeVoicePacket(?string $decrypted, VoiceClient $vc, VoicePacket $voicePacket): void
     {
         if ($decrypted === null) {
             return; // couldn't decrypt
