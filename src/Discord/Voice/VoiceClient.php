@@ -434,8 +434,9 @@ class VoiceClient extends EventEmitter
         if (! $channel = $this->discord->getChannel($channel)) {
             throw new \InvalidArgumentException('Could not retrieve voice channel to connect to: '.$channel);
         }
-        if (! $channel->guild_id) {
-            throw new \InvalidArgumentException('Connecting to a voice channel that is not in a guild is not currently supported.');
+        static $allowed = [Channel::TYPE_GUILD_VOICE, Channel::TYPE_GUILD_STAGE_VOICE];
+        if (!in_array($channel->type, $allowed) || ! $channel->guild_id) {
+            throw new \InvalidArgumentException('Channel must be a guild voice or stage channel: '.$channel->id);
         }
         $this->channel = $channel;
         $this->guild_id = $channel->guild_id;
@@ -1453,7 +1454,7 @@ class VoiceClient extends EventEmitter
         static $allowed = ['voip', 'audio', 'lowdelay'];
 
         if (! in_array($app, $allowed)) {
-            throw new \DomainException("{$app} is not a valid option. Valid options are: ".implode(', ', $allowed));
+            throw new \DomainException("{$app} is not a valid audio application. Valid options are: ".implode(', ', $allowed));
         }
 
         if ($this->speaking) {
