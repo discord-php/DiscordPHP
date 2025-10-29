@@ -99,6 +99,8 @@ class VoiceClient extends EventEmitter
         Op::VOICE_DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION => 'handleDaveMlsAnnounceCommitTransition',
         Op::VOICE_DAVE_MLS_WELCOME => 'handleDaveMlsWelcome',
         Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME => 'handleDaveMlsInvalidCommitWelcome',
+
+        Op::CLOSE_VOICE_DISCONNECTED => 'handleCloseVoiceDisconnected',
     ];
 
     /**
@@ -153,9 +155,16 @@ class VoiceClient extends EventEmitter
     /**
      * The Channel that we are connecting to.
      *
-     * @var Channel The channel that we are going to connect to.
+     * @var string The channel that we are connecting to.
      */
     protected $channel;
+
+    /**
+     * The ID of the Channel's Guild.
+     *
+     * @var string The ID of the channel's guild.
+     */
+    protected $guild_id;
 
     /**
      * Data from the main WebSocket.
@@ -414,18 +423,31 @@ class VoiceClient extends EventEmitter
     /**
      * Constructs the Voice Client instance.
      *
-     * @param Discord   &$discord   The Discord client.
-     * @param WebSocket &$websocket The main WebSocket client.
-     * @param Channel   $channel    The channel we are connecting to.
-     * @param array     $data       More information related to the voice client.
+     * @param Discord        &$discord   The Discord client.
+     * @param WebSocket      &$websocket The main WebSocket client.
+     * @param Channel|string $channel    The channel we are connecting to.
+     * @param array          $data       More information related to the voice client.
+     *
+     * @throws \InvalidArgumentException If connecting to a voice channel that could not be found, or if that channel is not in a guild.
      */
-    public function __construct(Discord &$discord, WebSocket &$websocket, array &$voice_sessions, Channel $channel, array $data)
+    public function __construct(Discord &$discord, WebSocket &$websocket, array &$voice_sessions, $channel, array $data)
     {
         $this->discord = $discord;
         $this->mainWebsocket = $websocket;
         $this->voice_sessions = $voice_sessions;
+        if (! is_string($channel)) {
+            $channel = $channel->id;
+        }
+        if (! $channel = $this->discord->getChannel($channel)) {
+            throw new \InvalidArgumentException('Could not retrieve voice channel to connect to: '.$channel);
+        }
+        if (! $channel->guild_id) {
+            throw new \InvalidArgumentException('Connecting to a voice channel that is not in a guild is not currently supported.');
+        }
         $this->channel = $channel;
         $this->bitrate = $channel->bitrate;
+        $this->guild_id = $channel->guild_id;
+        
         $this->data = $data;
         $this->deaf = $data['deaf'];
         $this->mute = $data['mute'];
@@ -493,12 +515,12 @@ class VoiceClient extends EventEmitter
     protected function identify(): void
     {
         $data = [
-            'server_id' => $this->channel->guild_id,
+            'server_id' => $this->guild_id,
             'user_id' => $this->data['user_id'],
             'token' => $this->data['token'],
         ];
-        if (isset($this->voice_sessions[$this->channel->guild_id])) {
-            $data['session_id'] = $this->voice_sessions[$this->channel->guild_id];
+        if (isset($this->voice_sessions[$this->guild_id])) {
+            $data['session_id'] = $this->voice_sessions[$this->guild_id];
         }
 
         $payload = Payload::new(
@@ -718,9 +740,9 @@ class VoiceClient extends EventEmitter
 
     /**
      * Handles the any event from the voice server.
-     * 
+     *
      * @param Payload $data
-     * 
+     *
      * @since 10.40.0
      */
     public function handleAny(object $data): void
@@ -863,6 +885,12 @@ class VoiceClient extends EventEmitter
         ));
     }
 
+    protected function handleCloseVoiceDisconnected(): void
+    {
+        $this->discord->logger->info('voice client disconnected from channel', ['channel_id' => $this->channel]);
+        $this->voice_sessions[$this->guild_id] = null;
+    }
+
     /**
      * Handles the speaking state of a user.
      *
@@ -888,8 +916,8 @@ class VoiceClient extends EventEmitter
         $payload = Payload::new(
             Op::VOICE_RESUME,
             [
-                'server_id' => $this->channel->guild_id,
-                'session_id' => $this->voice_sessions[$this->channel->guild_id],
+                'server_id' => $this->guild_id,
+                'session_id' => $this->voice_sessions[$this->guild_id],
                 'token' => $this->data['token'],
                 'seq_ack' => $this->data['seq'],
             ]
@@ -942,11 +970,11 @@ class VoiceClient extends EventEmitter
         } elseif (isset(
             $this->data['token'],
             $this->data['seq'],
-            $this->voice_sessions[$this->channel->guild_id]
+            $this->voice_sessions[$this->guild_id]
         )) {
             $this->resume();
         } else {
-            $this->discord->logger->debug('existing voice session or data not found, re-sending identify', ['guild_id' => $this->channel->guild_id]);
+            $this->discord->logger->debug('existing voice session or data not found, re-sending identify', ['guild_id' => $this->guild_id]);
             $this->identify();
         }
     }
@@ -1025,8 +1053,7 @@ class VoiceClient extends EventEmitter
 
         // Remove voice session when leaving.
         if ($op === Op::CLOSE_VOICE_DISCONNECTED) {
-            $this->discord->logger->info('voice client disconnected from channel', ['channel_id' => $this->channel->id]);
-            $this->voice_sessions[$this->channel->guild_id] = null;
+            $this->handleCloseVoiceDisconnected();
 
             return;
         }
@@ -1034,7 +1061,7 @@ class VoiceClient extends EventEmitter
         // Don't reconnect on a critical opcode or if closed by user.
         if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this->userClose) {
             $this->discord->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
-            $this->voice_sessions[$this->channel->guild_id] = null;
+            $this->voice_sessions[$this->guild_id] = null;
             $this->emit('close');
         } else {
             $this->discord->logger->warning('reconnecting in 2 seconds');
@@ -1370,7 +1397,7 @@ class VoiceClient extends EventEmitter
         $this->mainSend(Payload::new(
             Op::OP_UPDATE_VOICE_STATE,
             [
-                'guild_id' => $channel->guild_id,
+                'guild_id' => $this->guild_id,
                 'channel_id' => $channel->id,
                 'self_mute' => $this->mute,
                 'self_deaf' => $this->deaf,
@@ -1382,7 +1409,7 @@ class VoiceClient extends EventEmitter
 
     /**
      * Sets the bitrate.
-     * 
+     *
      * For voice channels, normal servers can set bitrate up to 96000,
      * servers with Boost level 1 can set up to 128000,
      * servers with Boost level 2 can set up to 256000,
@@ -1493,8 +1520,8 @@ class VoiceClient extends EventEmitter
         $this->mainSend(Payload::new(
             Op::OP_UPDATE_VOICE_STATE,
             [
-                'guild_id' => $this->channel->guild_id,
-                'channel_id' => $this->channel->id,
+                'guild_id' => $this->guild_id,
+                'channel_id' => $this->channel,
                 'self_mute' => $mute,
                 'self_deaf' => $deaf,
             ],
@@ -1587,7 +1614,7 @@ class VoiceClient extends EventEmitter
         $this->mainSend(Payload::new(
             Op::OP_UPDATE_VOICE_STATE,
             [
-                'guild_id' => $this->channel->guild_id,
+                'guild_id' => $this->guild_id,
                 'channel_id' => null,
                 'self_mute' => true,
                 'self_deaf' => true,
@@ -1672,7 +1699,7 @@ class VoiceClient extends EventEmitter
             return; // not in our channel
         }
 
-        if ($d->channel_id && $d->channel_id === $this->channel->id) {
+        if ($d->channel_id && $d->channel_id === $this->channel) {
             return; // ignore, just a mute/deaf change
         }
 
@@ -2012,7 +2039,7 @@ class VoiceClient extends EventEmitter
      */
     public function getChannel(): Channel
     {
-        return $this->channel;
+        return $this->discord->getChannel($this->channel);
     }
 
     /**
