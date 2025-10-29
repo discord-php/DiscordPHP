@@ -831,7 +831,9 @@ class VoiceClient extends EventEmitter
 
         $this->discord->logger->debug('received speaking packet', ['data' => $data]);
 
-        $this->speakingStatus[$data->d['ssrc']] = $data->d;
+        $speakingData = $this->discord->factory(Speaking::class, (array) $data->d, true);
+
+        $this->speakingStatus[$data->d['ssrc']] = $speakingData;
     }
 
     /**

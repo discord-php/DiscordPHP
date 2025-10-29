@@ -29,7 +29,7 @@ use Discord\Parts\User\User;
  * @property      int         $speaking Whether the user is speaking or not.
  * @property      int         $delay    The delay property should be set to 0 for bots that use the voice gateway.
  */
-class SpeakingData extends Part
+class Speaking extends Part
 {
     /**
      * @inheritDoc
@@ -45,7 +45,7 @@ class SpeakingData extends Part
 
     /**
      * Get the user attribute.
-     * 
+     *
      * @return User The user.
      */
     protected function getUserAttribute(): User
@@ -59,7 +59,7 @@ class SpeakingData extends Part
 
     /**
      * Get the delay attribute.
-     * 
+     *
      * @return int The delay.
      */
     protected function getDelayAttribute(): int
