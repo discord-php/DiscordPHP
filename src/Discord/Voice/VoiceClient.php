@@ -42,7 +42,7 @@ use function React\Promise\resolve;
 
 /**
  * The Discord voice client.
- * 
+ *
  * @link https://discord.com/developers/docs/topics/voice-connections
  *
  * @since 3.2.0
@@ -51,7 +51,7 @@ class VoiceClient extends EventEmitter
 {
     /**
      * The Opus Silence Frame.
-     * 
+     *
      * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
      *
      * @var string The silence frame.
@@ -1698,34 +1698,42 @@ class VoiceClient extends EventEmitter
         $voicePacket = VoicePacket::make($message);
 
         if (($decrypted = $this->decryptVoicePacket($voicePacket)) === false) {
-            return; // if we can't decode the message, drop it silently.
+            $decrypted = null;
         }
 
-        $this->emit('raw', [$decrypted, $this]);
+        $this->emit('raw', [$decrypted, $this, $voicePacket]);
+    }
 
-        /* @todo
+    /**
+     * Decodes voice packet data.
+     *
+     * @param VoicePacket $voicePacket The voice packet to decode.
+     * @param VoiceClient $vc          The voice client instance.
+     * @param string|null $decrypted   The decrypted voice data or null if decryption failed.
+     *
+     * @todo
+     */
+    public static function decodeVoicePacket(VoicePacket $voicePacket, VoiceClient $vc, ?string $decrypted): void
+    {
+        if ($decrypted === null) {
+            return; // couldn't decrypt
+        }
+
         $vp = VoicePacket::make($voicePacket->getHeader().$decrypted);
 
-        if (! $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC())) {
+        if (! $ss = $vc->speakingStatus->get('ssrc', $vp->getSSRC())) {
             return; // for some reason we don't have a speaking status
         }
 
-        
-        if (! $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null) {
+        if (! $decoder = $vc->voiceDecoders[$vp->getSSRC()] ?? null) {
             // make a decoder
-            if (! isset($this->receiveStreams[$ss->ssrc])) {
-                $this->receiveStreams[$ss->ssrc] = new ReceiveStream();
-
-                $this->receiveStreams[$ss->ssrc]->on('pcm', function ($d) {
-                    $this->emit('channel-pcm', [$d, $this]);
-                });
-
-                $this->receiveStreams[$ss->ssrc]->on('opus', function ($d) {
-                    $this->emit('channel-opus', [$d, $this]);
-                });
+            if (! isset($vc->receiveStreams[$ss->ssrc])) {
+                $vc->receiveStreams[$ss->ssrc] = new ReceiveStream();
+                $vc->receiveStreams[$ss->ssrc]->on('pcm', fn ($d) => $vc->emit('channel-pcm', [$d, $vc]));
+                $vc->receiveStreams[$ss->ssrc]->on('opus', fn ($d) => $vc->emit('channel-opus', [$d, $vc]));
             }
-            $this->createDecoder($ss);
-            $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
+            $vc->createDecoder($ss);
+            $decoder = $vc->voiceDecoders[$vp->getSSRC()] ?? null;
         }
 
         $buff = new Buffer(strlen($vp->getData()) + 2);
@@ -1733,7 +1741,6 @@ class VoiceClient extends EventEmitter
         $buff->write($vp->getData(), 2);
 
         $decoder->stdin->write((string) $buff);
-        */
     }
 
     /**
