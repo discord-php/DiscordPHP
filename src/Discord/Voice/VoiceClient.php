@@ -365,13 +365,6 @@ class VoiceClient extends EventEmitter
     protected $audioApplication = 'audio';
 
     /**
-     * The bitrate to encode with.
-     *
-     * @var int Encoding bitrate.
-     */
-    protected $bitrate = 64000;
-
-    /**
      * Is the voice client reconnecting?
      *
      * @var bool Whether the voice client is reconnecting.
@@ -445,7 +438,6 @@ class VoiceClient extends EventEmitter
             throw new \InvalidArgumentException('Connecting to a voice channel that is not in a guild is not currently supported.');
         }
         $this->channel = $channel;
-        $this->bitrate = $channel->bitrate;
         $this->guild_id = $channel->guild_id;
         
         $this->data = $data;
@@ -1420,18 +1412,11 @@ class VoiceClient extends EventEmitter
      *
      * @throws \DomainException
      * @throws \RuntimeException
+     * 
+     * @deprecated 10.40.0 This data is now taken from the Channel.
      */
     public function setBitrate(int $bitrate): void
     {
-        if ($bitrate < 8000 || $bitrate > 384000) {
-            throw new \DomainException("{$bitrate} is not a valid option. The bitrate must be between 8,000 bps and 384,000 bps.");
-        }
-
-        if ($this->speaking) {
-            throw new \RuntimeException('Cannot change bitrate while playing.');
-        }
-
-        $this->bitrate = $bitrate;
     }
 
     /**
@@ -2013,7 +1998,7 @@ class VoiceClient extends EventEmitter
             '-ar', '48000',
             '-af', 'volume='.$dB.'dB',
             '-ac', '2',
-            '-b:a', $this->bitrate,
+            '-b:a', $this->getChannel()->bitrate,
             '-loglevel', 'warning',
             'pipe:1',
         ];
