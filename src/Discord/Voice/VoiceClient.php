@@ -1703,13 +1703,14 @@ class VoiceClient extends EventEmitter
 
         $this->emit('raw', [$decrypted, $this]);
 
+        /* @todo
         $vp = VoicePacket::make($voicePacket->getHeader().$decrypted);
 
         if (! $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC())) {
             return; // for some reason we don't have a speaking status
         }
 
-        /* @todo
+        
         if (! $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null) {
             // make a decoder
             if (! isset($this->receiveStreams[$ss->ssrc])) {
