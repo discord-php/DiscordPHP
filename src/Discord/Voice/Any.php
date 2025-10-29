@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Voice;
 
 use Discord\Parts\Part;
-use Discord\Parts\User\User;
 
 /**
  * Represents the any data sent when a user connects to a voice channel.
