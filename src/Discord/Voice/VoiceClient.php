@@ -84,7 +84,7 @@ class VoiceClient extends EventEmitter
         Op::VOICE_RESUMED => 'handleResumed',
         Op::VOICE_CLIENT_CONNECT => 'handleClientConnect',
         Op::VOICE_CLIENT_DISCONNECT => 'handleClientDisconnect',
-        Op::VOICE_CLIENT_UNKNOWN_15 => 'handleUndocumented',
+        Op::VOICE_CLIENT_UNKNOWN_15 => 'handleAny',
         Op::VOICE_CLIENT_UNKNOWN_18 => 'handleFlags',
         Op::VOICE_CLIENT_PLATFORM => 'handlePlatform',
         Op::VOICE_DAVE_PREPARE_TRANSITION => 'handleDavePrepareTransition',
@@ -715,6 +715,20 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Handles the any event from the voice server.
+     * 
+     * @param Payload $data
+     * 
+     * @since 10.40.0
+     */
+    public function handleAny(object $data): void
+    {
+        $any = $this->discord->factory(Any::class, (array) $data->d, true);
+
+        $this->emit('any', [$any, $this]);
+    }
+
+    /**
      * Handles the flags event from the voice server.
      *
      * @param Payload $data
@@ -908,7 +922,8 @@ class VoiceClient extends EventEmitter
                 $handler = self::VOICE_OP_HANDLERS[$data->op];
                 $this->$handler($data);
             } else {
-                $this->discord->logger->warning('unknown voice op', ['op' => $data->op]);
+                $this->discord->logger->debug('unknown voice op', ['op' => $data->op]);
+                $this->handleUndocumented($data);
             }
         });
 
