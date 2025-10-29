@@ -14316,6 +14316,11 @@ Search.appendIndex(
             "summary": "Creates\u0020a\u0020process\u0020that\u0020will\u0020run\u0020FFmpeg\u0020and\u0020encode\u0020\u0060\u0024filename\u0060\u0020into\u0020Ogg\nOpus\u0020format.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_ffmpegEncode"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AgetGuild\u0028\u0029",
+            "name": "getGuild",
+            "summary": "Returns\u0020the\u0020connected\u0020guild.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_getGuild"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AgetChannel\u0028\u0029",
             "name": "getChannel",
             "summary": "Returns\u0020the\u0020connected\u0020channel.",
