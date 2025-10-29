@@ -1772,7 +1772,7 @@ class VoiceClient extends EventEmitter
                 $vc->emit('receiveStream', [$vc->receiveStreams[$ss->ssrc], $vc]);
             }
             if (! $decoder = $vc->createDecoder($ss)) {
-                return; // decoder could not be created
+                return;
             }
 
             $vc->voiceDecoders[$ss->ssrc] = $decoder;
