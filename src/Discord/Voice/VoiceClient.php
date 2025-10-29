@@ -1584,9 +1584,11 @@ class VoiceClient extends EventEmitter
             return $this->speaking;
         }
         if ($user = $this->speakingStatus->get('user_id', $id)) {
+            /** @var Speaking $user */
             return $user->speaking;
         }
         if ($ssrc = $this->speakingStatus->get('ssrc', $id)) {
+            /** @var Speaking $ssrc */
             return $ssrc->speaking;
         }
 
@@ -1718,6 +1720,7 @@ class VoiceClient extends EventEmitter
         if (! $ss = $vc->speakingStatus->get('ssrc', $vp->getSSRC())) {
             return; // for some reason we don't have a speaking status
         }
+        /** @var Speaking $ss */
 
         if (! $decoder = $vc->voiceDecoders[$vp->getSSRC()] ?? null) {
             // make a decoder
