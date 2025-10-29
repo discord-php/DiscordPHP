@@ -17,7 +17,7 @@ use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
 /**
- * Represents a user's flags in a voice channel.
+ * Represents a user's flag data sent when a user connects to a voice channel.
  *
  * Undocumented.
  *
