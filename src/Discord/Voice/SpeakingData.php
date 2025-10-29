@@ -26,7 +26,7 @@ use Discord\Parts\User\User;
  * @property      string|null $user_id  The user ID of the user that is speaking, or null if this bot is speaking.
  * @property-read User        $user     The user that is speaking.
  * @property      int         $ssrc     The SSRC identifier for the user.
- * @property      int         $speaking Whether the user is speaking or not.
+ * @property      bool        $speaking Whether the user is speaking or not.
  * @property      int         $delay    The delay property should be set to 0 for bots that use the voice gateway.
  */
 class Speaking extends Part
