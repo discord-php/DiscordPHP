@@ -401,7 +401,7 @@ class VoiceClient extends EventEmitter
      *
      * @var ?TimerInterface Timer
      */
-    protected $readOpusTimer;
+    protected $readOpusTimer = null;
 
     /**
      * Audio Buffer.
