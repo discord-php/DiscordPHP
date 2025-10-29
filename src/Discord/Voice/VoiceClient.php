@@ -360,7 +360,7 @@ class VoiceClient extends EventEmitter
      *
      * @var int Encoding bitrate.
      */
-    protected $bitrate = 128000;
+    protected $bitrate = 64000;
 
     /**
      * Is the voice client reconnecting?
@@ -1381,6 +1381,12 @@ class VoiceClient extends EventEmitter
 
     /**
      * Sets the bitrate.
+     * 
+     * For voice channels, normal servers can set bitrate up to 96000,
+     * servers with Boost level 1 can set up to 128000,
+     * servers with Boost level 2 can set up to 256000,
+     * and servers with Boost level 3 or the VIP_REGIONS guild feature can set up to 384000.
+     * For stage channels, bitrate can be set up to 64000.
      *
      * @param int $bitrate The bitrate to set.
      *
