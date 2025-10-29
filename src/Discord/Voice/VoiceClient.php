@@ -28,6 +28,7 @@ use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket;
 use React\Datagram\Factory as DatagramFactory;
 use React\Datagram\Socket;
+use React\Dns\Config\Config;
 use React\Dns\Resolver\Factory as DNSFactory;
 use React\ChildProcess\Process;
 use React\Promise\Deferred;
@@ -383,9 +384,9 @@ class VoiceClient extends EventEmitter
     protected $version = 8;
 
     /**
-     * The Config for DNS Resolver.
+     * The configuration for DNS Resolver.
      *
-     * @var string|\React\Dns\Config\Config
+     * @var Config|string The DNS configuration.
      */
     protected $dnsConfig;
 
