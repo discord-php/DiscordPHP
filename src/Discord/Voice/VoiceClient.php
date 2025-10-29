@@ -1709,6 +1709,7 @@ class VoiceClient extends EventEmitter
             return; // for some reason we don't have a speaking status
         }
 
+        /* @todo
         if (! $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null) {
             // make a decoder
             if (! isset($this->receiveStreams[$ss->ssrc])) {
@@ -1725,6 +1726,7 @@ class VoiceClient extends EventEmitter
             $this->createDecoder($ss);
             $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
         }
+        */
 
         $buff = new Buffer(strlen($vp->getData()) + 2);
         $buff->write(pack('s', strlen($vp->getData())), 0);
