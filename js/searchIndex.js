@@ -13698,7 +13698,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\Flags",
             "name": "Flags",
-            "summary": "Represents\u0020a\u0020user\u0027s\u0020flags\u0020in\u0020a\u0020voice\u0020channel.",
+            "summary": "Represents\u0020a\u0020user\u0027s\u0020flag\u0020data\u0020sent\u0020when\u0020a\u0020user\u0020connects\u0020to\u0020a\u0020voice\u0020channel.",
             "url": "classes/Discord-Voice-Flags.html"
         },                {
             "fqsen": "\\Discord\\Voice\\Flags\u003A\u003AgetUserAttribute\u0028\u0029",
@@ -14643,7 +14643,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003ARTP_VERSION_PAD_EXTEND",
             "name": "RTP_VERSION_PAD_EXTEND",
-            "summary": "",
+            "summary": "Bit\u0020index\u00200\u0020and\u00201\u0020represent\u0020the\u0020RTP\u0020Protocol\u0020version\u0020used.\u0020Discord\u0020uses\u0020the\u0020latest\u0020RTP\u0020protocol\u0020version,\u00202.",
             "url": "classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND"
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003ARTP_PAYLOAD_INDEX",
@@ -14653,7 +14653,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003ARTP_PAYLOAD_TYPE",
             "name": "RTP_PAYLOAD_TYPE",
-            "summary": "",
+            "summary": "This\u0020is\u0020Discord\u0027s\u0020RTP\u0020Profile\u0020Payload\u0020type.",
             "url": "classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_TYPE"
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003ASEQ_INDEX",

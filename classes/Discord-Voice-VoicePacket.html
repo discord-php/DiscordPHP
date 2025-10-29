@@ -261,7 +261,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
@@ -270,7 +270,7 @@
 
     <section class="phpdocumentor-description"><p>Huge thanks to Austin and Michael from JDA for the constants and audio
 packets. Check out their repo:
-https://github.com/DV8FromTheWorld/JDA</p>
+https://github.com/discord-jda/JDA</p>
 </section>
 
 
@@ -329,12 +329,14 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <span>
         &nbsp;= 0x78                            </span>
 </dt>
+<dd>This is Discord&#039;s RTP Profile Payload type.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND">RTP_VERSION_PAD_EXTEND</a>
     <span>
         &nbsp;= 0x80                            </span>
 </dt>
+<dd>Bit index 0 and 1 represent the RTP Protocol version used. Discord uses the latest RTP protocol version, 2.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND_INDEX">RTP_VERSION_PAD_EXTEND_INDEX</a>
@@ -510,7 +512,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
@@ -541,7 +543,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
     </aside>
 
@@ -572,11 +574,12 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">This is Discord&#039;s RTP Profile Payload type.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -586,7 +589,9 @@ https://github.com/DV8FromTheWorld/JDA</p>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"><p>I've yet to find actual documentation on what the bits inside this value represent.</p>
+</section>
+
     
     
 
@@ -603,11 +608,12 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Bit index 0 and 1 represent the RTP Protocol version used. Discord uses the latest RTP protocol version, 2.</p>
+
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -617,7 +623,11 @@ https://github.com/DV8FromTheWorld/JDA</p>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"><p>Bit index 2 represents whether or not we pad. Opus uses an internal padding system, so RTP padding is not used.
+Bit index 3 represents if we use extensions.
+Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
+</section>
+
     
     
 
@@ -634,7 +644,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 
     </aside>
 
@@ -665,7 +675,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -696,7 +706,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -727,7 +737,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -774,7 +784,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
     </aside>
 
@@ -813,7 +823,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
@@ -854,7 +864,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -895,7 +905,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -941,7 +951,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
@@ -1033,7 +1043,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">235</span>
+    <span class="phpdocumentor-element-found-in__line">243</span>
 
     </aside>
 
@@ -1072,7 +1082,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">191</span>
+    <span class="phpdocumentor-element-found-in__line">199</span>
 
     </aside>
 
@@ -1115,7 +1125,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 
@@ -1158,7 +1168,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">151</span>
+    <span class="phpdocumentor-element-found-in__line">159</span>
 
     </aside>
 
@@ -1201,7 +1211,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">171</span>
+    <span class="phpdocumentor-element-found-in__line">179</span>
 
     </aside>
 
@@ -1244,7 +1254,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">161</span>
+    <span class="phpdocumentor-element-found-in__line">169</span>
 
     </aside>
 
@@ -1287,7 +1297,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">203</span>
+    <span class="phpdocumentor-element-found-in__line">211</span>
 
     </aside>
 
@@ -1342,7 +1352,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">219</span>
+    <span class="phpdocumentor-element-found-in__line">227</span>
 
     </aside>
 
@@ -1393,7 +1403,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">142</span>
 
     </aside>
 
@@ -1436,7 +1446,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">115</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -1492,7 +1502,7 @@ https://github.com/DV8FromTheWorld/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
