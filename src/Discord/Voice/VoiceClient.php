@@ -85,7 +85,7 @@ class VoiceClient extends EventEmitter
         Op::VOICE_CLIENT_CONNECT => 'handleClientConnect',
         Op::VOICE_CLIENT_DISCONNECT => 'handleClientDisconnect',
         Op::VOICE_CLIENT_UNKNOWN_15 => 'handleUndocumented',
-        Op::VOICE_CLIENT_UNKNOWN_18 => 'handleUndocumented',
+        Op::VOICE_CLIENT_UNKNOWN_18 => 'handleFlags',
         Op::VOICE_CLIENT_PLATFORM => 'handlePlatform',
         Op::VOICE_DAVE_PREPARE_TRANSITION => 'handleDavePrepareTransition',
         Op::VOICE_DAVE_EXECUTE_TRANSITION => 'handleDaveExecuteTransition',
@@ -715,10 +715,24 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Handles the platform event from the voice server.
-     * 
+     * Handles the flags event from the voice server.
+     *
      * @param Payload $data
-     * 
+     *
+     * @since 10.40.0
+     */
+    protected function handleFlags(object $data): void
+    {
+        $flags = $this->discord->factory(Flags::class, (array) $data->d, true);
+
+        $this->emit('flags', [$flags, $this]);
+    }
+
+    /**
+     * Handles the platform event from the voice server.
+     *
+     * @param Payload $data
+     *
      * @since 10.40.0
      */
     protected function handlePlatform(object $data): void
@@ -1735,7 +1749,6 @@ class VoiceClient extends EventEmitter
             return; // for some reason we don't have a speaking status
         }
         /** @var Speaking $ss */
-
         if (! $decoder = $vc->voiceDecoders[$vp->getSSRC()] ?? null) {
             // make a decoder
             if (! isset($vc->receiveStreams[$ss->ssrc])) {

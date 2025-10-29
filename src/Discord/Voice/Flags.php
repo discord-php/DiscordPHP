@@ -18,14 +18,14 @@ use Discord\Parts\User\User;
 
 /**
  * Represents a user's flags in a voice channel.
- * 
+ *
  * Undocumented.
  *
  * @since 10.40.0
  *
- * @property      string      $user_id  The ID of the user.
- * @property-read User        $user     The user.
- * @property      int         $flags    The flags for the user.
+ * @property      string $user_id The ID of the user.
+ * @property-read User   $user    The user.
+ * @property      int    $flags   The flags for the user.
  */
 class Flags extends Part
 {

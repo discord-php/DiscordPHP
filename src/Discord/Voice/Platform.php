@@ -18,19 +18,19 @@ use Discord\Parts\User\User;
 
 /**
  * Represents a user's platform.
- * 
+ *
  * Undocumented.
  *
  * @since 10.40.0
  *
- * @property      string      $user_id  The ID of the user.
- * @property-read User        $user     The user.
- * @property      int         $platform The platform for the user.
+ * @property      string $user_id  The ID of the user.
+ * @property-read User   $user     The user.
+ * @property      int    $platform The platform for the user.
  */
 class Platform extends Part
 {
-    const PLATFORM_DESKTOP = 0;
-    const PLATFORM_MOBILE = 1;
+    public const PLATFORM_DESKTOP = 0;
+    public const PLATFORM_MOBILE = 1;
 
     /**
      * @inheritDoc

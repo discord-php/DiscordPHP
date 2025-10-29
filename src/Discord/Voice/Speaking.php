@@ -59,7 +59,7 @@ class Speaking extends Part
 
     /**
      * Get the speaking attribute.
-     * 
+     *
      * @return bool Whether the user is speaking.
      */
     protected function getSpeakingAttribute(): bool
