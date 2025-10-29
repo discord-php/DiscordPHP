@@ -1430,7 +1430,7 @@ class VoiceClient extends EventEmitter
      */
     public function setAudioApplication(string $app): void
     {
-        $allowed = ['voip', 'audio', 'lowdelay'];
+        static $allowed = ['voip', 'audio', 'lowdelay'];
 
         if (! in_array($app, $allowed)) {
             throw new \DomainException("{$app} is not a valid option. Valid options are: ".implode(', ', $allowed));
