@@ -329,14 +329,14 @@ class VoiceClient extends EventEmitter
      *
      * @var array Voice decoders.
      */
-    protected $voiceDecoders;
+    public $voiceDecoders;
 
     /**
      * Voice audio receive streams.
      *
      * @var ReceiveStream[] Voice audio receive streams.
      */
-    protected $receiveStreams;
+    public $receiveStreams;
 
     /**
      * The volume the audio will be encoded with.
