@@ -322,7 +322,7 @@ class VoiceClient extends EventEmitter
      *
      * @var ExCollectionInterface<Speaking>|Speaking[] Status of people speaking.
      */
-    protected $speakingStatus;
+    public $speakingStatus;
 
     /**
      * Collection of voice decoders.
