@@ -1697,28 +1697,22 @@ class VoiceClient extends EventEmitter
 
         $voicePacket = VoicePacket::make($message);
 
-        if (($decrypted = $this->decryptVoicePacket($voicePacket)) === false) {
-            $decrypted = null;
+        if (($decrypted = $this->decryptVoicePacket($voicePacket)) !== false) {
+            $this->emit('raw', [$decrypted, $this, $voicePacket]);
         }
-
-        $this->emit('raw', [$decrypted, $this, $voicePacket]);
     }
 
     /**
      * Decodes voice packet data.
      *
-     * @param string|null $decrypted   The decrypted voice data or null if decryption failed.
+     * @param string      $decrypted   The decrypted voice data or null if decryption failed.
      * @param VoiceClient $vc          The voice client instance.
      * @param VoicePacket $voicePacket The voice packet to decode.
      *
      * @todo
      */
-    public static function decodeVoicePacket(?string $decrypted, VoiceClient $vc, VoicePacket $voicePacket): void
+    public static function decodeVoicePacket(string $decrypted, VoiceClient $vc, VoicePacket $voicePacket): void
     {
-        if ($decrypted === null) {
-            return; // couldn't decrypt
-        }
-
         $vp = VoicePacket::make($voicePacket->getHeader().$decrypted);
 
         if (! $ss = $vc->speakingStatus->get('ssrc', $vp->getSSRC())) {
