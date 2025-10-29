@@ -28,9 +28,9 @@ class VoicePacket
 
     public const RTP_VERSION_PAD_EXTEND_INDEX = 0;
     /**
-     * Bit index 0 and 1 represent the RTP Protocol version used. Discord uses the latest RTP protocol version, 2.<br>
-     * Bit index 2 represents whether or not we pad. Opus uses an internal padding system, so RTP padding is not used.<br>
-     * Bit index 3 represents if we use extensions.<br>
+     * Bit index 0 and 1 represent the RTP Protocol version used. Discord uses the latest RTP protocol version, 2.
+     * Bit index 2 represents whether or not we pad. Opus uses an internal padding system, so RTP padding is not used.
+     * Bit index 3 represents if we use extensions.
      * Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.
      */
     public const RTP_VERSION_PAD_EXTEND = 0x80;
