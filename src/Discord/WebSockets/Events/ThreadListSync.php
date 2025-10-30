@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Builders\ChannelBuilder;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
@@ -38,8 +39,9 @@ class ThreadListSync extends Event
             }
 
             foreach ($data->threads as $thread) {
+                /** @var Thread $thread */
                 /** @var Thread */
-                $threadPart = $this->factory->part(Thread::class, (array) $thread, true);
+                $threadPart = $this->factory->part(ChannelBuilder::TYPES[$thread->type ?? Thread::class], (array) $thread, true);
                 /** @var ?Channel */
                 if ($channel = $channels[$thread->parent_id] ?? null) {
                     /** @var ?Thread */
