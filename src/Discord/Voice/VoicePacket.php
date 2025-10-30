@@ -45,6 +45,7 @@ class VoicePacket
     public const SEQ_INDEX = 2;
     public const TIMESTAMP_INDEX = 4;
     public const SSRC_INDEX = 8;
+    public const AUTH_TAG_LENGTH = 16;
 
     /**
      * The voice packet buffer.
