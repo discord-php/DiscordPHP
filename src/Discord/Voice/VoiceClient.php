@@ -126,9 +126,9 @@ class VoiceClient extends EventEmitter
     protected $ffmpeg;
 
     /**
-     * The voice sessions.
+     * The array of voice session IDs.
      *
-     * @var array The voice sessions.
+     * @var string[] The voice sessions.
      */
     protected $voice_sessions;
 
