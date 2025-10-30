@@ -65,7 +65,7 @@ class VoiceClient extends EventEmitter
      *
      * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes
      *
-     * @var array<int, string> The supported transport encryption modes.
+     * @var string[] The supported transport encryption modes.
      */
     public const SUPPORTED_MODES = [
         'aead_aes256_gcm_rtpsize',
