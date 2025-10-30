@@ -25,8 +25,8 @@ namespace Discord\Voice;
 class VoicePacket
 {
     public const RTP_HEADER_BYTE_LENGTH = 12;
+    public const AUTH_TAG_LENGTH = 16;
 
-    public const RTP_VERSION_PAD_EXTEND_INDEX = 0;
     /**
      * Bit index 0 and 1 represent the RTP Protocol version used. Discord uses the latest RTP protocol version, 2.
      * Bit index 2 represents whether or not we pad. Opus uses an internal padding system, so RTP padding is not used.
@@ -34,18 +34,17 @@ class VoicePacket
      * Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.
      */
     public const RTP_VERSION_PAD_EXTEND = 0x80;
-
-    public const RTP_PAYLOAD_INDEX = 1;
     /**
      * This is Discord's RTP Profile Payload type.
      * I've yet to find actual documentation on what the bits inside this value represent.
      */
     public const RTP_PAYLOAD_TYPE = 0x78;
 
+    public const RTP_VERSION_PAD_EXTEND_INDEX = 0;
+    public const RTP_PAYLOAD_INDEX = 1;
     public const SEQ_INDEX = 2;
     public const TIMESTAMP_INDEX = 4;
     public const SSRC_INDEX = 8;
-    public const AUTH_TAG_LENGTH = 16;
 
     /**
      * The voice packet buffer.
@@ -137,17 +136,23 @@ class VoicePacket
 
     /**
      * Builds the header.
+     * 
+     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure
      *
      * @return Buffer The header.
      */
     protected function buildHeader(): Buffer
     {
         $header = new Buffer(self::RTP_HEADER_BYTE_LENGTH);
-        $header[self::RTP_VERSION_PAD_EXTEND_INDEX] = pack('c', self::RTP_VERSION_PAD_EXTEND);
-        $header[self::RTP_PAYLOAD_INDEX] = pack('c', self::RTP_PAYLOAD_TYPE);
-        $header->writeShort($this->seq, self::SEQ_INDEX);
-        $header->writeInt($this->timestamp, self::TIMESTAMP_INDEX);
-        $header->writeInt($this->ssrc, self::SSRC_INDEX);
+
+        $header->write(pack(
+            'CCnNN',
+            self::RTP_VERSION_PAD_EXTEND,
+            self::RTP_PAYLOAD_TYPE,
+            $this->seq,
+            $this->timestamp,
+            $this->ssrc
+        ), 0);
 
         return $header;
     }
