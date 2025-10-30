@@ -35,8 +35,11 @@ class VoicePacket
      */
     public const RTP_VERSION_PAD_EXTEND = 0x80;
     /**
-     * This is Discord's RTP Profile Payload type.
-     * I've yet to find actual documentation on what the bits inside this value represent.
+     * This is Discord's RTP Profile Payload type,
+     * which is the same as Opus audio RTP stream's default payload type of 120 (0x78 & 0x7F).
+     * 
+     * @link https://www.opus-codec.org/docs/opus-tools/opusrtp.html
+     * @link https://datatracker.ietf.org/doc/html/rfc3551
      */
     public const RTP_PAYLOAD_TYPE = 0x78;
 
