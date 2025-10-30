@@ -151,6 +151,7 @@ class Message extends Part
     public const TYPE_PURCHASE_NOTIFICATION = 44;
     public const TYPE_POLL_RESULT = 46;
     public const TYPE_EMOJI_ADDED = 63;
+    public const TYPE_PREMIUM_GROUP_INVITE = 64;
 
     /** @deprecated 7.1.0 Use `Message::TYPE_USER_JOIN` */
     public const GUILD_MEMBER_JOIN = self::TYPE_USER_JOIN;
