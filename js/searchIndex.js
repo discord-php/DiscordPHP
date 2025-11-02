@@ -5926,6 +5926,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_EMOJI_ADDED"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003ATYPE_PREMIUM_GROUP_INVITE",
+            "name": "TYPE_PREMIUM_GROUP_INVITE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_PREMIUM_GROUP_INVITE"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AGUILD_MEMBER_JOIN",
             "name": "GUILD_MEMBER_JOIN",
             "summary": "",
@@ -7385,6 +7390,11 @@ Search.appendIndex(
             "name": "HOME_SETTINGS_UPDATE",
             "summary": "Guild\u0020Server\u0020Guide\u0020was\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_HOME_SETTINGS_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AGUILD_PROFILE_UPDATE",
+            "name": "GUILD_PROFILE_UPDATE",
+            "summary": "Guild\u0020Profile\u0020was\u0020updated.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_GUILD_PROFILE_UPDATE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -14368,7 +14378,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024voice_sessions",
             "name": "voice_sessions",
-            "summary": "The\u0020voice\u0020sessions.",
+            "summary": "The\u0020array\u0020of\u0020voice\u0020session\u0020IDs.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_voice_sessions"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024mainWebsocket",
@@ -14636,25 +14646,30 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Voice-VoicePacket.html#constant_RTP_HEADER_BYTE_LENGTH"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003ARTP_VERSION_PAD_EXTEND_INDEX",
-            "name": "RTP_VERSION_PAD_EXTEND_INDEX",
+            "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003AAUTH_TAG_LENGTH",
+            "name": "AUTH_TAG_LENGTH",
             "summary": "",
-            "url": "classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND_INDEX"
+            "url": "classes/Discord-Voice-VoicePacket.html#constant_AUTH_TAG_LENGTH"
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003ARTP_VERSION_PAD_EXTEND",
             "name": "RTP_VERSION_PAD_EXTEND",
             "summary": "Bit\u0020index\u00200\u0020and\u00201\u0020represent\u0020the\u0020RTP\u0020Protocol\u0020version\u0020used.\u0020Discord\u0020uses\u0020the\u0020latest\u0020RTP\u0020protocol\u0020version,\u00202.",
             "url": "classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003ARTP_PAYLOAD_TYPE",
+            "name": "RTP_PAYLOAD_TYPE",
+            "summary": "This\u0020is\u0020Discord\u0027s\u0020RTP\u0020Profile\u0020Payload\u0020type,\nwhich\u0020is\u0020the\u0020same\u0020as\u0020Opus\u0020audio\u0020RTP\u0020stream\u0027s\u0020default\u0020payload\u0020type\u0020of\u0020120\u0020\u00280x78\u0020\u0026\u00200x7F\u0029.",
+            "url": "classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_TYPE"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003ARTP_VERSION_PAD_EXTEND_INDEX",
+            "name": "RTP_VERSION_PAD_EXTEND_INDEX",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND_INDEX"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003ARTP_PAYLOAD_INDEX",
             "name": "RTP_PAYLOAD_INDEX",
             "summary": "",
             "url": "classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_INDEX"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003ARTP_PAYLOAD_TYPE",
-            "name": "RTP_PAYLOAD_TYPE",
-            "summary": "This\u0020is\u0020Discord\u0027s\u0020RTP\u0020Profile\u0020Payload\u0020type.",
-            "url": "classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_TYPE"
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003ASEQ_INDEX",
             "name": "SEQ_INDEX",

@@ -313,6 +313,12 @@ https://github.com/discord-jda/JDA</p>
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Voice-VoicePacket.html#constant_AUTH_TAG_LENGTH">AUTH_TAG_LENGTH</a>
+    <span>
+        &nbsp;= 16                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-VoicePacket.html#constant_RTP_HEADER_BYTE_LENGTH">RTP_HEADER_BYTE_LENGTH</a>
     <span>
         &nbsp;= 12                            </span>
@@ -329,7 +335,8 @@ https://github.com/discord-jda/JDA</p>
     <span>
         &nbsp;= 0x78                            </span>
 </dt>
-<dd>This is Discord&#039;s RTP Profile Payload type.</dd>
+<dd>This is Discord&#039;s RTP Profile Payload type,
+which is the same as Opus audio RTP stream&#039;s default payload type of 120 (0x78 &amp; 0x7F).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND">RTP_VERSION_PAD_EXTEND</a>
@@ -503,6 +510,37 @@ https://github.com/discord-jda/JDA</p>
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_AUTH_TAG_LENGTH">
+        AUTH_TAG_LENGTH
+        <a href="classes/Discord-Voice-VoicePacket.html#constant_AUTH_TAG_LENGTH" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">28</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">AUTH_TAG_LENGTH</span>
+    = <span class="phpdocumentor-signature__default-value">16</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_RTP_HEADER_BYTE_LENGTH">
         RTP_HEADER_BYTE_LENGTH
         <a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_HEADER_BYTE_LENGTH" class="headerlink"><i class="fas fa-link"></i></a>
@@ -543,7 +581,7 @@ https://github.com/discord-jda/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -574,11 +612,12 @@ https://github.com/discord-jda/JDA</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">This is Discord&#039;s RTP Profile Payload type.</p>
+        <p class="phpdocumentor-summary">This is Discord&#039;s RTP Profile Payload type,
+which is the same as Opus audio RTP stream&#039;s default payload type of 120 (0x78 &amp; 0x7F).</p>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -589,11 +628,30 @@ https://github.com/discord-jda/JDA</p>
 </code>
 
 
-        <section class="phpdocumentor-description"><p>I've yet to find actual documentation on what the bits inside this value represent.</p>
-</section>
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_TYPE#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
-    
-    
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://www.opus-codec.org/docs/opus-tools/opusrtp.html"> https://www.opus-codec.org/docs/opus-tools/opusrtp.html </a>
+                    
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://datatracker.ietf.org/doc/html/rfc3551"> https://datatracker.ietf.org/doc/html/rfc3551 </a>
+                    
+                                    </dd>
+                                            </dl>
 
     
 
@@ -644,7 +702,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -675,7 +733,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -706,7 +764,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
@@ -737,7 +795,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
@@ -784,7 +842,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -823,7 +881,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
@@ -864,7 +922,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -905,7 +963,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
@@ -951,7 +1009,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">87</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -1403,7 +1461,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">142</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -1419,6 +1477,20 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Voice-VoicePacket.html#method_buildHeader#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure"> https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure </a>
+                    
+                                    </dd>
+                                            </dl>
 
     
 
@@ -1446,7 +1518,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -1502,7 +1574,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">105</span>
+    <span class="phpdocumentor-element-found-in__line">108</span>
 
     </aside>
 
@@ -1650,6 +1722,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Voice-VoicePacket.html#constant_AUTH_TAG_LENGTH">AUTH_TAG_LENGTH</a></li>
                                                     <li class=""><a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_HEADER_BYTE_LENGTH">RTP_HEADER_BYTE_LENGTH</a></li>
                                                     <li class=""><a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_INDEX">RTP_PAYLOAD_INDEX</a></li>
                                                     <li class=""><a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_TYPE">RTP_PAYLOAD_TYPE</a></li>

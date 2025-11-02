@@ -638,9 +638,9 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Voice-VoiceClient.html#property_voice_sessions">$voice_sessions</a>
     <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+                        &nbsp;: array&lt;string|int, string&gt;            </span>
 </dt>
-<dd>The voice sessions.</dd>
+<dd>The array of voice session IDs.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Voice-VoiceClient.html#property_voiceWebsocket">$voiceWebsocket</a>
@@ -1267,7 +1267,7 @@ Opus format.</dd>
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">array&lt;int, string&gt;</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, string&gt;</span>
     <span class="phpdocumentor-signature__name">SUPPORTED_MODES</span>
     = <span class="phpdocumentor-signature__default-value">[&#039;aead_aes256_gcm_rtpsize&#039;, &#039;aead_xchacha20_poly1305_rtpsize&#039;]</span>
 </code>
@@ -3041,12 +3041,12 @@ Opus format.</dd>
 
     </aside>
 
-        <p class="phpdocumentor-summary">The voice sessions.</p>
+        <p class="phpdocumentor-summary">The array of voice session IDs.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, string&gt;</span>
     <span class="phpdocumentor-signature__name">$voice_sessions</span>
     </code>
 
