@@ -215,8 +215,8 @@ class VoicePacket
     public static function make(string $data): VoicePacket
     {
         $n = new self('', 0, 0, 0);
-        $buff = new Buffer($data);
-        $n->setBuffer($buff);
+
+        $n->setBuffer(new Buffer($data));
 
         return $n;
     }
