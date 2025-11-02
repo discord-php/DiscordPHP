@@ -37,7 +37,7 @@ class VoicePacket
     /**
      * This is Discord's RTP Profile Payload type,
      * which is the same as Opus audio RTP stream's default payload type of 120 (0x78 & 0x7F).
-     * 
+     *
      * @link https://www.opus-codec.org/docs/opus-tools/opusrtp.html
      * @link https://datatracker.ietf.org/doc/html/rfc3551
      */
@@ -125,21 +125,16 @@ class VoicePacket
      */
     protected function initBufferEncryption(string $data, string $key): void
     {
-        $data = (string) $data;
-        $header = $this->buildHeader();
-        $nonce = new Buffer(24);
-        $nonce->write((string) $header, 0);
+        $header = (string) $this->buildHeader();
+        $encrypted = \sodium_crypto_secretbox($data, str_pad($header, 24, "\0"), $key);
 
-        $data = \sodium_crypto_secretbox($data, (string) $nonce, $key);
-
-        $this->buffer = new Buffer(strlen((string) $header) + strlen($data));
-        $this->buffer->write((string) $header, 0);
-        $this->buffer->write($data, 12);
+        $this->buffer = new Buffer(strlen($header) + strlen($encrypted));
+        $this->buffer->write($header.$encrypted, 0);
     }
 
     /**
      * Builds the header.
-     * 
+     *
      * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure
      *
      * @return Buffer The header.
