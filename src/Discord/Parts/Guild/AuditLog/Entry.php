@@ -171,6 +171,8 @@ class Entry extends Part
     public const HOME_SETTINGS_CREATE = 190;
     /** Guild Server Guide was updated. */
     public const HOME_SETTINGS_UPDATE = 191;
+    /** Guild Profile was updated. */
+    public const GUILD_PROFILE_UPDATE = 211;
 
     /**
      * @inheritDoc

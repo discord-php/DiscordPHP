@@ -108,8 +108,8 @@ class VoicePacket
     protected function initBufferNoEncryption(string $data): void
     {
         $packet = (string) $this->buildHeader().$data;
-        $this->buffer = new Buffer(strlen($packet));
 
+        $this->buffer = new Buffer(strlen($packet));
         $this->buffer->write($packet, 0);
     }
 
