@@ -88,6 +88,7 @@ class WinProcess extends EventEmitter
     public function terminate(): void
     {
         if (is_resource($this->proc)) {
+            // It might be better to call fwrite($this->stdin, "q\n") instead to triggers FFmpeg’s graceful shutdown
             proc_terminate($this->proc);
             $this->emit('exit', [0]);
         }
