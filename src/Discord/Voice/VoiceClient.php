@@ -19,6 +19,7 @@ use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Helpers\Buffer as RealBuffer;
 use Discord\Helpers\Collection;
+use Discord\Helpers\WinProcess;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
@@ -1194,7 +1195,7 @@ class VoiceClient extends EventEmitter
     /**
      * Plays an Ogg Opus stream.
      *
-     * @param resource|Process|Stream $stream The Ogg Opus stream to be sent.
+     * @param resource|WinProcess|Process|Stream $stream The Ogg Opus stream to be sent.
      *
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
@@ -1217,7 +1218,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if ($stream instanceof Process) {
+        if ($stream instanceof Process || $stream instanceof WinProcess) {
             $stream->stderr->on('data', function ($d) {
                 if (empty($d)) {
                     return;
@@ -1978,9 +1979,9 @@ class VoiceClient extends EventEmitter
      * @param ?array  $preArgs  A list of arguments to be appended before the
      *                          input filename.
      *
-     * @return Process A ReactPHP child process.
+     * @return Process|WinProcess A ReactPHP child process, or a Windows compatible process replacement.
      */
-    public function ffmpegEncode(?string $filename = null, ?array $preArgs = null): Process
+    public function ffmpegEncode(?string $filename = null, ?array $preArgs = null): Process|WinProcess
     {
         $dB = match ($this->volume) {
             0 => -100,
@@ -2009,6 +2010,11 @@ class VoiceClient extends EventEmitter
 
         $flags = implode(' ', $flags);
         $cmd = "{$this->ffmpeg} {$flags}";
+
+        // ReactPHP Process replacement for Windows (since native pipes block)
+        if (PHP_OS === 'WINNT') {
+            return new WinProcess($cmd);
+        }
 
         return new Process($cmd, null, null, [
             ['socket'],
