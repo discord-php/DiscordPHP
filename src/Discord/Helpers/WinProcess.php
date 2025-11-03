@@ -13,12 +13,16 @@ declare(strict_types=1);
 
 namespace Discord\Helpers;
 
+use Evenement\EventEmitter;
+
 /** 
  * A simple implementation of a Windows-compatible process handler.
  * 
  * Experimental and minimal; for demonstration and testing purposes only.
+ * 
+ * @see React\ChildProcess\Process
  */
-class WinProcess //extends React\ChildProcess\Process
+class WinProcess extends EventEmitter
 {
     public $stdin;
     public $stdout;
@@ -26,25 +30,10 @@ class WinProcess //extends React\ChildProcess\Process
     private $proc;
     private $pipes;
     private string $cmd;
-    private array $listeners = [];
 
     public function __construct(string $cmd)
     {
         $this->cmd = $cmd;
-    }
-
-    /** Register an event listener */
-    public function on(string $event, callable $listener): void
-    {
-        $this->listeners[$event][] = $listener;
-    }
-
-    /** Emit an event (internal use) */
-    private function emit(string $event, ...$args): void
-    {
-        foreach ($this->listeners[$event] ?? [] as $listener) {
-            $listener(...$args);
-        }
     }
 
     public function start($loop = null): void
@@ -58,7 +47,7 @@ class WinProcess //extends React\ChildProcess\Process
         $this->proc = proc_open($this->cmd, $descriptorSpec, $this->pipes);
 
         if (! is_resource($this->proc)) {
-            $this->emit('error', new \RuntimeException('Failed to start process.'));
+            $this->emit('error', [new \RuntimeException('Failed to start process.')]);
 
             return;
         }
@@ -74,14 +63,14 @@ class WinProcess //extends React\ChildProcess\Process
             $loop->addReadStream($this->stdout, function () {
                 $data = fread($this->stdout, 8192);
                 if ($data !== false && $data !== '') {
-                    $this->emit('data', $data);
+                    $this->emit('data', [$data]);
                 }
             });
 
             $loop->addReadStream($this->stderr, function () {
                 $data = fread($this->stderr, 8192);
                 if ($data !== false && $data !== '') {
-                    $this->emit('errorOutput', $data);
+                    $this->emit('errorOutput', [$data]);
                 }
             });
 
@@ -89,7 +78,7 @@ class WinProcess //extends React\ChildProcess\Process
             $loop->addPeriodicTimer(0.5, function ($timer) use ($loop) {
                 if (! $this->isRunning()) {
                     $exitCode = $this->close();
-                    $this->emit('exit', $exitCode);
+                    $this->emit('exit', [$exitCode]);
                     $loop->cancelTimer($timer);
                 }
             });
@@ -100,7 +89,7 @@ class WinProcess //extends React\ChildProcess\Process
     {
         if (is_resource($this->proc)) {
             proc_terminate($this->proc);
-            $this->emit('exit', 0);
+            $this->emit('exit', [0]);
         }
     }
 
@@ -127,7 +116,7 @@ class WinProcess //extends React\ChildProcess\Process
             ? proc_close($this->proc)
             : 0;
 
-        $this->emit('exit', $code);
+        $this->emit('exit', [$code]);
 
         return $code;
     }
