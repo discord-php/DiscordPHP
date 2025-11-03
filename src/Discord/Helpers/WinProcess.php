@@ -87,11 +87,29 @@ class WinProcess extends EventEmitter
 
     public function terminate(): void
     {
-        if (is_resource($this->proc)) {
-            // It might be better to call fwrite($this->stdin, "q\n") instead to triggers FFmpeg’s graceful shutdown
-            proc_terminate($this->proc);
-            $this->emit('exit', [0]);
+        if (!is_resource($this->proc)) {
+            return;
         }
+
+        // Attempt graceful shutdown first
+        if (is_resource($this->stdin)) {
+            // Sending 'q' tells FFmpeg to quit
+            fwrite($this->stdin, "q\n");
+            fflush($this->stdin); // ensure it’s sent immediately
+        }
+
+        // Wait a short period for FFmpeg to exit naturally
+        $start = microtime(true);
+        while ($this->isRunning() && (microtime(true) - $start) < 2) {
+            usleep(50_000); // 50ms
+        }
+
+        // If still running, forcibly terminate
+        if ($this->isRunning()) {
+            proc_terminate($this->proc); // hard kill on Windows
+        }
+
+        $this->emit('exit', [$this->isRunning() ? 1 : 0]);
     }
 
     public function isRunning(): bool
