@@ -71,18 +71,9 @@ class OggStream
      */
     public static function fromBuffer(Buffer $buffer, ?int $timeout = -1): PromiseInterface
     {
-        /** @var OpusHead */
-        $header = null;
-
-        return OggPage::fromBuffer($buffer, $timeout)->then(function (OggPage $page) use (&$header, $buffer, $timeout) {
-            $header = new OpusHead($page->segmentData);
-
-            return OggPage::fromBuffer($buffer, $timeout);
-        })->then(function (OggPage $page) use (&$header, $buffer) {
-            $tags = new OpusTags($page->segmentData);
-
-            return new OggStream($buffer, $header, $tags);
-        });
+        return OggPage::fromBuffer($buffer, $timeout)
+            ->then(fn (OggPage $pageHeader) => OggPage::fromBuffer($buffer, $timeout)
+            ->then(fn (OggPage $pageTags) => new OggStream($buffer, new OpusHead($pageHeader->segmentData), new OpusTags($pageTags->segmentData))));
     }
 
     /**
