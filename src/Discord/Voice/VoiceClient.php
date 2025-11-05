@@ -157,9 +157,9 @@ class VoiceClient extends EventEmitter
     /**
      * The MLS Group for handling multi-user encryption.
      *
-     * @var MLSGroup The MLS Group instance.
+     * @var VoiceGroupCrypto The MLS Group instance.
      */
-    public MLSGroup $mlsGroup;
+    public VoiceGroupCrypto $crypto;
 
     /**
      * The Channel that we are connecting to.
@@ -213,7 +213,7 @@ class VoiceClient extends EventEmitter
     /**
      * The supported transport encryption modes the voice server expects.
      *
-     * @var array<string> The supported transport encryption modes.
+     * @var string[] The supported transport encryption modes.
      */
     protected $supportedModes;
 
@@ -485,7 +485,7 @@ class VoiceClient extends EventEmitter
                 break;
         }
         
-        $this->mlsGroup = new MLSGroup('', $mlsMode);
+        $this->crypto = new VoiceGroupCrypto('', $mlsMode);
     }
 
     /**
@@ -704,7 +704,7 @@ class VoiceClient extends EventEmitter
             $this->secret_key .= pack('C*', $part);
         }
 
-        $this->mlsGroup->groupSecret = $this->secret_key;
+        $this->crypto->groupSecret = $this->secret_key;
 
         $this->discord->logger->debug('received description packet, vc ready', ['data' => $data]);
 
@@ -738,8 +738,6 @@ class VoiceClient extends EventEmitter
     protected function handleClientConnect(object $data): void
     {
         $this->discord->logger->debug('received client connect packet', ['data' => $data]);
-
-        $this->mlsGroup->addMember($this->discord->id);
     }
 
     /**
@@ -752,8 +750,6 @@ class VoiceClient extends EventEmitter
     protected function handleClientDisconnect(object $data): void
     {
         $this->discord->logger->debug('received client disconnect packet', ['data' => $data]);
-
-        $this->mlsGroup->removeMember($this->discord->id);
     }
 
     /**
@@ -916,8 +912,6 @@ class VoiceClient extends EventEmitter
      */
     protected function handleSpeaking(object $data): void
     {
-        $this->mlsGroup->addMember($data->d['user_id']);
-
         $this->emit('speaking', [$data->d['speaking'], $data->d['user_id'], $this]);
         $this->emit("speaking.{$data->d['user_id']}", [$data->d['speaking'], $this]);
 
@@ -1368,7 +1362,7 @@ class VoiceClient extends EventEmitter
         }
 
         $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
-        $this->client->send($this->mlsGroup->encryptRTPPacket($this->discord->id, (string) $packet->buildHeader(), $packet->getData(), $this->seq));
+        $this->client->send($this->crypto->encryptRTPPacket($this->discord->id, (string) $packet->buildHeader(), $packet->getData(), $this->seq));
 
         $this->streamTime = microtime(true);
 
@@ -1784,7 +1778,7 @@ class VoiceClient extends EventEmitter
 
         $voicePacket = VoicePacket::make($message);
 
-        if (($decrypted = $this->mlsGroup->decryptRTPPacket($this->discord->id, $message, $this->seq)) !== false) {
+        if (($decrypted = $this->crypto->decryptRTPPacket($this->discord->id, $message, $this->seq)) !== false) {
             $this->emit('raw', [$decrypted, $this, $voicePacket]);
 
             self::decodeVoicePacket($decrypted, $this, $voicePacket);
@@ -1870,8 +1864,8 @@ class VoiceClient extends EventEmitter
      *
      * @return string|false The decrypted voice data as a string, or false if decryption fails
      *                      (e.g., when AEAD payload is too short)
-     * 
-     * @deprecated v10.41.0 Use `MLSGroup::decryptRTPPacket()` instead.
+     *
+     * @deprecated v10.41.0 Use `VoiceGroupCrypto::decryptRTPPacket()` instead.
      */
     protected function decryptVoicePacket(VoicePacket $voicePacket): string|false
     {
