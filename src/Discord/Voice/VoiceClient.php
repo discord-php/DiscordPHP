@@ -52,6 +52,7 @@ use function React\Promise\resolve;
  */
 class VoiceClient extends EventEmitter
 {
+    public const NOT_SPEAKING = 0 << 0;
     public const SPEAKING = 1 << 0;
     public const SOUNDSHARE = 1 << 1;
     public const PRIORITY_SPEAKER = 1 << 2;
@@ -1105,8 +1106,8 @@ class VoiceClient extends EventEmitter
         $this->on('resumed', function () {
             $this->discord->logger->debug('voice client resumed');
             $this->unpause();
-            $this->speaking = 0;
-            $this->setSpeaking(true);
+            $this->speaking = self::NOT_SPEAKING;
+            $this->setSpeaking(self::SPEAKING);
         });
     }
 
@@ -1251,7 +1252,7 @@ class VoiceClient extends EventEmitter
 
         $loops = 0;
 
-        $this->setSpeaking(true);
+        $this->setSpeaking(self::SPEAKING);
 
         OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($deferred, $loops) {
             $this->startTime = microtime(true) + 0.5;
@@ -1328,7 +1329,7 @@ class VoiceClient extends EventEmitter
             $this->readOpusTimer = null;
         }
 
-        $this->setSpeaking(false);
+        $this->setSpeaking(self::NOT_SPEAKING);
         $this->streamTime = 0;
         $this->startTime = 0;
         $this->paused = false;
@@ -1600,7 +1601,7 @@ class VoiceClient extends EventEmitter
 
         if ($this->speaking) {
             $this->stop();
-            $this->setSpeaking(false);
+            $this->setSpeaking(self::NOT_SPEAKING);
         }
 
         $this->ready = false;
