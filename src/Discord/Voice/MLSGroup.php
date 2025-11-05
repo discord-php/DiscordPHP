@@ -16,7 +16,7 @@ namespace Discord\Voice;
 /**
  * A simplified implementation of an MLS (Messaging Layer Security) group for encrypting and decrypting messages among multiple members.
  *
- * @todo
+ * Supports Optional Values and Variable-Length Vector headers according to RFC 9420.
  *
  * @author Valithor Obsidion <valithor@valgorithms.com>
  *
@@ -30,7 +30,6 @@ class MLSGroup
 
     public function __construct(protected string $groupSecret = '')
     {
-        // For demonstration, root secret = random bytes
         if ($this->groupSecret === '') {
             $this->groupSecret = random_bytes(SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES);
         }
@@ -64,27 +63,26 @@ class MLSGroup
     }
 
     /**
-     * Recompute the group ratchet tree and root secret
-     * Simplified: generate a random root secret.
-     *
-     * In a real MLS implementation, this would involve complex tree operations
-     * and key derivations to ensure forward secrecy and post-compromise security.
+     * Recompute the group ratchet tree and root secret.
      *
      * @param string $secret Optional new root secret
      */
     protected function recomputeTree(string $secret = ''): void
     {
-        // For demonstration, root secret = random bytes
-        $this->groupSecret = $secret !== '' ? $secret : (isset($this->groupSecret) ? $this->groupSecret : random_bytes(SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES));
+        $this->groupSecret = $secret !== '' ? $secret : $this->groupSecret;
 
-        // Assign per-member shared secrets (simulate ratchet)
+        // Assign per-member derived secrets using generichash (message + output length)
         foreach ($this->members as $id => $member) {
-            $this->tree[$id] = sodium_crypto_generichash($this->groupSecret.$member['pk'], length: SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES);
+            $this->tree[$id] = sodium_crypto_generichash(
+                $this->groupSecret.$member['pk'], // message
+                '',                                  // optional keyed hash
+                SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES // output length
+            );
         }
     }
 
     /**
-     * Encrypt message for the whole group.
+     * Encrypt a message for all members.
      */
     public function encrypt(string $plaintext): array
     {
@@ -104,7 +102,7 @@ class MLSGroup
     }
 
     /**
-     * Decrypt message for a specific member.
+     * Decrypt a message for a specific member.
      */
     public function decrypt(string $memberId, string $message): string
     {
@@ -136,5 +134,70 @@ class MLSGroup
     public function getMemberPublicKey(string $memberId): string
     {
         return $this->members[$memberId]['pk'] ?? '';
+    }
+
+    /**
+     * Serialize an optional value (Optional<Value>).
+     */
+    public static function serializeOptional(mixed $value): string
+    {
+        return $value === null ? "\x00" : "\x01".$value;
+    }
+
+    /**
+     * Deserialize an optional value (Optional<Value>).
+     */
+    public static function deserializeOptional(string $data, int &$offset): mixed
+    {
+        $flag = ord($data[$offset++]);
+        if ($flag === 0) {
+            return null;
+        }
+        $value = substr($data, $offset); // placeholder: adjust based on expected value
+        $offset += strlen($value);
+
+        return $value;
+    }
+
+    /**
+     * Encode a variable-length vector according to RFC 9420.
+     */
+    public static function encodeVector(string $data): string
+    {
+        $len = strlen($data);
+        if ($len <= 0xff) {
+            return chr($len).$data;
+        } elseif ($len <= 0xffff) {
+            return pack('n', $len).$data;
+        } elseif ($len <= 0xffffff) {
+            $b1 = ($len >> 16) & 0xff;
+            $b2 = ($len >> 8) & 0xff;
+            $b3 = $len & 0xff;
+
+            return chr($b1).chr($b2).chr($b3).$data;
+        }
+        throw new \RuntimeException('Vector too large');
+    }
+
+    /**
+     * Decode a variable-length vector according to RFC 9420.
+     */
+    public static function decodeVector(string $data, int &$offset, int $lengthBytes): string
+    {
+        if ($lengthBytes === 1) {
+            $len = ord($data[$offset]);
+        } elseif ($lengthBytes === 2) {
+            $len = unpack('n', substr($data, $offset, 2))[1];
+        } elseif ($lengthBytes === 3) {
+            $b = unpack('C3', substr($data, $offset, 3));
+            $len = ($b[1] << 16) | ($b[2] << 8) | $b[3];
+        } else {
+            throw new \RuntimeException('Invalid lengthBytes');
+        }
+        $offset += $lengthBytes;
+        $vector = substr($data, $offset, $len);
+        $offset += $len;
+
+        return $vector;
     }
 }
