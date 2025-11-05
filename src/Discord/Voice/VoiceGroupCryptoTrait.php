@@ -29,7 +29,7 @@ namespace Discord\Voice;
  * @method string       encryptRTPPacket(string $rtpHeader, string $opusPayload, int $seq = 0) Encrypt an RTP packet (header + Opus payload).
  * @method string|false decryptRTPPacket(string $packet, int $seq = 0)                         Decrypt an RTP packet (header + encrypted payload).
  */
-class VoiceGroupCryptoTrait
+trait VoiceGroupCryptoTrait
 {
     protected int $nonceLength;
     //protected int $keyLength;
