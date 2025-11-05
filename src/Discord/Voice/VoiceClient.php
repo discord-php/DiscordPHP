@@ -155,6 +155,13 @@ class VoiceClient extends EventEmitter
     public $client;
 
     /**
+     * The MLS Group for handling multi-user encryption.
+     *
+     * @var MLSGroup The MLS Group instance.
+     */
+    public MLSGroup $mlsGroup;
+
+    /**
      * The Channel that we are connecting to.
      *
      * @var string The channel that we are connecting to.
@@ -460,15 +467,25 @@ class VoiceClient extends EventEmitter
      */
     public function setMode(string $mode): void
     {
-        if (in_array($mode, self::SUPPORTED_MODES)) {
-            $this->mode = $mode;
+        if (! in_array($mode, self::SUPPORTED_MODES)) {
+            $this->discord->logger->error("{$mode} is either a deprecated or unsupported transport encryption connection mode. Please use a supported mode: ".implode(', ', self::SUPPORTED_MODES));
 
-            return;
+            throw new \InvalidArgumentException("Invalid transport encryption mode: {$mode}");
         }
 
-        $this->discord->logger->error("{$mode} is either a deprecated or unsupported transport encryption connection mode. Please use a supported mode: ".implode(', ', self::SUPPORTED_MODES));
+        $this->mode = $mode;
 
-        throw new \InvalidArgumentException("Invalid transport encryption mode: {$mode}");
+        $mlsMode = '';
+        switch ($this->mode) {
+            case 'aead_aes256_gcm_rtpsize':
+                $mlsMode = 'aes256-gcm-rtpsize';
+                break;
+            default:
+                $mlsMode = 'xchacha20-poly1305-rtpsize';
+                break;
+        }
+        
+        $this->mlsGroup = new MLSGroup('', $mlsMode);
     }
 
     /**
@@ -596,7 +613,7 @@ class VoiceClient extends EventEmitter
             $this->discord->logger->warning("{$this->mode} is not a valid transport encryption connection mode. Valid modes are: ".implode(', ', $this->supportedModes));
             $fallback = $this->supportedModes[0];
             $this->discord->logger->info('Switching voice transport encryption mode to: '.$fallback);
-            $this->mode = $fallback;
+            $this->setMode($fallback);
         }
 
         $payload = Payload::new(
@@ -680,7 +697,7 @@ class VoiceClient extends EventEmitter
     protected function handleSessionDescription(object $data): void
     {
         $this->ready = true;
-        $this->mode = $data->d['mode'];
+        $this->setMode($data->d['mode']);
         $this->secret_key = '';
 
         foreach ($data->d['secret_key'] as $part) {
@@ -719,6 +736,8 @@ class VoiceClient extends EventEmitter
     protected function handleClientConnect(object $data): void
     {
         $this->discord->logger->debug('received client connect packet', ['data' => $data]);
+
+        $this->mlsGroup->addMember($this->discord->id);
     }
 
     /**
@@ -731,6 +750,8 @@ class VoiceClient extends EventEmitter
     protected function handleClientDisconnect(object $data): void
     {
         $this->discord->logger->debug('received client disconnect packet', ['data' => $data]);
+
+        $this->mlsGroup->removeMember($this->discord->id);
     }
 
     /**
@@ -893,6 +914,8 @@ class VoiceClient extends EventEmitter
      */
     protected function handleSpeaking(object $data): void
     {
+        $this->mlsGroup->addMember($data->d['user_id']);
+
         $this->emit('speaking', [$data->d['speaking'], $data->d['user_id'], $this]);
         $this->emit("speaking.{$data->d['user_id']}", [$data->d['speaking'], $this]);
 
