@@ -240,7 +240,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    MLSGroup
+    VoiceGroupCrypto
 
     
             <div class="phpdocumentor-element__package">
@@ -259,22 +259,20 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCrypto.php"><a href="files/src-discord-voice-voicegroupcrypto.html"><abbr title="src/Discord/Voice/VoiceGroupCrypto.php">VoiceGroupCrypto.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">A simplified implementation of an MLS (Messaging Layer Security) group for encrypting and decrypting messages among multiple members.</p>
+            <p class="phpdocumentor-summary">Provides group-based AEAD encryption and decryption for Discord voice RTP packets.</p>
 
 
-    <section class="phpdocumentor-description"><p>Supports Optional Values and Variable-Length Vector headers according to RFC 9420.</p>
-</section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Voice-MLSGroup.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -295,7 +293,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Voice-MLSGroup.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Voice-VoiceGroupCrypto.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -305,199 +303,191 @@
 
 
 
+<h4 id="toc-constants">
+    Constants
+    <a href="classes/Discord-Voice-VoiceGroupCrypto.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Voice-VoiceGroupCrypto.html#constant_SUPPORTED_MODES">SUPPORTED_MODES</a>
+    <span>
+        &nbsp;= [&#039;aead_aes256_gcm_rtpsize&#039;, &#039;aead_xchacha20_poly1305_rtpsize&#039;]                            </span>
+</dt>
+<dd>Supported encryption modes for voice connections.</dd>
+
+    </dl>
 
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-Voice-MLSGroup.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Voice-VoiceGroupCrypto.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#property_groupSecret">$groupSecret</a>
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Voice-VoiceGroupCrypto.html#property_secret_key">$secret_key</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#property_members">$members</a>
-    <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#property_mode">$mode</a>
+    <a class="" href="classes/Discord-Voice-VoiceGroupCrypto.html#property_mode">$mode</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#property_nonceLength">$nonceLength</a>
+    <a class="" href="classes/Discord-Voice-VoiceGroupCrypto.html#property_nonceLength">$nonceLength</a>
     <span>
                         &nbsp;: int            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#property_tree">$tree</a>
-    <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 
     </dl>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Voice-MLSGroup.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Voice-VoiceGroupCrypto.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#method___construct">__construct()</a>
+    <a class="" href="classes/Discord-Voice-VoiceGroupCrypto.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#method_addMember">addMember()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Add a member with generated key pair.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#method_decrypt">decrypt()</a>
+    <a class="" href="classes/Discord-Voice-VoiceGroupCrypto.html#method_decrypt">decrypt()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Decrypt a message for a specific member.</dd>
+<dd>Decrypt a message from Discord&#039;s MLS Group.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#method_decryptRTPPacket">decryptRTPPacket()</a>
+    <a class="" href="classes/Discord-Voice-VoiceGroupCrypto.html#method_decryptRTPPacket">decryptRTPPacket()</a>
+    <span>
+                                &nbsp;: string|false    </span>
+</dt>
+<dd>Decrypt an RTP packet (header + encrypted payload).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Voice-VoiceGroupCrypto.html#method_encrypt">encrypt()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Decrypt an RTP packet (header + encrypted payload) for a member.</dd>
+<dd>Encrypt a message for Discord&#039;s MLS Group.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#method_encrypt">encrypt()</a>
+    <a class="" href="classes/Discord-Voice-VoiceGroupCrypto.html#method_encryptRTPPacket">encryptRTPPacket()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Encrypt a message for a specific member.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#method_encryptRTPPacket">encryptRTPPacket()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd>Encrypt an RTP packet (header + Opus payload) for a member.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#method_getMemberPublicKey">getMemberPublicKey()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#method_removeMember">removeMember()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Remove a member.</dd>
+<dd>Encrypt an RTP packet (header + Opus payload).</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#method_buildNonce">buildNonce()</a>
+    <a class="" href="classes/Discord-Voice-VoiceGroupCrypto.html#method_buildNonce">buildNonce()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
 <dd>Build a nonce for RTP-style AEAD.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Voice-MLSGroup.html#method_recomputeTree">recomputeTree()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>Recompute per-member derived keys from group secret.</dd>
 
     </dl>
 
 
 
         
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="classes/Discord-Voice-VoiceGroupCrypto.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_SUPPORTED_MODES">
+        SUPPORTED_MODES
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#constant_SUPPORTED_MODES" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCrypto.php"><a href="files/src-discord-voice-voicegroupcrypto.html"><abbr title="src/Discord/Voice/VoiceGroupCrypto.php">VoiceGroupCrypto.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">34</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Supported encryption modes for voice connections.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, string&gt;</span>
+    <span class="phpdocumentor-signature__name">SUPPORTED_MODES</span>
+    = <span class="phpdocumentor-signature__default-value">[&#039;aead_aes256_gcm_rtpsize&#039;, &#039;aead_xchacha20_poly1305_rtpsize&#039;]</span>
+</code>
+
+
+    
+        <section class="phpdocumentor-description"><p>The supported transport encryption modes.</p>
+</section>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#constant_SUPPORTED_MODES#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes"> https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes </a>
+                    
+                                    </dd>
+                                            </dl>
+
+    
+
+</article>
+            </section>
 
         
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Voice-MLSGroup.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Voice-VoiceGroupCrypto.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
         class="
             phpdocumentor-element
             -property
-            -protected
+            -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_groupSecret">
-        $groupSecret
-        <a href="classes/Discord-Voice-MLSGroup.html#property_groupSecret" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_secret_key">
+        $secret_key
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#property_secret_key" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCrypto.php"><a href="files/src-discord-voice-voicegroupcrypto.html"><abbr title="src/Discord/Voice/VoiceGroupCrypto.php">VoiceGroupCrypto.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
     
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$groupSecret</span>
-     = <span class="phpdocumentor-signature__default-value">&#039;&#039;</span></code>
-
-    
-    
-    
-
-    
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_members">
-        $members
-        <a href="classes/Discord-Voice-MLSGroup.html#property_members" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">30</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
-    <span class="phpdocumentor-signature__name">$members</span>
-     = <span class="phpdocumentor-signature__default-value">[]</span></code>
+    <span class="phpdocumentor-signature__name">$secret_key</span>
+    </code>
 
     
     
@@ -517,15 +507,15 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_mode">
         $mode
-        <a href="classes/Discord-Voice-MLSGroup.html#property_mode" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#property_mode" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCrypto.php"><a href="files/src-discord-voice-voicegroupcrypto.html"><abbr title="src/Discord/Voice/VoiceGroupCrypto.php">VoiceGroupCrypto.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -555,15 +545,15 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_nonceLength">
         $nonceLength
-        <a href="classes/Discord-Voice-MLSGroup.html#property_nonceLength" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#property_nonceLength" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCrypto.php"><a href="files/src-discord-voice-voicegroupcrypto.html"><abbr title="src/Discord/Voice/VoiceGroupCrypto.php">VoiceGroupCrypto.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -584,50 +574,12 @@
     
 
 </article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_tree">
-        $tree
-        <a href="classes/Discord-Voice-MLSGroup.html#property_tree" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">31</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
-    <span class="phpdocumentor-signature__name">$tree</span>
-     = <span class="phpdocumentor-signature__default-value">[]</span></code>
-
-    
-    
-    
-
-    
-
-    
-
-</article>
             </section>
 
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Voice-MLSGroup.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Voice-VoiceGroupCrypto.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -638,20 +590,20 @@
 >
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
-        <a href="classes/Discord-Voice-MLSGroup.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCrypto.php"><a href="files/src-discord-voice-voicegroupcrypto.html"><abbr title="src/Discord/Voice/VoiceGroupCrypto.php">VoiceGroupCrypto.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$groupSecret</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mode</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;xchacha20-poly1305-rtpsize&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$secret_key</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$mode</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;aead_xchacha20_poly1305_rtpsize&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -660,67 +612,22 @@
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$groupSecret</span>
+                <span class="phpdocumentor-signature__argument__name">$secret_key</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
+                            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Optional group secret</p>
+                    <section class="phpdocumentor-description"><p>Optional group secret.</p>
 </section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$mode</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;xchacha20-poly1305-rtpsize&#039;</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">&#039;aead_xchacha20_poly1305_rtpsize&#039;</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>'aes256-gcm-rtpsize' or 'xchacha20-poly1305-rtpsize'</p>
+                    <section class="phpdocumentor-description"><p>The supported transport encryption mode.</p>
 </section>
 
-            </dd>
-            </dl>
-
-    
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_addMember">
-        addMember()
-        <a href="classes/Discord-Voice-MLSGroup.html#method_addMember" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">70</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Add a member with generated key pair.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">addMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberId</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$memberId</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
             </dd>
             </dl>
 
@@ -738,21 +645,21 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_decrypt">
         decrypt()
-        <a href="classes/Discord-Voice-MLSGroup.html#method_decrypt" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#method_decrypt" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCrypto.php"><a href="files/src-discord-voice-voicegroupcrypto.html"><abbr title="src/Discord/Voice/VoiceGroupCrypto.php">VoiceGroupCrypto.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">95</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Decrypt a message for a specific member.</p>
+        <p class="phpdocumentor-summary">Decrypt a message from Discord&#039;s MLS Group.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">decrypt</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberId</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ciphertext</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$header</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">decrypt</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ciphertext</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$header</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -760,13 +667,6 @@
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$memberId</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$ciphertext</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
@@ -812,21 +712,21 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_decryptRTPPacket">
         decryptRTPPacket()
-        <a href="classes/Discord-Voice-MLSGroup.html#method_decryptRTPPacket" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#method_decryptRTPPacket" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCrypto.php"><a href="files/src-discord-voice-voicegroupcrypto.html"><abbr title="src/Discord/Voice/VoiceGroupCrypto.php">VoiceGroupCrypto.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">194</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Decrypt an RTP packet (header + encrypted payload) for a member.</p>
+        <p class="phpdocumentor-summary">Decrypt an RTP packet (header + encrypted payload).</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">decryptRTPPacket</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberId</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$packet</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">decryptRTPPacket</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$packet</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|false</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -834,13 +734,6 @@
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$memberId</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$packet</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
@@ -863,7 +756,7 @@
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
+        <span class="phpdocumentor-signature__response_type">string|false</span>
             </section>
 
 </article>
@@ -875,21 +768,21 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_encrypt">
         encrypt()
-        <a href="classes/Discord-Voice-MLSGroup.html#method_encrypt" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#method_encrypt" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCrypto.php"><a href="files/src-discord-voice-voicegroupcrypto.html"><abbr title="src/Discord/Voice/VoiceGroupCrypto.php">VoiceGroupCrypto.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Encrypt a message for a specific member.</p>
+        <p class="phpdocumentor-summary">Encrypt a message for Discord&#039;s MLS Group.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">encrypt</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberId</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$plaintext</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$header</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">encrypt</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$plaintext</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$header</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -897,13 +790,6 @@
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$memberId</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$plaintext</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
@@ -949,21 +835,21 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_encryptRTPPacket">
         encryptRTPPacket()
-        <a href="classes/Discord-Voice-MLSGroup.html#method_encryptRTPPacket" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#method_encryptRTPPacket" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCrypto.php"><a href="files/src-discord-voice-voicegroupcrypto.html"><abbr title="src/Discord/Voice/VoiceGroupCrypto.php">VoiceGroupCrypto.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">184</span>
+    <span class="phpdocumentor-element-found-in__line">129</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Encrypt an RTP packet (header + Opus payload) for a member.</p>
+        <p class="phpdocumentor-summary">Encrypt an RTP packet (header + Opus payload).</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">encryptRTPPacket</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberId</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rtpHeader</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$opusPayload</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">encryptRTPPacket</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rtpHeader</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$opusPayload</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -971,13 +857,6 @@
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$memberId</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$rtpHeader</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
@@ -1020,111 +899,18 @@
                     <article
         class="phpdocumentor-element
             -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getMemberPublicKey">
-        getMemberPublicKey()
-        <a href="classes/Discord-Voice-MLSGroup.html#method_getMemberPublicKey" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">171</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getMemberPublicKey</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberId</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$memberId</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_removeMember">
-        removeMember()
-        <a href="classes/Discord-Voice-MLSGroup.html#method_removeMember" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">88</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Remove a member.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">removeMember</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberId</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$memberId</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
             -protected
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="method_buildNonce">
         buildNonce()
-        <a href="classes/Discord-Voice-MLSGroup.html#method_buildNonce" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#method_buildNonce" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceGroupCrypto.php"><a href="files/src-discord-voice-voicegroupcrypto.html"><abbr title="src/Discord/Voice/VoiceGroupCrypto.php">VoiceGroupCrypto.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">163</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
@@ -1132,7 +918,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">buildNonce</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$memberId</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$header</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">buildNonce</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$header</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1140,13 +926,6 @@
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$memberId</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$header</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
@@ -1173,48 +952,13 @@
             </section>
 
 </article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_recomputeTree">
-        recomputeTree()
-        <a href="classes/Discord-Voice-MLSGroup.html#method_recomputeTree" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/MLSGroup.php"><a href="files/src-discord-voice-mlsgroup.html"><abbr title="src/Discord/Voice/MLSGroup.php">MLSGroup.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">97</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Recompute per-member derived keys from group secret.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">recomputeTree</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-    
-</article>
             </section>
 
         <div class="phpdocumentor-modal" id="source-view">
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Voice/MLSGroup.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Voice/VoiceGroupCrypto.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -1315,35 +1059,36 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/Discord-Voice-MLSGroup.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-Voice-MLSGroup.html#toc-methods">Methods</a></li>
+                                        <li><a href="classes/Discord-Voice-VoiceGroupCrypto.html#toc-constants">Constants</a></li>
+                                                            <li><a href="classes/Discord-Voice-VoiceGroupCrypto.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-Voice-VoiceGroupCrypto.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
+                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Voice-VoiceGroupCrypto.html#constant_SUPPORTED_MODES">SUPPORTED_MODES</a></li>
+                                            </ul>
+                </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Voice-MLSGroup.html#property_groupSecret">$groupSecret</a></li>
-                                                    <li class=""><a href="classes/Discord-Voice-MLSGroup.html#property_members">$members</a></li>
-                                                    <li class=""><a href="classes/Discord-Voice-MLSGroup.html#property_mode">$mode</a></li>
-                                                    <li class=""><a href="classes/Discord-Voice-MLSGroup.html#property_nonceLength">$nonceLength</a></li>
-                                                    <li class=""><a href="classes/Discord-Voice-MLSGroup.html#property_tree">$tree</a></li>
+                                                    <li class=""><a href="classes/Discord-Voice-VoiceGroupCrypto.html#property_secret_key">$secret_key</a></li>
+                                                    <li class=""><a href="classes/Discord-Voice-VoiceGroupCrypto.html#property_mode">$mode</a></li>
+                                                    <li class=""><a href="classes/Discord-Voice-VoiceGroupCrypto.html#property_nonceLength">$nonceLength</a></li>
                                             </ul>
                 </li>
             
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li class=""><a href="classes/Discord-Voice-MLSGroup.html#method___construct">__construct()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-MLSGroup.html#method_addMember">addMember()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-MLSGroup.html#method_decrypt">decrypt()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-MLSGroup.html#method_decryptRTPPacket">decryptRTPPacket()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-MLSGroup.html#method_encrypt">encrypt()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-MLSGroup.html#method_encryptRTPPacket">encryptRTPPacket()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-MLSGroup.html#method_getMemberPublicKey">getMemberPublicKey()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-MLSGroup.html#method_removeMember">removeMember()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-MLSGroup.html#method_buildNonce">buildNonce()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-MLSGroup.html#method_recomputeTree">recomputeTree()</a></li>
+                                            <li class=""><a href="classes/Discord-Voice-VoiceGroupCrypto.html#method___construct">__construct()</a></li>
+                                            <li class=""><a href="classes/Discord-Voice-VoiceGroupCrypto.html#method_decrypt">decrypt()</a></li>
+                                            <li class=""><a href="classes/Discord-Voice-VoiceGroupCrypto.html#method_decryptRTPPacket">decryptRTPPacket()</a></li>
+                                            <li class=""><a href="classes/Discord-Voice-VoiceGroupCrypto.html#method_encrypt">encrypt()</a></li>
+                                            <li class=""><a href="classes/Discord-Voice-VoiceGroupCrypto.html#method_encryptRTPPacket">encryptRTPPacket()</a></li>
+                                            <li class=""><a href="classes/Discord-Voice-VoiceGroupCrypto.html#method_buildNonce">buildNonce()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -1363,7 +1108,7 @@
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Voice-MLSGroup.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Voice-VoiceGroupCrypto.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

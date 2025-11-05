@@ -13796,86 +13796,6 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Voice-Flags.html#property_fillable"
         },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup",
-            "name": "MLSGroup",
-            "summary": "A\u0020simplified\u0020implementation\u0020of\u0020an\u0020MLS\u0020\u0028Messaging\u0020Layer\u0020Security\u0029\u0020group\u0020for\u0020encrypting\u0020and\u0020decrypting\u0020messages\u0020among\u0020multiple\u0020members.",
-            "url": "classes/Discord-Voice-MLSGroup.html"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Discord-Voice-MLSGroup.html#method___construct"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003AaddMember\u0028\u0029",
-            "name": "addMember",
-            "summary": "Add\u0020a\u0020member\u0020with\u0020generated\u0020key\u0020pair.",
-            "url": "classes/Discord-Voice-MLSGroup.html#method_addMember"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003AremoveMember\u0028\u0029",
-            "name": "removeMember",
-            "summary": "Remove\u0020a\u0020member.",
-            "url": "classes/Discord-Voice-MLSGroup.html#method_removeMember"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003ArecomputeTree\u0028\u0029",
-            "name": "recomputeTree",
-            "summary": "Recompute\u0020per\u002Dmember\u0020derived\u0020keys\u0020from\u0020group\u0020secret.",
-            "url": "classes/Discord-Voice-MLSGroup.html#method_recomputeTree"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003Aencrypt\u0028\u0029",
-            "name": "encrypt",
-            "summary": "Encrypt\u0020a\u0020message\u0020for\u0020a\u0020specific\u0020member.",
-            "url": "classes/Discord-Voice-MLSGroup.html#method_encrypt"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003Adecrypt\u0028\u0029",
-            "name": "decrypt",
-            "summary": "Decrypt\u0020a\u0020message\u0020for\u0020a\u0020specific\u0020member.",
-            "url": "classes/Discord-Voice-MLSGroup.html#method_decrypt"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003AbuildNonce\u0028\u0029",
-            "name": "buildNonce",
-            "summary": "Build\u0020a\u0020nonce\u0020for\u0020RTP\u002Dstyle\u0020AEAD.",
-            "url": "classes/Discord-Voice-MLSGroup.html#method_buildNonce"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003AgetMemberPublicKey\u0028\u0029",
-            "name": "getMemberPublicKey",
-            "summary": "",
-            "url": "classes/Discord-Voice-MLSGroup.html#method_getMemberPublicKey"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003AencryptRTPPacket\u0028\u0029",
-            "name": "encryptRTPPacket",
-            "summary": "Encrypt\u0020an\u0020RTP\u0020packet\u0020\u0028header\u0020\u002B\u0020Opus\u0020payload\u0029\u0020for\u0020a\u0020member.",
-            "url": "classes/Discord-Voice-MLSGroup.html#method_encryptRTPPacket"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003AdecryptRTPPacket\u0028\u0029",
-            "name": "decryptRTPPacket",
-            "summary": "Decrypt\u0020an\u0020RTP\u0020packet\u0020\u0028header\u0020\u002B\u0020encrypted\u0020payload\u0029\u0020for\u0020a\u0020member.",
-            "url": "classes/Discord-Voice-MLSGroup.html#method_decryptRTPPacket"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003A\u0024members",
-            "name": "members",
-            "summary": "",
-            "url": "classes/Discord-Voice-MLSGroup.html#property_members"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003A\u0024tree",
-            "name": "tree",
-            "summary": "",
-            "url": "classes/Discord-Voice-MLSGroup.html#property_tree"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003A\u0024nonceLength",
-            "name": "nonceLength",
-            "summary": "",
-            "url": "classes/Discord-Voice-MLSGroup.html#property_nonceLength"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003A\u0024mode",
-            "name": "mode",
-            "summary": "",
-            "url": "classes/Discord-Voice-MLSGroup.html#property_mode"
-        },                {
-            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003A\u0024groupSecret",
-            "name": "groupSecret",
-            "summary": "",
-            "url": "classes/Discord-Voice-MLSGroup.html#property_groupSecret"
-        },                {
             "fqsen": "\\Discord\\Voice\\OpusFFI",
             "name": "OpusFFI",
             "summary": "Handles\u0020the\u0020decoding\u0020of\u0020Opus\u0020audio\u0020data\u0020using\u0020FFI\u0020\u0028Foreign\u0020Function\u0020Interface\u0029.",
@@ -14551,6 +14471,11 @@ Search.appendIndex(
             "summary": "The\u0020UDP\u0020client.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_client"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024crypto",
+            "name": "crypto",
+            "summary": "The\u0020MLS\u0020Group\u0020for\u0020handling\u0020multi\u002Duser\u0020encryption.",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_crypto"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024channel_id",
             "name": "channel_id",
             "summary": "The\u0020Channel\u0020that\u0020we\u0020are\u0020connecting\u0020to.",
@@ -14731,6 +14656,61 @@ Search.appendIndex(
             "summary": "Audio\u0020Buffer.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_buffer"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto",
+            "name": "VoiceGroupCrypto",
+            "summary": "Provides\u0020group\u002Dbased\u0020AEAD\u0020encryption\u0020and\u0020decryption\u0020for\u0020Discord\u0020voice\u0020RTP\u0020packets.",
+            "url": "classes/Discord-Voice-VoiceGroupCrypto.html"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003Aencrypt\u0028\u0029",
+            "name": "encrypt",
+            "summary": "Encrypt\u0020a\u0020message\u0020for\u0020Discord\u0027s\u0020MLS\u0020Group.",
+            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method_encrypt"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003Adecrypt\u0028\u0029",
+            "name": "decrypt",
+            "summary": "Decrypt\u0020a\u0020message\u0020from\u0020Discord\u0027s\u0020MLS\u0020Group.",
+            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method_decrypt"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003AbuildNonce\u0028\u0029",
+            "name": "buildNonce",
+            "summary": "Build\u0020a\u0020nonce\u0020for\u0020RTP\u002Dstyle\u0020AEAD.",
+            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method_buildNonce"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003AencryptRTPPacket\u0028\u0029",
+            "name": "encryptRTPPacket",
+            "summary": "Encrypt\u0020an\u0020RTP\u0020packet\u0020\u0028header\u0020\u002B\u0020Opus\u0020payload\u0029.",
+            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method_encryptRTPPacket"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003AdecryptRTPPacket\u0028\u0029",
+            "name": "decryptRTPPacket",
+            "summary": "Decrypt\u0020an\u0020RTP\u0020packet\u0020\u0028header\u0020\u002B\u0020encrypted\u0020payload\u0029.",
+            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method_decryptRTPPacket"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003ASUPPORTED_MODES",
+            "name": "SUPPORTED_MODES",
+            "summary": "Supported\u0020encryption\u0020modes\u0020for\u0020voice\u0020connections.",
+            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#constant_SUPPORTED_MODES"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003A\u0024nonceLength",
+            "name": "nonceLength",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#property_nonceLength"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003A\u0024mode",
+            "name": "mode",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#property_mode"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003A\u0024secret_key",
+            "name": "secret_key",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#property_secret_key"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket",
             "name": "VoicePacket",
             "summary": "A\u0020voice\u0020packet\u0020received\u0020from\u0020Discord.",
@@ -14756,6 +14736,11 @@ Search.appendIndex(
             "summary": "Builds\u0020the\u0020header.",
             "url": "classes/Discord-Voice-VoicePacket.html#method_buildHeader"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003AbuildHeaderStatic\u0028\u0029",
+            "name": "buildHeaderStatic",
+            "summary": "Builds\u0020the\u0020header.",
+            "url": "classes/Discord-Voice-VoicePacket.html#method_buildHeaderStatic"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003AgetSequence\u0028\u0029",
             "name": "getSequence",
             "summary": "Returns\u0020the\u0020sequence.",
@@ -14780,6 +14765,11 @@ Search.appendIndex(
             "name": "getData",
             "summary": "Returns\u0020the\u0020data.",
             "url": "classes/Discord-Voice-VoicePacket.html#method_getData"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003AgetDataStatic\u0028\u0029",
+            "name": "getDataStatic",
+            "summary": "Returns\u0020the\u0020data.",
+            "url": "classes/Discord-Voice-VoicePacket.html#method_getDataStatic"
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003Amake\u0028\u0029",
             "name": "make",
