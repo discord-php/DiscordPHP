@@ -289,7 +289,7 @@ class VoiceClient extends EventEmitter
      *
      * @var int The speaking mode.
      */
-    protected $speaking = self::SPEAKING;
+    protected $speaking = self::NOT_SPEAKING;
 
     /**
      * Whether we are set as mute.
