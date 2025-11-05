@@ -194,10 +194,10 @@ class MLSGroup
     /**
      * Decrypt an RTP packet (header + encrypted payload) for a member.
      */
-    public function decryptRTPPacket(string $memberId, string $packet, int $seq = 0): string
+    public function decryptRTPPacket(string $memberId, string $packet, int $seq = 0): string|false
     {
         if (strlen($packet) < 12) {
-            throw new \RuntimeException('Invalid RTP packet');
+            return false;
         }
         $header = substr($packet, 0, 12);
         $payloadEnc = substr($packet, 12);
