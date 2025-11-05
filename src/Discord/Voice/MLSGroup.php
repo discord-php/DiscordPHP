@@ -37,7 +37,7 @@ class MLSGroup
      * @param string $groupSecret Optional group secret
      * @param string $mode        'aes256-gcm-rtpsize' or 'xchacha20-poly1305-rtpsize'
      */
-    public function __construct(protected string $groupSecret = '', string $mode = 'xchacha20-poly1305-rtpsize')
+    public function __construct(public string $groupSecret = '', string $mode = 'xchacha20-poly1305-rtpsize')
     {
         $this->mode = strtolower($mode);
 
