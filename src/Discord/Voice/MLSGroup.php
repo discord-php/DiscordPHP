@@ -26,12 +26,39 @@ namespace Discord\Voice;
 class MLSGroup
 {
     protected array $members = []; // memberId => ['pk' => ..., 'sk' => ...]
-    protected array $tree = [];    // simple binary tree storing shared secrets
+    protected array $tree = [];    // per-member derived keys
 
-    public function __construct(protected string $groupSecret = '')
+    protected int $nonceLength; // Nonce length based on encryption mode
+    protected string $mode; // 'aes256-gcm-rtpsize' or 'xchacha20-poly1305-rtpsize'
+
+    /**
+     * @param string $groupSecret Optional group secret
+     * @param string $mode        'aes256-gcm-rtpsize' or 'xchacha20-poly1305-rtpsize'
+     */
+    public function __construct(protected string $groupSecret = '', string $mode = 'xchacha20-poly1305-rtpsize')
     {
+        $this->mode = strtolower($mode);
+
+        switch ($this->mode) {
+            case 'aes256-gcm-rtpsize':
+                if (! defined('SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES')) {
+                    throw new \RuntimeException('AES256-GCM not supported');
+                }
+                $this->nonceLength = SODIUM_CRYPTO_AEAD_AES256GCM_NPUBBYTES; // 12
+                $keyLen = SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES;
+                break;
+
+            case 'xchacha20-poly1305-rtpsize':
+                $this->nonceLength = 24; // RTP header + 12 zero bytes
+                $keyLen = SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES;
+                break;
+
+            default:
+                throw new \InvalidArgumentException('Unsupported mode');
+        }
+
         if ($this->groupSecret === '') {
-            $this->groupSecret = random_bytes(SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES);
+            $this->groupSecret = random_bytes($keyLen);
         }
     }
 
@@ -59,67 +86,67 @@ class MLSGroup
     public function removeMember(string $memberId): void
     {
         unset($this->members[$memberId]);
-        $this->recomputeTree();
+        unset($this->tree[$memberId]);
     }
 
     /**
-     * Recompute the group ratchet tree and root secret.
-     *
-     * @param string $secret Optional new root secret
+     * Recompute per-member derived keys from group secret.
      */
-    protected function recomputeTree(string $secret = ''): void
+    protected function recomputeTree(): void
     {
-        $this->groupSecret = $secret !== '' ? $secret : $this->groupSecret;
-
-        // Assign per-member derived secrets using generichash (message + output length)
         foreach ($this->members as $id => $member) {
+            $keyLen = $this->mode === 'aes256-gcm-rtpsize'
+                ? SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES
+                : SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES;
+
             $this->tree[$id] = sodium_crypto_generichash(
-                $this->groupSecret.$member['pk'], // message
-                '',                                  // optional keyed hash
-                SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES // output length
+                $this->groupSecret.$member['pk'],
+                '',
+                $keyLen
             );
         }
     }
 
     /**
-     * Encrypt a message for all members.
+     * Encrypt a message for a specific member.
+     * @param string $memberId
+     * @param string $plaintext
+     * @param string $header    Optional 12-byte RTP header (for RTP-style nonce)
+     * @param int    $seq       Optional sequence number (for AES-GCM)
      */
-    public function encrypt(string $plaintext): array
-    {
-        $messages = [];
-        foreach ($this->members as $id => $member) {
-            $nonce = random_bytes(SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_NPUBBYTES);
-            $ciphertext = sodium_crypto_aead_chacha20poly1305_ietf_encrypt(
-                $plaintext,
-                '', // optional AD
-                $nonce,
-                $this->tree[$id]
-            );
-            $messages[$id] = base64_encode($nonce.$ciphertext);
-        }
-
-        return $messages;
-    }
-
-    /**
-     * Decrypt a message for a specific member.
-     */
-    public function decrypt(string $memberId, string $message): string
+    public function encrypt(string $memberId, string $plaintext, string $header = '', int $seq = 0): string
     {
         if (! isset($this->tree[$memberId])) {
             throw new \RuntimeException('Unknown member');
         }
 
-        $decoded = base64_decode($message, true);
-        $nonce = substr($decoded, 0, SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_NPUBBYTES);
-        $ciphertext = substr($decoded, SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_NPUBBYTES);
+        $nonce = $this->buildNonce($memberId, $header, $seq);
 
-        $plaintext = sodium_crypto_aead_chacha20poly1305_ietf_decrypt(
-            $ciphertext,
-            '',
-            $nonce,
-            $this->tree[$memberId]
-        );
+        return match ($this->mode) {
+            'aes256-gcm-rtpsize' => sodium_crypto_aead_aes256gcm_encrypt($plaintext, '', $nonce, $this->tree[$memberId]),
+            'xchacha20-poly1305-rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_encrypt($plaintext, '', $nonce, $this->tree[$memberId]),
+        };
+    }
+
+    /**
+     * Decrypt a message for a specific member.
+     * @param string $memberId
+     * @param string $ciphertext
+     * @param string $header     Optional RTP header
+     * @param int    $seq        Optional sequence number
+     */
+    public function decrypt(string $memberId, string $ciphertext, string $header = '', int $seq = 0): string
+    {
+        if (! isset($this->tree[$memberId])) {
+            throw new \RuntimeException('Unknown member');
+        }
+
+        $nonce = $this->buildNonce($memberId, $header, $seq);
+
+        $plaintext = match ($this->mode) {
+            'aes256-gcm-rtpsize' => sodium_crypto_aead_aes256gcm_decrypt($ciphertext, '', $nonce, $this->tree[$memberId]),
+            'xchacha20-poly1305-rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_decrypt($ciphertext, '', $nonce, $this->tree[$memberId]),
+        };
 
         if ($plaintext === false) {
             throw new \RuntimeException('Decryption failed');
@@ -129,75 +156,18 @@ class MLSGroup
     }
 
     /**
-     * Get public key of a member.
+     * Build a nonce for RTP-style AEAD.
      */
+    protected function buildNonce(string $memberId, string $header = '', int $seq = 0): string
+    {
+        return match ($this->mode) {
+            'xchacha20-poly1305-rtpsize' => str_pad($header, 12, "\x00", STR_PAD_RIGHT).str_repeat("\x00", 12),
+            'aes256-gcm-rtpsize' => pack('N', $seq).str_repeat("\x00", 8),
+        };
+    }
+
     public function getMemberPublicKey(string $memberId): string
     {
         return $this->members[$memberId]['pk'] ?? '';
-    }
-
-    /**
-     * Serialize an optional value (Optional<Value>).
-     */
-    public static function serializeOptional(mixed $value): string
-    {
-        return $value === null ? "\x00" : "\x01".$value;
-    }
-
-    /**
-     * Deserialize an optional value (Optional<Value>).
-     */
-    public static function deserializeOptional(string $data, int &$offset): mixed
-    {
-        $flag = ord($data[$offset++]);
-        if ($flag === 0) {
-            return null;
-        }
-        $value = substr($data, $offset); // placeholder: adjust based on expected value
-        $offset += strlen($value);
-
-        return $value;
-    }
-
-    /**
-     * Encode a variable-length vector according to RFC 9420.
-     */
-    public static function encodeVector(string $data): string
-    {
-        $len = strlen($data);
-        if ($len <= 0xff) {
-            return chr($len).$data;
-        } elseif ($len <= 0xffff) {
-            return pack('n', $len).$data;
-        } elseif ($len <= 0xffffff) {
-            $b1 = ($len >> 16) & 0xff;
-            $b2 = ($len >> 8) & 0xff;
-            $b3 = $len & 0xff;
-
-            return chr($b1).chr($b2).chr($b3).$data;
-        }
-        throw new \RuntimeException('Vector too large');
-    }
-
-    /**
-     * Decode a variable-length vector according to RFC 9420.
-     */
-    public static function decodeVector(string $data, int &$offset, int $lengthBytes): string
-    {
-        if ($lengthBytes === 1) {
-            $len = ord($data[$offset]);
-        } elseif ($lengthBytes === 2) {
-            $len = unpack('n', substr($data, $offset, 2))[1];
-        } elseif ($lengthBytes === 3) {
-            $b = unpack('C3', substr($data, $offset, 3));
-            $len = ($b[1] << 16) | ($b[2] << 8) | $b[3];
-        } else {
-            throw new \RuntimeException('Invalid lengthBytes');
-        }
-        $offset += $lengthBytes;
-        $vector = substr($data, $offset, $len);
-        $offset += $len;
-
-        return $vector;
     }
 }
