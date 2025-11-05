@@ -1345,7 +1345,7 @@ class VoiceClient extends EventEmitter
         }
 
         $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
-        $this->client->send($this->crypto->encryptRTPPacket($this->discord->id, (string) $packet->buildHeader(), $packet->getData(), $this->seq));
+        $this->client->send($this->crypto->encryptRTPPacket((string) $packet->buildHeader(), $packet->getData(), $this->seq));
 
         $this->streamTime = microtime(true);
 
@@ -1761,7 +1761,7 @@ class VoiceClient extends EventEmitter
 
         $voicePacket = VoicePacket::make($message);
 
-        if (($decrypted = $this->crypto->decryptRTPPacket($this->discord->id, $message, $this->seq)) !== false) {
+        if (($decrypted = $this->crypto->decryptRTPPacket($message, $this->seq)) !== false) {
             $this->emit('raw', [$decrypted, $this, $voicePacket]);
 
             self::decodeVoicePacket($decrypted, $this, $voicePacket);
