@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Discord\Voice;
 
 /**
- * A simplified implementation of an MLS (Messaging Layer Security) group for encrypting and decrypting messages among multiple members.
+ * Provides group-based AEAD encryption and decryption for Discord voice RTP packets.
  *
- * Supports Optional Values and Variable-Length Vector headers according to RFC 9420.
+ * Supported encryption modes: 'aes256-gcm-rtpsize' and 'xchacha20-poly1305-rtpsize'.
  *
  * @author Valithor Obsidion <valithor@valgorithms.com>
  *
@@ -24,8 +24,21 @@ namespace Discord\Voice;
  * @property int    $nonceLength Nonce length based on encryption mode.
  * @property string $mode        The encryption mode used ('aes256-gcm-rtpsize' or 'xchacha20-poly1305-rtpsize').
  */
-class MLSGroup
+class VoiceGroupCrypto
 {
+    /**
+     * Supported encryption modes for voice connections.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes
+     *
+     * @var string[] The supported transport encryption modes.
+     */
+    public const SUPPORTED_MODES = [
+        'aead_aes256_gcm_rtpsize',
+        'aead_xchacha20_poly1305_rtpsize',
+        'xchacha20-poly1305-rtpsize',
+    ];
+
     protected int $nonceLength;
     //protected int $keyLength;
     protected string $mode;
@@ -36,6 +49,10 @@ class MLSGroup
      */
     public function __construct(public string $groupSecret, string $mode = 'xchacha20-poly1305-rtpsize')
     {
+        if (! in_array($mode, self::SUPPORTED_MODES)) {
+            throw new \InvalidArgumentException("Invalid transport encryption mode: {$mode}");
+        }
+
         $this->mode = strtolower($mode);
 
         switch ($this->mode) {
@@ -47,6 +64,7 @@ class MLSGroup
                 //$this->keyLength = SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES;
                 break;
 
+            case 'aead_xchacha20_poly1305_rtpsize':
             case 'xchacha20-poly1305-rtpsize':
                 $this->nonceLength = 24; // RTP header + 12 zero bytes
                 //$this->keyLength = SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES;
@@ -72,6 +90,7 @@ class MLSGroup
         return match ($this->mode) {
             'aes256-gcm-rtpsize' => sodium_crypto_aead_aes256gcm_encrypt($plaintext, '', $nonce, $this->groupSecret),
             'xchacha20-poly1305-rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_encrypt($plaintext, '', $nonce, $this->groupSecret),
+            'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_encrypt($plaintext, '', $nonce, $this->groupSecret),
         };
     }
 
@@ -90,6 +109,7 @@ class MLSGroup
         $plaintext = match ($this->mode) {
             'aes256-gcm-rtpsize' => sodium_crypto_aead_aes256gcm_decrypt($ciphertext, '', $nonce, $this->groupSecret),
             'xchacha20-poly1305-rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_decrypt($ciphertext, '', $nonce, $this->groupSecret),
+            'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_encrypt($ciphertext, '', $nonce, $this->groupSecret),
         };
 
         if ($plaintext === false) {
@@ -105,8 +125,9 @@ class MLSGroup
     protected function buildNonce(string $memberId, string $header = '', int $seq = 0): string
     {
         return match ($this->mode) {
-            'xchacha20-poly1305-rtpsize' => str_pad($header, 12, "\x00", STR_PAD_RIGHT).str_repeat("\x00", 12),
             'aes256-gcm-rtpsize' => pack('N', $seq).str_repeat("\x00", 8),
+            'xchacha20-poly1305-rtpsize' => str_pad($header, 12, "\x00", STR_PAD_RIGHT).str_repeat("\x00", 12),
+            'aead_xchacha20_poly1305_rtpsize' => str_pad($header, 12, "\x00", STR_PAD_RIGHT).str_repeat("\x00", 12),
         };
     }
 
