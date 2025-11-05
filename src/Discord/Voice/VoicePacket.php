@@ -225,6 +225,18 @@ class VoicePacket
     }
 
     /**
+     * Returns the data.
+     * 
+     * @param Buffer $buffer
+     *
+     * @return string The packet data.
+     */
+    public static function getDataStatic(Buffer $buffer): string
+    {
+        return $buffer->read(self::RTP_HEADER_BYTE_LENGTH, strlen((string) $buffer) - self::RTP_HEADER_BYTE_LENGTH);
+    }
+
+    /**
      * Creates a voice packet from data sent from Discord.
      *
      * @param string $data Data from Discord.
