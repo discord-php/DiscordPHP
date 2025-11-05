@@ -11,7 +11,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Voice\Processes;
+namespace Discord\Voice;
 
 use FFI;
 
