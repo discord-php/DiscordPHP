@@ -58,8 +58,10 @@ trait VoiceGroupCryptoTrait
      * @param string $ciphertext
      * @param string $header     Optional RTP header
      * @param int    $seq        Optional sequence number
+     * 
+     * @return string|false The decrypted plaintext, or false on failure
      */
-    public function decrypt(string $ciphertext, string $header = '', int $seq = 0): string
+    public function decrypt(string $ciphertext, string $header = '', int $seq = 0): string|false
     {
         $nonce = $this->buildNonce($header, $seq);
 
@@ -67,10 +69,6 @@ trait VoiceGroupCryptoTrait
             'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_decrypt($ciphertext, '', $nonce, $this->secret_key),
             'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_decrypt($ciphertext, '', $nonce, $this->secret_key),
         };
-
-        if ($plaintext === false) {
-            throw new \RuntimeException('Decryption failed');
-        }
 
         return $plaintext;
     }
