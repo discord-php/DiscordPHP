@@ -15,11 +15,11 @@ namespace Discord\Helpers;
 
 use Evenement\EventEmitter;
 
-/** 
+/**
  * A simple implementation of a Windows-compatible process handler.
- * 
+ *
  * Experimental and minimal; for demonstration and testing purposes only.
- * 
+ *
  * @see React\ChildProcess\Process
  */
 class WinProcess extends EventEmitter
@@ -87,7 +87,7 @@ class WinProcess extends EventEmitter
 
     public function terminate(): void
     {
-        if (!is_resource($this->proc)) {
+        if (! is_resource($this->proc)) {
             return;
         }
 
