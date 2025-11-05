@@ -14356,11 +14356,6 @@ Search.appendIndex(
             "summary": "Creates\u0020and\u0020starts\u0020a\u0020decoder\u0020process\u0020for\u0020the\u0020given\u0020stream\u0020source.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_createDecoder"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AdecryptVoicePacket\u0028\u0029",
-            "name": "decryptVoicePacket",
-            "summary": "Decrypts\u0020a\u0020voice\u0020packet\u0020received\u0020from\u0020Discord.",
-            "url": "classes/Discord-Voice-VoiceClient.html#method_decryptVoicePacket"
-        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AgenerateKeyPackage\u0028\u0029",
             "name": "generateKeyPackage",
             "summary": "",
