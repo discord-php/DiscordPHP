@@ -1784,7 +1784,7 @@ class VoiceClient extends EventEmitter
 
         $voicePacket = VoicePacket::make($message);
 
-        if ($decrypted = $this->mlsGroup->decryptRTPPacket($this->discord->id, $message, $this->seq) !== false) {
+        if (($decrypted = $this->mlsGroup->decryptRTPPacket($this->discord->id, $message, $this->seq)) !== false) {
             $this->emit('raw', [$decrypted, $this, $voicePacket]);
 
             self::decodeVoicePacket($decrypted, $this, $voicePacket);
