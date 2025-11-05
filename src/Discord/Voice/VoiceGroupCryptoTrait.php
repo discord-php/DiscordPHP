@@ -75,9 +75,17 @@ trait VoiceGroupCryptoTrait
      */
     protected function buildNonce(string $header = '', int $seq = 0): string
     {
+        // Ensure header is exactly 12 bytes (truncate or pad)
+        $header12 = str_pad(substr($header, 0, 12), 12, "\x00", STR_PAD_RIGHT);
+
         return match ($this->mode) {
-            'aead_aes256_gcm_rtpsize' => pack('N', $seq).str_repeat("\x00", 8),
-            'aead_xchacha20_poly1305_rtpsize' => str_pad($header, 12, "\x00", STR_PAD_RIGHT).str_repeat("\x00", 12),
+            // Protocol uses a 4-byte truncated nonce; expand to 12 bytes by
+            // setting the 8 most-significant bytes to zero and placing the
+            // 4-byte nonce in the least-significant bytes.
+            'aead_aes256_gcm_rtpsize' => str_repeat("\x00", 8) . pack('N', $seq),
+            // XChaCha20-Poly1305 uses a 24-byte nonce formed from the RTP header (12)
+            // followed by 12 zero bytes.
+            'aead_xchacha20_poly1305_rtpsize' => $header12 . str_repeat("\x00", 12),
         };
     }
 
