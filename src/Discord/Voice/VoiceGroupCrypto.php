@@ -65,23 +65,19 @@ class VoiceGroupCrypto
                 $this->nonceLength = 24; // RTP header + 12 zero bytes
                 //$this->keyLength = SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES;
                 break;
-
-            default:
-                throw new \InvalidArgumentException('Unsupported mode');
         }
     }
 
     /**
      * Encrypt a message for Discord's MLS Group.
      *
-     * @param string $memberId
      * @param string $plaintext
      * @param string $header    Optional 12-byte RTP header (for RTP-style nonce)
      * @param int    $seq       Optional sequence number (for AES-GCM)
      */
-    public function encrypt(string $memberId, string $plaintext, string $header = '', int $seq = 0): string
+    public function encrypt(string $plaintext, string $header = '', int $seq = 0): string
     {
-        $nonce = $this->buildNonce($memberId, $header, $seq);
+        $nonce = $this->buildNonce($header, $seq);
 
         return match ($this->mode) {
             'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_encrypt($plaintext, '', $nonce, $this->groupSecret),
@@ -92,14 +88,13 @@ class VoiceGroupCrypto
     /**
      * Decrypt a message from Discord's MLS Group.
      *
-     * @param string $memberId
      * @param string $ciphertext
      * @param string $header     Optional RTP header
      * @param int    $seq        Optional sequence number
      */
-    public function decrypt(string $memberId, string $ciphertext, string $header = '', int $seq = 0): string
+    public function decrypt(string $ciphertext, string $header = '', int $seq = 0): string
     {
-        $nonce = $this->buildNonce($memberId, $header, $seq);
+        $nonce = $this->buildNonce($header, $seq);
 
         $plaintext = match ($this->mode) {
             'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_decrypt($ciphertext, '', $nonce, $this->groupSecret),
@@ -116,7 +111,7 @@ class VoiceGroupCrypto
     /**
      * Build a nonce for RTP-style AEAD.
      */
-    protected function buildNonce(string $memberId, string $header = '', int $seq = 0): string
+    protected function buildNonce(string $header = '', int $seq = 0): string
     {
         return match ($this->mode) {
             'aead_aes256_gcm_rtpsize' => pack('N', $seq).str_repeat("\x00", 8),
@@ -125,24 +120,23 @@ class VoiceGroupCrypto
     }
 
     /**
-     * Encrypt an RTP packet (header + Opus payload) for a member.
+     * Encrypt an RTP packet (header + Opus payload).
      *
-     * @param string $memberId
      * @param string $rtpHeader   12-byte RTP header
      * @param string $opusPayload Opus-encoded audio
      * @param int    $seq         Sequence number for AES-GCM mode
      */
-    public function encryptRTPPacket(string $memberId, string $rtpHeader, string $opusPayload, int $seq = 0): string
+    public function encryptRTPPacket(string $rtpHeader, string $opusPayload, int $seq = 0): string
     {
-        $cipher = $this->encrypt($memberId, $opusPayload, $rtpHeader, $seq);
+        $cipher = $this->encrypt($opusPayload, $rtpHeader, $seq);
 
         return $rtpHeader.$cipher;
     }
 
     /**
-     * Decrypt an RTP packet (header + encrypted payload) for a member.
+     * Decrypt an RTP packet (header + encrypted payload).
      */
-    public function decryptRTPPacket(string $memberId, string $packet, int $seq = 0): string|false
+    public function decryptRTPPacket(string $packet, int $seq = 0): string|false
     {
         if (strlen($packet) < 12) {
             return false;
@@ -150,6 +144,6 @@ class VoiceGroupCrypto
         $header = substr($packet, 0, 12);
         $payloadEnc = substr($packet, 12);
 
-        return $this->decrypt($memberId, $payloadEnc, $header, $seq);
+        return $this->decrypt($payloadEnc, $header, $seq);
     }
 }
