@@ -84,8 +84,8 @@ class VoicePacket
      * @param int         $ssrc       The client SSRC value.
      * @param int         $seq        The packet sequence.
      * @param int         $timestamp  The packet timestamp.
-     * @param bool        $encryption Whether the packet should be encrypted.
-     * @param string|null $key        The encryption key.
+     * @param bool        $encryption (Deprecated) Whether the packet should be encrypted.
+     * @param string|null $key        (Deprecated) The encryption key.
      */
     public function __construct(string $data, int $ssrc, int $seq, int $timestamp, bool $encryption = false, ?string $key = null)
     {
@@ -135,7 +135,7 @@ class VoicePacket
      *
      * @return Buffer The header.
      */
-    protected function buildHeader(): Buffer
+    public function buildHeader(): Buffer
     {
         $header = new Buffer(self::RTP_HEADER_BYTE_LENGTH);
 
@@ -146,6 +146,29 @@ class VoicePacket
             $this->seq,
             $this->timestamp,
             $this->ssrc
+        ), 0);
+
+        return $header;
+    }
+
+    /**
+     * Builds the header.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure
+     *
+     * @return Buffer The header.
+     */
+    public static function buildHeaderStatic(int $ssrc, int $seq, int $timestamp): Buffer
+    {
+        $header = new Buffer(self::RTP_HEADER_BYTE_LENGTH);
+
+        $header->write(pack(
+            'CCnNN',
+            self::RTP_VERSION_PAD_EXTEND,
+            self::RTP_PAYLOAD_TYPE,
+            $seq,
+            $timestamp,
+            $ssrc
         ), 0);
 
         return $header;

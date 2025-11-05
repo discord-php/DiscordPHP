@@ -111,6 +111,7 @@ class MLSGroup
 
     /**
      * Encrypt a message for a specific member.
+     *
      * @param string $memberId
      * @param string $plaintext
      * @param string $header    Optional 12-byte RTP header (for RTP-style nonce)
@@ -132,6 +133,7 @@ class MLSGroup
 
     /**
      * Decrypt a message for a specific member.
+     *
      * @param string $memberId
      * @param string $ciphertext
      * @param string $header     Optional RTP header

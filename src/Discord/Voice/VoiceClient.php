@@ -1365,8 +1365,8 @@ class VoiceClient extends EventEmitter
             return;
         }
 
-        $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp, true, $this->secret_key);
-        $this->client->send((string) $packet);
+        $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
+        $this->client->send($this->mlsGroup->encryptRTPPacket($this->discord->id, (string) $packet->buildHeader(), $packet->getData(), $this->seq));
 
         $this->streamTime = microtime(true);
 
