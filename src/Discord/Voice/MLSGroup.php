@@ -27,6 +27,7 @@ namespace Discord\Voice;
 class MLSGroup
 {
     protected int $nonceLength;
+    //protected int $keyLength;
     protected string $mode;
 
     /**
@@ -43,12 +44,12 @@ class MLSGroup
                     throw new \RuntimeException('AES256-GCM not supported');
                 }
                 $this->nonceLength = SODIUM_CRYPTO_AEAD_AES256GCM_NPUBBYTES; // 12
-                $keyLen = SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES;
+                //$this->keyLength = SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES;
                 break;
 
             case 'xchacha20-poly1305-rtpsize':
                 $this->nonceLength = 24; // RTP header + 12 zero bytes
-                $keyLen = SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES;
+                //$this->keyLength = SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES;
                 break;
 
             default:
