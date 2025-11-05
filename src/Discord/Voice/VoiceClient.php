@@ -687,13 +687,7 @@ class VoiceClient extends EventEmitter
     {
         $this->ready = true;
         $this->setMode($data->d['mode']);
-        $this->secret_key = '';
-
-        foreach ($data->d['secret_key'] as $part) {
-            $this->secret_key .= pack('C*', $part);
-        }
-
-        $this->crypto->groupSecret = $this->secret_key;
+        $this->crypto->secret_key = pack('C*', ...$data->d['secret_key']);
 
         $this->discord->logger->debug('received description packet, vc ready', ['data' => $data]);
 

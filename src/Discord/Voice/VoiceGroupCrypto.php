@@ -18,7 +18,7 @@ namespace Discord\Voice;
  *
  * @author Valithor Obsidion <valithor@valgorithms.com>
  *
- * @property string $groupSecret The group secret used for key derivation.
+ * @property string $secret_key The group secret used for key derivation.
  * @property int    $nonceLength Nonce length based on encryption mode.
  * @property string $mode        The encryption mode.
  */
@@ -41,10 +41,10 @@ class VoiceGroupCrypto
     protected string $mode;
 
     /**
-     * @param string $groupSecret Optional group secret.
+     * @param string $secret_key Optional group secret.
      * @param string $mode        The supported transport encryption mode.
      */
-    public function __construct(public string $groupSecret, string $mode = 'aead_xchacha20_poly1305_rtpsize')
+    public function __construct(public string $secret_key, string $mode = 'aead_xchacha20_poly1305_rtpsize')
     {
         if (! in_array($mode, self::SUPPORTED_MODES)) {
             throw new \InvalidArgumentException("Invalid transport encryption mode: {$mode}");
@@ -80,8 +80,8 @@ class VoiceGroupCrypto
         $nonce = $this->buildNonce($header, $seq);
 
         return match ($this->mode) {
-            'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_encrypt($plaintext, '', $nonce, $this->groupSecret),
-            'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_encrypt($plaintext, '', $nonce, $this->groupSecret),
+            'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_encrypt($plaintext, '', $nonce, $this->secret_key),
+            'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_encrypt($plaintext, '', $nonce, $this->secret_key),
         };
     }
 
@@ -97,8 +97,8 @@ class VoiceGroupCrypto
         $nonce = $this->buildNonce($header, $seq);
 
         $plaintext = match ($this->mode) {
-            'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_decrypt($ciphertext, '', $nonce, $this->groupSecret),
-            'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_decrypt($ciphertext, '', $nonce, $this->groupSecret),
+            'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_decrypt($ciphertext, '', $nonce, $this->secret_key),
+            'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_decrypt($ciphertext, '', $nonce, $this->secret_key),
         };
 
         if ($plaintext === false) {
