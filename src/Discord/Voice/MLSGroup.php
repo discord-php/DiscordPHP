@@ -24,6 +24,7 @@ namespace Discord\Voice;
  * @property array  $tree        The ratchet tree structure for the group.
  * @property int    $nonceLength Nonce length based on encryption mode.
  * @property string $mode        The encryption mode used ('aes256-gcm-rtpsize' or 'xchacha20-poly1305-rtpsize').
+ * @property string $groupSecret The group secret used for key derivation.
  */
 class MLSGroup
 {
