@@ -24,10 +24,10 @@ namespace Discord\Voice;
  * @property int    $nonceLength Nonce length based on encryption mode.
  * @property string $mode        The encryption mode.
  *
- * @method string       encrypt(string $plaintext, string $header = '', int $seq = 0)          Encrypt a message for Discord's MLS Group.
- * @method string       decrypt(string $ciphertext, string $header = '', int $seq = 0)         Decrypt a message from Discord's MLS Group.
- * @method string       encryptRTPPacket(string $rtpHeader, string $opusPayload, int $seq = 0) Encrypt an RTP packet (header + Opus payload).
- * @method string|false decryptRTPPacket(string $packet, int $seq = 0)                         Decrypt an RTP packet (header + encrypted payload).
+ * @method string       encrypt(string $plaintext, string $header = '', int $seq = 0)  Encrypt a message for Discord's MLS Group.
+ * @method string       decrypt(string $ciphertext, string $header = '', int $seq = 0) Decrypt a message from Discord's MLS Group.
+ * @method string       encryptRTPPacket(VoicePacket $packet, int $seq = 0)            Encrypt an RTP packet (header + Opus payload).
+ * @method string|false decryptRTPPacket(VoicePacket $packet, int $seq = 0)            Decrypt an RTP packet (header + encrypted payload).
  */
 class VoiceGroupCrypto implements VoiceGroupCryptoInterface
 {

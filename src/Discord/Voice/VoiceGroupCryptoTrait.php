@@ -24,10 +24,10 @@ namespace Discord\Voice;
  * @property int    $nonceLength Nonce length based on encryption mode.
  * @property string $mode        The encryption mode.
  *
- * @method string       encrypt(string $plaintext, string $header = '', int $seq = 0)          Encrypt a message for Discord's MLS Group.
- * @method string       decrypt(string $ciphertext, string $header = '', int $seq = 0)         Decrypt a message from Discord's MLS Group.
- * @method string       encryptRTPPacket(string $rtpHeader, string $opusPayload, int $seq = 0) Encrypt an RTP packet (header + Opus payload).
- * @method string|false decryptRTPPacket(string $packet, int $seq = 0)                         Decrypt an RTP packet (header + encrypted payload).
+ * @method string       encrypt(string $plaintext, string $header = '', int $seq = 0)  Encrypt a message for Discord's MLS Group.
+ * @method string       decrypt(string $ciphertext, string $header = '', int $seq = 0) Decrypt a message from Discord's MLS Group.
+ * @method string       encryptRTPPacket(VoicePacket $packet, int $seq = 0)            Encrypt an RTP packet (header + Opus payload).
+ * @method string|false decryptRTPPacket(VoicePacket $packet, int $seq = 0)            Decrypt an RTP packet (header + encrypted payload).
  */
 trait VoiceGroupCryptoTrait
 {
@@ -67,6 +67,7 @@ trait VoiceGroupCryptoTrait
             'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_decrypt($ciphertext, '', $nonce, $this->secret_key),
             'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_decrypt($ciphertext, '', $nonce, $this->secret_key),
         };
+
         return $plaintext;
     }
 
@@ -82,10 +83,10 @@ trait VoiceGroupCryptoTrait
             // Protocol uses a 4-byte truncated nonce; expand to 12 bytes by
             // setting the 8 most-significant bytes to zero and placing the
             // 4-byte nonce in the least-significant bytes.
-            'aead_aes256_gcm_rtpsize' => str_repeat("\x00", 8) . pack('N', $seq),
+            'aead_aes256_gcm_rtpsize' => str_repeat("\x00", 8).pack('N', $seq),
             // XChaCha20-Poly1305 uses a 24-byte nonce formed from the RTP header (12)
             // followed by 12 zero bytes.
-            'aead_xchacha20_poly1305_rtpsize' => $header12 . str_repeat("\x00", 12),
+            'aead_xchacha20_poly1305_rtpsize' => $header12.str_repeat("\x00", 12),
         };
     }
 
@@ -96,24 +97,27 @@ trait VoiceGroupCryptoTrait
      * @param string $opusPayload Opus-encoded audio
      * @param int    $seq         Sequence number for AES-GCM mode
      */
-    public function encryptRTPPacket(string $rtpHeader, string $opusPayload, int $seq = 0): string
+    public function encryptRTPPacket(VoicePacket $packet, int $seq = 0): string
     {
-        $cipher = $this->encrypt($opusPayload, $rtpHeader, $seq);
+        $cipher = $this->encrypt($packet->getData(), $packet->getHeader(), $seq);
 
-        return $rtpHeader.$cipher;
+        return $packet->getHeader().$cipher;
     }
 
     /**
      * Decrypt an RTP packet (header + encrypted payload).
      */
-    public function decryptRTPPacket(string $packet, int $seq = 0): string|false
+    public function decryptRTPPacket(VoicePacket $packet, int $seq = 0): string|false
     {
-        if (strlen($packet) < 12) {
-            return false;
-        }
-        $header = substr($packet, 0, 12);
-        $payloadEnc = substr($packet, 12);
+        $data = $packet->getData();
 
-        return $this->decrypt($payloadEnc, $header, $seq);
+        $ciphertext = $this->extractCiphertext($data);
+        
+        return $this->decrypt($ciphertext, $packet->getHeader(), $seq);
+    }
+
+    protected function extractCiphertext(string $data): string
+    {
+        return substr($data, 0, -4);
     }
 }

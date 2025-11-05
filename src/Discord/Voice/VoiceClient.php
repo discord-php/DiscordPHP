@@ -1220,7 +1220,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if ($stream instanceof Process || $stream instanceof WinProcess) {
+        if ($stream instanceof Process /*|| $stream instanceof WinProcess*/) {
             $stream->stderr->on('data', function ($d) {
                 if (empty($d)) {
                     return;
@@ -1243,9 +1243,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->buffer = new RealBuffer();
-        $stream->on('data', function ($d) {
-            $this->buffer->write($d);
-        });
+        $stream->on('data', fn ($d) => $this->buffer->write($d));
 
         $loops = 0;
 
@@ -1345,7 +1343,7 @@ class VoiceClient extends EventEmitter
         }
 
         $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
-        $this->client->send($this->crypto->encryptRTPPacket((string) $packet->buildHeader(), $packet->getData(), $this->seq));
+        $this->client->send($this->crypto->encryptRTPPacket($packet, $this->seq));
 
         $this->streamTime = microtime(true);
 
@@ -1751,21 +1749,27 @@ class VoiceClient extends EventEmitter
      */
     protected function handleAudioData($message): void
     {
+        return;
+
         if ($this->deaf) {
             $this->discord->logger->debug('ignoring voice data, client is deafened');
 
             return;
         }
 
-        $this->discord->logger->debug('received voice data', ['message' => $message]);
+        //$this->discord->logger->debug('received voice data', ['message' => $message]);
 
         $voicePacket = VoicePacket::make($message);
 
-        if (($decrypted = $this->crypto->decryptRTPPacket($message, $this->seq)) !== false) {
-            $this->emit('raw', [$decrypted, $this, $voicePacket]);
+        if (($decrypted = $this->crypto->decryptRTPPacket($voicePacket, $this->seq)) === false) {
+            $this->discord->logger->warning('failed to decrypt voice packet', ['packet' => $voicePacket]);
 
-            self::decodeVoicePacket($decrypted, $this, $voicePacket);
+            return;
         }
+
+        $this->emit('raw', [$decrypted, $this, $voicePacket]);
+
+        self::decodeVoicePacket($decrypted, $this, $voicePacket);
     }
 
     /**
@@ -1952,17 +1956,15 @@ class VoiceClient extends EventEmitter
             default => -40 + ($this->volume / 100) * 40,
         };
 
-        $bitrate = $this->getChannel()->bitrate;
-
         $flags = [
             '-i', $filename ?? 'pipe:0',
             '-map_metadata', '-1',
             '-f', 'opus',
             '-c:a', 'libopus',
-            '-ar', $bitrate,
+            '-ar', 48000,
             '-af', 'volume='.$dB.'dB',
             '-ac', '2',
-            '-b:a', $bitrate,
+            '-b:a', $this->getChannel()->bitrate,
             '-loglevel', 'warning',
             'pipe:1',
         ];
@@ -1976,7 +1978,7 @@ class VoiceClient extends EventEmitter
 
         // ReactPHP Process replacement for Windows (since native pipes block)
         if (PHP_OS === 'WINNT') {
-            return new WinProcess($cmd);
+            //return new WinProcess($cmd);
         }
 
         return new Process($cmd, null, null, [

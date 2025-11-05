@@ -22,6 +22,6 @@ namespace Discord\Voice;
  */
 interface VoiceGroupCryptoInterface
 {
-    public function encryptRTPPacket(string $rtpHeader, string $opusPayload, int $seq = 0): string;
-    public function decryptRTPPacket(string $packet, int $seq = 0): string|false;
+    public function encryptRTPPacket(VoicePacket $packet, int $seq = 0): string;
+    public function decryptRTPPacket(VoicePacket $packet, int $seq = 0): string|false;
 }
