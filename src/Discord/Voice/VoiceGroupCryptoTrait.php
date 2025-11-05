@@ -42,7 +42,7 @@ trait VoiceGroupCryptoTrait
      * @param string $header    Optional 12-byte RTP header (for RTP-style nonce)
      * @param int    $seq       Optional sequence number (for AES-GCM)
      */
-    public function encrypt(string $plaintext, string $header = '', int $seq = 0): string
+    protected function encrypt(string $plaintext, string $header = '', int $seq = 0): string
     {
         $nonce = $this->buildNonce($header, $seq);
 
@@ -58,10 +58,8 @@ trait VoiceGroupCryptoTrait
      * @param string $ciphertext
      * @param string $header     Optional RTP header
      * @param int    $seq        Optional sequence number
-     *
-     * @return string|false The decrypted plaintext, or false on failure
      */
-    public function decrypt(string $ciphertext, string $header = '', int $seq = 0): string|false
+    protected function decrypt(string $ciphertext, string $header = '', int $seq = 0): string|false
     {
         $nonce = $this->buildNonce($header, $seq);
 
@@ -69,7 +67,6 @@ trait VoiceGroupCryptoTrait
             'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_decrypt($ciphertext, '', $nonce, $this->secret_key),
             'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_decrypt($ciphertext, '', $nonce, $this->secret_key),
         };
-
         return $plaintext;
     }
 
