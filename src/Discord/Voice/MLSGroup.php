@@ -170,4 +170,33 @@ class MLSGroup
     {
         return $this->members[$memberId]['pk'] ?? '';
     }
+
+    /**
+     * Encrypt an RTP packet (header + Opus payload) for a member.
+     *
+     * @param string $memberId
+     * @param string $rtpHeader   12-byte RTP header
+     * @param string $opusPayload Opus-encoded audio
+     * @param int    $seq         Sequence number for AES-GCM mode
+     */
+    public function encryptRTPPacket(string $memberId, string $rtpHeader, string $opusPayload, int $seq = 0): string
+    {
+        $cipher = $this->encrypt($memberId, $opusPayload, $rtpHeader, $seq);
+
+        return $rtpHeader.$cipher;
+    }
+
+    /**
+     * Decrypt an RTP packet (header + encrypted payload) for a member.
+     */
+    public function decryptRTPPacket(string $memberId, string $packet, int $seq = 0): string
+    {
+        if (strlen($packet) < 12) {
+            throw new \RuntimeException('Invalid RTP packet');
+        }
+        $header = substr($packet, 0, 12);
+        $payloadEnc = substr($packet, 12);
+
+        return $this->decrypt($memberId, $payloadEnc, $header, $seq);
+    }
 }
