@@ -1840,49 +1840,6 @@ class VoiceClient extends EventEmitter
         return $decoder;
     }
 
-    /**
-     * Decrypts a voice packet received from Discord.
-     *
-     * @param VoicePacket $voicePacket The voice packet to decrypt.
-     *
-     * @return string|false The decrypted voice data as a string, or false if decryption fails
-     *                      (e.g., when AEAD payload is too short)
-     *
-     * @deprecated v10.41.0 Use `VoiceGroupCrypto::decryptRTPPacket()` instead.
-     */
-    protected function decryptVoicePacket(VoicePacket $voicePacket): string|false
-    {
-        // AEAD modes use a nonce that is a 32-bit integer appended to the payload.
-        $data = $voicePacket->getData();
-        $nonce = str_repeat("\x00", 12); // 12-byte nonce for AES-GCM
-        // The last 4 bytes of the payload are the nonce (32-bit LE integer)
-        if (strlen($data) < 4) {
-            return false;
-        }
-        $ciphertext = substr($data, 0, -4);
-        $nonceInt = unpack('V', substr($data, -4))[1];
-        $nonce = str_pad(pack('V', $nonceInt), 12, "\x00", STR_PAD_RIGHT);
-
-        switch ($this->mode) {
-            case 'aead_aes256_gcm_rtpsize': // preferred
-                return \sodium_crypto_aead_aes256gcm_decrypt(
-                    $ciphertext,
-                    '', // no additional data
-                    (string) $nonce,
-                    $this->secret_key
-                );
-            case 'aead_xchacha20_poly1305_rtpsize': // required
-                return \sodium_crypto_aead_xchacha20poly1305_ietf_decrypt(
-                    $ciphertext,
-                    '', // no additional data
-                    (string) $nonce,
-                    $this->secret_key
-                );
-        }
-
-        return false;
-    }
-
     protected function generateKeyPackage()
     {
         // Generate and return a new MLS key package
