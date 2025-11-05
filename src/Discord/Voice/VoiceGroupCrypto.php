@@ -16,13 +16,11 @@ namespace Discord\Voice;
 /**
  * Provides group-based AEAD encryption and decryption for Discord voice RTP packets.
  *
- * Supported encryption modes: 'aes256-gcm-rtpsize' and 'xchacha20-poly1305-rtpsize'.
- *
  * @author Valithor Obsidion <valithor@valgorithms.com>
  *
  * @property string $groupSecret The group secret used for key derivation.
  * @property int    $nonceLength Nonce length based on encryption mode.
- * @property string $mode        The encryption mode used ('aes256-gcm-rtpsize' or 'xchacha20-poly1305-rtpsize').
+ * @property string $mode        The encryption mode.
  */
 class VoiceGroupCrypto
 {
@@ -36,7 +34,6 @@ class VoiceGroupCrypto
     public const SUPPORTED_MODES = [
         'aead_aes256_gcm_rtpsize',
         'aead_xchacha20_poly1305_rtpsize',
-        'xchacha20-poly1305-rtpsize',
     ];
 
     protected int $nonceLength;
@@ -44,10 +41,10 @@ class VoiceGroupCrypto
     protected string $mode;
 
     /**
-     * @param string $groupSecret Optional group secret
-     * @param string $mode        'aes256-gcm-rtpsize' or 'xchacha20-poly1305-rtpsize'
+     * @param string $groupSecret Optional group secret.
+     * @param string $mode        The supported transport encryption mode.
      */
-    public function __construct(public string $groupSecret, string $mode = 'xchacha20-poly1305-rtpsize')
+    public function __construct(public string $groupSecret, string $mode = 'aead_xchacha20_poly1305_rtpsize')
     {
         if (! in_array($mode, self::SUPPORTED_MODES)) {
             throw new \InvalidArgumentException("Invalid transport encryption mode: {$mode}");
@@ -56,7 +53,7 @@ class VoiceGroupCrypto
         $this->mode = strtolower($mode);
 
         switch ($this->mode) {
-            case 'aes256-gcm-rtpsize':
+            case 'aead_aes256_gcm_rtpsize':
                 if (! defined('SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES')) {
                     throw new \RuntimeException('AES256-GCM not supported');
                 }
@@ -65,7 +62,6 @@ class VoiceGroupCrypto
                 break;
 
             case 'aead_xchacha20_poly1305_rtpsize':
-            case 'xchacha20-poly1305-rtpsize':
                 $this->nonceLength = 24; // RTP header + 12 zero bytes
                 //$this->keyLength = SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES;
                 break;
@@ -88,8 +84,7 @@ class VoiceGroupCrypto
         $nonce = $this->buildNonce($memberId, $header, $seq);
 
         return match ($this->mode) {
-            'aes256-gcm-rtpsize' => sodium_crypto_aead_aes256gcm_encrypt($plaintext, '', $nonce, $this->groupSecret),
-            'xchacha20-poly1305-rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_encrypt($plaintext, '', $nonce, $this->groupSecret),
+            'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_encrypt($plaintext, '', $nonce, $this->groupSecret),
             'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_encrypt($plaintext, '', $nonce, $this->groupSecret),
         };
     }
@@ -107,9 +102,8 @@ class VoiceGroupCrypto
         $nonce = $this->buildNonce($memberId, $header, $seq);
 
         $plaintext = match ($this->mode) {
-            'aes256-gcm-rtpsize' => sodium_crypto_aead_aes256gcm_decrypt($ciphertext, '', $nonce, $this->groupSecret),
-            'xchacha20-poly1305-rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_decrypt($ciphertext, '', $nonce, $this->groupSecret),
-            'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_encrypt($ciphertext, '', $nonce, $this->groupSecret),
+            'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_decrypt($ciphertext, '', $nonce, $this->groupSecret),
+            'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_decrypt($ciphertext, '', $nonce, $this->groupSecret),
         };
 
         if ($plaintext === false) {
@@ -125,8 +119,7 @@ class VoiceGroupCrypto
     protected function buildNonce(string $memberId, string $header = '', int $seq = 0): string
     {
         return match ($this->mode) {
-            'aes256-gcm-rtpsize' => pack('N', $seq).str_repeat("\x00", 8),
-            'xchacha20-poly1305-rtpsize' => str_pad($header, 12, "\x00", STR_PAD_RIGHT).str_repeat("\x00", 12),
+            'aead_aes256_gcm_rtpsize' => pack('N', $seq).str_repeat("\x00", 8),
             'aead_xchacha20_poly1305_rtpsize' => str_pad($header, 12, "\x00", STR_PAD_RIGHT).str_repeat("\x00", 12),
         };
     }
