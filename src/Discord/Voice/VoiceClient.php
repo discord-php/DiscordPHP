@@ -52,6 +52,10 @@ use function React\Promise\resolve;
  */
 class VoiceClient extends EventEmitter
 {
+    public const SPEAKING = 1 << 0;
+    public const SOUNDSHARE = 1 << 1;
+    public const PRIORITY_SPEAKER = 1 << 2;
+
     /**
      * The Opus Silence Frame.
      *
@@ -281,11 +285,11 @@ class VoiceClient extends EventEmitter
     protected $secret_key;
 
     /**
-     * Are we currently set as speaking?
+     * The speaking mode.
      *
-     * @var bool Whether we are speaking or not.
+     * @var int The speaking mode.
      */
-    protected $speaking = false;
+    protected $speaking = self::SPEAKING;
 
     /**
      * Whether we are set as mute.
@@ -1101,7 +1105,7 @@ class VoiceClient extends EventEmitter
         $this->on('resumed', function () {
             $this->discord->logger->debug('voice client resumed');
             $this->unpause();
-            $this->speaking = false;
+            $this->speaking = 0;
             $this->setSpeaking(true);
         });
     }
@@ -1352,12 +1356,14 @@ class VoiceClient extends EventEmitter
 
     /**
      * Sets the speaking value of the client.
+     * 
+     * @link https://discord.com/developers/docs/topics/voice-connections#speaking
      *
-     * @param bool $speaking Whether the client is speaking or not.
+     * @param int $speaking The speaking mode.
      *
      * @throws \RuntimeException
      */
-    public function setSpeaking(bool $speaking = true): void
+    public function setSpeaking(int $speaking = self::SPEAKING): void
     {
         if ($this->speaking === $speaking) {
             return;
@@ -1645,15 +1651,15 @@ class VoiceClient extends EventEmitter
     public function isSpeaking($id = null): bool
     {
         if (! isset($id) || $id === $this->discord->id) {
-            return $this->speaking;
+            return $this->speaking !== 0;
         }
         if ($user = $this->speakingStatus->get('user_id', $id)) {
             /** @var Speaking $user */
-            return $user->speaking;
+            return $user->speaking !== 0;
         }
         if ($ssrc = $this->speakingStatus->get('ssrc', $id)) {
             /** @var Speaking $ssrc */
-            return $ssrc->speaking;
+            return $ssrc->speaking !== 0;
         }
 
         return false;
