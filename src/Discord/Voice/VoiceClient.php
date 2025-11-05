@@ -474,18 +474,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->mode = $mode;
-
-        $mlsMode = '';
-        switch ($this->mode) {
-            case 'aead_aes256_gcm_rtpsize':
-                $mlsMode = 'aes256-gcm-rtpsize';
-                break;
-            default:
-                $mlsMode = 'xchacha20-poly1305-rtpsize';
-                break;
-        }
-        
-        $this->crypto = new VoiceGroupCrypto('', $mlsMode);
+        $this->crypto = new VoiceGroupCrypto('', $mode);
     }
 
     /**
