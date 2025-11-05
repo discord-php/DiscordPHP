@@ -1870,6 +1870,8 @@ class VoiceClient extends EventEmitter
      *
      * @return string|false The decrypted voice data as a string, or false if decryption fails
      *                      (e.g., when AEAD payload is too short)
+     * 
+     * @deprecated v10.41.0 Use `MLSGroup::decryptRTPPacket()` instead.
      */
     protected function decryptVoicePacket(VoicePacket $voicePacket): string|false
     {
