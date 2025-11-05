@@ -4171,6 +4171,66 @@ Search.appendIndex(
             "summary": "Array\u0020of\u0020sub\u002Dcommands.",
             "url": "classes/Discord-Helpers-RegisteredCommand.html#property_subCommands"
         },                {
+            "fqsen": "\\Discord\\Helpers\\WinProcess",
+            "name": "WinProcess",
+            "summary": "A\u0020simple\u0020implementation\u0020of\u0020a\u0020Windows\u002Dcompatible\u0020process\u0020handler.",
+            "url": "classes/Discord-Helpers-WinProcess.html"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-Helpers-WinProcess.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003Astart\u0028\u0029",
+            "name": "start",
+            "summary": "",
+            "url": "classes/Discord-Helpers-WinProcess.html#method_start"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003Aterminate\u0028\u0029",
+            "name": "terminate",
+            "summary": "",
+            "url": "classes/Discord-Helpers-WinProcess.html#method_terminate"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003AisRunning\u0028\u0029",
+            "name": "isRunning",
+            "summary": "",
+            "url": "classes/Discord-Helpers-WinProcess.html#method_isRunning"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003Aclose\u0028\u0029",
+            "name": "close",
+            "summary": "",
+            "url": "classes/Discord-Helpers-WinProcess.html#method_close"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A\u0024stdin",
+            "name": "stdin",
+            "summary": "",
+            "url": "classes/Discord-Helpers-WinProcess.html#property_stdin"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A\u0024stdout",
+            "name": "stdout",
+            "summary": "",
+            "url": "classes/Discord-Helpers-WinProcess.html#property_stdout"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A\u0024stderr",
+            "name": "stderr",
+            "summary": "",
+            "url": "classes/Discord-Helpers-WinProcess.html#property_stderr"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A\u0024proc",
+            "name": "proc",
+            "summary": "",
+            "url": "classes/Discord-Helpers-WinProcess.html#property_proc"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A\u0024pipes",
+            "name": "pipes",
+            "summary": "",
+            "url": "classes/Discord-Helpers-WinProcess.html#property_pipes"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A\u0024cmd",
+            "name": "cmd",
+            "summary": "",
+            "url": "classes/Discord-Helpers-WinProcess.html#property_cmd"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Attachment",
             "name": "Attachment",
             "summary": "A\u0020message\u0020attachment.",
@@ -11521,6 +11581,16 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-User-Connection.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\DisplayNameStyles",
+            "name": "DisplayNameStyles",
+            "summary": "The\u0020data\u0020for\u0020the\u0020user\u0027s\u0020display\u0020name\u0020styles.",
+            "url": "classes/Discord-Parts-User-DisplayNameStyles.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\DisplayNameStyles\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-User-DisplayNameStyles.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Member",
             "name": "Member",
             "summary": "A\u0020member\u0020is\u0020a\u0020relationship\u0020between\u0020a\u0020user\u0020and\u0020a\u0020guild.\u0020It\u0020contains\u0020user\u002Dto\u002Dguild\u0020specific\u0020data\u0020like\u0020roles.",
@@ -11890,6 +11960,11 @@ Search.appendIndex(
             "name": "getAvatarDecorationDataAttribute",
             "summary": "Returns\u0020the\u0020avatar\u0020decoration\u0020data.",
             "url": "classes/Discord-Parts-User-User.html#method_getAvatarDecorationDataAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetDisplayNameStylesAttribute\u0028\u0029",
+            "name": "getDisplayNameStylesAttribute",
+            "summary": "Returns\u0020the\u0020display\u0020name\u0020styles\u0020data.",
+            "url": "classes/Discord-Parts-User-User.html#method_getDisplayNameStylesAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AgetCollectiblesAttribute\u0028\u0029",
             "name": "getCollectiblesAttribute",
@@ -13721,30 +13796,110 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Voice-Flags.html#property_fillable"
         },                {
-            "fqsen": "\\Discord\\Voice\\Processes\\OpusFFI",
-            "name": "OpusFFI",
-            "summary": "Handles\u0020the\u0020decoding\u0020of\u0020Opus\u0020audio\u0020data\u0020using\u0020FFI\u0020\u0028Foreign\u0020Function\u0020Interface\u0029.",
-            "url": "classes/Discord-Voice-Processes-OpusFFI.html"
+            "fqsen": "\\Discord\\Voice\\MLSGroup",
+            "name": "MLSGroup",
+            "summary": "A\u0020simplified\u0020implementation\u0020of\u0020an\u0020MLS\u0020\u0028Messaging\u0020Layer\u0020Security\u0029\u0020group\u0020for\u0020encrypting\u0020and\u0020decrypting\u0020messages\u0020among\u0020multiple\u0020members.",
+            "url": "classes/Discord-Voice-MLSGroup.html"
         },                {
-            "fqsen": "\\Discord\\Voice\\Processes\\OpusFFI\u003A\u003A__construct\u0028\u0029",
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
             "summary": "",
-            "url": "classes/Discord-Voice-Processes-OpusFFI.html#method___construct"
+            "url": "classes/Discord-Voice-MLSGroup.html#method___construct"
         },                {
-            "fqsen": "\\Discord\\Voice\\Processes\\OpusFFI\u003A\u003Adecode\u0028\u0029",
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003AaddMember\u0028\u0029",
+            "name": "addMember",
+            "summary": "Add\u0020a\u0020member\u0020with\u0020generated\u0020key\u0020pair.",
+            "url": "classes/Discord-Voice-MLSGroup.html#method_addMember"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003AremoveMember\u0028\u0029",
+            "name": "removeMember",
+            "summary": "Remove\u0020a\u0020member.",
+            "url": "classes/Discord-Voice-MLSGroup.html#method_removeMember"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003ArecomputeTree\u0028\u0029",
+            "name": "recomputeTree",
+            "summary": "Recompute\u0020per\u002Dmember\u0020derived\u0020keys\u0020from\u0020group\u0020secret.",
+            "url": "classes/Discord-Voice-MLSGroup.html#method_recomputeTree"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003Aencrypt\u0028\u0029",
+            "name": "encrypt",
+            "summary": "Encrypt\u0020a\u0020message\u0020for\u0020a\u0020specific\u0020member.",
+            "url": "classes/Discord-Voice-MLSGroup.html#method_encrypt"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003Adecrypt\u0028\u0029",
+            "name": "decrypt",
+            "summary": "Decrypt\u0020a\u0020message\u0020for\u0020a\u0020specific\u0020member.",
+            "url": "classes/Discord-Voice-MLSGroup.html#method_decrypt"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003AbuildNonce\u0028\u0029",
+            "name": "buildNonce",
+            "summary": "Build\u0020a\u0020nonce\u0020for\u0020RTP\u002Dstyle\u0020AEAD.",
+            "url": "classes/Discord-Voice-MLSGroup.html#method_buildNonce"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003AgetMemberPublicKey\u0028\u0029",
+            "name": "getMemberPublicKey",
+            "summary": "",
+            "url": "classes/Discord-Voice-MLSGroup.html#method_getMemberPublicKey"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003AencryptRTPPacket\u0028\u0029",
+            "name": "encryptRTPPacket",
+            "summary": "Encrypt\u0020an\u0020RTP\u0020packet\u0020\u0028header\u0020\u002B\u0020Opus\u0020payload\u0029\u0020for\u0020a\u0020member.",
+            "url": "classes/Discord-Voice-MLSGroup.html#method_encryptRTPPacket"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003AdecryptRTPPacket\u0028\u0029",
+            "name": "decryptRTPPacket",
+            "summary": "Decrypt\u0020an\u0020RTP\u0020packet\u0020\u0028header\u0020\u002B\u0020encrypted\u0020payload\u0029\u0020for\u0020a\u0020member.",
+            "url": "classes/Discord-Voice-MLSGroup.html#method_decryptRTPPacket"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003A\u0024members",
+            "name": "members",
+            "summary": "",
+            "url": "classes/Discord-Voice-MLSGroup.html#property_members"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003A\u0024tree",
+            "name": "tree",
+            "summary": "",
+            "url": "classes/Discord-Voice-MLSGroup.html#property_tree"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003A\u0024nonceLength",
+            "name": "nonceLength",
+            "summary": "",
+            "url": "classes/Discord-Voice-MLSGroup.html#property_nonceLength"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003A\u0024mode",
+            "name": "mode",
+            "summary": "",
+            "url": "classes/Discord-Voice-MLSGroup.html#property_mode"
+        },                {
+            "fqsen": "\\Discord\\Voice\\MLSGroup\u003A\u003A\u0024groupSecret",
+            "name": "groupSecret",
+            "summary": "",
+            "url": "classes/Discord-Voice-MLSGroup.html#property_groupSecret"
+        },                {
+            "fqsen": "\\Discord\\Voice\\OpusFFI",
+            "name": "OpusFFI",
+            "summary": "Handles\u0020the\u0020decoding\u0020of\u0020Opus\u0020audio\u0020data\u0020using\u0020FFI\u0020\u0028Foreign\u0020Function\u0020Interface\u0029.",
+            "url": "classes/Discord-Voice-OpusFFI.html"
+        },                {
+            "fqsen": "\\Discord\\Voice\\OpusFFI\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-Voice-OpusFFI.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Voice\\OpusFFI\u003A\u003Adecode\u0028\u0029",
             "name": "decode",
             "summary": "Creates\u0020a\u0020FFI\u0020instance\u0020\u0028code\u0020in\u0020C\u0029\u0020to\u0020decode\u0020Opus\u0020audio\u0020data.",
-            "url": "classes/Discord-Voice-Processes-OpusFFI.html#method_decode"
+            "url": "classes/Discord-Voice-OpusFFI.html#method_decode"
         },                {
-            "fqsen": "\\Discord\\Voice\\Processes\\OpusFFI\u003A\u003A__call\u0028\u0029",
+            "fqsen": "\\Discord\\Voice\\OpusFFI\u003A\u003A__call\u0028\u0029",
             "name": "__call",
             "summary": "Magic\u0020method\u0020to\u0020redirect\u0020method\u0020calls\u0020to\u0020the\u0020FFI\u0020instance.",
-            "url": "classes/Discord-Voice-Processes-OpusFFI.html#method___call"
+            "url": "classes/Discord-Voice-OpusFFI.html#method___call"
         },                {
-            "fqsen": "\\Discord\\Voice\\Processes\\OpusFFI\u003A\u003A\u0024ffi",
+            "fqsen": "\\Discord\\Voice\\OpusFFI\u003A\u003A\u0024ffi",
             "name": "ffi",
             "summary": "",
-            "url": "classes/Discord-Voice-Processes-OpusFFI.html#property_ffi"
+            "url": "classes/Discord-Voice-OpusFFI.html#property_ffi"
         },                {
             "fqsen": "\\Discord\\Voice\\Platform",
             "name": "Platform",
@@ -16570,11 +16725,6 @@ Search.appendIndex(
             "name": "Voice",
             "summary": "",
             "url": "namespaces/discord-voice.html"
-        },                {
-            "fqsen": "\\Discord\\Voice\\Processes",
-            "name": "Processes",
-            "summary": "",
-            "url": "namespaces/discord-voice-processes.html"
         },                {
             "fqsen": "\\Discord\\Voice\\Speaking",
             "name": "Speaking",
