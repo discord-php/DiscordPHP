@@ -58,7 +58,7 @@ trait VoiceGroupCryptoTrait
      * @param string $ciphertext
      * @param string $header     Optional RTP header
      * @param int    $seq        Optional sequence number
-     * 
+     *
      * @return string|false The decrypted plaintext, or false on failure
      */
     public function decrypt(string $ciphertext, string $header = '', int $seq = 0): string|false
