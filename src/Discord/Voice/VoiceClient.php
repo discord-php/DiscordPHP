@@ -704,6 +704,8 @@ class VoiceClient extends EventEmitter
             $this->secret_key .= pack('C*', $part);
         }
 
+        $this->mlsGroup->groupSecret = $this->secret_key;
+
         $this->discord->logger->debug('received description packet, vc ready', ['data' => $data]);
 
         if (! $this->reconnecting) {
