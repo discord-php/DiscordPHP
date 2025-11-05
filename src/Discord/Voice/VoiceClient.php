@@ -159,7 +159,7 @@ class VoiceClient extends EventEmitter
      *
      * @var VoiceGroupCrypto The MLS Group instance.
      */
-    public VoiceGroupCrypto $crypto;
+    public VoiceGroupCryptoInterface $crypto;
 
     /**
      * The Channel that we are connecting to.
