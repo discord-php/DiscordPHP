@@ -346,7 +346,7 @@ class User extends Part implements Stringable
 
     /**
      * Returns the display name styles data.
-     * 
+     *
      * @return DisplayNameStyles|null The display name styles data.
      */
     public function getDisplayNameStylesAttribute(): ?DisplayNameStyles
