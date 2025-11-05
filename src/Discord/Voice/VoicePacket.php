@@ -226,7 +226,7 @@ class VoicePacket
 
     /**
      * Returns the data.
-     * 
+     *
      * @param Buffer $buffer
      *
      * @return string The packet data.
