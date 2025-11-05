@@ -54,6 +54,7 @@ use function React\Promise\resolve;
  * @property-read string|null                $avatar_decoration      The user's avatar decoration URL.
  * @property-read string|null                $avatar_decoration_hash The user's avatar decoration hash.
  * @property      ?AvatarDecorationData|null $avatar_decoration_data Data for the user's avatar decoration.
+ * @property      DisplayNameStyles|null     $display_name_styles    Data for the user's display name styles.
  * @property      ?Collectibles|null         $collectibles           Data for the user's collectibles.
  * @property      ?PrimaryGuild|null         $primary_guild          The user's primary guild
  *
@@ -341,6 +342,16 @@ class User extends Part implements Stringable
     public function getAvatarDecorationDataAttribute(): ?AvatarDecorationData
     {
         return $this->attributePartHelper('avatar_decoration_data', AvatarDecorationData::class);
+    }
+
+    /**
+     * Returns the display name styles data.
+     * 
+     * @return DisplayNameStyles|null The display name styles data.
+     */
+    public function getDisplayNameStylesAttribute(): ?DisplayNameStyles
+    {
+        return $this->attributePartHelper('display_name_styles', DisplayNameStyles::class);
     }
 
     /**
