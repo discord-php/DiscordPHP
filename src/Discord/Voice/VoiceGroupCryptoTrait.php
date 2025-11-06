@@ -20,11 +20,11 @@ namespace Discord\Voice;
  *
  * @since 10.41.0
  *
- * @property string $secret_key  The group secret used for key derivation.
- * @property string $mode        The encryption mode.
+ * @property string $secret_key The group secret used for key derivation.
+ * @property string $mode       The encryption mode.
  *
- * @method string       encryptRTPPacket(VoicePacket $packet, int $seq = 0)            Encrypt an RTP packet (header + Opus payload).
- * @method string|false decryptRTPPacket(VoicePacket $packet, int $seq = 0)            Decrypt an RTP packet (header + encrypted payload).
+ * @method string       encryptRTPPacket(VoicePacket $packet, int $seq = 0) Encrypt an RTP packet (header + Opus payload).
+ * @method string|false decryptRTPPacket(VoicePacket $packet, int $seq = 0) Decrypt an RTP packet (header + encrypted payload).
  */
 trait VoiceGroupCryptoTrait
 {

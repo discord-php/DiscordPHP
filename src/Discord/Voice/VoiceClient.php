@@ -1356,7 +1356,7 @@ class VoiceClient extends EventEmitter
 
     /**
      * Sets the speaking value of the client.
-     * 
+     *
      * @link https://discord.com/developers/docs/topics/voice-connections#speaking
      *
      * @param int $speaking The speaking mode.
