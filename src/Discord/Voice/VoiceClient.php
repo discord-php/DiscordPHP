@@ -630,9 +630,9 @@ class VoiceClient extends EventEmitter
      * Handles the "ready" event for the voice client, initializing UDP connection and heartbeat.
      *
      * @param Payload $data The data object containing voice server connection details:
-     *                      - $data->d['ssrc']: The synchronization source identifier.
-     *                      - $data->d['ip']: The IP address for the UDP connection.
-     *                      - $data->d['port']: The port for the UDP connection.
+     *                      - $data->d['ssrc']:  The synchronization source identifier.
+     *                      - $data->d['ip']:    The IP address for the UDP connection.
+     *                      - $data->d['port']:  The port for the UDP connection.
      *                      - $data->d['modes']: Supported encryption modes.
      *
      * @since 10.19.0
