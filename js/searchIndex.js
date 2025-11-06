@@ -13736,6 +13736,16 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Voice-Flags.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Voice\\Hello",
+            "name": "Hello",
+            "summary": "Represents\u0020the\u0020hello\u0020data\u0020sent\u0020when\u0020establishing\u0020a\u0020voice\u0020connection.",
+            "url": "classes/Discord-Voice-Hello.html"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Hello\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Voice-Hello.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Voice\\OpusFFI",
             "name": "OpusFFI",
             "summary": "Handles\u0020the\u0020decoding\u0020of\u0020Opus\u0020audio\u0020data\u0020using\u0020FFI\u0020\u0028Foreign\u0020Function\u0020Interface\u0029.",
@@ -13785,6 +13795,46 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Voice-Platform.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Ready",
+            "name": "Ready",
+            "summary": "Represents\u0020the\u0020ready\u0020data.",
+            "url": "classes/Discord-Voice-Ready.html"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Ready\u003A\u003AgetTypeAttribute\u0028\u0029",
+            "name": "getTypeAttribute",
+            "summary": "Get\u0020the\u0020type\u0020of\u0020the\u0020stream.",
+            "url": "classes/Discord-Voice-Ready.html#method_getTypeAttribute"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Ready\u003A\u003AgetSsrcAttribute\u0028\u0029",
+            "name": "getSsrcAttribute",
+            "summary": "Get\u0020the\u0020SSRC\u0020of\u0020the\u0020stream.",
+            "url": "classes/Discord-Voice-Ready.html#method_getSsrcAttribute"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Ready\u003A\u003AgetRtxSsrcAttribute\u0028\u0029",
+            "name": "getRtxSsrcAttribute",
+            "summary": "Get\u0020the\u0020RTX\u0020SSRC\u0020of\u0020the\u0020stream.",
+            "url": "classes/Discord-Voice-Ready.html#method_getRtxSsrcAttribute"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Ready\u003A\u003AgetRidAttribute\u0028\u0029",
+            "name": "getRidAttribute",
+            "summary": "Get\u0020the\u0020RID\u0020of\u0020the\u0020stream.",
+            "url": "classes/Discord-Voice-Ready.html#method_getRidAttribute"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Ready\u003A\u003AgetQualityAttribute\u0028\u0029",
+            "name": "getQualityAttribute",
+            "summary": "Get\u0020the\u0020quality\u0020of\u0020the\u0020stream.",
+            "url": "classes/Discord-Voice-Ready.html#method_getQualityAttribute"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Ready\u003A\u003AgetActiveAttribute\u0028\u0029",
+            "name": "getActiveAttribute",
+            "summary": "Get\u0020whether\u0020the\u0020stream\u0020is\u0020active.",
+            "url": "classes/Discord-Voice-Ready.html#method_getActiveAttribute"
+        },                {
+            "fqsen": "\\Discord\\Voice\\Ready\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Voice-Ready.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Voice\\ReceiveStream",
             "name": "ReceiveStream",
@@ -13901,45 +13951,25 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Voice-Region.html#property_fillable"
         },                {
-            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState",
-            "name": "UserSpeakingState",
-            "summary": "",
-            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html"
+            "fqsen": "\\Discord\\Voice\\Resumed",
+            "name": "Resumed",
+            "summary": "Represents\u0020the\u0020resumed\u0020data.",
+            "url": "classes/Discord-Voice-Resumed.html"
         },                {
-            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#method___construct"
+            "fqsen": "\\Discord\\Voice\\SessionDescription",
+            "name": "SessionDescription",
+            "summary": "Represents\u0020the\u0020session\u0020description\u0020data.",
+            "url": "classes/Discord-Voice-SessionDescription.html"
         },                {
-            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003AgetUserId\u0028\u0029",
-            "name": "getUserId",
-            "summary": "",
-            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#method_getUserId"
+            "fqsen": "\\Discord\\Voice\\SessionDescription\u003A\u003AgetSecretKeyAttribute\u0028\u0029",
+            "name": "getSecretKeyAttribute",
+            "summary": "Get\u0020the\u0020secret\u0020key\u0020as\u0020a\u0020raw\u0020binary\u0020string.",
+            "url": "classes/Discord-Voice-SessionDescription.html#method_getSecretKeyAttribute"
         },                {
-            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003AisSpeaking\u0028\u0029",
-            "name": "isSpeaking",
-            "summary": "",
-            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#method_isSpeaking"
-        },                {
-            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003AgetPacketsByUserId\u0028\u0029",
-            "name": "getPacketsByUserId",
-            "summary": "",
-            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#method_getPacketsByUserId"
-        },                {
-            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003A\u0024userId",
-            "name": "userId",
-            "summary": "",
-            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#property_userId"
-        },                {
-            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003A\u0024speaking",
-            "name": "speaking",
-            "summary": "",
-            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#property_speaking"
-        },                {
-            "fqsen": "\\Discord\\Voice\\Speaking\\UserSpeakingState\u003A\u003A\u0024packets",
-            "name": "packets",
-            "summary": "",
-            "url": "classes/Discord-Voice-Speaking-UserSpeakingState.html#property_packets"
+            "fqsen": "\\Discord\\Voice\\SessionDescription\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Voice-SessionDescription.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Voice\\Speaking",
             "name": "Speaking",
@@ -14626,6 +14656,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method___construct"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003AvalidateEncryptedRTPPacket\u0028\u0029",
+            "name": "validateEncryptedRTPPacket",
+            "summary": "Validate\u0020an\u0020encrypted\u0020RTP\u0020packet\u0020\u0028header\u0020\u002B\u0020encrypted\u0020payload\u0029.",
+            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method_validateEncryptedRTPPacket"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003ASUPPORTED_MODES",
             "name": "SUPPORTED_MODES",
             "summary": "Supported\u0020encryption\u0020modes\u0020for\u0020voice\u0020connections.",
@@ -14681,11 +14716,6 @@ Search.appendIndex(
             "summary": "Decrypt\u0020an\u0020RTP\u0020packet\u0020\u0028header\u0020\u002B\u0020encrypted\u0020payload\u0029.",
             "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#method_decryptRTPPacket"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003AextractCiphertext\u0028\u0029",
-            "name": "extractCiphertext",
-            "summary": "Extracts\u0020the\u0020ciphertext\u0020from\u0020the\u0020RTP\u0020packet\u0020data.",
-            "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#method_extractCiphertext"
-        },                {
             "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003A\u0024mode",
             "name": "mode",
             "summary": "",
@@ -14700,6 +14730,11 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "Constructs\u0020the\u0020voice\u0020packet.",
             "url": "classes/Discord-Voice-VoicePacket.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003AvalidatePacket\u0028\u0029",
+            "name": "validatePacket",
+            "summary": "Validates\u0020a\u0020VoicePacket\u0020for\u0020sending.",
+            "url": "classes/Discord-Voice-VoicePacket.html#method_validatePacket"
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003AinitBufferNoEncryption\u0028\u0029",
             "name": "initBufferNoEncryption",
@@ -16685,11 +16720,6 @@ Search.appendIndex(
             "name": "Voice",
             "summary": "",
             "url": "namespaces/discord-voice.html"
-        },                {
-            "fqsen": "\\Discord\\Voice\\Speaking",
-            "name": "Speaking",
-            "summary": "",
-            "url": "namespaces/discord-voice-speaking.html"
         },                {
             "fqsen": "\\Discord\\WebSockets",
             "name": "WebSockets",
