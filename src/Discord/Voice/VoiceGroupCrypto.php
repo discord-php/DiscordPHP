@@ -58,6 +58,7 @@ class VoiceGroupCrypto implements VoiceGroupCryptoInterface
         $this->mode = $mode;
 
         /*
+        // This isn't needed, but could be used for validation or future features.
         switch ($this->mode) {
             case 'aead_aes256_gcm_rtpsize':
                 if (! defined('SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES')) {
