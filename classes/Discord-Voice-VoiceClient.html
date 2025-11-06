@@ -264,7 +264,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -319,11 +319,35 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Voice-VoiceClient.html#constant_NOT_SPEAKING">NOT_SPEAKING</a>
+    <span>
+        &nbsp;= 0 &lt;&lt; 0                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Voice-VoiceClient.html#constant_PRIORITY_SPEAKER">PRIORITY_SPEAKER</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 2                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-VoiceClient.html#constant_SILENCE_FRAME">SILENCE_FRAME</a>
     <span>
         &nbsp;= &quot;\xf8\xff\xfe&quot;                            </span>
 </dt>
 <dd>The Opus Silence Frame.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Voice-VoiceClient.html#constant_SOUNDSHARE">SOUNDSHARE</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 1                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Voice-VoiceClient.html#constant_SPEAKING">SPEAKING</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 0                            </span>
+</dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Voice-VoiceClient.html#constant_SUPPORTED_MODES">SUPPORTED_MODES</a>
@@ -575,9 +599,9 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Voice-VoiceClient.html#property_speaking">$speaking</a>
     <span>
-                        &nbsp;: bool            </span>
+                        &nbsp;: int            </span>
 </dt>
-<dd>Are we currently set as speaking?</dd>
+<dd>The speaking mode.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Voice-VoiceClient.html#property_startTime">$startTime</a>
@@ -695,7 +719,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Voice-VoiceClient.html#method_ffmpegEncode">ffmpegEncode()</a>
     <span>
-                                &nbsp;: <abbr title="\React\ChildProcess\Process">Process</abbr>|<a href="classes/Discord-Helpers-WinProcess.html"><abbr title="\Discord\Helpers\WinProcess">WinProcess</abbr></a>    </span>
+                                &nbsp;: <abbr title="\React\ChildProcess\Process">Process</abbr>    </span>
 </dt>
 <dd>Creates a process that will run FFmpeg and encode `$filename` into Ogg
 Opus format.</dd>
@@ -1201,6 +1225,68 @@ Opus format.</dd>
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_NOT_SPEAKING">
+        NOT_SPEAKING
+        <a href="classes/Discord-Voice-VoiceClient.html#constant_NOT_SPEAKING" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">54</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">NOT_SPEAKING</span>
+    = <span class="phpdocumentor-signature__default-value">0 &lt;&lt; 0</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_PRIORITY_SPEAKER">
+        PRIORITY_SPEAKER
+        <a href="classes/Discord-Voice-VoiceClient.html#constant_PRIORITY_SPEAKER" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">57</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">PRIORITY_SPEAKER</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 2</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_SILENCE_FRAME">
         SILENCE_FRAME
         <a href="classes/Discord-Voice-VoiceClient.html#constant_SILENCE_FRAME" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1210,7 +1296,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -1249,6 +1335,68 @@ Opus format.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_SOUNDSHARE">
+        SOUNDSHARE
+        <a href="classes/Discord-Voice-VoiceClient.html#constant_SOUNDSHARE" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">56</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">SOUNDSHARE</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 1</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_SPEAKING">
+        SPEAKING
+        <a href="classes/Discord-Voice-VoiceClient.html#constant_SPEAKING" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">55</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">SPEAKING</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 0</span>
+</code>
+
+
+    
+    
+    
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_SUPPORTED_MODES">
         SUPPORTED_MODES
         <a href="classes/Discord-Voice-VoiceClient.html#constant_SUPPORTED_MODES" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1258,7 +1406,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -1306,7 +1454,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
@@ -1356,7 +1504,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">155</span>
+    <span class="phpdocumentor-element-found-in__line">159</span>
 
     </aside>
 
@@ -1397,7 +1545,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">162</span>
+    <span class="phpdocumentor-element-found-in__line">166</span>
 
     </aside>
 
@@ -1438,7 +1586,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">358</span>
+    <span class="phpdocumentor-element-found-in__line">362</span>
 
     </aside>
 
@@ -1479,7 +1627,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">344</span>
+    <span class="phpdocumentor-element-found-in__line">348</span>
 
     </aside>
 
@@ -1520,7 +1668,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">253</span>
+    <span class="phpdocumentor-element-found-in__line">257</span>
 
     </aside>
 
@@ -1561,7 +1709,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">351</span>
+    <span class="phpdocumentor-element-found-in__line">355</span>
 
     </aside>
 
@@ -1602,7 +1750,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">374</span>
+    <span class="phpdocumentor-element-found-in__line">378</span>
 
     </aside>
 
@@ -1645,7 +1793,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">423</span>
+    <span class="phpdocumentor-element-found-in__line">427</span>
 
     </aside>
 
@@ -1686,7 +1834,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">169</span>
+    <span class="phpdocumentor-element-found-in__line">173</span>
 
     </aside>
 
@@ -1727,7 +1875,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">183</span>
+    <span class="phpdocumentor-element-found-in__line">187</span>
 
     </aside>
 
@@ -1768,7 +1916,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">302</span>
+    <span class="phpdocumentor-element-found-in__line">306</span>
 
     </aside>
 
@@ -1809,7 +1957,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -1850,7 +1998,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">402</span>
+    <span class="phpdocumentor-element-found-in__line">406</span>
 
     </aside>
 
@@ -1891,7 +2039,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">190</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
     </aside>
 
@@ -1932,7 +2080,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">127</span>
+    <span class="phpdocumentor-element-found-in__line">131</span>
 
     </aside>
 
@@ -1971,7 +2119,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">337</span>
+    <span class="phpdocumentor-element-found-in__line">341</span>
 
     </aside>
 
@@ -2012,7 +2160,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">176</span>
+    <span class="phpdocumentor-element-found-in__line">180</span>
 
     </aside>
 
@@ -2053,7 +2201,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">232</span>
+    <span class="phpdocumentor-element-found-in__line">236</span>
 
     </aside>
 
@@ -2094,7 +2242,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">225</span>
+    <span class="phpdocumentor-element-found-in__line">229</span>
 
     </aside>
 
@@ -2135,7 +2283,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">246</span>
+    <span class="phpdocumentor-element-found-in__line">250</span>
 
     </aside>
 
@@ -2176,7 +2324,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">145</span>
 
     </aside>
 
@@ -2217,7 +2365,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">274</span>
+    <span class="phpdocumentor-element-found-in__line">278</span>
 
     </aside>
 
@@ -2258,7 +2406,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">295</span>
+    <span class="phpdocumentor-element-found-in__line">299</span>
 
     </aside>
 
@@ -2299,7 +2447,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">309</span>
+    <span class="phpdocumentor-element-found-in__line">313</span>
 
     </aside>
 
@@ -2340,7 +2488,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">197</span>
+    <span class="phpdocumentor-element-found-in__line">201</span>
 
     </aside>
 
@@ -2381,7 +2529,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">416</span>
+    <span class="phpdocumentor-element-found-in__line">420</span>
 
     </aside>
 
@@ -2422,7 +2570,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">120</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -2463,7 +2611,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">381</span>
+    <span class="phpdocumentor-element-found-in__line">385</span>
 
     </aside>
 
@@ -2504,7 +2652,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">281</span>
+    <span class="phpdocumentor-element-found-in__line">285</span>
 
     </aside>
 
@@ -2545,7 +2693,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">316</span>
+    <span class="phpdocumentor-element-found-in__line">320</span>
 
     </aside>
 
@@ -2586,7 +2734,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">260</span>
+    <span class="phpdocumentor-element-found-in__line">264</span>
 
     </aside>
 
@@ -2627,7 +2775,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">409</span>
+    <span class="phpdocumentor-element-found-in__line">413</span>
 
     </aside>
 
@@ -2668,21 +2816,21 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">288</span>
+    <span class="phpdocumentor-element-found-in__line">292</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Are we currently set as speaking?</p>
+        <p class="phpdocumentor-summary">The speaking mode.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">bool</span>
+            <span class="phpdocumentor-signature__type">int</span>
     <span class="phpdocumentor-signature__name">$speaking</span>
-     = <span class="phpdocumentor-signature__default-value">false</span></code>
+     = <span class="phpdocumentor-signature__default-value">self::NOT_SPEAKING</span></code>
 
     
-        <section class="phpdocumentor-description"><p>Whether we are speaking or not.</p>
+        <section class="phpdocumentor-description"><p>The speaking mode.</p>
 </section>
 
     
@@ -2709,7 +2857,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">323</span>
+    <span class="phpdocumentor-element-found-in__line">327</span>
 
     </aside>
 
@@ -2750,7 +2898,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">330</span>
+    <span class="phpdocumentor-element-found-in__line">334</span>
 
     </aside>
 
@@ -2791,7 +2939,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">218</span>
+    <span class="phpdocumentor-element-found-in__line">222</span>
 
     </aside>
 
@@ -2832,7 +2980,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">267</span>
+    <span class="phpdocumentor-element-found-in__line">271</span>
 
     </aside>
 
@@ -2873,7 +3021,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">239</span>
+    <span class="phpdocumentor-element-found-in__line">243</span>
 
     </aside>
 
@@ -2914,7 +3062,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">204</span>
+    <span class="phpdocumentor-element-found-in__line">208</span>
 
     </aside>
 
@@ -2955,7 +3103,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">211</span>
+    <span class="phpdocumentor-element-found-in__line">215</span>
 
     </aside>
 
@@ -2996,7 +3144,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">388</span>
+    <span class="phpdocumentor-element-found-in__line">392</span>
 
     </aside>
 
@@ -3037,7 +3185,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">395</span>
+    <span class="phpdocumentor-element-found-in__line">399</span>
 
     </aside>
 
@@ -3078,7 +3226,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -3119,7 +3267,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">148</span>
+    <span class="phpdocumentor-element-found-in__line">152</span>
 
     </aside>
 
@@ -3160,7 +3308,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">365</span>
+    <span class="phpdocumentor-element-found-in__line">369</span>
 
     </aside>
 
@@ -3206,7 +3354,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">435</span>
+    <span class="phpdocumentor-element-found-in__line">439</span>
 
     </aside>
 
@@ -3304,7 +3452,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1591</span>
+    <span class="phpdocumentor-element-found-in__line">1595</span>
 
     </aside>
 
@@ -3354,7 +3502,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1780</span>
+    <span class="phpdocumentor-element-found-in__line">1790</span>
 
     </aside>
 
@@ -3433,7 +3581,7 @@ Opus format.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1947</span>
+    <span class="phpdocumentor-element-found-in__line">1957</span>
 
     </aside>
 
@@ -3442,7 +3590,7 @@ Opus format.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">ffmpegEncode</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filename</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$preArgs</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\ChildProcess\Process">Process</abbr>|<a href="classes/Discord-Helpers-WinProcess.html"><abbr title="\Discord\Helpers\WinProcess">WinProcess</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">ffmpegEncode</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filename</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$preArgs</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\ChildProcess\Process">Process</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3485,7 +3633,7 @@ input filename.</p>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\React\ChildProcess\Process">Process</abbr>|<a href="classes/Discord-Helpers-WinProcess.html"><abbr title="\Discord\Helpers\WinProcess">WinProcess</abbr></a></span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\ChildProcess\Process">Process</abbr></span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>A ReactPHP child process, or a Windows compatible process replacement.</p>
 </section>
@@ -3507,7 +3655,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2006</span>
+    <span class="phpdocumentor-element-found-in__line">2009</span>
 
     </aside>
 
@@ -3550,7 +3698,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1996</span>
+    <span class="phpdocumentor-element-found-in__line">1999</span>
 
     </aside>
 
@@ -3608,7 +3756,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1732</span>
+    <span class="phpdocumentor-element-found-in__line">1736</span>
 
     </aside>
 
@@ -3659,7 +3807,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1720</span>
+    <span class="phpdocumentor-element-found-in__line">1724</span>
 
     </aside>
 
@@ -3717,7 +3865,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">745</span>
+    <span class="phpdocumentor-element-found-in__line">749</span>
 
     </aside>
 
@@ -3777,7 +3925,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1083</span>
+    <span class="phpdocumentor-element-found-in__line">1087</span>
 
     </aside>
 
@@ -3824,7 +3972,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1682</span>
+    <span class="phpdocumentor-element-found-in__line">1686</span>
 
     </aside>
 
@@ -3888,7 +4036,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1032</span>
+    <span class="phpdocumentor-element-found-in__line">1036</span>
 
     </aside>
 
@@ -3940,7 +4088,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">935</span>
+    <span class="phpdocumentor-element-found-in__line">939</span>
 
     </aside>
 
@@ -3987,7 +4135,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1020</span>
+    <span class="phpdocumentor-element-found-in__line">1024</span>
 
     </aside>
 
@@ -4034,7 +4182,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">500</span>
+    <span class="phpdocumentor-element-found-in__line">504</span>
 
     </aside>
 
@@ -4069,7 +4217,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1669</span>
+    <span class="phpdocumentor-element-found-in__line">1673</span>
 
     </aside>
 
@@ -4112,7 +4260,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1863</span>
+    <span class="phpdocumentor-element-found-in__line">1873</span>
 
     </aside>
 
@@ -4155,7 +4303,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1647</span>
+    <span class="phpdocumentor-element-found-in__line">1651</span>
 
     </aside>
 
@@ -4210,7 +4358,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1528</span>
+    <span class="phpdocumentor-element-found-in__line">1532</span>
 
     </aside>
 
@@ -4264,7 +4412,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1120</span>
+    <span class="phpdocumentor-element-found-in__line">1124</span>
 
     </aside>
 
@@ -4347,7 +4495,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1207</span>
+    <span class="phpdocumentor-element-found-in__line">1211</span>
 
     </aside>
 
@@ -4355,7 +4503,7 @@ input filename.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">playOggStream</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">resource|<a href="classes/Discord-Helpers-WinProcess.html"><abbr title="\Discord\Helpers\WinProcess">WinProcess</abbr></a>|<abbr title="\React\ChildProcess\Process">Process</abbr>|<abbr title="\React\Stream\ReadableResourceStream">ReadableResourceStream</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$stream</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">playOggStream</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">resource|<abbr title="\React\ChildProcess\Process">Process</abbr>|<abbr title="\React\Stream\ReadableResourceStream">ReadableResourceStream</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$stream</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4365,7 +4513,7 @@ input filename.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$stream</span>
-                : <span class="phpdocumentor-signature__argument__return-type">resource|<a href="classes/Discord-Helpers-WinProcess.html"><abbr title="\Discord\Helpers\WinProcess">WinProcess</abbr></a>|<abbr title="\React\ChildProcess\Process">Process</abbr>|<abbr title="\React\Stream\ReadableResourceStream">ReadableResourceStream</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type">resource|<abbr title="\React\ChildProcess\Process">Process</abbr>|<abbr title="\React\Stream\ReadableResourceStream">ReadableResourceStream</abbr></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The Ogg Opus stream to be sent.</p>
@@ -4421,7 +4569,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1160</span>
+    <span class="phpdocumentor-element-found-in__line">1164</span>
 
     </aside>
 
@@ -4515,7 +4663,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1272</span>
+    <span class="phpdocumentor-element-found-in__line">1274</span>
 
     </aside>
 
@@ -4597,7 +4745,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1458</span>
+    <span class="phpdocumentor-element-found-in__line">1462</span>
 
     </aside>
 
@@ -4667,7 +4815,7 @@ input filename.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1425</span>
+    <span class="phpdocumentor-element-found-in__line">1429</span>
 
     </aside>
 
@@ -4750,7 +4898,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">468</span>
+    <span class="phpdocumentor-element-found-in__line">472</span>
 
     </aside>
 
@@ -4814,7 +4962,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1501</span>
+    <span class="phpdocumentor-element-found-in__line">1505</span>
 
     </aside>
 
@@ -4885,7 +5033,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1362</span>
+    <span class="phpdocumentor-element-found-in__line">1366</span>
 
     </aside>
 
@@ -4893,7 +5041,7 @@ For stage channels, bitrate can be set up to 64000.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setSpeaking</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$speaking</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                    <span class="phpdocumentor-signature__name">setSpeaking</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$speaking</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">self::SPEAKING</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -4903,10 +5051,10 @@ For stage channels, bitrate can be set up to 64000.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$speaking</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">self::SPEAKING</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Whether the client is speaking or not.</p>
+                    <section class="phpdocumentor-description"><p>The speaking mode.</p>
 </section>
 
             </dd>
@@ -4920,6 +5068,13 @@ For stage channels, bitrate can be set up to 64000.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/topics/voice-connections#speaking"> https://discord.com/developers/docs/topics/voice-connections#speaking </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">throws</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -4947,7 +5102,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1437</span>
+    <span class="phpdocumentor-element-found-in__line">1441</span>
 
     </aside>
 
@@ -5017,7 +5172,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">485</span>
+    <span class="phpdocumentor-element-found-in__line">489</span>
 
     </aside>
 
@@ -5056,7 +5211,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1574</span>
+    <span class="phpdocumentor-element-found-in__line">1578</span>
 
     </aside>
 
@@ -5110,7 +5265,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1390</span>
+    <span class="phpdocumentor-element-found-in__line">1394</span>
 
     </aside>
 
@@ -5172,7 +5327,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1551</span>
+    <span class="phpdocumentor-element-found-in__line">1555</span>
 
     </aside>
 
@@ -5226,7 +5381,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2031</span>
+    <span class="phpdocumentor-element-found-in__line">2034</span>
 
     </aside>
 
@@ -5273,7 +5428,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1907</span>
+    <span class="phpdocumentor-element-found-in__line">1917</span>
 
     </aside>
 
@@ -5322,7 +5477,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1873</span>
+    <span class="phpdocumentor-element-found-in__line">1883</span>
 
     </aside>
 
@@ -5365,7 +5520,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1890</span>
+    <span class="phpdocumentor-element-found-in__line">1900</span>
 
     </aside>
 
@@ -5404,7 +5559,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1820</span>
+    <span class="phpdocumentor-element-found-in__line">1830</span>
 
     </aside>
 
@@ -5475,7 +5630,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">988</span>
+    <span class="phpdocumentor-element-found-in__line">992</span>
 
     </aside>
 
@@ -5522,7 +5677,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1848</span>
+    <span class="phpdocumentor-element-found-in__line">1858</span>
 
     </aside>
 
@@ -5556,7 +5711,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1843</span>
+    <span class="phpdocumentor-element-found-in__line">1853</span>
 
     </aside>
 
@@ -5590,7 +5745,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1853</span>
+    <span class="phpdocumentor-element-found-in__line">1863</span>
 
     </aside>
 
@@ -5624,7 +5779,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1752</span>
+    <span class="phpdocumentor-element-found-in__line">1756</span>
 
     </aside>
 
@@ -5671,7 +5826,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">721</span>
+    <span class="phpdocumentor-element-found-in__line">725</span>
 
     </aside>
 
@@ -5731,7 +5886,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">733</span>
+    <span class="phpdocumentor-element-found-in__line">737</span>
 
     </aside>
 
@@ -5791,7 +5946,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">885</span>
+    <span class="phpdocumentor-element-found-in__line">889</span>
 
     </aside>
 
@@ -5825,7 +5980,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">803</span>
+    <span class="phpdocumentor-element-found-in__line">807</span>
 
     </aside>
 
@@ -5869,7 +6024,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">860</span>
+    <span class="phpdocumentor-element-found-in__line">864</span>
 
     </aside>
 
@@ -5913,7 +6068,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">854</span>
+    <span class="phpdocumentor-element-found-in__line">858</span>
 
     </aside>
 
@@ -5957,7 +6112,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">829</span>
+    <span class="phpdocumentor-element-found-in__line">833</span>
 
     </aside>
 
@@ -6001,7 +6156,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">872</span>
+    <span class="phpdocumentor-element-found-in__line">876</span>
 
     </aside>
 
@@ -6045,7 +6200,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">835</span>
+    <span class="phpdocumentor-element-found-in__line">839</span>
 
     </aside>
 
@@ -6089,7 +6244,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">841</span>
+    <span class="phpdocumentor-element-found-in__line">845</span>
 
     </aside>
 
@@ -6133,7 +6288,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">866</span>
+    <span class="phpdocumentor-element-found-in__line">870</span>
 
     </aside>
 
@@ -6177,7 +6332,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">816</span>
+    <span class="phpdocumentor-element-found-in__line">820</span>
 
     </aside>
 
@@ -6221,7 +6376,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">791</span>
+    <span class="phpdocumentor-element-found-in__line">795</span>
 
     </aside>
 
@@ -6265,7 +6420,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">810</span>
+    <span class="phpdocumentor-element-found-in__line">814</span>
 
     </aside>
 
@@ -6309,7 +6464,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">759</span>
+    <span class="phpdocumentor-element-found-in__line">763</span>
 
     </aside>
 
@@ -6369,7 +6524,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">584</span>
+    <span class="phpdocumentor-element-found-in__line">588</span>
 
     </aside>
 
@@ -6429,7 +6584,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">773</span>
+    <span class="phpdocumentor-element-found-in__line">777</span>
 
     </aside>
 
@@ -6489,7 +6644,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">636</span>
+    <span class="phpdocumentor-element-found-in__line">640</span>
 
     </aside>
 
@@ -6512,9 +6667,9 @@ For stage channels, bitrate can be set up to 64000.</p>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The data object containing voice server connection details:</p>
 <ul>
-<li>$data-&gt;d['ssrc']: The synchronization source identifier.</li>
-<li>$data-&gt;d['ip']: The IP address for the UDP connection.</li>
-<li>$data-&gt;d['port']: The port for the UDP connection.</li>
+<li>$data-&gt;d['ssrc']:  The synchronization source identifier.</li>
+<li>$data-&gt;d['ip']:    The IP address for the UDP connection.</li>
+<li>$data-&gt;d['port']:  The port for the UDP connection.</li>
 <li>$data-&gt;d['modes']: Supported encryption modes.</li>
 </ul>
 </section>
@@ -6557,7 +6712,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">709</span>
+    <span class="phpdocumentor-element-found-in__line">713</span>
 
     </aside>
 
@@ -6604,7 +6759,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">686</span>
+    <span class="phpdocumentor-element-found-in__line">690</span>
 
     </aside>
 
@@ -6664,7 +6819,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">896</span>
+    <span class="phpdocumentor-element-found-in__line">900</span>
 
     </aside>
 
@@ -6711,7 +6866,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">787</span>
+    <span class="phpdocumentor-element-found-in__line">791</span>
 
     </aside>
 
@@ -6771,7 +6926,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">544</span>
+    <span class="phpdocumentor-element-found-in__line">548</span>
 
     </aside>
 
@@ -6828,7 +6983,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">568</span>
+    <span class="phpdocumentor-element-found-in__line">572</span>
 
     </aside>
 
@@ -6888,7 +7043,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">516</span>
+    <span class="phpdocumentor-element-found-in__line">520</span>
 
     </aside>
 
@@ -6945,7 +7100,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">2018</span>
+    <span class="phpdocumentor-element-found-in__line">2021</span>
 
     </aside>
 
@@ -7002,7 +7157,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1488</span>
+    <span class="phpdocumentor-element-found-in__line">1492</span>
 
     </aside>
 
@@ -7049,7 +7204,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1700</span>
+    <span class="phpdocumentor-element-found-in__line">1704</span>
 
     </aside>
 
@@ -7094,7 +7249,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1322</span>
+    <span class="phpdocumentor-element-found-in__line">1324</span>
 
     </aside>
 
@@ -7129,7 +7284,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">913</span>
+    <span class="phpdocumentor-element-found-in__line">917</span>
 
     </aside>
 
@@ -7179,7 +7334,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">599</span>
+    <span class="phpdocumentor-element-found-in__line">603</span>
 
     </aside>
 
@@ -7250,7 +7405,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1478</span>
+    <span class="phpdocumentor-element-found-in__line">1482</span>
 
     </aside>
 
@@ -7297,7 +7452,7 @@ For stage channels, bitrate can be set up to 64000.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoiceClient.php"><a href="files/src-discord-voice-voiceclient.html"><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1341</span>
+    <span class="phpdocumentor-element-found-in__line">1343</span>
 
     </aside>
 
@@ -7445,7 +7600,11 @@ For stage channels, bitrate can be set up to 64000.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Voice-VoiceClient.html#constant_NOT_SPEAKING">NOT_SPEAKING</a></li>
+                                                    <li class=""><a href="classes/Discord-Voice-VoiceClient.html#constant_PRIORITY_SPEAKER">PRIORITY_SPEAKER</a></li>
                                                     <li class=""><a href="classes/Discord-Voice-VoiceClient.html#constant_SILENCE_FRAME">SILENCE_FRAME</a></li>
+                                                    <li class=""><a href="classes/Discord-Voice-VoiceClient.html#constant_SOUNDSHARE">SOUNDSHARE</a></li>
+                                                    <li class=""><a href="classes/Discord-Voice-VoiceClient.html#constant_SPEAKING">SPEAKING</a></li>
                                                     <li class=""><a href="classes/Discord-Voice-VoiceClient.html#constant_SUPPORTED_MODES">SUPPORTED_MODES</a></li>
                                                     <li class=""><a href="classes/Discord-Voice-VoiceClient.html#constant_VOICE_OP_HANDLERS">VOICE_OP_HANDLERS</a></li>
                                             </ul>

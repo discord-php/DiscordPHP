@@ -14416,6 +14416,26 @@ Search.appendIndex(
             "summary": "Inserts\u0020silence\u0020frames\u0020recursively.",
             "url": "classes/Discord-Voice-VoiceClient.html#method___insertSilence"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ANOT_SPEAKING",
+            "name": "NOT_SPEAKING",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#constant_NOT_SPEAKING"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ASPEAKING",
+            "name": "SPEAKING",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#constant_SPEAKING"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ASOUNDSHARE",
+            "name": "SOUNDSHARE",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#constant_SOUNDSHARE"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003APRIORITY_SPEAKER",
+            "name": "PRIORITY_SPEAKER",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceClient.html#constant_PRIORITY_SPEAKER"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ASILENCE_FRAME",
             "name": "SILENCE_FRAME",
             "summary": "The\u0020Opus\u0020Silence\u0020Frame.",
@@ -14553,7 +14573,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024speaking",
             "name": "speaking",
-            "summary": "Are\u0020we\u0020currently\u0020set\u0020as\u0020speaking\u003F",
+            "summary": "The\u0020speaking\u0020mode.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_speaking"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024mute",
@@ -14661,50 +14681,75 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method___construct"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003Aencrypt\u0028\u0029",
-            "name": "encrypt",
-            "summary": "Encrypt\u0020a\u0020message\u0020for\u0020Discord\u0027s\u0020MLS\u0020Group.",
-            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method_encrypt"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003Adecrypt\u0028\u0029",
-            "name": "decrypt",
-            "summary": "Decrypt\u0020a\u0020message\u0020from\u0020Discord\u0027s\u0020MLS\u0020Group.",
-            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method_decrypt"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003AbuildNonce\u0028\u0029",
-            "name": "buildNonce",
-            "summary": "Build\u0020a\u0020nonce\u0020for\u0020RTP\u002Dstyle\u0020AEAD.",
-            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method_buildNonce"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003AencryptRTPPacket\u0028\u0029",
-            "name": "encryptRTPPacket",
-            "summary": "Encrypt\u0020an\u0020RTP\u0020packet\u0020\u0028header\u0020\u002B\u0020Opus\u0020payload\u0029.",
-            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method_encryptRTPPacket"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003AdecryptRTPPacket\u0028\u0029",
-            "name": "decryptRTPPacket",
-            "summary": "Decrypt\u0020an\u0020RTP\u0020packet\u0020\u0028header\u0020\u002B\u0020encrypted\u0020payload\u0029.",
-            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#method_decryptRTPPacket"
-        },                {
             "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003ASUPPORTED_MODES",
             "name": "SUPPORTED_MODES",
             "summary": "Supported\u0020encryption\u0020modes\u0020for\u0020voice\u0020connections.",
             "url": "classes/Discord-Voice-VoiceGroupCrypto.html#constant_SUPPORTED_MODES"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003A\u0024nonceLength",
-            "name": "nonceLength",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#property_nonceLength"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003A\u0024mode",
-            "name": "mode",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceGroupCrypto.html#property_mode"
-        },                {
             "fqsen": "\\Discord\\Voice\\VoiceGroupCrypto\u003A\u003A\u0024secret_key",
             "name": "secret_key",
             "summary": "",
             "url": "classes/Discord-Voice-VoiceGroupCrypto.html#property_secret_key"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoInterface",
+            "name": "VoiceGroupCryptoInterface",
+            "summary": "Interface\u0020for\u0020group\u002Dbased\u0020AEAD\u0020encryption\u0020and\u0020decryption\u0020for\u0020Discord\u0020voice\u0020RTP\u0020packets.",
+            "url": "classes/Discord-Voice-VoiceGroupCryptoInterface.html"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoInterface\u003A\u003AencryptRTPPacket\u0028\u0029",
+            "name": "encryptRTPPacket",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceGroupCryptoInterface.html#method_encryptRTPPacket"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoInterface\u003A\u003AdecryptRTPPacket\u0028\u0029",
+            "name": "decryptRTPPacket",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceGroupCryptoInterface.html#method_decryptRTPPacket"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait",
+            "name": "VoiceGroupCryptoTrait",
+            "summary": "Provides\u0020group\u002Dbased\u0020AEAD\u0020encryption\u0020and\u0020decryption\u0020for\u0020Discord\u0020voice\u0020RTP\u0020packets.",
+            "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003Aencrypt\u0028\u0029",
+            "name": "encrypt",
+            "summary": "Encrypt\u0020a\u0020message\u0020for\u0020Discord\u0027s\u0020MLS\u0020Group.",
+            "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#method_encrypt"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003Adecrypt\u0028\u0029",
+            "name": "decrypt",
+            "summary": "Decrypt\u0020a\u0020message\u0020from\u0020Discord\u0027s\u0020MLS\u0020Group.",
+            "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#method_decrypt"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003AbuildNonce\u0028\u0029",
+            "name": "buildNonce",
+            "summary": "Build\u0020a\u0020nonce\u0020for\u0020RTP\u002Dstyle\u0020AEAD.",
+            "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#method_buildNonce"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003AencryptRTPPacket\u0028\u0029",
+            "name": "encryptRTPPacket",
+            "summary": "Encrypt\u0020an\u0020RTP\u0020packet\u0020\u0028header\u0020\u002B\u0020Opus\u0020payload\u0029.",
+            "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#method_encryptRTPPacket"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003AdecryptRTPPacket\u0028\u0029",
+            "name": "decryptRTPPacket",
+            "summary": "Decrypt\u0020an\u0020RTP\u0020packet\u0020\u0028header\u0020\u002B\u0020encrypted\u0020payload\u0029.",
+            "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#method_decryptRTPPacket"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003AextractCiphertext\u0028\u0029",
+            "name": "extractCiphertext",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#method_extractCiphertext"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003A\u0024nonceLength",
+            "name": "nonceLength",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#property_nonceLength"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003A\u0024mode",
+            "name": "mode",
+            "summary": "",
+            "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#property_mode"
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket",
             "name": "VoicePacket",
