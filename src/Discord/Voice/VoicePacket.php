@@ -137,7 +137,7 @@ class VoicePacket
      *
      * @return Buffer The header.
      */
-    public function buildHeader(): Buffer
+    protected function buildHeader(): Buffer
     {
         $header = new Buffer(self::RTP_HEADER_BYTE_LENGTH);
 
