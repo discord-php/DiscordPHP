@@ -1309,7 +1309,7 @@ class VoiceClient extends EventEmitter
             // increment timestamp
             // uint32 overflow protection
             if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
-                $this->timestamp = 0;
+                $this->timestamp = 0.0;
             }
 
             $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
@@ -1636,7 +1636,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->seq = 0;
-        $this->timestamp = 0;
+        $this->timestamp = 0.0;
         $this->sentLoginFrame = false;
         $this->startTime = null;
         $this->streamTime = 0.0;
