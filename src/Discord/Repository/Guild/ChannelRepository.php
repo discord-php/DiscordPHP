@@ -57,6 +57,7 @@ class ChannelRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
      *
+     * @deprecated v10.41.0 Use `ChannelRepository::build()`
      * @since 10.25.0
      *
      * @param Guild|string                  $guild   The guild or guild ID that the channel should be created on.
@@ -66,6 +67,24 @@ class ChannelRepository extends AbstractRepository
      * @return PromiseInterface<Channel>
      */
     public function createChannel($guild, $channel, ?string $reason = null): PromiseInterface
+    {
+        return $this->build($guild, $channel, $reason);
+    }
+
+    /**
+     * Attempts to save a channel to the Discord servers.
+     *
+     * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
+     *
+     * @since 10.25.0
+     *
+     * @param Guild|string                  $guild   The guild or guild ID that the channel should be created on.
+     * @param Channel|ChannelBuilder|string $channel The Channel builder that should be converted into a channel, or the name of the channel.
+     * @param string|null                   $reason  Reason for Audit Log.
+     *
+     * @return PromiseInterface<Channel>
+     */
+    public function build($guild, $channel, ?string $reason = null): PromiseInterface
     {
         if (! is_string($guild)) {
             $guild = $guild->id;
