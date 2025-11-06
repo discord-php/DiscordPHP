@@ -17,6 +17,8 @@ namespace Discord\Voice;
  * Interface for group-based AEAD encryption and decryption for Discord voice RTP packets.
  *
  * @author Valithor Obsidion <valithor@valgorithms.com>
+ * 
+ * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-and-sending-voice
  *
  * @since 10.41.0
  */
