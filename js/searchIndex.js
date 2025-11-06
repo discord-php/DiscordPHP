@@ -4171,66 +4171,6 @@ Search.appendIndex(
             "summary": "Array\u0020of\u0020sub\u002Dcommands.",
             "url": "classes/Discord-Helpers-RegisteredCommand.html#property_subCommands"
         },                {
-            "fqsen": "\\Discord\\Helpers\\WinProcess",
-            "name": "WinProcess",
-            "summary": "A\u0020simple\u0020implementation\u0020of\u0020a\u0020Windows\u002Dcompatible\u0020process\u0020handler.",
-            "url": "classes/Discord-Helpers-WinProcess.html"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/Discord-Helpers-WinProcess.html#method___construct"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003Astart\u0028\u0029",
-            "name": "start",
-            "summary": "",
-            "url": "classes/Discord-Helpers-WinProcess.html#method_start"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003Aterminate\u0028\u0029",
-            "name": "terminate",
-            "summary": "",
-            "url": "classes/Discord-Helpers-WinProcess.html#method_terminate"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003AisRunning\u0028\u0029",
-            "name": "isRunning",
-            "summary": "",
-            "url": "classes/Discord-Helpers-WinProcess.html#method_isRunning"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003Aclose\u0028\u0029",
-            "name": "close",
-            "summary": "",
-            "url": "classes/Discord-Helpers-WinProcess.html#method_close"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A\u0024stdin",
-            "name": "stdin",
-            "summary": "",
-            "url": "classes/Discord-Helpers-WinProcess.html#property_stdin"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A\u0024stdout",
-            "name": "stdout",
-            "summary": "",
-            "url": "classes/Discord-Helpers-WinProcess.html#property_stdout"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A\u0024stderr",
-            "name": "stderr",
-            "summary": "",
-            "url": "classes/Discord-Helpers-WinProcess.html#property_stderr"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A\u0024proc",
-            "name": "proc",
-            "summary": "",
-            "url": "classes/Discord-Helpers-WinProcess.html#property_proc"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A\u0024pipes",
-            "name": "pipes",
-            "summary": "",
-            "url": "classes/Discord-Helpers-WinProcess.html#property_pipes"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\WinProcess\u003A\u003A\u0024cmd",
-            "name": "cmd",
-            "summary": "",
-            "url": "classes/Discord-Helpers-WinProcess.html#property_cmd"
-        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Attachment",
             "name": "Attachment",
             "summary": "A\u0020message\u0020attachment.",
@@ -14041,6 +13981,11 @@ Search.appendIndex(
             "summary": "Constructs\u0020the\u0020Voice\u0020Client\u0020instance.",
             "url": "classes/Discord-Voice-VoiceClient.html#method___construct"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A__destruct\u0028\u0029",
+            "name": "__destruct",
+            "summary": "Closes\u0020the\u0020voice\u0020client\u0020when\u0020destroyed.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method___destruct"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AsetMode\u0028\u0029",
             "name": "setMode",
             "summary": "Sets\u0020the\u0020transport\u0020encryption\u0020mode\u0020for\u0020the\u0020voice\u0020client.",
@@ -14433,7 +14378,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003APRIORITY_SPEAKER",
             "name": "PRIORITY_SPEAKER",
-            "summary": "Priority\u0020speaker,\u0020lowering\u0020audio\u0020of\u0020other\u0020speakers",
+            "summary": "Priority\u0020speaker,\u0020lowering\u0020audio\u0020of\u0020other\u0020speakers.",
             "url": "classes/Discord-Voice-VoiceClient.html#constant_PRIORITY_SPEAKER"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ASILENCE_FRAME",
