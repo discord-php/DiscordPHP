@@ -599,7 +599,10 @@ class VoiceClient extends EventEmitter
      */
     protected function handleHello($data): void
     {
-        $this->heartbeat_interval = $data->d['heartbeat_interval'];
+        /** @var Hello */
+        $hello = $this->discord->factory(Hello::class, (array) $data->d, true);
+
+        $this->heartbeat_interval = $hello->heartbeat_interval;
         $this->heartbeat();
         $this->heartbeat = $this->discord->loop->addPeriodicTimer($this->heartbeat_interval / 1000, fn () => $this->heartbeat());
     }
