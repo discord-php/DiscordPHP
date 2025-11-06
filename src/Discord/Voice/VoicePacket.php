@@ -118,6 +118,8 @@ class VoicePacket
      *
      * @param string $data The Opus data to encode.
      * @param string $key  The encryption key.
+     * 
+     * @deprecated v10.41.0 Use `VoiceGroupCrypto::encryptRTPPacket()`
      */
     protected function initBufferEncryption(string $data, string $key): void
     {
