@@ -51,9 +51,13 @@ use function React\Promise\resolve;
  */
 class VoiceClient extends EventEmitter
 {
+    /** Not speaking. */
     public const NOT_SPEAKING = 0;
-    public const SPEAKING = 1 << 0;
+    /** Normal transmission of voice audio. */
+    public const MICROPHONE = 1 << 0;
+    /** Transmission of context audio for video, no speaking indicator. */
     public const SOUNDSHARE = 1 << 1;
+    /** Priority speaker, lowering audio of other speakers */
     public const PRIORITY_SPEAKER = 1 << 2;
 
     /**
