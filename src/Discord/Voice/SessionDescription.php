@@ -45,7 +45,7 @@ class SessionDescription extends Part
 
     /**
      * Get the secret key as a raw binary string.
-     * 
+     *
      * @return string The raw binary secret key.
      */
     public function getSecretKeyAttribute(): string

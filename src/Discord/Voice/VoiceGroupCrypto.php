@@ -79,8 +79,8 @@ class VoiceGroupCrypto implements VoiceGroupCryptoInterface
     /**
      * Validate an encrypted RTP packet (header + encrypted payload).
      *
-     * @param string $packet The full RTP packet (header + encrypted payload)
-     * @return bool True if valid, false otherwise
+     * @param  string $packet The full RTP packet (header + encrypted payload)
+     * @return bool   True if valid, false otherwise
      */
     public static function validateEncryptedRTPPacket(string $packet): bool
     {
