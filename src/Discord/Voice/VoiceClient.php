@@ -733,7 +733,9 @@ class VoiceClient extends EventEmitter
      */
     protected function handleResumed(object $data): void
     {
-        $this->discord->logger->debug('received resumed packet', ['data' => $data]);
+        /** @var Resumed */
+        $resumed = $this->discord->factory(Resumed::class, (array) $data->d, true);
+        $this->discord->logger->debug('received resumed packet', ['data' => $resumed]);
     }
 
     /**
