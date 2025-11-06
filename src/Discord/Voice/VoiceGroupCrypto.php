@@ -75,4 +75,41 @@ class VoiceGroupCrypto implements VoiceGroupCryptoInterface
         }
         */
     }
+
+    /**
+     * Validate an encrypted RTP packet (header + encrypted payload).
+     *
+     * @param string $packet The full RTP packet (header + encrypted payload)
+     * @return bool True if valid, false otherwise
+     */
+    public static function validateEncryptedRTPPacket(string $packet): bool
+    {
+        // RTP header is always 12 bytes
+        if (strlen($packet) < 13) {
+            // Too short to be a valid RTP packet (header + at least 1 byte payload)
+            return false;
+        }
+
+        $header = substr($packet, 0, 12);
+        $payload = substr($packet, 12);
+
+        // Check header length
+        if (strlen($header) !== 12) {
+            return false;
+        }
+
+        // Check payload is not empty
+        if (empty($payload)) {
+            return false;
+        }
+
+        // Optionally: check RTP version (first 2 bits should be 2)
+        if ((ord($header[0]) >> 6) !== 2) {
+            return false;
+        }
+
+        // Optionally: check for other RTP header fields, payload length, etc.
+
+        return true;
+    }
 }

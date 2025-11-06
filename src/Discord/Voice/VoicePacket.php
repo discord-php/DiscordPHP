@@ -101,6 +101,57 @@ class VoicePacket
     }
 
     /**
+     * Validates a VoicePacket for sending.
+     *
+     * @param VoicePacket $packet The packet to validate.
+     *
+     * @return bool Whether the packet is valid.
+     */
+    public static function validatePacket(VoicePacket $packet): bool
+    {
+        // RTP header must be 12 bytes
+        $header = $packet->getHeader();
+        if (strlen($header) !== VoicePacket::RTP_HEADER_BYTE_LENGTH) {
+            return false;
+        }
+
+        // Check RTP version and payload type
+        $unpacked = unpack('Cversion/Cpayload', $header);
+        if (($unpacked['version'] & 0xC0) !== 0x80) { // Version 2
+            return false;
+        }
+        if ($unpacked['payload'] !== VoicePacket::RTP_PAYLOAD_TYPE) {
+            return false;
+        }
+
+        // Sequence: 0–65535
+        $seq = $packet->getSequence();
+        if ($seq < 0 || $seq > 0xFFFF) {
+            return false;
+        }
+
+        // Timestamp: 0–4294967295
+        $timestamp = $packet->getTimestamp();
+        if ($timestamp < 0 || $timestamp > 0xFFFFFFFF) {
+            return false;
+        }
+
+        // SSRC: non-zero
+        $ssrc = $packet->getSSRC();
+        if ($ssrc === 0) {
+            return false;
+        }
+
+        // Opus payload: not empty, reasonable size
+        $data = $packet->getData();
+        if (empty($data) || strlen($data) < 10 || strlen($data) > 400) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Initilizes the buffer with no encryption.
      *
      * @param string $data The Opus data to encode.

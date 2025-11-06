@@ -1359,7 +1359,12 @@ class VoiceClient extends EventEmitter
         }
 
         $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
-        $this->client->send($this->crypto->encryptRTPPacket($packet, $this->seq));
+        //$this->discord->logger->debug('valid packet?' , ['valid' => $packet::validatePacket($packet)]);
+        
+        $encrypted = $this->crypto->encryptRTPPacket($packet, $this->seq);
+        //$this->discord->logger->debug('valid encrypted packet?' , ['valid' => $this->crypto::validateEncryptedRTPPacket($encrypted)]);
+
+        $this->client->send($encrypted);
 
         $this->streamTime = microtime(true);
 
