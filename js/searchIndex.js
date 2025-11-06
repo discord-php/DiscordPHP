@@ -14741,11 +14741,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#method_extractCiphertext"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003A\u0024nonceLength",
-            "name": "nonceLength",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#property_nonceLength"
-        },                {
             "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003A\u0024mode",
             "name": "mode",
             "summary": "",
