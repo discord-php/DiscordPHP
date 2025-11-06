@@ -1721,11 +1721,11 @@ class VoiceClient extends EventEmitter
      *
      * @param int|string $id Either a SSRC or User ID.
      *
-     * @return RecieveStream
+     * @return ReceiveStream
      *
      * @deprecated use self::getReceiveStream()
      */
-    public function getRecieveStream($id): ?RecieveStream
+    public function getRecieveStream($id): ?ReceiveStream
     {
         return $this->getReceiveStream($id);
     }
