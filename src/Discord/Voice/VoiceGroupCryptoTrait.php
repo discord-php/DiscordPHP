@@ -106,8 +106,6 @@ trait VoiceGroupCryptoTrait
      */
     public function decryptRTPPacket(VoicePacket $packet, int $seq = 0): string|false
     {
-        $ciphertext = $packet->getData();
-        
-        return $this->decrypt($ciphertext, $packet->getHeader(), $seq);
+        return $this->decrypt($packet->getData(), $packet->getHeader(), $seq);
     }
 }
