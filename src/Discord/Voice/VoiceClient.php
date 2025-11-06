@@ -1772,7 +1772,7 @@ class VoiceClient extends EventEmitter
         $voicePacket = VoicePacket::make($message);
 
         if (($decrypted = $this->crypto->decryptRTPPacket($voicePacket, $this->seq)) === false) {
-            $this->discord->logger->warning('failed to decrypt voice packet', ['packet' => $voicePacket]);
+            $this->discord->logger->debug('failed to decrypt voice packet', ['packet' => $voicePacket]);
 
             return;
         }
