@@ -20,7 +20,7 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/topics/voice-connections#heartbeating-example-hello-payload
  *
- * @since 10.40.0
+ * @since 10.41.0
  *
  * @property int $v                  The voice gateway version.
  * @property int $heartbeat_interval The heartbeat interval in milliseconds.
