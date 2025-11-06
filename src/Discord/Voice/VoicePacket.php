@@ -73,7 +73,7 @@ class VoicePacket
     /**
      * The packet timestamp.
      *
-     * @var int The packet timestamp.
+     * @var float The packet timestamp.
      */
     protected $timestamp;
 
@@ -83,11 +83,11 @@ class VoicePacket
      * @param string      $data       The Opus data to encode.
      * @param int         $ssrc       The client SSRC value.
      * @param int         $seq        The packet sequence.
-     * @param int         $timestamp  The packet timestamp.
+     * @param float       $timestamp  The packet timestamp.
      * @param bool        $encryption (Deprecated) Whether the packet should be encrypted.
      * @param string|null $key        (Deprecated) The encryption key.
      */
-    public function __construct(string $data, int $ssrc, int $seq, int $timestamp, bool $encryption = false, ?string $key = null)
+    public function __construct(string $data, int $ssrc, int $seq, float $timestamp, bool $encryption = false, ?string $key = null)
     {
         $this->ssrc = $ssrc;
         $this->seq = $seq;
@@ -166,9 +166,9 @@ class VoicePacket
     /**
      * Returns the timestamp.
      *
-     * @return int The packet timestamp.
+     * @return float The packet timestamp.
      */
-    public function getTimestamp(): int
+    public function getTimestamp(): float
     {
         return $this->timestamp;
     }
@@ -231,7 +231,7 @@ class VoicePacket
         $this->buffer = $buffer;
 
         $this->seq = $this->buffer->readShort(self::SEQ_INDEX);
-        $this->timestamp = $this->buffer->readInt(self::TIMESTAMP_INDEX);
+        $this->timestamp = (float) $this->buffer->readInt(self::TIMESTAMP_INDEX);
         $this->ssrc = $this->buffer->readInt(self::SSRC_INDEX);
 
         return $this;

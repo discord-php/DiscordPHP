@@ -270,9 +270,9 @@ class VoiceClient extends EventEmitter
     /**
      * The timestamp of the last packet.
      *
-     * @var int The timestamp the last packet was constructed.
+     * @var float The timestamp the last packet was constructed.
      */
-    protected $timestamp = 0;
+    protected $timestamp = 0.0;
 
     /**
      * The Voice WebSocket mode.
@@ -326,16 +326,16 @@ class VoiceClient extends EventEmitter
     /**
      * The time we started sending packets.
      *
-     * @var int The time we started sending packets.
+     * @var float|null The time we started sending packets.
      */
     protected $startTime;
 
     /**
      * The stream time of the last packet.
      *
-     * @var int The time we sent the last packet.
+     * @var float The time we sent the last packet.
      */
-    protected $streamTime = 0;
+    protected $streamTime = 0.0;
 
     /**
      * The size of audio frames, in milliseconds.
@@ -1333,8 +1333,8 @@ class VoiceClient extends EventEmitter
         }
 
         $this->setSpeaking(self::NOT_SPEAKING);
-        $this->streamTime = 0;
-        $this->startTime = 0;
+        $this->streamTime = 0.0;
+        $this->startTime = 0.0;
         $this->paused = false;
         $this->silenceRemaining = 5;
     }
@@ -1639,7 +1639,7 @@ class VoiceClient extends EventEmitter
         $this->timestamp = 0;
         $this->sentLoginFrame = false;
         $this->startTime = null;
-        $this->streamTime = 0;
+        $this->streamTime = 0.0;
         $this->speakingStatus = new Collection([], 'ssrc');
 
         $this->emit('close');
