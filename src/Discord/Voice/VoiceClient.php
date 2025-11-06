@@ -701,11 +701,14 @@ class VoiceClient extends EventEmitter
      */
     protected function handleSessionDescription(object $data): void
     {
-        $this->ready = true;
-        $this->setMode($data->d['mode']);
-        $this->crypto->secret_key = pack('C*', ...$data->d['secret_key']);
+        /** @var SessionDescription */
+        $sd = $this->discord->factory(SessionDescription::class, (array) $data->d, true);
 
-        $this->discord->logger->debug('received description packet, vc ready', ['data' => $data]);
+        $this->ready = true;
+        $this->setMode($sd->mode);
+        $this->crypto->secret_key = $sd->secret_key;
+
+        $this->discord->logger->debug('received description packet, vc ready', ['data' => $sd]);
 
         if (! $this->reconnecting) {
             $this->emit('ready', [$this]);
