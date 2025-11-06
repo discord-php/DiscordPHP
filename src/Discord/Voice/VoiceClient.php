@@ -57,7 +57,7 @@ class VoiceClient extends EventEmitter
     public const MICROPHONE = 1 << 0;
     /** Transmission of context audio for video, no speaking indicator. */
     public const SOUNDSHARE = 1 << 1;
-    /** Priority speaker, lowering audio of other speakers */
+    /** Priority speaker, lowering audio of other speakers. */
     public const PRIORITY_SPEAKER = 1 << 2;
 
     /**
