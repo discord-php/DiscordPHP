@@ -154,29 +154,6 @@ class VoicePacket
     }
 
     /**
-     * Builds the header.
-     *
-     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure
-     *
-     * @return Buffer The header.
-     */
-    public static function buildHeaderStatic(int $ssrc, int $seq, int $timestamp): Buffer
-    {
-        $header = new Buffer(self::RTP_HEADER_BYTE_LENGTH);
-
-        $header->write(pack(
-            'CCnNN',
-            self::RTP_VERSION_PAD_EXTEND,
-            self::RTP_PAYLOAD_TYPE,
-            $seq,
-            $timestamp,
-            $ssrc
-        ), 0);
-
-        return $header;
-    }
-
-    /**
      * Returns the sequence.
      *
      * @return int The packet sequence.
@@ -224,18 +201,6 @@ class VoicePacket
     public function getData(): string
     {
         return $this->buffer->read(self::RTP_HEADER_BYTE_LENGTH, strlen((string) $this->buffer) - self::RTP_HEADER_BYTE_LENGTH);
-    }
-
-    /**
-     * Returns the data.
-     *
-     * @param Buffer $buffer
-     *
-     * @return string The packet data.
-     */
-    public static function getDataStatic(Buffer $buffer): string
-    {
-        return $buffer->read(self::RTP_HEADER_BYTE_LENGTH, strlen((string) $buffer) - self::RTP_HEADER_BYTE_LENGTH);
     }
 
     /**
