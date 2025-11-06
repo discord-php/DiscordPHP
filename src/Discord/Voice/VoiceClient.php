@@ -1950,7 +1950,7 @@ class VoiceClient extends EventEmitter
      * may also want to provide some arguments to FFmpeg via `$preArgs`, which
      * will be appended to the FFmpeg command _before_ setting the input
      * arguments.
-     * 
+     *
      * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-and-sending-voice
      *
      * @param ?string $filename Path to file to be converted into Ogg Opus, or
