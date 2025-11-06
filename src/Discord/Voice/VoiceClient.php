@@ -51,7 +51,7 @@ use function React\Promise\resolve;
  */
 class VoiceClient extends EventEmitter
 {
-    public const NOT_SPEAKING = 0 << 0;
+    public const NOT_SPEAKING = 0;
     public const SPEAKING = 1 << 0;
     public const SOUNDSHARE = 1 << 1;
     public const PRIORITY_SPEAKER = 1 << 2;
