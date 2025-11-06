@@ -651,12 +651,15 @@ class VoiceClient extends EventEmitter
      */
     protected function handleReady(object $data): void
     {
-        $this->ssrc = $data->d['ssrc'];
-        $this->udpIp = $data->d['ip'];
-        $this->udpPort = $data->d['port'];
-        $this->supportedModes = $data->d['modes'];
+        /** @var Ready */
+        $ready = $this->discord->factory(Ready::class, (array) $data->d, true);
 
-        $this->discord->logger->debug('received voice ready packet', ['data' => $data]);
+        $this->ssrc = $ready->ssrc;
+        $this->udpIp = $ready->ip;
+        $this->udpPort = $ready->port;
+        $this->supportedModes = $ready->modes;
+
+        $this->discord->logger->debug('received voice ready packet', ['data' => $ready]);
 
         $udpfac = new DatagramFactory(null, (new DNSFactory())->createCached($this->dnsConfig));
         $udpfac->createClient("{$this->udpIp}:".$this->udpPort)->then(function (Socket $client): void {
