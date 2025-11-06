@@ -467,6 +467,14 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Closes the voice client when destroyed.
+     */
+    public function __destruct()
+    {
+        $this->close();
+    }
+
+    /**
      * Sets the transport encryption mode for the voice client.
      *
      * @param string $mode The transport encryption mode to set for the voice client.
