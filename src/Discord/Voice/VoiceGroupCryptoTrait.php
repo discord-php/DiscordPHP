@@ -113,6 +113,13 @@ trait VoiceGroupCryptoTrait
         return $this->decrypt($ciphertext, $packet->getHeader(), $seq);
     }
 
+    /**
+     * Extracts the ciphertext from the RTP packet data.
+     * 
+     * @param string $data The RTP packet data (header + encrypted payload).
+     * 
+     * @return string The extracted ciphertext.
+     */
     protected function extractCiphertext(string $data): string
     {
         return substr($data, 0, -4);
