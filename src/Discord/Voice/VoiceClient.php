@@ -1110,7 +1110,7 @@ class VoiceClient extends EventEmitter
             $this->discord->logger->debug('voice client resumed');
             $this->unpause();
             $this->speaking = self::NOT_SPEAKING;
-            $this->setSpeaking(self::SPEAKING);
+            $this->setSpeaking(self::MICROPHONE);
         });
     }
 
@@ -1255,7 +1255,7 @@ class VoiceClient extends EventEmitter
 
         $loops = 0;
 
-        $this->setSpeaking(self::SPEAKING);
+        $this->setSpeaking(self::MICROPHONE);
 
         OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($deferred, $loops) {
             $this->startTime = microtime(true) + 0.5;
@@ -1367,7 +1367,7 @@ class VoiceClient extends EventEmitter
      *
      * @throws \RuntimeException
      */
-    public function setSpeaking(int $speaking = self::SPEAKING): void
+    public function setSpeaking(int $speaking = self::MICROPHONE): void
     {
         if ($this->speaking === $speaking) {
             return;
