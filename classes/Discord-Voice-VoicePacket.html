@@ -429,28 +429,7 @@ which is the same as Opus audio RTP stream&#039;s default payload type of 120 (0
 <dd>Handles to string casting of object.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Voice-VoicePacket.html#method_buildHeader">buildHeader()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a>    </span>
-</dt>
-<dd>Builds the header.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Voice-VoicePacket.html#method_buildHeaderStatic">buildHeaderStatic()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a>    </span>
-</dt>
-<dd>Builds the header.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Voice-VoicePacket.html#method_getData">getData()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd>Returns the data.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Voice-VoicePacket.html#method_getDataStatic">getDataStatic()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
@@ -499,7 +478,14 @@ which is the same as Opus audio RTP stream&#039;s default payload type of 120 (0
 <dd>Sets the buffer.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Voice-VoicePacket.html#method_initBufferEncryption">initBufferEncryption()</a>
+    <a class="" href="classes/Discord-Voice-VoicePacket.html#method_buildHeader">buildHeader()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a>    </span>
+</dt>
+<dd>Builds the header.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="-deprecated" href="classes/Discord-Voice-VoicePacket.html#method_initBufferEncryption">initBufferEncryption()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -1115,7 +1101,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">278</span>
+    <span class="phpdocumentor-element-found-in__line">245</span>
 
     </aside>
 
@@ -1146,144 +1132,6 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_buildHeader">
-        buildHeader()
-        <a href="classes/Discord-Voice-VoicePacket.html#method_buildHeader" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">138</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Builds the header.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">buildHeader</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Voice-VoicePacket.html#method_buildHeader#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure"> https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure </a>
-                    
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The header.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_buildHeaderStatic">
-        buildHeaderStatic()
-        <a href="classes/Discord-Voice-VoicePacket.html#method_buildHeaderStatic" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">161</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Builds the header.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">buildHeaderStatic</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ssrc</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timestamp</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$ssrc</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$seq</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$timestamp</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Discord-Voice-VoicePacket.html#method_buildHeaderStatic#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure"> https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure </a>
-                    
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The header.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getData">
         getData()
         <a href="classes/Discord-Voice-VoicePacket.html#method_getData" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1292,7 +1140,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">222</span>
+    <span class="phpdocumentor-element-found-in__line">201</span>
 
     </aside>
 
@@ -1325,59 +1173,6 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
         class="phpdocumentor-element
             -method
             -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_getDataStatic">
-        getDataStatic()
-        <a href="classes/Discord-Voice-VoicePacket.html#method_getDataStatic" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">234</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Returns the data.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getDataStatic</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$buffer</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$buffer</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The packet data.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="method_getHeader">
@@ -1388,7 +1183,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">212</span>
+    <span class="phpdocumentor-element-found-in__line">191</span>
 
     </aside>
 
@@ -1431,7 +1226,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">182</span>
+    <span class="phpdocumentor-element-found-in__line">161</span>
 
     </aside>
 
@@ -1474,7 +1269,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">181</span>
 
     </aside>
 
@@ -1517,7 +1312,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">192</span>
+    <span class="phpdocumentor-element-found-in__line">171</span>
 
     </aside>
 
@@ -1560,7 +1355,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">246</span>
+    <span class="phpdocumentor-element-found-in__line">213</span>
 
     </aside>
 
@@ -1615,7 +1410,7 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">262</span>
+    <span class="phpdocumentor-element-found-in__line">229</span>
 
     </aside>
 
@@ -1658,6 +1453,63 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_buildHeader">
+        buildHeader()
+        <a href="classes/Discord-Voice-VoicePacket.html#method_buildHeader" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">140</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Builds the header.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">buildHeader</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Voice-VoicePacket.html#method_buildHeader#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure"> https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure </a>
+                    
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The header.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+            -deprecated                                            "
+>
     <h4 class="phpdocumentor-element__name" id="method_initBufferEncryption">
         initBufferEncryption()
         <a href="classes/Discord-Voice-VoicePacket.html#method_initBufferEncryption" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1666,17 +1518,24 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">122</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Initilizes the buffer with encryption.</p>
 
-    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">protected</span>
                     <span class="phpdocumentor-signature__name">initBufferEncryption</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
+        </div>
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>v10.41.0 Use <code class="prettyprint">VoiceGroupCrypto::encryptRTPPacket()</code></p>
+
+            </article>
         </div>
     
     
@@ -1897,17 +1756,15 @@ Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.</p>
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method___toString">__toString()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_buildHeader">buildHeader()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_buildHeaderStatic">buildHeaderStatic()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_getData">getData()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_getDataStatic">getDataStatic()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_getHeader">getHeader()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_getSequence">getSequence()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_getSSRC">getSSRC()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_getTimestamp">getTimestamp()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_make">make()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_setBuffer">setBuffer()</a></li>
-                                            <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_initBufferEncryption">initBufferEncryption()</a></li>
+                                            <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_buildHeader">buildHeader()</a></li>
+                                            <li class="-deprecated"><a href="classes/Discord-Voice-VoicePacket.html#method_initBufferEncryption">initBufferEncryption()</a></li>
                                             <li class=""><a href="classes/Discord-Voice-VoicePacket.html#method_initBufferNoEncryption">initBufferNoEncryption()</a></li>
                                     </ul>
             </li>

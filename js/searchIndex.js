@@ -14418,22 +14418,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ANOT_SPEAKING",
             "name": "NOT_SPEAKING",
-            "summary": "",
+            "summary": "Not\u0020speaking.",
             "url": "classes/Discord-Voice-VoiceClient.html#constant_NOT_SPEAKING"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ASPEAKING",
-            "name": "SPEAKING",
-            "summary": "",
-            "url": "classes/Discord-Voice-VoiceClient.html#constant_SPEAKING"
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AMICROPHONE",
+            "name": "MICROPHONE",
+            "summary": "Normal\u0020transmission\u0020of\u0020voice\u0020audio.",
+            "url": "classes/Discord-Voice-VoiceClient.html#constant_MICROPHONE"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ASOUNDSHARE",
             "name": "SOUNDSHARE",
-            "summary": "",
+            "summary": "Transmission\u0020of\u0020context\u0020audio\u0020for\u0020video,\u0020no\u0020speaking\u0020indicator.",
             "url": "classes/Discord-Voice-VoiceClient.html#constant_SOUNDSHARE"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003APRIORITY_SPEAKER",
             "name": "PRIORITY_SPEAKER",
-            "summary": "",
+            "summary": "Priority\u0020speaker,\u0020lowering\u0020audio\u0020of\u0020other\u0020speakers",
             "url": "classes/Discord-Voice-VoiceClient.html#constant_PRIORITY_SPEAKER"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ASILENCE_FRAME",
@@ -14738,7 +14738,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003AextractCiphertext\u0028\u0029",
             "name": "extractCiphertext",
-            "summary": "",
+            "summary": "Extracts\u0020the\u0020ciphertext\u0020from\u0020the\u0020RTP\u0020packet\u0020data.",
             "url": "classes/Discord-Voice-VoiceGroupCryptoTrait.html#method_extractCiphertext"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceGroupCryptoTrait\u003A\u003A\u0024mode",
@@ -14771,11 +14771,6 @@ Search.appendIndex(
             "summary": "Builds\u0020the\u0020header.",
             "url": "classes/Discord-Voice-VoicePacket.html#method_buildHeader"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003AbuildHeaderStatic\u0028\u0029",
-            "name": "buildHeaderStatic",
-            "summary": "Builds\u0020the\u0020header.",
-            "url": "classes/Discord-Voice-VoicePacket.html#method_buildHeaderStatic"
-        },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003AgetSequence\u0028\u0029",
             "name": "getSequence",
             "summary": "Returns\u0020the\u0020sequence.",
@@ -14800,11 +14795,6 @@ Search.appendIndex(
             "name": "getData",
             "summary": "Returns\u0020the\u0020data.",
             "url": "classes/Discord-Voice-VoicePacket.html#method_getData"
-        },                {
-            "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003AgetDataStatic\u0028\u0029",
-            "name": "getDataStatic",
-            "summary": "Returns\u0020the\u0020data.",
-            "url": "classes/Discord-Voice-VoicePacket.html#method_getDataStatic"
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket\u003A\u003Amake\u0028\u0029",
             "name": "make",
