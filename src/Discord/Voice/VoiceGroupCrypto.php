@@ -49,25 +49,29 @@ class VoiceGroupCrypto implements VoiceGroupCryptoInterface
      */
     public function __construct(public string $secret_key, string $mode = 'aead_xchacha20_poly1305_rtpsize')
     {
+        $mode = strtolower($mode);
+
         if (! in_array($mode, self::SUPPORTED_MODES)) {
             throw new \InvalidArgumentException("Invalid transport encryption mode: {$mode}");
         }
 
-        $this->mode = strtolower($mode);
+        $this->mode = $mode;
 
+        /*
         switch ($this->mode) {
             case 'aead_aes256_gcm_rtpsize':
                 if (! defined('SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES')) {
                     throw new \RuntimeException('AES256-GCM not supported');
                 }
-                $this->nonceLength = SODIUM_CRYPTO_AEAD_AES256GCM_NPUBBYTES; // 12
+                //$this->nonceLength = SODIUM_CRYPTO_AEAD_AES256GCM_NPUBBYTES; // 12
                 //$this->keyLength = SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES;
                 break;
 
             case 'aead_xchacha20_poly1305_rtpsize':
-                $this->nonceLength = 24; // RTP header + 12 zero bytes
+                //$this->nonceLength = 24; // RTP header + 12 zero bytes
                 //$this->keyLength = SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_KEYBYTES;
                 break;
         }
+        */
     }
 }

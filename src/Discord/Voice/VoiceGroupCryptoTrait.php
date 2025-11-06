@@ -21,7 +21,6 @@ namespace Discord\Voice;
  * @since 10.41.0
  *
  * @property string $secret_key  The group secret used for key derivation.
- * @property int    $nonceLength Nonce length based on encryption mode.
  * @property string $mode        The encryption mode.
  *
  * @method string       encryptRTPPacket(VoicePacket $packet, int $seq = 0)            Encrypt an RTP packet (header + Opus payload).
@@ -29,7 +28,7 @@ namespace Discord\Voice;
  */
 trait VoiceGroupCryptoTrait
 {
-    protected int $nonceLength;
+    //protected int $nonceLength;
     //protected int $keyLength;
     protected string $mode;
 
