@@ -1369,7 +1369,7 @@ class VoiceClient extends EventEmitter
      */
     public function setSpeaking(int $speaking = self::MICROPHONE): void
     {
-        if ($this->speaking === $speaking) {
+        if ($this->speaking == $speaking) {
             return;
         }
 
