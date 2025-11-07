@@ -73,11 +73,10 @@ class MessageRepository extends AbstractRepository
      *
      * @param Channel|string $channel Channel ID or Channel object.
      * @param MessageBuilder $message MessageBuilder instance.
-     * @param string|null    $reason  Optional audit log reason.
 
      * @return PromiseInterface<Message>
      */
-    public function build($channel, MessageBuilder $message, ?string $reason = null): PromiseInterface
+    public function build($channel, MessageBuilder $message): PromiseInterface
     {
         if (! is_string($channel)) {
             if (method_exists($channel, 'getBotPermissions')) {
@@ -91,21 +90,16 @@ class MessageRepository extends AbstractRepository
             $channelId = $channel;
         }
 
-        $headers = [];
-        if ($reason !== null) {
-            $headers['X-Audit-Log-Reason'] = $reason;
-        }
-
         $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $channelId);
 
         if ($message->requiresMultipart()) {
             $multipart = $message->toMultipart();
 
-            return $this->http->post($endpoint, (string) $multipart, array_merge($headers, $multipart->getHeaders()))
+            return $this->http->post($endpoint, (string) $multipart, $multipart->getHeaders())
                 ->then(fn ($response) => $this->factory->part($this->class, (array) $response, true));
         }
 
-        return $this->http->post($endpoint, $message->jsonSerialize(), $headers)
+        return $this->http->post($endpoint, $message)
             ->then(fn ($response) => $this->factory->part($this->class, (array) $response, true));
     }
 }
