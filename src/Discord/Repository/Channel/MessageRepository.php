@@ -13,9 +13,15 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Channel;
 
+use Discord\Builders\MessageBuilder;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Repository\AbstractRepository;
+use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * Contains messages sent to a channel.
@@ -56,5 +62,50 @@ class MessageRepository extends AbstractRepository
     {
         unset($vars['thread_id']); // For thread
         parent::__construct($discord, $vars);
+    }
+
+    /**
+     * Attempts to create a message in a channel.
+     *
+     * @since 10.41.0
+     *
+     * @link https://discord.com/developers/docs/resources/message#create-message
+     *
+     * @param Channel|string $channel Channel ID or Channel object.
+     * @param MessageBuilder $message MessageBuilder instance.
+     * @param string|null    $reason  Optional audit log reason.
+
+     * @return PromiseInterface<Message>
+     */
+    public function build($channel, MessageBuilder $message, ?string $reason = null): PromiseInterface
+    {
+        if (! is_string($channel)) {
+            if (method_exists($channel, 'getBotPermissions')) {
+                $botperms = $channel->getBotPermissions();
+                if ($botperms && ! $botperms->send_messages) {
+                    return reject(new NoPermissionsException("You do not have permission to send messages in channel {$channel->id}."));
+                }
+            }
+            $channelId = $channel->id;
+        } else {
+            $channelId = $channel;
+        }
+
+        $headers = [];
+        if ($reason !== null) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $channelId);
+
+        if ($message->requiresMultipart()) {
+            $multipart = $message->toMultipart();
+
+            return $this->http->post($endpoint, (string) $multipart, array_merge($headers, $multipart->getHeaders()))
+                ->then(fn ($response) => $this->factory->part($this->class, (array) $response, true));
+        }
+
+        return $this->http->post($endpoint, $message->jsonSerialize(), $headers)
+            ->then(fn ($response) => $this->factory->part($this->class, (array) $response, true));
     }
 }
