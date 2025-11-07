@@ -22,7 +22,6 @@ use Discord\Parts\Part;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
-use stdClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function Discord\normalizePartId;
@@ -104,8 +103,8 @@ class Reaction extends Part
      */
     protected function setIdAttribute(string $value): void
     {
-        if (! isset($this->attributes['emoji'])) {
-            $this->attributes['emoji'] = new stdClass();
+        if ($this->emoji === null) {
+            $this->attributes['emoji'] = new Emoji($this->discord);
         }
 
         $colonDelimiter = explode(':', $value);
