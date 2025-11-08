@@ -72,7 +72,7 @@ class MessageRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/message#create-message
      *
-     * @param Channel|string $channel Channel ID or Channel object.
+     * @param Channel|string $channel Channel or Thread object, or channel ID.
      * @param MessageBuilder $message MessageBuilder instance.
 
      * @return PromiseInterface<Message>
