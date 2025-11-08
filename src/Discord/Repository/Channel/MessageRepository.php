@@ -18,6 +18,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 
@@ -79,18 +80,16 @@ class MessageRepository extends AbstractRepository
     public function build($channel, MessageBuilder $message): PromiseInterface
     {
         if (! is_string($channel)) {
-            if (method_exists($channel, 'getBotPermissions')) {
-                $botperms = $channel->getBotPermissions();
-                if ($botperms && ! $botperms->send_messages) {
-                    return reject(new NoPermissionsException("You do not have permission to send messages in channel {$channel->id}."));
-                }
+            if (! $channel instanceof Channel || $channel instanceof Thread) {
+                return reject(new \InvalidArgumentException('The $channel parameter must be a Channel or Thread instance or a string channel ID.'));
             }
-            $channelId = $channel->id;
-        } else {
-            $channelId = $channel;
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->send_messages) {
+                return reject(new NoPermissionsException("You do not have permission to send messages in channel {$channel->id}."));
+            }
         }
 
-        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $channelId);
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $channel);
 
         if ($message->requiresMultipart()) {
             $multipart = $message->toMultipart();
