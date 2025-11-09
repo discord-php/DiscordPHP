@@ -53,7 +53,7 @@ use function React\Promise\reject;
  * @property-read string|null                        $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
  * @property      ?string|null                       $banner                       The guild banner's URL of the member or null if the member has no guild banner.
  * @property-read string|null                        $banner_hash                  The guild banner hash of the member or null if the member has no guild banner.
- * @property      ExCollectionInterface<Role>|Role[] $roles                        A collection of Roles that the member has.
+ * @property      ExCollectionInterface<Role>        $roles                        A collection of Roles that the member has.
  * @property      ?Carbon|null                       $joined_at                    A timestamp of when the member joined the guild.
  * @property      ?Carbon|null                       $premium_since                When the user started boosting the server.
  * @property      bool                               $deaf                         Whether the member is deaf.
