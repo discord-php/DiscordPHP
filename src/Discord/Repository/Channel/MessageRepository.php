@@ -80,7 +80,7 @@ class MessageRepository extends AbstractRepository
     public function build($channel, MessageBuilder $message): PromiseInterface
     {
         if (! is_string($channel)) {
-            if (! $channel instanceof Channel || $channel instanceof Thread) {
+            if (! $channel instanceof Channel || ! $channel instanceof Thread) {
                 return reject(new \InvalidArgumentException('The $channel parameter must be a Channel or Thread instance or a string channel ID.'));
             }
             $botperms = $channel->getBotPermissions();
