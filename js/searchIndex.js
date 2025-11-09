@@ -116,6 +116,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Builders-ChannelBuilder.html#method_jsonSerialize"
         },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003ATYPES",
+            "name": "TYPES",
+            "summary": "",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#constant_TYPES"
+        },                {
             "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003A\u0024name",
             "name": "name",
             "summary": "",
@@ -4171,6 +4176,11 @@ Search.appendIndex(
             "summary": "Array\u0020of\u0020sub\u002Dcommands.",
             "url": "classes/Discord-Helpers-RegisteredCommand.html#property_subCommands"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\AnnouncementThread",
+            "name": "AnnouncementThread",
+            "summary": "Represents\u0020a\u0020Discord\u0020thread.",
+            "url": "classes/Discord-Parts-Channel-AnnouncementThread.html"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Attachment",
             "name": "Attachment",
             "summary": "A\u0020message\u0020attachment.",
@@ -4621,6 +4631,11 @@ Search.appendIndex(
             "summary": "Creates\u0020a\u0020message\u0020collector\u0020for\u0020the\u0020channel.",
             "url": "classes/Discord-Parts-Channel-ChannelTrait.html#method_createMessageCollector"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\DM",
+            "name": "DM",
+            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "url": "classes/Discord-Parts-Channel-DM.html"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Forum\\Reaction",
             "name": "Reaction",
             "summary": "An\u0020object\u0020that\u0020specifies\u0020the\u0020emoji\u0020to\u0020use\u0020as\u0020the\u0020default\u0020way\u0020to\u0020react\u0020to\u0020a\nforum\u0020post.\u0020Exactly\u0020one\u0020of\u0020\u0060emoji_id\u0060\u0020and\u0020\u0060emoji_name\u0060\u0020must\u0020be\u0020set.",
@@ -4640,6 +4655,51 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Channel-Forum-Tag.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GroupDM",
+            "name": "GroupDM",
+            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "url": "classes/Discord-Parts-Channel-GroupDM.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GuildAnnouncement",
+            "name": "GuildAnnouncement",
+            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "url": "classes/Discord-Parts-Channel-GuildAnnouncement.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GuildCategory",
+            "name": "GuildCategory",
+            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "url": "classes/Discord-Parts-Channel-GuildCategory.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GuildDirectory",
+            "name": "GuildDirectory",
+            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "url": "classes/Discord-Parts-Channel-GuildDirectory.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GuildForum",
+            "name": "GuildForum",
+            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "url": "classes/Discord-Parts-Channel-GuildForum.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GuildMedia",
+            "name": "GuildMedia",
+            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "url": "classes/Discord-Parts-Channel-GuildMedia.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GuildStageVoice",
+            "name": "GuildStageVoice",
+            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "url": "classes/Discord-Parts-Channel-GuildStageVoice.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GuildText",
+            "name": "GuildText",
+            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "url": "classes/Discord-Parts-Channel-GuildText.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\GuildVoice",
+            "name": "GuildVoice",
+            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "url": "classes/Discord-Parts-Channel-GuildVoice.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Invite",
             "name": "Invite",
@@ -6345,6 +6405,16 @@ Search.appendIndex(
             "name": "repositories",
             "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
             "url": "classes/Discord-Parts-Channel-Poll.html#property_repositories"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\PrivateThread",
+            "name": "PrivateThread",
+            "summary": "Represents\u0020a\u0020Discord\u0020thread.",
+            "url": "classes/Discord-Parts-Channel-PrivateThread.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\PublicThread",
+            "name": "PublicThread",
+            "summary": "Represents\u0020a\u0020Discord\u0020thread.",
+            "url": "classes/Discord-Parts-Channel-PublicThread.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Reaction",
             "name": "Reaction",
@@ -13040,6 +13110,11 @@ Search.appendIndex(
             "name": "createChannel",
             "summary": "Attempts\u0020to\u0020save\u0020a\u0020channel\u0020to\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-ChannelRepository.html#method_createChannel"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\ChannelRepository\u003A\u003Abuild\u0028\u0029",
+            "name": "build",
+            "summary": "Attempts\u0020to\u0020save\u0020a\u0020channel\u0020to\u0020the\u0020Discord\u0020servers.",
+            "url": "classes/Discord-Repository-Guild-ChannelRepository.html#method_build"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\ChannelRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",

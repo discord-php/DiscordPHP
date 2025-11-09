@@ -454,6 +454,13 @@ within the class. If it does, it calls that method with the provided arguments.<
 <dd>Checks if any item matches the callback.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Repository-Guild-ChannelRepository.html#method_build">build()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;    </span>
+</dt>
+<dd>Attempts to save a channel to the Discord servers.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="-deprecated" href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_clear">clear()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -482,7 +489,7 @@ within the class. If it does, it calls that method with the provided arguments.<
 <dd>Builds a new, empty part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Repository-Guild-ChannelRepository.html#method_createChannel">createChannel()</a>
+    <a class="-deprecated" href="classes/Discord-Repository-Guild-ChannelRepository.html#method_createChannel">createChannel()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;    </span>
 </dt>
@@ -1605,6 +1612,97 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
         class="phpdocumentor-element
             -method
             -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_build">
+        build()
+        <a href="classes/Discord-Repository-Guild-ChannelRepository.html#method_build" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/ChannelRepository.php"><a href="files/src-discord-repository-guild-channelrepository.html"><abbr title="src/Discord/Repository/Guild/ChannelRepository.php">ChannelRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">87</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Attempts to save a channel to the Discord servers.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">build</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Discord\Repository\Guild\Guild">Guild</abbr>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$guild</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|<a href="classes/Discord-Builders-ChannelBuilder.html"><abbr title="\Discord\Builders\ChannelBuilder">ChannelBuilder</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$channel</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$guild</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Discord\Repository\Guild\Guild">Guild</abbr>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The guild or guild ID that the channel should be created on.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$channel</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|<a href="classes/Discord-Builders-ChannelBuilder.html"><abbr title="\Discord\Builders\ChannelBuilder">ChannelBuilder</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The Channel builder that should be converted into a channel, or the name of the channel.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$reason</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Reason for Audit Log.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Repository-Guild-ChannelRepository.html#method_build#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/guild#create-guild-channel"> https://discord.com/developers/docs/resources/guild#create-guild-channel </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.25.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
             -deprecated                                            "
 >
     <h4 class="phpdocumentor-element__name" id="method_clear">
@@ -1802,7 +1900,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
         class="phpdocumentor-element
             -method
             -public
-                                                        "
+            -deprecated                                            "
 >
     <h4 class="phpdocumentor-element__name" id="method_createChannel">
         createChannel()
@@ -1812,17 +1910,24 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/ChannelRepository.php"><a href="files/src-discord-repository-guild-channelrepository.html"><abbr title="src/Discord/Repository/Guild/ChannelRepository.php">ChannelRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Attempts to save a channel to the Discord servers.</p>
 
-    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">createChannel</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Discord\Repository\Guild\Guild">Guild</abbr>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$guild</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|<a href="classes/Discord-Builders-ChannelBuilder.html"><abbr title="\Discord\Builders\ChannelBuilder">ChannelBuilder</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$channel</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
+        </div>
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>v10.41.0 Use <code class="prettyprint">ChannelRepository::build()</code></p>
+
+            </article>
         </div>
     
     
@@ -4413,11 +4518,12 @@ This method is deprecated for userland code but can still be used internally wit
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method___unserialize">__unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_all">all()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_any">any()</a></li>
+                                            <li class=""><a href="classes/Discord-Repository-Guild-ChannelRepository.html#method_build">build()</a></li>
                                             <li class="-deprecated"><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_clear">clear()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_collect">collect()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_count">count()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_create">create()</a></li>
-                                            <li class=""><a href="classes/Discord-Repository-Guild-ChannelRepository.html#method_createChannel">createChannel()</a></li>
+                                            <li class="-deprecated"><a href="classes/Discord-Repository-Guild-ChannelRepository.html#method_createChannel">createChannel()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_delete">delete()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_diff">diff()</a></li>
                                             <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#method_fetch">fetch()</a></li>
