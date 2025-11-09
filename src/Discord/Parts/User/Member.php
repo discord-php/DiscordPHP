@@ -765,7 +765,7 @@ class Member extends Part implements Stringable
     /**
      * Returns the roles attribute.
      *
-     * @return ExCollectionInterface<?Role>|Role[] A collection of roles the member is in. null role only contains ID in the collection.
+     * @return ExCollectionInterface<Role>|Role[] A collection of roles the member is in. null role only contains ID in the collection.
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {
