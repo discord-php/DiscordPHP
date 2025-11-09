@@ -7466,6 +7466,11 @@ Search.appendIndex(
             "summary": "Guild\u0020Profile\u0020was\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_GUILD_PROFILE_UPDATE"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AGUILD_MIGRATE_BYPASS_SLOWMODE_PERMISSION",
+            "name": "GUILD_MIGRATE_BYPASS_SLOWMODE_PERMISSION",
+            "summary": "Guild\u0020migrated\u0020and\u0020bypassed\u0020slowmode\u0020permission.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_GUILD_MIGRATE_BYPASS_SLOWMODE_PERMISSION"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
