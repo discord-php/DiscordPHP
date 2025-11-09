@@ -81,7 +81,7 @@ class MessageRepository extends AbstractRepository
     {
         if (! is_string($channel)) {
             if (! $channel instanceof Channel || ! $channel instanceof Thread) {
-                return reject(new \InvalidArgumentException('The $channel parameter must be a Channel or Thread instance or a string channel ID.'));
+                return reject(new \InvalidArgumentException('Channel must be a Channel or Thread instance or a string channel ID.'));
             }
             $botperms = $channel->getBotPermissions();
             if ($botperms && ! $botperms->send_messages) {
