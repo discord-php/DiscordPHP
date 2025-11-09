@@ -173,6 +173,8 @@ class Entry extends Part
     public const HOME_SETTINGS_UPDATE = 191;
     /** Guild Profile was updated. */
     public const GUILD_PROFILE_UPDATE = 211;
+    /** Guild migrated and bypassed slowmode permission. */
+    public const GUILD_MIGRATE_BYPASS_SLOWMODE_PERMISSION = 213;
 
     /**
      * @inheritDoc
