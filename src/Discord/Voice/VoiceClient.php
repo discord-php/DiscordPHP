@@ -1393,11 +1393,11 @@ class VoiceClient extends EventEmitter
      */
     public function setSpeaking(int|bool $speaking = self::MICROPHONE): void
     {
+        $speaking = (int) $speaking;
+
         if ($this->speaking === $speaking) {
             return;
         }
-
-        $speaking = (int) $speaking;
 
         if (! $this->ready) {
             throw new \RuntimeException('Voice Client is not ready.');
@@ -1408,6 +1408,7 @@ class VoiceClient extends EventEmitter
             [
                 'speaking' => $speaking,
                 'delay' => 0,
+                'ssrc' => $this->ssrc,
             ],
         ));
 
