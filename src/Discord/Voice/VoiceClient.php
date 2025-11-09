@@ -1387,15 +1387,17 @@ class VoiceClient extends EventEmitter
      *
      * @link https://discord.com/developers/docs/topics/voice-connections#speaking
      *
-     * @param int $speaking The speaking mode.
+     * @param int|bool $speaking The speaking mode.
      *
      * @throws \RuntimeException
      */
-    public function setSpeaking(int $speaking = self::MICROPHONE): void
+    public function setSpeaking(int|bool $speaking = self::MICROPHONE): void
     {
         if ($this->speaking === $speaking) {
             return;
         }
+
+        $speaking = (int) $speaking;
 
         if (! $this->ready) {
             throw new \RuntimeException('Voice Client is not ready.');
