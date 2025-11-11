@@ -77,9 +77,18 @@ class VoiceClient extends EventEmitter
      * @var string[] The supported transport encryption modes.
      */
     public const SUPPORTED_MODES = [
-        'aead_aes256_gcm_rtpsize',
+        //'aead_aes256_gcm_rtpsize',
         'aead_xchacha20_poly1305_rtpsize',
     ];
+
+    /**
+     * Maximum DAVE protocol version supported.
+     * 
+     * @link https://discord.com/developers/docs/topics/voice-connections#endtoend-encryption-dave-protocol
+     * 
+     * @var int The maximum DAVE protocol version supported.
+     */
+    public const MAX_DAVE_PROTOCOL_VERSION = 0;
 
     /**
      * Dispatch table mapping Discord Voice Gateway opcodes to handler methods.
@@ -279,7 +288,7 @@ class VoiceClient extends EventEmitter
      *
      * @var string The transport encryption mode.
      */
-    protected $mode = 'aead_aes256_gcm_rtpsize';
+    protected $mode = 'aead_xchacha20_poly1305_rtpsize';
 
     /**
      * The secret key used for encrypting voice.
@@ -329,6 +338,8 @@ class VoiceClient extends EventEmitter
      * @var float|null The time we started sending packets.
      */
     protected $startTime;
+
+    private $lastSendTime = 0.0;
 
     /**
      * The stream time of the last packet.
@@ -431,6 +442,13 @@ class VoiceClient extends EventEmitter
     protected $buffer;
 
     /**
+     * Debug packet log counter (limit initial hex inspection).
+     *
+     * @var int
+     */
+    protected $debugPacketLogCount = 0;
+
+    /**
      * Constructs the Voice Client instance.
      *
      * @param Discord        &$discord   The Discord client.
@@ -484,7 +502,7 @@ class VoiceClient extends EventEmitter
     public function setMode(string $mode): void
     {
         if (! in_array($mode, self::SUPPORTED_MODES)) {
-            $this->discord->logger->error("{$mode} is either a deprecated or unsupported transport encryption connection mode. Please use a supported mode: ".implode(', ', self::SUPPORTED_MODES));
+            $this->discord->getLogger()->error("{$mode} is either a deprecated or unsupported transport encryption connection mode. Please use a supported mode: ".implode(', ', self::SUPPORTED_MODES));
 
             throw new \InvalidArgumentException("Invalid transport encryption mode: {$mode}");
         }
@@ -535,6 +553,7 @@ class VoiceClient extends EventEmitter
             'server_id' => $this->guild_id,
             'user_id' => $this->data['user_id'],
             'token' => $this->data['token'],
+            'max_dave_protocol_version' => self::MAX_DAVE_PROTOCOL_VERSION,
         ];
         if (isset($this->voice_sessions[$this->guild_id])) {
             $data['session_id'] = $this->voice_sessions[$this->guild_id];
@@ -545,7 +564,7 @@ class VoiceClient extends EventEmitter
             $data
         );
 
-        $this->discord->logger->debug('sending identify', ['packet' => $payload]);
+        $this->discord->getLogger()->debug('sending identify', ['packet' => $payload]);
 
         $this->send($payload);
     }
@@ -567,7 +586,7 @@ class VoiceClient extends EventEmitter
             ]
         );
 
-        $this->discord->logger->debug('sending heartbeat', ['packet' => $payload]);
+        $this->discord->getLogger()->debug('sending heartbeat', ['packet' => $payload]);
 
         $this->send($payload);
 
@@ -585,7 +604,7 @@ class VoiceClient extends EventEmitter
     {
         $diff = (microtime(true) - $data->d['t']) * 1000;
 
-        $this->discord->logger->debug('received heartbeat ack', ['response_time' => $diff]);
+        $this->discord->getLogger()->debug('received heartbeat ack', ['response_time' => $diff]);
         $this->emit('ws-ping', [$diff]);
         $this->emit('ws-heartbeat-ack', [$data->d]);
     }
@@ -604,7 +623,7 @@ class VoiceClient extends EventEmitter
 
         $this->heartbeat_interval = $hello->heartbeat_interval;
         $this->heartbeat();
-        $this->heartbeat = $this->discord->loop->addPeriodicTimer($this->heartbeat_interval / 1000, fn () => $this->heartbeat());
+        $this->heartbeat = $this->discord->getLoop()->addPeriodicTimer($this->heartbeat_interval / 1000, fn () => $this->heartbeat());
     }
 
     /**
@@ -618,9 +637,9 @@ class VoiceClient extends EventEmitter
     protected function selectProtocol($ip, $port): void
     {
         if (! in_array($this->mode, $this->supportedModes)) {
-            $this->discord->logger->warning("{$this->mode} is not a valid transport encryption connection mode. Valid modes are: ".implode(', ', $this->supportedModes));
+            $this->discord->getLogger()->warning("{$this->mode} is not a valid transport encryption connection mode. Valid modes are: ".implode(', ', $this->supportedModes));
             $fallback = $this->supportedModes[0];
-            $this->discord->logger->info('Switching voice transport encryption mode to: '.$fallback);
+            $this->discord->getLogger()->info('Switching voice transport encryption mode to: '.$fallback);
             $this->setMode($fallback);
         }
 
@@ -636,7 +655,7 @@ class VoiceClient extends EventEmitter
             ]
         );
 
-        $this->discord->logger->debug('sending voice select protocol', ['packet' => $payload]);
+        $this->discord->getLogger()->debug('sending voice select protocol', ['packet' => $payload]);
 
         $this->send($payload);
     }
@@ -662,7 +681,7 @@ class VoiceClient extends EventEmitter
         $this->udpPort = $ready->port;
         $this->supportedModes = $ready->modes;
 
-        $this->discord->logger->debug('received voice ready packet', ['data' => $ready]);
+        $this->discord->getLogger()->debug('received voice ready packet', ['data' => $ready]);
 
         $udpfac = new DatagramFactory(null, (new DNSFactory())->createCached($this->dnsConfig));
         $udpfac->createClient("{$this->udpIp}:".$this->udpPort)->then(function (Socket $client): void {
@@ -673,27 +692,27 @@ class VoiceClient extends EventEmitter
             $buffer[3] = "\x46";
             $buffer->writeUInt32BE($this->ssrc, 4);
 
-            $this->udpHeartbeat = $this->discord->loop->addPeriodicTimer(5, function () {
+            $this->udpHeartbeat = $this->discord->getLoop()->addPeriodicTimer(5, function () {
                 $buffer = new Buffer(9);
                 $buffer[0] = "\xC9";
                 $buffer->writeUInt64LE($this->heartbeatSeq, 1);
                 ++$this->heartbeatSeq;
 
                 $this->client->send((string) $buffer);
-                $this->discord->logger->debug('sent udp heartbeat', ['seq' => $this->heartbeatSeq]);
+                $this->discord->getLogger()->debug('sent udp heartbeat', ['seq' => $this->heartbeatSeq]);
                 $this->emit('udp-heartbeat', []);
             });
 
             $this->client->on('error', function (\Throwable $e): void {
-                $this->discord->logger->error('UDP error', ['e' => $e->getMessage()]);
+                $this->discord->getLogger()->error('UDP error', ['e' => $e->getMessage()]);
                 $this->emit('udp-error', [$e]);
             });
 
             $this->client->once('message', fn (string $message) => $this->decodeUDP($message));
 
-            $this->discord->loop->addTimer(0.1, fn () => $this->client->send((string) $buffer));
+            $this->discord->getLoop()->addTimer(0.1, fn () => $this->client->send((string) $buffer));
         }, function (\Throwable $e): void {
-            $this->discord->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
+            $this->discord->getLogger()->error('error while connecting to udp', ['e' => $e->getMessage()]);
             $this->emit('error', [$e]);
         });
     }
@@ -714,7 +733,7 @@ class VoiceClient extends EventEmitter
         $this->setMode($sd->mode);
         $this->crypto->secret_key = $sd->secret_key;
 
-        $this->discord->logger->debug('received description packet, vc ready', ['data' => $sd]);
+        $this->discord->getLogger()->debug('received description packet, vc ready', ['data' => $sd]);
 
         if (! $this->reconnecting) {
             $this->emit('ready', [$this]);
@@ -735,7 +754,7 @@ class VoiceClient extends EventEmitter
     {
         /** @var Resumed */
         $resumed = $this->discord->factory(Resumed::class, (array) $data->d, true);
-        $this->discord->logger->debug('received resumed packet', ['data' => $resumed]);
+        $this->discord->getLogger()->debug('received resumed packet', ['data' => $resumed]);
     }
 
     /**
@@ -747,7 +766,7 @@ class VoiceClient extends EventEmitter
      */
     protected function handleClientConnect(object $data): void
     {
-        $this->discord->logger->debug('received client connect packet', ['data' => $data]);
+        $this->discord->getLogger()->debug('received client connect packet', ['data' => $data]);
     }
 
     /**
@@ -759,7 +778,7 @@ class VoiceClient extends EventEmitter
      */
     protected function handleClientDisconnect(object $data): void
     {
-        $this->discord->logger->debug('received client disconnect packet', ['data' => $data]);
+        $this->discord->getLogger()->debug('received client disconnect packet', ['data' => $data]);
     }
 
     /**
@@ -817,7 +836,7 @@ class VoiceClient extends EventEmitter
 
     protected function handleDavePrepareTransition(object $data): void
     {
-        $this->discord->logger->debug('DAVE Prepare Transition', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE Prepare Transition', ['data' => $data]);
         // Prepare local state necessary to perform the transition
         $this->send(Payload::new(
             Op::VOICE_DAVE_TRANSITION_READY,
@@ -829,20 +848,20 @@ class VoiceClient extends EventEmitter
 
     protected function handleDaveExecuteTransition(object $data): void
     {
-        $this->discord->logger->debug('DAVE Execute Transition', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE Execute Transition', ['data' => $data]);
         // Execute the transition
         // Update local state to reflect the new protocol context
     }
 
     protected function handleDaveTransitionReady(object $data): void
     {
-        $this->discord->logger->debug('DAVE Transition Ready', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE Transition Ready', ['data' => $data]);
         // Handle transition ready state
     }
 
     protected function handleDavePrepareEpoch(object $data): void
     {
-        $this->discord->logger->debug('DAVE Prepare Epoch', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE Prepare Epoch', ['data' => $data]);
         // Prepare local MLS group with parameters appropriate for the DAVE protocol version
         $this->send(Payload::new(
             Op::VOICE_DAVE_MLS_KEY_PACKAGE,
@@ -855,19 +874,19 @@ class VoiceClient extends EventEmitter
 
     protected function handleDaveMlsExternalSender(object $data)
     {
-        $this->discord->logger->debug('DAVE MLS External Sender', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS External Sender', ['data' => $data]);
         // Handle external sender public key and credential
     }
 
     protected function handleDaveMlsKeyPackage(object $data): void
     {
-        $this->discord->logger->debug('DAVE MLS Key Package', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS Key Package', ['data' => $data]);
         // Handle MLS key package
     }
 
     protected function handleDaveMlsProposals(object $data): void
     {
-        $this->discord->logger->debug('DAVE MLS Proposals', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS Proposals', ['data' => $data]);
         // Handle MLS proposals
         $this->send(Payload::new(
             Op::VOICE_DAVE_MLS_COMMIT_WELCOME,
@@ -880,25 +899,25 @@ class VoiceClient extends EventEmitter
 
     protected function handleDaveMlsCommitWelcome(object $data): void
     {
-        $this->discord->logger->debug('DAVE MLS Commit Welcome', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS Commit Welcome', ['data' => $data]);
         // Handle MLS commit and welcome messages
     }
 
     protected function handleDaveMlsAnnounceCommitTransition(object $data): void
     {
         // Handle MLS announce commit transition
-        $this->discord->logger->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
     }
 
     protected function handleDaveMlsWelcome(object $data): void
     {
         // Handle MLS welcome message
-        $this->discord->logger->debug('DAVE MLS Welcome', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS Welcome', ['data' => $data]);
     }
 
     protected function handleDaveMlsInvalidCommitWelcome(object $data): void
     {
-        $this->discord->logger->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
         // Handle invalid commit or welcome message
         // Reset local group state and generate a new key package
         $this->send(Payload::new(
@@ -911,7 +930,7 @@ class VoiceClient extends EventEmitter
 
     protected function handleCloseVoiceDisconnected(): void
     {
-        $this->discord->logger->info('voice client disconnected from channel', ['channel_id' => $this->channel_id]);
+        $this->discord->getLogger()->info('voice client disconnected from channel', ['channel_id' => $this->channel_id]);
         unset($this->voice_sessions[$this->guild_id]);
     }
 
@@ -925,7 +944,7 @@ class VoiceClient extends EventEmitter
         $this->emit('speaking', [$data->d['speaking'], $data->d['user_id'], $this]);
         $this->emit("speaking.{$data->d['user_id']}", [$data->d['speaking'], $this]);
 
-        $this->discord->logger->debug('received speaking packet', ['data' => $data]);
+        $this->discord->getLogger()->debug('received speaking packet', ['data' => $data]);
 
         $speaking = $this->discord->factory(Speaking::class, (array) $data->d, true);
 
@@ -949,7 +968,7 @@ class VoiceClient extends EventEmitter
             ]
         );
 
-        $this->discord->logger->debug('sending identify', ['packet' => $payload]);
+        $this->discord->getLogger()->debug('sending identify', ['packet' => $payload]);
 
         $this->send($payload);
     }
@@ -961,7 +980,7 @@ class VoiceClient extends EventEmitter
      */
     public function handleWebSocketConnection(WebSocket $ws): void
     {
-        $this->discord->logger->debug('connected to voice websocket');
+        $this->discord->getLogger()->debug('connected to voice websocket');
 
         $this->voiceWebsocket = $ws;
 
@@ -973,18 +992,18 @@ class VoiceClient extends EventEmitter
 
             $this->emit('ws-message', [$message, $this]);
 
-            $this->discord->logger->debug('received voice op', ['op' => $data->op]);
+            $this->discord->getLogger()->debug('received voice op', ['op' => $data->op]);
             if (isset(self::VOICE_OP_HANDLERS[$data->op])) {
                 $handler = self::VOICE_OP_HANDLERS[$data->op];
                 $this->$handler($data);
             } else {
-                $this->discord->logger->debug('unknown voice op', ['op' => $data->op]);
+                $this->discord->getLogger()->debug('unknown voice op', ['op' => $data->op]);
                 $this->handleUndocumented($data);
             }
         });
 
         $ws->on('error', function ($e) {
-            $this->discord->logger->error('error with voice websocket', ['e' => $e->getMessage()]);
+            $this->discord->getLogger()->error('error with voice websocket', ['e' => $e->getMessage()]);
             $this->emit('ws-error', [$e]);
         });
 
@@ -1000,7 +1019,7 @@ class VoiceClient extends EventEmitter
         )) {
             $this->resume();
         } else {
-            $this->discord->logger->debug('existing voice session or data not found, re-sending identify', ['guild_id' => $this->guild_id]);
+            $this->discord->getLogger()->debug('existing voice session or data not found, re-sending identify', ['guild_id' => $this->guild_id]);
             $this->identify();
         }
     }
@@ -1032,7 +1051,7 @@ class VoiceClient extends EventEmitter
         $ip = $unpackedMessageArray['Address'];
         $port = $unpackedMessageArray['Port'];
 
-        $this->discord->logger->debug('received our IP and port', ['ip' => $ip, 'port' => $port]);
+        $this->discord->getLogger()->debug('received our IP and port', ['ip' => $ip, 'port' => $port]);
 
         $this->selectProtocol($ip, $port);
 
@@ -1046,7 +1065,7 @@ class VoiceClient extends EventEmitter
      */
     public function handleWebSocketError(\Exception $e): void
     {
-        $this->discord->logger->error('error with voice websocket', ['e' => $e->getMessage()]);
+        $this->discord->getLogger()->error('error with voice websocket', ['e' => $e->getMessage()]);
         $this->emit('error', [$e]);
     }
 
@@ -1058,17 +1077,17 @@ class VoiceClient extends EventEmitter
      */
     public function handleWebSocketClose(int $op, string $reason): void
     {
-        $this->discord->logger->warning('voice websocket closed', ['op' => $op, 'reason' => $reason]);
+        $this->discord->getLogger()->warning('voice websocket closed', ['op' => $op, 'reason' => $reason]);
         $this->emit('ws-close', [$op, $reason, $this]);
 
         // Cancel heartbeat timers
         if (isset($this->heartbeat)) {
-            $this->discord->loop->cancelTimer($this->heartbeat);
+            $this->discord->getLoop()->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
         if (isset($this->udpHeartbeat)) {
-            $this->discord->loop->cancelTimer($this->udpHeartbeat);
+            $this->discord->getLoop()->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
 
@@ -1086,14 +1105,14 @@ class VoiceClient extends EventEmitter
 
         // Don't reconnect on a critical opcode or if closed by user.
         if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this->userClose) {
-            $this->discord->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
+            $this->discord->getLogger()->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
             $this->voice_sessions[$this->guild_id] = null;
             $this->emit('close');
         } else {
-            $this->discord->logger->warning('reconnecting in 2 seconds');
+            $this->discord->getLogger()->warning('reconnecting in 2 seconds');
 
             // Retry connect after 2 seconds
-            $this->discord->loop->addTimer(2, function () {
+            $this->discord->getLoop()->addTimer(2, function () {
                 $this->reconnecting = true;
                 $this->sentLoginFrame = false;
 
@@ -1109,7 +1128,7 @@ class VoiceClient extends EventEmitter
      */
     public function handleVoiceServerChange(array $data = []): void
     {
-        $this->discord->logger->debug('voice server has changed, dynamically changing servers in the background', ['data' => $data]);
+        $this->discord->getLogger()->debug('voice server has changed, dynamically changing servers in the background', ['data' => $data]);
         $this->reconnecting = true;
         $this->sentLoginFrame = false;
         $this->pause();
@@ -1117,8 +1136,8 @@ class VoiceClient extends EventEmitter
         $this->client->close();
         $this->voiceWebsocket->close();
 
-        $this->discord->loop->cancelTimer($this->heartbeat);
-        $this->discord->loop->cancelTimer($this->udpHeartbeat);
+        $this->discord->getLoop()->cancelTimer($this->heartbeat);
+        $this->discord->getLoop()->cancelTimer($this->udpHeartbeat);
 
         $this->data['token'] = $data['token']; // set the token if it changed
         $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
@@ -1126,7 +1145,7 @@ class VoiceClient extends EventEmitter
         $this->initSockets();
 
         $this->on('resumed', function () {
-            $this->discord->logger->debug('voice client resumed');
+            $this->discord->getLogger()->debug('voice client resumed');
             $this->unpause();
             $this->speaking = self::NOT_SPEAKING;
             $this->setSpeaking(self::MICROPHONE);
@@ -1253,12 +1272,12 @@ class VoiceClient extends EventEmitter
                     return;
                 }
 
+                $this->discord->getLogger()->warning('FFmpeg stderr', ['output' => trim($d)]);
                 $this->emit('stderr', [$d, $this]);
             });
 
             $stream = $stream->stdout;
         }
-
         if (is_resource($stream)) {
             $stream = new ReadableResourceStream($stream);
         }
@@ -1276,9 +1295,26 @@ class VoiceClient extends EventEmitter
 
         $this->setSpeaking(self::MICROPHONE);
 
+        // Randomize initial RTP sequence & timestamp (uint16 / uint32 sample units).
+        $this->seq = random_int(0, 0xFFFF);
+        $this->timestamp = (int) random_int(0, 0xFFFFFFFF);
+        // Warm-up silence: 5 frames (each MUST have unique sequence for nonce uniqueness).
+        for ($i = 0; $i < 5; $i++) {
+            $this->sendBuffer(self::SILENCE_FRAME);
+            // Increment sequence (uint16 wrap).
+            if (++$this->seq >= 2 ** 16) {
+                $this->seq = 0;
+            }
+            // Advance timestamp by 20ms (960 samples @48k) with uint32 wrap.
+            $this->timestamp += (20 * 48);
+            if ($this->timestamp >= 2 ** 32) {
+                $this->timestamp = 0;
+            }
+        }
+
         OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($deferred, $loops) {
-            $this->startTime = microtime(true) + 0.5;
-            $this->readOpusTimer = $this->discord->loop->addTimer(0.5, fn () => $this->readOpus($deferred, $os, $loops));
+            $this->startTime = microtime(true);
+            $this->readOpusTimer = $this->discord->getLoop()->addTimer(0.02, fn () => $this->readOpus($deferred, $os, $loops));
         });
 
         return $deferred->promise();
@@ -1303,7 +1339,7 @@ class VoiceClient extends EventEmitter
         // If the client is paused, delay by frame size and check again.
         if ($this->paused) {
             $this->insertSilence();
-            $this->readOpusTimer = $this->discord->loop->addTimer($this->frameSize / 1000, fn () => $this->readOpus($deferred, $ogg, $loops));
+            $this->readOpusTimer = $this->discord->getLoop()->addTimer($this->frameSize / 1000, fn () => $this->readOpus($deferred, $ogg, $loops));
 
             return;
         }
@@ -1331,11 +1367,26 @@ class VoiceClient extends EventEmitter
                 $this->timestamp = 0.0;
             }
 
-            $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
-            $delay = $nextTime - microtime(true);
+            // Calculate next packet time to maintain 20ms intervals
+            $nextTime = $this->startTime + (0.02 * $loops);
+            $now = microtime(true);
+            $delay = max(0, $nextTime - $now);
+            
+            // Log timing drift every 50 packets
+            if ($loops % 50 === 0) {
+                $drift = $now - $nextTime + $delay;
+                $this->discord->getLogger()->debug('packet timing stats', [
+                    'loops' => $loops,
+                    'scheduled_delay_ms' => round($delay * 1000, 2),
+                    'cumulative_drift_ms' => round($drift * 1000, 2),
+                    'packet_size' => strlen($packet),
+                ]);
+            }
 
-            $this->readOpusTimer = $this->discord->loop->addTimer($delay, fn () => $this->readOpus($deferred, $ogg, $loops));
+            // Schedule next packet read to maintain precise timing
+            $this->readOpusTimer = $this->discord->getLoop()->addTimer($delay, fn () => $this->readOpus($deferred, $ogg, $loops));
         }, function ($e) use ($deferred) {
+            $this->discord->getLogger()->error('Error reading opus packet', ['error' => $e->getMessage()]);
             $this->reset();
             $deferred->resolve(null);
         });
@@ -1347,7 +1398,7 @@ class VoiceClient extends EventEmitter
     protected function reset(): void
     {
         if ($this->readOpusTimer) {
-            $this->discord->loop->cancelTimer($this->readOpusTimer);
+            $this->discord->getLoop()->cancelTimer($this->readOpusTimer);
             $this->readOpusTimer = null;
         }
 
@@ -1370,15 +1421,27 @@ class VoiceClient extends EventEmitter
         }
 
         $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
-        //$this->discord->logger->debug('valid packet?' , ['valid' => $packet::validatePacket($packet)]);
-        
         $encrypted = $this->crypto->encryptRTPPacket($packet, $this->seq);
-        //$this->discord->logger->debug('valid encrypted packet?' , ['valid' => $this->crypto::validateEncryptedRTPPacket($encrypted)]);
+
+        $now = microtime(true);
+        $this->discord->getLogger()->debug('sending encrypted voice packet', [
+            'plaintext_len' => strlen($data),
+            'encrypted_len' => strlen($encrypted),
+            'seq' => $this->seq,
+            'delay_since_last' => $this->lastSendTime ? ($now - $this->lastSendTime) * 1000 : 0.0,
+            'timestamp' => $this->timestamp,
+            'ssrc' => $this->ssrc,
+            'mode' => $this->crypto->mode,
+            'first_packets_hex' => $this->debugPacketLogCount < 5 ? substr(bin2hex(substr($encrypted, 0, 32)), 0, 64) : null,
+         
+        ]);
+        if ($this->debugPacketLogCount < 5) {
+            $this->debugPacketLogCount++;
+        }
+        $this->lastSendTime = $now;
 
         $this->client->send($encrypted);
-
-        $this->streamTime = microtime(true);
-
+        $this->streamTime = $now;
         $this->emit('packet-sent', [$packet]);
     }
 
@@ -1594,7 +1657,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->paused = false;
-        $this->timestamp = microtime(true) * 1000;
+        // $this->timestamp = microtime(true) * 1000;
 
         return resolve(null);
     }
@@ -1653,12 +1716,12 @@ class VoiceClient extends EventEmitter
         $this->heartbeat_interval = null;
 
         if (isset($this->heartbeat)) {
-            $this->discord->loop->cancelTimer($this->heartbeat);
+            $this->discord->getLoop()->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
         if (isset($this->udpHeartbeat)) {
-            $this->discord->loop->cancelTimer($this->udpHeartbeat);
+            $this->discord->getLoop()->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
 
@@ -1786,21 +1849,54 @@ class VoiceClient extends EventEmitter
      */
     protected function handleAudioData($message): void
     {
-        return;
-
         if ($this->deaf) {
-            $this->discord->logger->debug('ignoring voice data, client is deafened');
+            $this->discord->getLogger()->debug('ignoring voice data, client is deafened');
 
             return;
         }
 
-        //$this->discord->logger->debug('received voice data', ['message' => $message]);
+        if (strlen($message) < 2 || (ord($message[1]) & 0x78) !== 0x78) {
+            return;
+        }
+
+        if ($this->paused) {
+            return;
+        }
+
+        if (empty($this->crypto->secret_key)) {
+            $this->discord->getLogger()->warning('Cannot decrypt: secret key not set yet');
+
+            return;
+        }
+
+        $this->discord->getLogger()->debug('attempting decryption', [
+            'mode' => $this->crypto->mode,
+            'secret_key_length' => strlen($this->crypto->secret_key),
+            'message_length' => strlen($message),
+            'payload_type' => sprintf('0x%02X', ord($message[1]) & 0x7F),
+        ]);
 
         $voicePacket = VoicePacket::make($message);
 
-        if (($decrypted = $this->crypto->decryptRTPPacket($voicePacket, $this->seq)) === false) {
-            $this->discord->logger->debug('failed to decrypt voice packet', ['packet' => $voicePacket]);
+        $this->discord->getLogger()->debug('voice packet details', [
+            'header_length' => strlen($voicePacket->getHeader()),
+            'data_length' => strlen($voicePacket->getData()),
+            'sequence' => $voicePacket->getSequence(),
+            'ssrc' => $voicePacket->getSSRC(),
+            'timestamp' => $voicePacket->getTimestamp(),
+        ]);
 
+        if (($decrypted = $this->crypto->decryptRTPPacket($voicePacket, $voicePacket->getSequence())) === false) {
+            $this->discord->getLogger()->debug('failed to decrypt voice packet', [
+                'packet' => $voicePacket,
+                'mode' => $this->crypto->mode,
+                'ciphertext_length' => strlen($voicePacket->getData()),
+            ]);
+
+            return;
+        }
+
+        if ($decrypted === self::SILENCE_FRAME) {
             return;
         }
 
@@ -1911,12 +2007,10 @@ class VoiceClient extends EventEmitter
      *
      * @return bool Whether FFmpeg is installed or not.
      */
-    protected function checkForFFmpeg(): bool
+    public function checkForFFmpeg(): string|false
     {
         if ($output = $this->checkForExecutable('ffmpeg')) {
-            $this->ffmpeg = $output;
-
-            return true;
+            return $this->ffmpeg = $output;
         }
         $this->emit('error', [new FFmpegNotFoundException('No FFmpeg binary was found.')]);
 
@@ -1995,15 +2089,25 @@ class VoiceClient extends EventEmitter
             default => -40 + ($this->volume / 100) * 40,
         };
 
+        $channelBitrate = $this->getChannel()->bitrate;
+        $safeBitrate = $channelBitrate > 64000 ? 64000 : $channelBitrate;
+
         $flags = [
+            '-fflags', '+genpts',
             '-i', $filename ?? 'pipe:0',
             '-map_metadata', '-1',
-            '-f', 'opus',
+            '-vn', '-sn', '-dn',
+            '-f', 'ogg',
             '-c:a', 'libopus',
-            '-ar', 48000,
-            '-af', 'volume='.$dB.'dB',
+            '-frame_duration', '20',  // 20ms frames (960 samples @ 48k)
+            '-application', $this->audioApplication, // 'audio' by default
+            '-ar', '48000',
             '-ac', '2',
-            '-b:a', $this->getChannel()->bitrate,
+            '-b:a', (string) $safeBitrate,
+            '-vbr', 'constrained',
+            '-compression_level', '10',
+            '-filter:a', 'aresample=async=0:first_pts=0,asetpts=N/SR/TB,volume='.$dB.'dB',
+            '-avoid_negative_ts', 'make_zero',
             '-loglevel', 'warning',
             'pipe:1',
         ];
@@ -2069,7 +2173,7 @@ class VoiceClient extends EventEmitter
         if ($this->silenceRemaining > 0) {
             $this->sendBuffer(self::SILENCE_FRAME);
             $this->silenceRemaining--;
-            $this->discord->loop->addTimer($this->frameSize / 1000, fn () => $this->__insertSilence($deferred));
+            $this->discord->getLoop()->addTimer($this->frameSize / 1000, fn () => $this->__insertSilence($deferred));
         } else {
             $deferred->resolve(null);
         }
