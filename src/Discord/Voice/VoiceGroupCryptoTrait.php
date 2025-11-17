@@ -20,67 +20,37 @@ namespace Discord\Voice;
  *
  * @since 10.41.0
  *
- * @property string $secret_key The encryption secret from session description.
+ * @property string $secret_key The group secret used for key derivation.
  * @property string $mode       The encryption mode.
  *
  * @method string       encryptRTPPacket(VoicePacket $packet, int $seq = 0) Encrypt an RTP packet (header + Opus payload).
  * @method string|false decryptRTPPacket(VoicePacket $packet, int $seq = 0) Decrypt an RTP packet (header + encrypted payload).
- *
- * @link https://discord.com/developers/docs/topics/voice-connections
- * @link https://messaginglayersecurity.rocks/
  */
 trait VoiceGroupCryptoTrait
 {
-    public string $mode;
-    public int $lite_nonce = 0;
-    
-    /** @var int DAVE protocol version (0 = legacy mode, no MLS) */
-    public int $daveProtocolVersion = 0;
+    //protected int $nonceLength;
+    //protected int $keyLength;
+    protected string $mode;
 
     /**
-     * Encrypt a message for Discord voice.
+     * Encrypt a message for Discord's MLS Group.
      *
      * @param string $plaintext
      * @param string $header    Optional 12-byte RTP header (for RTP-style nonce)
-     * @param int    $seq       Optional sequence number
+     * @param int    $seq       Optional sequence number (for AES-GCM)
      */
     protected function encrypt(string $plaintext, string $header = '', int $seq = 0): string
     {
-        $this->lite_nonce = ($this->lite_nonce + 1) & 0xFFFFFFFF;
-        $header12 = str_pad(substr($header, 0, 12), 12, "\x00", STR_PAD_RIGHT);
+        $nonce = $this->buildNonce($header, $seq);
 
-        if ($this->mode === 'aead_aes256_gcm_rtpsize') {
-            // Nonce: 8 zero bytes + 4-byte counter (BE)
-            $nonce = str_repeat("\x00", 8).pack('N', $this->lite_nonce);
-
-            try {
-                $ciphertext = sodium_crypto_aead_aes256gcm_encrypt($plaintext, '', $nonce, $this->secret_key);
-            } catch (\SodiumException $e) {
-                $tag = '';
-                $ctRaw = openssl_encrypt($plaintext, 'aes-256-gcm', $this->secret_key, OPENSSL_RAW_DATA, $nonce, $tag, '');
-                if ($ctRaw === false) {
-                    throw $e;
-                }
-                $ciphertext = $ctRaw.$tag;
-            }
-
-            return $ciphertext.pack('V', $this->lite_nonce);
-        }
-
-        if ($this->mode === 'aead_xchacha20_poly1305_rtpsize') {
-            // Per Discord docs: Nonce is 12-byte RTP header + 12 zero bytes
-            // https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes
-            $nonce = $header12.str_repeat("\x00", 12);
-            $ciphertext = sodium_crypto_aead_xchacha20poly1305_ietf_encrypt($plaintext, '', $nonce, $this->secret_key);
-
-            return $ciphertext.pack('V', $this->lite_nonce);
-        }
-
-        return $plaintext;
+        return match ($this->mode) {
+            'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_encrypt($plaintext, '', $nonce, $this->secret_key),
+            'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_encrypt($plaintext, '', $nonce, $this->secret_key),
+        };
     }
 
     /**
-     * Decrypt a message from Discord voice.
+     * Decrypt a message from Discord's MLS Group.
      *
      * @param string $ciphertext
      * @param string $header     Optional RTP header
@@ -88,131 +58,41 @@ trait VoiceGroupCryptoTrait
      */
     protected function decrypt(string $ciphertext, string $header = '', int $seq = 0): string|false
     {
-        if (strlen($ciphertext) < 20) {
-            return false;
-        }
+        $nonce = $this->buildNonce($header, $seq);
 
-        // Layout: CT | TAG(16) | SUFFIX(4)
-        $nonceSuffix = substr($ciphertext, -4);
-        $ciphertextWithTag = substr($ciphertext, 0, -4);
-        $header12 = str_pad(substr($header, 0, 12), 12, "\x00", STR_PAD_RIGHT);
+        $plaintext = match ($this->mode) {
+            'aead_aes256_gcm_rtpsize' => sodium_crypto_aead_aes256gcm_decrypt($ciphertext, '', $nonce, $this->secret_key),
+            'aead_xchacha20_poly1305_rtpsize' => sodium_crypto_aead_chacha20poly1305_ietf_decrypt($ciphertext, '', $nonce, $this->secret_key),
+        };
 
-        // Check if DAVE/MLS is enabled
-        if ($this->daveProtocolVersion > 0) {
-            // DAVE mode requires full MLS implementation
-            error_log(sprintf(
-                'Voice decryption with DAVE protocol v%d requires MLS implementation (not yet supported). Use max_dave_protocol_version=0 for legacy mode.',
-                $this->daveProtocolVersion
-            ));
-            return false;
-        }
-
-        // Legacy mode (DAVE disabled)
-        $ctr = unpack('V', $nonceSuffix)[1];
-
-        if ($this->mode === 'aead_xchacha20_poly1305_rtpsize') {
-            // Try comprehensive nonce and AAD combinations
-            $variants = [
-                // Standard: header + 12 zeros
-                ['nonce' => $header12.str_repeat("\x00", 12), 'aad' => '', 'label' => 'HDR+12Z-NOAAD'],
-                ['nonce' => $header12.str_repeat("\x00", 12), 'aad' => $header12, 'label' => 'HDR+12Z-HDRAAD'],
-                
-                // With counter in nonce (BE)
-                ['nonce' => $header12.str_repeat("\x00", 8).pack('N', $ctr), 'aad' => '', 'label' => 'HDR+8Z+BE-NOAAD'],
-                ['nonce' => $header12.str_repeat("\x00", 8).pack('N', $ctr), 'aad' => $header12, 'label' => 'HDR+8Z+BE-HDRAAD'],
-                
-                // With counter in nonce (LE from suffix)
-                ['nonce' => $header12.str_repeat("\x00", 8).$nonceSuffix, 'aad' => '', 'label' => 'HDR+8Z+LE-NOAAD'],
-                ['nonce' => $header12.str_repeat("\x00", 8).$nonceSuffix, 'aad' => $header12, 'label' => 'HDR+8Z+LE-HDRAAD'],
-                
-                // Zero nonce (counter only)
-                ['nonce' => str_repeat("\x00", 20).pack('N', $ctr), 'aad' => '', 'label' => '20Z+BE-NOAAD'],
-                ['nonce' => str_repeat("\x00", 20).pack('N', $ctr), 'aad' => $header12, 'label' => '20Z+BE-HDRAAD'],
-                ['nonce' => str_repeat("\x00", 20).$nonceSuffix, 'aad' => '', 'label' => '20Z+LE-NOAAD'],
-                ['nonce' => str_repeat("\x00", 20).$nonceSuffix, 'aad' => $header12, 'label' => '20Z+LE-HDRAAD'],
-                
-                // All zeros
-                ['nonce' => str_repeat("\x00", 24), 'aad' => '', 'label' => '24Z-NOAAD'],
-                ['nonce' => str_repeat("\x00", 24), 'aad' => $header12, 'label' => '24Z-HDRAAD'],
-            ];
-
-            foreach ($variants as $variant) {
-                $plaintext = sodium_crypto_aead_xchacha20poly1305_ietf_decrypt($ciphertextWithTag, $variant['aad'], $variant['nonce'], $this->secret_key);
-                
-                if ($plaintext !== false) {
-                    error_log(sprintf(
-                        'XChaCha20 DECRYPT SUCCESS! Config: %s, Counter: %d, Suffix: %s',
-                        $variant['label'],
-                        $ctr,
-                        bin2hex($nonceSuffix)
-                    ));
-                    return $this->stripHeaderExtension($plaintext);
-                }
-            }
-
-            // All variants failed
-            error_log(sprintf(
-                'XChaCha20 decrypt FAILED (all %d variants). Ctr: %d, CTLen: %d, Suffix: %s, Header: %s, KeyLen: %d',
-                count($variants),
-                $ctr,
-                strlen($ciphertextWithTag),
-                bin2hex($nonceSuffix),
-                bin2hex($header12),
-                strlen($this->secret_key)
-            ));
-            
-            return false;
-        }
-
-        if ($this->mode === 'aead_aes256_gcm_rtpsize') {
-            // Nonce: 8 zero bytes + 4-byte counter (BE)
-            $nonce = str_repeat("\x00", 8).pack('N', $ctr);
-
-            $plaintext = false;
-            try {
-                $plaintext = sodium_crypto_aead_aes256gcm_decrypt($ciphertextWithTag, '', $nonce, $this->secret_key);
-            } catch (\SodiumException $e) {
-                // Try OpenSSL fallback
-                $tag = substr($ciphertextWithTag, -16);
-                $ctRaw = substr($ciphertextWithTag, 0, -16);
-                $plaintext = openssl_decrypt($ctRaw, 'aes-256-gcm', $this->secret_key, OPENSSL_RAW_DATA, $nonce, $tag, '');
-            }
-
-            if ($plaintext === false) {
-                return false;
-            }
-
-            return $this->stripHeaderExtension($plaintext);
-        }
-
-        return false;
+        return $plaintext;
     }
 
     /**
-     * Strip RTP header extension from decrypted data.
-     *
-     * @param  string $data The decrypted data
-     * @return string Data with header extension removed if present
+     * Build a nonce for RTP-style AEAD.
      */
-    protected function stripHeaderExtension(string $data): string
+    protected function buildNonce(string $header = '', int $seq = 0): string
     {
-        if (strlen($data) > 4 && ord($data[0]) === 0xBE && ord($data[1]) === 0xDE) {
-            $length = unpack('n', substr($data, 2, 2))[1];
-            $offset = 4 + $length * 4;
-            
-            if ($offset <= strlen($data)) {
-                $data = substr($data, $offset);
-            }
-        }
+        // Ensure header is exactly 12 bytes (truncate or pad)
+        $header12 = str_pad(substr($header, 0, 12), 12, "\x00", STR_PAD_RIGHT);
 
-        return $data;
+        return match ($this->mode) {
+            // Protocol uses a 4-byte truncated nonce; expand to 12 bytes by
+            // setting the 8 most-significant bytes to zero and placing the
+            // 4-byte nonce in the least-significant bytes.
+            'aead_aes256_gcm_rtpsize' => str_repeat("\x00", 8).pack('N', $seq),
+            // XChaCha20-Poly1305 uses a 24-byte nonce formed from the RTP header (12)
+            // followed by 12 zero bytes.
+            'aead_xchacha20_poly1305_rtpsize' => $header12.str_repeat("\x00", 12),
+        };
     }
 
     /**
      * Encrypt an RTP packet (header + Opus payload).
      *
-     * @param VoicePacket $packet
-     * @param int         $seq    Sequence number for AES-GCM mode
+     * @param string $rtpHeader   12-byte RTP header
+     * @param string $opusPayload Opus-encoded audio
+     * @param int    $seq         Sequence number for AES-GCM mode
      */
     public function encryptRTPPacket(VoicePacket $packet, int $seq = 0): string
     {

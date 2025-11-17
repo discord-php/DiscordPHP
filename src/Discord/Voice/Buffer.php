@@ -31,7 +31,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      */
     public function writeUInt32BE(int $value, int $offset): void
     {
-        $this->insert('N', $value, $offset, 4);
+        $this->insert('I', $value, $offset, 3);
     }
 
     /**
@@ -46,7 +46,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
     }
 
     /**
-     * Writes a 32-bit unsigned integer with big endian.
+     * Writes a signed integer.
      *
      * @param int $value  The value that will be written.
      * @param int $offset The offset that the value will be written.
@@ -57,7 +57,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
     }
 
     /**
-     * Reads an unsigned 32-bit integer with big endian.
+     * Reads a signed integer.
      *
      * @param int $offset The offset to read from.
      *
@@ -88,7 +88,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      */
     public function readShort(int $offset): int
     {
-        return $this->extract('n', $offset, 2);
+        return $this->extract('n', $offset, 4);
     }
 
     /**
@@ -100,7 +100,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      */
     public function readUIntLE(int $offset): int
     {
-        return $this->extract('I', $offset, 4);
+        return $this->extract('I', $offset, 3);
     }
 
     /**
