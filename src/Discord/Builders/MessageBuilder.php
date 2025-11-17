@@ -424,7 +424,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Adds a component to the builder.
      *
-     * @param ExCollectionInterface<ComponentObject>|ComponentObject[]|ComponentObject $component Component to add.
+     * @param ComponentObject[]|ComponentObject $component Component to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
@@ -463,7 +463,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Add a group of components to the builder.
      *
-     * @param ExCollectionInterface<ComponentObject>|ComponentObject[] $components Components to add.
+     * @param ComponentObject[] $components Components to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
