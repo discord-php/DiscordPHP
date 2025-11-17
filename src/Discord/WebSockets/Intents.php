@@ -253,6 +253,17 @@ class Intents
     }
 
     /**
+     * Returns an integer value that represents all privileged intents.
+     * Verified apps cannot use Privileged Intents without being approved.
+     * 
+     * @return int
+     */
+    public static function getAllPrivilegedIntents(): int
+    {
+        return static::GUILD_MEMBERS | static::GUILD_PRESENCES | static::MESSAGE_CONTENT;
+    }
+
+    /**
      * Converts an integer intent representation into an array of strings,
      * representing the enabled intents. Useful for debugging.
      *
