@@ -82,6 +82,15 @@ class VoiceClient extends EventEmitter
     ];
 
     /**
+     * Maximum DAVE protocol version supported.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#endtoend-encryption-dave-protocol
+     *
+     * @var int The maximum DAVE protocol version supported.
+     */
+    public const MAX_DAVE_PROTOCOL_VERSION = 0;
+
+    /**
      * Dispatch table mapping Discord Voice Gateway opcodes to handler methods.
      *
      * @var array<int,string> Method name indexed by opcode constant.
@@ -535,6 +544,7 @@ class VoiceClient extends EventEmitter
             'server_id' => $this->guild_id,
             'user_id' => $this->data['user_id'],
             'token' => $this->data['token'],
+            'max_dave_protocol_version' => self::MAX_DAVE_PROTOCOL_VERSION,
         ];
         if (isset($this->voice_sessions[$this->guild_id])) {
             $data['session_id'] = $this->voice_sessions[$this->guild_id];
