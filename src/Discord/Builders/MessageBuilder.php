@@ -431,7 +431,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function addComponent(...$components): self
+    public function addComponent(Component ...$components): self
     {
         foreach ($components as $component) {
             if (! $component instanceof ComponentObject) {
@@ -476,10 +476,8 @@ class MessageBuilder extends Builder implements JsonSerializable
      */
     public function addComponents($components): self
     {
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
-
+        $this->addComponent(...$components);
+        
         return $this;
     }
 
