@@ -13,9 +13,12 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
+use Discord\Parts\User\Member;
 use React\Promise\PromiseInterface;
 
 /**
@@ -25,13 +28,13 @@ use React\Promise\PromiseInterface;
  *
  * @since 7.0.0
  *
- * @property      string     $id             Guild id.
- * @property-read Guild|null $guild          Guild.
- * @property      string     $name           Guild name (2-100 characters).
- * @property      ?string    $instant_invite Instant invite for the guilds specified widget invite channel.
- * @property      object[]   $channels       Voice and stage channels which are accessible by @everyone.
- * @property      object[]   $members        Special widget user objects that includes users presence (Limit 100).
- * @property      int        $presence_count Number of online members in this guild.
+ * @property      string                                   $id             Guild id.
+ * @property-read Guild|null                               $guild          Guild.
+ * @property      string                                   $name           Guild name (2-100 characters).
+ * @property      ?string                                  $instant_invite Instant invite for the guilds specified widget invite channel.
+ * @property      ExCollectionInterface<Channel>|Channel[] $channels       Voice and stage channels which are accessible by @everyone.
+ * @property      ExCollectionInterface<Member>|Member[]   $members        Special widget user objects that includes users presence (Limit 100).
+ * @property      int                                      $presence_count Number of online members in this guild.
  *
  * @property-read string $image
  */
@@ -49,29 +52,20 @@ class Widget extends Part
         'presence_count',
     ];
 
-    /** shield style widget with Discord icon and guild members online count. */
+    /** Shield style widget with Discord icon and guild members online count. */
     public const STYLE_SHIELD = 'shield';
 
-    /**
-     * large image with guild icon, name and online count. "POWERED BY DISCORD"
-     * as the footer of the widget.
-     */
+    /** Large image with guild icon, name and online count. "POWERED BY DISCORD" as the footer of the widget. */
     public const STYLE_BANNER1 = 'banner1';
 
-    /**
-     * smaller widget style with guild icon, name and online count. Split on the
-     * right with Discord logo.
-     */
+    /** * Smaller widget style with guild icon, name and online count. Split on the right with Discord logo. */
     public const STYLE_BANNER2 = 'banner2';
 
-    /**
-     * large image with guild icon, name and online count. In the footer,
-     * Discord logo on the left and "Chat Now" on the right.
-     */
+    /** Large image with guild icon, name and online count. In the footer, Discord logo on the left and "Chat Now" on the right. */
     public const STYLE_BANNER3 = 'banner3';
 
     /**
-     * large Discord logo at the top of the widget. Guild icon, name and online
+     * Large Discord logo at the top of the widget. Guild icon, name and online
      * count in the middle portion of the widget and a "JOIN MY SERVER" button
      * at the bottom.
      */
@@ -107,6 +101,26 @@ class Widget extends Part
     protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->id);
+    }
+
+    /**
+     * Returns the channels attribute.
+     *
+     * @return ExCollectionInterface<Channel>|Channel[] A collection of channels.
+     */
+    protected function getChannelsAttribute(): ExCollectionInterface
+    {
+        return $this->attributeCollectionHelper('channels', Channel::class);
+    }
+
+    /**
+     * Returns the members attribute.
+     *
+     * @return ExCollectionInterface<Member>|Member[] A collection of members.
+     */
+    protected function getMembersAttribute(): ExCollectionInterface
+    {
+        return $this->attributeCollectionHelper('members', Member::class);
     }
 
     /**

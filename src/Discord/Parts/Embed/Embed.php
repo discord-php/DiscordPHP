@@ -56,12 +56,19 @@ class Embed extends Part
         self::TYPE_POLL_RESULT => EmbedPollResult::class,
     ];
 
+    /** Generic embed rendered from embed attributes. */
     public const TYPE_RICH = 'rich';
+    /** Image embed. */
     public const TYPE_IMAGE = 'image';
+    /** Video embed. */
     public const TYPE_VIDEO = 'video';
+    /** Animated gif image embed rendered as a video embed. */
     public const TYPE_GIFV = 'gifv';
+    /** Article embed. */
     public const TYPE_ARTICLE = 'article';
+    /** Link embed. */
     public const TYPE_LINK = 'link';
+    /** Poll result embed. */
     public const TYPE_POLL_RESULT = 'poll_result';
 
     /**
@@ -162,7 +169,7 @@ class Embed extends Part
      */
     protected function getFieldsAttribute(): ExCollectionInterface
     {
-        return $this->attributeCollectionHelper('fields', Field::class);
+        return $this->attributeCollectionHelper('fields', Field::class, 'name');
     }
 
     /**
@@ -239,7 +246,7 @@ class Embed extends Part
      */
     protected function setTitleAttribute(string $title): self
     {
-        if (poly_strlen($title) == 0) {
+        if (poly_strlen($title) === 0) {
             $this->attributes['title'] = null;
         } elseif (poly_strlen($title) > 256) {
             throw new \LengthException('Embed title can not be longer than 256 characters');

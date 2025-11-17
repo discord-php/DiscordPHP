@@ -32,51 +32,89 @@ use function React\Promise\resolve;
  *
  * @since 2.0.0
  *
- * @property string                     $id                     The unique identifier of the user.
- * @property string                     $username               The username of the user.
- * @property string                     $discriminator          The discriminator of the user.
- * @property string|null                $global_name            The user's display name, if it is set. For bots, this is the application name.
- * @property string                     $displayname            The display name of the client.
- * @property ?string                    $avatar                 The avatar URL of the user.
- * @property string|null                $avatar_hash            The avatar hash of the user.
- * @property bool|null                  $bot                    Whether the user is a bot.
- * @property bool|null                  $system                 Whether the user is a Discord system user.
- * @property bool|null                  $mfa_enabled            Whether MFA is enabled.
- * @property ?string|null               $banner                 The banner URL of the user.
- * @property string|null                $banner_hash            The banner hash of the user.
- * @property ?int|null                  $accent_color           The user's banner color encoded as an integer representation of hexadecimal color code.
- * @property string|null                $locale                 User locale.
- * @property bool|null                  $verified               Whether the user is verified.
- * @property ?string|null               $email                  User email.
- * @property int|null                   $flags                  User flags.
- * @property int|null                   $premium_type           Type of nitro subscription.
- * @property int|null                   $public_flags           Public flags on the user.
- * @property int|null                   $avatar_decoration      The user's avatar decoration URL.
- * @property int|null                   $avatar_decoration_hash The user's avatar decoration hash.
- * @property ?AvatarDecorationData|null $avatar_decoration_data Data for the user's avatar decoration.
- * @property ?Collectibles|null         $collectibles           Data for the user's collectibles.
- * @property ?PrimaryGuild|null         $primary_guild          The user's primary guild
+ * @property      string                     $id                     The unique identifier of the user.
+ * @property      string                     $username               The username of the user.
+ * @property      string                     $discriminator          The discriminator of the user.
+ * @property      ?string|null               $global_name            The user's display name, if it is set. For bots, this is the application name.
+ * @property-read string                     $displayname            The display name of the client.
+ * @property      ?string|null               $avatar                 The avatar URL of the user.
+ * @property-read string|null                $avatar_hash            The avatar hash of the user.
+ * @property      bool|null                  $bot                    Whether the user is a bot.
+ * @property      bool|null                  $system                 Whether the user is a Discord system user.
+ * @property      bool|null                  $mfa_enabled            Whether MFA is enabled.
+ * @property      ?string|null               $banner                 The banner URL of the user.
+ * @property-read string|null                $banner_hash            The banner hash of the user.
+ * @property      ?int|null                  $accent_color           The user's banner color encoded as an integer representation of hexadecimal color code.
+ * @property      string|null                $locale                 User locale.
+ * @property      bool|null                  $verified               Whether the user is verified.
+ * @property      ?string|null               $email                  User email.
+ * @property      int|null                   $flags                  User flags.
+ * @property      int|null                   $premium_type           Type of nitro subscription.
+ * @property      int|null                   $public_flags           Public flags on the user.
+ * @property-read string|null                $avatar_decoration      The user's avatar decoration URL.
+ * @property-read string|null                $avatar_decoration_hash The user's avatar decoration hash.
+ * @property      ?AvatarDecorationData|null $avatar_decoration_data Data for the user's avatar decoration.
+ * @property      DisplayNameStyles|null     $display_name_styles    Data for the user's display name styles.
+ * @property      ?Collectibles|null         $collectibles           Data for the user's collectibles.
+ * @property      ?PrimaryGuild|null         $primary_guild          The user's primary guild
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
 class User extends Part implements Stringable
 {
-    public const FLAG_DISCORD_EMPLOYEE = (1 << 0);
-    public const FLAG_DISCORD_PARTNER = (1 << 1);
+    /** Discord Employee. */
+    public const FLAG_STAFF = (1 << 0);
+    /** @deprecated 10.36.32 use `User::FLAG_STAFF` */
+    public const FLAG_DISCORD_EMPLOYEE = self::FLAG_STAFF;
+    /** Partnered Server Owner. */
+    public const FLAG_PARTNER = (1 << 1);
+    /** @deprecated 10.36.32 use `User::FLAG_PARTNER` */
+    public const FLAG_DISCORD_PARTNER = self::FLAG_PARTNER;
+    /** HypeSquad Events Member. */
+    public const FLAG_HYPESQUAD = (1 << 2);
+    /** @deprecated 10.36.32 use `User::FLAG_HYPESQUAD` */
     public const FLAG_HYPESQUAD_EVENTS = (1 << 2);
+    /** Bug Hunter Level 1. */
     public const FLAG_BUG_HUNTER_LEVEL_1 = (1 << 3);
-    public const FLAG_HOUSE_BRAVERY = (1 << 6);
-    public const FLAG_HOUSE_BRILLIANCE = (1 << 7);
-    public const FLAG_HOUSE_BALANCE = (1 << 8);
+    /** House Bravery Member. */
+    public const HYPESQUAD_ONLINE_HOUSE_1 = (1 << 6);
+    /** House Bravery Member. */
+    public const FLAG_HOUSE_BRAVERY = self::HYPESQUAD_ONLINE_HOUSE_1;
+    /** House Brilliance Member. */
+    public const FLAG_HYPESQUAD_ONLINE_HOUSE_2 = (1 << 7);
+    /** House Brilliance Member. */
+    public const FLAG_HOUSE_BRILLIANCE = self::FLAG_HYPESQUAD_ONLINE_HOUSE_2;
+    /** House Balance Member. */
+    public const FLAG_HYPESQUAD_ONLINE_HOUSE_3 = (1 << 8);
+    /** House Balance Member. */
+    public const FLAG_HOUSE_BALANCE = self::FLAG_HYPESQUAD_ONLINE_HOUSE_3;
+    /** Early Nitro Supporter. */
+    public const FLAG_PREMIUM_EARLY_SUPPORTER = (1 << 9);
+    /** @deprecated 10.36.32 use `User::FLAG_PREMIUM_EARLY_SUPPORTER` */
     public const FLAG_EARLY_SUPPORTER = (1 << 9);
+    /** User is a team. */
+    public const FLAG_TEAM_PSEUDO_USER = (1 << 10);
+    /** @deprecated 10.36.32 use `User::FLAG_TEAM_PSEUDO_USER` */
     public const FLAG_TEAM_USER = (1 << 10);
+    /** @todo Undocumented. */
     public const FLAG_SYSTEM = (1 << 12);
+    /** Bug Hunter Level 2. */
     public const FLAG_BUG_HUNTER_LEVEL_2 = (1 << 14);
+    /** Verified Bot. */
     public const FLAG_VERIFIED_BOT = (1 << 16);
-    public const FLAG_VERIFIED_BOT_DEVELOPER = (1 << 17);
-    public const FLAG_DISCORD_CERTIFIED_MODERATOR = (1 << 18);
-    public const BOT_HTTP_INTERACTIONS = (1 << 19);
+    /** Early Verified Bot Developer. */
+    public const FLAG_VERIFIED_DEVELOPER = (1 << 17);
+    /** @deprecated 10.36.32 use `User::FLAG_VERIFIED_DEVELOPER` */
+    public const FLAG_VERIFIED_BOT_DEVELOPER = self::FLAG_VERIFIED_DEVELOPER;
+    /** Moderator Programs Alumni. */
+    public const FLAG_CERTIFIED_MODERATOR = (1 << 18);
+    /** @deprecated 10.36.32 use `User::FLAG_CERTIFIED_MODERATOR` */
+    public const FLAG_DISCORD_CERTIFIED_MODERATOR = self::FLAG_CERTIFIED_MODERATOR;
+    /** Bot uses only HTTP interactions and is shown in the online member list. */
+    public const FLAG_BOT_HTTP_INTERACTIONS = (1 << 19);
+    /** @todo Undocumented. */
     public const FLAG_SUSPECTED_SPAM = (1 << 20); // Not documented
+    /** User is an Active Developer. */
     public const FLAG_ACTIVE_DEVELOPER = (1 << 22);
 
     public const PREMIUM_NONE = 0;
@@ -195,8 +233,8 @@ class User extends Part implements Stringable
 
         if (isset($format)) {
             static $allowed = ['png', 'jpg', 'webp', 'gif'];
-
-            if (! in_array(strtolower($format), $allowed)) {
+            $format = strtolower($format);
+            if (! in_array($format, $allowed)) {
                 $format = 'webp';
             }
         } elseif (strpos($this->attributes['avatar'], 'a_') === 0) {
@@ -205,56 +243,21 @@ class User extends Part implements Stringable
             $format = 'webp';
         }
 
+        // Clamp size to allowed powers of two between 16 and 4096
+        $size = max(16, min(4096, $size));
+        $size = 2 ** (int) round(log($size, 2));
+
         return "https://cdn.discordapp.com/avatars/{$this->id}/{$this->attributes['avatar']}.{$format}?size={$size}";
     }
 
     /**
      * Returns the avatar hash for the client.
      *
-     * @return ?string The client avatar's hash.
+     * @return string|null The client avatar's hash.
      */
     public function getAvatarHashAttribute(): ?string
     {
         return $this->attributes['avatar'];
-    }
-
-    /**
-     * Returns the avatar decoration URL for the client.
-     *
-     * @param string|null $format The image format.
-     * @param int         $size   The size of the image.
-     *
-     * @return string|null The URL to the clients avatar decoration.
-     */
-    public function getAvatarDecorationAttribute(?string $format = null, int $size = 288): ?string
-    {
-        if (! isset($this->attributes['avatar_decoration'])) {
-            return null;
-        }
-
-        if (isset($format)) {
-            static $allowed = ['png', 'jpg', 'webp'];
-
-            if (! in_array(strtolower($format), $allowed)) {
-                $format = 'png';
-            }
-        } elseif (strpos($this->attributes['avatar_decoration'], 'a_') === 0) {
-            $format = 'png';
-        } else {
-            $format = 'png';
-        }
-
-        return "https://cdn.discordapp.com/avatar-decorations/{$this->id}/{$this->attributes['avatar_decoration']}.{$format}?size={$size}";
-    }
-
-    /**
-     * Returns the avatar decoration hash for the client.
-     *
-     * @return ?string The client avatar decoration's hash.
-     */
-    public function getAvatarDecorationHashAttribute(): ?string
-    {
-        return $this->attributes['avatar_decoration'];
     }
 
     /**
@@ -289,7 +292,7 @@ class User extends Part implements Stringable
     /**
      * Returns the banner hash for the client.
      *
-     * @return ?string|null The client banner's hash.
+     * @return string|null The client banner's hash.
      */
     protected function getBannerHashAttribute(): ?string
     {
@@ -297,9 +300,44 @@ class User extends Part implements Stringable
     }
 
     /**
+     * Returns the avatar decoration URL for the client.
+     *
+     * @param string|null $format The image format. (Only 'png' is allowed)
+     * @param int         $size   The size of the image.
+     *
+     * @return string|null The URL to the clients avatar decoration.
+     */
+    public function getAvatarDecorationAttribute(?string $format = 'png', int $size = 288): ?string
+    {
+        if (! isset($this->attributes['avatar_decoration_data'])) {
+            return null;
+        }
+
+        // Clamp size to allowed powers of two between 16 and 4096
+        $size = max(16, min(4096, $size));
+        $size = 2 ** (int) round(log($size, 2));
+
+        if (! $asset = $this->avatar_decoration_data->asset ?? null) {
+            return null;
+        }
+
+        return "https://cdn.discordapp.com/avatar-decoration-presets/{$asset}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the avatar decoration hash for the client.
+     *
+     * @return string|null The client avatar decoration's hash.
+     */
+    public function getAvatarDecorationHashAttribute(): ?string
+    {
+        return $this->avatar_decoration_data->asset ?? null;
+    }
+
+    /**
      * Returns the avatar decoration data.
      *
-     * @return ?AvatarDecorationData|null The avatar decoration.
+     * @return AvatarDecorationData|null The avatar decoration.
      */
     public function getAvatarDecorationDataAttribute(): ?AvatarDecorationData
     {
@@ -307,9 +345,19 @@ class User extends Part implements Stringable
     }
 
     /**
+     * Returns the display name styles data.
+     *
+     * @return DisplayNameStyles|null The display name styles data.
+     */
+    public function getDisplayNameStylesAttribute(): ?DisplayNameStyles
+    {
+        return $this->attributePartHelper('display_name_styles', DisplayNameStyles::class);
+    }
+
+    /**
      * Returns the collectibles for the client.
      *
-     * @return ?Collectibles|null The collectibles data.
+     * @return Collectibles|null The collectibles data.
      */
     protected function getCollectiblesAttribute(): ?Collectibles
     {
@@ -327,11 +375,38 @@ class User extends Part implements Stringable
     /**
      * Returns a timestamp for when a user's account was created.
      *
-     * @return ?float
+     * @return float|null
      */
     public function createdTimestamp()
     {
         return \Discord\getSnowflakeTimestamp($this->id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if ($this->id === $this->discord->id) {
+            $data = [];
+            if ($this->username) {
+                $data['username'] = $this->username;
+            }
+            if ($this->avatar_hash) {
+                $data['avatar'] = $this->avatar_hash;
+            }
+            if ($this->banner_hash) {
+                $data['banner'] = $this->banner_hash;
+            }
+
+            return $this->discord->users->modifyCurrentUser($data, $reason)->then(function ($user) {
+                $this->fill((array) $user);
+
+                return $this;
+            });
+        }
+
+        return $this->discord->users->save($this, $reason);
     }
 
     /**

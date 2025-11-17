@@ -14,21 +14,20 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 /**
- * A Label is a top-level component.
+ * A Label is a top-level layout component. Labels wrap modal components with text as a label and optional description.
+ *
+ * The description may display above or below the component depending on the platform.
  *
  * @link https://discord.com/developers/docs/components/reference#label
  *
- * @todo Update to match Discord's documentation upon public release.
- * @todo Update Label class to extend the relevant base class.
- *
  * @since 10.19.0
  *
- * @property int                  $type        18 for label component.
- * @property string               $label       The text for the label.
- * @property string|null          $description Optional description for the label.
- * @property SelectMenu|TextInput $component   The component associated with the label.
+ * @property int                             $type        18 for a label.
+ * @property string                          $label       The label text; max 45 characters.
+ * @property ?string|null                    $description An optional description text for the label; max 100 characters.
+ * @property FileUpload|SelectMenu|TextInput $component   The component within the label.
  */
-class Label extends Component
+class Label extends Layout
 {
     /**
      * @inheritDoc
@@ -43,6 +42,6 @@ class Label extends Component
 
     public function getComponentAttribute(): Component
     {
-        return $this->createOf(Component::TYPES[$this->attributes['component']->type ?? 0], $this->attributes['component']);
+        return $this->attributePartHelper('component', Component::TYPES[$this->attributes['component']->type ?? 0]);
     }
 }

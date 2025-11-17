@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Request;
 
+use Discord\Builders\ChannelBuilder;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Attachment;
@@ -32,12 +33,12 @@ use Discord\Parts\User\User;
  *
  * @since 7.0.0
  *
- * @property ExCollectionInterface|User[]             $users       The ids and User objects.
- * @property ExCollectionInterface|Member[]           $members     The ids and partial Member objects.
- * @property ExCollectionInterface|Role[]             $roles       The ids and Role objects.
- * @property ExCollectionInterface|Channel[]|Thread[] $channels    The ids and partial Channel objects.
- * @property ExCollectionInterface|Message[]          $messages    The ids and partial Message objects.
- * @property ExCollectionInterface|Attachment[]       $attachments The ids and partial Attachment objects.
+ * @property ExCollectionInterface<User>|User[]                $users       The ids and User objects.
+ * @property ExCollectionInterface<Member>|Member[]            $members     The ids and partial Member objects.
+ * @property ExCollectionInterface<Role>|Role[]                $roles       The ids and Role objects.
+ * @property ExCollectionInterface<Channel>|Channel[]|Thread[] $channels    The ids and partial Channel objects.
+ * @property ExCollectionInterface<Message>|Message[]          $messages    The ids and partial Message objects.
+ * @property ExCollectionInterface<Attachment>|Attachment[]    $attachments The ids and partial Attachment objects.
  *
  * @property      string|null $guild_id ID of the guild internally passed from Interaction.
  * @property-read ?Guild|null $guild    The guild the interaction was sent in.
@@ -67,10 +68,14 @@ class Resolved extends Part
     /**
      * Returns a collection of resolved users.
      *
-     * @return ExCollectionInterface|User[] Map of Snowflakes to user objects
+     * @return ExCollectionInterface<User>|User[] Map of Snowflakes to user objects
      */
     protected function getUsersAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['users']) && $this->attributes['users'] instanceof ExCollectionInterface) {
+            return $this->attributes['users'];
+        }
+
         $collection = Collection::for(User::class);
 
         if (! isset($this->attributes['users'])) {
@@ -81,6 +86,8 @@ class Resolved extends Part
             $collection->pushItem($this->discord->users->get('id', $snowflake) ?: $this->factory->part(User::class, (array) $user, true));
         }
 
+        $this->attributes['users'] = $collection;
+
         return $collection;
     }
 
@@ -89,10 +96,14 @@ class Resolved extends Part
      *
      * Partial Member objects are missing user, deaf and mute fields
      *
-     * @return ExCollectionInterface|Member[] Map of Snowflakes to partial member objects
+     * @return ExCollectionInterface<Member>|Member[] Map of Snowflakes to partial member objects
      */
     protected function getMembersAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['members']) && $this->attributes['members'] instanceof ExCollectionInterface) {
+            return $this->attributes['members'];
+        }
+
         $collection = Collection::for(Member::class);
 
         if (! isset($this->attributes['members'])) {
@@ -112,16 +123,22 @@ class Resolved extends Part
             $collection->pushItem($memberPart);
         }
 
+        $this->attributes['members'] = $collection;
+
         return $collection;
     }
 
     /**
      * Returns a collection of resolved roles.
      *
-     * @return ExCollectionInterface|Role[] Map of Snowflakes to role objects
+     * @return ExCollectionInterface<Role>|Role[] Map of Snowflakes to role objects
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['roles']) && $this->attributes['roles'] instanceof ExCollectionInterface) {
+            return $this->attributes['roles'];
+        }
+
         $collection = Collection::for(Role::class);
 
         if (! isset($this->attributes['roles'])) {
@@ -140,6 +157,8 @@ class Resolved extends Part
             $collection->pushItem($rolePart);
         }
 
+        $this->attributes['roles'] = $collection;
+
         return $collection;
     }
 
@@ -148,10 +167,14 @@ class Resolved extends Part
      *
      * Partial Channel objects only have id, name, type and permissions fields. Threads will also have thread_metadata and parent_id fields.
      *
-     * @return ExCollectionInterface|Channel[]|Thread[] Map of Snowflakes to partial channel objects
+     * @return ExCollectionInterface<Channel|Thread>|Channel[]|Thread[] Map of Snowflakes to partial channel objects
      */
     protected function getChannelsAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['channels']) && $this->attributes['channels'] instanceof ExCollectionInterface) {
+            return $this->attributes['channels'];
+        }
+
         $collection = new Collection();
 
         if (! isset($this->attributes['channels'])) {
@@ -164,15 +187,13 @@ class Resolved extends Part
             }
 
             if (! isset($channelPart)) {
-                if (in_array($channel->type, [Channel::TYPE_ANNOUNCEMENT_THREAD, Channel::TYPE_PRIVATE_THREAD, Channel::TYPE_PUBLIC_THREAD])) {
-                    $channelPart = $this->factory->part(Thread::class, (array) $channel + ['guild_id' => $this->guild_id], true);
-                } else {
-                    $channelPart = $this->factory->part(Channel::class, (array) $channel + ['guild_id' => $this->guild_id], true);
-                }
+                $channelPart = $this->factory->part(ChannelBuilder::TYPES[$channel->type] ?? Channel::class, (array) $channel + ['guild_id' => $this->guild_id], true);
             }
 
             $collection->pushItem($channelPart);
         }
+
+        $this->attributes['channels'] = $collection;
 
         return $collection;
     }
@@ -180,10 +201,14 @@ class Resolved extends Part
     /**
      * Returns a collection of resolved messages.
      *
-     * @return ExCollectionInterface|Message[] Map of Snowflakes to partial messages objects
+     * @return ExCollectionInterface<Message>|Message[] Map of Snowflakes to partial messages objects
      */
     protected function getMessagesAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['messages']) && $this->attributes['messages'] instanceof ExCollectionInterface) {
+            return $this->attributes['messages'];
+        }
+
         $collection = Collection::for(Message::class);
 
         if (! isset($this->attributes['messages'])) {
@@ -200,13 +225,15 @@ class Resolved extends Part
             $collection->pushItem($messagePart ?? $this->factory->part(Message::class, (array) $message + ['guild_id' => $this->guild_id], true));
         }
 
+        $this->attributes['messages'] = $collection;
+
         return $collection;
     }
 
     /**
      * Returns a collection of resolved attachments.
      *
-     * @return ExCollectionInterface|Attachment[] Map of Snowflakes to attachments objects
+     * @return ExCollectionInterface<Attachment>|Attachment[] Map of Snowflakes to attachments objects
      */
     protected function getAttachmentsAttribute(): ExCollectionInterface
     {

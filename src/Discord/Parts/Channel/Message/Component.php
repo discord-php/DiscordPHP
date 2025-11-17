@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 use Discord\Builders\Components\Component as ComponentBuilder;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 
@@ -57,6 +56,7 @@ class Component extends Part
         ComponentBuilder::TYPE_SEPARATOR => Separator::class,
         ComponentBuilder::TYPE_CONTAINER => Container::class,
         ComponentBuilder::TYPE_LABEL => Label::class,
+        ComponentBuilder::TYPE_FILE_UPLOAD => FileUpload::class,
     ];
 
     /**
@@ -68,22 +68,20 @@ class Component extends Part
     ];
 
     /**
-     * Gets the components of the interaction.
+     * Gets the components.
      *
-     * @return ExCollectionInterface|Component[] $components
+     * @return ExCollectionInterface<Component>|Component[]
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        $components = Collection::for(Component::class, null);
+        return $this->attributeTypedCollectionHelper(Component::class, 'components');
+    }
 
-        if (! isset($this->attributes['components'])) {
-            return $components;
-        }
-
-        foreach ($this->attributes['components'] as $component) {
-            $components->pushItem($this->createOf(self::TYPES[$component->type ?? 0], $component));
-        }
-
-        return $components;
+    /**
+     * Gets the component.
+     */
+    public function getComponentAttribute(): ?Component
+    {
+        return $this->attributePartHelper('component', Component::TYPES[$this->attributes['component']->type ?? 0]);
     }
 }

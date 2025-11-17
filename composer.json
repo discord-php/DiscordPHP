@@ -35,11 +35,11 @@
     "require-dev": {
         "symfony/var-dumper": "*",
         "friendsofphp/php-cs-fixer": "^3",
-        "phpunit/phpunit": "^9.4.4",
         "davidcole1340/reactsh": "dev-master",
         "wyrihaximus/react-cache-redis": "^4.5",
         "symfony/cache": "^5.4",
-        "laravel/pint": "^1.21"
+        "laravel/pint": "^1.21",
+        "pestphp/pest": "^4.1.2"
     },
     "autoload": {
         "files": [
@@ -67,6 +67,12 @@
         "php8.1": ["docker-compose run php8.1 sh"],
         "php8.2": ["docker-compose run php8.2 sh"],
         "php8.3": ["docker-compose run php8.3 sh"],
-        "php8.4": ["docker-compose run php8.4 sh"]
+        "php8.4": ["docker-compose run php8.4 sh"],
+        "pest": "pest --parallel"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     }
 }

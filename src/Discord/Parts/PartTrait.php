@@ -21,6 +21,8 @@ use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Http;
 use React\Promise\PromiseInterface;
 
+use function React\Promise\reject;
+
 /**
  * @property Http    $http               The HTTP client.
  * @property Factory $factory            The factory instance.
@@ -32,8 +34,6 @@ use React\Promise\PromiseInterface;
  * @property array   $hidden             Attributes that are hidden from public.
  * @property array   $repositories       Repositories that can exist in a part.
  * @property array   $repositories_cache An array of repositories.
- * @property Discord $discord            The Discord client.
- * @property mixed   $scriptData         Custom script data.
  * @property bool    $created            Whether the part has been created.
  */
 trait PartTrait
@@ -43,6 +43,21 @@ trait PartTrait
      */
     protected function afterConstruct(): void
     {
+    }
+
+    /**
+     * Save the part with its originating repository.
+     *
+     * @param string|null $reason The reason for the audit log, if supported.
+     *
+     * @throws \Exception             If the part does not support saving.
+     * @throws NoPermissionsException Missing permission.
+     *
+     * @return PromiseInterface<Part> Resolves with the saved part.
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        return reject(new \Exception('This part does not support saving.'));
     }
 
     /**
@@ -141,7 +156,7 @@ trait PartTrait
     {
         if (isset($this->repositories[$key])) {
             if (! isset($this->repositories_cache[$key])) {
-                $this->repositories_cache[$key] = $this->factory->create($this->repositories[$key], $this->getRepositoryAttributes());
+                $this->repositories_cache[$key] = $this->factory->repository($this->repositories[$key], $this->getRepositoryAttributes());
             }
 
             return $this->repositories_cache[$key];
@@ -472,16 +487,42 @@ trait PartTrait
     {
         $collection = Collection::for($class, $discrim);
 
-        if (! isset($this->attributes[$key])) {
+        if (empty($this->attributes[$key])) {
             return $collection;
         }
 
-        foreach ($this->attributes[$key] as $part) {
+        foreach ($this->attributes[$key] as &$part) {
             $collection->pushItem(
                 $part instanceof $class
                     ? $part
-                    : $this->createOf($class, $part)
+                    : $part = $this->createOf($class, $part)
             );
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Helps with getting Part attributes for classes with extended types.
+     *
+     * @param string $class The attribute class.
+     * @param string $key   The attribute key.
+     *
+     * @return ExCollectionInterface
+     */
+    protected function attributeTypedCollectionHelper(string $class, string $key): ExCollectionInterface
+    {
+        $collection = Collection::for($class);
+
+        if (empty($this->attributes[$key])) {
+            return $collection;
+        }
+
+        foreach ($this->attributes[$key] as &$part) {
+            if (! $part instanceof $class) {
+                $part = $this->createOf($class::TYPES[$part->type ?? 0], $part);
+            }
+            $collection->pushItem($part);
         }
 
         return $collection;
@@ -502,7 +543,7 @@ trait PartTrait
      */
     protected function attributePartHelper($key, $class, $extraData = []): ?Part
     {
-        if (! isset($this->attributes[$key])) {
+        if (! isset($this->attributes[$key]) || ! $this->attributes[$key]) {
             return null;
         }
 

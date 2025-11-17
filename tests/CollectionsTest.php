@@ -153,18 +153,18 @@ final class CollectionsTest extends TestCase
     {
         $collection = new Collection([1, 2, 3, 4, 5], null);
 
-        $this->assertEquals(true, $collection->isset(0));
-        $this->assertEquals(false, $collection->isset(5));
+        $this->assertTrue($collection->isset(0));
+        $this->assertFalse($collection->isset(5));
     }
 
     public function testHas()
     {
         $collection = new Collection([1, 2, 3, 4, 5], null);
 
-        $this->assertEquals(true, $collection->has(1, 2, 3));
-        $this->assertEquals(true, $collection->has(0));
-        $this->assertEquals(false, $collection->has(5, 6, 7));
-        $this->assertEquals(false, $collection->has(0, 5));
+        $this->assertTrue($collection->has(1, 2, 3));
+        $this->assertTrue($collection->has(0));
+        $this->assertFalse($collection->has(5, 6, 7));
+        $this->assertFalse($collection->has(0, 5));
     }
 
     public function testFilter()

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Builders\ChannelBuilder;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
@@ -30,7 +31,7 @@ class ChannelCreate extends Event
     public function handle($data)
     {
         /** @var Channel */
-        $channelPart = $this->factory->part(Channel::class, (array) $data, true);
+        $channelPart = $this->factory->part(ChannelBuilder::TYPES[$data->type] ?? Channel::class, (array) $data, true);
 
         if ($channelPart->is_private) {
             $this->discord->private_channels->set($data->id, $channelPart);

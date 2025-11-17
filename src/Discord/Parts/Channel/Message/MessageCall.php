@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 use Carbon\Carbon;
+use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
@@ -27,7 +29,7 @@ use Discord\Parts\User\User;
  * @property array        $participants    Array of user object IDs that participated in the call.
  * @property ?Carbon|null $ended_timestamp Time when the call ended (ISO8601 timestamp), or null if ongoing.
  *
- * @property-read User[] $users Array of user objects that participated in the call.
+ * @property-read ExCollectionInterface<User>|User[] $users Array of user objects that participated in the call.
  */
 class MessageCall extends Part
 {
@@ -52,13 +54,13 @@ class MessageCall extends Part
     /**
      * Gets the users.
      *
-     * @return User[]
+     * @return ExCollectionInterface<User>|User[]
      */
-    protected function getUsersAttribute(): array
+    protected function getUsersAttribute(): ExCollectionInterface
     {
-        return array_map(
+        return Collection::for(User::class)->push(array_map(
             fn ($userData) => $this->discord->users->get('id', $userData) ?? $this->factory->part(User::class, ['id' => $userData], true),
             $this->attributes['participants']
-        );
+        ));
     }
 }

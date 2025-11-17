@@ -15,11 +15,15 @@ namespace Discord\Parts\Guild\AutoModeration;
 
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * Auto Moderation is a feature which allows each guild to set up rules that
@@ -33,19 +37,19 @@ use Discord\Parts\User\User;
  *
  * @since 7.1.0
  *
- * @property      string                           $id               The id of this rule.
- * @property      string                           $guild_id         The id of the guild which this rule belongs to.
- * @property-read Guild|null                       $guild            The guild which this rule belongs to.
- * @property      string                           $name             The rule name.
- * @property      string                           $creator_id       The id of the user which first created this rule.
- * @property-read User|null                        $creator          The user which first created this rule.
- * @property      int                              $event_type       The rule event type.
- * @property      int                              $trigger_type     The rule trigger type.
- * @property      object                           $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `regex_patterns`, `presets`, `allow_list`, `mention_total_limit` and `mention_raid_protection_enabled`).
- * @property      ExCollectionInterface|Action[]   $actions          The actions which will execute when the rule is triggered.
- * @property      bool                             $enabled          Whether the rule is enabled.
- * @property      ExCollectionInterface|?Role[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
- * @property      ExCollectionInterface|?Channel[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
+ * @property      string                                   $id               The id of this rule.
+ * @property      string                                   $guild_id         The id of the guild which this rule belongs to.
+ * @property-read Guild|null                               $guild            The guild which this rule belongs to.
+ * @property      string                                   $name             The rule name.
+ * @property      string                                   $creator_id       The id of the user which first created this rule.
+ * @property-read User|null                                $creator          The user which first created this rule.
+ * @property      int                                      $event_type       The rule event type.
+ * @property      int                                      $trigger_type     The rule trigger type.
+ * @property      TriggerMetadata                          $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `regex_patterns`, `presets`, `allow_list`, `mention_total_limit` and `mention_raid_protection_enabled`).
+ * @property      ExCollectionInterface<Action>|Action[]   $actions          The actions which will execute when the rule is triggered.
+ * @property      bool                                     $enabled          Whether the rule is enabled.
+ * @property      ExCollectionInterface<Role>|Role[]       $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
+ * @property      ExCollectionInterface<Channel>|Channel[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
  */
 class Rule extends Part
 {
@@ -66,17 +70,28 @@ class Rule extends Part
         'exempt_channels',
     ];
 
+    /** Check if content contains words from a user defined list of keywords. */
     public const TRIGGER_TYPE_KEYWORD = 1;
+    /** Check if content represents generic spam. */
     public const TRIGGER_TYPE_SPAM = 3;
+    /** Check if content contains words from internal pre-defined wordsets. */
     public const TRIGGER_TYPE_KEYWORD_PRESET = 4;
+    /** Check if content contains more unique mentions than allowed. */
     public const TRIGGER_TYPE_MENTION_SPAM = 5;
+    /** Check if member profile contains words from a user defined list of keywords. */
     public const TRIGGER_TYPE_PROFILE = 6;
 
+    /** Words that may be considered forms of swearing or cursing. */
     public const KEYWORD_PRESET_TYPE_PROFANITY = 1;
+    /** Words that refer to sexually explicit behavior or activity. */
     public const KEYWORD_PRESET_TYPE_SEXUAL_CONTENT = 2;
+    /** Personal insults or words that may be considered hate speech. */
     public const KEYWORD_PRESET_TYPE_SLURS = 3;
 
+    /** When a member sends or edits a message in the guild. */
     public const EVENT_TYPE_MESSAGE_SEND = 1;
+    /** When a member edits their profile. */
+    public const EVENT_TYPE_MEMBER_UPDATE = 2;
 
     /**
      * Returns the guild attribute.
@@ -99,9 +114,19 @@ class Rule extends Part
     }
 
     /**
+     * Returns the trigger metadata attribute.
+     *
+     * @return TriggerMetadata The rule trigger metadata.
+     */
+    protected function getTriggerMetadataAttribute(): TriggerMetadata
+    {
+        return $this->attributePartHelper('trigger_metadata', TriggerMetadata::class);
+    }
+
+    /**
      * Returns the actions attribute.
      *
-     * @return ExCollectionInterface|Action[] A collection of actions.
+     * @return ExCollectionInterface<Action>|Action[] A collection of actions.
      */
     protected function getActionsAttribute(): ExCollectionInterface
     {
@@ -111,7 +136,7 @@ class Rule extends Part
     /**
      * Returns the exempt roles attribute.
      *
-     * @return ExCollectionInterface|?Role[] A collection of roles exempt from the rule.
+     * @return ExCollectionInterface<Role>|Role[] A collection of roles exempt from the rule.
      */
     protected function getExemptRolesAttribute(): ExCollectionInterface
     {
@@ -135,7 +160,7 @@ class Rule extends Part
     /**
      * Returns the exempt channels attribute.
      *
-     * @return ExCollectionInterface|?Channel[] A collection of channels exempt from the rule.
+     * @return ExCollectionInterface<Channel>|Channel[] A collection of channels exempt from the rule.
      */
     protected function getExemptChannelsAttribute(): ExCollectionInterface
     {
@@ -206,6 +231,27 @@ class Rule extends Part
         }
 
         return $attr;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->manage_guild) {
+                    return reject(new NoPermissionsException("You do not have permission to manage auto moderation rules in the guild {$guild->id}."));
+                }
+            }
+
+            return $guild->auto_moderation_rules->save($this, $reason);
+        }
+
+        return parent::save();
     }
 
     /**

@@ -15,6 +15,8 @@ namespace Discord\Helpers;
 
 use Stringable;
 
+use function Discord\poly_strlen;
+
 /**
  * Builds a multipart request.
  *
@@ -93,7 +95,7 @@ class Multipart implements Stringable
     {
         return [
             'Content-Type' => $this->getContentType(),
-            'Content-Length' => strlen((string) $this),
+            'Content-Length' => poly_strlen((string) $this),
         ];
     }
 

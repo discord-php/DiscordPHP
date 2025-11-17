@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 
 /**
  * An Integration is a guild integrations for Twitch, YouTube, Bot and Apps.
@@ -36,7 +37,7 @@ use Discord\Parts\User\User;
  * @property      int|null         $expire_behavior     The behavior of expiring subscribers.
  * @property      int|null         $expire_grace_period The grace period (in days) before expiring subscribers.
  * @property      User|null        $user                User for this integration.
- * @property      object           $account             Integration account information.
+ * @property      Account          $account             Integration account information.
  * @property      Carbon|null      $synced_at           When this integration was last synced.
  * @property      int|null         $subscriber_count    How many subscribers this integration has.
  * @property      bool|null        $revoked             Has this integration been revoked.
@@ -88,7 +89,17 @@ class Integration extends Part
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        return $this->attributePartHelper('user', User::class);
+    }
+
+    /**
+     * Returns the account attribute.
+     *
+     * @return Account The account attribute.
+     */
+    protected function getAccountAttribute(): Account
+    {
+        return $this->attributePartHelper('account', Account::class);
     }
 
     /**
@@ -118,11 +129,11 @@ class Integration extends Part
 
         $botApplication = $this->discord->application;
 
-        if ($this->attributes['application']->id == $botApplication->id) {
+        if ($this->attributes['application']->id === $botApplication->id) {
             return $botApplication;
         }
 
-        return $this->factory->part(Application::class, (array) $this->attributes['application'], true);
+        return $this->attributePartHelper('application', Application::class);
     }
 
     /**
@@ -147,6 +158,21 @@ class Integration extends Part
         }
 
         return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->integrations->save($this, $reason);
+        }
+
+        return parent::save();
     }
 
     /**

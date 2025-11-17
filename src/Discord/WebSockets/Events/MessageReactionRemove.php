@@ -57,7 +57,7 @@ class MessageReactionRemove extends Event
         if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
             /** @var Reaction */
             if ($react = yield $message->reactions->cacheGet($reaction->reaction_id)) {
-                if ($data->user_id == $this->discord->id) {
+                if ($data->user_id === $this->discord->id) {
                     $react->me = false;
                 }
 

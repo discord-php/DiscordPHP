@@ -35,7 +35,9 @@ class TextInput extends Interactive
 {
     public const USAGE = ['Message', 'Modal'];
 
+    /** Single-line input. */
     public const STYLE_SHORT = 1;
+    /** Multi-line input. */
     public const STYLE_PARAGRAPH = 2;
 
     /**
@@ -122,26 +124,6 @@ class TextInput extends Interactive
     public static function new(?string $label, int $style, ?string $custom_id = null): self
     {
         return new self($label, $style, $custom_id);
-    }
-
-    /**
-     * Sets the custom ID for the text input.
-     *
-     * @param string $custom_id
-     *
-     * @throws \LengthException
-     *
-     * @return $this
-     */
-    public function setCustomId($custom_id): self
-    {
-        if (poly_strlen($custom_id) > 100) {
-            throw new \LengthException('Custom ID must be maximum 100 characters.');
-        }
-
-        $this->custom_id = $custom_id;
-
-        return $this;
     }
 
     /**

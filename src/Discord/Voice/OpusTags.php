@@ -48,7 +48,7 @@ class OpusTags
     public function __construct(string $data)
     {
         $magic = substr($data, 0, 8);
-        if ($magic != 'OpusTags') {
+        if ($magic !== 'OpusTags') {
             throw new \UnexpectedValueException("Expected OpusTags, found {$magic}.");
         }
 

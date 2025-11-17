@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Discord\Builders\Components;
 
 /**
+ * For displaying static text, images, and files (Text Display, Media Gallery, Thumbnails).
+ *
  * @since 10.9.0
  */
 abstract class Content extends ComponentObject

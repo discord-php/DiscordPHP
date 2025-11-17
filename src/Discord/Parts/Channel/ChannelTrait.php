@@ -240,7 +240,7 @@ trait ChannelTrait
                 return reject(new NoPermissionsException("You do not have permission to read message history in the channel {$this->id}."));
             }
 
-            if ($this->type == Channel::TYPE_GUILD_VOICE && ! $botperms->connect) {
+            if ($this->type === Channel::TYPE_GUILD_VOICE && ! $botperms->connect) {
                 return reject(new NoPermissionsException("You do not have permission to connect in the channel {$this->id}."));
             }
         }
@@ -393,7 +393,7 @@ trait ChannelTrait
         }
 
         return $this->http->get($endpoint)
-            ->then(fn ($responses) => $this->factory->create(MessagePinData::class, $responses));
+            ->then(fn ($response) => $this->factory->part(MessagePinData::class, $response, true));
     }
 
     /**
@@ -426,7 +426,7 @@ trait ChannelTrait
             return reject(new \RuntimeException('This message is already pinned.'));
         }
 
-        if ($message->channel_id != $this->id) {
+        if ($message->channel_id !== $this->id) {
             return reject(new \RuntimeException('You cannot pin a message to a different channel.'));
         }
 
@@ -471,8 +471,8 @@ trait ChannelTrait
             return reject(new \RuntimeException('This message is not pinned.'));
         }
 
-        if ($message->channel_id != $this->id) {
-            return reject(new \RuntimeException('You cannot un-pin a message not sent in this thread.'));
+        if ($message->channel_id !== $this->id) {
+            return reject(new \RuntimeException('You cannot un-pin a message to a different channel.'));
         }
 
         $headers = [];
@@ -638,7 +638,7 @@ trait ChannelTrait
         ], $options);
 
         $eventHandler = function (Message $message) use (&$eventHandler, $filter, $options, &$messages, &$deferred, &$timer) {
-            if ($message->channel_id != $this->id) {
+            if ($message->channel_id !== $this->id) {
                 return;
             }
             // Reject messages not in this channel

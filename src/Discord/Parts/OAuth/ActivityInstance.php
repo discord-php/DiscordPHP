@@ -17,6 +17,7 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 
 /**
  * Represents an Activity Instance.
@@ -25,11 +26,11 @@ use Discord\Parts\User\User;
  *
  * @since 10.17.0
  *
- * @property string                       $application_id Application ID.
- * @property string                       $instance_id    Activity Instance ID.
- * @property string                       $launch_id      Unique identifier for the launch.
- * @property ActivityLocation             $location       Location the instance is running in.
- * @property ExCollectionInterface|User[] $users          IDs of the Users currently connected to the instance.
+ * @property string                             $application_id Application ID.
+ * @property string                             $instance_id    Activity Instance ID.
+ * @property string                             $launch_id      Unique identifier for the launch.
+ * @property ActivityLocation                   $location       Location the instance is running in.
+ * @property ExCollectionInterface<User>|User[] $users          IDs of the Users currently connected to the instance.
  */
 class ActivityInstance extends Part
 {
@@ -54,16 +55,30 @@ class ActivityInstance extends Part
     /**
      * Returns a collection of users currently connected to the instance.
      *
-     * @return ExCollectionInterface|User[]
+     * @return ExCollectionInterface<User>|User[]
      */
     protected function getUsersAttribute(): ExCollectionInterface
     {
+        if (isset($this->attributes['users']) && $this->attributes['users'] instanceof ExCollectionInterface) {
+            return $this->attributes['users'];
+        }
+
         $collection = Collection::for(User::class);
 
         foreach ($this->attributes['users'] as $user) {
             $collection->pushItem($this->discord->users->get('id', $user->id) ?: $this->factory->part(User::class, (array) $user, true));
         }
 
+        $this->attributes['users'] = $collection;
+
         return $collection;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        return $this->discord->application->activity_instances->save($this, $reason);
     }
 }

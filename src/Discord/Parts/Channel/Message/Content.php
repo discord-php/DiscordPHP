@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 /**
- * Abstract class for content components.
+ * For displaying static text, images, and files (Text Display, Media Gallery, Thumbnails).
  *
  * @since 10.11.0
  */

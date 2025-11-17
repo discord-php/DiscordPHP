@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\User;
 
 use Carbon\Carbon;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 use Stringable;
@@ -26,47 +27,41 @@ use Stringable;
  * @since 5.0.0 Renamed from Game to Activity
  * @since 3.2.2
  *
- * @property string        $name                The activity's name.
- * @property int           $type                Activity type.
- * @property ?string|null  $url                 Stream url, is validated when type is 1.
- * @property Carbon|null   $created_at          Timestamp of when the activity was added to the user's session.
- * @property object|null   $timestamps          Unix timestamps for start and/or end of the game.
- * @property string|null   $application_id      Application id for the game.
- * @property ?int|null     $status_display_type Status display type; controls which field is displayed in the user's status text in the member list.
- * @property ?string|null  $details             What the player is currently doing.
- * @property ?string|null  $details_url         URL that is linked when clicking on the details text
- * @property ?string|null  $state               The user's current party status, or text used for a custom status.
- * @property ?string|null  $state_url           URL that is linked when clicking on the state text.
- * @property Emoji|null    $emoji               The emoji used for a custom status.
- * @property Party|null    $party               Information for the current party of the player.
- * @property Assets|null   $assets              Images for the presence and their hover texts.
- * @property Secrets|null  $secrets             Secrets for Rich Presence joining and spectating.
- * @property bool|null     $instance            Whether or not the activity is an instanced game session.
- * @property int|null      $flags               Activity flags `OR`d together, describes what the payload includes.
- * @property object[]|null $buttons             The custom buttons shown in the Rich Presence (max 2).
+ * @property string                                      $name                The activity's name.
+ * @property int                                         $type                Activity type.
+ * @property ?string|null                                $url                 Stream url, is validated when type is 1.
+ * @property Carbon|null                                 $created_at          Timestamp of when the activity was added to the user's session.
+ * @property Timestamps|null                             $timestamps          Unix timestamps for start and/or end of the game.
+ * @property string|null                                 $application_id      Application id for the game.
+ * @property ?int|null                                   $status_display_type Status display type; controls which field is displayed in the user's status text in the member list.
+ * @property ?string|null                                $details             What the player is currently doing.
+ * @property ?string|null                                $details_url         URL that is linked when clicking on the details text
+ * @property ?string|null                                $state               The user's current party status, or text used for a custom status.
+ * @property ?string|null                                $state_url           URL that is linked when clicking on the state text.
+ * @property Emoji|null                                  $emoji               The emoji used for a custom status.
+ * @property Party|null                                  $party               Information for the current party of the player.
+ * @property Assets|null                                 $assets              Images for the presence and their hover texts.
+ * @property Secrets|null                                $secrets             Secrets for Rich Presence joining and spectating.
+ * @property bool|null                                   $instance            Whether or not the activity is an instanced game session.
+ * @property int|null                                    $flags               Activity flags `OR`d together, describes what the payload includes.
+ * @property ExCollectionInterface<Button>|Button[]|null $buttons             The custom buttons shown in the Rich Presence (max 2).
  */
 class Activity extends Part implements Stringable
 {
     /** Playing {name} */
-    public const TYPE_GAME = 0;
-
+    public const TYPE_PLAYING = 0;
+    /** @deprecated 10.36.31 Use `Activity::TYPE_PLAYING` */
+    public const TYPE_GAME = self::TYPE_PLAYING;
     /** Streaming {details} */
     public const TYPE_STREAMING = 1;
-
     /** Listening to {name} */
     public const TYPE_LISTENING = 2;
-
     /** Watching {name} */
     public const TYPE_WATCHING = 3;
-
     /** {emoji} {name} */
     public const TYPE_CUSTOM = 4;
-
     /** Competing in {name} */
     public const TYPE_COMPETING = 5;
-
-    /** @deprecated 10.0.0 Use `Activity::TYPE_GAME` */
-    public const TYPE_PLAYING = self::TYPE_GAME;
 
     public const FLAG_INSTANCE = (1 << 0);
     public const FLAG_JOIN = (1 << 1);
@@ -78,13 +73,22 @@ class Activity extends Part implements Stringable
     public const FLAG_PARTY_PRIVACY_VOICE_CHANNEL = (1 << 7);
     public const FLAG_EMBEDDED = (1 << 8);
 
+    /** Online. */
     public const STATUS_ONLINE = 'online';
-    public const STATUS_IDLE = 'idle';
+    /** Do Not Disturb. */
     public const STATUS_DND = 'dnd';
+    /** AFK. */
+    public const STATUS_IDLE = 'idle';
+    /** Invisible and shown as offline. */
     public const STATUS_INVISIBLE = 'invisible';
+    /** Offline. */
+    public const STATUS_OFFLINE = 'offline';
 
+    /** "Listening to Spotify" */
     public const STATUS_DISPLAY_TYPE_NAME = 0;
+    /** "Listening to Rick Astley" */
     public const STATUS_DISPLAY_TYPE_STATE = 1;
+    /** "Listening to Never Gonna Give You Up" */
     public const STATUS_DISPLAY_TYPE_DETAILS = 2;
 
     /**
@@ -124,6 +128,16 @@ class Activity extends Part implements Stringable
     }
 
     /**
+     * Gets the timestamps object of the activity.
+     *
+     * @return Timestamps|null
+     */
+    protected function getTimestampsAttribute(): ?Timestamps
+    {
+        return $this->attributePartHelper('timestamps', Timestamps::class);
+    }
+
+    /**
      * Gets the emoji object of the activity.
      *
      * @return Emoji|null
@@ -154,6 +168,26 @@ class Activity extends Part implements Stringable
     }
 
     /**
+     * Gets the secrets object of the activity.
+     *
+     * @return Secrets|null
+     */
+    protected function getSecretsAttribute(): ?Secrets
+    {
+        return $this->attributePartHelper('secrets', Secrets::class);
+    }
+
+    /**
+     * Gets the buttons array of the activity.
+     *
+     * @return ExCollectionInterface<Button>|Button[]|null
+     */
+    protected function getButtonsAttribute(): ?ExCollectionInterface
+    {
+        return $this->attributeCollectionHelper('buttons', Button::class, 'label');
+    }
+
+    /**
      * Converts the activity to a string.
      *
      * @return string
@@ -161,7 +195,7 @@ class Activity extends Part implements Stringable
     public function __toString(): string
     {
         return match ($this->type) {
-            self::TYPE_GAME => 'Playing '.$this->name,
+            self::TYPE_PLAYING => 'Playing '.$this->name,
             self::TYPE_STREAMING => 'Streaming '.$this->details,
             self::TYPE_LISTENING => 'Listening to '.$this->name,
             self::TYPE_WATCHING => 'Watching '.$this->name,

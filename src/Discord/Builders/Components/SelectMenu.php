@@ -32,8 +32,6 @@ use function Discord\poly_strlen;
  *
  * @since 10.0.0 Renamed from SelectMenu to StringSelect and made SelectMenu abstract
  * @since 10.9.0 Extends Interactive instead of Component
- *
- * @deprecated 10.0.0 Use `StringSelect`
  */
 abstract class SelectMenu extends Interactive
 {
@@ -171,26 +169,6 @@ abstract class SelectMenu extends Interactive
     }
 
     /**
-     * Sets the custom ID for the select menu.
-     *
-     * @param string $custom_id
-     *
-     * @throws \LengthException If the custom ID is longer than 100 characters.
-     *
-     * @return $this
-     */
-    public function setCustomId($custom_id): self
-    {
-        if (poly_strlen($custom_id) > 100) {
-            throw new \LengthException('Custom ID must be maximum 100 characters.');
-        }
-
-        $this->custom_id = $custom_id;
-
-        return $this;
-    }
-
-    /**
      * Specified choices in a select menu (only required and available for string selects (type 3); max 25.
      *
      * @param array $options
@@ -201,7 +179,7 @@ abstract class SelectMenu extends Interactive
      */
     public function setOptions(array $options): self
     {
-        if ($this->type != self::TYPE_STRING_SELECT) {
+        if ($this->type !== self::TYPE_STRING_SELECT) {
             throw new \InvalidArgumentException('Options can only be set for string selects.');
         }
 
@@ -224,7 +202,7 @@ abstract class SelectMenu extends Interactive
      */
     public function setChannelTypes(array $channel_types): self
     {
-        if ($this->type != self::TYPE_CHANNEL_SELECT) {
+        if ($this->type !== self::TYPE_CHANNEL_SELECT) {
             throw new \InvalidArgumentException('Channel types can only be set for channel selects.');
         }
 
@@ -355,7 +333,7 @@ abstract class SelectMenu extends Interactive
 
         $this->discord = $discord;
 
-        if ($callback == null) {
+        if ($callback === null) {
             return $this;
         }
 
@@ -382,8 +360,8 @@ abstract class SelectMenu extends Interactive
         $timer = null;
 
         $listener = function (Interaction $interaction) use ($callback, $oneOff, &$timer) {
-            if ($interaction->data->component_type == $this->type &&
-                $interaction->data->custom_id == $this->custom_id) {
+            if ($interaction->data->component_type === $this->type &&
+                $interaction->data->custom_id === $this->custom_id) {
                 if (empty($this->options)) {
                     $response = $callback($interaction);
                 } else {

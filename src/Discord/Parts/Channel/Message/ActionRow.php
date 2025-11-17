@@ -28,9 +28,9 @@ namespace Discord\Parts\Channel\Message;
  *
  * @since 10.11.0
  *
- * @property int                               $type       1 for action row component
- * @property string|null                       $id         Optional identifier for component
- * @property ExCollectionInterface|Component[] $components Up to 5 interactive button components or a single select component
+ * @property int                                          $type       1 for action row component
+ * @property string|null                                  $id         Optional identifier for component
+ * @property ExCollectionInterface<Component>|Component[] $components Up to 5 interactive button components or a single select component
  */
 class ActionRow extends Layout
 {

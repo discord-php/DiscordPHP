@@ -97,7 +97,7 @@ trait GuildTrait
         return in_array('ANIMATED_ICON', $this->features);
     }
 
-    protected function getFeatureApplicationCommandPermissionsV2(): bool
+    protected function getFeatureApplicationCommandPermissionsV2Attribute(): bool
     {
         return in_array('APPLICATION_COMMAND_PERMISSIONS_V2', $this->features);
     }
@@ -257,9 +257,14 @@ trait GuildTrait
         return in_array('WELCOME_SCREEN_ENABLED', $this->features);
     }
 
-    protected function getFeatureGuestEnabledAttribute(): bool
+    protected function getFeatureGuestsEnabledAttribute(): bool
     {
-        return in_array('GUEST_ENABLED', $this->features);
+        return in_array('GUESTS_ENABLED', $this->features);
+    }
+
+    protected function getFeatureGuildTagsAttribute(): bool
+    {
+        return in_array('GUILD_TAGS', $this->features);
     }
 
     protected function getFeatureEnhancedRoleColorsAttribute(): bool

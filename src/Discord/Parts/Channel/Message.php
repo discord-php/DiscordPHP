@@ -19,9 +19,11 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Channel\Message\MessageInteractionMetadata;
+use Discord\Parts\Channel\Message\MessageSnapshot;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Role;
+use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -29,8 +31,10 @@ use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Channel\Message\Activity;
 use Discord\Parts\Channel\Message\MessageCall;
 use Discord\Parts\Channel\Message\MessageReference;
+use Discord\Parts\Channel\Message\RoleSubscriptionData;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Resolved;
@@ -47,47 +51,47 @@ use function React\Promise\reject;
 /**
  * A message which is posted to a Discord text channel.
  *
- * @link https://discord.com/developers/docs/resources/channel#message-object
+ * @link https://discord.com/developers/docs/resources/message#message-object
  *
  * @since 2.0.0
  *
- * @property      string                             $id                     The unique identifier of the message.
- * @property      string                             $channel_id             The unique identifier of the channel that the message was sent in.
- * @property-read Channel|Thread                     $channel                The channel that the message was sent in.
- * @property      User|null                          $author                 The author of the message. Will be a webhook if sent from one.
- * @property-read string|null                        $user_id                The user id of the author.
- * @property      string                             $content                The content of the message if it is a normal message.
- * @property      Carbon                             $timestamp              A timestamp of when the message was sent.
- * @property      Carbon|null                        $edited_timestamp       A timestamp of when the message was edited, or null.
- * @property      bool                               $tts                    Whether the message was sent as a text-to-speech message.
- * @property      bool                               $mention_everyone       Whether the message contained an @everyone mention.
- * @property      ExCollectionInterface|User[]       $mentions               A collection of the users mentioned in the message.
- * @property      ExCollectionInterface|Role[]       $mention_roles          A collection of roles that were mentioned in the message.
- * @property      ExCollectionInterface|Channel[]    $mention_channels       Collection of mentioned channels.
- * @property      ExCollectionInterface|Attachment[] $attachments            Collection of attachment objects.
- * @property      ExCollectionInterface|Embed[]      $embeds                 A collection of embed objects.
- * @property      ReactionRepository                 $reactions              Collection of reactions on the message.
- * @property      string|null                        $nonce                  A randomly generated string that provides verification for the client. Not required.
- * @property      bool                               $pinned                 Whether the message is pinned to the channel.
- * @property      string|null                        $webhook_id             ID of the webhook that made the message, if any.
- * @property      int                                $type                   The type of message.
- * @property      object|null                        $activity               Current message activity. Requires rich presence.
- * @property      object|null                        $application            Application of message. Requires rich presence.
- * @property      string|null                        $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
- * @property      int|null                           $flags                  Message flags.
- * @property      MessageReference|null              $message_reference      Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
- * @property      object|null                        $message_snapshot       The message associated with the message_reference. This is a minimal subset of fields in a message (e.g. author is excluded.).
- * @property      Message|null                       $referenced_message     The message that is referenced in a reply.
- * @property      MessageInteractionMetadata|null    $interaction_metadata   Sent if the message is sent as a result of an interaction.
- * @property      MessageInteraction|null            $interaction            Sent if the message is a response to an Interaction.
- * @property      Thread|null                        $thread                 The thread that was started from this message, includes thread member object.
- * @property      ExCollectionInterface|Component[]  $components             Sent if the message contains components like buttons, action rows, or other interactive components.
- * @property      ExCollectionInterface|Sticker[]    $sticker_items          Stickers attached to the message.
- * @property      int|null                           $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
- * @property      object|null                        $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
- * @property      Resolved|null                      $resolved               Data for users, members, channels, and roles in the message's auto-populated select menus
- * @property      Poll|null                          $poll                   The poll attached to the message.
- * @property      MessageCall|null                   $call                   The call associated with the message
+ * @property      string                                                   $id                     The unique identifier of the message.
+ * @property      string                                                   $channel_id             The unique identifier of the channel that the message was sent in.
+ * @property-read Channel|Thread                                           $channel                The channel that the message was sent in.
+ * @property      User|null                                                $author                 The author of the message. Will be a webhook if sent from one.
+ * @property-read string|null                                              $user_id                The user id of the author.
+ * @property      string                                                   $content                The content of the message if it is a normal message.
+ * @property      Carbon                                                   $timestamp              A timestamp of when the message was sent.
+ * @property      ?Carbon|null                                             $edited_timestamp       A timestamp of when the message was edited, or null.
+ * @property      bool                                                     $tts                    Whether the message was sent as a text-to-speech message.
+ * @property      bool                                                     $mention_everyone       Whether the message contained an @everyone mention.
+ * @property      ExCollectionInterface<User>|User[]                       $mentions               A collection of the users mentioned in the message.
+ * @property      ExCollectionInterface<Role>|Role[]                       $mention_roles          A collection of roles that were mentioned in the message.
+ * @property      ExCollectionInterface<Channel>|Channel[]                 $mention_channels       Collection of mentioned channels.
+ * @property      ExCollectionInterface<Attachment>|Attachment[]           $attachments            Collection of attachment objects.
+ * @property      ExCollectionInterface<Embed>|Embed[]                     $embeds                 A collection of embed objects.
+ * @property      string|null                                              $nonce                  A randomly generated string that provides verification for the client. Not required.
+ * @property      bool                                                     $pinned                 Whether the message is pinned to the channel.
+ * @property      string|null                                              $webhook_id             ID of the webhook that made the message, if any.
+ * @property      int                                                      $type                   The type of message.
+ * @property      Activity|null                                            $activity               Current message activity. Sent with Rich Presence-related chat embeds.
+ * @property      Application|null                                         $application            Application of message. Sent with Rich Presence-related chat embeds.
+ * @property      string|null                                              $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
+ * @property      int|null                                                 $flags                  Message flags.
+ * @property      MessageReference|null                                    $message_reference      Message that is referenced by this message. Data showing the source of a crosspost, channel follow add, pin, or reply message.
+ * @property-read MessageSnapshot|null                                     $message_snapshot       The first message associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
+ * @property      ExCollectionInterface<MessageSnapshot>|MessageSnapshot[] $message_snapshots      The messages associated with the `message_reference`. This is a minimal subset of fields in a message (e.g. `author` is excluded.).
+ * @property      ?Message|null                                            $referenced_message     The message that is referenced in a reply.
+ * @property      MessageInteractionMetadata|null                          $interaction_metadata   Sent if the message is sent as a result of an interaction.
+ * @property      MessageInteraction|null                                  $interaction            Sent if the message is a response to an Interaction.
+ * @property      Thread|null                                              $thread                 The thread that was started from this message, includes thread member object.
+ * @property      ExCollectionInterface<Component>|Component[]             $components             Sent if the message contains components like buttons, action rows, or other interactive components.
+ * @property      ExCollectionInterface<Sticker>|Sticker[]                 $sticker_items          Stickers attached to the message.
+ * @property      int|null                                                 $position               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
+ * @property      RoleSubscriptionData|null                                $role_subscription_data Data of the role subscription purchase or renewal that prompted this `ROLE_SUBSCRIPTION_PURCHASE` message.
+ * @property      Resolved|null                                            $resolved               Data for users, members, channels, and roles in the message's auto-populated select menus
+ * @property      Poll|null                                                $poll                   The poll attached to the message.
+ * @property      MessageCall|null                                         $call                   The call associated with the message
  *
  * @property-read bool $crossposted                            Message has been crossposted.
  * @property-read bool $is_crosspost                           Message is a crosspost from another channel.
@@ -104,6 +108,8 @@ use function React\Promise\reject;
  * @property-read Guild|null  $guild    The guild that the message was sent in.
  * @property      Member|null $member   The member that sent this message, or null if it was in a private message.
  * @property-read string|null $link     Returns a link to the message.
+ *
+ * @property ReactionRepository $reactions Collection of reactions on the message.
  */
 class Message extends Part
 {
@@ -144,7 +150,8 @@ class Message extends Part
     public const TYPE_GUILD_INCIDENT_REPORT_FALSE_ALARM = 39;
     public const TYPE_PURCHASE_NOTIFICATION = 44;
     public const TYPE_POLL_RESULT = 46;
-    public const EMOJI_ADDED = 63;
+    public const TYPE_EMOJI_ADDED = 63;
+    public const TYPE_PREMIUM_GROUP_INVITE = 64;
 
     /** @deprecated 7.1.0 Use `Message::TYPE_USER_JOIN` */
     public const GUILD_MEMBER_JOIN = self::TYPE_USER_JOIN;
@@ -177,17 +184,14 @@ class Message extends Part
     /** @deprecated 10.0.0 Use `Message::TYPE_CHAT_INPUT_COMMAND` */
     public const TYPE_APPLICATION_COMMAND = self::TYPE_CHAT_INPUT_COMMAND;
 
-    public const ACTIVITY_JOIN = 1;
-    public const ACTIVITY_SPECTATE = 2;
-    public const ACTIVITY_LISTEN = 3;
-    public const ACTIVITY_JOIN_REQUEST = 5;
-
     public const REACT_DELETE_ALL = 0;
     public const REACT_DELETE_ME = 1;
     public const REACT_DELETE_ID = 2;
     public const REACT_DELETE_EMOJI = 3;
 
+    /** A standard reference used by replies. */
     public const REFERENCE_DEFAULT = 0;
+    /** Reference used to point to a message at a point in time. */
     public const REFERENCE_FORWARD = 1;
 
     /** This message has been published to subscribed channels (via Channel Following). */
@@ -218,7 +222,7 @@ class Message extends Part
     public const FLAG_HAS_SNAPSHOT = (1 << 14);
     /** @deprecated Use `Message::FLAG_IS_COMPONENTS_V2` instead. */
     public const FLAG_IS_V2_COMPONENTS = (1 << 15);
-    /** Allows you to create fully component-driven messages. */
+    /** Allows you to create fully component-driven messages. Once a message has been sent with this flag, it can't be removed from that message. */
     public const FLAG_IS_COMPONENTS_V2 = (1 << 15);
 
     /**
@@ -245,9 +249,10 @@ class Message extends Part
         'activity',
         'application',
         'application_id',
+        'flags',
         'message_reference',
         'message_snapshot',
-        'flags',
+        'message_snapshots',
         'referenced_message',
         'interaction_metadata',
         'interaction',
@@ -256,6 +261,7 @@ class Message extends Part
         'sticker_items',
         'position',
         'role_subscription_data',
+        'resolved',
         'poll',
         'call',
         // @internal
@@ -376,7 +382,7 @@ class Message extends Part
     /**
      * Gets the mention_channels attribute.
      *
-     * @return ExCollectionInterface|Channel[]
+     * @return ExCollectionInterface<Channel>|Channel[]
      */
     protected function getMentionChannelsAttribute(): ExCollectionInterface
     {
@@ -400,7 +406,7 @@ class Message extends Part
     /**
      * Returns any attached files.
      *
-     * @return ExCollectionInterface|Attachment[] Attachment objects.
+     * @return ExCollectionInterface<Attachment>|Attachment[] Attachment objects.
      */
     protected function getAttachmentsAttribute(): ExCollectionInterface
     {
@@ -462,14 +468,14 @@ class Message extends Part
             }
         }
 
-        // @todo potentially slow
-        if ($channel = $this->discord->getChannel($this->channel_id)) {
+        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
             return $channel;
         }
 
-        return $this->factory->part(Channel::class, [
+        return $this->factory->part(DM::class, [
             'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
+            'recipients' => [$this->author],
         ], true);
     }
 
@@ -526,7 +532,7 @@ class Message extends Part
     /**
      * Returns the mention_roles attribute.
      *
-     * @return ExCollectionInterface<?Role> The roles that were mentioned. null role only contains the ID in the collection.
+     * @return ExCollectionInterface<Role>|Role[] The roles that were mentioned. null role only contains the ID in the collection.
      */
     protected function getMentionRolesAttribute(): ExCollectionInterface
     {
@@ -539,9 +545,9 @@ class Message extends Part
         $roles->fill(array_fill_keys($this->attributes['mention_roles'], null));
 
         if ($guild = $this->guild) {
-            $roles->merge($guild->roles->filter(function ($role) {
-                return in_array($role->id, $this->attributes['mention_roles']);
-            }));
+            $roles->merge($guild->roles->filter(
+                fn ($role) => in_array($role->id, $this->attributes['mention_roles'])
+            ));
         }
 
         return $roles;
@@ -550,7 +556,7 @@ class Message extends Part
     /**
      * Returns the mention attribute.
      *
-     * @return ExCollectionInterface|User[] The users that were mentioned.
+     * @return ExCollectionInterface<User>|User[] The users that were mentioned.
      */
     protected function getMentionsAttribute(): ExCollectionInterface
     {
@@ -588,7 +594,7 @@ class Message extends Part
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['author'], true);
+        return $this->attributePartHelper('author', User::class);
     }
 
     /**
@@ -617,17 +623,27 @@ class Message extends Part
     /**
      * Returns the embed attribute.
      *
-     * @return ExCollectionInterface<Embed> A collection of embeds.
+     * @return ExCollectionInterface<Embed>|Embed[] A collection of embeds.
      */
     protected function getEmbedsAttribute(): ExCollectionInterface
     {
-        $embeds = Collection::for(Embed::class, null);
+        return $this->attributeTypedCollectionHelper(Embed::class, 'embeds');
+    }
 
-        foreach ($this->attributes['embeds'] ?? [] as $embed) {
-            $embeds->pushItem($this->createOf(Embed::TYPES[$embed->type ?? 0], $embed));
-        }
+    /**
+     * Returns the activity sent with Rich Presence-related chat embeds.
+     */
+    protected function getActivityAttribute(): ?Activity
+    {
+        return $this->attributePartHelper('activity', Activity::class);
+    }
 
-        return $embeds;
+    /**
+     * Returns the application sent with Rich Presence-related chat embeds.
+     */
+    protected function getApplicationAttribute(): ?Application
+    {
+        return $this->attributePartHelper('application', Application::class);
     }
 
     /**
@@ -669,9 +685,8 @@ class Message extends Part
                     $channel = $guild->channels->get('id', $reference->channel_id);
                 }
 
-                // @todo potentially slow
                 if (! $channel && ! isset($this->attributes['referenced_message'])) {
-                    $channel = $this->discord->getChannel($reference->channel_id);
+                    $channel = $this->discord->private_channels->get('id', $reference->channel_id);
                 }
 
                 if ($channel) {
@@ -682,11 +697,7 @@ class Message extends Part
             }
         }
 
-        if (isset($this->attributes['referenced_message'])) {
-            return $this->factory->part(Message::class, (array) $this->attributes['referenced_message'], true);
-        }
-
-        return null;
+        return $this->attributePartHelper('referenced_message', self::class);
     }
 
     protected function getMessageReferenceAttribute(): ?MessageReference
@@ -699,6 +710,8 @@ class Message extends Part
      * For forwarded messages, this contains a snapshot of the original message.
      *
      * @return Message|null
+     *
+     * @deprecated Use `getMessageSnapshotsAttribute()`.
      */
     protected function getMessageSnapshotAttribute(): ?Message
     {
@@ -720,6 +733,17 @@ class Message extends Part
             (array) $snapshot,
             true
         );
+    }
+
+    /**
+     * Returns the message_snapshot attribute, if present.
+     * For forwarded messages, this contains a snapshot of the original message.
+     *
+     * @return ExCollectionInterface<MessageSnapshot>|MessageSnapshot[]
+     */
+    protected function getMessageSnapshotsAttribute(): ExCollectionInterface
+    {
+        return $this->attributeCollectionHelper('message_snapshots', MessageSnapshot::class);
     }
 
     /**
@@ -753,27 +777,27 @@ class Message extends Part
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        $components = Collection::for(Component::class, null);
-
-        if (! isset($this->attributes['components'])) {
-            return $components;
-        }
-
-        foreach ($this->attributes['components'] as $component) {
-            $components->pushItem($this->createOf(Component::TYPES[$component->type ?? 0], $component));
-        }
-
-        return $components;
+        return $this->attributeTypedCollectionHelper(Component::class, 'components');
     }
 
     /**
      * Returns the sticker_items attribute.
      *
-     * @return ExCollectionInterface|Sticker[] Partial stickers.
+     * @return ExCollectionInterface<Sticker>|Sticker[] Partial stickers.
      */
     protected function getStickerItemsAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('sticker_items', Sticker::class);
+    }
+
+    /**
+     * Returns the role_subscription_data attribute.
+     *
+     * @return RoleSubscriptionData|null Role subscription data.
+     */
+    protected function getRoleSubscriptionDataAttribute(): ?RoleSubscriptionData
+    {
+        return $this->attributePartHelper('role_subscription_data', RoleSubscriptionData::class);
     }
 
     /**
@@ -831,7 +855,7 @@ class Message extends Part
      * @param ?int|null   $options['rate_limit_per_user']   Amount of seconds a user has to wait before sending another message (0-21600).
      * @param string|null $reason                           Reason for Audit Log.
      *
-     * @throws \RuntimeException      Channel type is not guild text or news.
+     * @throws \RuntimeException      Channel type is not guild text or announcement.
      * @throws NoPermissionsException Missing create_public_threads permission to create or manage_threads permission to set rate_limit_per_user.
      *
      * @return PromiseInterface<Thread>
@@ -870,7 +894,7 @@ class Message extends Part
         $channel = $this->channel;
         if ($channel) {
             if (! in_array($channel->type, [Channel::TYPE_GUILD_TEXT, Channel::TYPE_GUILD_ANNOUNCEMENT, null])) {
-                return reject(new \RuntimeException('You can only start threads on guild text channels or news channels.'));
+                return reject(new \RuntimeException('You can only start threads on guild text channels or announcement channels.'));
             }
 
             $botperms = $channel->getBotPermissions();
@@ -911,7 +935,7 @@ class Message extends Part
     /**
      * Replies to the message.
      *
-     * @link https://discord.com/developers/docs/resources/channel#create-message
+     * @link https://discord.com/developers/docs/resources/message#create-message
      *
      * @param string|MessageBuilder $message The reply message.
      *
@@ -933,7 +957,7 @@ class Message extends Part
     /**
      * Crossposts the message to any following channels (publish announcement).
      *
-     * @link https://discord.com/developers/docs/resources/channel#crosspost-message
+     * @link https://discord.com/developers/docs/resources/message#crosspost-message
      *
      * @throws \RuntimeException      Message has already been crossposted.
      * @throws NoPermissionsException Missing permission:
@@ -950,7 +974,7 @@ class Message extends Part
 
         if ($channel = $this->channel) {
             if ($botperms = $channel->getBotPermissions()) {
-                if ($this->user_id == $this->discord->id) {
+                if ($this->user_id === $this->discord->id) {
                     if (! $botperms->send_messages) {
                         return reject(new NoPermissionsException("You do not have permission to crosspost message in channel {$this->id}."));
                     }
@@ -1015,7 +1039,7 @@ class Message extends Part
     /**
      * Reacts to the message.
      *
-     * @link https://discord.com/developers/docs/resources/channel#create-reaction
+     * @link https://discord.com/developers/docs/resources/message#create-reaction
      *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
@@ -1044,8 +1068,8 @@ class Message extends Part
      *
      * @deprecated 10.14.0 Use `Message::deleteAllReactions()`, `Message::deleteOwnReaction()`, `Message::deleteUserReaction()`, or `Message::deleteEmojiReactions()`.
      *
-     * @link https://discord.com/developers/docs/resources/channel#delete-own-reaction
-     * @link https://discord.com/developers/docs/resources/channel#delete-user-reaction
+     * @link https://discord.com/developers/docs/resources/message#delete-own-reaction
+     * @link https://discord.com/developers/docs/resources/message#delete-user-reaction
      *
      * @param int               $type     The type of deletion to perform.
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
@@ -1194,7 +1218,7 @@ class Message extends Part
     /**
      * Edits the message.
      *
-     * @link https://discord.com/developers/docs/resources/channel#edit-message
+     * @link https://discord.com/developers/docs/resources/message#edit-message
      *
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
      *
@@ -1238,7 +1262,7 @@ class Message extends Part
             return reject(new \RuntimeException("Cannot delete this type of message: {$this->type}", 50021));
         }
 
-        if ($this->user_id != $this->discord->id && $channel = $this->channel) {
+        if ($this->user_id !== $this->discord->id && $channel = $this->channel) {
             $botperms = $channel->getBotPermissions();
             if ($botperms && ! $botperms->manage_messages) {
                 return reject(new NoPermissionsException("You do not have permission to delete message by others in channel {$channel->id}."));
@@ -1279,7 +1303,7 @@ class Message extends Part
         ], $options);
 
         $eventHandler = function (MessageReaction $reaction) use (&$eventHandler, $filter, $options, &$reactions, &$deferred, &$timer) {
-            if ($reaction->message_id != $this->id) {
+            if ($reaction->message_id !== $this->id) {
                 return;
             }
 
@@ -1343,13 +1367,19 @@ class Message extends Part
             self::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING,
             self::TYPE_THREAD_STARTER_MESSAGE,
             self::TYPE_GUILD_APPLICATION_PREMIUM_SUBSCRIPTION,
+            self::TYPE_GUILD_INCIDENT_ALERT_MODE_ENABLED,
+            self::TYPE_GUILD_INCIDENT_ALERT_MODE_DISABLED,
+            self::TYPE_GUILD_INCIDENT_REPORT_RAID,
+            self::TYPE_GUILD_INCIDENT_REPORT_FALSE_ALARM,
+            self::TYPE_PURCHASE_NOTIFICATION,
+            self::TYPE_POLL_RESULT,
         ]);
     }
 
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/channel#edit-message-jsonform-params
+     * @link https://discord.com/developers/docs/resources/message#edit-message-jsonform-params
      */
     public function getUpdatableAttributes(): array
     {
@@ -1357,6 +1387,42 @@ class Message extends Part
             'content' => $this->content,
             'flags' => $this->flags,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['channel_id'])) {
+            /** @var Channel $channel */
+            $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+
+            if ($botperms = $channel->getBotPermissions()) {
+                if (! $this->created) {
+                    if (! $botperms->send_messages) {
+                        return reject(new NoPermissionsException("You do not have permission to send messages in channel {$channel->id}."));
+                    }
+                } elseif ($this->id !== $this->discord->id) {
+                    if (! $botperms->manage_messages) {
+                        return reject(new NoPermissionsException("You do not have permission to manage messages in channel {$channel->id}."));
+                    }
+                }
+            }
+
+            if (isset($this->attributes['webhook_id'])) {
+                if (! $webhook = $channel->webhooks->get('id', $this->attributes['webhook_id'])) {
+                    return reject(new \Exception('Cannot find the webhook for this message (missing token).'));
+                }
+
+                return $webhook->messages->save($this, $reason);
+            }
+
+            /** @var Channel $channel */
+            return $channel->messages->save($this, $reason);
+        }
+
+        return parent::save();
     }
 
     /**

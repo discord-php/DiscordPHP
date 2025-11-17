@@ -39,7 +39,9 @@ final class MessageTest extends DiscordTestCase
     public function testCanCrosspostMessage()
     {
         return wait(function (Discord $discord, $resolve) {
-            $this->channel()->sendMessage('crossposting message')
+            $channel = $this->channel();
+            $this->assertEquals(Channel::TYPE_GUILD_ANNOUNCEMENT, $channel->type);
+            $channel->sendMessage('crossposting message')
                 ->then(function (Message $message) {
                     return $message->crosspost();
                 })

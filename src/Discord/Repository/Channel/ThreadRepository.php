@@ -61,7 +61,7 @@ class ThreadRepository extends AbstractRepository
         foreach ($response->threads as $value) {
             $value = array_merge($this->vars, (array) $value);
             /** @var Thread */
-            $part = $this->factory->create($this->class, $value, true);
+            $part = $this->factory->part($this->class, $value, true);
             $items[$part->{$this->discrim}] = $part;
         }
 
@@ -74,7 +74,7 @@ class ThreadRepository extends AbstractRepository
         return $this->cache->setMultiple($items)->then(function ($success) use ($items, $members) {
             foreach ($items as $thread) {
                 foreach ($members as $member) {
-                    if ($member->id == $thread->id) {
+                    if ($member->id === $thread->id) {
                         $thread->members->cache->set($member->id, $thread->members->create((array) $member + ['guild_id' => $thread->guild_id], true));
                         break;
                     }
@@ -132,11 +132,11 @@ class ThreadRepository extends AbstractRepository
 
         $endpoint = Endpoint::bind($endpoint, $this->vars['channel_id']);
 
-        if ($limit != null) {
+        if ($limit) {
             $endpoint->addQuery('limit', $limit);
         }
 
-        if ($before != null) {
+        if ($before !== null) {
             if ($before instanceof Thread) {
                 $before = $before->id;
             }
@@ -153,7 +153,7 @@ class ThreadRepository extends AbstractRepository
      *
      * @param object $response
      *
-     * @return ExCollectionInterface|Thread[]
+     * @return ExCollectionInterface<Thread>|Thread[]
      */
     private function handleThreadPaginationResponse(object $response): ExCollectionInterface
     {
@@ -164,7 +164,7 @@ class ThreadRepository extends AbstractRepository
             $thread = $this->factory->part(Thread::class, (array) $thread, true);
 
             foreach ($response->members as $member) {
-                if ($member->id == $thread->id) {
+                if ($member->id === $thread->id) {
                     $thread->members->pushItem($thread->members->create($member, true));
                 }
             }

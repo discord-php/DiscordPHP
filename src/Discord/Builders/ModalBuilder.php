@@ -14,16 +14,16 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Builders\Components\ComponentObject;
-use Discord\Helpers\Collection;
-use Discord\Helpers\ExCollectionInterface;
+use Discord\Builders\Components\TextInput;
 use Discord\Parts\Interactions\Interaction;
 use JsonSerializable;
 
 use function Discord\poly_strlen;
 
 /**
- * Helper class used to build messages.
+ * Helper class used to build Modals.
  *
+ * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-modal
  * @link https://discord.com/developers/docs/components/using-modal-components
  *
  * @since 10.19.0
@@ -40,13 +40,6 @@ class ModalBuilder extends Builder implements JsonSerializable
     protected $type = Interaction::RESPONSE_TYPE_MODAL;
 
     /**
-     * The title of the popup modal, max 45 characters.
-     *
-     * @var string
-     */
-    protected $title;
-
-    /**
      * Developer-defined identifier for the component, max 100 characters.
      *
      * @var string
@@ -54,18 +47,25 @@ class ModalBuilder extends Builder implements JsonSerializable
     protected $custom_id;
 
     /**
+     * The title of the popup modal, max 45 characters.
+     *
+     * @var string
+     */
+    protected $title;
+
+    /**
      * Between 1 and 5 (inclusive) components that make up the modal.
      *
-     * @var ExCollectionInterface<ComponentObject>|ComponentObject[]
+     * @var ComponentObject[]
      */
     protected $components;
 
     /**
      * Creates a new message builder.
      *
-     * @param string                                                   $title
-     * @param string                                                   $custom_id
-     * @param ExCollectionInterface<ComponentObject>|ComponentObject[] $components
+     * @param string            $title
+     * @param string            $custom_id
+     * @param ComponentObject[] $components
      *
      * @return static
      */
@@ -78,36 +78,6 @@ class ModalBuilder extends Builder implements JsonSerializable
         $modal->setComponents($components);
 
         return $modal;
-    }
-
-    /**
-     * Set the title of the modal.
-     *
-     * @param string $title Maximum length is 45 characters.
-     *
-     * @throws \LengthException Modal title too long.
-     *
-     * @return $this
-     */
-    public function setTitle(string $title): self
-    {
-        if (poly_strlen($title) > 45) {
-            throw new \LengthException('Modal title can not be longer than 45 characters');
-        }
-
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Returns the title of the modal.
-     *
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return $this->title;
     }
 
     /**
@@ -141,18 +111,48 @@ class ModalBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * Sets the components of the modal.
+     * Set the title of the modal.
      *
-     * @param ExCollectionInterface<ComponentObject>|ComponentObject[] $components
+     * @param string $title Maximum length is 45 characters.
+     *
+     * @throws \LengthException Modal title too long.
      *
      * @return $this
      */
-    public function setComponents($components): self
+    public function setTitle(string $title): self
     {
-        $this->components = Collection::for(ComponentObject::class);
+        if (poly_strlen($title) > 45) {
+            throw new \LengthException('Modal title can not be longer than 45 characters');
+        }
+
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Returns the title of the modal.
+     *
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * Sets the components of the modal (Limit 5).
+     *
+     * @param ComponentObject[] $components
+     *
+     * @return $this
+     */
+    public function setComponents(...$components): self
+    {
+        $this->components = [];
 
         foreach ($components as $component) {
-            $this->components->pushItem($component);
+            $this->addComponent($component);
         }
 
         return $this;
@@ -167,13 +167,28 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @param ComponentObject $component
      *
+     * @throws \InvalidArgumentException Component is not a valid type.
+     * @throws \OverflowException        If the modal has more than 5 components.
+     *
      * @return $this
      */
-    public function addComponent($component): self
+    public function addComponent(ComponentObject $component): self
     {
-        $this->components ??= Collection::for(ComponentObject::class);
+        if (! in_array($component::USAGE, ['Modal'])) {
+            throw new \InvalidArgumentException('Invalid component type for modals.');
+        }
 
-        $this->components->pushItem($component);
+        if ($component instanceof TextInput) {
+            $this->discord->logger->warning('Discord no longer recommends using Text Input within an Action Row in modals. Going forward all Text Inputs should be placed inside a Label component.');
+        }
+
+        $this->components ??= [];
+
+        if (count($this->components) >= 5) {
+            throw new \OverflowException('You can only have 5 components per modal.');
+        }
+
+        $this->components[] = $component;
 
         return $this;
     }
@@ -187,10 +202,11 @@ class ModalBuilder extends Builder implements JsonSerializable
      */
     public function removeComponent($component): self
     {
-        $this->components ??= Collection::for(ComponentObject::class);
+        $this->components ??= [];
 
-        if (($idx = $this->components->search($component)) !== false) {
-            $this->components->splice($idx, 1);
+        $index = array_search($component, $this->components, true);
+        if ($index !== false) {
+            array_splice($this->components, $index, 1);
         }
 
         return $this;
@@ -199,11 +215,11 @@ class ModalBuilder extends Builder implements JsonSerializable
     /**
      * Returns the components of the modal.
      *
-     * @return ExCollectionInterface<ComponentObject>|ComponentObject[]
+     * @return ComponentObject[]
      */
-    public function getComponents(): ExCollectionInterface
+    public function getComponents(): array
     {
-        return $this->components ?? Collection::for(ComponentObject::class);
+        return $this->components ?? [];
     }
 
     /**
@@ -216,7 +232,7 @@ class ModalBuilder extends Builder implements JsonSerializable
             'data' => [
                 'custom_id' => $this->custom_id,
                 'title' => $this->title,
-                'components' => $this->component->toArray(false),
+                'components' => $this->components,
             ],
         ];
     }

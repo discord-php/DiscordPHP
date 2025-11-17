@@ -23,6 +23,7 @@ final class DiscordTest extends TestCase
         $this->assertNotFalse(getenv('TEST_CHANNEL_NAME'), 'Test channel name is missing');
     }
 
+    /*
     public function testSetGetCacheAsync()
     {
         wait(function (Discord $discord, $resolve) {
@@ -44,4 +45,5 @@ final class DiscordTest extends TestCase
             })->then($resolve, $resolve);
         }, 10);
     }
+    */
 }

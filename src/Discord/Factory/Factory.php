@@ -50,6 +50,8 @@ class Factory
      *
      * @return Part|AbstractRepository The object.
      * @throws \Exception
+     *
+     * @deprecated 10.37.4 Use `Factory::part()` or `Factory::repository()`
      */
     public function create(string $class, $data = [], bool $created = false)
     {

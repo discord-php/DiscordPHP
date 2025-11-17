@@ -54,7 +54,7 @@ function wait(callable $callback, float $timeout = TIMEOUT, ?callable $timeoutFn
     }
 
     if ($timedOut) {
-        if ($timeoutFn != null) {
+        if ($timeoutFn !== null) {
             $timeoutFn();
         } else {
             throw new \Exception('Timed out');

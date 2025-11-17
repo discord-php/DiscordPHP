@@ -54,7 +54,7 @@ class InteractionCreate extends Event
                 $members = $guild->members;
 
                 foreach ($interaction->data->resolved->members ?? [] as $snowflake => $member) {
-                    $this->cacheMember($members, (array) $member + ['user' => $interaction->data->resolved->users->$snowflake]);
+                    $this->cacheMember($members, (array) $member + ['user' => $interaction->data->resolved->users->get('id', $snowflake)]);
                 }
 
                 $this->cacheMember($members, (array) $interaction->member);
@@ -111,7 +111,7 @@ class InteractionCreate extends Event
                 if ($option->focused) {
                     return $subCommand->suggest($interaction);
                 }
-                if (! empty($option->options)) {
+                if ($option->options) {
                     return $this->checkCommand($subCommand, $option->options, $interaction);
                 }
             } elseif ($option->focused) {

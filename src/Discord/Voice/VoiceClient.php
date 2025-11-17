@@ -13,13 +13,15 @@ declare(strict_types=1);
 
 namespace Discord\Voice;
 
+use Discord\Discord;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\LibSodiumNotFoundException;
-use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Buffer as RealBuffer;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\WebSockets\Payload;
 use Discord\WebSockets\Op;
 use Evenement\EventEmitter;
@@ -27,9 +29,8 @@ use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket;
 use React\Datagram\Factory as DatagramFactory;
 use React\Datagram\Socket;
+use React\Dns\Config\Config;
 use React\Dns\Resolver\Factory as DNSFactory;
-use React\EventLoop\LoopInterface;
-use Psr\Log\LoggerInterface;
 use React\ChildProcess\Process;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
@@ -38,43 +39,62 @@ use React\EventLoop\TimerInterface;
 use React\Stream\ReadableResourceStream;
 use React\Stream\ReadableStreamInterface;
 
+use function React\Promise\reject;
+use function React\Promise\resolve;
+
 /**
  * The Discord voice client.
+ *
+ * @link https://discord.com/developers/docs/topics/voice-connections
  *
  * @since 3.2.0
  */
 class VoiceClient extends EventEmitter
 {
-    /**
-     * The DCA version the client is using.
-     *
-     * @var string The DCA version.
-     */
-    public const DCA_VERSION = 'DCA1';
+    /** Not speaking. */
+    public const NOT_SPEAKING = 0;
+    /** Normal transmission of voice audio. */
+    public const MICROPHONE = 1 << 0;
+    /** Transmission of context audio for video, no speaking indicator. */
+    public const SOUNDSHARE = 1 << 1;
+    /** Priority speaker, lowering audio of other speakers. */
+    public const PRIORITY_SPEAKER = 1 << 2;
 
     /**
      * The Opus Silence Frame.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
      *
      * @var string The silence frame.
      */
     public const SILENCE_FRAME = "\xF8\xFF\xFE";
 
+    /**
+     * Supported encryption modes for voice connections.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes
+     *
+     * @var string[] The supported transport encryption modes.
+     */
     public const SUPPORTED_MODES = [
         'aead_aes256_gcm_rtpsize',
         'aead_xchacha20_poly1305_rtpsize',
     ];
 
-    public const DEPRECATED_MODES = [
-        'xsalsa20_poly1305',
-    ];
+    /**
+     * Maximum DAVE protocol version supported.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#endtoend-encryption-dave-protocol
+     *
+     * @var int The maximum DAVE protocol version supported.
+     */
+    public const MAX_DAVE_PROTOCOL_VERSION = 0;
 
-    public const UNSUPPORTED_MODES = [
-        'xsalsa20_poly1305_lite_rtpsize',
-        'aead_aes256_gcm',
-        'xsalsa20_poly1305_suffix',
-        'xsalsa20_poly1305_lite',
-    ];
-
+    /**
+     * Dispatch table mapping Discord Voice Gateway opcodes to handler methods.
+     *
+     * @var array<int,string> Method name indexed by opcode constant.
+     */
     public const VOICE_OP_HANDLERS = [
         Op::VOICE_READY => 'handleReady',
         Op::VOICE_SESSION_DESCRIPTION => 'handleSessionDescription',
@@ -84,6 +104,9 @@ class VoiceClient extends EventEmitter
         Op::VOICE_RESUMED => 'handleResumed',
         Op::VOICE_CLIENT_CONNECT => 'handleClientConnect',
         Op::VOICE_CLIENT_DISCONNECT => 'handleClientDisconnect',
+        Op::VOICE_CLIENT_UNKNOWN_15 => 'handleAny',
+        Op::VOICE_CLIENT_UNKNOWN_18 => 'handleFlags',
+        Op::VOICE_CLIENT_PLATFORM => 'handlePlatform',
         Op::VOICE_DAVE_PREPARE_TRANSITION => 'handleDavePrepareTransition',
         Op::VOICE_DAVE_EXECUTE_TRANSITION => 'handleDaveExecuteTransition',
         Op::VOICE_DAVE_TRANSITION_READY => 'handleDaveTransitionReady',
@@ -95,7 +118,16 @@ class VoiceClient extends EventEmitter
         Op::VOICE_DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION => 'handleDaveMlsAnnounceCommitTransition',
         Op::VOICE_DAVE_MLS_WELCOME => 'handleDaveMlsWelcome',
         Op::VOICE_DAVE_MLS_INVALID_COMMIT_WELCOME => 'handleDaveMlsInvalidCommitWelcome',
+
+        Op::CLOSE_VOICE_DISCONNECTED => 'handleCloseVoiceDisconnected',
     ];
+
+    /**
+     * The Discord client.
+     *
+     * @var Discord The Discord client.
+     */
+    protected $discord;
 
     /**
      * Is the voice client ready?
@@ -105,13 +137,6 @@ class VoiceClient extends EventEmitter
     protected $ready = false;
 
     /**
-     * The DCA binary name that we will use.
-     *
-     * @var string The DCA binary name that will be run.
-     */
-    protected $dca;
-
-    /**
      * The FFmpeg binary location.
      *
      * @var string
@@ -119,18 +144,11 @@ class VoiceClient extends EventEmitter
     protected $ffmpeg;
 
     /**
-     * The voice sessions.
+     * The array of voice session IDs.
      *
-     * @var array The voice sessions.
+     * @var string[] The voice sessions.
      */
-    protected $voiceSessions;
-
-    /**
-     * The ReactPHP event loop.
-     *
-     * @var LoopInterface The ReactPHP event loop that will run everything.
-     */
-    protected $loop;
+    protected $voice_sessions;
 
     /**
      * The main WebSocket instance.
@@ -154,11 +172,25 @@ class VoiceClient extends EventEmitter
     public $client;
 
     /**
+     * The MLS Group for handling multi-user encryption.
+     *
+     * @var VoiceGroupCrypto The MLS Group instance.
+     */
+    public VoiceGroupCryptoInterface $crypto;
+
+    /**
      * The Channel that we are connecting to.
      *
-     * @var Channel The channel that we are going to connect to.
+     * @var string The channel that we are connecting to.
      */
-    protected $channel;
+    protected $channel_id;
+
+    /**
+     * The ID of the Channel's Guild.
+     *
+     * @var string The ID of the channel's guild.
+     */
+    protected $guild_id;
 
     /**
      * Data from the main WebSocket.
@@ -198,7 +230,7 @@ class VoiceClient extends EventEmitter
     /**
      * The supported transport encryption modes the voice server expects.
      *
-     * @var array<string> The supported transport encryption modes.
+     * @var string[] The supported transport encryption modes.
      */
     protected $supportedModes;
 
@@ -247,9 +279,9 @@ class VoiceClient extends EventEmitter
     /**
      * The timestamp of the last packet.
      *
-     * @var int The timestamp the last packet was constructed.
+     * @var float The timestamp the last packet was constructed.
      */
-    protected $timestamp = 0;
+    protected $timestamp = 0.0;
 
     /**
      * The Voice WebSocket mode.
@@ -266,11 +298,11 @@ class VoiceClient extends EventEmitter
     protected $secret_key;
 
     /**
-     * Are we currently set as speaking?
+     * The speaking mode.
      *
-     * @var bool Whether we are speaking or not.
+     * @var int The speaking mode.
      */
-    protected $speaking = false;
+    protected $speaking = self::NOT_SPEAKING;
 
     /**
      * Whether we are set as mute.
@@ -303,16 +335,16 @@ class VoiceClient extends EventEmitter
     /**
      * The time we started sending packets.
      *
-     * @var int The time we started sending packets.
+     * @var float|null The time we started sending packets.
      */
     protected $startTime;
 
     /**
      * The stream time of the last packet.
      *
-     * @var int The time we sent the last packet.
+     * @var float The time we sent the last packet.
      */
-    protected $streamTime = 0;
+    protected $streamTime = 0.0;
 
     /**
      * The size of audio frames, in milliseconds.
@@ -324,23 +356,23 @@ class VoiceClient extends EventEmitter
     /**
      * Collection of the status of people speaking.
      *
-     * @var ExCollectionInterface Status of people speaking.
+     * @var ExCollectionInterface<Speaking>|Speaking[] Status of people speaking.
      */
-    protected $speakingStatus;
+    public $speakingStatus;
 
     /**
-     * Collection of voice decoders.
+     * Array of voice decoders.
      *
-     * @var ExCollectionInterface Voice decoders.
+     * @var Process[] Voice decoders.
      */
-    protected $voiceDecoders;
+    public $voiceDecoders;
 
     /**
-     * Voice audio recieve streams.
+     * Voice audio receive streams.
      *
-     * @var array Voice audio recieve streams.
+     * @var ReceiveStream[] Voice audio receive streams.
      */
-    protected $recieveStreams;
+    public $receiveStreams = [];
 
     /**
      * The volume the audio will be encoded with.
@@ -359,13 +391,6 @@ class VoiceClient extends EventEmitter
     protected $audioApplication = 'audio';
 
     /**
-     * The bitrate to encode with.
-     *
-     * @var int Encoding bitrate.
-     */
-    protected $bitrate = 128000;
-
-    /**
      * Is the voice client reconnecting?
      *
      * @var bool Whether the voice client is reconnecting.
@@ -380,13 +405,6 @@ class VoiceClient extends EventEmitter
     protected $userClose = false;
 
     /**
-     * The logger.
-     *
-     * @var LoggerInterface Logger.
-     */
-    protected $logger;
-
-    /**
      * The Discord voice gateway version.
      *
      * @var int Voice version.
@@ -394,9 +412,9 @@ class VoiceClient extends EventEmitter
     protected $version = 8;
 
     /**
-     * The Config for DNS Resolver.
+     * The configuration for DNS Resolver.
      *
-     * @var string|\React\Dns\Config\Config
+     * @var Config|string The DNS configuration.
      */
     protected $dnsConfig;
 
@@ -410,9 +428,9 @@ class VoiceClient extends EventEmitter
     /**
      * readopus Timer.
      *
-     * @var TimerInterface Timer
+     * @var ?TimerInterface Timer
      */
-    protected $readOpusTimer;
+    protected $readOpusTimer = null;
 
     /**
      * Audio Buffer.
@@ -424,26 +442,45 @@ class VoiceClient extends EventEmitter
     /**
      * Constructs the Voice Client instance.
      *
-     * @param WebSocket       $websocket     The main WebSocket client.
-     * @param LoopInterface   $loop          The ReactPHP event loop.
-     * @param Channel         $channel       The channel we are connecting to.
-     * @param LoggerInterface $logger        The logger.
-     * @param array           $data          More information related to the voice client.
-     * @param array           $voiceSessions The voice sessions.
+     * @param Discord        &$discord   The Discord client.
+     * @param WebSocket      &$websocket The main WebSocket client.
+     * @param Channel|string $channel    The channel we are connecting to.
+     * @param array          $data       More information related to the voice client.
+     *
+     * @throws \InvalidArgumentException If connecting to a voice channel that could not be found, or if that channel is not in a guild.
      */
-    public function __construct(WebSocket $websocket, LoopInterface $loop, Channel $channel, LoggerInterface $logger, array $data, array &$voiceSessions)
+    public function __construct(Discord &$discord, WebSocket &$websocket, array &$voice_sessions, $channel, array $data)
     {
-        $this->voiceSessions = &$voiceSessions;
-        $this->loop = $loop;
+        $this->discord = $discord;
         $this->mainWebsocket = $websocket;
-        $this->channel = $channel;
-        $this->logger = $logger;
+        $this->voice_sessions = $voice_sessions;
+        if (! is_string($channel)) {
+            $channel = $channel->id;
+        }
+        if (! $channel = $this->discord->getChannel($channel)) {
+            throw new \InvalidArgumentException('Could not retrieve voice channel to connect to: '.$channel);
+        }
+        static $allowed = [Channel::TYPE_GUILD_VOICE, Channel::TYPE_GUILD_STAGE_VOICE];
+        if (! in_array($channel->type, $allowed) || ! $channel->guild_id) {
+            throw new \InvalidArgumentException('Channel must be a guild voice or stage channel: '.$channel->id);
+        }
+        $this->channel_id = $channel->id;
+        $this->guild_id = $channel->guild_id;
+        
         $this->data = $data;
         $this->deaf = $data['deaf'];
         $this->mute = $data['mute'];
         $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
         $this->speakingStatus = new Collection([], 'ssrc');
         $this->dnsConfig = $data['dnsConfig'];
+    }
+
+    /**
+     * Closes the voice client when destroyed.
+     */
+    public function __destruct()
+    {
+        $this->close();
     }
 
     /**
@@ -455,28 +492,20 @@ class VoiceClient extends EventEmitter
      */
     public function setMode(string $mode): void
     {
-        if (in_array($mode, self::SUPPORTED_MODES)) {
-            $this->mode = $mode;
+        if (! in_array($mode, self::SUPPORTED_MODES)) {
+            $this->discord->getLogger()->error("{$mode} is either a deprecated or unsupported transport encryption connection mode. Please use a supported mode: ".implode(', ', self::SUPPORTED_MODES));
 
-            return;
+            throw new \InvalidArgumentException("Invalid transport encryption mode: {$mode}");
         }
 
-        if (in_array($mode, self::DEPRECATED_MODES)) {
-            $this->logger->warning("{$mode} is a deprecated transport encryption connection mode. Please use a supported mode: ".implode(', ', self::SUPPORTED_MODES));
-            $this->mode = $mode;
-
-            return;
-        }
-
-        $this->logger->error("{$mode} is not a supported transport encryption connection mode.");
-
-        throw new \InvalidArgumentException("Invalid transport encryption mode: {$mode}");
+        $this->mode = $mode;
+        $this->crypto = new VoiceGroupCrypto('', $mode);
     }
 
     /**
      * Starts the voice client.
      *
-     * @return void|bool
+     * @return bool|void
      */
     public function start()
     {
@@ -495,7 +524,7 @@ class VoiceClient extends EventEmitter
      */
     public function initSockets(): void
     {
-        $wsfac = new WsFactory($this->loop);
+        $wsfac = new WsFactory();
         /** @var PromiseInterface */
         $promise = $wsfac("wss://{$this->endpoint}?v={$this->version}");
 
@@ -512,12 +541,13 @@ class VoiceClient extends EventEmitter
     protected function identify(): void
     {
         $data = [
-            'server_id' => $this->channel->guild_id,
+            'server_id' => $this->guild_id,
             'user_id' => $this->data['user_id'],
             'token' => $this->data['token'],
+            'max_dave_protocol_version' => self::MAX_DAVE_PROTOCOL_VERSION,
         ];
-        if (isset($this->voiceSessions[$this->channel->guild_id])) {
-            $data['session_id'] = $this->voiceSessions[$this->channel->guild_id];
+        if (isset($this->voice_sessions[$this->guild_id])) {
+            $data['session_id'] = $this->voice_sessions[$this->guild_id];
         }
 
         $payload = Payload::new(
@@ -525,7 +555,7 @@ class VoiceClient extends EventEmitter
             $data
         );
 
-        $this->logger->debug('sending identify', ['packet' => $payload]);
+        $this->discord->getLogger()->debug('sending identify', ['packet' => $payload]);
 
         $this->send($payload);
     }
@@ -547,7 +577,7 @@ class VoiceClient extends EventEmitter
             ]
         );
 
-        $this->logger->debug('sending heartbeat', ['packet' => $payload]);
+        $this->discord->getLogger()->debug('sending heartbeat', ['packet' => $payload]);
 
         $this->send($payload);
 
@@ -563,11 +593,9 @@ class VoiceClient extends EventEmitter
      */
     protected function heartbeatAck($data): void
     {
-        $end = microtime(true);
-        $start = $data->d->t;
-        $diff = ($end - $start) * 1000;
+        $diff = (microtime(true) - $data->d['t']) * 1000;
 
-        $this->logger->debug('received heartbeat ack', ['response_time' => $diff]);
+        $this->discord->getLogger()->debug('received heartbeat ack', ['response_time' => $diff]);
         $this->emit('ws-ping', [$diff]);
         $this->emit('ws-heartbeat-ack', [$data->d]);
     }
@@ -581,9 +609,12 @@ class VoiceClient extends EventEmitter
      */
     protected function handleHello($data): void
     {
-        $this->heartbeat_interval = $data->d->heartbeat_interval;
+        /** @var Hello */
+        $hello = $this->discord->factory(Hello::class, (array) $data->d, true);
+
+        $this->heartbeat_interval = $hello->heartbeat_interval;
         $this->heartbeat();
-        $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, fn () => $this->heartbeat());
+        $this->heartbeat = $this->discord->getLoop()->addPeriodicTimer($this->heartbeat_interval / 1000, fn () => $this->heartbeat());
     }
 
     /**
@@ -597,10 +628,10 @@ class VoiceClient extends EventEmitter
     protected function selectProtocol($ip, $port): void
     {
         if (! in_array($this->mode, $this->supportedModes)) {
-            $this->logger->warning("{$this->mode} is not a valid transport encryption connection mode. Valid modes are: ".implode(', ', $this->supportedModes));
+            $this->discord->getLogger()->warning("{$this->mode} is not a valid transport encryption connection mode. Valid modes are: ".implode(', ', $this->supportedModes));
             $fallback = $this->supportedModes[0];
-            $this->logger->info('Switching voice transport encryption mode to: '.$fallback);
-            $this->mode = $fallback;
+            $this->discord->getLogger()->info('Switching voice transport encryption mode to: '.$fallback);
+            $this->setMode($fallback);
         }
 
         $payload = Payload::new(
@@ -615,7 +646,7 @@ class VoiceClient extends EventEmitter
             ]
         );
 
-        $this->logger->debug('sending voice select protocol', ['packet' => $payload]);
+        $this->discord->getLogger()->debug('sending voice select protocol', ['packet' => $payload]);
 
         $this->send($payload);
     }
@@ -624,23 +655,26 @@ class VoiceClient extends EventEmitter
      * Handles the "ready" event for the voice client, initializing UDP connection and heartbeat.
      *
      * @param Payload $data The data object containing voice server connection details:
-     *                      - $data->d->ssrc: The synchronization source identifier.
-     *                      - $data->d->ip: The IP address for the UDP connection.
-     *                      - $data->d->port: The port for the UDP connection.
-     *                      - $data->d->modes: Supported encryption modes.
+     *                      - $data->d['ssrc']:  The synchronization source identifier.
+     *                      - $data->d['ip']:    The IP address for the UDP connection.
+     *                      - $data->d['port']:  The port for the UDP connection.
+     *                      - $data->d['modes']: Supported encryption modes.
      *
      * @since 10.19.0
      */
     protected function handleReady(object $data): void
     {
-        $this->ssrc = $data->d->ssrc;
-        $this->udpIp = $data->d->ip;
-        $this->udpPort = $data->d->port;
-        $this->supportedModes = $data->d->modes;
+        /** @var Ready */
+        $ready = $this->discord->factory(Ready::class, (array) $data->d, true);
 
-        $this->logger->debug('received voice ready packet', ['data' => $data]);
+        $this->ssrc = $ready->ssrc;
+        $this->udpIp = $ready->ip;
+        $this->udpPort = $ready->port;
+        $this->supportedModes = $ready->modes;
 
-        $udpfac = new DatagramFactory(null, (new DNSFactory())->createCached($this->dnsConfig, $this->loop));
+        $this->discord->getLogger()->debug('received voice ready packet', ['data' => $ready]);
+
+        $udpfac = new DatagramFactory(null, (new DNSFactory())->createCached($this->dnsConfig));
         $udpfac->createClient("{$this->udpIp}:".$this->udpPort)->then(function (Socket $client): void {
             $this->client = $client;
 
@@ -649,27 +683,27 @@ class VoiceClient extends EventEmitter
             $buffer[3] = "\x46";
             $buffer->writeUInt32BE($this->ssrc, 4);
 
-            $this->udpHeartbeat = $this->loop->addPeriodicTimer(5, function () {
+            $this->udpHeartbeat = $this->discord->getLoop()->addPeriodicTimer(5, function () {
                 $buffer = new Buffer(9);
                 $buffer[0] = "\xC9";
                 $buffer->writeUInt64LE($this->heartbeatSeq, 1);
                 ++$this->heartbeatSeq;
 
                 $this->client->send((string) $buffer);
-                $this->logger->debug('sent udp heartbeat', ['seq' => $this->heartbeatSeq]);
+                $this->discord->getLogger()->debug('sent udp heartbeat', ['seq' => $this->heartbeatSeq]);
                 $this->emit('udp-heartbeat', []);
             });
 
             $this->client->on('error', function (\Throwable $e): void {
-                $this->logger->error('UDP error', ['e' => $e->getMessage()]);
+                $this->discord->getLogger()->error('UDP error', ['e' => $e->getMessage()]);
                 $this->emit('udp-error', [$e]);
             });
 
             $this->client->once('message', fn (string $message) => $this->decodeUDP($message));
 
-            $this->loop->addTimer(0.1, fn () => $this->client->send((string) $buffer));
+            $this->discord->getLoop()->addTimer(0.1, fn () => $this->client->send((string) $buffer));
         }, function (\Throwable $e): void {
-            $this->logger->error('error while connecting to udp', ['e' => $e->getMessage()]);
+            $this->discord->getLogger()->error('error while connecting to udp', ['e' => $e->getMessage()]);
             $this->emit('error', [$e]);
         });
     }
@@ -683,15 +717,14 @@ class VoiceClient extends EventEmitter
      */
     protected function handleSessionDescription(object $data): void
     {
+        /** @var SessionDescription */
+        $sd = $this->discord->factory(SessionDescription::class, (array) $data->d, true);
+
         $this->ready = true;
-        $this->mode = $data->d->mode;
-        $this->secret_key = '';
+        $this->setMode($sd->mode);
+        $this->crypto->secret_key = $sd->secret_key;
 
-        foreach ($data->d->secret_key as $part) {
-            $this->secret_key .= pack('C*', $part);
-        }
-
-        $this->logger->debug('received description packet, vc ready', ['data' => $data]);
+        $this->discord->getLogger()->debug('received description packet, vc ready', ['data' => $sd]);
 
         if (! $this->reconnecting) {
             $this->emit('ready', [$this]);
@@ -710,7 +743,9 @@ class VoiceClient extends EventEmitter
      */
     protected function handleResumed(object $data): void
     {
-        $this->logger->debug('received resumed packet', ['data' => $data]);
+        /** @var Resumed */
+        $resumed = $this->discord->factory(Resumed::class, (array) $data->d, true);
+        $this->discord->getLogger()->debug('received resumed packet', ['data' => $resumed]);
     }
 
     /**
@@ -722,7 +757,7 @@ class VoiceClient extends EventEmitter
      */
     protected function handleClientConnect(object $data): void
     {
-        $this->logger->debug('received client connect packet', ['data' => $data]);
+        $this->discord->getLogger()->debug('received client connect packet', ['data' => $data]);
     }
 
     /**
@@ -734,42 +769,95 @@ class VoiceClient extends EventEmitter
      */
     protected function handleClientDisconnect(object $data): void
     {
-        $this->logger->debug('received client disconnect packet', ['data' => $data]);
+        $this->discord->getLogger()->debug('received client disconnect packet', ['data' => $data]);
+    }
+
+    /**
+     * Handles the any event from the voice server.
+     *
+     * @param Payload $data
+     *
+     * @since 10.40.0
+     */
+    public function handleAny(object $data): void
+    {
+        $any = $this->discord->factory(Any::class, (array) $data->d, true);
+
+        $this->emit('any', [$any, $this]);
+    }
+
+    /**
+     * Handles the flags event from the voice server.
+     *
+     * @param Payload $data
+     *
+     * @since 10.40.0
+     */
+    protected function handleFlags(object $data): void
+    {
+        $flags = $this->discord->factory(Flags::class, (array) $data->d, true);
+
+        $this->emit('flags', [$flags, $this]);
+    }
+
+    /**
+     * Handles the platform event from the voice server.
+     *
+     * @param Payload $data
+     *
+     * @since 10.40.0
+     */
+    protected function handlePlatform(object $data): void
+    {
+        $platform = $this->discord->factory(Platform::class, (array) $data->d, true);
+
+        $this->emit('platform', [$platform, $this]);
+    }
+
+    /**
+     * Handles undocumented voice opcodes not intended for use by bots.
+     *
+     * @param Payload $data
+     *
+     * @since 10.39.2
+     */
+    protected function handleUndocumented(object $data): void
+    {
     }
 
     protected function handleDavePrepareTransition(object $data): void
     {
-        $this->logger->debug('DAVE Prepare Transition', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE Prepare Transition', ['data' => $data]);
         // Prepare local state necessary to perform the transition
         $this->send(Payload::new(
             Op::VOICE_DAVE_TRANSITION_READY,
             [
-                'transition_id' => $data->d->transition_id,
+                'transition_id' => $data->d['transition_id'],
             ],
         ));
     }
 
     protected function handleDaveExecuteTransition(object $data): void
     {
-        $this->logger->debug('DAVE Execute Transition', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE Execute Transition', ['data' => $data]);
         // Execute the transition
         // Update local state to reflect the new protocol context
     }
 
     protected function handleDaveTransitionReady(object $data): void
     {
-        $this->logger->debug('DAVE Transition Ready', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE Transition Ready', ['data' => $data]);
         // Handle transition ready state
     }
 
     protected function handleDavePrepareEpoch(object $data): void
     {
-        $this->logger->debug('DAVE Prepare Epoch', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE Prepare Epoch', ['data' => $data]);
         // Prepare local MLS group with parameters appropriate for the DAVE protocol version
         $this->send(Payload::new(
             Op::VOICE_DAVE_MLS_KEY_PACKAGE,
             [
-                'epoch_id' => $data->d->epoch_id,
+                'epoch_id' => $data->d['epoch_id'],
                 'key_package' => $this->generateKeyPackage(),
             ],
         ));
@@ -777,19 +865,19 @@ class VoiceClient extends EventEmitter
 
     protected function handleDaveMlsExternalSender(object $data)
     {
-        $this->logger->debug('DAVE MLS External Sender', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS External Sender', ['data' => $data]);
         // Handle external sender public key and credential
     }
 
     protected function handleDaveMlsKeyPackage(object $data): void
     {
-        $this->logger->debug('DAVE MLS Key Package', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS Key Package', ['data' => $data]);
         // Handle MLS key package
     }
 
     protected function handleDaveMlsProposals(object $data): void
     {
-        $this->logger->debug('DAVE MLS Proposals', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS Proposals', ['data' => $data]);
         // Handle MLS proposals
         $this->send(Payload::new(
             Op::VOICE_DAVE_MLS_COMMIT_WELCOME,
@@ -802,25 +890,25 @@ class VoiceClient extends EventEmitter
 
     protected function handleDaveMlsCommitWelcome(object $data): void
     {
-        $this->logger->debug('DAVE MLS Commit Welcome', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS Commit Welcome', ['data' => $data]);
         // Handle MLS commit and welcome messages
     }
 
     protected function handleDaveMlsAnnounceCommitTransition(object $data): void
     {
         // Handle MLS announce commit transition
-        $this->logger->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS Announce Commit Transition', ['data' => $data]);
     }
 
     protected function handleDaveMlsWelcome(object $data): void
     {
         // Handle MLS welcome message
-        $this->logger->debug('DAVE MLS Welcome', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS Welcome', ['data' => $data]);
     }
 
     protected function handleDaveMlsInvalidCommitWelcome(object $data): void
     {
-        $this->logger->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
+        $this->discord->getLogger()->debug('DAVE MLS Invalid Commit Welcome', ['data' => $data]);
         // Handle invalid commit or welcome message
         // Reset local group state and generate a new key package
         $this->send(Payload::new(
@@ -831,6 +919,12 @@ class VoiceClient extends EventEmitter
         ));
     }
 
+    protected function handleCloseVoiceDisconnected(): void
+    {
+        $this->discord->getLogger()->info('voice client disconnected from channel', ['channel_id' => $this->channel_id]);
+        unset($this->voice_sessions[$this->guild_id]);
+    }
+
     /**
      * Handles the speaking state of a user.
      *
@@ -838,12 +932,14 @@ class VoiceClient extends EventEmitter
      */
     protected function handleSpeaking(object $data): void
     {
-        $this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
-        $this->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this]);
+        $this->emit('speaking', [$data->d['speaking'], $data->d['user_id'], $this]);
+        $this->emit("speaking.{$data->d['user_id']}", [$data->d['speaking'], $this]);
 
-        $this->logger->debug('received speaking packet', ['data' => $data]);
+        $this->discord->getLogger()->debug('received speaking packet', ['data' => $data]);
 
-        $this->speakingStatus[$data->d->ssrc] = $data->d;
+        $speaking = $this->discord->factory(Speaking::class, (array) $data->d, true);
+
+        $this->speakingStatus[$speaking->ssrc] = $speaking;
     }
 
     /**
@@ -856,14 +952,14 @@ class VoiceClient extends EventEmitter
         $payload = Payload::new(
             Op::VOICE_RESUME,
             [
-                'server_id' => $this->channel->guild_id,
-                'session_id' => $this->voiceSessions[$this->channel->guild_id],
+                'server_id' => $this->guild_id,
+                'session_id' => $this->voice_sessions[$this->guild_id],
                 'token' => $this->data['token'],
                 'seq_ack' => $this->data['seq'],
             ]
         );
 
-        $this->logger->debug('sending identify', ['packet' => $payload]);
+        $this->discord->getLogger()->debug('sending identify', ['packet' => $payload]);
 
         $this->send($payload);
     }
@@ -875,29 +971,30 @@ class VoiceClient extends EventEmitter
      */
     public function handleWebSocketConnection(WebSocket $ws): void
     {
-        $this->logger->debug('connected to voice websocket');
+        $this->discord->getLogger()->debug('connected to voice websocket');
 
         $this->voiceWebsocket = $ws;
 
         $ws->on('message', function ($message) {
-            if (! $data = json_decode($message->getPayload(), true)) {
+            if (($data = json_decode($message->getPayload(), true)) === false) {
                 return;
             }
             $data = Payload::fromArray($data);
 
             $this->emit('ws-message', [$message, $this]);
 
-            $this->logger->debug('received voice op', ['op' => $data->op]);
+            $this->discord->getLogger()->debug('received voice op', ['op' => $data->op]);
             if (isset(self::VOICE_OP_HANDLERS[$data->op])) {
                 $handler = self::VOICE_OP_HANDLERS[$data->op];
                 $this->$handler($data);
             } else {
-                $this->logger->warning('unknown voice op', ['op' => $data->op]);
+                $this->discord->getLogger()->debug('unknown voice op', ['op' => $data->op]);
+                $this->handleUndocumented($data);
             }
         });
 
         $ws->on('error', function ($e) {
-            $this->logger->error('error with voice websocket', ['e' => $e->getMessage()]);
+            $this->discord->getLogger()->error('error with voice websocket', ['e' => $e->getMessage()]);
             $this->emit('ws-error', [$e]);
         });
 
@@ -909,11 +1006,11 @@ class VoiceClient extends EventEmitter
         } elseif (isset(
             $this->data['token'],
             $this->data['seq'],
-            $this->voiceSessions[$this->channel->guild_id]
+            $this->voice_sessions[$this->guild_id]
         )) {
             $this->resume();
         } else {
-            $this->logger->debug('existing voice session or data not found, re-sending identify', ['guild_id' => $this->channel->guild_id]);
+            $this->discord->getLogger()->debug('existing voice session or data not found, re-sending identify', ['guild_id' => $this->guild_id]);
             $this->identify();
         }
     }
@@ -945,7 +1042,7 @@ class VoiceClient extends EventEmitter
         $ip = $unpackedMessageArray['Address'];
         $port = $unpackedMessageArray['Port'];
 
-        $this->logger->debug('received our IP and port', ['ip' => $ip, 'port' => $port]);
+        $this->discord->getLogger()->debug('received our IP and port', ['ip' => $ip, 'port' => $port]);
 
         $this->selectProtocol($ip, $port);
 
@@ -959,7 +1056,7 @@ class VoiceClient extends EventEmitter
      */
     public function handleWebSocketError(\Exception $e): void
     {
-        $this->logger->error('error with voice websocket', ['e' => $e->getMessage()]);
+        $this->discord->getLogger()->error('error with voice websocket', ['e' => $e->getMessage()]);
         $this->emit('error', [$e]);
     }
 
@@ -971,17 +1068,17 @@ class VoiceClient extends EventEmitter
      */
     public function handleWebSocketClose(int $op, string $reason): void
     {
-        $this->logger->warning('voice websocket closed', ['op' => $op, 'reason' => $reason]);
+        $this->discord->getLogger()->warning('voice websocket closed', ['op' => $op, 'reason' => $reason]);
         $this->emit('ws-close', [$op, $reason, $this]);
 
         // Cancel heartbeat timers
-        if (null !== $this->heartbeat) {
-            $this->loop->cancelTimer($this->heartbeat);
+        if (isset($this->heartbeat)) {
+            $this->discord->getLoop()->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
-        if (null !== $this->udpHeartbeat) {
-            $this->loop->cancelTimer($this->udpHeartbeat);
+        if (isset($this->udpHeartbeat)) {
+            $this->discord->getLoop()->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
 
@@ -991,23 +1088,22 @@ class VoiceClient extends EventEmitter
         }
 
         // Remove voice session when leaving.
-        if ($op == Op::CLOSE_VOICE_DISCONNECTED) {
-            $this->logger->info('voice client disconnected from channel', ['channel_id' => $this->channel->id]);
-            $this->voiceSessions[$this->channel->guild_id] = null;
+        if ($op === Op::CLOSE_VOICE_DISCONNECTED) {
+            $this->handleCloseVoiceDisconnected();
 
             return;
         }
 
         // Don't reconnect on a critical opcode or if closed by user.
         if (in_array($op, Op::getCriticalVoiceCloseCodes()) || $this->userClose) {
-            $this->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
-            $this->voiceSessions[$this->channel->guild_id] = null;
+            $this->discord->getLogger()->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
+            $this->voice_sessions[$this->guild_id] = null;
             $this->emit('close');
         } else {
-            $this->logger->warning('reconnecting in 2 seconds');
+            $this->discord->getLogger()->warning('reconnecting in 2 seconds');
 
             // Retry connect after 2 seconds
-            $this->loop->addTimer(2, function () {
+            $this->discord->getLoop()->addTimer(2, function () {
                 $this->reconnecting = true;
                 $this->sentLoginFrame = false;
 
@@ -1023,7 +1119,7 @@ class VoiceClient extends EventEmitter
      */
     public function handleVoiceServerChange(array $data = []): void
     {
-        $this->logger->debug('voice server has changed, dynamically changing servers in the background', ['data' => $data]);
+        $this->discord->getLogger()->debug('voice server has changed, dynamically changing servers in the background', ['data' => $data]);
         $this->reconnecting = true;
         $this->sentLoginFrame = false;
         $this->pause();
@@ -1031,8 +1127,8 @@ class VoiceClient extends EventEmitter
         $this->client->close();
         $this->voiceWebsocket->close();
 
-        $this->loop->cancelTimer($this->heartbeat);
-        $this->loop->cancelTimer($this->udpHeartbeat);
+        $this->discord->getLoop()->cancelTimer($this->heartbeat);
+        $this->discord->getLoop()->cancelTimer($this->udpHeartbeat);
 
         $this->data['token'] = $data['token']; // set the token if it changed
         $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
@@ -1040,10 +1136,10 @@ class VoiceClient extends EventEmitter
         $this->initSockets();
 
         $this->on('resumed', function () {
-            $this->logger->debug('voice client resumed');
+            $this->discord->getLogger()->debug('voice client resumed');
             $this->unpause();
-            $this->speaking = false;
-            $this->setSpeaking(true);
+            $this->speaking = self::NOT_SPEAKING;
+            $this->setSpeaking(self::MICROPHONE);
         });
     }
 
@@ -1081,7 +1177,7 @@ class VoiceClient extends EventEmitter
         }
 
         $process = $this->ffmpegEncode($file);
-        $process->start($this->loop);
+        $process->start();
 
         return $this->playOggStream($process);
     }
@@ -1121,7 +1217,7 @@ class VoiceClient extends EventEmitter
         }
 
         if (is_resource($stream)) {
-            $stream = new Stream($stream, $this->loop);
+            $stream = new Stream($stream);
         }
 
         $process = $this->ffmpegEncode(preArgs: [
@@ -1129,7 +1225,7 @@ class VoiceClient extends EventEmitter
             '-ac', $channels,
             '-ar', $audioRate,
         ]);
-        $process->start($this->loop);
+        $process->start();
         $stream->pipe($process->stdin);
 
         return $this->playOggStream($process);
@@ -1174,7 +1270,7 @@ class VoiceClient extends EventEmitter
         }
 
         if (is_resource($stream)) {
-            $stream = new ReadableResourceStream($stream, $this->loop);
+            $stream = new ReadableResourceStream($stream);
         }
 
         if (! ($stream instanceof ReadableStreamInterface)) {
@@ -1183,189 +1279,76 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $this->buffer = new RealBuffer($this->loop);
-        $stream->on('data', function ($d) {
-            $this->buffer->write($d);
-        });
-
-        /** @var OggStream */
-        $ogg = null;
+        $this->buffer = new RealBuffer();
+        $stream->on('data', fn ($d) => $this->buffer->write($d));
 
         $loops = 0;
 
-        $readOpus = function () use ($deferred, &$ogg, &$readOpus, &$loops) {
-            $this->readOpusTimer = null;
+        $this->setSpeaking(self::MICROPHONE);
 
-            $loops += 1;
-
-            // If the client is paused, delay by frame size and check again.
-            if ($this->paused) {
-                $this->insertSilence();
-                $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
-
-                return;
-            }
-
-            $ogg->getPacket()->then(function ($packet) use (&$readOpus, &$loops, $deferred) {
-                // EOF for Ogg stream.
-                if (null === $packet) {
-                    $this->reset();
-                    $deferred->resolve(null);
-
-                    return;
-                }
-
-                // increment sequence
-                // uint16 overflow protection
-                if (++$this->seq >= 2 ** 16) {
-                    $this->seq = 0;
-                }
-
-                $this->sendBuffer($packet);
-
-                // increment timestamp
-                // uint32 overflow protection
-                if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
-                    $this->timestamp = 0;
-                }
-
-                $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
-                $delay = $nextTime - microtime(true);
-
-                $this->readOpusTimer = $this->loop->addTimer($delay, $readOpus);
-            }, function ($e) use ($deferred) {
-                $this->reset();
-                $deferred->resolve(null);
-            });
-        };
-
-        $this->setSpeaking(true);
-
-        OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($readOpus, &$ogg) {
-            $ogg = $os;
+        OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($deferred, $loops) {
             $this->startTime = microtime(true) + 0.5;
-            $this->readOpusTimer = $this->loop->addTimer(0.5, $readOpus);
+            $this->readOpusTimer = $this->discord->getLoop()->addTimer(0.5, fn () => $this->readOpus($deferred, $os, $loops));
         });
 
         return $deferred->promise();
     }
 
     /**
-     * Plays a DCA stream.
+     * Reads and processes Opus audio packets from an OGG stream.
      *
-     * @param resource|Process|Stream $stream The DCA stream to be sent.
+     * @param Deferred  $deferred The deferred promise that will be resolved when the stream ends.
+     * @param OggStream &$ogg     Reference to the OGG stream object to read packets from.
+     * @param int       &$loops   Reference to the loop counter used for timing calculations.
      *
-     * @return PromiseInterface
-     * @throws \Exception
      *
-     * @deprecated 10.0.0 DCA is now deprecated in DiscordPHP, switch to using
-     *                    `playOggStream` with raw Ogg Opus.
+     * @throws \Exception If packet retrieval fails.
      */
-    public function playDCAStream($stream): PromiseInterface
+    public function readOpus(Deferred $deferred, OggStream &$ogg, int &$loops)
     {
-        $deferred = new Deferred();
+        $this->readOpusTimer = null;
 
-        if (! $this->isReady()) {
-            $deferred->reject(new \Exception('Voice client is not ready yet.'));
+        $loops += 1;
 
-            return $deferred->promise();
+        // If the client is paused, delay by frame size and check again.
+        if ($this->paused) {
+            $this->insertSilence();
+            $this->readOpusTimer = $this->discord->getLoop()->addTimer($this->frameSize / 1000, fn () => $this->readOpus($deferred, $ogg, $loops));
+
+            return;
         }
 
-        if ($this->speaking) {
-            $deferred->reject(new \Exception('Audio already playing.'));
-
-            return $deferred->promise();
-        }
-
-        if ($stream instanceof Process) {
-            $stream->stderr->on('data', function ($d) {
-                if (empty($d)) {
-                    return;
-                }
-
-                $this->emit('stderr', [$d, $this]);
-            });
-
-            $stream = $stream->stdout;
-        }
-
-        if (is_resource($stream)) {
-            $stream = new ReadableResourceStream($stream, $this->loop);
-        }
-
-        if (! ($stream instanceof ReadableStreamInterface)) {
-            $deferred->reject(new \Exception('The stream passed to playDCAStream was not an instance of resource, ReactPHP Process, ReactPHP Readable Stream'));
-
-            return $deferred->promise();
-        }
-
-        $this->buffer = new RealBuffer($this->loop);
-        $stream->on('data', function ($d) {
-            $this->buffer->write($d);
-        });
-
-        $readOpus = function () use ($deferred, &$readOpus) {
-            $this->readOpusTimer = null;
-
-            // If the client is paused, delay by frame size and check again.
-            if ($this->paused) {
-                $this->insertSilence();
-                $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
+        $ogg->getPacket()->then(function (string|null $packet) use ($deferred, &$ogg, &$loops) {
+            // EOF for Ogg stream.
+            if ($packet === null) {
+                $this->reset();
+                $deferred->resolve(null);
 
                 return;
             }
 
-            // Read opus length
-            $this->buffer->readInt16(1000)->then(function ($opusLength) {
-                // Read opus data
-                return $this->buffer->read($opusLength, null, 1000);
-            })->then(function ($opus) use (&$readOpus) {
-                $this->sendBuffer($opus);
-
-                // increment sequence
-                // uint16 overflow protection
-                if (++$this->seq >= 2 ** 16) {
-                    $this->seq = 0;
-                }
-
-                // increment timestamp
-                // uint32 overflow protection
-                if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
-                    $this->timestamp = 0;
-                }
-
-                $this->readOpusTimer = $this->loop->addTimer(($this->frameSize - 1) / 1000, $readOpus);
-            }, function () use ($deferred) {
-                $this->reset();
-                $deferred->resolve(null);
-            });
-        };
-
-        $this->setSpeaking(true);
-
-        // Read magic byte header
-        $this->buffer->read(4)->then(function ($mb) {
-            if ($mb !== self::DCA_VERSION) {
-                throw new OutdatedDCAException('The DCA magic byte header was not correct.');
+            // increment sequence
+            // uint16 overflow protection
+            if (++$this->seq >= 2 ** 16) {
+                $this->seq = 0;
             }
 
-            // Read JSON length
-            return $this->buffer->readInt32();
-        })->then(function ($jsonLength) {
-            // Read JSON content
-            return $this->buffer->read($jsonLength);
-        })->then(function ($metadata) use ($readOpus) {
-            $metadata = json_decode($metadata, true);
+            $this->sendBuffer($packet);
 
-            if (null !== $metadata) {
-                $this->frameSize = $metadata['opus']['frame_size'] / 48;
+            // increment timestamp
+            // uint32 overflow protection
+            if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
+                $this->timestamp = 0.0;
             }
 
-            $this->startTime = microtime(true) + 0.5;
-            $this->readOpusTimer = $this->loop->addTimer(0.5, $readOpus);
+            $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
+            $delay = $nextTime - microtime(true);
+
+            $this->readOpusTimer = $this->discord->getLoop()->addTimer($delay, fn () => $this->readOpus($deferred, $ogg, $loops));
+        }, function ($e) use ($deferred) {
+            $this->reset();
+            $deferred->resolve(null);
         });
-
-        return $deferred->promise();
     }
 
     /**
@@ -1374,13 +1357,13 @@ class VoiceClient extends EventEmitter
     protected function reset(): void
     {
         if ($this->readOpusTimer) {
-            $this->loop->cancelTimer($this->readOpusTimer);
+            $this->discord->getLoop()->cancelTimer($this->readOpusTimer);
             $this->readOpusTimer = null;
         }
 
-        $this->setSpeaking(false);
-        $this->streamTime = 0;
-        $this->startTime = 0;
+        $this->setSpeaking(self::NOT_SPEAKING);
+        $this->streamTime = 0.0;
+        $this->startTime = 0.0;
         $this->paused = false;
         $this->silenceRemaining = 5;
     }
@@ -1396,8 +1379,13 @@ class VoiceClient extends EventEmitter
             return;
         }
 
-        $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp, true, $this->secret_key);
-        $this->client->send((string) $packet);
+        $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
+        //$this->discord->getLogger()->debug('valid packet?' , ['valid' => $packet::validatePacket($packet)]);
+        
+        $encrypted = $this->crypto->encryptRTPPacket($packet, $this->seq);
+        //$this->discord->getLogger()->debug('valid encrypted packet?' , ['valid' => $this->crypto::validateEncryptedRTPPacket($encrypted)]);
+
+        $this->client->send($encrypted);
 
         $this->streamTime = microtime(true);
 
@@ -1407,13 +1395,17 @@ class VoiceClient extends EventEmitter
     /**
      * Sets the speaking value of the client.
      *
-     * @param bool $speaking Whether the client is speaking or not.
+     * @link https://discord.com/developers/docs/topics/voice-connections#speaking
+     *
+     * @param int|bool $speaking The speaking mode.
      *
      * @throws \RuntimeException
      */
-    public function setSpeaking(bool $speaking = true): void
+    public function setSpeaking(int|bool $speaking = self::MICROPHONE): void
     {
-        if ($this->speaking == $speaking) {
+        $speaking = (int) $speaking;
+
+        if ($this->speaking === $speaking) {
             return;
         }
 
@@ -1426,6 +1418,7 @@ class VoiceClient extends EventEmitter
             [
                 'speaking' => $speaking,
                 'delay' => 0,
+                'ssrc' => $this->ssrc,
             ],
         ));
 
@@ -1448,35 +1441,34 @@ class VoiceClient extends EventEmitter
         $this->mainSend(Payload::new(
             Op::OP_UPDATE_VOICE_STATE,
             [
-                'guild_id' => $channel->guild_id,
+                'guild_id' => $this->guild_id,
                 'channel_id' => $channel->id,
                 'self_mute' => $this->mute,
                 'self_deaf' => $this->deaf,
             ],
         ));
 
-        $this->channel = $channel;
+        $this->channel_id = $channel;
     }
 
     /**
      * Sets the bitrate.
      *
+     * For voice channels, normal servers can set bitrate up to 96000,
+     * servers with Boost level 1 can set up to 128000,
+     * servers with Boost level 2 can set up to 256000,
+     * and servers with Boost level 3 or the VIP_REGIONS guild feature can set up to 384000.
+     * For stage channels, bitrate can be set up to 64000.
+     *
      * @param int $bitrate The bitrate to set.
      *
      * @throws \DomainException
      * @throws \RuntimeException
+     *
+     * @deprecated 10.40.0 This data is now taken from the Channel.
      */
     public function setBitrate(int $bitrate): void
     {
-        if ($bitrate < 8000 || $bitrate > 384000) {
-            throw new \DomainException("{$bitrate} is not a valid option. The bitrate must be between 8,000 bps and 384,000 bps.");
-        }
-
-        if ($this->speaking) {
-            throw new \RuntimeException('Cannot change bitrate while playing.');
-        }
-
-        $this->bitrate = $bitrate;
     }
 
     /**
@@ -1490,7 +1482,7 @@ class VoiceClient extends EventEmitter
     public function setVolume(int $volume): void
     {
         if ($volume < 0 || $volume > 100) {
-            throw new \DomainException("{$volume}% is not a valid option. The bitrate must be between 0% and 100%.");
+            throw new \DomainException("{$volume}% is not a valid option. The volume must be between 0% and 100%.");
         }
 
         if ($this->speaking) {
@@ -1510,10 +1502,10 @@ class VoiceClient extends EventEmitter
      */
     public function setAudioApplication(string $app): void
     {
-        $legal = ['voip', 'audio', 'lowdelay'];
+        static $allowed = ['voip', 'audio', 'lowdelay'];
 
-        if (! in_array($app, $legal)) {
-            throw new \DomainException("{$app} is not a valid option. Valid options are: ".implode(', ', $legal));
+        if (! in_array($app, $allowed)) {
+            throw new \DomainException("{$app} is not a valid audio application. Valid options are: ".implode(', ', $allowed));
         }
 
         if ($this->speaking) {
@@ -1528,21 +1520,19 @@ class VoiceClient extends EventEmitter
      *
      * @param Payload|array $data The data to send to the voice WebSocket.
      */
-    protected function send(Payload|array $data): void
+    protected function send($data): void
     {
-        $json = json_encode($data);
-        $this->voiceWebsocket->send($json);
+        $this->voiceWebsocket->send(json_encode($data));
     }
 
     /**
      * Sends a message to the main websocket.
      *
-     * @param Payload $data The data to send to the main WebSocket.
+     * @param Payload|array $data The data to send to the main WebSocket.
      */
-    protected function mainSend(Payload $data): void
+    protected function mainSend($data): void
     {
-        $json = json_encode($data);
-        $this->mainWebsocket->send($json);
+        $this->mainWebsocket->send(json_encode($data));
     }
 
     /**
@@ -1565,8 +1555,8 @@ class VoiceClient extends EventEmitter
         $this->mainSend(Payload::new(
             Op::OP_UPDATE_VOICE_STATE,
             [
-                'guild_id' => $this->channel->guild_id,
-                'channel_id' => $this->channel->id,
+                'guild_id' => $this->guild_id,
+                'channel_id' => $this->channel_id,
                 'self_mute' => $mute,
                 'self_deaf' => $deaf,
             ],
@@ -1577,54 +1567,65 @@ class VoiceClient extends EventEmitter
      * Pauses the current sound.
      *
      * @throws \RuntimeException
+     *
+     * @return PromiseInterface
      */
-    public function pause(): void
+    public function pause(): PromiseInterface
     {
         if (! $this->speaking) {
-            throw new \RuntimeException('Audio must be playing to pause it.');
+            return reject(new \RuntimeException('Audio must be playing to pause it.'));
         }
 
         if ($this->paused) {
-            throw new \RuntimeException('Audio is already paused.');
+            return reject(new \RuntimeException('Audio is already paused.'));
         }
 
         $this->paused = true;
         $this->silenceRemaining = 5;
+
+        return resolve(null);
     }
 
     /**
      * Unpauses the current sound.
      *
      * @throws \RuntimeException
+     *
+     * @return PromiseInterface
      */
-    public function unpause(): void
+    public function unpause(): PromiseInterface
     {
         if (! $this->speaking) {
-            throw new \RuntimeException('Audio must be playing to unpause it.');
+            return reject(new \RuntimeException('Audio must be playing to unpause it.'));
         }
 
         if (! $this->paused) {
-            throw new \RuntimeException('Audio is already playing.');
+            return reject(new \RuntimeException('Audio is already playing.'));
         }
 
         $this->paused = false;
         $this->timestamp = microtime(true) * 1000;
+
+        return resolve(null);
     }
 
     /**
      * Stops the current sound.
      *
      * @throws \RuntimeException
+     *
+     * @return PromiseInterface
      */
-    public function stop(): void
+    public function stop(): PromiseInterface
     {
         if (! $this->speaking) {
-            throw new \RuntimeException('Audio must be playing to stop it.');
+            return reject(new \RuntimeException('Audio must be playing to stop it.'));
         }
 
         $this->buffer->end();
-        $this->insertSilence();
         $this->reset();
+
+        return $this->insertSilence();
     }
 
     /**
@@ -1640,7 +1641,7 @@ class VoiceClient extends EventEmitter
 
         if ($this->speaking) {
             $this->stop();
-            $this->setSpeaking(false);
+            $this->setSpeaking(self::NOT_SPEAKING);
         }
 
         $this->ready = false;
@@ -1648,7 +1649,7 @@ class VoiceClient extends EventEmitter
         $this->mainSend(Payload::new(
             Op::OP_UPDATE_VOICE_STATE,
             [
-                'guild_id' => $this->channel->guild_id,
+                'guild_id' => $this->guild_id,
                 'channel_id' => null,
                 'self_mute' => true,
                 'self_deaf' => true,
@@ -1661,21 +1662,21 @@ class VoiceClient extends EventEmitter
 
         $this->heartbeat_interval = null;
 
-        if (null !== $this->heartbeat) {
-            $this->loop->cancelTimer($this->heartbeat);
+        if (isset($this->heartbeat)) {
+            $this->discord->getLoop()->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
-        if (null !== $this->udpHeartbeat) {
-            $this->loop->cancelTimer($this->udpHeartbeat);
+        if (isset($this->udpHeartbeat)) {
+            $this->discord->getLoop()->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
 
         $this->seq = 0;
-        $this->timestamp = 0;
+        $this->timestamp = 0.0;
         $this->sentLoginFrame = false;
         $this->startTime = null;
-        $this->streamTime = 0;
+        $this->streamTime = 0.0;
         $this->speakingStatus = new Collection([], 'ssrc');
 
         $this->emit('close');
@@ -1690,12 +1691,16 @@ class VoiceClient extends EventEmitter
      */
     public function isSpeaking($id = null): bool
     {
-        if (! isset($id)) {
-            return $this->speaking;
-        } elseif ($user = $this->speakingStatus->get('user_id', $id)) {
-            return $user->speaking;
-        } elseif ($ssrc = $this->speakingStatus->get('ssrc', $id)) {
-            return $ssrc->speaking;
+        if (! isset($id) || $id === $this->discord->id) {
+            return $this->speaking !== 0;
+        }
+        if ($user = $this->speakingStatus->get('user_id', $id)) {
+            /** @var Speaking $user */
+            return $user->speaking !== 0;
+        }
+        if ($ssrc = $this->speakingStatus->get('ssrc', $id)) {
+            /** @var Speaking $ssrc */
+            return $ssrc->speaking !== 0;
         }
 
         return false;
@@ -1714,54 +1719,70 @@ class VoiceClient extends EventEmitter
     /**
      * Handles a voice state update.
      * NOTE: This object contains the data as the VoiceStateUpdate Part.
+     *
      * @see \Discord\Parts\WebSockets\VoiceStateUpdate
      *
-     *
-     * @param Payload $data The WebSocket data.
+     * @param VoiceStateUpdate $data The WebSocket data.
      */
     public function handleVoiceStateUpdate(object $data): void
     {
-        $removeDecoder = function ($ss) {
-            $decoder = $this->voiceDecoders[$ss->ssrc] ?? null;
-
-            if (null === $decoder) {
-                return; // no voice decoder to remove
-            }
-
-            $decoder->close();
-            unset($this->voiceDecoders[$ss->ssrc]);
-            unset($this->speakingStatus[$ss->ssrc]);
-        };
-
-        $ss = $this->speakingStatus->get('user_id', $data->d->user_id ?? null);
-
-        if (null === $ss) {
+        if (! isset($data->user_id) || ! $ss = $this->speakingStatus->get('user_id', $data->user_id)) {
             return; // not in our channel
         }
 
-        if (isset($data->d->channel_id) && $data->d->channel_id == $this->channel->id) {
+        if ($data->channel_id && $data->channel_id === $this->channel_id) {
             return; // ignore, just a mute/deaf change
         }
 
-        $removeDecoder($ss);
+        $this->removeDecoder($ss);
     }
 
     /**
-     * Gets a recieve voice stream.
+     * Removes the voice decoder associated with the given SSRC.
+     *
+     * @param object $ss
+     */
+    protected function removeDecoder($ss)
+    {
+        if (! $decoder = $this->voiceDecoders[$ss->ssrc] ?? null) {
+            return; // no voice decoder to remove
+        }
+
+        $decoder->close();
+        unset($this->voiceDecoders[$ss->ssrc]);
+        unset($this->speakingStatus[$ss->ssrc]);
+    }
+
+    /**
+     * Gets a receive voice stream.
      *
      * @param int|string $id Either a SSRC or User ID.
      *
-     * @return RecieveStream
+     * @return ReceiveStream
+     *
+     * @deprecated use self::getReceiveStream()
      */
-    public function getRecieveStream($id): ?RecieveStream
+    public function getRecieveStream($id): ?ReceiveStream
     {
-        if (isset($this->recieveStreams[$id])) {
-            return $this->recieveStreams[$id];
+        return $this->getReceiveStream($id);
+    }
+
+    /**
+     * Gets a receive voice stream.
+     *
+     * @param int|string $id Either a SSRC or User ID.
+     *
+     * @return ReceiveStream
+     */
+    public function getReceiveStream($id): ?ReceiveStream
+    {
+        if (isset($this->receiveStreams[$id])) {
+            return $this->receiveStreams[$id];
         }
 
         foreach ($this->speakingStatus as $status) {
-            if ($status->user_id == $id) {
-                return $this->recieveStreams[$status->ssrc];
+            if ($status->user_id === $id) {
+                return $this->receiveStreams[$status->ssrc];
             }
         }
 
@@ -1775,72 +1796,60 @@ class VoiceClient extends EventEmitter
      */
     protected function handleAudioData($message): void
     {
+        return;
+
         if ($this->deaf) {
-            $this->logger->debug('ignoring voice data, client is deafened');
+            $this->discord->getLogger()->debug('ignoring voice data, client is deafened');
 
             return;
         }
 
-        $this->logger->debug('received voice data', ['message' => $message]);
+        //$this->discord->getLogger()->debug('received voice data', ['message' => $message]);
 
         $voicePacket = VoicePacket::make($message);
 
-        $decrypted = $this->decryptVoicePacket($voicePacket);
+        if (($decrypted = $this->crypto->decryptRTPPacket($voicePacket, $this->seq)) === false) {
+            $this->discord->getLogger()->debug('failed to decrypt voice packet', ['packet' => $voicePacket]);
 
-        if ($decrypted === false) {
-            // if we can't decode the message, drop it silently.
             return;
         }
 
-        $this->emit('raw', [$decrypted, $this]);
+        $this->emit('raw', [$decrypted, $this, $voicePacket]);
 
+        self::decodeVoicePacket($decrypted, $this, $voicePacket);
+    }
+
+    /**
+     * Decodes voice packet data.
+     *
+     * @param string      $decrypted   The decrypted voice data.
+     * @param VoiceClient $vc          The voice client instance.
+     * @param VoicePacket $voicePacket The voice packet to decode.
+     *
+     * @todo
+     */
+    public static function decodeVoicePacket(string $decrypted, VoiceClient $vc, VoicePacket $voicePacket): void
+    {
         $vp = VoicePacket::make($voicePacket->getHeader().$decrypted);
-        $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
-        $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
 
-        if (null === $ss) {
-            // for some reason we don't have a speaking status
-            return;
+        if (! $ss = $vc->speakingStatus->get('ssrc', $vp->getSSRC())) {
+            return; // for some reason we don't have a speaking status
         }
-
-        if (null === $decoder) {
+        /** @var Speaking $ss */
+        if (! $decoder = $vc->voiceDecoders[$vp->getSSRC()] ?? null) {
             // make a decoder
-            if (! isset($this->recieveStreams[$ss->ssrc])) {
-                $this->recieveStreams[$ss->ssrc] = new RecieveStream();
+            if (! isset($vc->receiveStreams[$ss->ssrc])) {
+                $vc->receiveStreams[$ss->ssrc] = new ReceiveStream();
+                $vc->receiveStreams[$ss->ssrc]->on('pcm', fn ($d) => $vc->emit('channel-pcm', [$d, $vc]));
+                $vc->receiveStreams[$ss->ssrc]->on('opus', fn ($d) => $vc->emit('channel-opus', [$d, $vc]));
 
-                $this->recieveStreams[$ss->ssrc]->on('pcm', function ($d) {
-                    $this->emit('channel-pcm', [$d, $this]);
-                });
-
-                $this->recieveStreams[$ss->ssrc]->on('opus', function ($d) {
-                    $this->emit('channel-opus', [$d, $this]);
-                });
+                $vc->emit('receiveStream', [$vc->receiveStreams[$ss->ssrc], $vc]);
+            }
+            if (! $decoder = $vc->createDecoder($ss)) {
+                return;
             }
 
-            $createDecoder = function () use (&$createDecoder, $ss) {
-                $decoder = $this->dcaDecode();
-                $decoder->start($this->loop);
-
-                $decoder->stdout->on('data', function ($data) use ($ss) {
-                    $this->recieveStreams[$ss->ssrc]->writePCM($data);
-                });
-                $decoder->stderr->on('data', function ($data) use ($ss) {
-                    $this->emit("voice.{$ss->ssrc}.stderr", [$data, $this]);
-                    $this->emit("voice.{$ss->user_id}.stderr", [$data, $this]);
-                });
-                $decoder->on('exit', function ($code, $term) use ($ss, &$createDecoder) {
-                    if ($code > 0) {
-                        $this->emit('decoder-error', [$code, $term, $ss]);
-
-                        $createDecoder();
-                    }
-                });
-
-                $this->voiceDecoders[$ss->ssrc] = $decoder;
-            };
-
-            $createDecoder();
-            $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
+            $vc->voiceDecoders[$ss->ssrc] = $decoder;
         }
 
         $buff = new Buffer(strlen($vp->getData()) + 2);
@@ -1850,44 +1859,36 @@ class VoiceClient extends EventEmitter
         $decoder->stdin->write((string) $buff);
     }
 
-    protected function decryptVoicePacket(VoicePacket $voicePacket): string|false
+    /**
+     * Creates and starts a decoder process for the given stream source.
+     *
+     * @todo Implement MLS decoding and use the appropriate decoder.
+     *
+     * @param object $ss The stream source object containing ssrc and user_id properties.
+     *
+     * @return Process|null The created decoder ReactPHP Child Process, or null if decoding is not implemented or supported.
+     */
+    protected function createDecoder(object $ss): ?Process
     {
-        // AEAD modes use a nonce that is a 32-bit integer appended to the payload.
-        if (strpos($this->mode, 'aead') !== false) {
-            $data = $voicePacket->getData();
-            $nonce = str_repeat("\x00", 12); // 12-byte nonce for AES-GCM
-            // The last 4 bytes of the payload are the nonce (32-bit LE integer)
-            if (strlen($data) < 4) {
-                return false;
+        return null; // Decoding not implemented yet
+
+        //$decoder = $this->opusDecode();
+        $decoder->start();
+        $decoder->stdout->on('data', function ($data) use ($ss) {
+            $this->receiveStreams[$ss->ssrc]->writePCM($data);
+        });
+        $decoder->stderr->on('data', function ($data) use ($ss) {
+            $this->emit("voice.{$ss->ssrc}.stderr", [$data, $this]);
+            $this->emit("voice.{$ss->user_id}.stderr", [$data, $this]);
+        });
+        $decoder->on('exit', function ($code, $term) use ($ss) {
+            if ($code > 0) {
+                $this->emit('decoder-error', [$code, $term, $ss]);
+                $this->createDecoder($ss);
             }
-            $ciphertext = substr($data, 0, -4);
-            $nonceInt = unpack('V', substr($data, -4))[1];
-            $nonce = str_pad(pack('V', $nonceInt), 12, "\x00", STR_PAD_RIGHT);
-        } else {
-            $nonce = new Buffer(24);
-            $nonce->write($voicePacket->getHeader(), 0);
-        }
+        });
 
-        switch ($this->mode) {
-            case 'aead_aes256_gcm_rtpsize': // preferred
-                return \sodium_crypto_aead_aes256gcm_decrypt(
-                    $ciphertext,
-                    '', // no additional data
-                    $nonce,
-                    $this->secret_key
-                );
-            case 'aead_xchacha20_poly1305_rtpsize': // required
-                return \sodium_crypto_aead_xchacha20poly1305_ietf_decrypt(
-                    $ciphertext,
-                    '', // no additional data
-                    $nonce,
-                    $this->secret_key
-                );
-            case 'xsalsa20_poly1305': // deprecated
-                return \sodium_crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
-        }
-
-        return false;
+        return $decoder;
     }
 
     protected function generateKeyPackage()
@@ -1922,20 +1923,11 @@ class VoiceClient extends EventEmitter
      */
     protected function checkForFFmpeg(): bool
     {
-        $binaries = [
-            'ffmpeg',
-        ];
+        if ($output = $this->checkForExecutable('ffmpeg')) {
+            $this->ffmpeg = $output;
 
-        foreach ($binaries as $binary) {
-            $output = $this->checkForExecutable($binary);
-
-            if (null !== $output) {
-                $this->ffmpeg = $output;
-
-                return true;
-            }
+            return true;
         }
-
         $this->emit('error', [new FFmpegNotFoundException('No FFmpeg binary was found.')]);
 
         return false;
@@ -1965,8 +1957,22 @@ class VoiceClient extends EventEmitter
      */
     protected static function checkForExecutable(string $executable): ?string
     {
-        $which = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'where' : 'command -v';
-        $executable = rtrim((string) explode(PHP_EOL, shell_exec("{$which} {$executable}"))[0]);
+        $systemOs = substr(PHP_OS, 0, 3);
+        $which = 'command -v';
+        if (strtoupper($systemOs) === 'WIN') {
+            $which = 'where';
+        }
+
+        $shellExecutable = shell_exec("$which $executable");
+        if ($shellExecutable === false) {
+            // Unable to establish pipe
+            return null;
+        }
+        if ($shellExecutable === null) {
+            // Error or the command produced no output
+            return null;
+        }
+        $executable = rtrim((string) explode(PHP_EOL, $shellExecutable)[0]);
 
         return is_executable($executable) ? $executable : null;
     }
@@ -1982,12 +1988,14 @@ class VoiceClient extends EventEmitter
      * will be appended to the FFmpeg command _before_ setting the input
      * arguments.
      *
+     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-and-sending-voice
+     *
      * @param ?string $filename Path to file to be converted into Ogg Opus, or
      *                          null for pipe via stdin.
      * @param ?array  $preArgs  A list of arguments to be appended before the
      *                          input filename.
      *
-     * @return Process A ReactPHP child process.
+     * @return Process A ReactPHP child process, or a Windows compatible process replacement.
      */
     public function ffmpegEncode(?string $filename = null, ?array $preArgs = null): Process
     {
@@ -2002,15 +2010,15 @@ class VoiceClient extends EventEmitter
             '-map_metadata', '-1',
             '-f', 'opus',
             '-c:a', 'libopus',
-            '-ar', '48000',
+            '-ar', 48000,
             '-af', 'volume='.$dB.'dB',
             '-ac', '2',
-            '-b:a', $this->bitrate,
+            '-b:a', $this->getChannel()->bitrate,
             '-loglevel', 'warning',
             'pipe:1',
         ];
 
-        if (null !== $preArgs) {
+        if ($preArgs) {
             $flags = array_merge($preArgs, $flags);
         }
 
@@ -2025,29 +2033,15 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Decodes a file from Opus with DCA.
+     * Returns the connected guild.
      *
-     * @param int      $channels  How many audio channels to decode with.
-     * @param int|null $frameSize The Opus packet frame size.
+     * @return Guild The connected guild.
      *
-     * @return Process A ReactPHP Child Process
+     * @since 10.41.0
      */
-    public function dcaDecode(int $channels = 2, ?int $frameSize = null): Process
+    public function getGuild(): Guild
     {
-        if (null === $frameSize) {
-            $frameSize = round($this->frameSize * 48);
-        }
-
-        $flags = [
-            '-ac', $channels, // Channels
-            '-ab', round($this->bitrate / 1000), // Bitrate
-            '-as', $frameSize, // Frame Size
-            '-mode', 'decode', // Decode mode
-        ];
-
-        $flags = implode(' ', $flags);
-
-        return new Process("{$this->dca} {$flags}");
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 
     /**
@@ -2057,18 +2051,37 @@ class VoiceClient extends EventEmitter
      */
     public function getChannel(): Channel
     {
-        return $this->channel;
+        return $this->getGuild()->channels->get('id', $this->channel_id);
     }
 
     /**
-     * Insert 5 frames of silence.
+     * Sends five frames of Opus silence to avoid unintended interpolation when there is a break in the sent data.
      *
      * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
+     *
+     * @return PromiseInterface Resolves after all silence frames have been sent.
      */
-    protected function insertSilence(): void
+    protected function insertSilence(): PromiseInterface
     {
-        while (--$this->silenceRemaining > 0) {
+        $deferred = new Deferred();
+        $this->__insertSilence($deferred);
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Inserts silence frames recursively.
+     *
+     * @param Deferred $deferred The deferred promise to resolve when done.
+     */
+    protected function __insertSilence(Deferred $deferred): void
+    {
+        if ($this->silenceRemaining > 0) {
             $this->sendBuffer(self::SILENCE_FRAME);
+            $this->silenceRemaining--;
+            $this->discord->getLoop()->addTimer($this->frameSize / 1000, fn () => $this->__insertSilence($deferred));
+        } else {
+            $deferred->resolve(null);
         }
     }
 }

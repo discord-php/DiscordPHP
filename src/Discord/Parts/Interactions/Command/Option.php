@@ -25,33 +25,38 @@ use function Discord\poly_strlen;
  *
  * @since 7.0.0
  *
- * @property int                            $type                      Type of the option.
- * @property string                         $name                      Name of the option.
- * @property ?string[]|null                 $name_localizations        Localization dictionary for the name field. Values follow the same restrictions as name.
- * @property string                         $description               1-100 character description.
- * @property ?string[]|null                 $description_localizations Localization dictionary for the description field. Values follow the same restrictions as description.
- * @property bool|null                      $required                  If the parameter is required or optional--default false.
- * @property ExCollectionInterface|Choice[] $choices                   Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
- * @property ExCollectionInterface|Option[] $options                   Sub-options if applicable.
- * @property array|null                     $channel_types             If the option is a channel type, the channels shown will be restricted to these types.
- * @property int|float|null                 $min_value                 If the option is an INTEGER or NUMBER type, the minimum value permitted.
- * @property int|float|null                 $max_value                 If the option is an INTEGER or NUMBER type, the maximum value permitted.
- * @property int|null                       $min_length                For option type `STRING`, the minimum allowed length (minimum of `0`, maximum of `6000`).
- * @property int|null                       $max_length                For option type `STRING`, the maximum allowed length (minimum of `1`, maximum of `6000`).
- * @property bool|null                      $autocomplete              Enable autocomplete interactions for this option.
+ * @property int                                    $type                      Type of the option.
+ * @property string                                 $name                      Name of the option.
+ * @property ?string[]|null                         $name_localizations        Localization dictionary for the name field. Values follow the same restrictions as name.
+ * @property string                                 $description               1-100 character description.
+ * @property ?string[]|null                         $description_localizations Localization dictionary for the description field. Values follow the same restrictions as description.
+ * @property bool|null                              $required                  If the parameter is required or optional--default false.
+ * @property ExCollectionInterface<Choice>|Choice[] $choices                   Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
+ * @property ExCollectionInterface<Option>|Option[] $options                   Sub-options if applicable.
+ * @property array|null                             $channel_types             If the option is a channel type, the channels shown will be restricted to these types.
+ * @property int|float|null                         $min_value                 If the option is an INTEGER or NUMBER type, the minimum value permitted.
+ * @property int|float|null                         $max_value                 If the option is an INTEGER or NUMBER type, the maximum value permitted.
+ * @property int|null                               $min_length                For option type `STRING`, the minimum allowed length (minimum of `0`, maximum of `6000`).
+ * @property int|null                               $max_length                For option type `STRING`, the maximum allowed length (minimum of `1`, maximum of `6000`).
+ * @property bool|null                              $autocomplete              Enable autocomplete interactions for this option.
  */
 class Option extends Part
 {
     public const SUB_COMMAND = 1;
     public const SUB_COMMAND_GROUP = 2;
     public const STRING = 3;
-    public const INTEGER = 4; // Any integer between -2^53 and 2^53
+    /** Any integer between -2^53+1 and 2^53-1. */
+    public const INTEGER = 4;
     public const BOOLEAN = 5;
     public const USER = 6;
-    public const CHANNEL = 7; // Includes all channel types + categories
+    /** Includes all channel types + categories. */
+    public const CHANNEL = 7;
     public const ROLE = 8;
-    public const MENTIONABLE = 9; // Includes users and roles
-    public const NUMBER = 10; // Any double between -2^53 and 2^53
+    /** Includes users and roles. */
+    public const MENTIONABLE = 9;
+    /** Any double between -2^53 and 2^53. */
+    public const NUMBER = 10;
+    /** Attachment object. */
     public const ATTACHMENT = 11;
 
     /**
@@ -77,7 +82,7 @@ class Option extends Part
     /**
      * Gets the choices attribute.
      *
-     * @return ExCollectionInterface|Choice[] A collection of choices.
+     * @return ExCollectionInterface<Choice>|Choice[] A collection of choices.
      */
     protected function getChoicesAttribute(): ExCollectionInterface
     {
@@ -87,7 +92,7 @@ class Option extends Part
     /**
      * Gets the options attribute.
      *
-     * @return ExCollectionInterface|Option[] A collection of options.
+     * @return ExCollectionInterface<Option>|Option[] A collection of options.
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {
@@ -284,7 +289,7 @@ class Option extends Part
         }
 
         foreach ($this->attributes['options'] ?? [] as $idx => $opt) {
-            if ($opt['name'] == $option) {
+            if ($opt['name'] === $option) {
                 unset($this->attributes['options'][$idx]);
                 break;
             }
@@ -307,7 +312,7 @@ class Option extends Part
         }
 
         foreach ($this->attributes['choices'] ?? [] as $idx => $cho) {
-            if ($cho['name'] == $choice) {
+            if ($cho['name'] === $choice) {
                 unset($this->attributes['choices'][$idx]);
                 break;
             }
@@ -357,7 +362,7 @@ class Option extends Part
     public function setMinLength(?int $min_length): self
     {
         if (isset($min_length)) {
-            if ($this->type != self::STRING) {
+            if ($this->type !== self::STRING) {
                 throw new \LogicException('Minimum length can be only set on Option type STRING.');
             } elseif ($min_length < 0 || $min_length > 6000) {
                 throw new \LengthException('Minimum length must be between 0 and 6000 inclusive.');
@@ -382,7 +387,7 @@ class Option extends Part
     public function setMaxLength(?int $max_length): self
     {
         if (isset($max_length)) {
-            if ($this->type != self::STRING) {
+            if ($this->type !== self::STRING) {
                 throw new \LogicException('Maximum length can be only set on Option type STRING.');
             } elseif ($max_length < 1 || $max_length > 6000) {
                 throw new \LengthException('Maximum length must be between 1 and 6000 inclusive.');

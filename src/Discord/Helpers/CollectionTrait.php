@@ -16,47 +16,6 @@ namespace Discord\Helpers;
 trait CollectionTrait
 {
     /**
-     * Create a new Collection.
-     *
-     * @param array   $items
-     * @param ?string $discrim
-     * @param ?string $class
-     */
-    public function __construct(array $items = [], ?string $discrim = 'id', ?string $class = null)
-    {
-        $this->items = $items;
-        $this->discrim = $discrim;
-        $this->class = $class;
-    }
-
-    /**
-     * Creates a collection from an array.
-     *
-     * @param array   $items
-     * @param ?string $discrim
-     * @param ?string $class
-     *
-     * @return ExCollectionInterface
-     */
-    public static function from(array $items = [], ?string $discrim = 'id', ?string $class = null)
-    {
-        return new Collection($items, $discrim, $class);
-    }
-
-    /**
-     * Creates a collection for a class.
-     *
-     * @param string  $class
-     * @param ?string $discrim
-     *
-     * @return ExCollectionInterface
-     */
-    public static function for(string $class, ?string $discrim = 'id')
-    {
-        return new Collection([], $discrim, $class);
-    }
-
-    /**
      * Gets an item from the collection.
      *
      * @param string $discrim
@@ -66,14 +25,14 @@ trait CollectionTrait
      */
     public function get(string $discrim, $key)
     {
-        if ($discrim == $this->discrim && isset($this->items[$key])) {
+        if ($discrim === $this->discrim && isset($this->items[$key])) {
             return $this->items[$key];
         }
 
         foreach ($this->items as $item) {
-            if (is_array($item) && isset($item[$discrim]) && $item[$discrim] == $key) {
+            if (is_array($item) && isset($item[$discrim]) && $item[$discrim] === $key) {
                 return $item;
-            } elseif (is_object($item) && $item->{$discrim} == $key) {
+            } elseif (is_object($item) && $item->{$discrim} === $key) {
                 return $item;
             }
         }

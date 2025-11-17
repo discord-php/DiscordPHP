@@ -45,29 +45,35 @@ use function React\Promise\reject;
  *
  * @since 2.0.0
  *
- * @property      User|null                    $user                         The user part of the member.
- * @property-read string|null                  $username                     The username of the member.
- * @property      ?string|null                 $nick                         The nickname of the member.
- * @property-read string                       $displayname                  The nickname or display name with optional discriminator of the member.
- * @property      ?string|null                 $avatar                       The avatar URL of the member or null if member has no guild avatar.
- * @property      ?string|null                 $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
- * @property      ExCollectionInterface|Role[] $roles                        A collection of Roles that the member has.
- * @property      Carbon|null                  $joined_at                    A timestamp of when the member joined the guild.
- * @property      Carbon|null                  $premium_since                When the user started boosting the server.
- * @property      bool                         $deaf                         Whether the member is deaf.
- * @property      bool                         $mute                         Whether the member is mute.
- * @property      bool|null                    $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
- * @property      RolePermission|null          $permissions                  Total permissions of the member in the channel, including overwrites, returned when in the interaction object.
- * @property      Carbon|null                  $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
- * @property      int                          $flags                        Guild member flags represented as a bit set, defaults to `0`.
- * @property      string|null                  $guild_id                     The unique identifier of the guild that the member belongs to.
- * @property-read Guild|null                   $guild                        The guild that the member belongs to.
+ * @property      ?User|null                         $user                         The user part of the member.
+ * @property-read string|null                        $username                     The username of the member.
+ * @property      ?string|null                       $nick                         The nickname of the member.
+ * @property-read string                             $displayname                  The nickname or display name with optional discriminator of the member.
+ * @property      ?string|null                       $avatar                       The avatar URL of the member or null if member has no guild avatar.
+ * @property-read string|null                        $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
+ * @property      ?string|null                       $banner                       The guild banner's URL of the member or null if the member has no guild banner.
+ * @property-read string|null                        $banner_hash                  The guild banner hash of the member or null if the member has no guild banner.
+ * @property      ExCollectionInterface<Role>|Role[] $roles                        A collection of Roles that the member has.
+ * @property      ?Carbon|null                       $joined_at                    A timestamp of when the member joined the guild.
+ * @property      ?Carbon|null                       $premium_since                When the user started boosting the server.
+ * @property      bool                               $deaf                         Whether the member is deaf.
+ * @property      bool                               $mute                         Whether the member is mute.
+ * @property      int                                $flags                        Guild member flags represented as a bit set, defaults to `0`.
+ * @property      bool|null                          $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
+ * @property      RolePermission|null                $permissions                  Total permissions of the member in the channel, including overwrites, returned when in the interaction object.
+ * @property      ?Carbon|null                       $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
+ * @property-read string|null                        $avatar_decoration            The member's guild avatar decoration URL.
+ * @property-read string|null                        $avatar_decoration_hash       The member's guild avatar decoration hash.
+ * @property      ?AvatarDecorationData|null         $avatar_decoration_data       Data for the member's guild avatar decoration.
  *
- * @property      string                           $id            The unique identifier of the member.
- * @property      string                           $status        The status of the member.
- * @property-read Activity                         $game          The game the member is playing.
- * @property      ExCollectionInterface|Activity[] $activities    User's current activities.
- * @property      ClientStatus                     $client_status Current client status.
+ * @property      string|null $guild_id The unique identifier of the guild that the member belongs to.
+ * @property-read Guild|null  $guild    The guild that the member belongs to.
+ *
+ * @property      string                                     $id            The unique identifier of the member.
+ * @property      string                                     $status        The status of the member.
+ * @property-read Activity                                   $game          The game the member is playing.
+ * @property      ExCollectionInterface<Activity>|Activity[] $activities    User's current activities.
+ * @property      ClientStatus                               $client_status Current client status.
  *
  * @method PromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
@@ -101,15 +107,17 @@ class Member extends Part implements Stringable
         'user',
         'nick',
         'avatar',
+        'banner',
         'roles',
         'joined_at',
         'premium_since',
         'deaf',
         'mute',
+        'flags',
         'pending',
         'permissions',
         'communication_disabled_until',
-        'flags',
+        'avatar_decoration_data',
 
         // partial
         'guild_id',
@@ -220,7 +228,9 @@ class Member extends Part implements Stringable
         }
 
         // jake plz
-        if ($this->discord->id == $this->id) {
+        if ($this->discord->id === $this->id) {
+            $this->discord->getLogger()->warning('Modifying the bot member nickname via Member::setNickname is deprecated. Use MemberRepository::modifyCurrentMember instead.');
+
             return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $payload, $headers);
         }
 
@@ -243,8 +253,8 @@ class Member extends Part implements Stringable
     /**
      * Moves the member to another voice channel.
      *
-     * @param Channel|?string $channel The channel to move the member to.
-     * @param string|null     $reason  Reason for Audit Log.
+     * @param Channel|string $channel The channel to move the member to.
+     * @param string|null    $reason  Reason for Audit Log.
      *
      * @return PromiseInterface<self>
      */
@@ -293,6 +303,11 @@ class Member extends Part implements Stringable
                     return reject(new NoPermissionsException("You do not have permission to add member role in the guild {$guild->id}."));
                 }
             }
+            if ($botHighestRole = $guild->roles->getCurrentMemberHighestRole()) {
+                if ($botHighestRole->comparePosition($this) <= 0) {
+                    return reject(new NoPermissionsException("The bot's highest role is not higher than the role {$this->id} in guild {$this->guild_id}."));
+                }
+            }
         }
 
         $headers = [];
@@ -332,6 +347,11 @@ class Member extends Part implements Stringable
                     return reject(new NoPermissionsException("You do not have permission to remove member role in the guild {$guild->id}."));
                 }
             }
+            if ($botHighestRole = $guild->roles->getCurrentMemberHighestRole()) {
+                if ($botHighestRole->comparePosition($this) <= 0) {
+                    return reject(new NoPermissionsException("The bot's highest role is not higher than the role {$this->id} in guild {$this->guild_id}."));
+                }
+            }
         }
 
         $headers = [];
@@ -352,8 +372,8 @@ class Member extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-member
      *
-     * @param ExCollectionInterface|Role[]|string[] $roles  The roles to set to the member.
-     * @param string|null                           $reason Reason for Audit Log.
+     * @param ExCollectionInterface<Role|string>|Role[]|string[] $roles  The roles to set to the member.
+     * @param string|null                                        $reason Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing manage_roles permission.
      *
@@ -460,7 +480,7 @@ class Member extends Part implements Stringable
         $roles = [];
 
         // If this member is the guild owner
-        if ($guild->owner_id == $this->id) {
+        if ($guild->owner_id === $this->id) {
             // Add administrator permission
             $bitwise = BigInt::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']);
         } else {
@@ -631,13 +651,13 @@ class Member extends Part implements Stringable
      */
     protected function getGameAttribute(): ?Activity
     {
-        return $this->activities->get('type', Activity::TYPE_GAME);
+        return $this->activities->get('type', Activity::TYPE_PLAYING);
     }
 
     /**
      * Gets the activities attribute.
      *
-     * @return ExCollectionInterface|Activity[]
+     * @return ExCollectionInterface<Activity>|Activity[]
      */
     protected function getActivitiesAttribute(): ExCollectionInterface
     {
@@ -655,7 +675,7 @@ class Member extends Part implements Stringable
             return $this->factory->part(ClientStatus::class, [], true);
         }
 
-        return $this->factory->part(ClientStatus::class, (array) $this->attributes['client_status'], true);
+        return $this->attributePartHelper('client_status', ClientStatus::class);
     }
 
     /**
@@ -665,7 +685,18 @@ class Member extends Part implements Stringable
      */
     protected function getIdAttribute(): string
     {
-        return $this->attributes['id'] ?? $this->attributes['user']->id;
+        if (isset($this->attributes['id'])) {
+            return $this->attributes['id'];
+        }
+
+        if ($this->user) {
+            $this->attributes['id'] = $this->user->id;
+
+            return $this->user->id;
+        }
+
+        // The field `user` won't be included in the member object attached to MESSAGE_CREATE and MESSAGE_UPDATE gateway events.
+        return '';
     }
 
     /**
@@ -693,15 +724,32 @@ class Member extends Part implements Stringable
     /**
      * Returns the user attribute.
      *
+     * The field `user` won't be included in the member object attached to MESSAGE_CREATE and MESSAGE_UPDATE gateway events.
+     *
      * @return User|null The user that owns the member.
      */
     protected function getUserAttribute(): ?User
     {
-        if ($user = $this->discord->users->get('id', $this->id)) {
-            return $user;
+        if (isset($this->attributes['id'])) {
+            if ($user = $this->discord->users->get('id', $this->attributes['id'])) {
+                $this->attributes['user'] = $user;
+
+                return $user;
+            }
         }
 
-        return $this->attributePartHelper('user', User::class);
+        if (isset($this->attributes['user'])) {
+            return (function () {
+                if (! $this->attributes['user'] instanceof User) {
+                    $this->attributes['user'] = $this->createOf(User::class, ((array) $this->attributes['user']));
+                    $this->attributes['id'] = $this->attributes['user']->id;
+                }
+
+                return $this->attributes['user'];
+            })();
+        }
+
+        return null;
     }
 
     /**
@@ -717,7 +765,7 @@ class Member extends Part implements Stringable
     /**
      * Returns the roles attribute.
      *
-     * @return ExCollectionInterface<?Role> A collection of roles the member is in. null role only contains ID in the collection.
+     * @return ExCollectionInterface<Role>|Role[] A collection of roles the member is in. null role only contains ID in the collection.
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {
@@ -767,9 +815,9 @@ class Member extends Part implements Stringable
         }
 
         if (isset($format)) {
-            static $allowed = ['png', 'jpg', 'webp', 'gif'];
-
-            if (! in_array(strtolower($format), $allowed)) {
+            static $allowed = ['png', 'jpg', 'jpeg', 'webp', 'gif'];
+            $format = strtolower($format);
+            if (! in_array($format, $allowed)) {
                 $format = 'webp';
             }
         } elseif (strpos($this->attributes['avatar'], 'a_') === 0) {
@@ -778,17 +826,64 @@ class Member extends Part implements Stringable
             $format = 'webp';
         }
 
+        // Clamp size to allowed powers of two between 16 and 4096
+        $size = max(16, min(4096, $size));
+        $size = 2 ** (int) round(log($size, 2));
+
         return "https://cdn.discordapp.com/guilds/{$this->guild_id}/users/{$this->id}/avatars/{$this->attributes['avatar']}.{$format}?size={$size}";
     }
 
     /**
      * Returns the guild avatar hash for the member.
      *
-     * @return ?string|null The member avatar's hash or null.
+     * @return string|null The member avatar's hash or null.
      */
     protected function getAvatarHashAttribute(): ?string
     {
         return $this->attributes['avatar'] ?? null;
+    }
+
+    /**
+     * Returns the guild banner URL for the member.
+     *
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
+     *
+     * @return string|null The URL to the member banner or null.
+     */
+    protected function getBannerAttribute(?string $format = null, int $size = 1024): ?string
+    {
+        if (! isset($this->attributes['banner'])) {
+            return null;
+        }
+
+        if (isset($format)) {
+            static $allowed = ['png', 'jpg', 'jpeg', 'webp', 'gif'];
+            $format = strtolower($format);
+            if (! in_array($format, $allowed)) {
+                $format = 'webp';
+            }
+        } elseif (strpos($this->attributes['banner'], 'a_') === 0) {
+            $format = 'gif';
+        } else {
+            $format = 'webp';
+        }
+
+        // Clamp size to allowed powers of two between 16 and 4096
+        $size = max(16, min(4096, $size));
+        $size = 2 ** (int) round(log($size, 2));
+
+        return "https://cdn.discordapp.com/guilds/{$this->guild_id}/users/{$this->id}/banners/{$this->attributes['banner']}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the guild banner hash for the member.
+     *
+     * @return string|null The member's banner hash or null.
+     */
+    protected function getBannerHashAttribute(): ?string
+    {
+        return $this->attributes['banner'] ?? null;
     }
 
     /**
@@ -833,6 +928,51 @@ class Member extends Part implements Stringable
     }
 
     /**
+     * Returns the member's guild avatar decoration URL for the client.
+     *
+     * @param string|null $format The image format. (Only 'png' is allowed)
+     * @param int         $size   The size of the image.
+     *
+     * @return string|null The URL to the clients avatar decoration.
+     */
+    public function getAvatarDecorationAttribute(?string $format = 'png', int $size = 288): ?string
+    {
+        if (! isset($this->attributes['avatar_decoration_data'])) {
+            return null;
+        }
+
+        // Clamp size to allowed powers of two between 16 and 4096
+        $size = max(16, min(4096, $size));
+        $size = 2 ** (int) round(log($size, 2));
+
+        if (! $asset = $this->avatar_decoration_data->asset ?? null) {
+            return null;
+        }
+
+        return "https://cdn.discordapp.com/avatar-decoration-presets/{$asset}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the avatar decoration hash for the member.
+     *
+     * @return ?string The member's guild avatar decoration's hash.
+     */
+    public function getAvatarDecorationHashAttribute(): ?string
+    {
+        return $this->avatar_decoration_data->asset ?? null;
+    }
+
+    /**
+     * Returns the avatar decoration data for the member.
+     *
+     * @return AvatarDecorationData|null
+     */
+    protected function getAvatarDecorationDataAttribute(): ?AvatarDecorationData
+    {
+        return $this->attributePartHelper('avatar_decoration_data', AvatarDecorationData::class);
+    }
+
+    /**
      * Returns the voicechannel of the member.
      *
      * @return Channel|null
@@ -862,6 +1002,42 @@ class Member extends Part implements Stringable
         return [
             'roles' => array_values($this->attributes['roles']),
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return parent::save();
+        }
+
+        /** @var Guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        if ($this->id === $this->discord->id) {
+            $data = [];
+            if ($this->nick) {
+                $data['nick'] = $this->nick;
+            }
+            if ($this->banner_hash) {
+                $data['banner'] = $this->banner_hash;
+            }
+            if ($this->avatar_hash) {
+                $data['avatar'] = $this->avatar_hash;
+            }
+            if ($this->bio) {
+                $data['bio'] = $this->bio;
+            }
+
+            return $guild->members->modifyCurrentMember($guild, $data, $reason);
+        }
+
+        // @todo Add more permission checks
+        // @link https://discord.com/developers/docs/resources/guild#modify-guild-member
+
+        return $guild->members->save($this, $reason);
     }
 
     /**

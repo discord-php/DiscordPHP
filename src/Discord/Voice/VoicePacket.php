@@ -18,20 +18,33 @@ namespace Discord\Voice;
  *
  * Huge thanks to Austin and Michael from JDA for the constants and audio
  * packets. Check out their repo:
- * https://github.com/DV8FromTheWorld/JDA
+ * https://github.com/discord-jda/JDA
  *
  * @since 3.2.0
  */
 class VoicePacket
 {
     public const RTP_HEADER_BYTE_LENGTH = 12;
+    public const AUTH_TAG_LENGTH = 16;
 
-    public const RTP_VERSION_PAD_EXTEND_INDEX = 0;
+    /**
+     * Bit index 0 and 1 represent the RTP Protocol version used. Discord uses the latest RTP protocol version, 2.
+     * Bit index 2 represents whether or not we pad. Opus uses an internal padding system, so RTP padding is not used.
+     * Bit index 3 represents if we use extensions.
+     * Bit index 4 to 7 represent the CC or CSRC count. CSRC is Combined SSRC.
+     */
     public const RTP_VERSION_PAD_EXTEND = 0x80;
-
-    public const RTP_PAYLOAD_INDEX = 1;
+    /**
+     * This is Discord's RTP Profile Payload type,
+     * which is the same as Opus audio RTP stream's default payload type of 120 (0x78 & 0x7F).
+     *
+     * @link https://www.opus-codec.org/docs/opus-tools/opusrtp.html
+     * @link https://datatracker.ietf.org/doc/html/rfc3551
+     */
     public const RTP_PAYLOAD_TYPE = 0x78;
 
+    public const RTP_VERSION_PAD_EXTEND_INDEX = 0;
+    public const RTP_PAYLOAD_INDEX = 1;
     public const SEQ_INDEX = 2;
     public const TIMESTAMP_INDEX = 4;
     public const SSRC_INDEX = 8;
@@ -60,7 +73,7 @@ class VoicePacket
     /**
      * The packet timestamp.
      *
-     * @var int The packet timestamp.
+     * @var float The packet timestamp.
      */
     protected $timestamp;
 
@@ -70,11 +83,11 @@ class VoicePacket
      * @param string      $data       The Opus data to encode.
      * @param int         $ssrc       The client SSRC value.
      * @param int         $seq        The packet sequence.
-     * @param int         $timestamp  The packet timestamp.
-     * @param bool        $encryption Whether the packet should be encrypted.
-     * @param string|null $key        The encryption key.
+     * @param float       $timestamp  The packet timestamp.
+     * @param bool        $encryption (Deprecated) Whether the packet should be encrypted.
+     * @param string|null $key        (Deprecated) The encryption key.
      */
-    public function __construct(string $data, int $ssrc, int $seq, int $timestamp, bool $encryption = false, ?string $key = null)
+    public function __construct(string $data, int $ssrc, int $seq, float $timestamp, bool $encryption = false, ?string $key = null)
     {
         $this->ssrc = $ssrc;
         $this->seq = $seq;
@@ -88,20 +101,67 @@ class VoicePacket
     }
 
     /**
+     * Validates a VoicePacket for sending.
+     *
+     * @param VoicePacket $packet The packet to validate.
+     *
+     * @return bool Whether the packet is valid.
+     */
+    public static function validatePacket(VoicePacket $packet): bool
+    {
+        // RTP header must be 12 bytes
+        $header = $packet->getHeader();
+        if (strlen($header) !== VoicePacket::RTP_HEADER_BYTE_LENGTH) {
+            return false;
+        }
+
+        // Check RTP version and payload type
+        $unpacked = unpack('Cversion/Cpayload', $header);
+        if (($unpacked['version'] & 0xC0) !== 0x80) { // Version 2
+            return false;
+        }
+        if ($unpacked['payload'] !== VoicePacket::RTP_PAYLOAD_TYPE) {
+            return false;
+        }
+
+        // Sequence: 0–65535
+        $seq = $packet->getSequence();
+        if ($seq < 0 || $seq > 0xFFFF) {
+            return false;
+        }
+
+        // Timestamp: 0–4294967295
+        $timestamp = $packet->getTimestamp();
+        if ($timestamp < 0 || $timestamp > 0xFFFFFFFF) {
+            return false;
+        }
+
+        // SSRC: non-zero
+        $ssrc = $packet->getSSRC();
+        if ($ssrc === 0) {
+            return false;
+        }
+
+        // Opus payload: not empty, reasonable size
+        $data = $packet->getData();
+        if (empty($data) || strlen($data) < 10 || strlen($data) > 400) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Initilizes the buffer with no encryption.
      *
      * @param string $data The Opus data to encode.
      */
     protected function initBufferNoEncryption(string $data): void
     {
-        $data = (string) $data;
-        $header = $this->buildHeader();
+        $packet = (string) $this->buildHeader().$data;
 
-        $buffer = new Buffer(strlen((string) $header) + strlen($data));
-        $buffer->write((string) $header, 0);
-        $buffer->write($data, 12);
-
-        $this->buffer = $buffer;
+        $this->buffer = new Buffer(strlen($packet));
+        $this->buffer->write($packet, 0);
     }
 
     /**
@@ -109,34 +169,37 @@ class VoicePacket
      *
      * @param string $data The Opus data to encode.
      * @param string $key  The encryption key.
+     *
+     * @deprecated v10.41.0 Use `VoiceGroupCrypto::encryptRTPPacket()`
      */
     protected function initBufferEncryption(string $data, string $key): void
     {
-        $data = (string) $data;
-        $header = $this->buildHeader();
-        $nonce = new Buffer(24);
-        $nonce->write((string) $header, 0);
+        $header = (string) $this->buildHeader();
+        $encrypted = \sodium_crypto_secretbox($data, str_pad($header, 24, "\0"), $key);
 
-        $data = \sodium_crypto_secretbox($data, (string) $nonce, $key);
-
-        $this->buffer = new Buffer(strlen((string) $header) + strlen($data));
-        $this->buffer->write((string) $header, 0);
-        $this->buffer->write($data, 12);
+        $this->buffer = new Buffer(strlen($header) + strlen($encrypted));
+        $this->buffer->write($header.$encrypted, 0);
     }
 
     /**
      * Builds the header.
+     *
+     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure
      *
      * @return Buffer The header.
      */
     protected function buildHeader(): Buffer
     {
         $header = new Buffer(self::RTP_HEADER_BYTE_LENGTH);
-        $header[self::RTP_VERSION_PAD_EXTEND_INDEX] = pack('c', self::RTP_VERSION_PAD_EXTEND);
-        $header[self::RTP_PAYLOAD_INDEX] = pack('c', self::RTP_PAYLOAD_TYPE);
-        $header->writeShort($this->seq, self::SEQ_INDEX);
-        $header->writeInt($this->timestamp, self::TIMESTAMP_INDEX);
-        $header->writeInt($this->ssrc, self::SSRC_INDEX);
+
+        $header->write(pack(
+            'CCnNN',
+            self::RTP_VERSION_PAD_EXTEND,
+            self::RTP_PAYLOAD_TYPE,
+            $this->seq,
+            $this->timestamp,
+            $this->ssrc
+        ), 0);
 
         return $header;
     }
@@ -154,9 +217,9 @@ class VoicePacket
     /**
      * Returns the timestamp.
      *
-     * @return int The packet timestamp.
+     * @return float The packet timestamp.
      */
-    public function getTimestamp(): int
+    public function getTimestamp(): float
     {
         return $this->timestamp;
     }
@@ -201,8 +264,8 @@ class VoicePacket
     public static function make(string $data): VoicePacket
     {
         $n = new self('', 0, 0, 0);
-        $buff = new Buffer($data);
-        $n->setBuffer($buff);
+
+        $n->setBuffer(new Buffer($data));
 
         return $n;
     }
@@ -219,7 +282,7 @@ class VoicePacket
         $this->buffer = $buffer;
 
         $this->seq = $this->buffer->readShort(self::SEQ_INDEX);
-        $this->timestamp = $this->buffer->readInt(self::TIMESTAMP_INDEX);
+        $this->timestamp = (float) $this->buffer->readInt(self::TIMESTAMP_INDEX);
         $this->ssrc = $this->buffer->readInt(self::SSRC_INDEX);
 
         return $this;

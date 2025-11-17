@@ -160,10 +160,10 @@ function studly(string $string): string
  *
  * @since 5.0.12
  */
-function poly_strlen(string $str): int
+function poly_strlen(string $str, ?string $encoding = null): int
 {
     return function_exists('mb_strlen')
-        ? mb_strlen($str)
+        ? mb_strlen($str, $encoding)
         : strlen($str);
 }
 

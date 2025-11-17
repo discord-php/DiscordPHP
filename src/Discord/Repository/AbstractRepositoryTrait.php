@@ -59,7 +59,6 @@ trait AbstractRepositoryTrait
         __debugInfo as __debugInfo;
 
         // 'Parent' methods
-        __construct as __Collection____construct;
         get as __Collection__get;
         set as __Collection__set;
         pull as __Collection__pull;
@@ -158,7 +157,7 @@ trait AbstractRepositoryTrait
     {
         foreach ($response as $value) {
             $value = array_merge($this->vars, (array) $value);
-            $part = $this->factory->create($this->class, $value, true);
+            $part = $this->factory->part($this->class, $value, true);
             $items[$part->{$this->discrim}] = $part;
         }
 
@@ -195,6 +194,8 @@ trait AbstractRepositoryTrait
      * @return PromiseInterface<Part>
      *
      * @throws \Exception
+     *
+     * @deprecated v10.38.0 Use `Part->save($reason)` to ensure permissions are checked.
      */
     public function save(Part $part, ?string $reason = null): PromiseInterface
     {
@@ -231,10 +232,9 @@ trait AbstractRepositoryTrait
 
                     return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
                 default: // Create new part
-                    $newPart = $this->factory->create($this->class, (array) $response, true);
-                    $newPart->created = true;
+                    $newPart = $this->factory->part($this->class, (array) $response, true);
 
-                    return $this->cache->set($newPart->{$this->discrim}, $this->factory->create($this->class, (array) $response, true))->then(fn ($success) => $newPart);
+                    return $this->cache->set($newPart->{$this->discrim}, $newPart)->then(fn ($success) => $newPart);
             }
         });
     }
@@ -384,7 +384,7 @@ trait AbstractRepositoryTrait
             return null;
         }
 
-        if ($discrim == $this->discrim) {
+        if ($discrim === $this->discrim) {
             if ($item = $this->offsetGet($key)) {
                 return $item;
             }
@@ -740,7 +740,7 @@ trait AbstractRepositoryTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {

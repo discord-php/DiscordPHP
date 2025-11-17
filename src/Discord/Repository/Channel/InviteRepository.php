@@ -16,6 +16,7 @@ namespace Discord\Repository\Channel;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Invite;
 use Discord\Repository\AbstractRepository;
+use React\Promise\PromiseInterface;
 
 /**
  * Contains invites of a channel.
@@ -30,12 +31,6 @@ use Discord\Repository\AbstractRepository;
  * @method Invite|null first()
  * @method Invite|null last()
  * @method Invite|null find(callable $callback)
- *
- * @method Invite|null freshen(array $queryparams = [])
- *                                                      Optional Query Parameters:
- *                                                      - with_counts? (boolean): Whether the invite should contain approximate member counts.
- *                                                      - with_expiration? (boolean): Whether the invite should contain the expiration date.
- *                                                      - guild_scheduled_event_id? (snowflake): The guild scheduled event to include with the invite.
  */
 class InviteRepository extends AbstractRepository
 {
@@ -53,4 +48,21 @@ class InviteRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $class = Invite::class;
+
+    /**
+     * Freshens the repository cache.
+     *
+     * @param array        $queryparams              Query string params to add to the request (no validation)
+     * @param ?bool|null   $with_counts              Whether the invite should contain approximate member counts.
+     * @param ?string|null $guild_scheduled_event_id The guild scheduled event to include with the invite.
+     * @param ?bool|null   $with_permissions         Whether the invite should contain the `is_nickname_changeable` field.
+     *
+     * @return PromiseInterface<static>
+     *
+     * @throws \Exception
+     */
+    public function freshen(array $queryparams = []): PromiseInterface
+    {
+        return parent::freshen($queryparams);
+    }
 }

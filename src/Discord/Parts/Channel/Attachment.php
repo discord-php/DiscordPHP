@@ -18,7 +18,7 @@ use Discord\Parts\Part;
 /**
  * A message attachment.
  *
- * @link https://discord.com/developers/docs/resources/channel#attachment-object
+ * @link https://discord.com/developers/docs/resources/message#attachment-object
  *
  * @since 7.0.0
  *

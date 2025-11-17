@@ -89,7 +89,7 @@ class PollMedia extends Part
             return [
                 'id' => $id,
                 'name' => $name,
-                'animated' => $animated == 'a',
+                'animated' => $animated === 'a',
             ];
         })();
 

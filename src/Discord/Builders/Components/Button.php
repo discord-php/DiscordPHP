@@ -45,11 +45,17 @@ class Button extends Interactive
 {
     public const USAGE = ['Message'];
 
+    /** The most important or recommended action in a group of options. */
     public const STYLE_PRIMARY = 1;
+    /** Alternative or supporting actions. */
     public const STYLE_SECONDARY = 2;
+    /**	Positive confirmation or completion actions. */
     public const STYLE_SUCCESS = 3;
+    /** An action with irreversible consequences. */
     public const STYLE_DANGER = 4;
+    /** Navigates to a URL. */
     public const STYLE_LINK = 5;
+    /** Purchase. */
     public const STYLE_PREMIUM = 6;
 
     /**
@@ -289,9 +295,9 @@ class Button extends Interactive
             throw new \InvalidArgumentException('Invalid button style.');
         }
 
-        if ($this->style == self::STYLE_LINK && $style != self::STYLE_LINK) {
+        if ($this->style === self::STYLE_LINK && $style !== self::STYLE_LINK) {
             $this->url = null;
-        } elseif ($this->style != self::STYLE_LINK && $style == self::STYLE_LINK && $this->listener && $this->discord) {
+        } elseif ($this->style !== self::STYLE_LINK && $style === self::STYLE_LINK && $this->listener && $this->discord) {
             $this->setListener(null, $this->discord);
         }
 
@@ -329,8 +335,8 @@ class Button extends Interactive
      */
     public function setEmoji($emoji): self
     {
-        $this->emoji = (function () use ($emoji) {
-            if ($emoji === null) {
+        $this->emoji = (function ($emoji) {
+            if (! $emoji) {
                 return null;
             }
 
@@ -357,9 +363,9 @@ class Button extends Interactive
             return [
                 'id' => $id,
                 'name' => $name,
-                'animated' => $animated == 'a',
+                'animated' => $animated === 'a',
             ];
-        })();
+        })($emoji);
 
         return $this;
     }
@@ -376,7 +382,7 @@ class Button extends Interactive
      */
     public function setCustomId(?string $custom_id): self
     {
-        if ($this->style == Button::STYLE_LINK || $this->style == Button::STYLE_PREMIUM) {
+        if ($this->style === Button::STYLE_LINK || $this->style === Button::STYLE_PREMIUM) {
             throw new \LogicException('You cannot set the custom ID of a link or premium button.');
         }
 
@@ -400,7 +406,7 @@ class Button extends Interactive
      */
     public function setSkuId(?string $sku_id): self
     {
-        if ($this->style != Button::STYLE_PREMIUM) {
+        if ($this->style !== Button::STYLE_PREMIUM) {
             throw new \LogicException('You cannot set the SKU ID of a non-premium button.');
         }
 
@@ -421,7 +427,7 @@ class Button extends Interactive
      */
     public function setUrl(?string $url): self
     {
-        if ($this->style != Button::STYLE_LINK) {
+        if ($this->style !== Button::STYLE_LINK) {
             throw new \LogicException('You cannot set the URL of a non-link button.');
         }
 
@@ -473,7 +479,7 @@ class Button extends Interactive
      */
     public function setListener(?callable $callback, Discord $discord, bool $oneOff = false, int|float|null $timeout = null): self
     {
-        if ($this->style == Button::STYLE_LINK || $this->style == Button::STYLE_PREMIUM) {
+        if ($this->style === Button::STYLE_LINK || $this->style === Button::STYLE_PREMIUM) {
             throw new \LogicException('You cannot add a listener to a link or premium button.');
         }
 
@@ -488,7 +494,7 @@ class Button extends Interactive
 
         $this->discord = $discord;
 
-        if ($callback == null) {
+        if ($callback === null) {
             return $this;
         }
 
@@ -513,7 +519,7 @@ class Button extends Interactive
         $timer = null;
 
         $listener = function (Interaction $interaction) use ($callback, $oneOff, &$timer) {
-            if ($interaction->data->component_type != Component::TYPE_BUTTON || $interaction->data->custom_id != $this->custom_id) {
+            if ($interaction->data->component_type !== Component::TYPE_BUTTON || $interaction->data->custom_id !== $this->custom_id) {
                 return;
             }
 
@@ -621,7 +627,7 @@ class Button extends Interactive
             'style' => $this->style,
         ];
 
-        if ($this->style != Button::STYLE_PREMIUM) {
+        if ($this->style !== Button::STYLE_PREMIUM) {
             if (! isset($this->label)) {
                 throw new \DomainException('Non-Premium buttons must have a `label` field set.');
             }
@@ -633,11 +639,11 @@ class Button extends Interactive
 
             if (isset($this->custom_id)) {
                 $content['custom_id'] = $this->custom_id;
-            } elseif ($this->style != Button::STYLE_LINK) {
+            } elseif ($this->style !== Button::STYLE_LINK) {
                 throw new \DomainException('Buttons must have a `custom_id` field set.');
             }
 
-            if ($this->style == Button::STYLE_LINK) {
+            if ($this->style === Button::STYLE_LINK) {
                 if (! isset($this->url)) {
                     throw new \DomainException('Link buttons must have a `url` field set.');
                 }
@@ -645,7 +651,7 @@ class Button extends Interactive
             }
         }
 
-        if ($this->style == Button::STYLE_PREMIUM) {
+        if ($this->style === Button::STYLE_PREMIUM) {
             if (! isset($this->sku_id)) {
                 throw new \DomainException('Premium buttons must have a `sku_id` field set.');
             }

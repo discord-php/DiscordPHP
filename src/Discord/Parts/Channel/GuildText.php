@@ -11,13 +11,8 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Exceptions;
+namespace Discord\Parts\Channel;
 
-/**
- * Thrown when the installed DCA version is outdated.
- *
- * @since 3.2.0
- */
-class OutdatedDCAException extends \Exception
+class GuildText extends Channel
 {
 }

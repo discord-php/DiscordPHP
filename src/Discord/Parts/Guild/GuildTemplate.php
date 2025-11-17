@@ -15,11 +15,15 @@ namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use DomainException;
 use React\Promise\PromiseInterface;
 use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use function React\Promise\reject;
 
 /**
  * A Guild Template is a code that when used, creates a guild based on a
@@ -39,7 +43,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property      Carbon     $updated_at              When this template was last synced to the source guild.
  * @property      string     $source_guild_id         The ID of the guild this template is based on.
  * @property-read Guild|null $source_guild            The guild this template is based on.
- * @property      object     $serialized_source_guild The guild snapshot this template contains.
+ * @property      Guild      $serialized_source_guild The guild snapshot this template contains.
  * @property      ?bool      $is_dirty                Whether the template has unsynced changes.
  */
 class GuildTemplate extends Part implements Stringable
@@ -82,7 +86,17 @@ class GuildTemplate extends Part implements Stringable
             return $guild;
         }
 
-        return $this->createOf(Guild::class, $this->attributes['serialized_source_guild']);
+        return $this->attributePartHelper('serialized_source_guild', Guild::class);
+    }
+
+    /**
+     * Returns the serialized source guild attribute.
+     *
+     * @return Guild The guild snapshot this template contains.
+     */
+    protected function getSerializedSourceGuildAttribute(): Guild
+    {
+        return $this->attributePartHelper('serialized_source_guild', Guild::class);
     }
 
     /**
@@ -96,7 +110,7 @@ class GuildTemplate extends Part implements Stringable
             return $creator;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['creator'], true);
+        return $this->attributePartHelper('creator', User::class);
     }
 
     /**
@@ -208,6 +222,54 @@ class GuildTemplate extends Part implements Stringable
             'name' => $this->name,
             'description' => $this->description,
         ]);
+    }
+
+    /**
+     * Syncs the template to the guild's current state. Requires the MANAGE_GUILD permission.
+     *
+     * @link https://discord.com/developers/docs/resources/guild-template#sync-guild-template
+     *
+     * @return PromiseInterface<GuildTemplate>
+     *
+     * @since 10.40.0
+     */
+    public function sync(): PromiseInterface
+    {
+        if (! isset($this->attributes['source_guild_id'])) {
+            return reject(new DomainException('Cannot sync a guild template that is not associated with a guild.'));
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['source_guild_id']], true);
+
+        if ($botperms = $guild->getBotPermissions()) {
+            if (! $botperms->manage_guild) {
+                return reject(new NoPermissionsException("You do not have permission to save changes to the guild template {$this->code} in guild {$guild->id}."));
+            }
+        }
+
+        return $guild->templates->sync($this->code);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['source_guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['source_guild_id']], true);
+
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->manage_guild) {
+                    return reject(new NoPermissionsException("You do not have permission to save changes to the guild template {$this->code} in guild {$guild->id}."));
+                }
+            }
+
+            return $guild->templates->save($this, $reason);
+        }
+
+        return parent::save();
     }
 
     /**

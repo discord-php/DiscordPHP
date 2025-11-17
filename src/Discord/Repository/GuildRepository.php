@@ -18,6 +18,8 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\GuildPreview;
 use React\Promise\PromiseInterface;
 
+use function React\Promise\resolve;
+
 /**
  * Contains guilds that the client is in.
  *
@@ -39,11 +41,9 @@ class GuildRepository extends AbstractRepository
     protected $endpoints = [
         'all' => Endpoint::USER_CURRENT_GUILDS,
         'get' => Endpoint::GUILD,
-        'create' => Endpoint::GUILDS,
         'update' => Endpoint::GUILD,
         'delete' => Endpoint::GUILD,
         'leave' => Endpoint::USER_CURRENT_GUILD,
-        'preview' => Endpoint::GUILD_PREVIEW,
     ];
 
     /**
@@ -62,7 +62,7 @@ class GuildRepository extends AbstractRepository
      */
     public function leave($guild): PromiseInterface
     {
-        if ($guild instanceof Guild) {
+        if (! is_string($guild)) {
             $guild = $guild->id;
         }
 
@@ -85,11 +85,63 @@ class GuildRepository extends AbstractRepository
      */
     public function preview($guild_id): PromiseInterface
     {
-        if ($guild_id instanceof Guild) {
+        if (! is_string($guild_id)) {
             $guild_id = $guild_id->id;
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_PREVIEW, $guild_id))
-            ->then(fn ($data) => $data ? $this->factory->create(GuildPreview::class, $data, true) : null);
+            ->then(fn ($data) => $data ? $this->factory->part(GuildPreview::class, $data, true) : null);
+    }
+
+    /**
+     * Returns a list of partial guild objects the current user is a member of.
+     * For OAuth2, requires the guilds scope.
+     *
+     * This endpoint returns 200 guilds by default, which is the maximum number of guilds a non-bot user can join.
+     * Therefore, pagination is not needed for integrations that need to get a list of the users' guilds.
+     *
+     * @link https://discord.com/developers/docs/resources/user#get-current-user-guilds
+     *
+     * @param ?string|null $before      Get guilds before this guild ID.
+     * @param ?string|null $after       Get guilds after this guild ID.
+     * @param ?int|null    $limit       Max number of guilds to return (1-200). Defaults to 200.
+     * @param ?bool|null   $with_counts Include approximate member and presence counts in response. Defaults to false.
+     *
+     * @throws \InvalidArgumentException No valid parameters to query.
+     *
+     * @return PromiseInterface<self>
+     *
+     * @since 10.32.0
+     */
+    public function getCurrentUserGuilds(array $params): PromiseInterface
+    {
+        $allowed = ['before', 'after', 'limit', 'with_counts'];
+        $params = array_filter(
+            $params,
+            fn ($key) => in_array($key, $allowed, true),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        if (empty($params)) {
+            throw new \InvalidArgumentException('No valid parameters to query.');
+        }
+
+        return $this->http->get(Endpoint::USER_CURRENT_GUILDS, $params)->then(function ($response) {
+            $promise = resolve(true);
+
+            foreach ($response as $data) {
+                $promise = $promise
+                    ->then(fn ($success) => $this->cache->get($data->id))
+                    ->then(function ($part) use ($data) {
+                        if ($part !== null) {
+                            return $this->cache->set($data->id, $part->fill($data));
+                        }
+
+                        return $this->cache->set($data->id, $this->factory->part($this->class, $data, true));
+                    });
+            }
+
+            return $promise;
+        })->then(fn ($success) => $this);
     }
 }

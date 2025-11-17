@@ -13,8 +13,12 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * A Stage Instance holds information about a live stage.
@@ -35,6 +39,9 @@ use Discord\Parts\Part;
  */
 class StageInstance extends Part
 {
+    /** The Stage instance is visible publicly. (deprecated) */
+    public const PRIVACY_LEVEL_PUBLIC = 1;
+    /** The Stage instance is visible to only guild members. */
     public const PRIVACY_LEVEL_GROUP_ONLY = 2;
 
     /**
@@ -47,8 +54,10 @@ class StageInstance extends Part
         'topic',
         'privacy_level',
         'send_start_notification',
-        'discoverable_disabled', // deprecated
         'guild_scheduled_event_id',
+
+        // deprecated
+        'discoverable_disabled',
     ];
 
     /**
@@ -113,6 +122,26 @@ class StageInstance extends Part
             'topic' => $this->topic,
             'privacy_level' => $this->privacy_level,
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['channel_id'])) {
+            /** @var Channel $channel */
+            $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
+            if ($botperms = $channel->getBotPermissions()) {
+                if ($botperms->manage_channels && $botperms->mute_members && $botperms->move_members) {
+                    return reject(new NoPermissionsException("You do not have permission to moderate members in the channel {$channel->id}."));
+                }
+            }
+
+            return $channel->stage_instances->save($this, $reason);
+        }
+
+        return parent::save();
     }
 
     /**

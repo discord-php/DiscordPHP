@@ -24,14 +24,15 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\OverwriteRepository;
-use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Forum\Reaction;
 use Discord\Parts\Channel\Forum\Tag;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
+use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Repository\Channel\InviteRepository;
 use Discord\Repository\Channel\StageInstanceRepository;
 use Discord\Repository\Channel\ThreadRepository;
@@ -48,33 +49,39 @@ use function React\Promise\resolve;
  *
  * @link https://discord.com/developers/docs/resources/channel#channel-object
  *
+ * @todo Class will be abstract and deprecated for userland in v11.
+ *
  * @since 2.0.0 Refactored as Part
  * @since 1.0.0
  *
- * @property      int|null                     $position                           The position of the channel on the sidebar.
- * @property      ?array                       $permission_overwrites              Explicit permission overwrites for members and roles
- * @property      OverwriteRepository          $overwrites                         Permission overwrites
- * @property      ?string|null                 $topic                              The topic of the channel (0-4096 characters for forum channels, 0-1024 characters for all others).
- * @property      bool|null                    $nsfw                               Whether the channel is NSFW.
- * @property      int|null                     $bitrate                            The bitrate of the channel. Only for voice channels.
- * @property      int|null                     $user_limit                         The user limit of the channel. Max 99 for voice channels and 10000 for stage channels (0 refers to no limit).
- * @property      ExCollectionInterface|User[] $recipients                         A collection of all the recipients in the channel. Only for DM or group channels.
- * @property-read User|null                    $recipient                          The first recipient of the channel. Only for DM or group channels.
- * @property-read string|null                  $recipient_id                       The ID of the recipient of the channel, if it is a DM channel.
- * @property      ?string|null                 $icon                               Icon hash.
- * @property      string|null                  $application_id                     ID of the group DM creator if it is a bot.
- * @property      bool|null                    $managed                            Whether the channel is managed by an application via the `gdm.join` OAuth2 scope. Only for group DM channels.
- * @property      ?string|null                 $rtc_region                         Voice region id for the voice channel, automatic when set to null.
- * @property      int|null                     $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.
- * @property      int|null                     $default_auto_archive_duration      Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
- * @property      string|null                  $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on an application command interaction.
- * @property      int|null                     $flags                              Channel flags combined as a bitfield.
- * @property      ExCollectionInterface|Tag[]  $available_tags                     Set of tags that can be used in a forum channel, limited to 20.
- * @property      ?Reaction|null               $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.
- * @property      int|null                     $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a forum channel. This field is copied to the thread at creation time and does not live update.
- * @property      ?int|null                    $default_sort_order                 The default sort order type used to order posts in forum channels.
- * @property      int|null                     $default_forum_layout               The default layout type used to display posts in a forum channel. Defaults to `0`, which indicates a layout view has not been set by a channel admin.
+ * @property      string                             $id                                 The id of this channel.
+ * @property      int                                $type                               The type of channel.
+ * @property      string|null                        $guild_id                           The id of the guild (may be missing for some channel objects received over gateway guild dispatches).
+ * @property      int|null                           $position                           Sorting position of the channel.
+ * @property      Overwrite[]                        $permission_overwrites              Explicit permission overwrites for members and roles.
+ * @property      ?string|null                       $name                               The name of the channel (1-100 characters).
+ * @property      ?string|null                       $topic                              The topic of the channel (0-4096 characters for forum/media, 0-1024 for others).
+ * @property      bool|null                          $nsfw                               Whether the channel is NSFW.
+ * @property      int|null                           $bitrate                            The bitrate (in bits) of the voice or stage channel; min 8000.
+ * @property      int|null                           $user_limit                         The user limit of the voice or stage channel, max 99 for voice channels and 10,000 for stage channels (0 refers to no limit).
+ * @property      ExCollectionInterface<User>|User[] $recipients                         The recipients of the DM.
+ * @property-read User|null                          $recipient                          The first recipient of the DM (DM/group).
+ * @property-read string|null                        $recipient_id                       The ID of the recipient (DM).
+ * @property      ?string|null                       $icon                               Icon hash of the group DM.
+ * @property      string|null                        $application_id                     Application id of the group DM creator if bot-created.
+ * @property      bool|null                          $managed                            For group DM channels: whether the channel is managed by an application via the `gdm.join` OAuth2 scope.
+ * @property      ?string|null                       $rtc_region                         Voice region id for the voice channel, automatic when set to null.
+ * @property      int|null                           $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.
+ * @property      int|null                           $default_auto_archive_duration      Default duration for newly created threads, in minutes.
+ * @property      string|null                        $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the `resolved` data received on an interaction. This does not include implicit permissions, which may need to be checked separately.
+ * @property      int|null                           $flags                              Channel flags combined as a bitfield.
+ * @property      ExCollectionInterface<Tag>|Tag[]   $available_tags                     The set of tags that can be used in a `GUILD_FORUM` or a `GUILD_MEDIA` channel. Limited to 20.
+ * @property      ?Reaction|null                     $default_reaction_emoji             The emoji to show in the add reaction button on a thread in a `GUILD_FORUM` or a `GUILD_MEDIA` channel.
+ * @property      int|null                           $default_thread_rate_limit_per_user The initial `rate_limit_per_user` to set on newly created threads in a channel. This field is copied to the thread at creation time and does not live update.
+ * @property      ?int|null                          $default_sort_order                 The default sort order type used to order posts in `GUILD_FORUM` and `GUILD_MEDIA` channels. Defaults to `null`, which indicates a preferred sort order hasn't been set by a channel admin.
+ * @property      int|null                           $default_forum_layout               The default forum layout view used to display posts in `GUILD_FORUM` channels. Defaults to `0`, which indicates a layout view has not been set by a channel admin.
  *
+ * @property OverwriteRepository     $overwrites      Permission overwrites.
  * @property WebhookRepository       $webhooks        Webhooks in the channel.
  * @property ThreadRepository        $threads         Threads that belong to the channel.
  * @property InviteRepository        $invites         Invites in the channel.
@@ -119,19 +126,31 @@ class Channel extends Part implements Stringable
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_FORUM` */
     public const TYPE_FORUM = self::TYPE_GUILD_FORUM;
 
+    /** Discord chooses the quality for optimal performance. */
     public const VIDEO_QUALITY_AUTO = 1;
+    /** 720p. */
     public const VIDEO_QUALITY_FULL = 2;
 
     /** @deprecated 10.0.0 Use `Thread::FLAG_PINNED` */
     public const FLAG_PINNED = (1 << 1);
+    /** Whether a tag is required to be specified when creating a thread in a `GUILD_FORUM` or a `GUILD_MEDIA` channel. Tags are specified in the `applied_tags` field. */
     public const FLAG_REQUIRE_TAG = (1 << 4);
+    /** When set hides the embedded media download options. Available only for media channels. */
+    public const HIDE_MEDIA_DOWNLOAD_OPTIONS = (1 << 15);
 
+    /** Sort forum posts by activity. */
     public const SORT_ORDER_LATEST_ACTIVITY = 0;
+    /**	Sort forum posts by creation time (from most recent to oldest). */
     public const SORT_ORDER_CREATION_DATE = 1;
 
+    /** No default has been set for forum channel. */
     public const FORUM_LAYOUT_NOT_SET = 0;
+    /** Display posts as a list. */
     public const FORUM_LAYOUT_LIST_VIEW = 1;
-    public const FORUM_LAYOUT_GRID_VIEW = 2;
+    /** Display posts as a collection of tiles. */
+    public const FORUM_LAYOUT_GALLERY_VIEW = 2;
+    /** @deprecated 10.36.32 Use `Channel::FORUM_LAYOUT_GALLERY_VIEW` */
+    public const FORUM_LAYOUT_GRID_VIEW = self::FORUM_LAYOUT_GALLERY_VIEW;
 
     /**
      * @inheritDoc
@@ -178,7 +197,6 @@ class Channel extends Part implements Stringable
      */
     protected $repositories = [
         'overwrites' => OverwriteRepository::class,
-        'members' => MemberRepository::class,
         'messages' => MessageRepository::class,
         'webhooks' => WebhookRepository::class,
         'threads' => ThreadRepository::class,
@@ -223,7 +241,7 @@ class Channel extends Part implements Stringable
     /**
      * Gets the recipients attribute.
      *
-     * @return ExCollectionInterface A collection of recipients.
+     * @return ExCollectionInterface<User>|User[] A collection of recipients.
      */
     protected function getRecipientsAttribute(): ExCollectionInterface
     {
@@ -719,6 +737,35 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Delete a channel, or close a private message.
+     *
+     * Deleting a category does not delete its child channels; they will have their parent_id removed and a Channel Update Gateway event will fire for each of them.
+     * For Community guilds, the Rules or Guidelines channel and the Community Updates channel cannot be deleted.
+     *
+     * @link https://discord.com/developers/docs/resources/channel#deleteclose-channel
+     *
+     * @param string|null $reason Reason for Audit Log.
+     *
+     * @return PromiseInterface<Channel>
+     *
+     * @throws NoPermissionsException Missing manage_channels permission.
+     *
+     * @since 10.35.0
+     */
+    public function delete(?string $reason = null): PromiseInterface
+    {
+        if ($this->user_id !== $this->discord->id) {
+            if ($botperms = $this->getBotPermissions()) {
+                if (! $botperms->manage_channels) {
+                    return reject(new NoPermissionsException("You do not have permission to delete channel {$this->id}."));
+                }
+            }
+        }
+
+        return $this->messages->delete($this, $reason);
+    }
+
+    /**
      * Sets the permission overwrites attribute.
      *
      * @param ?array $overwrites
@@ -770,7 +817,7 @@ class Channel extends Part implements Stringable
     /**
      * Gets the available tags attribute.
      *
-     * @return ExCollectionInterface|Tag[] Available forum tags.
+     * @return ExCollectionInterface<Tag>|Tag[] Available forum tags.
      *
      * @since 7.4.0
      */
@@ -798,7 +845,7 @@ class Channel extends Part implements Stringable
      * @link https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
      *
      * @param array          $options                          Thread params.
-     * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in a news channel. Ignored in forum channel.
+     * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in an announcement channel. Ignored in forum channel.
      * @param string         $options['name']                  The name of the thread.
      * @param int|null       $options['auto_archive_duration'] Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
      * @param bool|null      $options['invitable']             Whether non-moderators can add other non-moderators to a thread; only available when creating a private thread.
@@ -847,7 +894,7 @@ class Channel extends Part implements Stringable
 
         $botperms = $this->getBotPermissions();
 
-        if ($this->type == self::TYPE_GUILD_FORUM) {
+        if ($this->type === self::TYPE_GUILD_FORUM) {
             $resolver
                 ->setDefined([
                     'message',
@@ -895,13 +942,13 @@ class Channel extends Part implements Stringable
                 }
             }
 
-            if ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
+            if ($this->type === self::TYPE_GUILD_ANNOUNCEMENT) {
                 if ($options['private']) {
-                    return reject(new \RuntimeException('You cannot start a private thread within a news channel.'));
+                    return reject(new \RuntimeException('You cannot start a private thread within an announcement channel.'));
                 }
 
                 $options['type'] = self::TYPE_ANNOUNCEMENT_THREAD;
-            } elseif ($this->type == self::TYPE_GUILD_TEXT) {
+            } elseif ($this->type === self::TYPE_GUILD_TEXT) {
                 $options['type'] = $options['private'] ? self::TYPE_PRIVATE_THREAD : self::TYPE_PUBLIC_THREAD;
             } else {
                 return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
@@ -952,6 +999,21 @@ class Channel extends Part implements Stringable
             return $threadPart;
         });
     }
+
+    /**
+     * Gets the members currently in the voice channel.
+     *
+     * @return ExCollectionInterface<VoiceStateUpdate>|VoiceStateUpdate[] Members in the voice channel.
+     */
+    public function getMembersAttribute(): ExCollectionInterface
+    {
+        if ($guild = $this->guild) {
+            return $guild->voice_states->filter(fn (VoiceStateUpdate $voice_state) => $voice_state->channel_id === $this->id);
+        }
+
+        return Collection::for(VoiceStateUpdate::class, 'user_id');
+    }
+
     /**
      * @inheritDoc
      *
@@ -1048,7 +1110,7 @@ class Channel extends Part implements Stringable
      */
     public function getUpdatableAttributes(): array
     {
-        if ($this->type == self::TYPE_GROUP_DM) {
+        if ($this->type === self::TYPE_GROUP_DM) {
             return [
                 'name' => $this->name,
                 'icon' => $this->icon,
@@ -1121,6 +1183,36 @@ class Channel extends Part implements Stringable
         }
 
         return $attr;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            if ($botperms = $this->getBotPermissions()) {
+                if (! $botperms->manage_channels) {
+                    return reject(new NoPermissionsException("You do not have permission to manage channels in the guild {$this->attributes['guild_id']}."));
+                }
+            }
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->channels->save($this, $reason);
+        } elseif ($this->created && $this->discord->private_channels->get('id', $this->id)) {
+            $data = [];
+            if ($this->name) {
+                $data['name'] = $this->name;
+            }
+            if ($this->icon) {
+                $data['icon'] = $this->icon;
+            }
+
+            return $this->discord->private_channels->modifyGroupDM($this, $data);
+        }
+
+        return parent::save($reason);
     }
 
     /**

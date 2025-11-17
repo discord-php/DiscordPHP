@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions;
 
-use Discord\Builders\Components\Component;
 use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\MessageBuilder;
 use Discord\Builders\ModalBuilder;
@@ -85,6 +84,38 @@ class Interaction extends Part
         Interaction::TYPE_MODAL_SUBMIT => ModalSubmit::class,
     ];
 
+    public const TYPE_PING = 1;
+    public const TYPE_APPLICATION_COMMAND = 2;
+    public const TYPE_MESSAGE_COMPONENT = 3;
+    public const TYPE_APPLICATION_COMMAND_AUTOCOMPLETE = 4;
+    public const TYPE_MODAL_SUBMIT = 5;
+
+    /** ACK a `Ping`. */
+    public const RESPONSE_TYPE_PONG = 1;
+    /** Respond to an interaction with a message. */
+    public const RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE = 4;
+    /** ACK an interaction and edit a response later, the user sees a loading state. */
+    public const RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = 5;
+    /** For components, ACK an interaction and edit the original message later; the user does not see a loading state. */
+    public const RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE = 6;
+    /** For components, edit the message the component was attached to. */
+    public const RESPONSE_TYPE_UPDATE_MESSAGE = 7;
+    /** Respond to an autocomplete interaction with suggested choices. */
+    public const RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8;
+    /** Respond to an interaction with a popup modal. */
+    public const RESPONSE_TYPE_MODAL = 9;
+    /**	Deprecated; respond to an interaction with an upgrade button, only available for apps with monetization enabled. */
+    public const RESPONSE_TYPE_PREMIUM_REQUIRED = 10;
+    /** Launch the Activity associated with the app. Only available for apps with Activities enabled. */
+    public const RESPONSE_TYPE_LAUNCH_ACTIVITY = 12;
+
+    /** Interaction can be used within servers. */
+    public const CONTEXT_TYPE_GUILD = 0;
+    /** Interaction can be used within DMs with the app's bot user. */
+    public const CONTEXT_TYPE_BOT_DM = 1;
+    /** Interaction can be used within Group DMs and DMs other than the app's bot user. */
+    public const CONTEXT_TYPE_PRIVATE_CHANNEL = 2;
+
     /**
      * @inheritDoc
      */
@@ -117,26 +148,6 @@ class Interaction extends Part
      * @var bool
      */
     protected $responded = false;
-
-    public const TYPE_PING = 1;
-    public const TYPE_APPLICATION_COMMAND = 2;
-    public const TYPE_MESSAGE_COMPONENT = 3;
-    public const TYPE_APPLICATION_COMMAND_AUTOCOMPLETE = 4;
-    public const TYPE_MODAL_SUBMIT = 5;
-
-    public const RESPONSE_TYPE_PONG = 1;
-    public const RESPONSE_TYPE_CHANNEL_MESSAGE_WITH_SOURCE = 4;
-    public const RESPONSE_TYPE_DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = 5;
-    public const RESPONSE_TYPE_DEFERRED_UPDATE_MESSAGE = 6;
-    public const RESPONSE_TYPE_UPDATE_MESSAGE = 7;
-    public const RESPONSE_TYPE_APPLICATION_COMMAND_AUTOCOMPLETE_RESULT = 8;
-    public const RESPONSE_TYPE_MODAL = 9;
-    public const RESPONSE_TYPE_PREMIUM_REQUIRED = 10;
-    public const RESPONSE_TYPE_LAUNCH_ACTIVITY = 12;
-
-    public const CONTEXT_TYPE_GUILD = 0;
-    public const CONTEXT_TYPE_BOT_DM = 1;
-    public const CONTEXT_TYPE_PRIVATE_CHANNEL = 2;
 
     /**
      * Returns true if this interaction has been internally responded.
@@ -178,11 +189,7 @@ class Interaction extends Part
             return $guild;
         }
 
-        if (isset($this->attributes['guild'])) {
-            return $this->factory->part(Guild::class, (array) $this->attributes['guild'], true);
-        }
-
-        return null;
+        return $this->attributePartHelper('guild', Guild::class);
     }
 
     /**
@@ -212,11 +219,7 @@ class Interaction extends Part
             return $channel;
         }
 
-        if (isset($this->attributes['channel'])) {
-            return $this->factory->part(Channel::class, (array) $this->attributes['channel'], true);
-        }
-
-        return null;
+        return $this->attributePartHelper('channel', Channel::class);
     }
 
     /**
@@ -236,7 +239,7 @@ class Interaction extends Part
                 }
             }
 
-            return $this->factory->part(Member::class, (array) $this->attributes['member'] + ['guild_id' => $this->guild_id], true);
+            return $this->attributePartHelper('member', Member::class, ['guild_id' => $this->guild_id]);
         }
 
         return null;
@@ -292,7 +295,7 @@ class Interaction extends Part
      */
     public function acknowledge(): PromiseInterface
     {
-        if ($this->type == self::TYPE_APPLICATION_COMMAND) {
+        if ($this->type === self::TYPE_APPLICATION_COMMAND) {
             return $this->acknowledgeWithResponse();
         }
 
@@ -453,7 +456,7 @@ class Interaction extends Part
      */
     public function sendFollowUpMessage(MessageBuilder $builder, bool $ephemeral = false): PromiseInterface
     {
-        if (! $this->responded && $this->type != self::TYPE_MESSAGE_COMPONENT) {
+        if (! $this->responded && $this->type !== self::TYPE_MESSAGE_COMPONENT) {
             return reject(new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.'));
         }
 
@@ -641,7 +644,7 @@ class Interaction extends Part
      */
     public function autoCompleteResult(array $choices): PromiseInterface
     {
-        if ($this->type != self::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE) {
+        if ($this->type !== self::TYPE_APPLICATION_COMMAND_AUTOCOMPLETE) {
             return reject(new \LogicException('You can only respond command option results with auto complete interactions.'));
         }
 
@@ -656,17 +659,17 @@ class Interaction extends Part
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
-     * @param string                  $title      The title of the popup modal, max 45 characters.
-     * @param string                  $custom_id  Developer-defined identifier for the component, max 100 characters.
-     * @param array|ComponentObject[] $components Between 1 and 5 (inclusive) components that make up the modal.
-     * @param callable|null           $submit     The function to call once modal is submitted.
+     * @param string            $title      The title of the popup modal, max 45 characters.
+     * @param string            $custom_id  Developer-defined identifier for the component, max 100 characters.
+     * @param ComponentObject[] $components Between 1 and 5 (inclusive) components that make up the modal.
+     * @param callable|null     $submit     The function to call once modal is submitted.
      *
      * @throws \LogicException  Interaction is Ping or Modal Submit.
      * @throws \LengthException Modal title is longer than 45 characters.
      *
      * @return PromiseInterface
      */
-    public function showModal(string $title, string $custom_id, array $components, ?callable $submit = null): PromiseInterface
+    public function showModal(string $title, string $custom_id, $components, ?callable $submit = null): PromiseInterface
     {
         if (in_array($this->type, [self::TYPE_PING, self::TYPE_MODAL_SUBMIT])) {
             return reject(new \LogicException('You cannot pop up a modal from a ping or modal submit interaction.'));
@@ -729,24 +732,29 @@ class Interaction extends Part
         $timer = null;
 
         $listener = function (Interaction $interaction) use ($custom_id, $submit, &$listener, &$timer) {
-            if ($interaction->type == self::TYPE_MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
-                $components = Collection::for(RequestComponent::class, 'custom_id');
-                foreach ($interaction->data->components as $container) {
-                    if ($container->type == Component::TYPE_LABEL) {
-                        $components->pushItem($container->component);
-                    } elseif ($container->type == Component::TYPE_ACTION_ROW) {
-                        foreach ($container->components as $component) {
-                            $components->pushItem($component);
-                        }
-                    }
-                }
-                $submit($interaction, $components);
-                $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
+            if (! $interaction instanceof ModalSubmit || $interaction->data->custom_id !== $custom_id) {
+                return;
+            }
 
-                /** @var ?TimerInterface $timer */
-                if ($timer !== null) {
-                    $this->discord->getLoop()->cancelTimer($timer);
+            $components = Collection::for(RequestComponent::class);
+            foreach ($interaction->data->components as $container) {
+                if ($container->components) { // e.g. ActionRow
+                    foreach ($container->components as $component) {
+                        /** @var RequestComponent $component */
+                        $components->pushItem($component);
+                    }
+                } elseif ($container->component) { // e.g. Label
+                    /** @var RequestComponent $component */
+                    $components->pushItem($component);
                 }
+            }
+
+            $submit($interaction, $components);
+            $this->discord->removeListener(Event::INTERACTION_CREATE, $listener);
+
+            /** @var ?TimerInterface $timer */
+            if ($timer instanceof TimerInterface) {
+                $this->discord->getLoop()->cancelTimer($timer);
             }
         };
 

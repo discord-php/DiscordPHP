@@ -25,7 +25,7 @@ trait DynamicPropertyMutatorTrait
      *
      * @return string|false Either a string if it is a method or false.
      */
-    private function checkForGetMutator(string $key)
+    protected function checkForGetMutator(string $key)
     {
         return method_exists($this, $str = 'get'.self::studly($key))
             ? $str
@@ -39,7 +39,7 @@ trait DynamicPropertyMutatorTrait
      *
      * @return string|false Either a string if it is a method or false.
      */
-    private function checkForSetMutator(string $key)
+    protected function checkForSetMutator(string $key)
     {
         return method_exists($this, $str = 'set'.self::studly($key))
             ? $str
@@ -54,7 +54,7 @@ trait DynamicPropertyMutatorTrait
      * @return mixed      Either the property if it exists or void.
      * @throws \Exception
      */
-    private function getProperty(string $key)
+    protected function getProperty(string $key)
     {
         if ($str = $this->checkForGetMutator($key)) {
             return $this->{$str}();
@@ -67,7 +67,7 @@ trait DynamicPropertyMutatorTrait
      * @param string $key   The name of the property.
      * @param mixed  $value The value of the property.
      */
-    private function setProperty(string $key, $value): void
+    protected function setProperty(string $key, $value): void
     {
         if ($str = $this->checkForSetMutator($key)) {
             $this->{$str}($value);

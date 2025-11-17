@@ -25,14 +25,14 @@ use Discord\Parts\User\User;
  *
  * @link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object
  *
- * @property      ?string             $target_id   ID of the affected entity (webhook, user, role, etc.).
- * @property      CollectionInterface $changes     Changes made to the target_id.
- * @property      ?string             $user_id     User or app that made the changes.
- * @property-read User|null           $user
- * @property      string              $id          ID of the entry.
- * @property      int                 $action_type Type of action that occurred.
- * @property      ?Options|null       $options     Additional info for certain action types.
- * @property      ?string|null        $reason      Reason for the change (1-512 characters).
+ * @property      ?string               $target_id   ID of the affected entity (webhook, user, role, etc.).
+ * @property      ExCollectionInterface $changes     Changes made to the target_id.
+ * @property      ?string               $user_id     User or app that made the changes.
+ * @property-read User|null             $user
+ * @property      string                $id          ID of the entry.
+ * @property      int                   $action_type Type of action that occurred.
+ * @property      ?Options|null         $options     Additional info for certain action types.
+ * @property      ?string|null          $reason      Reason for the change (1-512 characters).
  */
 class Entry extends Part
 {
@@ -171,8 +171,10 @@ class Entry extends Part
     public const HOME_SETTINGS_CREATE = 190;
     /** Guild Server Guide was updated. */
     public const HOME_SETTINGS_UPDATE = 191;
-
-    // AUDIT LOG ENTRY TYPES
+    /** Guild Profile was updated. */
+    public const GUILD_PROFILE_UPDATE = 211;
+    /** Guild migrated and bypassed slowmode permission. */
+    public const GUILD_MIGRATE_BYPASS_SLOWMODE_PERMISSION = 213;
 
     /**
      * @inheritDoc
@@ -216,6 +218,6 @@ class Entry extends Part
      */
     protected function getOptionsAttribute(): Options
     {
-        return $this->createOf(Options::class, $this->attributes['options'] ?? []);
+        return $this->attributePartHelper('options', Options::class);
     }
 }

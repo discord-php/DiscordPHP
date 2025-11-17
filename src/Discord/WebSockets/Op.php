@@ -101,6 +101,13 @@ class Op
     public const VOICE_CLIENT_CONNECT = 11;
     /** A client has disconnected from the voice channel. */
     public const VOICE_CLIENT_DISCONNECT = 13;
+    /** Undocumented. */
+    public const VOICE_CLIENT_UNKNOWN_15 = 15;
+    /** Undocumented. */
+    public const VOICE_CLIENT_UNKNOWN_18 = 18;
+    /** Undocumented. Assumed to be the platform type in which the user is. */
+    public const VOICE_CLIENT_PLATFORM = 20;
+
     /** A downgrade from the DAVE protocol is upcoming. */
     public const VOICE_DAVE_PREPARE_TRANSITION = 21;
     /** Execute a previously announced protocol transition. */
@@ -187,6 +194,12 @@ class Op
     public const CLOSE_VOICE_SERVER_CRASH = 4015;
     /** Unknown encryption mode. */
     public const CLOSE_VOICE_UNKNOWN_ENCRYPT = 4016;
+    /** You sent a malformed request. */
+    public const CLOSE_VOICE_BAD_REQUEST = 4020;
+    /** Disconnect due to rate limit exceeded. Should not reconnect. */
+    public const CLOSE_VOICE_DISCONNECTED_RATE_LIMITED = 4021;
+    /** Disconnect all clients due to call terminated (channel deleted, voice server changed, etc.). Should not reconnect. */
+    public const CLOSE_VOICE_DISCONNECTED_CALL_TERMINATED = 4022;
 
     /**
      * Returns the critical event codes that we should not reconnect after.

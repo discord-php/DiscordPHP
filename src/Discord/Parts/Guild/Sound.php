@@ -13,26 +13,34 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 use Stringable;
+
+use function React\Promise\reject;
 
 /**
  * An sound object represents a soundboard sound.
+ *
+ * Users can play soundboard sounds in voice channels, triggering a Voice Channel Effect Send Gateway event for users connected to the voice channel.
+ * There is a set of default sounds available to all users. Soundboard sounds can also be created in a guild; users will be able to use the sounds in the guild, and Nitro subscribers can use them in all guilds.
+ * Soundboard sounds in a set of guilds can be retrieved over the Gateway using Request Soundboard Sounds.
  *
  * @link https://discord.com/developers/docs/resources/soundboard
  *
  * @since 10.0.0
  *
- * @property      string     $name       The name of this sound.
- * @property      ?string    $sound_id   The identifier for this sound.
- * @property      float      $volume     The volume of this sound, from 0 to 1.
- * @property      ?string    $emoji_id   The identifier for this sound's custom emoji.
- * @property      ?string    $emoji_name The unicode character of this sound's standard emoji.
- * @property      ?string    $guild_id   The identifier of the guild this sound is in.
- * @property      bool       $available  Whether this sound can be used, may be false due to loss of Server Boosts.
- * @property      User|null  $user       The user who created this sound.
- * @property-read Guild|null $guild      The guild that owns the sound.
+ * @property      string       $name       The name of this sound.
+ * @property      string       $sound_id   The identifier for this sound.
+ * @property      float        $volume     The volume of this sound, from 0 to 1.
+ * @property      ?string|null $emoji_id   The identifier for this sound's custom emoji.
+ * @property      ?string|null $emoji_name The unicode character of this sound's standard emoji.
+ * @property      string|null  $guild_id   The identifier of the guild this sound is in.
+ * @property-read Guild|null   $guild      The guild that owns the sound.
+ * @property      bool         $available  Whether this sound can be used, may be false due to loss of Server Boosts.
+ * @property      User|null    $user       The user who created this sound.
  */
 class Sound extends Part implements Stringable
 {
@@ -75,7 +83,7 @@ class Sound extends Part implements Stringable
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        return $this->attributePartHelper('user', User::class);
     }
 
     /**
@@ -115,6 +123,36 @@ class Sound extends Part implements Stringable
             'emoji_id' => $this->emoji_id,
             'emoji_name' => $this->emoji_name,
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+            if ($botperms = $guild->getBotPermissions()) {
+                if ($this->created) {
+                    if ($this->user->id === $this->discord->id) {
+                        if (! $botperms->create_guild_expressions && ! $botperms->manage_guild_expressions) {
+                            return reject(new NoPermissionsException("You do not have permission to save changes to the sound {$this->id} in guild {$guild->id}."));
+                        }
+                    } else {
+                        if (! $botperms->manage_guild_expressions) {
+                            return reject(new NoPermissionsException("You do not have permission to save changes to the sound {$this->id} in guild {$guild->id}."));
+                        }
+                    }
+                } elseif (! $botperms->create_guild_expressions) {
+                    return reject(new NoPermissionsException("You do not have permission to save the sound {$this->id} in guild {$guild->id}."));
+                }
+            }
+
+            return $guild->sounds->save($this, $reason);
+        }
+
+        return parent::save($reason);
     }
 
     /**

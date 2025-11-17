@@ -34,16 +34,21 @@ use Discord\Repository\Monetization\SubscriptionRepository;
  */
 class SKU extends Part
 {
-    // SKU Types
-    public const DURABLE = 2;
-    public const CONSUMABLE = 3;
-    public const SUBSCRIPTION = 5;
-    public const SUBSCRIPTION_GROUP = 6;
+    /** Durable one-time purchase. */
+    public const TYPE_DURABLE = 2;
+    /** Consumable one-time purchase. */
+    public const TYPE_CONSUMABLE = 3;
+    /** Represents a recurring subscription. */
+    public const TYPE_SUBSCRIPTION = 5;
+    /** System-generated group for each SUBSCRIPTION SKU created. */
+    public const TYPE_SUBSCRIPTION_GROUP = 6;
 
-    // SKU Flags
-    public const AVAILABLE = 1 << 2;
-    public const GUILD_SUBSCRIPTION = 1 << 7;
-    public const USER_SUBSCRIPTION = 1 << 8;
+    /** SKU is available for purchase. */
+    public const FLAG_AVAILABLE = 1 << 2;
+    /** Recurring SKU that can be purchased by a user and applied to a single server. Grants access to every user in that server. */
+    public const FLAG_GUILD_SUBSCRIPTION = 1 << 7;
+    /** Recurring SKU purchased by a user for themselves. Grants access to the purchasing user in every server. */
+    public const FLAG_USER_SUBSCRIPTION = 1 << 8;
 
     /**
      * @inheritdoc

@@ -63,6 +63,8 @@ class GuildTemplateRepository extends AbstractRepository
      * @param string $template_code The guild template code.
      *
      * @return PromiseInterface<GuildTemplate>
+     *
+     * @since 10.40.0
      */
     public function sync(string $template_code): PromiseInterface
     {

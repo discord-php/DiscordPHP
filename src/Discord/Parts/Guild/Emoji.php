@@ -17,7 +17,10 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 use Stringable;
+
+use function React\Promise\reject;
 
 /**
  * An emoji object represents a custom emoji.
@@ -26,14 +29,14 @@ use Stringable;
  *
  * @since 4.0.2
  *
- * @property ?string                      $id             The identifier for the emoji.
- * @property string                       $name           The name of the emoji.
- * @property ExCollectionInterface|Role[] $roles          The roles that are allowed to use the emoji.
- * @property User|null                    $user           User that created this emoji.
- * @property bool|null                    $require_colons Whether the emoji requires colons to be triggered.
- * @property bool|null                    $managed        Whether this emoji is managed by a role.
- * @property bool|null                    $animated       Whether the emoji is animated.
- * @property bool|null                    $available      Whether this emoji can be used, may be false due to loss of Server Boosts.
+ * @property ?string|null                       $id             The identifier for the emoji.
+ * @property ?string|null                       $name           The name of the emoji (can be null only in reaction emoji objects).
+ * @property ExCollectionInterface<Role>|Role[] $roles          The roles that are all owed to use the emoji.
+ * @property User|null                          $user           User that created this emoji.
+ * @property bool|null                          $require_colons Whether the emoji requires colons to be triggered.
+ * @property bool|null                          $managed        Whether this emoji is managed by a role.
+ * @property bool|null                          $animated       Whether the emoji is animated.
+ * @property bool|null                          $available      Whether this emoji can be used, may be false due to loss of Server Boosts.
  *
  * @property      string|null $guild_id The identifier of the guild that owns the emoji.
  * @property-read Guild|null  $guild    The guild that owns the emoji.
@@ -70,7 +73,7 @@ class Emoji extends Part implements Stringable
     /**
      * Returns the roles attribute.
      *
-     * @return ExCollectionInterface<?Role> A collection of roles for the emoji.
+     * @return ExCollectionInterface<Role>|Role[] A collection of roles for the emoji.
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {
@@ -106,7 +109,7 @@ class Emoji extends Part implements Stringable
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        return $this->attributePartHelper('user', User::class);
     }
 
     /**
@@ -148,6 +151,32 @@ class Emoji extends Part implements Stringable
             'name' => $this->name,
             'roles' => $this->attributes['roles'] ?? null,
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+            if ($botperms = $guild->getBotPermissions()) {
+                if ($this->created) {
+                    if (! $botperms->create_guild_expressions) {
+                        return reject(new \DomainException("You do not have permission to create emojis in the guild {$guild->id}."));
+                    }
+                } elseif (! $botperms->manage_guild_expressions) {
+                    return reject(new \DomainException("You do not have permission to manage emojis in the guild {$guild->id}."));
+                } elseif ($this->user->id === $this->discord->id && ! $botperms->create_guild_expressions) {
+                    return reject(new \DomainException("You do not have permission to create or manage emojis in the guild {$guild->id}."));
+                }
+            }
+
+            return $guild->emojis->save($this, $reason);
+        }
+
+        return $this->discord->emojis->save($this, $reason);
     }
 
     /**

@@ -23,12 +23,13 @@ use Discord\Parts\Part;
  *
  * @since 10.19.0
  *
- * @property ?string|null $large_image See Activity Asset Image.
- * @property ?string|null $large_text  Text displayed when hovering over the large image of the activity.
- * @property ?string|null $large_url   URL that is opened when clicking on the large image.
- * @property ?string|null $small_image See Activity Asset Image.
- * @property ?string|null $small_text  Text displayed when hovering over the small image of the activity.
- * @property ?string|null $small_url   URL that is opened when clicking on the small image.
+ * @property ?string|null $large_image       See Activity Asset Image.
+ * @property ?string|null $large_text        Text displayed when hovering over the large image of the activity.
+ * @property ?string|null $large_url         URL that is opened when clicking on the large image.
+ * @property ?string|null $small_image       See Activity Asset Image.
+ * @property ?string|null $small_text        Text displayed when hovering over the small image of the activity.
+ * @property ?string|null $small_url         URL that is opened when clicking on the small image.
+ * @property ?string|null $nvite_cover_image Displayed as a banner on a Game Invite.
  */
 class Assets extends Part
 {
@@ -42,5 +43,6 @@ class Assets extends Part
         'small_image',
         'small_text',
         'small_url',
+        'invite_cover_image',
     ];
 }

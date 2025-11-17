@@ -35,7 +35,7 @@ class ThreadMembersUpdate extends Event
         // When the bot is added to a private thread, sometimes the `THREAD_MEMBER_UPDATE` event
         // comes before the `THREAD_CREATE` event, so we just don't emit this event if we don't have the
         // thread cached.
-        // @todo channels may be missing from cache
+        /** @todo channels may be missing from cache */
         /** @var Channel */
         foreach ($guild->channels as $channel) {
             /** @var ?Thread */

@@ -79,7 +79,7 @@ class StringSelect extends SelectMenu
 
         // didn't wanna use a hashtable here so that we can keep the order of options
         foreach ($this->options as $other) {
-            if ($other->getValue() == $value) {
+            if ($other->getValue() === $value) {
                 throw new \UnexpectedValueException('Another value already has the same value. These must not be the same.');
             }
         }

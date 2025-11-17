@@ -153,7 +153,7 @@ class Option extends Component
             return [
                 'id' => $id,
                 'name' => $name,
-                'animated' => $animated == 'a',
+                'animated' => $animated === 'a',
             ];
         })();
 

@@ -19,8 +19,6 @@ use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\Interactive;
 use Discord\Exceptions\FileNotFoundException;
-use Discord\Helpers\Collection;
-use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
@@ -108,7 +106,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Components to send with this message.
      *
-     * @var ExCollectionInterface<ComponentObject>|ComponentObject[]|null
+     * @var ComponentObject[]|null
      */
     protected $components;
 
@@ -431,31 +429,36 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function addComponent(Component ...$components): self
+    public function addComponent(Component ...$component): self
     {
+        $this->components ??= [];
+  
         foreach ($components as $component) {
             if (! $component instanceof ComponentObject) {
                 throw new \InvalidArgumentException('You can only add component objects to a message.');
             }
+          /*
+          if (! in_array($component::USAGE, ['Message'])) {
+              throw new \InvalidArgumentException('Invalid component type for messages.');
+          }
+          */
 
-            if ($component instanceof ComponentV2) {
-                $this->setIsComponentsV2Flag();
-            }
+          if ($component instanceof Interactive) {
+              $component = ActionRow::new()->addComponent($component);
+          }
 
-            if ($component instanceof Interactive) {
-                $component = ActionRow::new()->addComponent($component);
-            }
+          if ($component instanceof ComponentV2) {
+              $this->setV2Flag();
+          }
 
-            if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
-                $this->enforceV2Limits();
-            } else {
-                $this->enforceV1Limits($component);
-            }
-
-            $this->components ??= Collection::for(ComponentObject::class);
-
-            $this->components->pushItem($component);
+          if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
+              $this->enforceV2Limits();
+          } else {
+              $this->enforceV1Limits($component);
+          }
         }
+
+        $this->components[] = $component;
 
         return $this;
     }
@@ -489,7 +492,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     protected function enforceV2Limits(): void
     {
         if (isset($this->components)) {
-            if ($this->countTotalComponents($this->components) >= 40) {
+            if ($this->countTotalComponents() >= 40) {
                 throw new \OverflowException('You can only add 40 components to a v2 message');
             }
         }
@@ -503,7 +506,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @throws \OverflowException        If more than 5 components are added.
      * @throws \InvalidArgumentException If a component is not an ActionRow or is not properly wrapped.
      */
-    protected function enforceV1Limits(Component $component): void
+    protected function enforceV1Limits(ComponentObject $component): void
     {
         if (! $component instanceof ActionRow) {
             throw new \InvalidArgumentException('You can only add action rows as components to v1 messages. Put your other components inside an action row.');
@@ -527,7 +530,7 @@ class MessageBuilder extends Builder implements JsonSerializable
             fn ($component) => (is_array($component) && isset($component['components']) && is_array($component['components']))
                 ? 1 + $this->countTotalComponents($component['components'])
                 : 1,
-            $this->components->toArray() ?? []
+            $this->components ?? []
         ));
     }
 
@@ -544,8 +547,9 @@ class MessageBuilder extends Builder implements JsonSerializable
             return $this;
         }
 
-        if (($idx = $this->components->search($component)) !== false) {
-            $this->components->splice($idx, 1);
+        $index = array_search($component, $this->components, true);
+        if ($index !== false) {
+            array_splice($this->components, $index, 1);
         }
 
         return $this;
@@ -554,26 +558,16 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets the components of the message. Removes the existing components in the process.
      *
-     * @param ExCollectionInterface<ComponentObject>|ComponentObject[]|null $components New message components.
+     * @param ComponentObject[]|null $components New message components.
      *
      * @return $this
      */
     public function setComponents($components = null): self
     {
-        if ($components === null) {
-            unset($this->components);
+        $this->components = [];
 
-            return $this;
-        }
-
-        $this->components = Collection::for(ComponentObject::class);
-
-        foreach ($components as $component) {
-            $this->components->pushItem($component);
-        }
-
-        if (! $this->components->count()) {
-            unset($this->components);
+        foreach ($components ?? [] as $component) {
+            $this->components[] = $component;
         }
 
         return $this;
@@ -582,11 +576,11 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Returns all the components in the builder.
      *
-     * @return ExcollectionInterface<ComponentObject>|ComponentObject[]
+     * @return ComponentObject[]
      */
-    public function getComponents(): ExCollectionInterface
+    public function getComponents(): array
     {
-        return $this->components ?? Collection::for(ComponentObject::class);
+        return $this->components ?? [];
     }
 
     /**
@@ -882,6 +876,11 @@ class MessageBuilder extends Builder implements JsonSerializable
      * Sets or unsets the IS_COMPONENTS_V2 flag for the message.
      * Once a message has been sent with this flag, it can't be removed from that message.
      *
+     * When the `IS_COMPONENTS_V2` flag is set, any of the used `content`, `embeds`, `sticker_ids`, or `poll` fields must have their values reset to empty.
+     * For `content` and `poll` this is `null`.
+     * For `embeds` and `sticker_ids` this is `[]`.
+     * Failing to do this will result in a 400 BAD REQUEST response.
+     *
      * @deprecated 10.19.0 use `MessageBuilder::setIsComponentsV2Flag()` instead.
      *
      * @param  bool $enable
@@ -895,6 +894,11 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets or unsets the IS_COMPONENTS_V2 flag for the message.
      * Once a message has been sent with this flag, it can't be removed from that message.
+     *
+     * When the `IS_COMPONENTS_V2` flag is set, any of the used `content`, `embeds`, `sticker_ids`, or `poll` fields must have their values reset to empty.
+     * For `content` and `poll` this is `null`.
+     * For `embeds` and `sticker_ids` this is `[]`.
+     * Failing to do this will result in a 400 BAD REQUEST response.
      *
      * @since 10.19.0
      *
@@ -995,17 +999,23 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @param bool $payload Whether to include the JSON payload in the response.
      *
+     * @throws \RuntimeException If encoding the message to JSON fails.
+     *
      * @return Multipart
      */
     public function toMultipart(bool $payload = true): Multipart
     {
         $fields = [];
 
+        if (($jsonEncoded = json_encode($this)) === false) {
+            throw new \RuntimeException('Failed to encode message to JSON: '.json_last_error_msg());
+        }
+
         if ($payload) {
             $fields = [
                 [
                     'name' => 'payload_json',
-                    'content' => json_encode($this),
+                    'content' => $jsonEncoded,
                     'headers' => [
                         'Content-Type' => 'application/json',
                     ],
@@ -1083,8 +1093,8 @@ class MessageBuilder extends Builder implements JsonSerializable
             $empty = false;
         }
 
-        if (isset($this->components) && $this->components->count()) {
-            $body['components'] = $this->components->toArray(false);
+        if (isset($this->components)) {
+            $body['components'] = $this->components;
             $empty = false;
         }
 

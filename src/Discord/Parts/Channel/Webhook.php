@@ -15,6 +15,7 @@ namespace Discord\Parts\Channel;
 
 use Discord\Builders\MessageBuilder;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
@@ -23,9 +24,12 @@ use Discord\Repository\Channel\WebhookMessageRepository;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function React\Promise\reject;
+
 /**
- * Webhooks are a low-effort way to post messages to channels in Discord. They
- * do not require a bot user or authentication to use.
+ * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
+ *
+ * Apps can also subscribe to webhook events (i.e. outgoing webhooks) when events happen in Discord, which is detailed in the Webhook Events documentation.
  *
  * @link https://discord.com/developers/docs/resources/webhook#webhook-resource
  *
@@ -42,16 +46,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property      ?string      $avatar         The avatar of the webhook.
  * @property      string|null  $token          The token of the webhook.
  * @property      ?string      $application_id The bot/OAuth2 application that created this webhook.
- * @property      object|null  $source_guild   The partial guild of the channel that this webhook is following (returned for Channel Follower Webhooks).
- * @property      object|null  $source_channel The partial channel that this webhook is following (returned for Channel Follower Webhooks).
+ * @property      Guild|null   $source_guild   The partial guild of the channel that this webhook is following (returned for Channel Follower Webhooks).
+ * @property      Channel|null $source_channel The partial channel that this webhook is following (returned for Channel Follower Webhooks).
  * @property      string|null  $url            The url used for executing the webhook (returned by the webhooks OAuth2 flow).
  *
  * @property WebhookMessageRepository $messages
  */
 class Webhook extends Part
 {
+    /** Incoming Webhooks can post messages to channels with a generated token. */
     public const TYPE_INCOMING = 1;
+    /** Channel Follower Webhooks are internal webhooks used with Channel Following to post new messages into channels. */
     public const TYPE_CHANNEL_FOLLOWER = 2;
+    /** Application webhooks are webhooks used with Interactions. */
     public const TYPE_APPLICATION = 3;
 
     /**
@@ -85,13 +92,101 @@ class Webhook extends Part
      * @link https://discord.com/developers/docs/resources/webhook#execute-webhook
      *
      * @param MessageBuilder|array $data
-     * @param array                $queryparams Query string params to add to the request.
+     * @param array                $queryparams                    Query string params to add to the request.
+     * @param ?bool                $queryparams['wait']            Waits for server confirmation of message send before response, and returns the created message body (defaults to false; when false a message that is not saved does not return an error)
+     * @param ?string|int          $queryparams['thread_id']       Send a message to the specified thread within a webhook's channel. The thread will automatically be unarchived.
+     * @param ?bool                $queryparams['with_components'] Whether to respect the components field of the request. When enabled, allows application-owned webhooks to use all components and non-owned webhooks to use non-interactive components. (defaults to false)
      *
-     * @return PromiseInterface<void|Message> Message returned if wait parameter is set true.
+     * @return PromiseInterface<Message|void> Message returned if wait parameter is set true.
      */
     public function execute($data, array $queryparams = []): PromiseInterface
     {
         $endpoint = Endpoint::bind(Endpoint::WEBHOOK_EXECUTE, $this->id, $this->token);
+
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined(['wait', 'thread_id', 'with_components'])
+            ->setAllowedTypes('wait', 'bool')
+            ->setAllowedTypes('thread_id', ['string', 'int'])
+            ->setAllowedTypes('with_components', 'bool');
+
+        $options = $resolver->resolve($queryparams);
+
+        foreach ($options as $query => $param) {
+            $endpoint->addQuery($query, $param);
+        }
+
+        if ($data instanceof MessageBuilder && $data->requiresMultipart()) {
+            $multipart = $data->toMultipart();
+
+            $promise = $this->http->post($endpoint, (string) $multipart, $multipart->getHeaders());
+        } else {
+            $promise = $this->http->post($endpoint, $data);
+        }
+
+        if (! empty($queryparams['wait'])) {
+            return $promise->then(fn ($response) => $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true));
+        }
+
+        return $promise;
+    }
+
+    /**
+     * Executes a Slack-compatible webhook.
+     *
+     * Refer to Slack's documentation for more information. Discord does not support Slack's `channel`, `icon_emoji`, `mrkdwn`, or `mrkdwn_in` properties.
+     *
+     * @param ?string|int $queryparams['thread_id'] Id of the thread to send the message in.
+     * @param ?bool       $queryparams['wait']      Waits for server confirmation of message send before response (defaults to `true`; when `false` a message that is not saved does not return an error)
+     *
+     * @since 10.27.0
+     */
+    public function executeSlack($data, array $queryparams = []): PromiseInterface
+    {
+        $endpoint = Endpoint::bind(Endpoint::WEBHOOK_EXECUTE_SLACK, $this->id, $this->token);
+
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined(['wait', 'thread_id'])
+            ->setAllowedTypes('wait', 'bool')
+            ->setAllowedTypes('thread_id', ['string', 'int']);
+
+        $options = $resolver->resolve($queryparams);
+
+        foreach ($options as $query => $param) {
+            $endpoint->addQuery($query, $param);
+        }
+
+        if ($data instanceof MessageBuilder && $data->requiresMultipart()) {
+            $multipart = $data->toMultipart();
+
+            $promise = $this->http->post($endpoint, (string) $multipart, $multipart->getHeaders());
+        } else {
+            $promise = $this->http->post($endpoint, $data);
+        }
+
+        if (! empty($queryparams['wait'])) {
+            return $promise->then(fn ($response) => $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true));
+        }
+
+        return $promise;
+    }
+
+    /**
+     * Executes a GitHub-compatible webhook.
+     *
+     * Add a new webhook to your GitHub repo (in the repo's settings), and use this endpoint as the "Payload URL."
+     * You can choose what events your Discord channel receives by choosing the "Let me select individual events" option and selecting individual events for the new webhook you're configuring.
+     * The supported events are `commit_comment`, `create`, `delete`, `fork`, `issue_comment`, `issues`, `member`, `public`, `pull_request`, `pull_request_review`, `pull_request_review_comment`, `push`, `release`, `watch`, `check_run`, `check_suite`, `discussion`, and `discussion_comment`.
+     *
+     * @param ?string|int $queryparams['thread_id'] Id of the thread to send the message in.
+     * @param ?bool       $queryparams['wait']      Waits for server confirmation of message send before response (defaults to `true`; when `false` a message that is not saved does not return an error)
+     *
+     * @since 10.27.0
+     */
+    public function executeGitHub($data, array $queryparams = []): PromiseInterface
+    {
+        $endpoint = Endpoint::bind(Endpoint::WEBHOOK_EXECUTE_GITHUB, $this->id, $this->token);
 
         $resolver = new OptionsResolver();
         $resolver
@@ -211,7 +306,31 @@ class Webhook extends Part
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        return $this->attributePartHelper('user', User::class);
+    }
+
+    /**
+     * Gets the source guild attribute.
+     *
+     * @return Guild|null
+     *
+     * @since 10.23.0
+     */
+    protected function getSourceGuildAttribute(): ?Guild
+    {
+        return $this::attributePartHelper('source_guild', Guild::class);
+    }
+
+    /**
+     * Gets the source channel attribute.
+     *
+     * @return Channel|null
+     *
+     * @since 10.23.0
+     */
+    protected function getSourceChannelAttribute(): ?Channel
+    {
+        return $this::attributePartHelper('source_channel', Channel::class);
     }
 
     /**
@@ -258,6 +377,23 @@ class Webhook extends Part
             'channel_id' => $this->channel_id,
             'avatar' => $this->avatar,
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        /** @var Channel */
+        $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
+
+        if ($botperms = $channel->getBotPermissions()) {
+            if (! $botperms->manage_webhooks) {
+                return reject(new NoPermissionsException("You do not have permission to manage webhooks in the channel {$channel->id}."));
+            }
+        }
+
+        return $channel->webhooks->save($this, $reason);
     }
 
     /**

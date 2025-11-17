@@ -44,6 +44,6 @@ class StringSelectOption extends Part
 
     protected function getEmojiAttribute(): Emoji
     {
-        return $this->createOf(Emoji::class, $this->attributes['emoji'], true);
+        return $this->attributePartHelper('emoji', Emoji::class);
     }
 }

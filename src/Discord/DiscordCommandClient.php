@@ -74,12 +74,12 @@ class DiscordCommandClient extends Discord
             }
 
             $this->on('message', function ($message) {
-                if ($message->author->id == $this->id) {
+                if ($message->author->id === $this->id) {
                     return;
                 }
 
                 if ($withoutPrefix = $this->checkForPrefix($message->content)) {
-                    $args = str_getcsv($withoutPrefix, ' ');
+                    $args = str_getcsv($withoutPrefix, ' ', '"', '\\');
                     $command = array_shift($args);
 
                     if (null !== $command && $this->commandClientOptions['caseInsensitiveCommands']) {
@@ -142,7 +142,7 @@ class DiscordCommandClient extends Discord
                     if (! empty($this->aliases)) {
                         $aliasesString = '';
                         foreach ($this->aliases as $alias => $command) {
-                            if ($command != $commandString) {
+                            if ($command !== $commandString) {
                                 continue;
                             }
 
@@ -228,8 +228,8 @@ class DiscordCommandClient extends Discord
     protected function checkForPrefix(string $content): ?string
     {
         foreach ($this->commandClientOptions['prefixes'] as $prefix) {
-            if (substr($content, 0, strlen($prefix)) == $prefix) {
-                return substr($content, strlen($prefix));
+            if (substr($content, 0, poly_strlen($prefix)) === $prefix) {
+                return substr($content, poly_strlen($prefix));
             }
         }
 

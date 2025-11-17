@@ -31,13 +31,16 @@ use function React\Promise\resolve;
 /**
  * Represents a reaction emoji to a message by members(s).
  *
- * @link https://discord.com/developers/docs/resources/channel#reaction-object
+ * @link https://discord.com/developers/docs/resources/message#reaction-object
  *
  * @since 5.0.0
  *
- * @property int   $count Number of reactions.
- * @property bool  $me    Whether the current bot has reacted.
- * @property Emoji $emoji The emoji that was reacted with.
+ * @property int                  $count         Total number of times this emoji has been used to react (including super reacts).
+ * @property ReactionCountDetails $count_details Reaction count details object.
+ * @property bool                 $me            Whether the current user reacted using this emoji.
+ * @property bool                 $me_burst      Whether the current user super-reacted using this emoji.
+ * @property Emoji                $emoji         Emoji information.
+ * @property array                $burst_colors  HEX colors used for super reaction.
  *
  * @property      string         $channel_id The channel ID that the message belongs in.
  * @property-read Channel|Thread $channel    The channel that the message belongs to.
@@ -56,8 +59,11 @@ class Reaction extends Part
     protected $fillable = [
         'id', // internal
         'count',
+        'count_details',
         'me',
+        'me_burst',
         'emoji',
+        'burst_colors',
 
         // events only
         'channel_id',
@@ -106,9 +112,9 @@ class Reaction extends Part
         $delimitedCount = count($colonDelimiter);
         $emojiId = $emojiAnimated = null;
 
-        if ($delimitedCount == 2) { // Custom emoji name:id
+        if ($delimitedCount === 2) { // Custom emoji name:id
             [$emojiName, $emojiId] = $colonDelimiter;
-        } elseif ($delimitedCount == 3) { // Custom animated emoji a:name:id
+        } elseif ($delimitedCount === 3) { // Custom animated emoji a:name:id
             [$emojiAnimated, $emojiName, $emojiId] = $colonDelimiter;
         } else { // Standard emoji (or just have abnormal colon count)
             $emojiName = $value;
@@ -116,7 +122,7 @@ class Reaction extends Part
 
         $this->attributes['emoji']->id = $emojiId;
         $this->attributes['emoji']->name = $emojiName;
-        if ($emojiAnimated == 'a') {
+        if ($emojiAnimated === 'a') {
             $this->attributes['emoji']->animated = true;
         }
     }
@@ -142,7 +148,7 @@ class Reaction extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#get-reactions
      *
-     * @return PromiseInterface<Collection|User[]>
+     * @return PromiseInterface<ExCollectionInterface<User>|User[]>
      */
     public function getUsers(array $options = []): PromiseInterface
     {
@@ -185,7 +191,7 @@ class Reaction extends Part
      *
      * @see Message::getUsers()
      *
-     * @return PromiseInterface<Collection|User[]>
+     * @return PromiseInterface<ExCollectionInterface<User>|User[]>
      */
     public function getAllUsers(): PromiseInterface
     {
@@ -198,16 +204,16 @@ class Reaction extends Part
      * @param ExCollectionInterface $response The collection to accumulate users into.
      * @param mixed|null            $after    The user ID to paginate after, or null to start from the beginning.
      *
-     * @return PromiseInterface Resolves with the collection of users who reacted.
+     * @return PromiseInterface<ExCollectionInterface<User>|User[]> Resolves with the collection of users who reacted.
      */
     protected function __getUsers(ExCollectionInterface $response, $after = null): PromiseInterface
     {
         $options = ['limit' => 100];
-        if ($after != null) {
+        if ($after !== null) {
             $options['after'] = $after;
         }
 
-        return $this->getUsers($options)->then(function (Collection $users) use ($response) {
+        return $this->getUsers($options)->then(function (ExCollectionInterface $users) use ($response) {
             $last = null;
             foreach ($users as $user) {
                 $response->pushItem($user);
@@ -220,6 +226,16 @@ class Reaction extends Part
 
             return $this->__getUsers($response, $last);
         });
+    }
+
+    /**
+     * Gets the count details attribute.
+     *
+     * @return ReactionCountDetails
+     */
+    protected function getCountDetailsAttribute(): ReactionCountDetails
+    {
+        return $this->attributePartHelper('count_details', ReactionCountDetails::class);
     }
 
     /**
@@ -265,8 +281,7 @@ class Reaction extends Part
             }
         }
 
-        // @todo potentially slow
-        if ($channel = $this->discord->getChannel($this->channel_id)) {
+        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
             return $channel;
         }
 

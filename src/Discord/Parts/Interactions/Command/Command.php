@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Command;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use React\Promise\PromiseInterface;
 use Stringable;
 
 /**
@@ -38,19 +38,14 @@ class Command extends Part implements Stringable
 
     /** Slash commands; a text-based command that shows up when a user types / */
     public const CHAT_INPUT = 1;
-
     /** A UI-based command that shows up when you right click or tap on a user */
     public const USER = 2;
-
     /** A UI-based command that shows up when you right click or tap on a message */
     public const MESSAGE = 3;
-
     /** A UI-based command that represents the primary way to invoke an app's Activity */
     public const PRIMARY_ENTRY_POINT = 4;
-
     /** The app handles the interaction using an interaction token */
     public const APP_HANDLER = 1;
-
     /** Discord handles the interaction by launching an Activity and sending a follow-up message without coordinating with the app */
     public const DISCORD_LAUNCH_ACTIVITY = 2;
 
@@ -94,7 +89,7 @@ class Command extends Part implements Stringable
     /**
      * Gets the options attribute.
      *
-     * @return ExCollectionInterface|Option[] A collection of options.
+     * @return ExCollectionInterface<Option>|Option[] A collection of options.
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {
@@ -174,6 +169,21 @@ class Command extends Part implements Stringable
         }
 
         return $attr;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->commands->save($this, $reason);
+        }
+
+        return $this->discord->commands->save($this, $reason);
     }
 
     /**

@@ -172,7 +172,7 @@ class MessageReaction extends Part
             }
         }
 
-        return $this->attributes['message'] ?? null;
+        return $this->attributePartHelper('message', Message::class);
     }
 
     /**
@@ -202,11 +202,7 @@ class MessageReaction extends Part
             }
         }
 
-        if (isset($this->attributes['member'])) {
-            return $this->factory->part(Member::class, (array) $this->attributes['member'] + ['guild_id' => $this->guild_id], true);
-        }
-
-        return null;
+        return $this->attributePartHelper('member', Member::class, ['guild_id' => $this->guild_id]);
     }
 
     /**
@@ -236,7 +232,7 @@ class MessageReaction extends Part
     public function delete(?int $type = null): PromiseInterface
     {
         if ($type === null) {
-            if ($this->user_id == $this->discord->id) {
+            if ($this->user_id === $this->discord->id) {
                 $type = Message::REACT_DELETE_ME;
             } else {
                 $type = Message::REACT_DELETE_ID;

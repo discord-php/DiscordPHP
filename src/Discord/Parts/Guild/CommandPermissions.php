@@ -27,11 +27,11 @@ use Discord\Parts\Part;
  * @since 10.0.0 Refactored from Interactions\Command\Overwrite to Guild\CommandPermissions
  * @since 7.0.0
  *
- * @property      string                             $id             The id of the command or the application ID if no overwrites.
- * @property      string                             $application_id The id of the application the command belongs to.
- * @property      string                             $guild_id       The id of the guild.
- * @property-read Guild|null                         $guild
- * @property      ExCollectionInterface|Permission[] $permissions    The permissions for the command in the guild.
+ * @property      string                                         $id             The id of the command or the application ID if no overwrites.
+ * @property      string                                         $application_id The id of the application the command belongs to.
+ * @property      string                                         $guild_id       The id of the guild.
+ * @property-read Guild|null                                     $guild
+ * @property      ExCollectionInterface<Permission>|Permission[] $permissions    The permissions for the command in the guild.
  */
 class CommandPermissions extends Part
 {
@@ -58,7 +58,7 @@ class CommandPermissions extends Part
     /**
      * Gets the permissions attribute.
      *
-     * @return ExCollectionInterface|Permission[] A collection of permissions.
+     * @return ExCollectionInterface<Permission>|Permission[] A collection of permissions.
      */
     protected function getPermissionsAttribute(): ExCollectionInterface
     {

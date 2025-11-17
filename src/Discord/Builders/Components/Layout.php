@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Discord\Builders\Components;
 
 /**
+ * For organizing and structuring content (Action Rows, Sections, Containers).
+ *
  * @since 10.9.0
  */
 abstract class Layout extends ComponentObject

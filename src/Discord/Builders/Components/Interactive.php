@@ -13,7 +13,11 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use function Discord\poly_strlen;
+
 /**
+ * For user interactions (Buttons, Select Menus, Text Input).
+ *
  * @since 10.9.0
  */
 abstract class Interactive extends ComponentObject
@@ -32,5 +36,25 @@ abstract class Interactive extends ComponentObject
     protected function getId()
     {
         return null;
+    }
+
+    /**
+     * Sets the custom ID for the interactive component.
+     *
+     * @param string|null $custom_id
+     *
+     * @throws \LengthException If the custom ID is longer than 100 characters.
+     *
+     * @return $this
+     */
+    public function setCustomId(?string $custom_id): self
+    {
+        if (isset($custom_id) && poly_strlen($custom_id) > 100) {
+            throw new \LengthException('Custom ID must be maximum 100 characters.');
+        }
+
+        $this->custom_id = $custom_id;
+
+        return $this;
     }
 }

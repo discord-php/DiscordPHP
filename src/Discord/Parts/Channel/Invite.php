@@ -14,12 +14,17 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\Profile;
 use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\PromiseInterface;
 use Stringable;
+
+use function React\Promise\reject;
 
 /**
  * An invite to a Channel and Guild.
@@ -33,9 +38,10 @@ use Stringable;
  * @property string              $code                       The invite code.
  * @property Guild|null          $guild                      The partial guild that the invite is for.
  * @property string|null         $guild_id
- * @property Channel             $channel                    The partial channel that the invite is for.
+ * @property ?Channel|null       $channel                    The partial channel that the invite is for.
  * @property string|null         $channel_id
  * @property User|null           $inviter                    The user that created the invite.
+ * @property bool|null           $is_nickname_changeable     A member's ability to change their nickname by default, returned from the `GET /invites/<code>` endpoint when `with_permissions` is `true`
  * @property int|null            $target_type                The type of target for this voice channel invite.
  * @property User|null           $target_user                The user whose stream to display for this voice channel stream invite.
  * @property Application|null    $target_application         The partial embedded application to open for this voice channel embedded application invite.
@@ -44,6 +50,7 @@ use Stringable;
  * @property Carbon              $expires_at                 The expiration date of this invite.
  * @property ScheduledEvent|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
  * @property int                 $flags                      Guild invite flags for guild invites.
+ * @property Profile             $profile                    The guild profile.
  *
  * @property int|null    $uses       How many times the invite has been used.
  * @property int|null    $max_uses   How many times the invite can be used.
@@ -59,6 +66,12 @@ class Invite extends Part implements Stringable
     public const TYPE_GROUP_DM = 1;
     public const TYPE_FRIEND = 2;
 
+    public const TARGET_TYPE_STREAM = 1;
+    public const TARGET_TYPE_EMBEDDED_APPLICATION = 2;
+
+    /** This invite is a guest invite for a voice channel. */
+    public const FLAG_IS_GUEST_INVITE = 1 << 0;
+
     /**
      * @inheritDoc
      */
@@ -68,6 +81,7 @@ class Invite extends Part implements Stringable
         'guild',
         'channel',
         'inviter',
+        'is_nickname_changeable',
         'target_type',
         'target_user',
         'target_application',
@@ -75,6 +89,8 @@ class Invite extends Part implements Stringable
         'approximate_member_count',
         'expires_at',
         'guild_scheduled_event',
+        'flags',
+        'profile',
 
         // Extra metadata
         'uses',
@@ -87,11 +103,6 @@ class Invite extends Part implements Stringable
         'guild_id',
         'channel_id',
     ];
-
-    public const TARGET_TYPE_STREAM = 1;
-    public const TARGET_TYPE_EMBEDDED_APPLICATION = 2;
-
-    public const FLAG_IS_GUEST_INVITE = 1 << 0; // This invite is a guest invite for a voice channel
 
     /**
      * Returns the id attribute.
@@ -110,9 +121,11 @@ class Invite extends Part implements Stringable
      */
     protected function getGuildAttribute(): ?Guild
     {
-        $guildId = $this->guild_id;
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
 
-        if ($guildId && $guild = $this->discord->guilds->get('id', $guildId)) {
+        if ($guild = $this->discord->guilds->get('id', $this->attributes['guild_id'])) {
             return $guild;
         }
 
@@ -140,7 +153,7 @@ class Invite extends Part implements Stringable
     /**
      * Returns the channel attribute.
      *
-     * @return ?Channel The Channel that you have been invited to.
+     * @return Channel|null The Channel that you have been invited to.
      */
     protected function getChannelAttribute(): ?Channel
     {
@@ -151,17 +164,16 @@ class Invite extends Part implements Stringable
                 }
             }
 
-            // @todo potentially slow code
-            if ($channel = $this->discord->getChannel($channelId)) {
+            if ($channel = $this->discord->private_channels->get('id', $channelId)) {
                 return $channel;
             }
         }
 
-        if (isset($this->attributes['channel'])) {
-            return $this->factory->part(Channel::class, (array) $this->attributes['channel'] + ['guild_id' => $this->guild_id], true);
+        if ($channel = $this->attributePartHelper('channel', Channel::class, ['guild_id' => $this->guild_id])) {
+            $this->guild->channels->pushItem($channel);
         }
 
-        return null;
+        return $channel;
     }
 
     /**
@@ -197,7 +209,7 @@ class Invite extends Part implements Stringable
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['inviter'], true);
+        return $this->attributePartHelper('inviter', User::class);
     }
 
     /**
@@ -215,7 +227,7 @@ class Invite extends Part implements Stringable
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['target_user'], true);
+        return $this->attributePartHelper('target_user', User::class);
     }
 
     /**
@@ -257,7 +269,17 @@ class Invite extends Part implements Stringable
             }
         }
 
-        return $this->factory->part(ScheduledEvent::class, (array) $this->attributes['guild_scheduled_event'], true);
+        return $this->attributePartHelper('guild_scheduled_event', ScheduledEvent::class);
+    }
+
+    /**
+     * Returns the guild profile for this invite.
+     *
+     * @return Profile The guild profile.
+     */
+    protected function getProfileAttribute(): Profile
+    {
+        return $this->attributePartHelper('profile', Profile::class);
     }
 
     /**
@@ -290,6 +312,30 @@ class Invite extends Part implements Stringable
     protected function getInviteUrlAttribute(): string
     {
         return 'https://discord.gg/'.$this->code;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(?string $reason = null): PromiseInterface
+    {
+        if (! $this->guild_id) {
+            return parent::save();
+        }
+        
+        if (isset($this->attributes['channel_id'])) {
+            /** @var Channel $channel */
+            $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+            if ($botperms = $channel->getBotPermissions()) {
+                if (! $botperms->create_instant_invite) {
+                    return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$channel->id}."));
+                }
+            }
+
+            return $channel->invites->save($this, $reason);
+        }
+
+        return parent::save();
     }
 
     /**

@@ -38,7 +38,7 @@ $discord->on('init', function (Discord $discord) {
         }
 
         // If message is "ping"
-        if ($message->content == 'ping') {
+        if ($message->content === 'ping') {
             // Reply with "pong"
             $message->reply('pong');
         }

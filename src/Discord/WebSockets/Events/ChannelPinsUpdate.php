@@ -27,7 +27,7 @@ class ChannelPinsUpdate extends Event
      */
     public function handle($data)
     {
-        // TODO
+        /** @todo Create WebSockets Event Part */
         return $data;
     }
 }

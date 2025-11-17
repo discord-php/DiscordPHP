@@ -79,6 +79,7 @@ use Discord\Parts\Part;
  * @property bool       $send_polls                          Allows sending polls
  * @property bool       $use_external_apps                   Allows user-installed apps to send public responses. When disabled, users will still be allowed to use their apps but the responses will be ephemeral. This only applies to apps not also installed to the server.
  * @property bool       $pin_messages                        Allows pinning and unpinning messages
+ * @property bool       $bypass_slowmode                     Allows members to send messages in this channel without being affected by slowmode
  */
 abstract class Permission extends Part
 {
@@ -182,6 +183,8 @@ abstract class Permission extends Part
     public const USE_EXTERNAL_APPS = 50;
     /** Allows pinning and unpinning messages. */
     public const PIN_MESSAGES = 51;
+    /** Allows members to send messages in this channel without being affected by slowmode. */
+    public const BYPASS_SLOWMODE = 52;
 
     /**
      * Array of permissions that only apply to text channels.
@@ -199,6 +202,7 @@ abstract class Permission extends Part
         'create_private_threads' => self::CREATE_PRIVATE_THREADS,
         'send_messages_in_threads' => self::SEND_MESSAGES_IN_THREADS,
         'pin_messages' => self::PIN_MESSAGES,
+        'bypass_slowmode' => self::BYPASS_SLOWMODE,
     ];
 
     /**

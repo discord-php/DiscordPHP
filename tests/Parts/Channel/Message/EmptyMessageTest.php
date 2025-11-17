@@ -72,7 +72,7 @@ final class EmptyMessageTest extends DiscordTestCase
                 ->then(function (Message $message) use ($content) {
                     $message->content = $content;
 
-                    return $message->channel->messages->save($message)->then(function (Message $message) use ($content) {
+                    return $message->channel->messages->save($message, $content)->then(function (Message $message) use ($content) {
                         $this->assertEquals($content, $message->content);
                         $this->assertNotNull($message->edited_timestamp);
 
@@ -220,7 +220,7 @@ final class EmptyMessageTest extends DiscordTestCase
                     $field = $embed->fields->first();
                     $this->assertEquals('Field name', $field->name);
                     $this->assertEquals('Field value', $field->value);
-                    $this->assertEquals(true, $field->inline);
+                    $this->assertTrue($field->inline);
                 })
                 ->then($resolve, $resolve);
         });

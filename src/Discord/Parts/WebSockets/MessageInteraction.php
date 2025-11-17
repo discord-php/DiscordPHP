@@ -65,7 +65,7 @@ class MessageInteraction extends Part
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        return $this->attributePartHelper('user', User::class);
     }
 
     /**
@@ -82,9 +82,7 @@ class MessageInteraction extends Part
                 }
             }
 
-            if (isset($this->attributes['member'])) {
-                return $this->factory->part(Member::class, (array) $this->attributes['member'] + ['guild_id' => $this->guild_id], true);
-            }
+            return $this->attributePartHelper('member', Member::class, ['guild_id' => $this->guild_id]);
         }
 
         return null;
