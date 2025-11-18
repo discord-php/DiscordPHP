@@ -442,7 +442,7 @@ class MessageBuilder extends Builder implements JsonSerializable
         }
 
         if ($component instanceof ComponentV2) {
-            $this->setV2Flag();
+            $this->setIsComponentsV2Flag();
         }
 
         if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
