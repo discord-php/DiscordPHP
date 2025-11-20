@@ -169,9 +169,9 @@ abstract class Permission extends Part
     public const VIEW_CREATOR_MONETIZATION_ANALYTICS = 41;
     /** Allows for using soundboard in a voice channel. */
     public const USE_SOUNDBOARD = 42;
-    /** Allows for creating emojis, stickers, and soundboard sounds, and editing and deleting those created by the current user. Not yet available to developers. */
+    /** Allows for creating emojis, stickers, and soundboard sounds, and editing and deleting those created by the current user. */
     public const CREATE_GUILD_EXPRESSIONS = 43;
-    /** Allows for creating scheduled events, and editing and deleting those created by the current user. Not yet available to developers. */
+    /** Allows for creating scheduled events, and editing and deleting those created by the current user. */
     public const CREATE_EVENTS = 44;
     /** Allows the usage of custom soundboard sounds from other servers. */
     public const USE_EXTERNAL_SOUNDS = 45;
