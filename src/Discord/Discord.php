@@ -715,14 +715,14 @@ class Discord
         $payload = $message->getPayload();
 
         if ($message->isBinary()) {
-            if ($this->zstdDecompressor instanceof ZstdContext) {
+            if ($this->zstdDecompressor !== false) {
                 $decompressed = uncompress_add($this->zstdDecompressor, $payload);
                 if ($decompressed !== false) {
                     $this->processWsMessage($decompressed);
                 } else {
                     $this->logger->error('failed to decompress zstd payload', ['payload' => $payload, 'payload hex' => bin2hex($payload)]);
                 }
-            } elseif ($this->zlibDecompressor instanceof \InflateContext) {
+            } elseif ($this->zlibDecompressor !== false) {
                 $this->payloadBuffer .= $payload;
 
                 if ($message->getPayloadLength() < 4 || substr($payload, -4) !== "\x00\x00\xff\xff") {
