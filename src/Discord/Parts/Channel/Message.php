@@ -542,12 +542,13 @@ class Message extends Part
             return $roles;
         }
 
-        $roles->fill(array_fill_keys($this->attributes['mention_roles'], null));
-
         if ($guild = $this->guild) {
-            $roles->merge($guild->roles->filter(
-                fn ($role) => in_array($role->id, $this->attributes['mention_roles'])
-            ));
+            foreach ($this->attributes['mention_roles'] as $roleId) {
+                /** @var string $roleId */
+                $roles->set($roleId, $guild->roles->get('id', $roleId));
+            }
+        } else {
+            $roles->fill(array_fill_keys($this->attributes['mention_roles'], null));
         }
 
         return $roles;
