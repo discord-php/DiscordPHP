@@ -255,7 +255,7 @@ class Intents
     /**
      * Returns an integer value that represents all privileged intents.
      * Verified apps cannot use Privileged Intents without being approved.
-     * 
+     *
      * @return int
      */
     public static function getAllPrivilegedIntents(): int
