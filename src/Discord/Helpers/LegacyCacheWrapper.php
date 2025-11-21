@@ -178,6 +178,8 @@ final class LegacyCacheWrapper extends CacheWrapper
      * @param Part $part
      *
      * @return object
+     * 
+     * @todo PHP 8.5 clone($part, ['attributes' => $part->getRawAttributes()])
      */
     public function serializer($part)
     {
