@@ -548,7 +548,10 @@ class Message extends Part
                 $roles->set($roleId, $guild->roles->get('id', $roleId));
             }
         } else {
-            $roles->fill(array_fill_keys($this->attributes['mention_roles'], null));
+            foreach ($this->attributes['mention_roles'] as $roleId) {
+                /** @var string $roleId */
+                $roles->set($roleId, null);
+            }
         }
 
         return $roles;
