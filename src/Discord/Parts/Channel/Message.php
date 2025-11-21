@@ -1290,6 +1290,7 @@ class Message extends Part
      * Creates a reaction collector for the message.
      *
      * @param callable $filter           The filter function. Returns true or false.
+     * @param array    $options          Collector options.
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
