@@ -10988,12 +10988,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ACREATE_GUILD_EXPRESSIONS",
             "name": "CREATE_GUILD_EXPRESSIONS",
-            "summary": "Allows\u0020for\u0020creating\u0020emojis,\u0020stickers,\u0020and\u0020soundboard\u0020sounds,\u0020and\u0020editing\u0020and\u0020deleting\u0020those\u0020created\u0020by\u0020the\u0020current\u0020user.\u0020Not\u0020yet\u0020available\u0020to\u0020developers.",
+            "summary": "Allows\u0020for\u0020creating\u0020emojis,\u0020stickers,\u0020and\u0020soundboard\u0020sounds,\u0020and\u0020editing\u0020and\u0020deleting\u0020those\u0020created\u0020by\u0020the\u0020current\u0020user.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_CREATE_GUILD_EXPRESSIONS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ACREATE_EVENTS",
             "name": "CREATE_EVENTS",
-            "summary": "Allows\u0020for\u0020creating\u0020scheduled\u0020events,\u0020and\u0020editing\u0020and\u0020deleting\u0020those\u0020created\u0020by\u0020the\u0020current\u0020user.\u0020Not\u0020yet\u0020available\u0020to\u0020developers.",
+            "summary": "Allows\u0020for\u0020creating\u0020scheduled\u0020events,\u0020and\u0020editing\u0020and\u0020deleting\u0020those\u0020created\u0020by\u0020the\u0020current\u0020user.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_CREATE_EVENTS"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AUSE_EXTERNAL_SOUNDS",
@@ -13743,12 +13743,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\Buffer\u003A\u003AwriteInt\u0028\u0029",
             "name": "writeInt",
-            "summary": "Writes\u0020a\u0020signed\u0020integer.",
+            "summary": "Writes\u0020a\u002032\u002Dbit\u0020unsigned\u0020integer\u0020with\u0020big\u0020endian.",
             "url": "classes/Discord-Voice-Buffer.html#method_writeInt"
         },                {
             "fqsen": "\\Discord\\Voice\\Buffer\u003A\u003AreadInt\u0028\u0029",
             "name": "readInt",
-            "summary": "Reads\u0020a\u0020signed\u0020integer.",
+            "summary": "Reads\u0020an\u0020unsigned\u002032\u002Dbit\u0020integer\u0020with\u0020big\u0020endian.",
             "url": "classes/Discord-Voice-Buffer.html#method_readInt"
         },                {
             "fqsen": "\\Discord\\Voice\\Buffer\u003A\u003AwriteShort\u0028\u0029",
@@ -14500,6 +14500,11 @@ Search.appendIndex(
             "name": "SUPPORTED_MODES",
             "summary": "Supported\u0020encryption\u0020modes\u0020for\u0020voice\u0020connections.",
             "url": "classes/Discord-Voice-VoiceClient.html#constant_SUPPORTED_MODES"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AMAX_DAVE_PROTOCOL_VERSION",
+            "name": "MAX_DAVE_PROTOCOL_VERSION",
+            "summary": "Maximum\u0020DAVE\u0020protocol\u0020version\u0020supported.",
+            "url": "classes/Discord-Voice-VoiceClient.html#constant_MAX_DAVE_PROTOCOL_VERSION"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AVOICE_OP_HANDLERS",
             "name": "VOICE_OP_HANDLERS",
@@ -16100,6 +16105,11 @@ Search.appendIndex(
             "name": "getDefaultIntents",
             "summary": "Returns\u0020an\u0020integer\u0020value\u0020that\u0020represents\u0020the\u0020default\u0020intents.",
             "url": "classes/Discord-WebSockets-Intents.html#method_getDefaultIntents"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Intents\u003A\u003AgetAllPrivilegedIntents\u0028\u0029",
+            "name": "getAllPrivilegedIntents",
+            "summary": "Returns\u0020an\u0020integer\u0020value\u0020that\u0020represents\u0020all\u0020privileged\u0020intents.",
+            "url": "classes/Discord-WebSockets-Intents.html#method_getAllPrivilegedIntents"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Intents\u003A\u003AgetIntentArray\u0028\u0029",
             "name": "getIntentArray",
