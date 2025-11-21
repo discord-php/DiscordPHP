@@ -66,7 +66,7 @@ use function React\Promise\reject;
  * @property      bool                                                     $tts                    Whether the message was sent as a text-to-speech message.
  * @property      bool                                                     $mention_everyone       Whether the message contained an @everyone mention.
  * @property      ExCollectionInterface<User>|User[]                       $mentions               A collection of the users mentioned in the message.
- * @property      ExCollectionInterface<Role>|Role[]                       $mention_roles          A collection of roles that were mentioned in the message.
+ * @property      ExCollectionInterface<?Role>|array<string, ?Role>        $mention_roles          A collection of roles that were mentioned in the message.
  * @property      ExCollectionInterface<Channel>|Channel[]                 $mention_channels       Collection of mentioned channels.
  * @property      ExCollectionInterface<Attachment>|Attachment[]           $attachments            Collection of attachment objects.
  * @property      ExCollectionInterface<Embed>|Embed[]                     $embeds                 A collection of embed objects.
@@ -532,7 +532,7 @@ class Message extends Part
     /**
      * Returns the mention_roles attribute.
      *
-     * @return ExCollectionInterface<Role>|Role[] The roles that were mentioned. null role only contains the ID in the collection.
+     * @return ExCollectionInterface<?Role>|array<string, ?Role> The roles that were mentioned. Null role only contains the ID as the key in the collection.
      */
     protected function getMentionRolesAttribute(): ExCollectionInterface
     {
