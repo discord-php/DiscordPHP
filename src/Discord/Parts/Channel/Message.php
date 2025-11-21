@@ -542,14 +542,15 @@ class Message extends Part
             return $roles;
         }
 
+        /** @var array<string> */
+        $mention_roles = $this->attributes['mention_roles'];
+
         if ($guild = $this->guild) {
-            foreach ($this->attributes['mention_roles'] as $roleId) {
-                /** @var string $roleId */
+            foreach ($mention_roles as $roleId) {
                 $roles->set($roleId, $guild->roles->get('id', $roleId));
             }
         } else {
-            foreach ($this->attributes['mention_roles'] as $roleId) {
-                /** @var string $roleId */
+            foreach ($mention_roles as $roleId) {
                 $roles->set($roleId, null);
             }
         }
