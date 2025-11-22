@@ -22,9 +22,10 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/events/gateway-events#client-status-object
  *
- * @property ?string|null $desktop User's status set for an active desktop (Windows, Linux, Mac) application session.
- * @property ?string|null $mobile  User's status set for an active mobile (iOS, Android) application session.
- * @property ?string|null $web     User's status set for an active web (browser, bot user) application session.
+ * @property ?string|null $desktop  User's status set for an active desktop (Windows, Linux, Mac) application session.
+ * @property ?string|null $mobile   User's status set for an active mobile (iOS, Android) application session.
+ * @property ?string|null $web      User's status set for an active web (browser, bot user) application session.
+ * @property ?string|null $embedded User's status set for an active embedded application session (Xbox, PlayStation, in-game).
  */
 class ClientStatus extends Part
 {
@@ -35,5 +36,6 @@ class ClientStatus extends Part
         'desktop',
         'mobile',
         'web',
+        'embedded',
     ];
 }

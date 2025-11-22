@@ -419,7 +419,7 @@ class CacheWrapper
      * @param Part $part
      *
      * @return object|string
-     * 
+     *
      * @todo PHP 8.5 clone($part, ['attributes' => $part->getRawAttributes()])
      */
     public function serializer($part)
