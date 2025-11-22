@@ -338,14 +338,17 @@ class ScheduledEvent extends Part
         if (isset($this->attributes['guild_id'])) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
-
-            if ($botperms = $this->guild->getBotPermissions()) {
+            if ($botperms = $guild->getBotPermissions()) {
                 if ($this->creator_id === $this->discord->id) {
                     if (! $botperms->create_events && ! $botperms->manage_events) {
-                        return reject(new NoPermissionsException("The bot does not have permission to manage scheduled events in guild {$this->guild_id}."));
+                        return reject(new NoPermissionsException("You do not have permission to manage scheduled events in guild {$this->guild_id}."));
+                    }
+                } elseif ($this->created) {
+                    if (! $botperms->create_events) {
+                        return reject(new NoPermissionsException("You do not have permission to create scheduled events in the guild {$guild->id}."));
                     }
                 } elseif (! $botperms->manage_events) {
-                    return reject(new NoPermissionsException("The bot does not have permission to manage scheduled events in guild {$this->guild_id}."));
+                    return reject(new NoPermissionsException("You do not have permission to manage scheduled events in the guild {$guild->id}."));
                 }
             }
 
