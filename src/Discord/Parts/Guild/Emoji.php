@@ -15,6 +15,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\PromiseInterface;
@@ -164,12 +165,12 @@ class Emoji extends Part implements Stringable
             if ($botperms = $guild->getBotPermissions()) {
                 if ($this->created) {
                     if (! $botperms->create_guild_expressions) {
-                        return reject(new \DomainException("You do not have permission to create emojis in the guild {$guild->id}."));
+                        return reject(new NoPermissionsException("You do not have permission to create emojis in the guild {$guild->id}."));
                     }
                 } elseif (! $botperms->manage_guild_expressions) {
-                    return reject(new \DomainException("You do not have permission to manage emojis in the guild {$guild->id}."));
+                    return reject(new NoPermissionsException("You do not have permission to manage emojis in the guild {$guild->id}."));
                 } elseif ($this->user->id === $this->discord->id && ! $botperms->create_guild_expressions) {
-                    return reject(new \DomainException("You do not have permission to create or manage emojis in the guild {$guild->id}."));
+                    return reject(new NoPermissionsException("You do not have permission to create or manage emojis in the guild {$guild->id}."));
                 }
             }
 
