@@ -341,7 +341,7 @@ class ScheduledEvent extends Part
             if ($botperms = $guild->getBotPermissions()) {
                 if ($this->creator_id === $this->discord->id) {
                     if (! $botperms->create_events && ! $botperms->manage_events) {
-                        return reject(new NoPermissionsException("You do not have permission to manage scheduled events in guild {$this->guild_id}."));
+                        return reject(new NoPermissionsException("You do not have permission to create or manage scheduled events in guild {$this->guild_id}."));
                     }
                 } elseif ($this->created) {
                     if (! $botperms->create_events) {
