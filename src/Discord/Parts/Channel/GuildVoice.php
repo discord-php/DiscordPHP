@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
+/**
+ *  A voice channel within a server.
+ */
 class GuildVoice extends Channel
 {
 }

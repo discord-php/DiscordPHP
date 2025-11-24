@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
+/**
+ * A channel that users can follow and crosspost into their own server (formerly news channels).
+ */
 class GuildAnnouncement extends Channel
 {
 }

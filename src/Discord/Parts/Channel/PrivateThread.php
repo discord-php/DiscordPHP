@@ -15,6 +15,9 @@ namespace Discord\Parts\Channel;
 
 use Discord\Parts\Thread\Thread;
 
+/**
+ * A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission.
+ */
 class PrivateThread extends Thread
 {
 }

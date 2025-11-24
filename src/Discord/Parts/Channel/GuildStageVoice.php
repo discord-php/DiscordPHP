@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
+/**
+ * A voice channel for hosting events with an audience.
+ */
 class GuildStageVoice extends Channel
 {
 }

@@ -15,6 +15,9 @@ namespace Discord\Parts\Channel;
 
 use Discord\Parts\Thread\Thread;
 
+/**
+ * A temporary sub-channel within a GUILD_ANNOUNCEMENT channel.
+ */
 class AnnouncementThread extends Thread
 {
 }

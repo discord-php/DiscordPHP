@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
+/**
+ * Channel that can only contain threads, similar to GUILD_FORUM channels.
+ */
 class GuildMedia extends Channel
 {
 }

@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
+/**
+ * A direct message between multiple users.
+ */
 class GroupDM extends Channel
 {
 }

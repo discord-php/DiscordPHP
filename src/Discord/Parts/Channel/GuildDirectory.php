@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
+/**
+ * The channel in a hub containing the listed servers.
+ */
 class GuildDirectory extends Channel
 {
 }

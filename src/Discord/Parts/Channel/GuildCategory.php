@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
+/**
+ * An organizational category that contains up to 50 channels.
+ */
 class GuildCategory extends Channel
 {
 }
