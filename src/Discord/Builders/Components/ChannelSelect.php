@@ -37,7 +37,7 @@ class ChannelSelect extends SelectMenu
      *
      * @var int
      */
-    protected $type = Component::TYPE_CHANNEL_SELECT;
+    protected $type = ComponentObject::TYPE_CHANNEL_SELECT;
 
     /**
      * List of channel types to include.

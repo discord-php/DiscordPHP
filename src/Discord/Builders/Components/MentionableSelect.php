@@ -36,7 +36,7 @@ class MentionableSelect extends SelectMenu
      *
      * @var int
      */
-    protected $type = Component::TYPE_MENTIONABLE_SELECT;
+    protected $type = ComponentObject::TYPE_MENTIONABLE_SELECT;
 
     /**
      * Set if this component is required to be filled, default false. (Modal only).

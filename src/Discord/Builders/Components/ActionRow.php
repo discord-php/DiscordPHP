@@ -27,7 +27,7 @@ namespace Discord\Builders\Components;
  */
 class ActionRow extends Layout
 {
-    /** Usage of ActionRow in Modal is deprecated. Use `Component::Label` as the top-level container. */
+    /** Usage of ActionRow in Modal is deprecated. Use `ComponentObject::Label` as the top-level container. */
     public const USAGE = ['Message', 'Modal'];
 
     /**
@@ -35,7 +35,7 @@ class ActionRow extends Layout
      *
      * @var int
      */
-    protected $type = Component::TYPE_ACTION_ROW;
+    protected $type = ComponentObject::TYPE_ACTION_ROW;
 
     /**
      * Components contained by the action row.
@@ -43,6 +43,13 @@ class ActionRow extends Layout
      * @var ComponentObject[]
      */
     protected $components = [];
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->components = [];
+    }
 
     /**
      * Creates a new action row.

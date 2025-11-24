@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use Discord\Parts\Channel\Message\Component as ComponentPart;
+
 /**
  * Components allow you to style and structure your messages, modals, and interactions.
  * They are interactive elements that can create rich user experiences in your Discord applications.
@@ -27,6 +29,15 @@ namespace Discord\Builders\Components;
 abstract class ComponentObject extends Component
 {
     public const USAGE = [];
+
+    /**
+     * Available components and their respective classes.
+     * 
+     * Alias of Component::TYPES.
+     * 
+     * @var array<int, string>
+     */
+    public const TYPES = ComponentPart::TYPES;
 
     /**
      * The type of the component.

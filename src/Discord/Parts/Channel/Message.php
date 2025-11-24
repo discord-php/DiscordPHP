@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
@@ -782,7 +783,7 @@ class Message extends Part
      */
     protected function getComponentsAttribute(): ExCollectionInterface
     {
-        return $this->attributeTypedCollectionHelper(Component::class, 'components');
+        return $this->attributeTypedCollectionHelper(ComponentObject::class, 'components');
     }
 
     /**
