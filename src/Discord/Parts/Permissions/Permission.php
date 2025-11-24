@@ -183,7 +183,7 @@ abstract class Permission extends Part
     public const USE_EXTERNAL_APPS = 50;
     /** Allows pinning and unpinning messages. */
     public const PIN_MESSAGES = 51;
-    /** Allows members to send messages in this channel without being affected by slowmode. */
+    /** Allows bypassing slowmode restrictions. */
     public const BYPASS_SLOWMODE = 52;
 
     /**
