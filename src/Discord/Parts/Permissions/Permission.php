@@ -229,6 +229,7 @@ abstract class Permission extends Part
         'use_external_sounds' => self::USE_EXTERNAL_SOUNDS,
         'send_voice_messages' => self::SEND_VOICE_MESSAGES,
         'send_polls' => self::SEND_POLLS,
+        'bypass_slowmode' => self::BYPASS_SLOWMODE,
     ];
 
     /**
@@ -247,6 +248,7 @@ abstract class Permission extends Part
         'request_to_speak' => self::REQUEST_TO_SPEAK,
         'manage_events' => self::MANAGE_EVENTS,
         'create_events' => self::CREATE_EVENTS,
+        'bypass_slowmode' => self::BYPASS_SLOWMODE,
     ];
 
     /**
