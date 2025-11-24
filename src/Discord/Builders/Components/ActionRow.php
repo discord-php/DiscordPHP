@@ -44,13 +44,6 @@ class ActionRow extends Layout
      */
     protected $components = [];
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->components = [];
-    }
-
     /**
      * Creates a new action row.
      *
