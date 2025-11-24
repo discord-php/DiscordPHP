@@ -346,6 +346,7 @@ trait ChannelTrait
      *
      * @link https://discord.com/developers/docs/resources/message#get-channel-pins
      *
+     * @param array                 $options           Array of options.
      * @param int                   $options['limit']  The amount of messages to retrieve.
      * @param Message|Carbon|string $options['before'] A message or timestamp to get messages before.
      *
