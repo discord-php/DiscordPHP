@@ -381,7 +381,7 @@
     <span>
         &nbsp;= 52                            </span>
 </dt>
-<dd>Allows members to send messages in this channel without being affected by slowmode.</dd>
+<dd>Allows bypassing slowmode restrictions.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_CHANGE_NICKNAME">CHANGE_NICKNAME</a>
@@ -624,7 +624,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_STAGE_PERMISSIONS">STAGE_PERMISSIONS</a>
     <span>
-        &nbsp;= [&#039;stream&#039; =&gt; self::STREAM, &#039;connect&#039; =&gt; self::CONNECT, &#039;mute_members&#039; =&gt; self::MUTE_MEMBERS, &#039;move_members&#039; =&gt; self::MOVE_MEMBERS, &#039;request_to_speak&#039; =&gt; self::REQUEST_TO_SPEAK, &#039;manage_events&#039; =&gt; self::MANAGE_EVENTS, &#039;create_events&#039; =&gt; self::CREATE_EVENTS]                            </span>
+        &nbsp;= [&#039;stream&#039; =&gt; self::STREAM, &#039;connect&#039; =&gt; self::CONNECT, &#039;mute_members&#039; =&gt; self::MUTE_MEMBERS, &#039;move_members&#039; =&gt; self::MOVE_MEMBERS, &#039;request_to_speak&#039; =&gt; self::REQUEST_TO_SPEAK, &#039;manage_events&#039; =&gt; self::MANAGE_EVENTS, &#039;create_events&#039; =&gt; self::CREATE_EVENTS, &#039;bypass_slowmode&#039; =&gt; self::BYPASS_SLOWMODE]                            </span>
 </dt>
 <dd>Array of permissions that only apply to stage channels.</dd>
 
@@ -729,7 +729,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Parts-Permissions-Permission.html#constant_VOICE_PERMISSIONS">VOICE_PERMISSIONS</a>
     <span>
-        &nbsp;= [&#039;priority_speaker&#039; =&gt; self::PRIORITY_SPEAKER, &#039;stream&#039; =&gt; self::STREAM, &#039;connect&#039; =&gt; self::CONNECT, &#039;speak&#039; =&gt; self::SPEAK, &#039;mute_members&#039; =&gt; self::MUTE_MEMBERS, &#039;deafen_members&#039; =&gt; self::DEAFEN_MEMBERS, &#039;move_members&#039; =&gt; self::MOVE_MEMBERS, &#039;use_vad&#039; =&gt; self::USE_VAD, &#039;manage_events&#039; =&gt; self::MANAGE_EVENTS, &#039;use_embedded_activities&#039; =&gt; self::USE_EMBEDDED_ACTIVITIES, &#039;use_soundboard&#039; =&gt; self::USE_SOUNDBOARD, &#039;create_events&#039; =&gt; self::CREATE_EVENTS, &#039;use_external_sounds&#039; =&gt; self::USE_EXTERNAL_SOUNDS, &#039;send_voice_messages&#039; =&gt; self::SEND_VOICE_MESSAGES, &#039;send_polls&#039; =&gt; self::SEND_POLLS]                            </span>
+        &nbsp;= [&#039;priority_speaker&#039; =&gt; self::PRIORITY_SPEAKER, &#039;stream&#039; =&gt; self::STREAM, &#039;connect&#039; =&gt; self::CONNECT, &#039;speak&#039; =&gt; self::SPEAK, &#039;mute_members&#039; =&gt; self::MUTE_MEMBERS, &#039;deafen_members&#039; =&gt; self::DEAFEN_MEMBERS, &#039;move_members&#039; =&gt; self::MOVE_MEMBERS, &#039;use_vad&#039; =&gt; self::USE_VAD, &#039;manage_events&#039; =&gt; self::MANAGE_EVENTS, &#039;use_embedded_activities&#039; =&gt; self::USE_EMBEDDED_ACTIVITIES, &#039;use_soundboard&#039; =&gt; self::USE_SOUNDBOARD, &#039;create_events&#039; =&gt; self::CREATE_EVENTS, &#039;use_external_sounds&#039; =&gt; self::USE_EXTERNAL_SOUNDS, &#039;send_voice_messages&#039; =&gt; self::SEND_VOICE_MESSAGES, &#039;send_polls&#039; =&gt; self::SEND_POLLS, &#039;bypass_slowmode&#039; =&gt; self::BYPASS_SLOWMODE]                            </span>
 </dt>
 <dd>Array of permissions that only apply to voice channels.</dd>
 
@@ -1512,7 +1512,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">258</span>
+    <span class="phpdocumentor-element-found-in__line">260</span>
 
     </aside>
 
@@ -1611,7 +1611,7 @@ JSON. Used for JsonSerializable.</dd>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Allows members to send messages in this channel without being affected by slowmode.</p>
+        <p class="phpdocumentor-summary">Allows bypassing slowmode restrictions.</p>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -2475,7 +2475,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">286</span>
+    <span class="phpdocumentor-element-found-in__line">288</span>
 
     </aside>
 
@@ -2709,7 +2709,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">242</span>
+    <span class="phpdocumentor-element-found-in__line">243</span>
 
     </aside>
 
@@ -2720,7 +2720,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">STAGE_PERMISSIONS</span>
-    = <span class="phpdocumentor-signature__default-value">[&#039;stream&#039; =&gt; self::STREAM, &#039;connect&#039; =&gt; self::CONNECT, &#039;mute_members&#039; =&gt; self::MUTE_MEMBERS, &#039;move_members&#039; =&gt; self::MOVE_MEMBERS, &#039;request_to_speak&#039; =&gt; self::REQUEST_TO_SPEAK, &#039;manage_events&#039; =&gt; self::MANAGE_EVENTS, &#039;create_events&#039; =&gt; self::CREATE_EVENTS]</span>
+    = <span class="phpdocumentor-signature__default-value">[&#039;stream&#039; =&gt; self::STREAM, &#039;connect&#039; =&gt; self::CONNECT, &#039;mute_members&#039; =&gt; self::MUTE_MEMBERS, &#039;move_members&#039; =&gt; self::MOVE_MEMBERS, &#039;request_to_speak&#039; =&gt; self::REQUEST_TO_SPEAK, &#039;manage_events&#039; =&gt; self::MANAGE_EVENTS, &#039;create_events&#039; =&gt; self::CREATE_EVENTS, &#039;bypass_slowmode&#039; =&gt; self::BYPASS_SLOWMODE]</span>
 </code>
 
 
@@ -3220,7 +3220,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">VOICE_PERMISSIONS</span>
-    = <span class="phpdocumentor-signature__default-value">[&#039;priority_speaker&#039; =&gt; self::PRIORITY_SPEAKER, &#039;stream&#039; =&gt; self::STREAM, &#039;connect&#039; =&gt; self::CONNECT, &#039;speak&#039; =&gt; self::SPEAK, &#039;mute_members&#039; =&gt; self::MUTE_MEMBERS, &#039;deafen_members&#039; =&gt; self::DEAFEN_MEMBERS, &#039;move_members&#039; =&gt; self::MOVE_MEMBERS, &#039;use_vad&#039; =&gt; self::USE_VAD, &#039;manage_events&#039; =&gt; self::MANAGE_EVENTS, &#039;use_embedded_activities&#039; =&gt; self::USE_EMBEDDED_ACTIVITIES, &#039;use_soundboard&#039; =&gt; self::USE_SOUNDBOARD, &#039;create_events&#039; =&gt; self::CREATE_EVENTS, &#039;use_external_sounds&#039; =&gt; self::USE_EXTERNAL_SOUNDS, &#039;send_voice_messages&#039; =&gt; self::SEND_VOICE_MESSAGES, &#039;send_polls&#039; =&gt; self::SEND_POLLS]</span>
+    = <span class="phpdocumentor-signature__default-value">[&#039;priority_speaker&#039; =&gt; self::PRIORITY_SPEAKER, &#039;stream&#039; =&gt; self::STREAM, &#039;connect&#039; =&gt; self::CONNECT, &#039;speak&#039; =&gt; self::SPEAK, &#039;mute_members&#039; =&gt; self::MUTE_MEMBERS, &#039;deafen_members&#039; =&gt; self::DEAFEN_MEMBERS, &#039;move_members&#039; =&gt; self::MOVE_MEMBERS, &#039;use_vad&#039; =&gt; self::USE_VAD, &#039;manage_events&#039; =&gt; self::MANAGE_EVENTS, &#039;use_embedded_activities&#039; =&gt; self::USE_EMBEDDED_ACTIVITIES, &#039;use_soundboard&#039; =&gt; self::USE_SOUNDBOARD, &#039;create_events&#039; =&gt; self::CREATE_EVENTS, &#039;use_external_sounds&#039; =&gt; self::USE_EXTERNAL_SOUNDS, &#039;send_voice_messages&#039; =&gt; self::SEND_VOICE_MESSAGES, &#039;send_polls&#039; =&gt; self::SEND_POLLS, &#039;bypass_slowmode&#039; =&gt; self::BYPASS_SLOWMODE]</span>
 </code>
 
 
@@ -5744,7 +5744,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">305</span>
+    <span class="phpdocumentor-element-found-in__line">307</span>
 
     </aside>
 
@@ -5787,7 +5787,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">310</span>
+    <span class="phpdocumentor-element-found-in__line">312</span>
 
     </aside>
 
@@ -6095,7 +6095,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">396</span>
+    <span class="phpdocumentor-element-found-in__line">398</span>
 
     </aside>
 
@@ -6431,7 +6431,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">330</span>
+    <span class="phpdocumentor-element-found-in__line">332</span>
 
     </aside>
 
@@ -7778,7 +7778,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">339</span>
+    <span class="phpdocumentor-element-found-in__line">341</span>
 
     </aside>
 
@@ -7831,7 +7831,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">383</span>
+    <span class="phpdocumentor-element-found-in__line">385</span>
 
     </aside>
 
@@ -7981,7 +7981,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">369</span>
+    <span class="phpdocumentor-element-found-in__line">371</span>
 
     </aside>
 
@@ -8040,7 +8040,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">391</span>
+    <span class="phpdocumentor-element-found-in__line">393</span>
 
     </aside>
 

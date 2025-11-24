@@ -329,33 +329,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Builders-ChannelBuilder.html#constant_TYPES">TYPES</a>
     <span>
-        &nbsp;= [
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_TEXT =&gt; \Discord\Parts\Channel\GuildText::class,
-    // A text channel within a server
-    \Discord\Parts\Channel\Channel::TYPE_DM =&gt; \Discord\Parts\Channel\DM::class,
-    // A direct message between users
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_VOICE =&gt; \Discord\Parts\Channel\GuildVoice::class,
-    // A voice channel within a server
-    \Discord\Parts\Channel\Channel::TYPE_GROUP_DM =&gt; \Discord\Parts\Channel\GroupDM::class,
-    // A direct message between multiple users
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_CATEGORY =&gt; \Discord\Parts\Channel\GuildCategory::class,
-    // An organizational category that contains up to 50 channels
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_ANNOUNCEMENT =&gt; \Discord\Parts\Channel\GuildAnnouncement::class,
-    // A channel that users can follow and crosspost into their own server (formerly news channels)
-    \Discord\Parts\Channel\Channel::TYPE_ANNOUNCEMENT_THREAD =&gt; \Discord\Parts\Channel\AnnouncementThread::class,
-    // A temporary sub-channel within a GUILD_ANNOUNCEMENT channel
-    \Discord\Parts\Channel\Channel::TYPE_PUBLIC_THREAD =&gt; \Discord\Parts\Channel\PublicThread::class,
-    // A temporary sub-channel within a GUILD_TEXT or GUILD_FORUM channel
-    \Discord\Parts\Channel\Channel::TYPE_PRIVATE_THREAD =&gt; \Discord\Parts\Channel\PrivateThread::class,
-    // A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_STAGE_VOICE =&gt; \Discord\Parts\Channel\GuildStageVoice::class,
-    // A voice channel for hosting events with an audience
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_DIRECTORY =&gt; \Discord\Parts\Channel\GuildDirectory::class,
-    // The channel in a hub containing the listed servers
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_FORUM =&gt; \Discord\Parts\Channel\GuildForum::class,
-    // Channel that can only contain threads
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_MEDIA =&gt; \Discord\Parts\Channel\GuildMedia::class,
-]                            </span>
+        &nbsp;= \Discord\Parts\Channel\Channel::TYPES                            </span>
 </dt>
 
     </dl>
@@ -708,33 +682,7 @@
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">TYPES</span>
-    = <span class="phpdocumentor-signature__default-value">[
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_TEXT =&gt; \Discord\Parts\Channel\GuildText::class,
-    // A text channel within a server
-    \Discord\Parts\Channel\Channel::TYPE_DM =&gt; \Discord\Parts\Channel\DM::class,
-    // A direct message between users
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_VOICE =&gt; \Discord\Parts\Channel\GuildVoice::class,
-    // A voice channel within a server
-    \Discord\Parts\Channel\Channel::TYPE_GROUP_DM =&gt; \Discord\Parts\Channel\GroupDM::class,
-    // A direct message between multiple users
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_CATEGORY =&gt; \Discord\Parts\Channel\GuildCategory::class,
-    // An organizational category that contains up to 50 channels
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_ANNOUNCEMENT =&gt; \Discord\Parts\Channel\GuildAnnouncement::class,
-    // A channel that users can follow and crosspost into their own server (formerly news channels)
-    \Discord\Parts\Channel\Channel::TYPE_ANNOUNCEMENT_THREAD =&gt; \Discord\Parts\Channel\AnnouncementThread::class,
-    // A temporary sub-channel within a GUILD_ANNOUNCEMENT channel
-    \Discord\Parts\Channel\Channel::TYPE_PUBLIC_THREAD =&gt; \Discord\Parts\Channel\PublicThread::class,
-    // A temporary sub-channel within a GUILD_TEXT or GUILD_FORUM channel
-    \Discord\Parts\Channel\Channel::TYPE_PRIVATE_THREAD =&gt; \Discord\Parts\Channel\PrivateThread::class,
-    // A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_STAGE_VOICE =&gt; \Discord\Parts\Channel\GuildStageVoice::class,
-    // A voice channel for hosting events with an audience
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_DIRECTORY =&gt; \Discord\Parts\Channel\GuildDirectory::class,
-    // The channel in a hub containing the listed servers
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_FORUM =&gt; \Discord\Parts\Channel\GuildForum::class,
-    // Channel that can only contain threads
-    \Discord\Parts\Channel\Channel::TYPE_GUILD_MEDIA =&gt; \Discord\Parts\Channel\GuildMedia::class,
-]</span>
+    = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Channel\Channel::TYPES</span>
 </code>
 
 
@@ -770,7 +718,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
@@ -807,7 +755,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -844,7 +792,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
     </aside>
 
@@ -881,7 +829,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
     </aside>
 
@@ -918,7 +866,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -955,7 +903,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -992,7 +940,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -1029,7 +977,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
@@ -1066,7 +1014,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
@@ -1103,7 +1051,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -1140,7 +1088,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -1177,7 +1125,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">69</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -1214,7 +1162,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
     </aside>
 
@@ -1251,7 +1199,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
@@ -1288,7 +1236,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -1325,7 +1273,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
@@ -1362,7 +1310,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -1399,7 +1347,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -1643,7 +1591,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">390</span>
+    <span class="phpdocumentor-element-found-in__line">376</span>
 
     </aside>
 
@@ -1695,7 +1643,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">82</span>
+    <span class="phpdocumentor-element-found-in__line">68</span>
 
     </aside>
 
@@ -1743,7 +1691,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">340</span>
+    <span class="phpdocumentor-element-found-in__line">326</span>
 
     </aside>
 
@@ -1792,7 +1740,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">163</span>
+    <span class="phpdocumentor-element-found-in__line">149</span>
 
     </aside>
 
@@ -1843,7 +1791,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">305</span>
+    <span class="phpdocumentor-element-found-in__line">291</span>
 
     </aside>
 
@@ -1894,7 +1842,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">366</span>
+    <span class="phpdocumentor-element-found-in__line">352</span>
 
     </aside>
 
@@ -1945,7 +1893,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">319</span>
+    <span class="phpdocumentor-element-found-in__line">305</span>
 
     </aside>
 
@@ -1994,7 +1942,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">354</span>
+    <span class="phpdocumentor-element-found-in__line">340</span>
 
     </aside>
 
@@ -2045,7 +1993,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">380</span>
+    <span class="phpdocumentor-element-found-in__line">366</span>
 
     </aside>
 
@@ -2096,7 +2044,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
     </aside>
 
@@ -2147,7 +2095,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">255</span>
+    <span class="phpdocumentor-element-found-in__line">241</span>
 
     </aside>
 
@@ -2198,7 +2146,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">237</span>
+    <span class="phpdocumentor-element-found-in__line">223</span>
 
     </aside>
 
@@ -2249,7 +2197,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">223</span>
+    <span class="phpdocumentor-element-found-in__line">209</span>
 
     </aside>
 
@@ -2300,7 +2248,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">209</span>
+    <span class="phpdocumentor-element-found-in__line">195</span>
 
     </aside>
 
@@ -2351,7 +2299,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">195</span>
+    <span class="phpdocumentor-element-found-in__line">181</span>
 
     </aside>
 
@@ -2402,7 +2350,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">269</span>
+    <span class="phpdocumentor-element-found-in__line">255</span>
 
     </aside>
 
@@ -2453,7 +2401,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">145</span>
+    <span class="phpdocumentor-element-found-in__line">131</span>
 
     </aside>
 
@@ -2504,7 +2452,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">111</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -2555,7 +2503,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">167</span>
 
     </aside>
 
@@ -2606,7 +2554,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ChannelBuilder.php"><a href="files/src-discord-builders-channelbuilder.html"><abbr title="src/Discord/Builders/ChannelBuilder.php">ChannelBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">287</span>
+    <span class="phpdocumentor-element-found-in__line">273</span>
 
     </aside>
 

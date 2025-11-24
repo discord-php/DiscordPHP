@@ -4178,7 +4178,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\AnnouncementThread",
             "name": "AnnouncementThread",
-            "summary": "Represents\u0020a\u0020Discord\u0020thread.",
+            "summary": "A\u0020temporary\u0020sub\u002Dchannel\u0020within\u0020a\u0020GUILD_ANNOUNCEMENT\u0020channel.",
             "url": "classes/Discord-Parts-Channel-AnnouncementThread.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Attachment",
@@ -4333,68 +4333,73 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_GUILD_TEXT",
             "name": "TYPE_GUILD_TEXT",
-            "summary": "",
+            "summary": "A\u0020text\u0020channel\u0020within\u0020a\u0020server.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_GUILD_TEXT"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_DM",
             "name": "TYPE_DM",
-            "summary": "",
+            "summary": "A\u0020direct\u0020message\u0020between\u0020users.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_DM"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_GUILD_VOICE",
             "name": "TYPE_GUILD_VOICE",
-            "summary": "",
+            "summary": "A\u0020voice\u0020channel\u0020within\u0020a\u0020server.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_GUILD_VOICE"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_GROUP_DM",
             "name": "TYPE_GROUP_DM",
-            "summary": "",
+            "summary": "A\u0020direct\u0020message\u0020between\u0020multiple\u0020users.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_GROUP_DM"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_GUILD_CATEGORY",
             "name": "TYPE_GUILD_CATEGORY",
-            "summary": "",
+            "summary": "An\u0020organizational\u0020category\u0020that\u0020contains\u0020up\u0020to\u002050\u0020channels.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_GUILD_CATEGORY"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_GUILD_ANNOUNCEMENT",
             "name": "TYPE_GUILD_ANNOUNCEMENT",
-            "summary": "",
+            "summary": "A\u0020channel\u0020that\u0020users\u0020can\u0020follow\u0020and\u0020crosspost\u0020into\u0020their\u0020own\u0020server\u0020\u0028formerly\u0020news\u0020channels\u0029.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_GUILD_ANNOUNCEMENT"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_ANNOUNCEMENT_THREAD",
             "name": "TYPE_ANNOUNCEMENT_THREAD",
-            "summary": "",
+            "summary": "A\u0020temporary\u0020sub\u002Dchannel\u0020within\u0020a\u0020\u0060GUILD_ANNOUNCEMENT\u0060\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_ANNOUNCEMENT_THREAD"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_PUBLIC_THREAD",
             "name": "TYPE_PUBLIC_THREAD",
-            "summary": "",
+            "summary": "A\u0020temporary\u0020sub\u002Dchannel\u0020within\u0020a\u0020\u0060GUILD_TEXT\u0060\u0020or\u0020\u0060GUILD_FORUM\u0060\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_PUBLIC_THREAD"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_PRIVATE_THREAD",
             "name": "TYPE_PRIVATE_THREAD",
-            "summary": "",
+            "summary": "A\u0020temporary\u0020sub\u002Dchannel\u0020within\u0020a\u0020\u0060GUILD_TEXT\u0060\u0020channel\u0020that\u0020is\u0020only\u0020viewable\u0020by\u0020those\u0020invited\u0020and\u0020those\u0020with\u0020the\u0020\u0060MANAGE_THREADS\u0060\u0020permission.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_PRIVATE_THREAD"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_GUILD_STAGE_VOICE",
             "name": "TYPE_GUILD_STAGE_VOICE",
-            "summary": "",
+            "summary": "A\u0020voice\u0020channel\u0020for\u0020hosting\u0020events\u0020with\u0020an\u0020audience.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_GUILD_STAGE_VOICE"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_GUILD_DIRECTORY",
             "name": "TYPE_GUILD_DIRECTORY",
-            "summary": "",
+            "summary": "The\u0020channel\u0020in\u0020a\u0020hub\u0020containing\u0020the\u0020listed\u0020servers.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_GUILD_DIRECTORY"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_GUILD_FORUM",
             "name": "TYPE_GUILD_FORUM",
-            "summary": "",
+            "summary": "Channel\u0020that\u0020can\u0020only\u0020contain\u0020threads.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_GUILD_FORUM"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_GUILD_MEDIA",
             "name": "TYPE_GUILD_MEDIA",
-            "summary": "",
+            "summary": "Channel\u0020that\u0020can\u0020only\u0020contain\u0020threads,\u0020similar\u0020to\u0020\u0060GUILD_FORUM\u0060\u0020channels.",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_GUILD_MEDIA"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPES",
+            "name": "TYPES",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPES"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_TEXT",
             "name": "TYPE_TEXT",
@@ -4633,7 +4638,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\DM",
             "name": "DM",
-            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "summary": "A\u0020direct\u0020message\u0020between\u0020users.",
             "url": "classes/Discord-Parts-Channel-DM.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Forum\\Reaction",
@@ -4658,47 +4663,47 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\GroupDM",
             "name": "GroupDM",
-            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "summary": "A\u0020direct\u0020message\u0020between\u0020multiple\u0020users.",
             "url": "classes/Discord-Parts-Channel-GroupDM.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\GuildAnnouncement",
             "name": "GuildAnnouncement",
-            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "summary": "A\u0020channel\u0020that\u0020users\u0020can\u0020follow\u0020and\u0020crosspost\u0020into\u0020their\u0020own\u0020server\u0020\u0028formerly\u0020news\u0020channels\u0029.",
             "url": "classes/Discord-Parts-Channel-GuildAnnouncement.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\GuildCategory",
             "name": "GuildCategory",
-            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "summary": "An\u0020organizational\u0020category\u0020that\u0020contains\u0020up\u0020to\u002050\u0020channels.",
             "url": "classes/Discord-Parts-Channel-GuildCategory.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\GuildDirectory",
             "name": "GuildDirectory",
-            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "summary": "The\u0020channel\u0020in\u0020a\u0020hub\u0020containing\u0020the\u0020listed\u0020servers.",
             "url": "classes/Discord-Parts-Channel-GuildDirectory.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\GuildForum",
             "name": "GuildForum",
-            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "summary": "Channel\u0020that\u0020can\u0020only\u0020contain\u0020threads.",
             "url": "classes/Discord-Parts-Channel-GuildForum.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\GuildMedia",
             "name": "GuildMedia",
-            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "summary": "Channel\u0020that\u0020can\u0020only\u0020contain\u0020threads,\u0020similar\u0020to\u0020GUILD_FORUM\u0020channels.",
             "url": "classes/Discord-Parts-Channel-GuildMedia.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\GuildStageVoice",
             "name": "GuildStageVoice",
-            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "summary": "A\u0020voice\u0020channel\u0020for\u0020hosting\u0020events\u0020with\u0020an\u0020audience.",
             "url": "classes/Discord-Parts-Channel-GuildStageVoice.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\GuildText",
             "name": "GuildText",
-            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "summary": "A\u0020text\u0020channel\u0020within\u0020a\u0020server.",
             "url": "classes/Discord-Parts-Channel-GuildText.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\GuildVoice",
             "name": "GuildVoice",
-            "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
+            "summary": "A\u0020voice\u0020channel\u0020within\u0020a\u0020server.",
             "url": "classes/Discord-Parts-Channel-GuildVoice.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Invite",
@@ -6408,12 +6413,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\PrivateThread",
             "name": "PrivateThread",
-            "summary": "Represents\u0020a\u0020Discord\u0020thread.",
+            "summary": "A\u0020temporary\u0020sub\u002Dchannel\u0020within\u0020a\u0020GUILD_TEXT\u0020channel\u0020that\u0020is\u0020only\u0020viewable\u0020by\u0020those\u0020invited\u0020and\u0020those\u0020with\u0020the\u0020MANAGE_THREADS\u0020permission.",
             "url": "classes/Discord-Parts-Channel-PrivateThread.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\PublicThread",
             "name": "PublicThread",
-            "summary": "Represents\u0020a\u0020Discord\u0020thread.",
+            "summary": "A\u0020temporary\u0020sub\u002Dchannel\u0020within\u0020a\u0020GUILD_TEXT\u0020or\u0020GUILD_FORUM\u0020channel.",
             "url": "classes/Discord-Parts-Channel-PublicThread.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Reaction",
@@ -11023,7 +11028,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ABYPASS_SLOWMODE",
             "name": "BYPASS_SLOWMODE",
-            "summary": "Allows\u0020members\u0020to\u0020send\u0020messages\u0020in\u0020this\u0020channel\u0020without\u0020being\u0020affected\u0020by\u0020slowmode.",
+            "summary": "Allows\u0020bypassing\u0020slowmode\u0020restrictions.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#constant_BYPASS_SLOWMODE"
         },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003ATEXT_PERMISSIONS",
