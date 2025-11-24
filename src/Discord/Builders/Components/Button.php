@@ -214,7 +214,7 @@ class Button extends Interactive
         $button = new self(self::STYLE_SUCCESS);
 
         if (! isset($custom_id)) {
-            $custom_id = ComponentObject::generateUuid();
+            $custom_id = self::generateUuid();
         }
 
         return $button->setCustomId($custom_id);
