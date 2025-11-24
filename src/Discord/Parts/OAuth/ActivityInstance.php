@@ -66,7 +66,7 @@ class ActivityInstance extends Part
         $collection = Collection::for(User::class);
 
         foreach ($this->attributes['users'] as $user) {
-            $collection->pushItem($this->discord->users->get('id', $user->id) ?: $this->factory->part(User::class, (array) $user, true));
+            $collection->pushItem($this->discord->users->get('id', $user->id) ?? $this->factory->part(User::class, (array) $user, true));
         }
 
         $this->attributes['users'] = $collection;

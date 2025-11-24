@@ -94,7 +94,7 @@ class SubscriptionRepository extends AbstractRepository
             $subscriptions = Collection::for(Subscription::class);
 
             foreach ($responses as $response) {
-                $subscriptions->pushItem($this->get('id', $response->id) ?: $this->create($response, true));
+                $subscriptions->pushItem($this->get('id', $response->id) ?? $this->create($response, true));
             }
 
             return $subscriptions;

@@ -278,7 +278,7 @@ trait ChannelTrait
             $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
-                $messages->pushItem($this->messages->get('id', $response->id) ?: $this->messages->create($response, true));
+                $messages->pushItem($this->messages->get('id', $response->id) ?? $this->messages->create($response, true));
             }
 
             return $messages;

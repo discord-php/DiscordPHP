@@ -248,7 +248,7 @@ class Channel extends Part implements Stringable
         $recipients = Collection::for(User::class);
 
         foreach ($this->attributes['recipients'] ?? [] as $recipient) {
-            $recipients->pushItem($this->discord->users->get('id', $recipient->id) ?: $this->factory->part(User::class, (array) $recipient, true));
+            $recipients->pushItem($this->discord->users->get('id', $recipient->id) ?? $this->factory->part(User::class, (array) $recipient, true));
         }
 
         return $recipients;

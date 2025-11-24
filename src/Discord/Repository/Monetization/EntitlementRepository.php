@@ -153,7 +153,7 @@ class EntitlementRepository extends AbstractRepository
             $entitlements = Collection::for(Entitlement::class);
 
             foreach ($responses as $response) {
-                $entitlements->pushItem($this->get('id', $response->id) ?: $this->create($response, true));
+                $entitlements->pushItem($this->get('id', $response->id) ?? $this->create($response, true));
             }
 
             return $entitlements;
