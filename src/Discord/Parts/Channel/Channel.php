@@ -103,11 +103,11 @@ class Channel extends Part implements Stringable
     public const TYPE_GUILD_CATEGORY = 4;
     /** A channel that users can follow and crosspost into their own server (formerly news channels). */
     public const TYPE_GUILD_ANNOUNCEMENT = 5;
-    /** A temporary sub-channel within a GUILD_ANNOUNCEMENT channel. */
+    /** A temporary sub-channel within a `GUILD_ANNOUNCEMENT` channel. */
     public const TYPE_ANNOUNCEMENT_THREAD = 10;
-    /** A temporary sub-channel within a GUILD_TEXT or GUILD_FORUM channel. */
+    /** A temporary sub-channel within a `GUILD_TEXT` or `GUILD_FORUM` channel. */
     public const TYPE_PUBLIC_THREAD = 11;
-    /** A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission. */
+    /** A temporary sub-channel within a `GUILD_TEXT` channel that is only viewable by those invited and those with the `MANAGE_THREADS` permission. */
     public const TYPE_PRIVATE_THREAD = 12;
     /** A voice channel for hosting events with an audience. */
     public const TYPE_GUILD_STAGE_VOICE = 13;
@@ -115,7 +115,7 @@ class Channel extends Part implements Stringable
     public const TYPE_GUILD_DIRECTORY = 14;
     /** Channel that can only contain threads. */
     public const TYPE_GUILD_FORUM = 15;
-    /** Channel that can only contain threads, similar to GUILD_FORUM channels. */
+    /** Channel that can only contain threads, similar to `GUILD_FORUM` channels. */
     public const TYPE_GUILD_MEDIA = 16;
 
     public const TYPES = [
