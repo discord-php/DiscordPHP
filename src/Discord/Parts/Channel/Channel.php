@@ -91,34 +91,47 @@ class Channel extends Part implements Stringable
 {
     use ChannelTrait;
 
+    /** A text channel within a server. */
     public const TYPE_GUILD_TEXT = 0;
+    /** A direct message between users. */
     public const TYPE_DM = 1;
+    /** A voice channel within a server. */
     public const TYPE_GUILD_VOICE = 2;
+    /** A direct message between multiple users. */
     public const TYPE_GROUP_DM = 3;
+    /** An organizational category that contains up to 50 channels. */
     public const TYPE_GUILD_CATEGORY = 4;
+    /** A channel that users can follow and crosspost into their own server (formerly news channels). */
     public const TYPE_GUILD_ANNOUNCEMENT = 5;
+    /** A temporary sub-channel within a GUILD_ANNOUNCEMENT channel. */
     public const TYPE_ANNOUNCEMENT_THREAD = 10;
+    /** A temporary sub-channel within a GUILD_TEXT or GUILD_FORUM channel. */
     public const TYPE_PUBLIC_THREAD = 11;
+    /** A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission. */
     public const TYPE_PRIVATE_THREAD = 12;
+    /** A voice channel for hosting events with an audience. */
     public const TYPE_GUILD_STAGE_VOICE = 13;
+    /** The channel in a hub containing the listed servers. */
     public const TYPE_GUILD_DIRECTORY = 14;
+    /** Channel that can only contain threads. */
     public const TYPE_GUILD_FORUM = 15;
+    /** Channel that can only contain threads, similar to GUILD_FORUM channels. */
     public const TYPE_GUILD_MEDIA = 16;
 
     public const TYPES = [
-        self::TYPE_GUILD_TEXT => GuildText::class, // A text channel within a server
-        self::TYPE_DM => DM::class, // A direct message between users
-        self::TYPE_GUILD_VOICE => GuildVoice::class, // A voice channel within a server
-        self::TYPE_GROUP_DM => GroupDM::class, // A direct message between multiple users
-        self::TYPE_GUILD_CATEGORY => GuildCategory::class, // An organizational category that contains up to 50 channels
-        self::TYPE_GUILD_ANNOUNCEMENT => GuildAnnouncement::class, // A channel that users can follow and crosspost into their own server (formerly news channels)
-        self::TYPE_ANNOUNCEMENT_THREAD => AnnouncementThread::class, // A temporary sub-channel within a GUILD_ANNOUNCEMENT channel
-        self::TYPE_PUBLIC_THREAD => PublicThread::class, // A temporary sub-channel within a GUILD_TEXT or GUILD_FORUM channel
-        self::TYPE_PRIVATE_THREAD => PrivateThread::class, // A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission
-        self::TYPE_GUILD_STAGE_VOICE => GuildStageVoice::class, // A voice channel for hosting events with an audience
-        self::TYPE_GUILD_DIRECTORY => GuildDirectory::class, // The channel in a hub containing the listed servers
-        self::TYPE_GUILD_FORUM => GuildForum::class, // Channel that can only contain threads
-        self::TYPE_GUILD_MEDIA => GuildMedia::class, // Channel that can only contain threads, similar to GUILD_FORUM channels
+        self::TYPE_GUILD_TEXT => GuildText::class, 
+        self::TYPE_DM => DM::class,
+        self::TYPE_GUILD_VOICE => GuildVoice::class,
+        self::TYPE_GROUP_DM => GroupDM::class,
+        self::TYPE_GUILD_CATEGORY => GuildCategory::class,
+        self::TYPE_GUILD_ANNOUNCEMENT => GuildAnnouncement::class,
+        self::TYPE_ANNOUNCEMENT_THREAD => AnnouncementThread::class,
+        self::TYPE_PUBLIC_THREAD => PublicThread::class,
+        self::TYPE_PRIVATE_THREAD => PrivateThread::class,
+        self::TYPE_GUILD_STAGE_VOICE => GuildStageVoice::class,
+        self::TYPE_GUILD_DIRECTORY => GuildDirectory::class,
+        self::TYPE_GUILD_FORUM => GuildForum::class,
+        self::TYPE_GUILD_MEDIA => GuildMedia::class,
     ];
 
     /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_TEXT` */
