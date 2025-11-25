@@ -13,9 +13,16 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Channel;
 
+use Discord\Builders\MessageBuilder;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;
+use React\Promise\PromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * Contains messages sent to a channel.
@@ -56,5 +63,42 @@ class MessageRepository extends AbstractRepository
     {
         unset($vars['thread_id']); // For thread
         parent::__construct($discord, $vars);
+    }
+
+    /**
+     * Attempts to create a message in a channel.
+     *
+     * @since 10.41.0
+     *
+     * @link https://discord.com/developers/docs/resources/message#create-message
+     *
+     * @param Channel|string $channel Channel or Thread object, or channel ID.
+     * @param MessageBuilder $message MessageBuilder instance.
+
+     * @return PromiseInterface<Message>
+     */
+    public function build($channel, MessageBuilder $message): PromiseInterface
+    {
+        if (! is_string($channel)) {
+            if (! $channel instanceof Channel || ! $channel instanceof Thread) {
+                return reject(new \InvalidArgumentException('Channel must be a Channel or Thread instance or a string channel ID.'));
+            }
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->send_messages) {
+                return reject(new NoPermissionsException("You do not have permission to send messages in channel {$channel->id}."));
+            }
+        }
+
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $channel);
+
+        if ($message->requiresMultipart()) {
+            $multipart = $message->toMultipart();
+
+            return $this->http->post($endpoint, (string) $multipart, $multipart->getHeaders())
+                ->then(fn ($response) => $this->factory->part($this->class, (array) $response, true));
+        }
+
+        return $this->http->post($endpoint, $message)
+            ->then(fn ($response) => $this->factory->part($this->class, (array) $response, true));
     }
 }
