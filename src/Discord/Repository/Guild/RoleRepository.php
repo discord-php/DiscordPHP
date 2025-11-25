@@ -77,9 +77,13 @@ class RoleRepository extends AbstractRepository
             return null;
         }
 
-        return $guild->roles
+        /** @var array<string, Role> */
+        $role = $guild->roles
             ->filter(fn (Role $role) => $botMember->roles->has($role->id))
             ->sort(fn (Role $a, Role $b) => $b->comparePosition($a))
-            ->shift();
+            ->shift() ?? [];
+
+        /** @var Role|null */
+        return array_shift($role);
     }
 }
