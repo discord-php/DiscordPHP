@@ -77,11 +77,13 @@ class RoleRepository extends AbstractRepository
             return null;
         }
 
-        $highestRole = $guild->roles
-            ->filter(fn(Role $role) => $botMember->roles->has($role->id))
-            ->sort(fn(Role $a, Role $b) => $b->comparePosition($a))
-            ->shift();
-        
-        return $shift[array_key_first($highestRole)] ?? null;
+        /** @var array<string, Role> */
+        $role = $guild->roles
+            ->filter(fn (Role $role) => $botMember->roles->has($role->id))
+            ->sort(fn (Role $a, Role $b) => $b->comparePosition($a))
+            ->shift() ?? [];
+
+        /** @var Role|null */
+        return array_shift($role);
     }
 }
