@@ -36,7 +36,7 @@ class StringSelect extends SelectMenu
      *
      * @var int
      */
-    protected $type = Component::TYPE_STRING_SELECT;
+    protected $type = ComponentObject::TYPE_STRING_SELECT;
 
     /**
      * Array of options that the select menu has.

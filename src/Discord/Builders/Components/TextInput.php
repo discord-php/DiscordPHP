@@ -45,7 +45,7 @@ class TextInput extends Interactive
      *
      * @var int
      */
-    protected $type = Component::TYPE_TEXT_INPUT;
+    protected $type = ComponentObject::TYPE_TEXT_INPUT;
 
     /**
      * Style of text input.
@@ -57,7 +57,7 @@ class TextInput extends Interactive
     /**
      * Label for the text input.
      *
-     * @deprecated Use a top-level `Component::Label`
+     * @deprecated Use a top-level `ComponentObject::Label`
      *
      * @var string|null
      */
