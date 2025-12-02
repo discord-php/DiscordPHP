@@ -104,6 +104,8 @@ class CommandBuilder extends Builder implements JsonSerializable
      * @param GlobalCommandRepository|GuildCommandRepository $repository
      *
      * @return Command
+     * 
+     * @since 10.41.0
      */
     public function create(GlobalCommandRepository|GuildCommandRepository $repository): Command
     {
