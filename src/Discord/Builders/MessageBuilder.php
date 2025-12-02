@@ -27,6 +27,8 @@ use Discord\Parts\Channel\Message\AllowedMentions;
 use Discord\Parts\Channel\Poll\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
+use Discord\Repository\Channel\MessageRepository;
+use Discord\Repository\PrivateChannelRepository;
 use JsonSerializable;
 
 use function Discord\poly_strlen;
@@ -160,6 +162,20 @@ class MessageBuilder extends Builder implements JsonSerializable
     public static function new(): self
     {
         return new static();
+    }
+
+    /**
+     * Creates the message in the given repository.
+     *
+     * @param MessageRepository|PrivateChannelRepository $repository
+     *
+     * @return Message
+     * 
+     * @since 10.41.0
+     */
+    public function create(MessageRepository|PrivateChannelRepository $repository): Message
+    {
+        return $repository->create($this->jsonSerialize());
     }
 
     /**
