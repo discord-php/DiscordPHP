@@ -18,8 +18,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003Anew\u0028\u0029",
             "name": "new",
-            "summary": "",
+            "summary": "Creates\u0020a\u0020new\u0020channel\u0020builder.",
             "url": "classes/Discord-Builders-ChannelBuilder.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003Acreate\u0028\u0029",
+            "name": "create",
+            "summary": "Creates\u0020the\u0020channel\u0020in\u0020the\u0020given\u0020repository.",
+            "url": "classes/Discord-Builders-ChannelBuilder.html#method_create"
         },                {
             "fqsen": "\\Discord\\Builders\\ChannelBuilder\u003A\u003AsetName\u0028\u0029",
             "name": "setName",
@@ -320,6 +325,11 @@ Search.appendIndex(
             "name": "new",
             "summary": "Creates\u0020a\u0020new\u0020command\u0020builder.",
             "url": "classes/Discord-Builders-CommandBuilder.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003Acreate\u0028\u0029",
+            "name": "create",
+            "summary": "Creates\u0020the\u0020command\u0020in\u0020the\u0020given\u0020repository.",
+            "url": "classes/Discord-Builders-CommandBuilder.html#method_create"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003AgetOptions\u0028\u0029",
             "name": "getOptions",
@@ -1980,6 +1990,11 @@ Search.appendIndex(
             "name": "new",
             "summary": "Creates\u0020a\u0020new\u0020message\u0020builder.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003Acreate\u0028\u0029",
+            "name": "create",
+            "summary": "Creates\u0020the\u0020message\u0020in\u0020the\u0020given\u0020repository.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_create"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetContent\u0028\u0029",
             "name": "setContent",
