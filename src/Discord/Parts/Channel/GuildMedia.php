@@ -15,7 +15,7 @@ namespace Discord\Parts\Channel;
 
 /**
  * Channel that can only contain threads, similar to GUILD_FORUM channels.
- * 
+ *
  * The GUILD_MEDIA channel type is still in active development.
  * Avoid implementing any features that are not documented, since they are subject to change without notice!
  */

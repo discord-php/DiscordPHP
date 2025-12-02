@@ -17,6 +17,8 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
+use Discord\Repository\Guild\GuildCommandRepository;
+use Discord\Repository\Interaction\GlobalCommandRepository;
 use JsonSerializable;
 
 /**
@@ -94,6 +96,18 @@ class CommandBuilder extends Builder implements JsonSerializable
     public static function new(): self
     {
         return new static();
+    }
+
+    /**
+     * Creates the command in the given repository.
+     *
+     * @param GlobalCommandRepository|GuildCommandRepository $repository
+     *
+     * @return Command
+     */
+    public function create(GlobalCommandRepository|GuildCommandRepository $repository): Command
+    {
+        return $repository->create($this->toArray());
     }
 
     /**

@@ -119,7 +119,7 @@ class Channel extends Part implements Stringable
     public const TYPE_GUILD_MEDIA = 16;
 
     public const TYPES = [
-        self::TYPE_GUILD_TEXT => GuildText::class, 
+        self::TYPE_GUILD_TEXT => GuildText::class,
         self::TYPE_DM => DM::class,
         self::TYPE_GUILD_VOICE => GuildVoice::class,
         self::TYPE_GROUP_DM => GroupDM::class,
