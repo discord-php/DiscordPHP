@@ -1045,10 +1045,7 @@ class MessageBuilder extends Builder implements JsonSerializable
         return new Multipart($fields);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize(): array
+    public function toArray(): array
     {
         $empty = true;
         $body = [];
@@ -1145,5 +1142,13 @@ class MessageBuilder extends Builder implements JsonSerializable
         }
 
         return $body;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
     }
 }
