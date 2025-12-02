@@ -109,7 +109,7 @@ class CommandBuilder extends Builder implements JsonSerializable
      */
     public function create(GlobalCommandRepository|GuildCommandRepository $repository): Command
     {
-        return $repository->create($this->toArray());
+        return $repository->create($this->jsonSerialize());
     }
 
     /**
