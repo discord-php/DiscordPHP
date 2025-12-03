@@ -33,7 +33,7 @@ class TextDisplay extends Content implements Contracts\ComponentV2
      *
      * @var int
      */
-    protected $type = Component::TYPE_TEXT_DISPLAY;
+    protected $type = ComponentObject::TYPE_TEXT_DISPLAY;
 
     /**
      * Content of the text display.

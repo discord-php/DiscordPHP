@@ -35,7 +35,7 @@ class FileUpload extends Interactive
      *
      * @var int
      */
-    protected $type = Component::TYPE_FILE_UPLOAD;
+    protected $type = ComponentObject::TYPE_FILE_UPLOAD;
 
     /**
      * Minimum number of files that can be uploaded.
