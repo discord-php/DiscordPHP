@@ -371,6 +371,13 @@ class Discord
     protected $application_commands;
 
     /**
+     * The voice handler, of clients and packets.
+     *
+     * @var Manager
+     */
+    public Manager $voice;
+
+    /**
      * The transport compression setting.
      *
      * @var bool Whether to use transport compression.
@@ -665,13 +672,11 @@ class Discord
         $voiceStateUpdate = $this->factory->part(VoiceStateUpdate::class, (array) $data->d, true);
 
         $this->logger->debug('voice state update received', ['guild' => $voiceStateUpdate->guild_id, 'data' => $voiceStateUpdate]);
-        if (! isset($this->voiceClients[$voiceStateUpdate->guild_id])) {
-            $this->logger->warning('voice client not found', ['guild' => $voiceStateUpdate->guild_id]);
-
-            return;
+        if (isset($this->voice->clients[$data->d->guild_id])) {
+            /** @var VoiceClient */
+            $client = $this->voice->clients[$data->d->guild_id];
+            $client->handleVoiceStateUpdate($data->d);
         }
-        $this->voiceClients[$voiceStateUpdate->guild_id]->handleVoiceStateUpdate($voiceStateUpdate);
-        $this->voiceClients[$voiceStateUpdate->guild_id]->manager->stateUpdate($voiceStateUpdate, $this->getChannel($voiceStateUpdate->channel_id));
     }
 
     /**
@@ -1404,6 +1409,9 @@ class Discord
         }
         $this->emittedInit = true;
 
+        $this->voice = new Manager($this);
+        $this->logger->info('voice class initialized');
+
         $this->logger->info('client is ready');
         $this->emit('init', [$this]);
 
@@ -1468,44 +1476,9 @@ class Discord
      *
      * @return PromiseInterface<VoiceClient>
      */
-    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null): PromiseInterface
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true): PromiseInterface
     {
-        $deferred = new Deferred();
-
-        if (! $channel->isVoiceBased()) {
-            $deferred->reject(new \RuntimeException('Channel must allow voice.'));
-
-            return $deferred->promise();
-        }
-
-        if (isset($this->voiceClients[$channel->guild_id])) {
-            $deferred->reject(new \RuntimeException('You cannot join more than one voice channel per guild.'));
-
-            return $deferred->promise();
-        }
-
-        $data = [
-            'user_id' => $this->id,
-            'deaf' => $deaf,
-            'mute' => $mute,
-        ];
-
-        $this->on(Event::VOICE_STATE_UPDATE, fn ($vs, $discord) => $this->voiceStateUpdate($vs, $channel, $data));
-        $this->on(Event::VOICE_SERVER_UPDATE, fn ($vs, $discord) => $this->voiceServerUpdate($vs, $channel, $data, $deferred, $logger));
-
-        $payload = Payload::new(
-            Op::OP_UPDATE_VOICE_STATE,
-            [
-                'guild_id' => $channel->guild_id,
-                'channel_id' => $channel->id,
-                'self_mute' => $mute,
-                'self_deaf' => $deaf,
-            ],
-        );
-
-        $this->send($payload);
-
-        return $deferred->promise();
+        return $this->voice->joinChannel($channel, $this, $mute, $deaf);
     }
 
     protected function voiceStateUpdate($vs, $channel, &$data)
