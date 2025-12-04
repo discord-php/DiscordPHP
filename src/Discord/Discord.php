@@ -1517,9 +1517,6 @@ class Discord
 
     protected function voiceServerUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data, Deferred &$deferred, ?LoggerInterface $logger)
     {
-        // @TODO
-        return;
-
         if ($vs->guild_id !== $channel->guild_id) {
             return; // This voice server update isn't for our guild.
         }
