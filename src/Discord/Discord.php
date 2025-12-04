@@ -1478,7 +1478,7 @@ class Discord
      */
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true): PromiseInterface
     {
-        return $this->voice->joinChannel($channel, $this, $mute, $deaf, $this->voice_sessions);
+        return $this->voice->joinChannel($channel, $this, $this->voice_sessions, $mute, $deaf);
     }
 
     protected function voiceStateUpdate($vs, $channel, &$data)
