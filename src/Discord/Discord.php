@@ -218,7 +218,7 @@ class Discord
      *
      * @var string[] Voice Sessions.
      */
-    protected $voice_sessions = [];
+    public $voice_sessions = [];
 
     /**
      * An array of large guilds that need to be requested for members.
