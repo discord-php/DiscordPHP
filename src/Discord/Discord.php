@@ -1383,7 +1383,7 @@ class Discord
      *
      * @param Payload|array $data Packet data.
      */
-    protected function send(object|array $data, bool $force = false): void
+    public function send(object|array $data, bool $force = false): void
     {
         // Wait until payload count has been reset
         // Keep 5 payloads for heartbeats as required
