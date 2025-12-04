@@ -1822,13 +1822,13 @@ class OldVoiceClient extends EventEmitter
     /**
      * Decodes voice packet data.
      *
-     * @param string      $decrypted   The decrypted voice data.
-     * @param VoiceClient $vc          The voice client instance.
-     * @param VoicePacket $voicePacket The voice packet to decode.
+     * @param string         $decrypted   The decrypted voice data.
+     * @param OldVoiceClient $vc          The voice client instance.
+     * @param VoicePacket    $voicePacket The voice packet to decode.
      *
      * @todo
      */
-    public static function decodeVoicePacket(string $decrypted, VoiceClient $vc, VoicePacket $voicePacket): void
+    public static function decodeVoicePacket(string $decrypted, OldVoiceClient $vc, VoicePacket $voicePacket): void
     {
         $vp = VoicePacket::make($voicePacket->getHeader().$decrypted);
 
