@@ -213,7 +213,7 @@ class Discord
      *
      * @var VoiceClient[] Voice Clients.
      */
-    protected $voiceClients = [];
+    public array $voiceClients = [];
 
     /**
      * An array of voice session IDs.
