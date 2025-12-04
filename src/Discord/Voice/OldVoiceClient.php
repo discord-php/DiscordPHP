@@ -597,7 +597,7 @@ class OldVoiceClient extends EventEmitter
 
         $this->discord->getLogger()->debug('received heartbeat ack', ['response_time' => $diff]);
         $this->emit('ws-ping', [$diff]);
-        $this->emit('ws-heartbeat-ack', [$data->d]);
+        $this->emit('ws-heartbeat-ack', [$data->d['t']]);
     }
 
     /**
