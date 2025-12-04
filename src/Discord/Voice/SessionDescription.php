@@ -53,7 +53,7 @@ class SessionDescription extends Part
         return pack('C*', ...$this->attributes['secret_key']);
     }
 
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         $array = $this->jsonSerialize();
 
