@@ -1517,6 +1517,9 @@ class Discord
 
     protected function voiceServerUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data, Deferred &$deferred, ?LoggerInterface $logger)
     {
+        // @TODO
+        return;
+
         if ($vs->guild_id !== $channel->guild_id) {
             return; // This voice server update isn't for our guild.
         }
@@ -1529,10 +1532,10 @@ class Discord
         $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
         $vc = new VoiceClient($this, $channel, $this->voice_sessions, $data);
+        $this->voiceClients[$channel->guild_id] = $vc;
 
         $vc->once('ready', function () use ($vc, $deferred, $channel) {
             $this->logger->info('voice client is ready');
-            $this->voiceClients[$channel->guild_id] = $vc;
             $deferred->resolve($vc);
         });
         $vc->once('error', function ($e) use ($deferred) {
