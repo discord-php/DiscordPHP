@@ -29,7 +29,7 @@ use function React\Promise\resolve;
  *
  * @internal
  */
-class OggStream
+class OldOggStream
 {
     /**
      * Leftover bytes from the previous Ogg packet.
@@ -67,13 +67,13 @@ class OggStream
      * @param Buffer $buffer  Buffer to read Ogg Opus packets from.
      * @param ?int   $timeout Time in milliseconds before a buffer read times out.
      *
-     * @return PromiseInterface<OggStream> A promise containing the Ogg stream.
+     * @return PromiseInterface<OldOggStream> A promise containing the Ogg stream.
      */
     public static function fromBuffer(Buffer $buffer, ?int $timeout = -1): PromiseInterface
     {
         return OggPage::fromBuffer($buffer, $timeout)
             ->then(fn (OggPage $pageHeader) => OggPage::fromBuffer($buffer, $timeout)
-            ->then(fn (OggPage $pageTags) => new OggStream($buffer, new OpusHead($pageHeader->segmentData), new OpusTags($pageTags->segmentData))));
+            ->then(fn (OggPage $pageTags) => new OldOggStream($buffer, new OpusHead($pageHeader->segmentData), new OpusTags($pageTags->segmentData))));
     }
 
     /**
