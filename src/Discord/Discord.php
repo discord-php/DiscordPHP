@@ -42,6 +42,7 @@ use Discord\Repository\LobbyRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\SoundRepository;
 use Discord\Repository\UserRepository;
+use Discord\Voice\Manager;
 use Discord\Voice\Region;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
@@ -1529,8 +1530,13 @@ class Discord
         $data['dnsConfig'] = $this->options['dnsConfig'];
         $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-        $new = isset($this->voiceClients[$channel->guild_id]);
-        $this->voiceClients[$channel->guild_id] ??= $vc = $this->voiceClients[$channel->guild_id] ?? new VoiceClient($this, $channel, $this->voice_sessions, $data);
+        $new = false;
+        $manager = null;
+        if (! isset($this->voiceClients[$channel->guild_id])) {
+            $new = true;
+            $manager = new Manager($this);
+        }
+        $this->voiceClients[$channel->guild_id] ??= $vc = $this->voiceClients[$channel->guild_id] ?? new VoiceClient($this, $channel, $this->voice_sessions, $data, deferred: $deferred, manager: $manager);
 
         $vc->once('ready', function () use ($vc, $deferred, $channel) {
             $this->logger->info('voice client is ready');
