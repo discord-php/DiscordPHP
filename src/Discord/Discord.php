@@ -670,6 +670,7 @@ class Discord
             return;
         }
         $this->voiceClients[$voiceStateUpdate->guild_id]->handleVoiceStateUpdate($voiceStateUpdate);
+        $this->voiceClients[$voiceStateUpdate->guild_id]->manager->stateUpdate($voiceStateUpdate, $this->getChannel($voiceStateUpdate->channel_id));
     }
 
     /**
