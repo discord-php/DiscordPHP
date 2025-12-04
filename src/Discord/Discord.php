@@ -42,6 +42,7 @@ use Discord\Repository\LobbyRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\SoundRepository;
 use Discord\Repository\UserRepository;
+use Discord\Voice\Manager;
 use Discord\Voice\Region;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
@@ -54,6 +55,7 @@ use Discord\WebSockets\Op;
 use Evenement\EventEmitterTrait;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
+use Monolog\Level;
 use Monolog\Logger as Monolog;
 use Psr\Log\LoggerInterface;
 use Ratchet\Client\Connector;
@@ -211,14 +213,14 @@ class Discord
      *
      * @var VoiceClient[] Voice Clients.
      */
-    protected $voiceClients = [];
+    public array $voiceClients = [];
 
     /**
      * An array of voice session IDs.
      *
      * @var string[] Voice Sessions.
      */
-    protected $voice_sessions = [];
+    public array $voice_sessions = [];
 
     /**
      * An array of large guilds that need to be requested for members.
@@ -367,6 +369,13 @@ class Discord
      * @var RegisteredCommand[]
      */
     protected $application_commands;
+
+    /**
+     * The voice handler, of clients and packets.
+     *
+     * @var Manager
+     */
+    public Manager $voice;
 
     /**
      * The transport compression setting.
@@ -663,12 +672,11 @@ class Discord
         $voiceStateUpdate = $this->factory->part(VoiceStateUpdate::class, (array) $data->d, true);
 
         $this->logger->debug('voice state update received', ['guild' => $voiceStateUpdate->guild_id, 'data' => $voiceStateUpdate]);
-        if (! isset($this->voiceClients[$voiceStateUpdate->guild_id])) {
-            $this->logger->warning('voice client not found', ['guild' => $voiceStateUpdate->guild_id]);
-
-            return;
+        if (isset($this->voice->clients[$data->d->guild_id])) {
+            /** @var VoiceClient */
+            $client = $this->voice->clients[$data->d->guild_id];
+            $client->handleVoiceStateUpdate($data->d);
         }
-        $this->voiceClients[$voiceStateUpdate->guild_id]->handleVoiceStateUpdate($voiceStateUpdate);
     }
 
     /**
@@ -1375,7 +1383,7 @@ class Discord
      *
      * @param Payload|array $data Packet data.
      */
-    protected function send(object|array $data, bool $force = false): void
+    public function send(object|array $data, bool $force = false): void
     {
         // Wait until payload count has been reset
         // Keep 5 payloads for heartbeats as required
@@ -1400,6 +1408,9 @@ class Discord
             return false;
         }
         $this->emittedInit = true;
+
+        $this->voice = new Manager($this);
+        $this->logger->info('voice class initialized');
 
         $this->logger->info('client is ready');
         $this->emit('init', [$this]);
@@ -1465,44 +1476,9 @@ class Discord
      *
      * @return PromiseInterface<VoiceClient>
      */
-    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null): PromiseInterface
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true): PromiseInterface
     {
-        $deferred = new Deferred();
-
-        if (! $channel->isVoiceBased()) {
-            $deferred->reject(new \RuntimeException('Channel must allow voice.'));
-
-            return $deferred->promise();
-        }
-
-        if (isset($this->voiceClients[$channel->guild_id])) {
-            $deferred->reject(new \RuntimeException('You cannot join more than one voice channel per guild.'));
-
-            return $deferred->promise();
-        }
-
-        $data = [
-            'user_id' => $this->id,
-            'deaf' => $deaf,
-            'mute' => $mute,
-        ];
-
-        $this->on(Event::VOICE_STATE_UPDATE, fn ($vs, $discord) => $this->voiceStateUpdate($vs, $channel, $data));
-        $this->on(Event::VOICE_SERVER_UPDATE, fn ($vs, $discord) => $this->voiceServerUpdate($vs, $channel, $data, $deferred, $logger));
-
-        $payload = Payload::new(
-            Op::OP_UPDATE_VOICE_STATE,
-            [
-                'guild_id' => $channel->guild_id,
-                'channel_id' => $channel->id,
-                'self_mute' => $mute,
-                'self_deaf' => $deaf,
-            ],
-        );
-
-        $this->send($payload);
-
-        return $deferred->promise();
+        return $this->voice->joinChannel($channel, $this, $this->voice_sessions, $mute, $deaf);
     }
 
     protected function voiceStateUpdate($vs, $channel, &$data)
@@ -1527,11 +1503,16 @@ class Discord
         $data['dnsConfig'] = $this->options['dnsConfig'];
         $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-        $vc = new VoiceClient($this, $this->ws, $this->voice_sessions, $channel, $data);
+        $new = false;
+        $manager = null;
+        if (! isset($this->voiceClients[$channel->guild_id])) {
+            $new = true;
+            $manager = new Manager($this);
+        }
+        $this->voiceClients[$channel->guild_id] ??= $vc = $this->voiceClients[$channel->guild_id] ?? new VoiceClient($this, $channel, $this->voice_sessions, $data, deferred: $deferred, manager: $manager);
 
         $vc->once('ready', function () use ($vc, $deferred, $channel) {
             $this->logger->info('voice client is ready');
-            $this->voiceClients[$channel->guild_id] = $vc;
             $deferred->resolve($vc);
         });
         $vc->once('error', function ($e) use ($deferred) {
@@ -1543,7 +1524,21 @@ class Discord
             unset($this->voiceClients[$channel->guild_id]);
         });
 
-        $vc->start();
+        if ($new) {
+            $vc->boot();
+        } else {
+            $vc->setData(
+                array_merge(
+                    $vc->data,
+                    [
+                    'token' => $vs->token,
+                    'endpoint' => $vs->endpoint,
+                    'session' => $vc->data['session'] ?? null,
+                ],
+                    ['dnsConfig' => $this->options['dnsConfig']]
+                )
+            );
+        }
 
         $this->voiceLoggers[$channel->guild_id] = $this->logger;
         $this->removeListener(Event::VOICE_SERVER_UPDATE, fn () => $this->voiceServerUpdate($vs, $channel, $data, $deferred, $logger));
@@ -1716,7 +1711,7 @@ class Discord
         $options['loop'] ??= Loop::get();
 
         if (null === $options['logger']) {
-            $streamHandler = new StreamHandler('php://stdout', Monolog::DEBUG);
+            $streamHandler = new StreamHandler('php://stdout', Level::Debug);
             $lineFormatter = new LineFormatter(null, null, true, true);
             $streamHandler->setFormatter($lineFormatter);
             $logger = new Monolog('DiscordPHP', [$streamHandler]);
@@ -1892,7 +1887,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'voice_sessions'];
+        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};
