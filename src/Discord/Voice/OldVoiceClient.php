@@ -1297,9 +1297,9 @@ class OldVoiceClient extends EventEmitter
     /**
      * Reads and processes Opus audio packets from an OGG stream.
      *
-     * @param Deferred  $deferred The deferred promise that will be resolved when the stream ends.
+     * @param Deferred     $deferred The deferred promise that will be resolved when the stream ends.
      * @param OldOggStream &$ogg     Reference to the OGG stream object to read packets from.
-     * @param int       &$loops   Reference to the loop counter used for timing calculations.
+     * @param int          &$loops   Reference to the loop counter used for timing calculations.
      *
      *
      * @throws \Exception If packet retrieval fails.
