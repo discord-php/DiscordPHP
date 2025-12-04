@@ -52,4 +52,15 @@ class SessionDescription extends Part
     {
         return pack('C*', ...$this->attributes['secret_key']);
     }
+
+    public function __debugInfo()
+    {
+        $array = $this->jsonSerialize();
+
+        if (isset($array['secret_key'])) {
+            $array['secret_key'] = 'xxxxx';
+        }
+
+        return $array;
+    }
 }
