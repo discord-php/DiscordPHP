@@ -58,7 +58,7 @@ class SessionDescription extends Part
         $array = $this->jsonSerialize();
 
         if (isset($array['secret_key'])) {
-            $array['secret_key'] = 'xxxxx';
+            $array['secret_key'] = '*****';
         }
 
         return $array;
