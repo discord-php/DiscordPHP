@@ -129,10 +129,20 @@ class CommandBuilder extends Builder implements JsonSerializable
      * @throws \DomainException
      *
      * @return array
+     * 
+     * @deprecated 10.42.0 Use `jsonSerialize`
      */
     public function toArray(): array
     {
-        $arrCommand = [
+        return $this->jsonSerialize();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        return $arrCommand = [
             'name' => $this->name,
             'description' => $this->description,
         ];
@@ -165,13 +175,5 @@ class CommandBuilder extends Builder implements JsonSerializable
         }
 
         return $arrCommand;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize(): array
-    {
-        return $this->toArray();
     }
 }
