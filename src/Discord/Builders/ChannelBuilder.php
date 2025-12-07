@@ -377,7 +377,10 @@ class ChannelBuilder extends Builder implements JsonSerializable
         return $this;
     }
 
-    public function toArray(): array
+    /**
+     * @inheritdoc
+     */
+    public function jsonSerialize(): array
     {
         if ($this->name === null) {
             throw new RequestFailedException('Channel name is required.');
@@ -440,13 +443,5 @@ class ChannelBuilder extends Builder implements JsonSerializable
         }
 
         return $body;
-    }
-    
-    /**
-     * @inheritdoc
-     */
-    public function jsonSerialize(): array
-    {
-        return $this->toArray();
     }
 }

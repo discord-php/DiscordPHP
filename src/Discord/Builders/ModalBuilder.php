@@ -222,7 +222,10 @@ class ModalBuilder extends Builder implements JsonSerializable
         return $this->components ?? [];
     }
 
-    public function toArray(): array
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
     {
         return [
             'type' => $this->type,
@@ -232,13 +235,5 @@ class ModalBuilder extends Builder implements JsonSerializable
                 'components' => $this->components,
             ],
         ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize(): array
-    {
-        return $this->toArray();
     }
 }
