@@ -69,7 +69,7 @@ class ChannelBuilder extends Builder implements JsonSerializable
      * @param ChannelRepository $repository
      *
      * @return Channel
-     * 
+     *
      * @since 10.41.0
      */
     public function create(ChannelRepository $repository): Channel

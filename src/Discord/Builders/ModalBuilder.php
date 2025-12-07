@@ -240,5 +240,5 @@ class ModalBuilder extends Builder implements JsonSerializable
     public function jsonSerialize(): array
     {
         return $this->toArray();
-    }   
+    }
 }

@@ -170,7 +170,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @param MessageRepository|PrivateChannelRepository $repository
      *
      * @return Message
-     * 
+     *
      * @since 10.41.0
      */
     public function create(MessageRepository|PrivateChannelRepository $repository): Message

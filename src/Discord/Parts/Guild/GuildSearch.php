@@ -21,19 +21,17 @@ use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\Member;
 
 /**
- * TODO.
+ * Represents a Guild Search result.
  *
- * @link TODO
+ * @link https://discord.com/developers/docs/resources/guild#search-guild-members
  *
- * @todo
- *
- * @property string                                   $analytics_id
- * @property ExCollectionInterface<Message>|Message[] $messages
- * @property bool                                     $doing_deep_historical_index
- * @property int                                      $total_results
- * @property ExCollectionInterface<Thread>|Thread[]   $threads
- * @property ExCollectionInterface<Member>|Member[]   $members
- * @property ?int|null                                $documents_indexed
+ * @property string                                   $analytics_id                The analytics ID for the search query.
+ * @property ExCollectionInterface<Message>|Message[] $messages                    An array of messages that match the query.
+ * @property bool                                     $doing_deep_historical_index The status of the guild's deep historical indexing operation, if any.
+ * @property int                                      $total_results               The total number of results that match the query.
+ * @property ExCollectionInterface<Thread>|Thread[]   $threads                     The threads that contain the returned messages.
+ * @property ExCollectionInterface<Member>|Member[]   $members                     A thread member object for each returned thread the current user has joined.
+ * @property ?int|null                                $documents_indexed           The number of documents that have been indexed during the current index operation, if any.
  */
 class GuildSearch extends Part
 {
@@ -52,6 +50,8 @@ class GuildSearch extends Part
 
     /**
      * Returns a collection of messages found in the search.
+     *
+     * The nested array was used to provide surrounding context to search results. However, surrounding context is no longer returned.
      *
      * @return ExCollectionInterface<Message>|Message[]
      */
