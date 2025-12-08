@@ -1410,9 +1410,10 @@ class Discord
         }
         $this->emittedInit = true;
 
-        /** @todo Only instantiate the manager if the class exists */
-        $this->voice = new Manager($this);
-        $this->logger->info('voice class initialized');
+        if (class_exists(Manager::class)) {
+            $this->voice = new Manager($this);
+            $this->logger->info('voice class initialized');
+        }
 
         $this->logger->info('client is ready');
         $this->emit('init', [$this]);
@@ -1484,7 +1485,14 @@ class Discord
             : reject(new \RuntimeException('Voice manager is not initialized.'));
     }
 
-    protected function voiceStateUpdate($vs, $channel, &$data)
+    /**
+     * Handles voice state update events.
+     *
+     * @param VoiceServerUpdate $vs      The voice state update event.
+     * @param Channel           $channel The voice channel.
+     * @param array             $data    Reference to the data array for the voice client.
+     */
+    protected function voiceStateUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data): void
     {
         if ($vs->guild_id !== $channel->guild_id) {
             return; // This voice state update isn't for our guild.
@@ -1495,15 +1503,17 @@ class Discord
 
     /**
      * Handles voice server update events.
-     * 
-     * @param VoiceServerUpdate    $vs       The voice server update event.
-     * @param Channel              $channel  The voice channel.
-     * @param array                $data     Reference to the data array for the voice client.
-     * @param Deferred             $deferred Reference to the deferred object for the voice client.
+     *
+     * @param VoiceServerUpdate $vs       The voice server update event.
+     * @param Channel           $channel  The voice channel.
+     * @param array             $data     Reference to the data array for the voice client.
+     * @param Deferred          $deferred Reference to the deferred object for the voice client.
      */
     protected function voiceServerUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data, Deferred &$deferred): void
     {
-        if (! class_exists(Manager::class)) {
+        if (! isset($this->voice)) {
+            $deferred->reject(new \RuntimeException('Voice manager is not initialized.'));
+
             return;
         }
 
@@ -1517,12 +1527,7 @@ class Discord
         $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
         $new = false;
-        $manager = null;
-        if (! isset($this->voiceClients[$channel->guild_id])) {
-            $new = true;
-            $manager = new Manager($this);
-        }
-        $this->voiceClients[$channel->guild_id] ??= $vc = $this->voiceClients[$channel->guild_id] ?? new VoiceClient($this, $channel, $this->voice_sessions, $data, deferred: $deferred, manager: $manager);
+        $this->voiceClients[$channel->guild_id] ??= $vc = $this->voiceClients[$channel->guild_id] ?? new VoiceClient($this, $channel, $this->voice_sessions, $data, deferred: $deferred, manager: $this->voice);
 
         $vc->once('ready', function () use ($vc, $deferred, $channel) {
             $this->logger->info('voice client is ready');
