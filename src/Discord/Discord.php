@@ -1471,7 +1471,7 @@ class Discord
      * @param bool    $mute    Whether you should be mute when you join the channel.
      * @param bool    $deaf    Whether you should be deaf when you join the channel.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException If the voice manager is not initialized.
      *
      * @since 10.0.0 Removed argument $check that has no effect (it is always checked)
      * @since 4.0.0
