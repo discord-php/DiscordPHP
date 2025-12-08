@@ -1526,10 +1526,9 @@ class Discord
         $data['dnsConfig'] = $this->options['dnsConfig'];
         $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-        $new = false;
         $this->voiceClients[$channel->guild_id] ??= $vc = $this->voiceClients[$channel->guild_id] ?? new VoiceClient($this, $channel, $this->voice_sessions, $data, deferred: $deferred, manager: $this->voice);
 
-        $vc->once('ready', function () use ($vc, $deferred, $channel) {
+        $vc->once('ready', function () use ($vc, $deferred) {
             $this->logger->info('voice client is ready');
             $deferred->resolve($vc);
         });
@@ -1542,21 +1541,17 @@ class Discord
             unset($this->voiceClients[$channel->guild_id]);
         });
 
-        if ($new) {
-            $vc->boot();
-        } else {
-            $vc->setData(
-                array_merge(
-                    $vc->data,
-                    [
-                    'token' => $vs->token,
-                    'endpoint' => $vs->endpoint,
-                    'session' => $vc->data['session'] ?? null,
-                ],
-                    ['dnsConfig' => $this->options['dnsConfig']]
-                )
-            );
-        }
+        $vc->setData(
+            array_merge(
+                $vc->data,
+                [
+                'token' => $vs->token,
+                'endpoint' => $vs->endpoint,
+                'session' => $vc->data['session'] ?? null,
+            ],
+                ['dnsConfig' => $this->options['dnsConfig']]
+            )
+        );
 
         $this->voiceLoggers[$channel->guild_id] = $this->logger;
         $this->removeListener(Event::VOICE_SERVER_UPDATE, fn () => $this->voiceServerUpdate($vs, $channel, $data, $deferred));
