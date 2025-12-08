@@ -1507,7 +1507,7 @@ class Discord
      * @param VoiceServerUpdate $vs       The voice server update event.
      * @param Channel           $channel  The voice channel.
      * @param array             $data     Reference to the data array for the voice client.
-     * @param Deferred          $deferred Reference to the deferred object for the voice client.
+     * @param Deferred          $deferred Reference to the deferred object for the voice client. Rejects on error or if voice manager is not initialized.
      */
     protected function voiceServerUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data, Deferred &$deferred): void
     {
