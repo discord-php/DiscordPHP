@@ -672,10 +672,10 @@ class Discord
         $voiceStateUpdate = $this->factory->part(VoiceStateUpdate::class, (array) $data->d, true);
 
         $this->logger->debug('voice state update received', ['guild' => $voiceStateUpdate->guild_id, 'data' => $voiceStateUpdate]);
-        if (isset($this->voice->clients[$data->d->guild_id])) {
+        if (isset($this->voice->clients[$voiceStateUpdate->guild_id])) {
             /** @var VoiceClient */
-            $client = $this->voice->clients[$data->d->guild_id];
-            $client->handleVoiceStateUpdate($data->d);
+            $client = $this->voice->clients[$voiceStateUpdate->guild_id];
+            $client->handleVoiceStateUpdate($voiceStateUpdate);
         }
     }
 
