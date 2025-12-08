@@ -6928,7 +6928,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\EmbedPollResult",
             "name": "EmbedPollResult",
-            "summary": "An\u0020embed\u0020object\u0020to\u0020be\u0020sent\u0020with\u0020a\u0020message.",
+            "summary": "An\u0020embed\u0020poll\u0020result\u0020object\u0020to\u0020be\u0020sent\u0020with\u0020a\u0020message.",
             "url": "classes/Discord-Parts-Embed-EmbedPollResult.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\EmbedPollResult\u003A\u003AgetPollFieldsAttribute\u0028\u0029",
@@ -8243,7 +8243,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildSearch",
             "name": "GuildSearch",
-            "summary": "TODO.",
+            "summary": "Represents\u0020a\u0020Guild\u0020Search\u0020result.",
             "url": "classes/Discord-Parts-Guild-GuildSearch.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\GuildSearch\u003A\u003AgetMessagesAttribute\u0028\u0029",
@@ -13303,7 +13303,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\MessageRepository",
             "name": "MessageRepository",
-            "summary": "Used\u0020only\u0020to\u0020search\u0020messages\u0020sent\u0020in\u0020a\u0020guild.",
+            "summary": "Returns\u0020a\u0020list\u0020of\u0020messages\u0020without\u0020the\u0020\u0060reactions\u0060\u0020key\u0020that\u0020match\u0020a\u0020search\u0020query\u0020in\u0020the\u0020guild.\u0020Requires\u0020the\u0020\u0060READ_MESSAGE_HISTORY\u0060\u0020permission.",
             "url": "classes/Discord-Repository-Guild-MessageRepository.html"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\MessageRepository\u003A\u003Afreshen\u0028\u0029",

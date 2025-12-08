@@ -265,14 +265,18 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MessageRepository.php"><a href="files/src-discord-repository-guild-messagerepository.html"><abbr title="src/Discord/Repository/Guild/MessageRepository.php">MessageRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Used only to search messages sent in a guild.</p>
+            <p class="phpdocumentor-summary">Returns a list of messages without the `reactions` key that match a search query in the guild. Requires the `READ_MESSAGE_HISTORY` permission.</p>
 
 
-    <section class="phpdocumentor-description"><p>All bots with the message content intent can use it, but it's not considered stable yet, and Discord might make changes or remove bot access if necessary.</p>
+    <section class="phpdocumentor-description"><p>If the entity you are searching is not yet indexed, the endpoint will return a 202 accepted response.
+The response body will not contain any search results, and will look similar to an error response.</p>
+<p>Due to speed optimizations, search may return slightly less results than the limit specified when messages have not been accessed for a long time.
+Clients should not rely on the length of the <code class="prettyprint">messages</code> array to paginate results.</p>
+<p>Additionally, when messages are actively being created or deleted, the <code class="prettyprint">total_results</code> field may not be accurate.</p>
 </section>
 
 
@@ -852,7 +856,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MessageRepository.php"><a href="files/src-discord-repository-guild-messagerepository.html"><abbr title="src/Discord/Repository/Guild/MessageRepository.php">MessageRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
@@ -941,7 +945,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MessageRepository.php"><a href="files/src-discord-repository-guild-messagerepository.html"><abbr title="src/Discord/Repository/Guild/MessageRepository.php">MessageRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
@@ -981,7 +985,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MessageRepository.php"><a href="files/src-discord-repository-guild-messagerepository.html"><abbr title="src/Discord/Repository/Guild/MessageRepository.php">MessageRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -2382,7 +2386,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MessageRepository.php"><a href="files/src-discord-repository-guild-messagerepository.html"><abbr title="src/Discord/Repository/Guild/MessageRepository.php">MessageRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -2390,7 +2394,7 @@ based on the response of the callback.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">freshen</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">freshen</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, static&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2400,37 +2404,10 @@ based on the response of the callback.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$queryparams</span>
-                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, mixed&gt;</span>
+                : <span class="phpdocumentor-argument-list__argument__type">bool</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Query string params to add to the request (no validation).
-Supported parameters:</p>
-<ul>
-<li>sort_by: Sorting mode. See SortingMode schema.</li>
-<li>sort_order: Sorting order. See SortingOrder schema.</li>
-<li>content: Message content to search for (array|string, max 1024 chars).</li>
-<li>slop: Integer, minimum 0, maximum 100.</li>
-<li>author_id: Author ID (SnowflakeType|null, up to 1521 unique items).</li>
-<li>author_type: Author type (AuthorType, up to 1521 unique items).</li>
-<li>mentions: Mentioned user ID (SnowflakeType|null, up to 1521 unique items).</li>
-<li>mention_everyone: Boolean, whether to include messages mentioning everyone.</li>
-<li>min_id: Minimum message ID (SnowflakeType).</li>
-<li>max_id: Maximum message ID (SnowflakeType).</li>
-<li>limit: Integer, minimum 1, maximum 25.</li>
-<li>offset: Integer, minimum 0, maximum 9975.</li>
-<li>cursor: Cursor for pagination (ScoreCursor or TimestampCursor).</li>
-<li>has: Message feature (HasOption, up to 1521 unique items).</li>
-<li>link_hostname: Link hostname (string|null, max 152133 chars each, up to 1521 unique items).</li>
-<li>embed_provider: Embed providers (string|null, max 256 chars each, up to 1521 unique items).</li>
-<li>embed_type: Embed type (SearchableEmbedType|null, up to 1521 unique items).</li>
-<li>attachment_extension: Attachment extension (string|null, max 152133 chars each, up to 1521 unique items).</li>
-<li>attachment_filename: Attachment filename (string, max 1024 chars).</li>
-<li>pinned: Boolean, whether to include pinned messages.</li>
-<li>command_id: Command ID (SnowflakeType).</li>
-<li>command_name: Command name (string, max 32 chars).</li>
-<li>include_nsfw: Boolean, whether to include NSFW messages.</li>
-<li>channel_id: Channel IDs (SnowflakeType, up to 500 unique items).</li>
-</ul>
+                    <section class="phpdocumentor-description"><p>['include_nsfw']         Boolean, whether to include results from NSFW channels (default false).</p>
 </section>
 
             </dd>
@@ -4161,7 +4138,7 @@ This method is deprecated for userland code but can still be used internally wit
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MessageRepository.php"><a href="files/src-discord-repository-guild-messagerepository.html"><abbr title="src/Discord/Repository/Guild/MessageRepository.php">MessageRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">126</span>
 
     </aside>
 
