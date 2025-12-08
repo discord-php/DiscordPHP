@@ -742,17 +742,17 @@ class Discord
      */
     protected function processWsMessage(string $data): void
     {
-        if (! $data = json_decode($data)) {
+        if (! $decoded = json_decode($data)) {
             $this->logger->warning('failed to decode websocket message', ['payload' => $data]);
 
             // @todo: handle invalid payload (reconnect), throw exception, or ignore?
             return;
         }
 
-        $this->emit('raw', [$data, $this]);
+        $this->emit('raw', [$decoded, $this]);
 
-        if (isset($data->s)) {
-            $this->seq = $data->s;
+        if (isset($decoded->s)) {
+            $this->seq = $decoded->s;
         }
 
         static $rawOp = [
@@ -767,11 +767,11 @@ class Discord
             Op::OP_HEARTBEAT_ACK => 'handleHeartbeatAck',
         ];
 
-        isset($rawOp[$data->op])
-            ? $this->{$rawOp[$data->op]}($data)
-            : (isset($op[$data->op])
-                ? $this->{$op[$data->op]}(Payload::new($data->op, $data->d, $data->s, $data->t))
-                : $this->logger->debug('unknown op code', ['op' => $data->op, 'payload' => $data]));
+        isset($rawOp[$decoded->op])
+            ? $this->{$rawOp[$decoded->op]}($decoded)
+            : (isset($op[$decoded->op])
+                ? $this->{$op[$decoded->op]}(Payload::new($decoded->op, $decoded->d, $decoded->s, $decoded->t))
+                : $this->logger->debug('unknown op code', ['op' => $decoded->op, 'payload' => $decoded]));
     }
 
     /**
