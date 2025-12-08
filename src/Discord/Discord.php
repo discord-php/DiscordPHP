@@ -1490,6 +1490,9 @@ class Discord
         $this->removeListener(Event::VOICE_STATE_UPDATE, fn () => $this->voiceStateUpdate($vs, $channel, $data));
     }
 
+    /**
+     * @todo Early return if the voice client class is not loaded.
+     */
     protected function voiceServerUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data, Deferred &$deferred, ?LoggerInterface $logger)
     {
         if ($vs->guild_id !== $channel->guild_id) {
