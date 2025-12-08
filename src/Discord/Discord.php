@@ -1545,10 +1545,10 @@ class Discord
             array_merge(
                 $vc->data,
                 [
-                'token' => $vs->token,
-                'endpoint' => $vs->endpoint,
-                'session' => $vc->data['session'] ?? null,
-            ],
+                    'token' => $vs->token,
+                    'endpoint' => $vs->endpoint,
+                    'session' => $vc->data['session'] ?? null,
+                ],
                 ['dnsConfig' => $this->options['dnsConfig']]
             )
         );
