@@ -71,6 +71,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function React\Async\coroutine;
 use function React\Promise\all;
+use function React\Promise\reject;
 use function React\Promise\resolve;
 
 /**
@@ -1465,10 +1466,9 @@ class Discord
     /**
      * Joins a voice channel.
      *
-     * @param Channel              $channel The channel to join.
-     * @param bool                 $mute    Whether you should be mute when you join the channel.
-     * @param bool                 $deaf    Whether you should be deaf when you join the channel.
-     * @param LoggerInterface|null $logger  Voice client logger. If null, uses same logger as Discord client.
+     * @param Channel $channel The channel to join.
+     * @param bool    $mute    Whether you should be mute when you join the channel.
+     * @param bool    $deaf    Whether you should be deaf when you join the channel.
      *
      * @throws \RuntimeException
      *
@@ -1479,7 +1479,9 @@ class Discord
      */
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true): PromiseInterface
     {
-        return $this->voice->joinChannel($channel, $this, $this->voice_sessions, $mute, $deaf);
+        return isset($this->voice)
+            ? $this->voice->joinChannel($channel, $this, $this->voice_sessions, $mute, $deaf)
+            : reject(new \RuntimeException('Voice manager is not initialized.'));
     }
 
     protected function voiceStateUpdate($vs, $channel, &$data)
