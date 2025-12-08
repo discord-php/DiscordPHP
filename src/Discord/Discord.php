@@ -1494,15 +1494,22 @@ class Discord
     }
 
     /**
-     * @todo Early return if the voice client class is not loaded.
+     * Handles voice server update events.
+     * 
+     * @param VoiceServerUpdate    $vs       The voice server update event.
+     * @param Channel              $channel  The voice channel.
+     * @param array                $data     Reference to the data array for the voice client.
+     * @param Deferred             $deferred Reference to the deferred object for the voice client.
      */
-    protected function voiceServerUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data, Deferred &$deferred, ?LoggerInterface $logger)
+    protected function voiceServerUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data, Deferred &$deferred): void
     {
+        if (! class_exists(Manager::class)) {
+            return;
+        }
+
         if ($vs->guild_id !== $channel->guild_id) {
             return; // This voice server update isn't for our guild.
         }
-
-        $logger ??= $this->logger;
 
         $data['token'] = $vs->token;
         $data['endpoint'] = $vs->endpoint;
@@ -1547,7 +1554,7 @@ class Discord
         }
 
         $this->voiceLoggers[$channel->guild_id] = $this->logger;
-        $this->removeListener(Event::VOICE_SERVER_UPDATE, fn () => $this->voiceServerUpdate($vs, $channel, $data, $deferred, $logger));
+        $this->removeListener(Event::VOICE_SERVER_UPDATE, fn () => $this->voiceServerUpdate($vs, $channel, $data, $deferred));
     }
 
     /**
