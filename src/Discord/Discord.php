@@ -210,13 +210,6 @@ class Discord
     protected $sessionId;
 
     /**
-     * An array of voice clients that are currently connected.
-     *
-     * @var VoiceClient[] Voice Clients.
-     */
-    public array $voiceClients = [];
-
-    /**
      * An array of guild IDs paired to their voice session IDs.
      *
      * @var string[] Voice Sessions.
@@ -461,9 +454,9 @@ class Discord
      */
     protected function handleVoiceServerUpdate(object $data): void
     {
-        if (isset($this->voiceClients[$data->d->guild_id])) {
+        if (isset($this->voice->clients[$data->d->guild_id])) {
             $this->logger->debug('voice server update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
-            $this->voiceClients[$data->d->guild_id]->handleVoiceServerChange((array) $data->d);
+            $this->voice->clients[$data->d->guild_id]->handleVoiceServerChange((array) $data->d);
         }
     }
 
@@ -1461,7 +1454,7 @@ class Discord
      */
     public function getVoiceClient(string $guild_id): ?VoiceClient
     {
-        return $this->voiceClients[$guild_id] ?? null;
+        return $this->voice->clients[$guild_id] ?? null;
     }
 
     /**
@@ -1526,7 +1519,7 @@ class Discord
         $data['dnsConfig'] = $this->options['dnsConfig'];
         $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-        $this->voiceClients[$channel->guild_id] ??= $vc = $this->voiceClients[$channel->guild_id] ?? new VoiceClient($this, $channel, $this->voice_sessions, $data, deferred: $deferred, manager: $this->voice);
+        $this->voice->clients[$channel->guild_id] ??= $vc = $this->voice->clients[$channel->guild_id] ?? new VoiceClient($this, $channel, $this->voice_sessions, $data, deferred: $deferred, manager: $this->voice);
 
         $vc->once('ready', function () use ($vc, $deferred) {
             $this->logger->info('voice client is ready');
@@ -1538,7 +1531,7 @@ class Discord
         });
         $vc->once('close', function () use ($channel) {
             $this->logger->warning('voice client closed');
-            unset($this->voiceClients[$channel->guild_id]);
+            unset($this->voice->clients[$channel->guild_id]);
         });
 
         $vc->setData(
