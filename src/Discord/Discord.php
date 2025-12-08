@@ -1409,6 +1409,7 @@ class Discord
         }
         $this->emittedInit = true;
 
+        /** @todo Only instantiate the manager if the class exists */
         $this->voice = new Manager($this);
         $this->logger->info('voice class initialized');
 
