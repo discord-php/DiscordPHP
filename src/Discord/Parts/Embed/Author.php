@@ -18,7 +18,7 @@ use Discord\Parts\Part;
 /**
  * The author of an embed object.
  *
- * @link https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure
+ * @link https://discord.com/developers/docs/resources/message#embed-object-embed-author-structure
  *
  * @since 4.0.3
  *
