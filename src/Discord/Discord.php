@@ -217,7 +217,7 @@ class Discord
     public array $voiceClients = [];
 
     /**
-     * An array of voice session IDs.
+     * An array of guild IDs paired to their voice session IDs.
      *
      * @var string[] Voice Sessions.
      */
