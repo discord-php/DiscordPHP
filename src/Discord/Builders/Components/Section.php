@@ -61,6 +61,50 @@ class Section extends Layout implements Contracts\ComponentV2
     }
 
     /**
+     * Sets a group of components to the section.
+     *
+     * @since 10.42.0
+     *
+     * @param TextDisplay[]|string[] $components Components to set.
+     *
+     * @throws \InvalidArgumentException Component is not a TextDisplay.
+     * @throws \OverflowException        Section exceeds 3 text components.
+     *
+     * @return $this
+     */
+    public function setComponents($components): self
+    {
+        $this->components = [];
+
+        foreach ($components as $component) {
+            $this->addComponent($component);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add a group of components to the section.
+     *
+     * @since 10.19.0
+     *
+     * @param TextDisplay[]|string[] $components Components to add.
+     *
+     * @throws \InvalidArgumentException Component is not a TextDisplay.
+     * @throws \OverflowException        Section exceeds 3 text components.
+     *
+     * @return $this
+     */
+    public function addComponents($components): self
+    {
+        foreach ($components as $component) {
+            $this->addComponent($component);
+        }
+
+        return $this;
+    }
+
+    /**
      * Adds a text display component to the section.
      * Text displays can only be used within sections.
      * Use setAccessory() instead for Thumbnail or Button.
@@ -87,27 +131,6 @@ class Section extends Layout implements Contracts\ComponentV2
         }
 
         $this->components[] = $component;
-
-        return $this;
-    }
-
-    /**
-     * Add a group of components to the section.
-     *
-     * @since 10.19.0
-     *
-     * @param TextDisplay[]|string[] $components Components to add.
-     *
-     * @throws \InvalidArgumentException Component is not a TextDisplay.
-     * @throws \OverflowException        Section exceeds 3 text components.
-     *
-     * @return $this
-     */
-    public function addComponents($components): self
-    {
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
 
         return $this;
     }
