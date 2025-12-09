@@ -17,14 +17,14 @@ namespace Discord\Builders\Components;
  * Containers are a new way to group components together.
  * You can also specify an accent color (similar to embeds) and spoiler it.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#container
+ * @link https://discord.com/developers/docs/components/reference#container
  *
  * @since 10.5.0
  *
- * @property int        $type         17 for container component
- * @property ?int|null  $id           Optional identifier for component
- * @property array      $components   Components of the type action row, text display, section, media gallery, separator, or file
- * @property ?int|null  $accent_color Color for the accent on the container as RGB from 0x000000 to 0xFFFFFF
+ * @property int        $type         17 for container component.
+ * @property ?int|null  $id           Optional identifier for component.
+ * @property array      $components   Components of the type action row, text display, section, media gallery, separator, or file.
+ * @property ?int|null  $accent_color Color for the accent on the container as RGB from 0x000000 to 0xFFFFFF.
  * @property ?bool|null $spoiler      Whether the container should be a spoiler (or blurred out). Defaults to false.
  */
 class Container extends Layout implements Contracts\ComponentV2
@@ -100,25 +100,19 @@ class Container extends Layout implements Contracts\ComponentV2
     }
 
     /**
-     * Adds a component to the container.
+     * Sets the components of the container.
      *
-     * @param ActionRow|SelectMenu|Section|TextDisplay|MediaGallery|File|Separator $component Component to add.
-     *
-     * @throws \InvalidArgumentException Component is not a valid type.
+     * @param ComponentObject[]|null $components Components to set.
      *
      * @return $this
      */
-    public function addComponent(ComponentObject $component): self
+    public function setComponents($components = null): self
     {
-        if ($component instanceof Interactive) {
-            $component = ActionRow::new()->addComponent($component);
-        }
+        $this->components = [];
 
-        if (! ($component instanceof ActionRow || $component instanceof Section || $component instanceof TextDisplay || $component instanceof MediaGallery || $component instanceof File || $component instanceof Separator)) {
-            throw new \InvalidArgumentException('Invalid component type.');
+        foreach ($components ?? [] as $component) {
+            $this->addComponent($component);
         }
-
-        $this->components[] = $component;
 
         return $this;
     }
@@ -142,19 +136,25 @@ class Container extends Layout implements Contracts\ComponentV2
     }
 
     /**
-     * Sets the components of the container.
+     * Adds a component to the container.
      *
-     * @param ComponentObject[]|null $components Components to set.
+     * @param ActionRow|SelectMenu|Section|TextDisplay|MediaGallery|File|Separator $component Component to add.
+     *
+     * @throws \InvalidArgumentException Component is not a valid type.
      *
      * @return $this
      */
-    public function setComponents($components = null): self
+    public function addComponent(ComponentObject $component): self
     {
-        $this->components = [];
-
-        foreach ($components ?? [] as $component) {
-            $this->addComponent($component);
+        if ($component instanceof Interactive) {
+            $component = ActionRow::new()->addComponent($component);
         }
+
+        if (! ($component instanceof ActionRow || $component instanceof Section || $component instanceof TextDisplay || $component instanceof MediaGallery || $component instanceof File || $component instanceof Separator)) {
+            throw new \InvalidArgumentException('Invalid component type.');
+        }
+
+        $this->components[] = $component;
 
         return $this;
     }
