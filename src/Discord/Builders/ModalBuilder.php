@@ -159,6 +159,24 @@ class ModalBuilder extends Builder implements JsonSerializable
     }
 
     /**
+     * Adds components to the modal.
+     * 
+     * @since 10.42.0
+     *
+     * @param ComponentObject[] $components Components to add.
+     *
+     * @return $this
+     */
+    public function addComponents($components): self
+    {
+        foreach ($components as $component) {
+            $this->addComponent($component);
+        }
+
+        return $this;
+    }
+
+    /**
      * Add a component to the modal.
      *
      * Only ActionRow, TextDisplay, and Label components are allowed.
