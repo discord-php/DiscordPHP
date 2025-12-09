@@ -33,7 +33,7 @@ trait ComponentsTrait
      * Sets the components of the builder.
      *
      * @param ComponentObject[]|null $components Components to set.
-     * 
+     *
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
      *

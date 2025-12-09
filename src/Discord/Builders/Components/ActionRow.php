@@ -64,7 +64,7 @@ class ActionRow extends Layout
      * @param ComponentObject $component Component to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
-     * @throws \OverflowException       If the action row has more than 5 components.
+     * @throws \OverflowException        If the action row has more than 5 components.
      *
      * @since 10.19.0
      *
