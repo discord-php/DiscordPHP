@@ -56,13 +56,6 @@ class ModalBuilder extends Builder implements JsonSerializable
     protected $title;
 
     /**
-     * Between 1 and 5 (inclusive) components that make up the modal.
-     *
-     * @var ComponentObject[]
-     */
-    protected $components;
-
-    /**
      * Creates a new message builder.
      *
      * @param string            $title

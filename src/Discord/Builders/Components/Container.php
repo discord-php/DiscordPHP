@@ -43,13 +43,6 @@ class Container extends Layout implements Contracts\ComponentV2
     protected $type = Component::TYPE_CONTAINER;
 
     /**
-     * Array of components.
-     *
-     * @var ComponentObject[]
-     */
-    protected $components = [];
-
-    /**
      * Accent color for the container.
      *
      * @var int|null

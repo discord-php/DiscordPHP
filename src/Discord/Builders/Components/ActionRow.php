@@ -42,13 +42,6 @@ class ActionRow extends Layout
     protected $type = Component::TYPE_ACTION_ROW;
 
     /**
-     * Components contained by the action row.
-     *
-     * @var ComponentObject[]
-     */
-    protected $components = [];
-
-    /**
      * Creates a new action row.
      *
      * @return self

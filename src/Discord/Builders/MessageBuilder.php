@@ -108,13 +108,6 @@ class MessageBuilder extends Builder implements JsonSerializable
     protected $forward;
 
     /**
-     * Components to send with this message.
-     *
-     * @var ComponentObject[]|null
-     */
-    protected $components;
-
-    /**
      * IDs of up to 3 stickers in the server to send in the message.
      *
      * @var string[]
