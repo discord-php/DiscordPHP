@@ -147,7 +147,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setComponents(...$components): self
+    public function setComponents(array $components): self
     {
         $this->components = [];
 
