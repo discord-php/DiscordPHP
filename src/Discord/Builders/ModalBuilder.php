@@ -32,6 +32,8 @@ use function Discord\poly_strlen;
  */
 class ModalBuilder extends Builder implements JsonSerializable
 {
+    use ComponentsTrait;
+
     /**
      * Interaction type.
      *
@@ -138,45 +140,6 @@ class ModalBuilder extends Builder implements JsonSerializable
     public function getTitle(): string
     {
         return $this->title;
-    }
-
-    /**
-     * Sets the components of the modal.
-     *
-     * @param ComponentObject[]|null $components Components to set.
-     *
-     * @return $this
-     */
-    public function setComponents($components = null): self
-    {
-        $this->components = [];
-
-        foreach ($components ?? [] as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Adds components to the modal.
-     *
-     * @since 10.42.0
-     *
-     * @param ComponentObject[] $components Components to add.
-     * 
-     * @throws \InvalidArgumentException Component is not a valid type.
-     * @throws \OverflowException        If the modal has more than 5 components.
-     *
-     * @return $this
-     */
-    public function addComponents($components): self
-    {
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
     }
 
     /**

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use Discord\Builders\ComponentsTrait;
+
 /**
  * Containers are a new way to group components together.
  * You can also specify an accent color (similar to embeds) and spoiler it.
@@ -29,6 +31,8 @@ namespace Discord\Builders\Components;
  */
 class Container extends Layout implements Contracts\ComponentV2
 {
+    use ComponentsTrait;
+
     public const USAGE = ['Message'];
 
     /**
@@ -97,42 +101,6 @@ class Container extends Layout implements Contracts\ComponentV2
         }
 
         return (($color[0] << 16) + (($color[1] ?? 0) << 8) + ($color[2] ?? 0));
-    }
-
-    /**
-     * Sets the components of the container.
-     *
-     * @param ComponentObject[]|null $components Components to set.
-     *
-     * @return $this
-     */
-    public function setComponents($components = null): self
-    {
-        $this->components = [];
-
-        foreach ($components ?? [] as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Add a group of components to the container.
-     *
-     * @param ComponentObject[] $components Components to add.
-     *
-     * @throws \InvalidArgumentException Component is not a valid type.
-     *
-     * @return $this
-     */
-    public function addComponents($components): self
-    {
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
     }
 
     /**

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use Discord\Builders\ComponentsTrait;
+
 /**
  * An Action Row is a non-interactive container component for other types of
  * components.
@@ -27,6 +29,8 @@ namespace Discord\Builders\Components;
  */
 class ActionRow extends Layout
 {
+    use ComponentsTrait;
+
     /** Usage of ActionRow in Modal is deprecated. Use `Component::Label` as the top-level container. */
     public const USAGE = ['Message', 'Modal'];
 
@@ -52,47 +56,6 @@ class ActionRow extends Layout
     public static function new(): self
     {
         return new self();
-    }
-
-    /**
-     * Add a group of components to the action row.
-     * 
-     * @since 10.42.0
-     *
-     * @param ComponentObject[] $components Components to add.
-     *
-     * @throws \InvalidArgumentException Component is not a valid type.
-     *
-     * @return $this
-     */
-    public function setComponents($components): self
-    {
-        $this->components = [];
-
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Add a group of components to the action row.
-     *
-     * @param ComponentObject[] $components Components to add.
-     *
-     * @throws \InvalidArgumentException Component is not a valid type.
-     * @throws \OverflowException        If the action row has more than 5 components.
-     *
-     * @return $this
-     */
-    public function addComponents($components): self
-    {
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
     }
 
     /**

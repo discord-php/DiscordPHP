@@ -42,6 +42,8 @@ use function Discord\poly_strlen;
  */
 class MessageBuilder extends Builder implements JsonSerializable
 {
+    use ComponentsTrait;
+
     /**
      * Content of the message.
      *
@@ -497,45 +499,6 @@ class MessageBuilder extends Builder implements JsonSerializable
         $index = array_search($component, $this->components, true);
         if ($index !== false) {
             array_splice($this->components, $index, 1);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Sets the components of the message.
-     *
-     * @param ComponentObject[]|null $components Components to set.
-     *
-     * @return $this
-     */
-    public function setComponents($components = null): self
-    {
-        $this->components = [];
-
-        foreach ($components ?? [] as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Add a group of components to the builder.
-     *
-     * @since 10.19.0
-     *
-     * @param ComponentObject[] $components Components to add.
-     *
-     * @throws \InvalidArgumentException Component is not a valid type.
-     * @throws \OverflowException        Builder exceeds component limits.
-     *
-     * @return $this
-     */
-    public function addComponents($components): self
-    {
-        foreach ($components as $component) {
-            $this->addComponent($component);
         }
 
         return $this;

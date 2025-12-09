@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Discord\Builders\Components;
 
+use Discord\Builders\ComponentsTrait;
+
 /**
  * Section components allow you to define up to 3 text display components and add either a thumbnail or button to the right side.
  *
@@ -27,6 +29,8 @@ namespace Discord\Builders\Components;
  */
 class Section extends Layout implements Contracts\ComponentV2
 {
+    use ComponentsTrait;
+
     public const USAGE = ['Message'];
 
     /**
@@ -58,50 +62,6 @@ class Section extends Layout implements Contracts\ComponentV2
     public static function new(): self
     {
         return new self();
-    }
-
-    /**
-     * Sets a group of components to the section.
-     *
-     * @since 10.42.0
-     *
-     * @param TextDisplay[]|string[] $components Components to set.
-     *
-     * @throws \InvalidArgumentException Component is not a TextDisplay.
-     * @throws \OverflowException        Section exceeds 3 text components.
-     *
-     * @return $this
-     */
-    public function setComponents($components): self
-    {
-        $this->components = [];
-
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Add a group of components to the section.
-     *
-     * @since 10.19.0
-     *
-     * @param TextDisplay[]|string[] $components Components to add.
-     *
-     * @throws \InvalidArgumentException Component is not a TextDisplay.
-     * @throws \OverflowException        Section exceeds 3 text components.
-     *
-     * @return $this
-     */
-    public function addComponents($components): self
-    {
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
     }
 
     /**
