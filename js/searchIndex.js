@@ -1361,15 +1361,20 @@ Search.appendIndex(
             "summary": "Creates\u0020a\u0020new\u0020section.",
             "url": "classes/Discord-Builders-Components-Section.html#method_new"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AaddComponent\u0028\u0029",
-            "name": "addComponent",
-            "summary": "Adds\u0020a\u0020text\u0020display\u0020component\u0020to\u0020the\u0020section.",
-            "url": "classes/Discord-Builders-Components-Section.html#method_addComponent"
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AsetComponents\u0028\u0029",
+            "name": "setComponents",
+            "summary": "Sets\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020section.",
+            "url": "classes/Discord-Builders-Components-Section.html#method_setComponents"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AaddComponents\u0028\u0029",
             "name": "addComponents",
             "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020section.",
             "url": "classes/Discord-Builders-Components-Section.html#method_addComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AaddComponent\u0028\u0029",
+            "name": "addComponent",
+            "summary": "Adds\u0020a\u0020text\u0020display\u0020component\u0020to\u0020the\u0020section.",
+            "url": "classes/Discord-Builders-Components-Section.html#method_addComponent"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AsetAccessory\u0028\u0029",
             "name": "setAccessory",
