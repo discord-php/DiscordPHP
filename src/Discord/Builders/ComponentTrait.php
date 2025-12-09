@@ -20,8 +20,15 @@ use Discord\Builders\Components\ComponentObject;
  *
  * @since 10.42.0
  */
-trait ComponentTrait
+trait ComponentsTrait
 {
+    /**
+     * Components of the builder.
+     *
+     * @var ComponentObject[]
+     */
+    protected $components = [];
+
     /**
      * Sets the components of the builder.
      *
