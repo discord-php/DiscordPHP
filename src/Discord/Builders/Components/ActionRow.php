@@ -55,6 +55,46 @@ class ActionRow extends Layout
     }
 
     /**
+     * Add a group of components to the action row.
+     * 
+     * @since 10.42.0
+     *
+     * @param ComponentObject[] $components Components to add.
+     *
+     * @throws \InvalidArgumentException Component is not a valid type.
+     *
+     * @return $this
+     */
+    public function setComponents($components): self
+    {
+        $this->components = [];
+
+        foreach ($components as $component) {
+            $this->addComponent($component);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add a group of components to the action row.
+     *
+     * @param ComponentObject[] $components Components to add.
+     *
+     * @throws \InvalidArgumentException Component is not a valid type.
+     *
+     * @return $this
+     */
+    public function addComponents($components): self
+    {
+        foreach ($components as $component) {
+            $this->addComponent($component);
+        }
+
+        return $this;
+    }
+
+    /**
      * Adds a component to the action row.
      *
      * @param ComponentObject $component Component to add.
@@ -85,24 +125,6 @@ class ActionRow extends Layout
         }
 
         $this->components[] = $component;
-
-        return $this;
-    }
-
-    /**
-     * Add a group of components to the action row.
-     *
-     * @param ComponentObject[] $components Components to add.
-     *
-     * @throws \InvalidArgumentException Component is not a valid type.
-     *
-     * @return $this
-     */
-    public function addComponents($components): self
-    {
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
 
         return $this;
     }
