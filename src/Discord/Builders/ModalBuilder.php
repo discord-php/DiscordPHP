@@ -164,6 +164,9 @@ class ModalBuilder extends Builder implements JsonSerializable
      * @since 10.42.0
      *
      * @param ComponentObject[] $components Components to add.
+     * 
+     * @throws \InvalidArgumentException Component is not a valid type.
+     * @throws \OverflowException        If the modal has more than 5 components.
      *
      * @return $this
      */

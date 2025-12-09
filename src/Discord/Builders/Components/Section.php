@@ -94,14 +94,14 @@ class Section extends Layout implements Contracts\ComponentV2
     /**
      * Add a group of components to the section.
      *
+     * @since 10.19.0
+     *
      * @param TextDisplay[]|string[] $components Components to add.
      *
      * @throws \InvalidArgumentException Component is not a TextDisplay.
      * @throws \OverflowException        Section exceeds 3 text components.
      *
      * @return $this
-     *
-     * @since 10.19.0
      */
     public function addComponents($components): self
     {

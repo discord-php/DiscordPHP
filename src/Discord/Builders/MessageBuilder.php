@@ -523,14 +523,14 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Add a group of components to the builder.
      *
+     * @since 10.19.0
+     *
      * @param ComponentObject[] $components Components to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
      * @throws \OverflowException        Builder exceeds component limits.
      *
      * @return $this
-     *
-     * @since 10.19.0
      */
     public function addComponents($components): self
     {
