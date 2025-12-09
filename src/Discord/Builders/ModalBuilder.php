@@ -160,7 +160,7 @@ class ModalBuilder extends Builder implements JsonSerializable
 
     /**
      * Adds components to the modal.
-     * 
+     *
      * @since 10.42.0
      *
      * @param ComponentObject[] $components Components to add.

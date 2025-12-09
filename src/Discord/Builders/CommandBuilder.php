@@ -129,7 +129,7 @@ class CommandBuilder extends Builder implements JsonSerializable
      * @throws \DomainException
      *
      * @return array
-     * 
+     *
      * @deprecated 10.42.0 Use `jsonSerialize`
      */
     public function toArray(): array

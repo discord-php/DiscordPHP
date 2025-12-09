@@ -17,9 +17,9 @@ use Discord\Helpers\ExCollectionInterface;
 
 /**
  * An embed poll result object to be sent with a message.
- * 
+ *
  * @todo Convert poll_fields to a Part instead of an array.
- * 
+ *
  * @property      ?string|null                         $title                                       The title of the embed.
  * @property-read ?string|null                         $type                                        The type of the embed (always "rich" for webhook embeds).
  * @property      ?string|null                         $description                                 A description of the embed.
