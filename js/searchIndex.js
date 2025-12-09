@@ -868,7 +868,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AsetComponents\u0028\u0029",
             "name": "setComponents",
-            "summary": "Sets\u0020the\u0020components\u0020for\u0020the\u0020container.",
+            "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020container.",
             "url": "classes/Discord-Builders-Components-Container.html#method_setComponents"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AsetAccentColor\u0028\u0029",
@@ -2123,7 +2123,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetComponents\u0028\u0029",
             "name": "setComponents",
-            "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020message.\u0020Removes\u0020the\u0020existing\u0020components\u0020in\u0020the\u0020process.",
+            "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_setComponents"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetComponents\u0028\u0029",
@@ -2378,7 +2378,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AsetComponents\u0028\u0029",
             "name": "setComponents",
-            "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020modal\u0020\u0028Limit\u00205\u0029.",
+            "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020modal.",
             "url": "classes/Discord-Builders-ModalBuilder.html#method_setComponents"
         },                {
             "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AaddComponent\u0028\u0029",

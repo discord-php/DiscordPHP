@@ -454,7 +454,7 @@
     <span>
                                 &nbsp;: $this    </span>
 </dt>
-<dd>Sets the components of the modal (Limit 5).</dd>
+<dd>Sets the components of the modal.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-ModalBuilder.html#method_setCustomId">setCustomId()</a>
@@ -1260,11 +1260,11 @@
 
     </aside>
 
-        <p class="phpdocumentor-summary">Sets the components of the modal (Limit 5).</p>
+        <p class="phpdocumentor-summary">Sets the components of the modal.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setComponents</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__variadic-operator">...</span><span class="phpdocumentor-signature__argument__name">$components</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setComponents</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$components</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -1274,10 +1274,12 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$components</span>
-                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>&gt;</span>
-                            </dt>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>&gt;|null</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Components to set.</p>
+</section>
+
             </dd>
             </dl>
 
