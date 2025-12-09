@@ -578,7 +578,7 @@ class MessageBuilder extends Builder implements JsonSerializable
         $this->components = [];
 
         foreach ($components ?? [] as $component) {
-            $this->components[] = $component;
+            $this->addComponent($component);
         }
 
         return $this;
