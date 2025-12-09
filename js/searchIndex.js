@@ -396,15 +396,20 @@ Search.appendIndex(
             "summary": "Creates\u0020a\u0020new\u0020action\u0020row.",
             "url": "classes/Discord-Builders-Components-ActionRow.html#method_new"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AaddComponent\u0028\u0029",
-            "name": "addComponent",
-            "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020action\u0020row.",
-            "url": "classes/Discord-Builders-Components-ActionRow.html#method_addComponent"
+            "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AsetComponents\u0028\u0029",
+            "name": "setComponents",
+            "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020action\u0020row.",
+            "url": "classes/Discord-Builders-Components-ActionRow.html#method_setComponents"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AaddComponents\u0028\u0029",
             "name": "addComponents",
             "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020action\u0020row.",
             "url": "classes/Discord-Builders-Components-ActionRow.html#method_addComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AaddComponent\u0028\u0029",
+            "name": "addComponent",
+            "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020action\u0020row.",
+            "url": "classes/Discord-Builders-Components-ActionRow.html#method_addComponent"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AremoveComponent\u0028\u0029",
             "name": "removeComponent",
@@ -856,20 +861,20 @@ Search.appendIndex(
             "summary": "Resolves\u0020a\u0020color\u0020to\u0020an\u0020integer.",
             "url": "classes/Discord-Builders-Components-Container.html#method_resolveColor"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AaddComponent\u0028\u0029",
-            "name": "addComponent",
-            "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020container.",
-            "url": "classes/Discord-Builders-Components-Container.html#method_addComponent"
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AsetComponents\u0028\u0029",
+            "name": "setComponents",
+            "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020container.",
+            "url": "classes/Discord-Builders-Components-Container.html#method_setComponents"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AaddComponents\u0028\u0029",
             "name": "addComponents",
             "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020container.",
             "url": "classes/Discord-Builders-Components-Container.html#method_addComponents"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AsetComponents\u0028\u0029",
-            "name": "setComponents",
-            "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020container.",
-            "url": "classes/Discord-Builders-Components-Container.html#method_setComponents"
+            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AaddComponent\u0028\u0029",
+            "name": "addComponent",
+            "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020container.",
+            "url": "classes/Discord-Builders-Components-Container.html#method_addComponent"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AsetAccentColor\u0028\u0029",
             "name": "setAccentColor",
@@ -2091,16 +2096,6 @@ Search.appendIndex(
             "summary": "Retrieves\u0020the\u0020forwarded\u0020message\u0020associated\u0020with\u0020this\u0020builder,\u0020if\u0020any.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_getForward"
         },                {
-            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AaddComponent\u0028\u0029",
-            "name": "addComponent",
-            "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020builder.",
-            "url": "classes/Discord-Builders-MessageBuilder.html#method_addComponent"
-        },                {
-            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AaddComponents\u0028\u0029",
-            "name": "addComponents",
-            "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020builder.",
-            "url": "classes/Discord-Builders-MessageBuilder.html#method_addComponents"
-        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AenforceV2Limits\u0028\u0029",
             "name": "enforceV2Limits",
             "summary": "Validates\u0020the\u0020total\u0020number\u0020of\u0020components\u0020added\u0020to\u0020the\u0020message.",
@@ -2125,6 +2120,16 @@ Search.appendIndex(
             "name": "setComponents",
             "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_setComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AaddComponents\u0028\u0029",
+            "name": "addComponents",
+            "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020builder.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_addComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AaddComponent\u0028\u0029",
+            "name": "addComponent",
+            "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020builder.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_addComponent"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetComponents\u0028\u0029",
             "name": "getComponents",
@@ -2380,6 +2385,11 @@ Search.appendIndex(
             "name": "setComponents",
             "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020modal.",
             "url": "classes/Discord-Builders-ModalBuilder.html#method_setComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AaddComponents\u0028\u0029",
+            "name": "addComponents",
+            "summary": "Adds\u0020components\u0020to\u0020the\u0020modal.",
+            "url": "classes/Discord-Builders-ModalBuilder.html#method_addComponents"
         },                {
             "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AaddComponent\u0028\u0029",
             "name": "addComponent",
