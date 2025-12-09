@@ -436,76 +436,14 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * Adds a component to the builder.
-     *
-     * @param ComponentObject $component Component to add.
-     *
-     * @throws \InvalidArgumentException Component is not a valid type.
-     * @throws \OverflowException        Builder exceeds component limits.
-     *
-     * @return $this
-     */
-    public function addComponent(ComponentObject $component): self
-    {
-        /*
-        if (! in_array($component::USAGE, ['Message'])) {
-            throw new \InvalidArgumentException('Invalid component type for messages.');
-        }
-        */
-
-        if ($component instanceof Interactive) {
-            $component = ActionRow::new()->addComponent($component);
-        }
-
-        if ($component instanceof ComponentV2) {
-            $this->setIsComponentsV2Flag();
-        }
-
-        if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
-            $this->enforceV2Limits();
-        } else {
-            $this->enforceV1Limits($component);
-        }
-
-        $this->components ??= [];
-
-        $this->components[] = $component;
-
-        return $this;
-    }
-
-    /**
-     * Add a group of components to the builder.
-     *
-     * @param ComponentObject[] $components Components to add.
-     *
-     * @throws \InvalidArgumentException Component is not a valid type.
-     * @throws \OverflowException        Builder exceeds component limits.
-     *
-     * @return $this
-     *
-     * @since 10.19.0
-     */
-    public function addComponents($components): self
-    {
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
-    }
-
-    /**
      * Validates the total number of components added to the message.
      *
      * @throws \OverflowException If the total number of components is 40 or more.
      */
     protected function enforceV2Limits(): void
     {
-        if (isset($this->components)) {
-            if ($this->countTotalComponents() >= 40) {
-                throw new \OverflowException('You can only add 40 components to a v2 message');
-            }
+        if ($this->countTotalComponents() >= 40) {
+            throw new \OverflowException('You can only add 40 components to a v2 message');
         }
     }
 
@@ -523,10 +461,8 @@ class MessageBuilder extends Builder implements JsonSerializable
             throw new \InvalidArgumentException('You can only add action rows as components to v1 messages. Put your other components inside an action row.');
         }
 
-        if (isset($this->components)) {
-            if (count($this->components) >= 5) {
-                throw new \OverflowException('You can only add 5 components to a v1 message');
-            }
+        if (count($this->components) >= 5) {
+            throw new \OverflowException('You can only add 5 components to a v1 message');
         }
     }
 
@@ -580,6 +516,64 @@ class MessageBuilder extends Builder implements JsonSerializable
         foreach ($components ?? [] as $component) {
             $this->addComponent($component);
         }
+
+        return $this;
+    }
+
+    /**
+     * Add a group of components to the builder.
+     *
+     * @param ComponentObject[] $components Components to add.
+     *
+     * @throws \InvalidArgumentException Component is not a valid type.
+     * @throws \OverflowException        Builder exceeds component limits.
+     *
+     * @return $this
+     *
+     * @since 10.19.0
+     */
+    public function addComponents($components): self
+    {
+        foreach ($components as $component) {
+            $this->addComponent($component);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Adds a component to the builder.
+     *
+     * @param ComponentObject $component Component to add.
+     *
+     * @throws \InvalidArgumentException Component is not a valid type.
+     * @throws \OverflowException        Builder exceeds component limits.
+     *
+     * @return $this
+     */
+    public function addComponent(ComponentObject $component): self
+    {
+        if (! in_array('Message', $component::USAGE, true)) {
+            throw new \InvalidArgumentException('Invalid component type for messages.');
+        }
+
+        if ($component instanceof Interactive) {
+            $component = ActionRow::new()->addComponent($component);
+        }
+
+        if ($component instanceof ComponentV2) {
+            $this->setIsComponentsV2Flag();
+        }
+
+        $this->components ??= [];
+        
+        if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
+            $this->enforceV2Limits();
+        } else {
+            $this->enforceV1Limits($component);
+        }
+
+        $this->components[] = $component;
 
         return $this;
     }
