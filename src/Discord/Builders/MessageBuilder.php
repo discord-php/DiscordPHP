@@ -597,7 +597,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Adds a sticker to the builder. Only used for sending message or creating forum thread.
      *
-     * @param string|Sticker $sticker Sticker to add.
+     * @param Sticker|string $sticker Sticker to add.
      *
      * @throws \OverflowException Builder exceeds 3 stickers.
      *
@@ -621,7 +621,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Removes a sticker from the builder.
      *
-     * @param string|Sticker $sticker Sticker to remove.
+     * @param Sticker|string $sticker Sticker to remove.
      *
      * @return $this
      */
@@ -641,7 +641,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets the stickers of the builder. Removes the existing stickers in the process.
      *
-     * @param array $stickers New sticker ids.
+     * @param Sticker[]|string[] $stickers New sticker ids.
      *
      * @return $this
      */
