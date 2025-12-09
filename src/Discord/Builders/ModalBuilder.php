@@ -141,13 +141,13 @@ class ModalBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * Sets the components of the modal (Limit 5).
+     * Sets the components of the modal.
      *
-     * @param ComponentObject[]|null $components
+     * @param ComponentObject[]|null $components Components to set.
      *
      * @return $this
      */
-    public function setComponents($components): self
+    public function setComponents($components = null): self
     {
         $this->components = [];
 

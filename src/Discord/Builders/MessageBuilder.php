@@ -567,9 +567,9 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * Sets the components of the message. Removes the existing components in the process.
+     * Sets the components of the message.
      *
-     * @param ComponentObject[]|null $components New message components.
+     * @param ComponentObject[]|null $components Components to set.
      *
      * @return $this
      */

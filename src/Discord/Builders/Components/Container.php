@@ -142,13 +142,13 @@ class Container extends Layout implements Contracts\ComponentV2
     }
 
     /**
-     * Sets the components for the container.
+     * Sets the components of the container.
      *
      * @param ComponentObject[]|null $components Components to set.
      *
      * @return $this
      */
-    public function setComponents($components): self
+    public function setComponents($components = null): self
     {
         $this->components = [];
 
