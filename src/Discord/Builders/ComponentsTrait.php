@@ -43,11 +43,7 @@ trait ComponentsTrait
     {
         $this->components = [];
 
-        foreach ($components ?? [] as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
+        return $components ? $this->addComponents($components) : $this;
     }
 
     /**
