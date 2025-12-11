@@ -162,7 +162,7 @@ class Command extends Part implements Stringable
             'handler' => $this->handler,
         ]);
 
-        if (! isset($this->guild_id)) {
+        if (! isset($this->attributes['guild_id'])) {
             $attr += $this->makeOptionalAttributes([
                 'dm_permission' => $this->dm_permission,
             ]);
