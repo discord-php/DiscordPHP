@@ -451,7 +451,7 @@ trait CommandAttributes
      */
     public function setHandler(?int $handler): self
     {
-        if ($this->type && $this->type !== Command::PRIMARY_ENTRY_POINT) {
+        if ($this->type !== Command::PRIMARY_ENTRY_POINT) {
             throw new \DomainException('Only PRIMARY_ENTRY_POINT Command type can have handler.');
         }
 
