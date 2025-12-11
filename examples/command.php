@@ -24,8 +24,11 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 ini_set('memory_limit', -1);
 
-// a class to handle the command callbacks
-// we're going to roll dice
+/**
+ * Class to handle the command callbacks
+ * 
+ * We're going to roll dice
+ */
 class DiceRollHandler
 {
     public const NAME = 'roll';
@@ -36,7 +39,7 @@ class DiceRollHandler
         // noop
     }
 
-    public function buildCommand():CommandBuilder
+    public function buildCommand(): CommandBuilder
     {
         // an option "sides"
         $sides = (new Option($this->discord))
@@ -54,16 +57,22 @@ class DiceRollHandler
     }
 
     // attempt to register a global slash command
-    public function register():static
+    public function register(bool $update = false): static
     {
-        // after the command was created successfully, you should disable this code
-        $this->discord->application->commands->save(new Command($this->discord, $this->buildCommand()->toArray()));
+        $builder = $this->buildCommand();
+
+        if (! $update && $this->discord->application->commands->get('name', static::NAME)) {
+            // If the the command was created successfully you don't need to create it again
+            return $this;
+        }
+
+        $builder->create($this->discord->application->commands)->save();
 
         return $this;
     }
 
     // add listener(s) for the command and possible subcommands
-    public function listen():static
+    public function listen(): static
     {
         $registeredCommand = $this->discord->listenCommand(DiceRollHandler::NAME, $this->execute(...), $this->autocomplete(...));
 
@@ -76,9 +85,9 @@ class DiceRollHandler
     }
 
     // the command callback
-    public function execute(ApplicationCommand $interaction, Collection $params):void
+    public function execute(ApplicationCommand $interaction, Collection $params): void
     {
-        $sides = ($interaction->data->options->offsetGet('sides')?->value ?? 20);
+        $sides = ($interaction->data->options->get('name', 'sides')?->value ?? 20);
 
         // sanity check
         if (! in_array($sides, [4, 6, 8, 10, 12, 20], true)) {
@@ -92,11 +101,11 @@ class DiceRollHandler
     }
 
     // the autocomplete callback (must return array to trigger a response)
-    public function autocomplete(ApplicationCommandAutocomplete $interaction):array|null
+    public function autocomplete(ApplicationCommandAutocomplete $interaction): array|null
     {
         // respond if the desired option is focused
         /** @see \Discord\Parts\Interactions\Request\Option */
-        if ($interaction->data->options->offsetGet('sides')->focused) {
+        if ($interaction->data->options->get('name', 'sides')->focused) {
             // the dataset, e.g. fetched from a database (25 results max)
             $dataset = [4, 6, 8, 10, 12, 20];
             $choices = [];
@@ -120,7 +129,8 @@ $dc = new Discord([
     'intents' => (Intents::getDefaultIntents() | Intents::MESSAGE_CONTENT),
 ]);
 
-$dc->on('init', function (Discord $discord):void {
+$dc->on('init', function (Discord $discord): void
+{
     echo "Bot is ready!\n";
 
     // invoke the command handler

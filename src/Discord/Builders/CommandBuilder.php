@@ -23,7 +23,7 @@ use JsonSerializable;
 
 /**
  * Helper class used to build application commands.
- * 
+ *
  * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  *
  * @since 7.0.0
