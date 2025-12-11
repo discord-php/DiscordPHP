@@ -176,7 +176,7 @@ class Command extends Part implements Stringable
      */
     public function save(?string $reason = null): PromiseInterface
     {
-        if (isset($this->attributes['guild_id'])) {
+        if ($this->guild_id !== null) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
