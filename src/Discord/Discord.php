@@ -66,10 +66,13 @@ use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Zstd\UnCompress\Context as ZstdContext;
 
 use function React\Async\coroutine;
 use function React\Promise\all;
 use function React\Promise\resolve;
+use function Zstd\uncompress_init;
+use function Zstd\uncompress_add;
 
 /**
  * The Discord client class.
@@ -315,9 +318,16 @@ class Discord
     /**
      * zlib decompressor.
      *
-     * @var \InflateContext|false
+     * @var \InflateContext|false Zlib decompression context
      */
-    protected $zlibDecompressor;
+    protected $zlibDecompressor = false;
+
+    /**
+     * zstd decompressor.
+     *
+     * @var ZstdContext|false Zstd decompression context when ext-zstd is available
+     */
+    protected $zstdDecompressor = false;
 
     /**
      * Tracks the number of payloads the client has sent in the past 60 seconds.
@@ -705,7 +715,14 @@ class Discord
         $payload = $message->getPayload();
 
         if ($message->isBinary()) {
-            if ($this->zlibDecompressor) {
+            if ($this->zstdDecompressor !== false) {
+                $decompressed = uncompress_add($this->zstdDecompressor, $payload);
+                if ($decompressed !== false) {
+                    $this->processWsMessage($decompressed);
+                } else {
+                    $this->logger->error('failed to decompress zstd payload', ['payload' => $payload, 'payload hex' => bin2hex($payload)]);
+                }
+            } elseif ($this->zlibDecompressor !== false) {
                 $this->payloadBuffer .= $payload;
 
                 if ($message->getPayloadLength() < 4 || substr($payload, -4) !== "\x00\x00\xff\xff") {
@@ -1612,10 +1629,14 @@ class Discord
         ];
 
         if ($this->useTransportCompression) {
-            if ($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
+            // Prefer zstd-stream if available (better compression), fallback to zlib-stream
+            if (extension_loaded('zstd') && ($this->zstdDecompressor = uncompress_init())) {
+                $params['compress'] = 'zstd-stream';
+                $this->logger->debug('using zstd-stream compression');
+            } elseif ($this->zlibDecompressor = inflate_init(ZLIB_ENCODING_DEFLATE)) {
                 $params['compress'] = 'zlib-stream';
+                $this->logger->debug('using zlib-stream compression');
             }
-            // @todo: add support for zstd-stream
         }
 
         $query = http_build_query($params);
