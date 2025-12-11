@@ -149,12 +149,12 @@ class CommandBuilder extends Builder implements JsonSerializable
 
         $optionals = [
             'type',
+            'guild_id',
             'name_localizations',
             'description_localizations',
             'default_member_permissions',
             'dm_permission',
             'default_permission',
-            'guild_id',
             'nsfw',
             'integration_types',
             'contexts',
