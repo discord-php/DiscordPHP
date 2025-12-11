@@ -39,7 +39,12 @@ class DiceRollHandler
         // noop
     }
 
-    public function buildCommand(): CommandBuilder
+    /**
+     * Create the command to be saved.
+     * 
+     * @return Command The command
+     */
+    public function buildCommand(): Command
     {
         // an option "sides"
         $sides = (new Option($this->discord))
@@ -53,25 +58,56 @@ class DiceRollHandler
             ->setType(Command::CHAT_INPUT)
             ->setName(static::NAME)
             ->setDescription('rolls an n-sided die')
-            ->addOption($sides);
+            ->addOption($sides)
+            ->create($this->discord->application->commands); // Can be GuildCommandRepository for guild-specific commands
     }
 
-    // attempt to register a global slash command
-    public function register(bool $update = false): static
+    /**
+     * Register a global slash command.
+     * 
+     * @param string|null $reason Reason for registering the command.
+     * @param bool        $update Whether to update the command if it already exists.
+     * 
+     * @return static
+     */
+    public function register(?string $reason = null, bool $update = false): static
     {
-        $builder = $this->buildCommand();
+        $command = $this->buildCommand();
 
+        // If the the command was created successfully you don't need to create it again
         if (! $update && $this->discord->application->commands->get('name', static::NAME)) {
-            // If the the command was created successfully you don't need to create it again
             return $this;
         }
 
-        $builder->create($this->discord->application->commands)->save();
+        $command->save($reason);
 
         return $this;
     }
 
-    // add listener(s) for the command and possible subcommands
+    /**
+     * Attempt to delete the command.
+     * 
+     * @param string|null $reason Reason for deleting the command.
+     * 
+     * @return static
+     */
+    public function delete(?string $reason = null): static
+    {
+        $repository = $this->discord->application->commands;
+        $command = $repository->get('name', static::NAME);
+
+        if ($command) {
+            $repository->delete($command, $reason);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add listener(s) for the command and possible subcommands.
+     * 
+     * @return static
+     */
     public function listen(): static
     {
         $registeredCommand = $this->discord->listenCommand(DiceRollHandler::NAME, $this->execute(...), $this->autocomplete(...));
@@ -84,7 +120,11 @@ class DiceRollHandler
         return $this;
     }
 
-    // the command callback
+    /**
+     * The command callback.
+     * 
+     * @param ApplicationCommand $interaction The interaction object.
+     */
     public function execute(ApplicationCommand $interaction, Collection $params): void
     {
         $sides = ($interaction->data->options->get('name', 'sides')?->value ?? 20);
@@ -100,7 +140,15 @@ class DiceRollHandler
         $interaction->respondWithMessage((new MessageBuilder)->setContent($message));
     }
 
-    // the autocomplete callback (must return array to trigger a response)
+    /**
+     * The autocomplete callback.
+     * 
+     * Must return array to trigger a response.
+     * 
+     * @param ApplicationCommandAutocomplete $interaction The interaction object.
+     * 
+     * @return array<Choice>|null An array of Choice objects or null to not respond.
+     */
     public function autocomplete(ApplicationCommandAutocomplete $interaction): array|null
     {
         // respond if the desired option is focused
