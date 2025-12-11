@@ -77,7 +77,7 @@ class DiceRollHandler
             return $this;
         }
 
-        $command = $this->buildCommand()->save($reason);
+        $this->buildCommand()->save($reason);
 
         return $this;
     }
