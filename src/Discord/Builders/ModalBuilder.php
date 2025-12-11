@@ -184,7 +184,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * Only ActionRow, TextDisplay, and Label components are allowed.
      *
-     * Using ActionRow in modals is now deprecated. Use `Component::Label` as the top level component.
+     * Using ActionRow in modals is now deprecated. Use `ComponentObject::Label` as the top level component.
      *
      * @param ComponentObject $component
      *

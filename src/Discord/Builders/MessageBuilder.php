@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Builders\Components\ActionRow;
-use Discord\Builders\Components\Component;
 use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\Interactive;
@@ -24,7 +23,7 @@ use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
-use Discord\Parts\Channel\Poll\Poll;
+use Discord\Parts\Channel\Poll\PollCreateRequest as Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
 use Discord\Repository\Channel\MessageRepository;
@@ -488,7 +487,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function removeComponent(Component $component): self
+    public function removeComponent($component): self
     {
         if (! isset($this->components)) {
             return $this;
@@ -797,7 +796,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setPoll(Poll|null $poll): self
+    public function setPoll($poll = null): self
     {
         $this->poll = $poll;
 
