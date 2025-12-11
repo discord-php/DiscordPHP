@@ -185,10 +185,8 @@ $dc->on('init', function (Discord $discord): void
     // invoke the command handler
     $commandHandler = new DiceRollHandler($discord);
 
-    // this method shouldn't be run on each bot start
-    #	if($options->registerCommands){
-        $commandHandler->register();
-    #	}
+    // this method should be run on each bot start
+    $commandHandler->register(reason: 'Initial command registration', update: false);
 
     // add a listener for the command
     $commandHandler->listen();
