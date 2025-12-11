@@ -379,6 +379,7 @@ trait PartTrait
             if (array_key_exists($key, $this->attributes)) {
                 $attr[$key] = $value;
             } elseif (is_int($key) && array_key_exists($value, $this->attributes)) {
+                // The key is an index, not a key-value pair, and needs to be stripped.
                 $attr[$value] = $this->attributes[$value];
             }
         }
