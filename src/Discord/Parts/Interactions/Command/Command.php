@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Command;
 
+use Discord\Builders\CommandAttributes;;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
@@ -34,7 +35,7 @@ use Stringable;
  */
 class Command extends Part implements Stringable
 {
-    use \Discord\Builders\CommandAttributes;
+    use CommandAttributes;
 
     /** Slash commands; a text-based command that shows up when a user types / */
     public const CHAT_INPUT = 1;
