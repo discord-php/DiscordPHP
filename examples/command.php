@@ -18,6 +18,7 @@ use Discord\Parts\Interactions\ApplicationCommandAutocomplete;
 use Discord\Parts\Interactions\Command\Choice;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
+use Discord\Parts\Interactions\Request\Option as RequestOption;
 use Discord\WebSockets\Intents;
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -150,8 +151,10 @@ class DiceRollHandler
     public function autocomplete(ApplicationCommandAutocomplete $interaction): array|null
     {
         // respond if the desired option is focused
-        /** @see \Discord\Parts\Interactions\Request\Option */
-        if ($interaction->data->options->get('name', 'sides')->focused) {
+        /** @var ?RequestOption */
+        $option = $interaction->data->options->get('name', 'sides');
+
+        if ($option && $option->focused) {
             // the dataset, e.g. fetched from a database (25 results max)
             $dataset = [4, 6, 8, 10, 12, 20];
             $choices = [];
