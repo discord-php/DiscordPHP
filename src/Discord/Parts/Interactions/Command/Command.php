@@ -127,16 +127,17 @@ class Command extends Part implements Stringable
             'name_localizations' => $this->name_localizations,
             'description' => $this->description,
             'description_localizations' => $this->description_localizations,
-            'options',
+            'options' => $this->options,
             'default_member_permissions' => $this->default_member_permissions,
             'default_permission' => $this->default_permission,
             'type' => $this->type,
             'nsfw' => $this->nsfw,
-            'integration_types',
-            'contexts',
+            'integration_types' => $this->integration_types,
             'handler' => $this->handler,
 
-            'dm_permission' => $this->dm_permission,  // Guild command might omit this fillable
+            // Guild command might omit these fillables
+            'dm_permission' => $this->dm_permission,
+            'contexts' => $this->contexts,
         ]);
 
         return $attr;
@@ -154,11 +155,11 @@ class Command extends Part implements Stringable
             'name_localizations' => $this->name_localizations,
             'description' => $this->description,
             'description_localizations' => $this->description_localizations,
-            'options',
+            'options' => $this->options,
             'default_member_permissions' => $this->default_member_permissions,
             'default_permission' => $this->default_permission,
             'nsfw' => $this->nsfw,
-            'integration_types',
+            'integration_types' => $this->integration_types,
             'handler' => $this->handler,
         ]);
 
