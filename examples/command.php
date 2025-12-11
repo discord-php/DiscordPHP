@@ -54,7 +54,7 @@ class DiceRollHandler
             ->setAutoComplete(true);
 
         // the command "roll"
-        return (new CommandBuilder)
+        return CommandBuilder::new()
             ->setType(Command::CHAT_INPUT)
             ->setName(static::NAME)
             ->setDescription('rolls an n-sided die')
