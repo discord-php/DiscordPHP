@@ -18,6 +18,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
+use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use React\EventLoop\Loop;
@@ -89,8 +90,8 @@ function mentioned(Part|string $part, Message $message): bool
     return match (true) {
         $part instanceof User, $part instanceof Member => $message->mentions->has($part->id),
         $part instanceof Role => $message->mention_roles->has($part->id),
-        $part instanceof Channel => str_contains($message->content, "<#{$part->id}>"),
-        default => str_contains($message->content, $part),
+        $part instanceof Channel || $part instanceof Thread => str_contains($message->content, "<#{$part->id}>"),
+        default => false,
     };
 }
 
