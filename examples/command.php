@@ -19,6 +19,7 @@ use Discord\Parts\Interactions\Command\Choice;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
 use Discord\Parts\Interactions\Request\Option as RequestOption;
+use Discord\Repository\Interaction\GlobalCommandRepository;
 use Discord\WebSockets\Intents;
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -170,14 +171,25 @@ class DiceRollHandler
     }
 }
 
-// invoke the discord client
+/**
+ * Invoke the discord client
+ * 
+ * MESSAGE_CONTENT, GUILD_MEMBERS and GUILD_PRESENCES are privileged
+ * 
+ * @see https://dis.gd/mcfaq
+ */
 $dc = new Discord([
     // https://discord.com/developers/applications/<APP_ID>>/bot
     'token' => 'YOUR_DISCORD_BOT_TOKEN',
-    // Note: MESSAGE_CONTENT, GUILD_MEMBERS and GUILD_PRESENCES are privileged, see https://dis.gd/mcfaq
+    
     'intents' => (Intents::getDefaultIntents() | Intents::MESSAGE_CONTENT),
 ]);
 
+/**
+ * When the bot is ready
+ * 
+ * IMPORTANT: Avoid calling freshen() multiple times to prevent rate limiting
+ */
 $dc->on('init', function (Discord $discord): void
 {
     echo "Bot is ready!\n";
@@ -185,8 +197,13 @@ $dc->on('init', function (Discord $discord): void
     // invoke the command handler
     $commandHandler = new DiceRollHandler($discord);
 
-    // this method should be run on each bot start
-    $commandHandler->register(reason: 'Initial command registration', update: false);
+    // Can be GuildCommandRepository for guild-specific commands
+    $repository = $discord->application->commands;
+
+    // Freshen the repository prior to registering to avoid overwriting other commands
+    //$repository->freshen()->then(fn ($repository) =>
+        $commandHandler->register(reason: 'Initial command registration', update: false);
+    //);
 
     // add a listener for the command
     $commandHandler->listen();
