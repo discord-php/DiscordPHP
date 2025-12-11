@@ -163,6 +163,7 @@ class Command extends Part implements Stringable
 
         if (! isset($this->attributes['guild_id'])) {
             $attr += $this->makeOptionalAttributes([
+                'dm_permission' => $this->dm_permission,
                 'contexts' => $this->contexts,
             ]);
         }
