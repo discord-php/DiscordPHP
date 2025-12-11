@@ -85,10 +85,10 @@ class Payload implements JsonSerializable
         if (isset($array['d'])) {
             is_array($array['d'])
                 ? (isset($array['d']['token'])
-                    ? $array['d']['token'] = 'xxxxx'
+                    ? $array['d']['token'] = '*****'
                     : null)
                 : (isset($array['d']->token)
-                    ? $array['d']->token = 'xxxxx'
+                    ? $array['d']->token = '*****'
                     : null);
         }
 
