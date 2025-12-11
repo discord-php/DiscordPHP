@@ -160,7 +160,6 @@ class CommandBuilder extends Builder implements JsonSerializable
             'nsfw',
             'integration_types',
             'contexts',
-            'handler',
         ];
 
         foreach ($optionals as $optional) {
@@ -169,11 +168,19 @@ class CommandBuilder extends Builder implements JsonSerializable
             }
         }
 
-        $this->options ??= Collection::for(Option::class, 'name');
+        // options can only be set for application commands of type CHAT_INPUT
+        if ($this->type === Command::CHAT_INPUT) {
+            $this->options ??= Collection::for(Option::class, 'name');
 
-        /** @var Option $option */
-        foreach ($this->options as $option) {
-            $arrCommand['options'][] = $option->getRawAttributes();
+            /** @var Option $option */
+            foreach ($this->options as $option) {
+                $arrCommand['options'][] = $option->getRawAttributes();
+            }
+        }
+
+        // handler can only be set for application commands of type PRIMARY_ENTRY_POINT for applications with the EMBEDDED flag (i.e. applications that have an Activity).
+        if ($this->type === Command::PRIMARY_ENTRY_POINT && property_exists($this, 'handler') && $this->handler !== null) {
+            $arrCommand['handler'] = $this->handler;
         }
 
         return $arrCommand;
