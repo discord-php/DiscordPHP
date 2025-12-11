@@ -19,6 +19,7 @@ use Discord\Parts\Interactions\Command\Choice;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
 use Discord\Parts\Interactions\Request\Option as RequestOption;
+use Discord\Repository\Guild\GuildCommandRepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
 use Discord\WebSockets\Intents;
 
@@ -46,7 +47,7 @@ class DiceRollHandler
      * 
      * @return Command The command
      */
-    public function buildCommand(): Command
+    public function buildCommand(GlobalCommandRepository|GuildCommandRepository $repository): Command
     {
         // an option "sides"
         $sides = (new Option($this->discord))
@@ -61,7 +62,7 @@ class DiceRollHandler
             ->setName(static::NAME)
             ->setDescription('rolls an n-sided die')
             ->addOption($sides)
-            ->create($this->discord->application->commands); // Can be GuildCommandRepository for guild-specific commands
+            ->create($repository);
     }
 
     /**
@@ -72,14 +73,14 @@ class DiceRollHandler
      * 
      * @return static
      */
-    public function register(?string $reason = null, bool $update = false): static
+    public function register(GlobalCommandRepository|GuildCommandRepository $repository, ?string $reason = null, bool $update = false): static
     {
         // If the the command was created successfully you don't need to create it again
-        if (! $update && $this->discord->application->commands->get('name', static::NAME)) {
+        if (! $update && $repository->get('name', static::NAME)) {
             return $this;
         }
 
-        $this->buildCommand()->save($reason);
+        $this->buildCommand($repository)->save($reason);
 
         return $this;
     }
@@ -202,7 +203,7 @@ $dc->on('init', function (Discord $discord): void
 
     // Freshen the repository prior to registering to avoid overwriting other commands
     //$repository->freshen()->then(fn ($repository) =>
-        $commandHandler->register(reason: 'Initial command registration', update: false);
+        $commandHandler->register(repository: $repository, reason: 'Initial command registration', update: false);
     //);
 
     // add a listener for the command
