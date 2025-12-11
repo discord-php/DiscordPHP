@@ -19,6 +19,7 @@ use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Http;
+use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -43,6 +44,18 @@ trait PartTrait
      */
     protected function afterConstruct(): void
     {
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return AbstractRepository The repository.
+     */
+    public function getRepository()
+    {
+        throw new \Exception('This part does not have an originating repository.');
     }
 
     /**
