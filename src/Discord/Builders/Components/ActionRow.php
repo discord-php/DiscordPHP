@@ -56,7 +56,7 @@ class ActionRow extends Layout
 
     /**
      * Add a group of components to the action row.
-     * 
+     *
      * @since 10.42.0
      *
      * @param ComponentObject[] $components Components to add.
@@ -101,7 +101,7 @@ class ActionRow extends Layout
      * @param ComponentObject $component Component to add.
      *
      * @throws \InvalidArgumentException Component is not a valid type.
-     * @throws \OverflowException       If the action row has more than 5 components.
+     * @throws \OverflowException        If the action row has more than 5 components.
      *
      * @since 10.19.0
      *

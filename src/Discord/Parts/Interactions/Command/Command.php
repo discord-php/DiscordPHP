@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Command;
 
-use Discord\Builders\CommandAttributes;;
+use Discord\Builders\CommandAttributes;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
