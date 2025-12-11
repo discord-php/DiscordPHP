@@ -72,14 +72,12 @@ class DiceRollHandler
      */
     public function register(?string $reason = null, bool $update = false): static
     {
-        $command = $this->buildCommand();
-
         // If the the command was created successfully you don't need to create it again
         if (! $update && $this->discord->application->commands->get('name', static::NAME)) {
             return $this;
         }
 
-        $command->save($reason);
+        $command = $this->buildCommand()->save($reason);
 
         return $this;
     }
