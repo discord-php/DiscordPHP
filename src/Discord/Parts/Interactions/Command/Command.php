@@ -127,7 +127,7 @@ class Command extends Part implements Stringable
             'name_localizations' => $this->name_localizations,
             'description' => $this->description,
             'description_localizations' => $this->description_localizations,
-            'options' => $this->options,
+            'options',
             'default_member_permissions' => $this->default_member_permissions,
             'default_permission' => $this->default_permission,
             'type' => $this->type,
