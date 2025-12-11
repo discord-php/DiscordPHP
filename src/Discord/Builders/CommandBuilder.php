@@ -144,7 +144,7 @@ class CommandBuilder extends Builder implements JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        return $arrCommand = [
+        $arrCommand = [
             'name' => $this->name,
             'description' => $this->description,
         ];
