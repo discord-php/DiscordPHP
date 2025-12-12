@@ -30,20 +30,20 @@ use function Discord\poly_strlen;
  *
  * @since 7.1.0
  *
- * @property int                                    $type                       The type of the command, defaults 1 if not set.
- * @property string                                 $name                       1-32 character name of the command.
- * @property ?string[]|null                         $name_localizations         Localization dictionary for the name field. Values follow the same restrictions as name.
- * @property ?string                                $description                1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
- * @property ?string[]|null                         $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
- * @property ExCollectionInterface<Option>|Option[] $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
- * @property ?string                                $default_member_permissions Set of permissions represented as a bit set.
- * @property bool|null                              $dm_permission              Deprecated (use contexts instead); Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
- * @property ?bool                                  $default_permission         Whether the command is enabled by default when the app is added to a guild, defaults to true. SOON DEPRECATED.
- * @property ?int                                   $guild_id                   The optional guild ID this command is for. If not set, the command is global.
- * @property bool|null                              $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
- * @property array                                  $integration_types          Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts
- * @property ExCollectionInterface|null             $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.
- * @property int|null                               $handler                    Determines whether the interaction is handled by the app's interactions handler or by Discord
+ * @property int                                     $type                       The type of the command, defaults 1 if not set.
+ * @property string                                  $name                       1-32 character name of the command.
+ * @property ?int|null                               $guild_id                   The optional guild ID this command is for. If not set, the command is global.
+ * @property ?string[]|null                          $name_localizations         Localization dictionary for the name field. Values follow the same restrictions as name.
+ * @property ?string                                 $description                1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
+ * @property ?string[]|null                          $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
+ * @property ?ExCollectionInterface<Option>|Option[] $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
+ * @property ?string                                 $default_member_permissions Set of permissions represented as a bit set.
+ * @property ?bool|null                              $dm_permission              Deprecated (use contexts instead); Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
+ * @property ?bool                                   $default_permission         Deprecated (use default_member_permissions instead); Whether the command is enabled by default when the app is added to a guild, defaults to true. SOON DEPRECATED.
+ * @property ?array                                  $integration_types          Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts
+ * @property ?bool                                   $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
+ * @property ?ExCollectionInterface|null             $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.
+ * @property ?int|null                               $handler                    Determines whether the interaction is handled by the app's interactions handler or by Discord
  */
 trait CommandAttributes
 {
@@ -86,7 +86,7 @@ trait CommandAttributes
             throw new \LengthException('Command name can be only up to 32 characters long.');
         }
 
-        if (isset($this->type) && $this->type === Command::CHAT_INPUT && preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u', $name) === 0) {
+        if ($this->type === Command::CHAT_INPUT && preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u', $name) === 0) {
             throw new \DomainException('Slash command name contains invalid characters.');
         }
 
@@ -116,7 +116,7 @@ trait CommandAttributes
                 throw new \LengthException('Command name can be only up to 32 characters long.');
             }
 
-            if (isset($this->type) && $this->type === Command::CHAT_INPUT && preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u', $name) === 0) {
+            if ($this->type === Command::CHAT_INPUT && preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u', $name) === 0) {
                 throw new \DomainException('Slash command localized name contains invalid characters.');
             }
         }
@@ -163,7 +163,7 @@ trait CommandAttributes
      */
     public function setDescriptionLocalization(string $locale, ?string $description): self
     {
-        if (isset($description, $this->type) && $this->type === Command::CHAT_INPUT && poly_strlen($description) > 100) {
+        if (isset($description) && $this->type === Command::CHAT_INPUT && poly_strlen($description) > 100) {
             throw new \LengthException('Command description must be less than or equal to 100 characters.');
         }
 
@@ -186,11 +186,11 @@ trait CommandAttributes
      */
     public function addOption(Option $option): self
     {
-        if (isset($this->type) && $this->type !== Command::CHAT_INPUT) {
+        if ($this->type !== Command::CHAT_INPUT) {
             throw new \DomainException('Only CHAT_INPUT Command type can have option.');
         }
 
-        if (isset($this->options) && count($this->options) >= 25) {
+        if ($this->options && count($this->options) >= 25) {
             throw new \OverflowException('Command can only have a maximum of 25 options.');
         }
 
@@ -212,11 +212,11 @@ trait CommandAttributes
      */
     public function removeOption(Option $option): self
     {
-        if (isset($this->type) && $this->type !== Command::CHAT_INPUT) {
+        if ($this->type !== Command::CHAT_INPUT) {
             throw new \DomainException('Only CHAT_INPUT Command type can have option.');
         }
 
-        if (isset($this->options) && ($idx = $this->options->search($option)) !== false) {
+        if ($this->options && ($idx = $this->options->search($option)) !== false) {
             $this->options->splice($idx, 1);
         }
 
@@ -318,7 +318,7 @@ trait CommandAttributes
      */
     public function addIntegrationType(int $integration_type): self
     {
-        if (isset($this->guild_id)) {
+        if ($this->guild_id !== null) {
             throw new \DomainException('Only globally-scopped commands can have an integration type.');
         }
 
@@ -349,11 +349,11 @@ trait CommandAttributes
      */
     public function removeIntegrationType($integration_type): self
     {
-        if (isset($this->guild_id)) {
+        if ($this->guild_id !== null) {
             throw new \DomainException('Only globally-scopped commands can have an integration type.');
         }
 
-        if (isset($this->integration_types) && ($idx = array_search($integration_type, $this->integration_types, true)) !== false) {
+        if ($this->integration_types && ($idx = array_search($integration_type, $this->integration_types, true)) !== false) {
             array_splice($this->integration_types, $idx, 1);
         }
 
@@ -373,7 +373,7 @@ trait CommandAttributes
      */
     public function addContext(int $context): self
     {
-        if (isset($this->guild_id)) {
+        if ($this->guild_id !== null) {
             throw new \DomainException('Only globally-scopped commands can have context.');
         }
 
@@ -407,11 +407,11 @@ trait CommandAttributes
      */
     public function removeContext(int $context): self
     {
-        if (isset($this->guild_id)) {
+        if ($this->guild_id !== null) {
             throw new \DomainException('Only globally-scopped commands can have context.');
         }
 
-        if (isset($this->contexts) && ($idx = $this->contexts->search($context)) !== false) {
+        if ($this->contexts && ($idx = $this->contexts->search($context)) !== false) {
             $this->contexts->splice($idx, 1);
         }
 
@@ -431,7 +431,7 @@ trait CommandAttributes
      */
     public function setContext(?array $contexts): self
     {
-        if (isset($this->guild_id)) {
+        if ($this->guild_id !== null) {
             throw new \DomainException('Only globally-scopped commands can have contexts.');
         }
 
@@ -451,7 +451,7 @@ trait CommandAttributes
      */
     public function setHandler(?int $handler): self
     {
-        if (isset($this->type) && $this->type !== Command::PRIMARY_ENTRY_POINT) {
+        if ($this->type !== Command::PRIMARY_ENTRY_POINT) {
             throw new \DomainException('Only PRIMARY_ENTRY_POINT Command type can have handler.');
         }
 

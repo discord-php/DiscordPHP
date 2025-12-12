@@ -42,15 +42,9 @@ final class MessageTest extends DiscordTestCase
             $channel = $this->channel();
             $this->assertEquals(Channel::TYPE_GUILD_ANNOUNCEMENT, $channel->type);
             $channel->sendMessage('crossposting message')
-                ->then(function (Message $message) {
-                    return $message->crosspost();
-                })
-                ->then(function ($message) {
-                    $this->assertInstanceOf(Message::class, $message);
-                })
+                ->then(fn (Message $message) => $message->crosspost())
+                ->then(fn ($message) => $this->assertInstanceOf(Message::class, $message))
                 ->then($resolve, $resolve);
-        }, 10, function () {
-            $this->markTestIncomplete('Crosspost has likely hit ratelimit.');
-        });
+        }, 10, fn () => $this->markTestIncomplete('Crosspost has likely hit ratelimit.'));
     }
 }

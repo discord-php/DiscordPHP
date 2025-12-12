@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Interactions\Command;
 
+use Discord\Builders\CommandAttributes;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
@@ -34,7 +35,7 @@ use Stringable;
  */
 class Command extends Part implements Stringable
 {
-    use \Discord\Builders\CommandAttributes;
+    use CommandAttributes;
 
     /** Slash commands; a text-based command that shows up when a user types / */
     public const CHAT_INPUT = 1;
@@ -132,10 +133,11 @@ class Command extends Part implements Stringable
             'type' => $this->type,
             'nsfw' => $this->nsfw,
             'integration_types',
-            'contexts',
             'handler' => $this->handler,
 
-            'dm_permission' => $this->dm_permission,  // Guild command might omit this fillable
+            // Guild command might omit these fillables
+            'dm_permission' => $this->dm_permission,
+            'contexts',
         ]);
 
         return $attr;
@@ -158,13 +160,13 @@ class Command extends Part implements Stringable
             'default_permission' => $this->default_permission,
             'nsfw' => $this->nsfw,
             'integration_types',
-            'contexts',
             'handler' => $this->handler,
         ]);
 
-        if (! isset($this->guild_id)) {
+        if ($this->guild_id !== null) {
             $attr += $this->makeOptionalAttributes([
                 'dm_permission' => $this->dm_permission,
+                'contexts',
             ]);
         }
 
@@ -176,7 +178,7 @@ class Command extends Part implements Stringable
      */
     public function save(?string $reason = null): PromiseInterface
     {
-        if (isset($this->attributes['guild_id'])) {
+        if ($this->guild_id !== null) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 

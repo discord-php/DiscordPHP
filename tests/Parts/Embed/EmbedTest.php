@@ -26,10 +26,7 @@ final class EmbedTest extends DiscordTestCase
             // kek
             $url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
             $this->channel()->sendMessage($url)
-                ->then(function (Message $message) {
-                    // fetch message to ensure embed is present
-                    return $this->channel()->messages->fetch($message->id);
-                })
+                ->then(fn (Message $message) => $this->channel()->messages->fetch($message->id)) // fetch message to ensure embed is present
                 ->then(function (Message $message) use ($url) {
                     $this->assertEquals(1, $message->embeds->count());
                     /** @var \Discord\Parts\Embed\Embed */
@@ -53,10 +50,7 @@ final class EmbedTest extends DiscordTestCase
         return wait(function (Discord $discord, $resolve) {
             $url = 'https://discord.com/assets/94db9c3c1eba8a38a1fcf4f223294185.png';
             $this->channel()->sendMessage($url)
-                ->then(function (Message $message) {
-                    // fetch message to ensure embed is present
-                    return $this->channel()->messages->fetch($message->id);
-                })
+                ->then(fn (Message $message) => $this->channel()->messages->fetch($message->id)) // fetch message to ensure embed is present
                 ->then(function (Message $message) use ($url) {
                     $this->assertEquals(1, $message->embeds->count());
                     /** @var \Discord\Parts\Embed\Embed */
