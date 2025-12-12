@@ -396,16 +396,6 @@ Search.appendIndex(
             "summary": "Creates\u0020a\u0020new\u0020action\u0020row.",
             "url": "classes/Discord-Builders-Components-ActionRow.html#method_new"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AsetComponents\u0028\u0029",
-            "name": "setComponents",
-            "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020action\u0020row.",
-            "url": "classes/Discord-Builders-Components-ActionRow.html#method_setComponents"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AaddComponents\u0028\u0029",
-            "name": "addComponents",
-            "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020action\u0020row.",
-            "url": "classes/Discord-Builders-Components-ActionRow.html#method_addComponents"
-        },                {
             "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AaddComponent\u0028\u0029",
             "name": "addComponent",
             "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020action\u0020row.",
@@ -440,11 +430,6 @@ Search.appendIndex(
             "name": "type",
             "summary": "Component\u0020type.",
             "url": "classes/Discord-Builders-Components-ActionRow.html#property_type"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003A\u0024components",
-            "name": "components",
-            "summary": "Components\u0020contained\u0020by\u0020the\u0020action\u0020row.",
-            "url": "classes/Discord-Builders-Components-ActionRow.html#property_components"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Button",
             "name": "Button",
@@ -861,16 +846,6 @@ Search.appendIndex(
             "summary": "Resolves\u0020a\u0020color\u0020to\u0020an\u0020integer.",
             "url": "classes/Discord-Builders-Components-Container.html#method_resolveColor"
         },                {
-            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AsetComponents\u0028\u0029",
-            "name": "setComponents",
-            "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020container.",
-            "url": "classes/Discord-Builders-Components-Container.html#method_setComponents"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AaddComponents\u0028\u0029",
-            "name": "addComponents",
-            "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020container.",
-            "url": "classes/Discord-Builders-Components-Container.html#method_addComponents"
-        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003AaddComponent\u0028\u0029",
             "name": "addComponent",
             "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020container.",
@@ -915,11 +890,6 @@ Search.appendIndex(
             "name": "type",
             "summary": "Component\u0020type.",
             "url": "classes/Discord-Builders-Components-Container.html#property_type"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003A\u0024components",
-            "name": "components",
-            "summary": "Array\u0020of\u0020components.",
-            "url": "classes/Discord-Builders-Components-Container.html#property_components"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Container\u003A\u003A\u0024accent_color",
             "name": "accent_color",
@@ -1360,16 +1330,6 @@ Search.appendIndex(
             "name": "new",
             "summary": "Creates\u0020a\u0020new\u0020section.",
             "url": "classes/Discord-Builders-Components-Section.html#method_new"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AsetComponents\u0028\u0029",
-            "name": "setComponents",
-            "summary": "Sets\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020section.",
-            "url": "classes/Discord-Builders-Components-Section.html#method_setComponents"
-        },                {
-            "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AaddComponents\u0028\u0029",
-            "name": "addComponents",
-            "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020section.",
-            "url": "classes/Discord-Builders-Components-Section.html#method_addComponents"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Section\u003A\u003AaddComponent\u0028\u0029",
             "name": "addComponent",
@@ -1991,6 +1951,31 @@ Search.appendIndex(
             "summary": "Component\u0020type.",
             "url": "classes/Discord-Builders-Components-UserSelect.html#property_type"
         },                {
+            "fqsen": "\\Discord\\Builders\\ComponentsTrait",
+            "name": "ComponentsTrait",
+            "summary": "Trait\u0020for\u0020builders\u0020that\u0020use\u0020components.",
+            "url": "classes/Discord-Builders-ComponentsTrait.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ComponentsTrait\u003A\u003AsetComponents\u0028\u0029",
+            "name": "setComponents",
+            "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020builder.",
+            "url": "classes/Discord-Builders-ComponentsTrait.html#method_setComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ComponentsTrait\u003A\u003AaddComponents\u0028\u0029",
+            "name": "addComponents",
+            "summary": "Adds\u0020the\u0020components\u0020to\u0020the\u0020builder.",
+            "url": "classes/Discord-Builders-ComponentsTrait.html#method_addComponents"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ComponentsTrait\u003A\u003AaddComponent\u0028\u0029",
+            "name": "addComponent",
+            "summary": "Adds\u0020a\u0020component\u0020to\u0020the\u0020builder.",
+            "url": "classes/Discord-Builders-ComponentsTrait.html#method_addComponent"
+        },                {
+            "fqsen": "\\Discord\\Builders\\ComponentsTrait\u003A\u003A\u0024components",
+            "name": "components",
+            "summary": "Components\u0020of\u0020the\u0020builder.",
+            "url": "classes/Discord-Builders-ComponentsTrait.html#property_components"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder",
             "name": "MessageBuilder",
             "summary": "Helper\u0020class\u0020used\u0020to\u0020build\u0020messages.",
@@ -2120,16 +2105,6 @@ Search.appendIndex(
             "name": "removeComponent",
             "summary": "Removes\u0020a\u0020component\u0020from\u0020the\u0020builder.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_removeComponent"
-        },                {
-            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetComponents\u0028\u0029",
-            "name": "setComponents",
-            "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020message.",
-            "url": "classes/Discord-Builders-MessageBuilder.html#method_setComponents"
-        },                {
-            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AaddComponents\u0028\u0029",
-            "name": "addComponents",
-            "summary": "Add\u0020a\u0020group\u0020of\u0020components\u0020to\u0020the\u0020builder.",
-            "url": "classes/Discord-Builders-MessageBuilder.html#method_addComponents"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AaddComponent\u0028\u0029",
             "name": "addComponent",
@@ -2321,11 +2296,6 @@ Search.appendIndex(
             "summary": "Message\u0020to\u0020forward\u0020with\u0020this\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#property_forward"
         },                {
-            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A\u0024components",
-            "name": "components",
-            "summary": "Components\u0020to\u0020send\u0020with\u0020this\u0020message.",
-            "url": "classes/Discord-Builders-MessageBuilder.html#property_components"
-        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A\u0024sticker_ids",
             "name": "sticker_ids",
             "summary": "IDs\u0020of\u0020up\u0020to\u00203\u0020stickers\u0020in\u0020the\u0020server\u0020to\u0020send\u0020in\u0020the\u0020message.",
@@ -2386,16 +2356,6 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020title\u0020of\u0020the\u0020modal.",
             "url": "classes/Discord-Builders-ModalBuilder.html#method_getTitle"
         },                {
-            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AsetComponents\u0028\u0029",
-            "name": "setComponents",
-            "summary": "Sets\u0020the\u0020components\u0020of\u0020the\u0020modal.",
-            "url": "classes/Discord-Builders-ModalBuilder.html#method_setComponents"
-        },                {
-            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AaddComponents\u0028\u0029",
-            "name": "addComponents",
-            "summary": "Adds\u0020components\u0020to\u0020the\u0020modal.",
-            "url": "classes/Discord-Builders-ModalBuilder.html#method_addComponents"
-        },                {
             "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003AaddComponent\u0028\u0029",
             "name": "addComponent",
             "summary": "Add\u0020a\u0020component\u0020to\u0020the\u0020modal.",
@@ -2430,11 +2390,6 @@ Search.appendIndex(
             "name": "title",
             "summary": "The\u0020title\u0020of\u0020the\u0020popup\u0020modal,\u0020max\u002045\u0020characters.",
             "url": "classes/Discord-Builders-ModalBuilder.html#property_title"
-        },                {
-            "fqsen": "\\Discord\\Builders\\ModalBuilder\u003A\u003A\u0024components",
-            "name": "components",
-            "summary": "Between\u00201\u0020and\u00205\u0020\u0028inclusive\u0029\u0020components\u0020that\u0020make\u0020up\u0020the\u0020modal.",
-            "url": "classes/Discord-Builders-ModalBuilder.html#property_components"
         },                {
             "fqsen": "\\Discord\\CommandClient\\Command",
             "name": "Command",

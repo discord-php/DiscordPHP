@@ -257,6 +257,9 @@
             implements
                             <abbr title="\JsonSerializable">JsonSerializable</abbr>                    </span>
     
+            <span class="phpdocumentor-element__extends">
+            uses
+                            <a href="classes/Discord-Builders-ComponentsTrait.html"><abbr title="\Discord\Builders\ComponentsTrait">ComponentsTrait</abbr></a>                    </span>
     </h2>
 
 <div class="phpdocumentor-label-line">
@@ -345,11 +348,11 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Builders-ModalBuilder.html#property_components">$components</a>
+    <a class="" href="classes/Discord-Builders-ComponentsTrait.html#property_components">$components</a>
     <span>
                         &nbsp;: array&lt;string|int, <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>&gt;            </span>
 </dt>
-<dd>Between 1 and 5 (inclusive) components that make up the modal.</dd>
+<dd>Components of the builder.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-ModalBuilder.html#property_custom_id">$custom_id</a>
@@ -402,11 +405,11 @@
 <dd>Add a component to the modal.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Builders-ModalBuilder.html#method_addComponents">addComponents()</a>
+    <a class="" href="classes/Discord-Builders-ComponentsTrait.html#method_addComponents">addComponents()</a>
     <span>
                                 &nbsp;: $this    </span>
 </dt>
-<dd>Adds components to the modal.</dd>
+<dd>Adds the components to the builder.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-Builder.html#method_fromPart">fromPart()</a>
@@ -457,11 +460,11 @@
 <dd>Removes a component from the builder.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Builders-ModalBuilder.html#method_setComponents">setComponents()</a>
+    <a class="" href="classes/Discord-Builders-ComponentsTrait.html#method_setComponents">setComponents()</a>
     <span>
                                 &nbsp;: $this    </span>
 </dt>
-<dd>Sets the components of the modal.</dd>
+<dd>Sets the components of the builder.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-ModalBuilder.html#method_setCustomId">setCustomId()</a>
@@ -534,26 +537,26 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_components">
         $components
-        <a href="classes/Discord-Builders-ModalBuilder.html#property_components" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Builders-ComponentsTrait.html#property_components" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ComponentsTrait.php"><a href="files/src-discord-builders-componentstrait.html"><abbr title="src/Discord/Builders/ComponentsTrait.php">ComponentsTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Between 1 and 5 (inclusive) components that make up the modal.</p>
+        <p class="phpdocumentor-summary">Components of the builder.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$components</span>
-    </code>
+     = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
     
     
@@ -580,7 +583,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
@@ -618,7 +621,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -656,7 +659,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -852,7 +855,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">196</span>
+    <span class="phpdocumentor-element-found-in__line">152</span>
 
     </aside>
 
@@ -925,17 +928,17 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_addComponents">
         addComponents()
-        <a href="classes/Discord-Builders-ModalBuilder.html#method_addComponents" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Builders-ComponentsTrait.html#method_addComponents" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ComponentsTrait.php"><a href="files/src-discord-builders-componentstrait.html"><abbr title="src/Discord/Builders/ComponentsTrait.php">ComponentsTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">173</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Adds components to the modal.</p>
+        <p class="phpdocumentor-summary">Adds the components to the builder.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -961,19 +964,11 @@
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Builders-ModalBuilder.html#method_addComponents#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Builders-ComponentsTrait.html#method_addComponents#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.42.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">throws</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
@@ -989,7 +984,7 @@
                 <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\OverflowException">OverflowException</abbr></span>
                                                             
-                                                 <section class="phpdocumentor-description"><p>If the modal has more than 5 components.</p>
+                                                 <section class="phpdocumentor-description"><p>Builder exceeds component limits.</p>
 </section>
 
                                     </dd>
@@ -1066,7 +1061,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">241</span>
+    <span class="phpdocumentor-element-found-in__line">197</span>
 
     </aside>
 
@@ -1105,7 +1100,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">108</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -1144,7 +1139,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">138</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 
     </aside>
 
@@ -1183,7 +1178,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">249</span>
+    <span class="phpdocumentor-element-found-in__line">205</span>
 
     </aside>
 
@@ -1235,7 +1230,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
@@ -1298,7 +1293,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">224</span>
+    <span class="phpdocumentor-element-found-in__line">180</span>
 
     </aside>
 
@@ -1343,17 +1338,17 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_setComponents">
         setComponents()
-        <a href="classes/Discord-Builders-ModalBuilder.html#method_setComponents" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Builders-ComponentsTrait.html#method_setComponents" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ComponentsTrait.php"><a href="files/src-discord-builders-componentstrait.html"><abbr title="src/Discord/Builders/ComponentsTrait.php">ComponentsTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">150</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Sets the components of the modal.</p>
+        <p class="phpdocumentor-summary">Sets the components of the builder.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1377,6 +1372,33 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Builders-ComponentsTrait.html#method_setComponents#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\InvalidArgumentException">InvalidArgumentException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>Component is not a valid type.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\OverflowException">OverflowException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>Builder exceeds component limits.</p>
+</section>
+
+                                    </dd>
+                                            </dl>
 
         
     
@@ -1400,7 +1422,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
@@ -1464,7 +1486,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ModalBuilder.php"><a href="files/src-discord-builders-modalbuilder.html"><abbr title="src/Discord/Builders/ModalBuilder.php">ModalBuilder.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">122</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -1939,7 +1961,7 @@ as we may move it outside this class in future.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#property_components">$components</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-ComponentsTrait.html#property_components">$components</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#property_custom_id">$custom_id</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#property_title">$title</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#property_type">$type</a></li>
@@ -1952,7 +1974,7 @@ as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___get">__get()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___set">__set()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#method_addComponent">addComponent()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#method_addComponents">addComponents()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-ComponentsTrait.html#method_addComponents">addComponents()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Builder.html#method_fromPart">fromPart()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#method_getComponents">getComponents()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#method_getCustomId">getCustomId()</a></li>
@@ -1960,7 +1982,7 @@ as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#method_jsonSerialize">jsonSerialize()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#method_new">new()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#method_removeComponent">removeComponent()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#method_setComponents">setComponents()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-ComponentsTrait.html#method_setComponents">setComponents()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#method_setCustomId">setCustomId()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-ModalBuilder.html#method_setTitle">setTitle()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>

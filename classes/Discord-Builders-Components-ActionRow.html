@@ -255,6 +255,9 @@
         </div>
     
     
+            <span class="phpdocumentor-element__extends">
+            uses
+                            <a href="classes/Discord-Builders-ComponentsTrait.html"><abbr title="\Discord\Builders\ComponentsTrait">ComponentsTrait</abbr></a>                    </span>
     </h2>
 
 <div class="phpdocumentor-label-line">
@@ -265,7 +268,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ActionRow.php"><a href="files/src-discord-builders-components-actionrow.html"><abbr title="src/Discord/Builders/Components/ActionRow.php">ActionRow.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
@@ -475,12 +478,11 @@ components.</p>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Builders-Components-ActionRow.html#property_components">$components</a>
     <span>
                         &nbsp;: array&lt;string|int, <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>&gt;            </span>
 </dt>
-<dd>Components contained by the action row.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#property_id">$id</a>
@@ -526,11 +528,11 @@ components.</p>
 <dd>Adds a component to the action row.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Builders-Components-ActionRow.html#method_addComponents">addComponents()</a>
+    <a class="" href="classes/Discord-Builders-ComponentsTrait.html#method_addComponents">addComponents()</a>
     <span>
                                 &nbsp;: $this    </span>
 </dt>
-<dd>Add a group of components to the action row.</dd>
+<dd>Adds the components to the builder.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Builders-Components-ActionRow.html#method_clearComponents">clearComponents()</a>
@@ -588,11 +590,11 @@ components.</p>
 <dd>Removes a component from the action row.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Builders-Components-ActionRow.html#method_setComponents">setComponents()</a>
+    <a class="" href="classes/Discord-Builders-ComponentsTrait.html#method_setComponents">setComponents()</a>
     <span>
                                 &nbsp;: $this    </span>
 </dt>
-<dd>Add a group of components to the action row.</dd>
+<dd>Sets the components of the builder.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_checkForGetMutator">checkForGetMutator()</a>
@@ -1297,7 +1299,7 @@ components.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ActionRow.php"><a href="files/src-discord-builders-components-actionrow.html"><abbr title="src/Discord/Builders/Components/ActionRow.php">ActionRow.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
@@ -1331,7 +1333,7 @@ components.</p>
         class="
             phpdocumentor-element
             -property
-            -protected
+            -public
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_components">
@@ -1344,20 +1346,21 @@ components.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ActionRow.php"><a href="files/src-discord-builders-components-actionrow.html"><abbr title="src/Discord/Builders/Components/ActionRow.php">ActionRow.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">0</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Components contained by the action row.</p>
-
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$components</span>
-     = <span class="phpdocumentor-signature__default-value">[]</span></code>
+    </code>
 
-    
+        <section class="phpdocumentor-description"><p>Up to 5 interactive button components or a single select component.</p>
+</section>
+
     
     
 
@@ -1420,7 +1423,7 @@ components.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ActionRow.php"><a href="files/src-discord-builders-components-actionrow.html"><abbr title="src/Discord/Builders/Components/ActionRow.php">ActionRow.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -1616,7 +1619,7 @@ components.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ActionRow.php"><a href="files/src-discord-builders-components-actionrow.html"><abbr title="src/Discord/Builders/Components/ActionRow.php">ActionRow.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -1696,17 +1699,17 @@ components.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_addComponents">
         addComponents()
-        <a href="classes/Discord-Builders-Components-ActionRow.html#method_addComponents" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Builders-ComponentsTrait.html#method_addComponents" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ActionRow.php"><a href="files/src-discord-builders-components-actionrow.html"><abbr title="src/Discord/Builders/Components/ActionRow.php">ActionRow.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ComponentsTrait.php"><a href="files/src-discord-builders-componentstrait.html"><abbr title="src/Discord/Builders/ComponentsTrait.php">ComponentsTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Add a group of components to the action row.</p>
+        <p class="phpdocumentor-summary">Adds the components to the builder.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1732,7 +1735,7 @@ components.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Builders-Components-ActionRow.html#method_addComponents#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Builders-ComponentsTrait.html#method_addComponents#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -1752,7 +1755,7 @@ components.</p>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\OverflowException">OverflowException</abbr></span>
                                                             
-                                                 <section class="phpdocumentor-description"><p>If the action row has more than 5 components.</p>
+                                                 <section class="phpdocumentor-description"><p>Builder exceeds component limits.</p>
 </section>
 
                                     </dd>
@@ -1780,7 +1783,7 @@ components.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ActionRow.php"><a href="files/src-discord-builders-components-actionrow.html"><abbr title="src/Discord/Builders/Components/ActionRow.php">ActionRow.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
@@ -1868,7 +1871,7 @@ components.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ActionRow.php"><a href="files/src-discord-builders-components-actionrow.html"><abbr title="src/Discord/Builders/Components/ActionRow.php">ActionRow.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">166</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -1985,7 +1988,7 @@ components.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ActionRow.php"><a href="files/src-discord-builders-components-actionrow.html"><abbr title="src/Discord/Builders/Components/ActionRow.php">ActionRow.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">174</span>
+    <span class="phpdocumentor-element-found-in__line">130</span>
 
     </aside>
 
@@ -2037,7 +2040,7 @@ components.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ActionRow.php"><a href="files/src-discord-builders-components-actionrow.html"><abbr title="src/Discord/Builders/Components/ActionRow.php">ActionRow.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
@@ -2076,7 +2079,7 @@ components.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ActionRow.php"><a href="files/src-discord-builders-components-actionrow.html"><abbr title="src/Discord/Builders/Components/ActionRow.php">ActionRow.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
@@ -2121,21 +2124,21 @@ components.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_setComponents">
         setComponents()
-        <a href="classes/Discord-Builders-Components-ActionRow.html#method_setComponents" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Builders-ComponentsTrait.html#method_setComponents" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ActionRow.php"><a href="files/src-discord-builders-components-actionrow.html"><abbr title="src/Discord/Builders/Components/ActionRow.php">ActionRow.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/ComponentsTrait.php"><a href="files/src-discord-builders-componentstrait.html"><abbr title="src/Discord/Builders/ComponentsTrait.php">ComponentsTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Add a group of components to the action row.</p>
+        <p class="phpdocumentor-summary">Sets the components of the builder.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setComponents</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$components</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setComponents</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>&gt;|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$components</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -2145,10 +2148,10 @@ components.</p>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$components</span>
-                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>&gt;</span>
-                            </dt>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, <a href="classes/Discord-Builders-Components-ComponentObject.html"><abbr title="\Discord\Builders\Components\ComponentObject">ComponentObject</abbr></a>&gt;|null</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Components to add.</p>
+                    <section class="phpdocumentor-description"><p>Components to set.</p>
 </section>
 
             </dd>
@@ -2157,25 +2160,27 @@ components.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Builders-Components-ActionRow.html#method_setComponents#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Builders-ComponentsTrait.html#method_setComponents#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">since</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.42.0</span>
-                                                                                
-                                             
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">throws</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><abbr title="\InvalidArgumentException">InvalidArgumentException</abbr></span>
                                                             
                                                  <section class="phpdocumentor-description"><p>Component is not a valid type.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\OverflowException">OverflowException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>Builder exceeds component limits.</p>
 </section>
 
                                     </dd>
@@ -2781,7 +2786,7 @@ as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___get">__get()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method___set">__set()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-ActionRow.html#method_addComponent">addComponent()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-Components-ActionRow.html#method_addComponents">addComponents()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-ComponentsTrait.html#method_addComponents">addComponents()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-ActionRow.html#method_clearComponents">clearComponents()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Builder.html#method_fromPart">fromPart()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-ActionRow.html#method_getComponents">getComponents()</a></li>
@@ -2790,7 +2795,7 @@ as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Builders-Components-ActionRow.html#method_jsonSerialize">jsonSerialize()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-ActionRow.html#method_new">new()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-ActionRow.html#method_removeComponent">removeComponent()</a></li>
-                                            <li class=""><a href="classes/Discord-Builders-Components-ActionRow.html#method_setComponents">setComponents()</a></li>
+                                            <li class=""><a href="classes/Discord-Builders-ComponentsTrait.html#method_setComponents">setComponents()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-DynamicPropertyMutatorTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Builders-Components-Component.html#method_generateUuid">generateUuid()</a></li>
