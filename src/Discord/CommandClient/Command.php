@@ -248,9 +248,9 @@ class Command
             $subCommand = strtolower($subCommand);
         }
 
-        if (array_key_exists($subCommand, $this->subCommands)) {
+        if (array_key_exists($subCommand ?? '', $this->subCommands)) {
             return $this->subCommands[$subCommand]->handle($message, $args);
-        } elseif (array_key_exists($subCommand, $this->subCommandAliases)) {
+        } elseif (array_key_exists($subCommand ?? '', $this->subCommandAliases)) {
             return $this->subCommands[$this->subCommandAliases[$subCommand]]->handle($message, $args);
         }
 
