@@ -18,7 +18,7 @@ final class RemoveReactionTest extends DiscordTestCase
 {
     /**
      * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::deleteReaction
+     * @covers \Discord\Parts\Channel\Message::deleteAllReactions
      */
     public function testDeleteAllReactions()
     {
@@ -33,7 +33,7 @@ final class RemoveReactionTest extends DiscordTestCase
                         });
                 })
                 ->then(function (Message $message) {
-                    return $message->deleteReaction(Message::REACT_DELETE_ALL);
+                    return $message->deleteAllReactions(Message::REACT_DELETE_ALL);
                 })
                 ->then($resolve, $resolve);
         });
@@ -41,7 +41,7 @@ final class RemoveReactionTest extends DiscordTestCase
 
     /**
      * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::deleteReaction
+     * @covers \Discord\Parts\Channel\Message::deleteOwnReaction
      */
     public function testDeleteSelfReaction()
     {
@@ -49,20 +49,15 @@ final class RemoveReactionTest extends DiscordTestCase
             $this
                 ->channel()
                 ->sendMessage('testing deleting self reaction')
-                ->then(function (Message $message) {
-                    return $message->react('🤪')->then(function () use ($message) {
-                        return $message;
-                    });
-                })->then(function (Message $message) {
-                    return $message->deleteReaction(Message::REACT_DELETE_ME, '🤪');
-                })
+                ->then(fn (Message $message) => $message->react('🤪')->then(fn() => $message))
+                ->then(fn (Message $message) => $message->deleteOwnReaction('🤪'))
                 ->then($resolve, $resolve);
         });
     }
 
     /**
      * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::deleteReaction
+     * @covers \Discord\Parts\Channel\Message::deleteUserReaction
      */
     public function testDeleteReactionOfUser()
     {
@@ -70,20 +65,15 @@ final class RemoveReactionTest extends DiscordTestCase
             $this
                 ->channel()
                 ->sendMessage('testing deleting reaction of user')
-                ->then(function (Message $message) {
-                    return $message->react('🤪')->then(function () use ($message) {
-                        return $message;
-                    });
-                })->then(function (Message $message) use ($discord) {
-                    return $message->deleteReaction(Message::REACT_DELETE_ID, '🤪', $discord->id);
-                })
+                ->then(fn (Message $message) => $message->react('🤪')->then(fn() => $message))
+                ->then(fn (Message $message) => $message->deleteUserReaction('🤪', $discord->id))
                 ->then($resolve, $resolve);
         });
     }
 
     /**
      * @doesNotPerformAssertions
-     * @covers \Discord\Parts\Channel\Message::deleteReaction
+     * @covers \Discord\Parts\Channel\Message::deleteEmojiReactions
      */
     public function testDeleteAllReactionsForEmoji()
     {
@@ -91,13 +81,8 @@ final class RemoveReactionTest extends DiscordTestCase
             $this
                 ->channel()
                 ->sendMessage('testing deleting of single reaction')
-                ->then(function (Message $message) {
-                    return $message->react('🤪')->then(function () use ($message) {
-                        return $message;
-                    });
-                })->then(function (Message $message) use ($discord) {
-                    return $message->deleteReaction(Message::REACT_DELETE_EMOJI, '🤪');
-                })
+                ->then(fn (Message $message) => $message->react('🤪')->then(fn() => $message))
+                ->then(fn (Message $message) => $message->deleteEmojiReactions('🤪'))
                 ->then($resolve, $resolve);
         });
     }

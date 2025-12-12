@@ -181,7 +181,7 @@ final class EmptyMessageTest extends DiscordTestCase
             $this->channel()->sendMessage('before edit')
                 ->then(function (Message $message) use ($content) {
                     $message->content = $content;
-                    return $message->channel->messages->save($message, $content);
+                    return $message->save($content);
                 })
                 ->then(function (Message $message) {
                     $this->assertInstanceOf(Carbon::class, $message->edited_timestamp);
