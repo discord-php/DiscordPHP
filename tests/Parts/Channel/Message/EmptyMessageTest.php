@@ -50,14 +50,13 @@ final class EmptyMessageTest extends DiscordTestCase
         return wait(function (Discord $discord, $resolve) {
             $content = 'Hello, world! From PHPunit';
             $this->channel()->sendMessage($content)
-                ->then(function (Message $message) {
-                    return $message->reply('replying to my message')
-                        ->then(function (Message $new_message) use ($message) {
-                            $this->assertEquals('replying to my message', $new_message->content);
-                            $this->assertInstanceOf(Message::class, $new_message->referenced_message);
-                            $this->assertEquals($message->id, $new_message->referenced_message->id);
-                        });
-                })
+                ->then(fn (Message $message) => $message->reply('replying to my message')
+                    ->then(function (Message $new_message) use ($message) {
+                        $this->assertEquals('replying to my message', $new_message->content);
+                        $this->assertInstanceOf(Message::class, $new_message->referenced_message);
+                        $this->assertEquals($message->id, $new_message->referenced_message->id);
+                    })
+                )
                 ->then($resolve, $resolve);
         });
     }
@@ -183,9 +182,7 @@ final class EmptyMessageTest extends DiscordTestCase
                     $message->content = $content;
                     return $message->save($content);
                 })
-                ->then(function (Message $message) {
-                    $this->assertInstanceOf(Carbon::class, $message->edited_timestamp);
-                })
+                ->then(fn (Message $message) => $this->assertInstanceOf(Carbon::class, $message->edited_timestamp))
                 ->then($resolve, $resolve);
         });
     }
@@ -201,9 +198,7 @@ final class EmptyMessageTest extends DiscordTestCase
             $start = microtime(true);
 
             $this->channel()->sendMessage('testing delayed reply')
-                ->then(function (Message $message) use ($delay) {
-                    return $message->delayedReply('delayed reply to message', $delay);
-                })
+                ->then(fn (Message $message) => $message->delayedReply('delayed reply to message', $delay))
                 ->then(function (Message $message) use ($delay, $start, $resolve) {
                     $stop = microtime(true);
                     $diff = $stop - $start;
@@ -222,9 +217,7 @@ final class EmptyMessageTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('testing reactions')
-                ->then(function (Message $message) {
-                    return $message->react('😀');
-                })
+                ->then(fn (Message $message) => $message->react('😀'))
                 ->then($resolve, $resolve);
         });
     }
@@ -270,12 +263,8 @@ final class EmptyMessageTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('delete through repo')
-                ->then(function (Message $message) {
-                    return $message->channel->messages->delete($message);
-                })
-                ->then(function (Message $message) {
-                    $this->assertFalse($message->created);
-                })
+                ->then(fn (Message $message) => $message->channel->messages->delete($message))
+                ->then(fn (Message $message) => $this->assertFalse($message->created))
                 ->then($resolve, $resolve);
         });
     }
@@ -288,9 +277,7 @@ final class EmptyMessageTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('testing delete through part')
-                ->then(function (Message $message) {
-                    return $message->delete();
-                })
+                ->then(fn (Message $message) => $message->delete())
                 ->then($resolve);
         });
     }

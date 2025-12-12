@@ -270,9 +270,7 @@ final class ChannelTest extends DiscordTestCase
         /**
          * @var Channel
          */
-        $vc = $this->channel()->guild->channels->filter(function ($channel) {
-            return $channel->type === Channel::TYPE_GUILD_VOICE;
-        })->first();
+        $vc = $this->channel()->guild->channels->filter(fn ($channel) => $channel->type === Channel::TYPE_GUILD_VOICE)->first();
 
         $this->assertTrue($vc->isVoiceBased());
     }
