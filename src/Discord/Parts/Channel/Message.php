@@ -425,14 +425,14 @@ class Message extends Part
             $keepReactions[] = $reactionKey = $reaction->emoji->id ?? $reaction->emoji->name;
             $reaction = (array) $reaction;
             /** @var ?Reaction */
-            if ($reactionPart = $this->reactions->fetch($reactionKey)) {
+            if ($reactionPart = $this->reactions->offsetGet($reactionKey)) {
                 $reactionPart->fill($reaction);
             } else {
                 /** @var Reaction */
                 $reactionPart = $this->reactions->create($reaction, $this->created);
                 $reactionPart->created = &$this->created;
             }
-            $this->reactions->set($reactionPart->id, $reactionPart);
+            $this->reactions->pushItem($reactionPart);
         }
 
         $oldReactions = [];
@@ -501,7 +501,7 @@ class Message extends Part
                 }
                 $thread = $channel->threads->create($this->attributes['thread'], $channel->created);
                 $thread->created = &$channel->created;
-                $channel->threads->cache->set($thread->id, $thread);
+                $channel->threads->pushItem($thread);
             }
         }
 
@@ -522,7 +522,7 @@ class Message extends Part
         // Workaround for Channel::sendMessage() no guild_id
         if ($this->channel_id) {
             return $this->discord->guilds->find(function (Guild $guild) {
-                return $guild->channels->cache->has($this->channel_id);
+                return $guild->channels->offsetExists($this->channel_id);
             });
         }
 
@@ -921,14 +921,14 @@ class Message extends Part
             $this->attributes['thread'] ??= $response;
             if ($channel) {
                 /** @var ?Thread */
-                if ($threadPart = $channel->threads->cache->get($response->id)) {
+                if ($threadPart = $channel->threads->offsetGet($response->id)) {
                     $threadPart->fill((array) $response);
                 } else {
                     /** @var Thread */
                     $threadPart = $channel->threads->create($response, $channel->created);
                     $threadPart->created = &$channel->created;
                 }
-                $channel->threads->cache->set($threadPart->id, $threadPart);
+                $channel->threads->pushItem($threadPart);
 
                 return $threadPart;
             }
