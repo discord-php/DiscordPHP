@@ -23,9 +23,7 @@ class DiscordTestCase extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        set_rejection_handler(function (\Throwable $e): void {
-            echo 'Uncaught Promise Rejection: ', $e->getMessage(), "\n";
-        });
+        set_rejection_handler(function (\Throwable $e): void {});
 
         /** @var Channel $channel */
         $channel = wait(function (Discord $discord, $resolve) {
