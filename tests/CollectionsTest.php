@@ -170,9 +170,7 @@ final class CollectionsTest extends TestCase
     public function testFilter()
     {
         $collection = new Collection([1, 2, 3, 4, 5], null);
-        $filteredCollection = $collection->filter(function (int $number) {
-            return $number > 2;
-        });
+        $filteredCollection = $collection->filter(fn (int $number) => $number > 2);
 
         $this->assertEquals([3, 4, 5], $filteredCollection->toArray());
     }
@@ -181,18 +179,14 @@ final class CollectionsTest extends TestCase
     {
         $collection = new Collection([1, 2, 3, 4, 5], null);
 
-        $this->assertEquals(2, $collection->find(function (int $number) {
-            return $number === 2;
-        }));
+        $this->assertEquals(2, $collection->find(fn (int $number) => $number === 2));
     }
 
     public function testFindReturnsNullWhenNoResultsFound()
     {
         $collection = new Collection([1, 2, 3, 4, 5], null);
 
-        $this->assertEquals(null, $collection->find(function (int $number) {
-            return false;
-        }));
+        $this->assertEquals(null, $collection->find(fn (int $number) => false));
     }
 
     public function testClear()
@@ -206,9 +200,7 @@ final class CollectionsTest extends TestCase
     public function testMap()
     {
         $collection = new Collection([1, 2, 3, 4, 5], null);
-        $mappedArray = $collection->map(function (int $number) {
-            return $number * 2;
-        });
+        $mappedArray = $collection->map(fn (int $number) => $number * 2);
 
         $this->assertEquals([
             2, 4, 6, 8, 10,
