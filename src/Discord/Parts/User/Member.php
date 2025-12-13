@@ -33,6 +33,7 @@ use Discord\Parts\Permissions\Permission;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\PresenceUpdate;
+use Discord\Repository\Guild\MemberRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -1002,6 +1003,21 @@ class Member extends Part implements Stringable
         return [
             'roles' => array_values($this->attributes['roles']),
         ];
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return MemberRepository The repository.
+     */
+    public function getRepository(): MemberRepository
+    {
+        /** @var Guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->members;
     }
 
     /**
