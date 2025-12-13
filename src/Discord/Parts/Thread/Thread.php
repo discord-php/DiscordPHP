@@ -24,6 +24,7 @@ use Discord\Parts\Thread\Member as ThreadMember;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
+use Discord\Repository\Channel\ThreadRepository;
 use Discord\Repository\Thread\MemberRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
@@ -444,6 +445,21 @@ class Thread extends Part implements Stringable
         ]);
 
         return $attr;
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return ThreadRepository The repository.
+     */
+    public function getRepository(): ThreadRepository
+    {
+        /** @var Channel $channel */
+        $channel = $this->discord->getChannel($this->parent_id);
+        
+        return $channel->threads;
     }
 
     /**
