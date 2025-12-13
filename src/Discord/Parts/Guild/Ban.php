@@ -97,10 +97,14 @@ class Ban extends Part
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return BanRepository The repository.
+     * @return BanRepository|null The repository.
      */
-    public function getRepository(): BanRepository
+    public function getRepository(): BanRepository|null
     {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
         /** @var Guild $guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
