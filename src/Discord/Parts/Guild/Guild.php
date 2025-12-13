@@ -48,6 +48,7 @@ use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
 use Discord\Repository\Guild\MessageRepository;
+use Discord\Repository\GuildRepository;
 use Discord\Repository\VoiceStateRepository;
 use React\Promise\PromiseInterface;
 use ReflectionClass;
@@ -1614,6 +1615,18 @@ class Guild extends Part
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return GuildRepository The repository.
+     */
+    public function getRepository(): GuildRepository
+    {
+        return $this->discord->guilds;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
@@ -1624,7 +1637,7 @@ class Guild extends Part
             }
         }
 
-        return $this->discord->guilds->save($this, $reason);
+        return $this->getRepository()->save($this, $reason);
     }
 
     /**
