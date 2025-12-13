@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\IntegrationRepository;
 use React\Promise\PromiseInterface;
 
 /**
@@ -161,15 +162,31 @@ class Integration extends Part
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return IntegrationRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): IntegrationRepository|null
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+        
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->integrations;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
     {
         if (isset($this->attributes['guild_id'])) {
-            /** @var Guild $guild */
-            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
-
-            return $guild->integrations->save($this, $reason);
+            return $this->getRepository()->save($this, $reason);
         }
 
         return parent::save();

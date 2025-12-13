@@ -16,6 +16,7 @@ namespace Discord\Parts\Channel;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Repository\Channel\StageInstanceRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -122,6 +123,24 @@ class StageInstance extends Part
             'topic' => $this->topic,
             'privacy_level' => $this->privacy_level,
         ]);
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return StageInstanceRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): StageInstanceRepository|null
+    {
+        if (! isset($this->attributes['channel_id'])) {
+            return null;
+        }
+
+        $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
+
+        return $channel->stage_instances;
     }
 
     /**

@@ -21,6 +21,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\WebhookMessageRepository;
+use Discord\Repository\Channel\WebhookRepository;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -136,6 +137,7 @@ class Webhook extends Part
      *
      * Refer to Slack's documentation for more information. Discord does not support Slack's `channel`, `icon_emoji`, `mrkdwn`, or `mrkdwn_in` properties.
      *
+     * @param array       $queryparams
      * @param ?string|int $queryparams['thread_id'] Id of the thread to send the message in.
      * @param ?bool       $queryparams['wait']      Waits for server confirmation of message send before response (defaults to `true`; when `false` a message that is not saved does not return an error)
      *
@@ -179,6 +181,7 @@ class Webhook extends Part
      * You can choose what events your Discord channel receives by choosing the "Let me select individual events" option and selecting individual events for the new webhook you're configuring.
      * The supported events are `commit_comment`, `create`, `delete`, `fork`, `issue_comment`, `issues`, `member`, `public`, `pull_request`, `pull_request_review`, `pull_request_review_comment`, `push`, `release`, `watch`, `check_run`, `check_suite`, `discussion`, and `discussion_comment`.
      *
+     * @param array       $queryparams
      * @param ?string|int $queryparams['thread_id'] Id of the thread to send the message in.
      * @param ?bool       $queryparams['wait']      Waits for server confirmation of message send before response (defaults to `true`; when `false` a message that is not saved does not return an error)
      *
@@ -380,10 +383,33 @@ class Webhook extends Part
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return WebhookRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): WebhookRepository|null
+    {
+        if (! isset($this->attributes['channel_id'])) {
+            return null;
+        }
+
+        /** @var Channel */
+        $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
+
+        return $channel->webhooks;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
     {
+        if (! isset($this->attributes['channel_id'])) {
+            return parent::save($reason);
+        }
+
         /** @var Channel */
         $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
 
