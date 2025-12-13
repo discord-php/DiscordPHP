@@ -241,8 +241,12 @@ class Rule extends Part
      *
      * @return AutoModerationRuleRepository|null The repository.
      */
-    public function getRepository(): AutoModerationRuleRepository
+    public function getRepository(): AutoModerationRuleRepository|null
     {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
         /** @var Guild $guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
