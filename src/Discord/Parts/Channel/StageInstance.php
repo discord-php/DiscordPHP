@@ -144,8 +144,6 @@ class StageInstance extends Part
      */
     public function save(?string $reason = null): PromiseInterface
     {
-        $repository = $this->getRepository();
-
         if (isset($this->attributes['channel_id'])) {
             /** @var Channel $channel */
             $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
@@ -155,7 +153,7 @@ class StageInstance extends Part
                 }
             }
 
-            return $repository->save($this, $reason);
+            return $channel->stage_instances->save($this, $reason);
         }
 
         return parent::save();
