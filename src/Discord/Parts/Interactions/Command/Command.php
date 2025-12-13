@@ -17,6 +17,8 @@ use Discord\Builders\CommandAttributes;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Repository\Guild\GuildCommandRepository;
+use Discord\Repository\Interaction\GlobalCommandRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -174,18 +176,30 @@ class Command extends Part implements Stringable
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return AbstractRepository The repository.
+     */
+    public function getRepository(): GuildCommandRepository|GlobalCommandRepository
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->commands;
+        }
+
+        return $this->discord->application->commands;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
     {
-        if ($this->guild_id !== null) {
-            /** @var Guild $guild */
-            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
-
-            return $guild->commands->save($this, $reason);
-        }
-
-        return $this->discord->commands->save($this, $reason);
+        return $this->getRepository()->save($this, $reason);
     }
 
     /**
