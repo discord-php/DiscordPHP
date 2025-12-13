@@ -1444,8 +1444,6 @@ class Message extends Part
                 if (! $channel->webhooks->get('id', $this->attributes['webhook_id'])) {
                     return reject(new \Exception('Cannot find the webhook for this message (missing token).'));
                 }
-
-                return $repository->save($this, $reason);
             }
 
             return $repository->save($this, $reason);
