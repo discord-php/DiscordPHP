@@ -15,6 +15,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\BanRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -89,6 +90,21 @@ class Ban extends Part
         }
 
         return $this->attributePartHelper('user', User::class);
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return BanRepository The repository.
+     */
+    public function getRepository(): BanRepository
+    {
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->bans;
     }
 
     /**
