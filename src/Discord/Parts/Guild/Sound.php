@@ -133,8 +133,12 @@ class Sound extends Part implements Stringable
      *
      * @return SoundRepository|null The repository.
      */
-    public function getRepository(): SoundRepository
+    public function getRepository(): SoundRepository|null
     {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
         /** @var Guild $guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
