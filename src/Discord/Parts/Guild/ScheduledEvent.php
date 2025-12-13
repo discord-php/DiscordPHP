@@ -20,6 +20,7 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\ScheduledEventRepository;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -328,6 +329,21 @@ class ScheduledEvent extends Part
         }
 
         return $attr;
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return ScheduledEventRepository The repository.
+     */
+    public function getRepository(): ScheduledEventRepository
+    {
+         /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->guild_scheduled_events;
     }
 
     /**
