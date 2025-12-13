@@ -387,10 +387,14 @@ class Webhook extends Part
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return WebhookRepository The repository.
+     * @return WebhookRepository|null The repository.
      */
-    public function getRepository(): WebhookRepository
+    public function getRepository(): WebhookRepository|null
     {
+        if (! isset($this->attributes['channel_id'])) {
+            return null;
+        }
+
         /** @var Channel */
         $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
 
@@ -402,6 +406,10 @@ class Webhook extends Part
      */
     public function save(?string $reason = null): PromiseInterface
     {
+        if (! isset($this->attributes['channel_id'])) {
+            return parent::save($reason);
+        }
+
         /** @var Channel */
         $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
 
