@@ -402,8 +402,6 @@ class Webhook extends Part
      */
     public function save(?string $reason = null): PromiseInterface
     {
-        $repository = $this->getRepository();
-
         /** @var Channel */
         $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
 
@@ -413,7 +411,7 @@ class Webhook extends Part
             }
         }
 
-        return $repository->save($this, $reason);
+        return $channel->webhooks->save($this, $reason);
     }
 
     /**
