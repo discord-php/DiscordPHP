@@ -1010,7 +1010,7 @@ class Member extends Part implements Stringable
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return MemberRepository The repository.
+     * @return MemberRepository|null The repository.
      */
     public function getRepository(): MemberRepository
     {

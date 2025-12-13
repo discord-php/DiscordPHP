@@ -336,7 +336,7 @@ class ScheduledEvent extends Part
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return ScheduledEventRepository The repository.
+     * @return ScheduledEventRepository|null The repository.
      */
     public function getRepository(): ScheduledEventRepository
     {

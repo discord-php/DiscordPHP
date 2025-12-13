@@ -180,7 +180,7 @@ class Command extends Part implements Stringable
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return AbstractRepository The repository.
+     * @return AbstractRepository|null The repository.
      */
     public function getRepository(): GuildCommandRepository|GlobalCommandRepository
     {

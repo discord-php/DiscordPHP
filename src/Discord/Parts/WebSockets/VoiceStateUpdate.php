@@ -149,7 +149,7 @@ class VoiceStateUpdate extends Part
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return VoiceStateRepository The repository.
+     * @return VoiceStateRepository|null The repository.
      */
     public function getRepository(): VoiceStateRepository
     {

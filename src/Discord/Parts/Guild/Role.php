@@ -266,7 +266,7 @@ class Role extends Part implements Stringable
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return RoleRepository The repository.
+     * @return RoleRepository|null The repository.
      */
     public function getRepository(): RoleRepository
     {

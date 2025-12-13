@@ -183,7 +183,7 @@ class Sticker extends Part implements Stringable
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return StickerRepository The repository.
+     * @return StickerRepository|null The repository.
      */
     public function getRepository(): StickerRepository
     {

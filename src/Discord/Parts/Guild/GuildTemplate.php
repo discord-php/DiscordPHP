@@ -257,7 +257,7 @@ class GuildTemplate extends Part implements Stringable
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return GuildTemplateRepository The repository.
+     * @return GuildTemplateRepository|null The repository.
      */
     public function getRepository(): GuildTemplateRepository
     {

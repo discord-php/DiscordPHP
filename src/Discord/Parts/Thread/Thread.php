@@ -452,7 +452,7 @@ class Thread extends Part implements Stringable
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return ThreadRepository The repository.
+     * @return ThreadRepository|null The repository.
      */
     public function getRepository(): ThreadRepository
     {
