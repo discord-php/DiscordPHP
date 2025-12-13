@@ -239,7 +239,7 @@ class Rule extends Part
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return AutoModerationRuleRepository|null The repository.
+     * @return AutoModerationRuleRepository|null The repository, or null if required part data is missing.
      */
     public function getRepository(): AutoModerationRuleRepository|null
     {

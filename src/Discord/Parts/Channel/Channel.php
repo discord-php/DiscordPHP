@@ -1221,7 +1221,7 @@ class Channel extends Part implements Stringable
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return ChannelRepository|PrivateChannelRepository|null The repository.
+     * @return ChannelRepository|PrivateChannelRepository The repository.
      */
     public function getRepository(): ChannelRepository|PrivateChannelRepository
     {

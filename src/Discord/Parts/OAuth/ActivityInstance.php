@@ -80,7 +80,7 @@ class ActivityInstance extends Part
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return ActivityInstanceRepository|null The repository.
+     * @return ActivityInstanceRepository The repository.
      */
     public function getRepository(): ActivityInstanceRepository
     {

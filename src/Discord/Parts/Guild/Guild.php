@@ -1619,7 +1619,7 @@ class Guild extends Part
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return GuildRepository|null The repository.
+     * @return GuildRepository The repository.
      */
     public function getRepository(): GuildRepository
     {

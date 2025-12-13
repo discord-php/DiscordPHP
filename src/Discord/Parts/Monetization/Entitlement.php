@@ -102,7 +102,7 @@ class Entitlement extends Part
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return EntitlementRepository|null The repository.
+     * @return EntitlementRepository The repository.
      */
     public function getRepository(): EntitlementRepository
     {

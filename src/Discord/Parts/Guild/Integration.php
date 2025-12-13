@@ -166,7 +166,7 @@ class Integration extends Part
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return IntegrationRepository|null The repository.
+     * @return IntegrationRepository|null The repository, or null if required part data is missing.
      */
     public function getRepository(): IntegrationRepository|null
     {

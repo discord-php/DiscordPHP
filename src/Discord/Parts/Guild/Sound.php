@@ -131,7 +131,7 @@ class Sound extends Part implements Stringable
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return SoundRepository|null The repository.
+     * @return SoundRepository|null The repository, or null if required part data is missing.
      */
     public function getRepository(): SoundRepository|null
     {

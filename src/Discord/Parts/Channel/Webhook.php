@@ -387,7 +387,7 @@ class Webhook extends Part
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return WebhookRepository|null The repository.
+     * @return WebhookRepository|null The repository, or null if required part data is missing.
      */
     public function getRepository(): WebhookRepository|null
     {
