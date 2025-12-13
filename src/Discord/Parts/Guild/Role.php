@@ -268,8 +268,12 @@ class Role extends Part implements Stringable
      *
      * @return RoleRepository|null The repository.
      */
-    public function getRepository(): RoleRepository
+    public function getRepository(): RoleRepository|null
     {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
         /** @var Guild $guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
