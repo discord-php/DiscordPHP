@@ -151,8 +151,12 @@ class VoiceStateUpdate extends Part
      *
      * @return VoiceStateRepository|null The repository.
      */
-    public function getRepository(): VoiceStateRepository
+    public function getRepository(): VoiceStateRepository|null
     {
+        if (! isset($this->attributes['guild_id'], $this->attributes['user_id'])) {
+            return null;
+        }
+
         /** @var Guild $guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
