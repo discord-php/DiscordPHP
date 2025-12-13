@@ -185,8 +185,12 @@ class Sticker extends Part implements Stringable
      *
      * @return StickerRepository|null The repository.
      */
-    public function getRepository(): StickerRepository
+    public function getRepository(): StickerRepository|null
     {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
         /** @var Guild $guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
