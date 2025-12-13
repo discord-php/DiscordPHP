@@ -180,8 +180,6 @@ class Emoji extends Part implements Stringable
      */
     public function save(?string $reason = null): PromiseInterface
     {
-        $repository = $this->getRepository();
-
         if (isset($this->attributes['guild_id'])) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
@@ -198,7 +196,7 @@ class Emoji extends Part implements Stringable
             }
         }
 
-        return $repository->save($this, $reason);
+        return $this->getRepository()->save($this, $reason);
     }
 
     /**
