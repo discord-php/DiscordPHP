@@ -130,10 +130,14 @@ class StageInstance extends Part
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return StageInstanceRepository The repository.
+     * @return StageInstanceRepository|null The repository.
      */
-    public function getRepository(): StageInstanceRepository
+    public function getRepository(): StageInstanceRepository|null
     {
+        if (! isset($this->attributes['channel_id'])) {
+            return null;
+        }
+
         $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
 
         return $channel->stage_instances;
