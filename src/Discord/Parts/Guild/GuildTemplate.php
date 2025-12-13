@@ -259,8 +259,12 @@ class GuildTemplate extends Part implements Stringable
      *
      * @return GuildTemplateRepository|null The repository.
      */
-    public function getRepository(): GuildTemplateRepository
+    public function getRepository(): GuildTemplateRepository|null
     {
+        if (! isset($this->attributes['source_guild_id'])) {
+            return null;
+        }
+
         /** @var Guild $guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['source_guild_id']], true);
 
