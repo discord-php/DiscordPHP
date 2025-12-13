@@ -1012,8 +1012,12 @@ class Member extends Part implements Stringable
      *
      * @return MemberRepository|null The repository.
      */
-    public function getRepository(): MemberRepository
+    public function getRepository(): MemberRepository|null
     {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
         /** @var Guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
