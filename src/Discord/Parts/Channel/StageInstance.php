@@ -16,6 +16,7 @@ namespace Discord\Parts\Channel;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Repository\Channel\StageInstanceRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -125,10 +126,26 @@ class StageInstance extends Part
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return StageInstanceRepository The repository.
+     */
+    public function getRepository(): StageInstanceRepository
+    {
+        $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
+
+        return $channel->stage_instances;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
     {
+        $repository = $this->getRepository();
+
         if (isset($this->attributes['channel_id'])) {
             /** @var Channel $channel */
             $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->channel_id], true);
@@ -138,7 +155,7 @@ class StageInstance extends Part
                 }
             }
 
-            return $channel->stage_instances->save($this, $reason);
+            return $repository->save($this, $reason);
         }
 
         return parent::save();
