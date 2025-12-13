@@ -338,9 +338,13 @@ class ScheduledEvent extends Part
      *
      * @return ScheduledEventRepository|null The repository.
      */
-    public function getRepository(): ScheduledEventRepository
+    public function getRepository(): ScheduledEventRepository|null
     {
-         /** @var Guild $guild */
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        };
+
+        /** @var Guild $guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
         return $guild->guild_scheduled_events;
