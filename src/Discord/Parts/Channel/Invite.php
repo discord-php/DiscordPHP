@@ -320,10 +320,14 @@ class Invite extends Part implements Stringable
      *
      * @throws \Exception If the part does not have an originating repository.
      *
-     * @return InviteRepository The repository.
+     * @return InviteRepository|null The repository.
      */
-    public function getRepository(): InviteRepository
+    public function getRepository(): InviteRepository|null
     {
+        if (! isset($this->attributes['channel_id'])) {
+            return null;
+        };
+
         /** @var Channel $channel */
         $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
 
