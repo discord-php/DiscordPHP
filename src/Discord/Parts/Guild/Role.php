@@ -16,6 +16,7 @@ namespace Discord\Parts\Guild;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
+use Discord\Repository\Guild\RoleRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -261,6 +262,21 @@ class Role extends Part implements Stringable
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return RoleRepository The repository.
+     */
+    public function getRepository(): RoleRepository
+    {
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->roles;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
@@ -269,7 +285,7 @@ class Role extends Part implements Stringable
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
-            if ($botperms = $this->guild->getBotPermissions()) {
+            if ($botperms = $guild->getBotPermissions()) {
                 if (! $botperms->manage_roles) {
                     return reject(new NoPermissionsException("The bot does not have permission to manage roles in guild {$this->guild_id}."));
                 }
