@@ -454,11 +454,12 @@ class Thread extends Part implements Stringable
      *
      * @return ThreadRepository|null The repository.
      */
-    public function getRepository(): ThreadRepository
+    public function getRepository(): ThreadRepository|null
     {
-        /** @var Channel $channel */
-        $channel = $this->discord->getChannel($this->parent_id);
-        
+        if (! $channel = $this->discord->getChannel($this->parent_id)) {
+            return null;
+        }
+
         return $channel->threads;
     }
 
