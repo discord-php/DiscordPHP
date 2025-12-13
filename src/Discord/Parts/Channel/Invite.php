@@ -21,6 +21,7 @@ use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Channel\InviteRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -312,6 +313,25 @@ class Invite extends Part implements Stringable
     protected function getInviteUrlAttribute(): string
     {
         return 'https://discord.gg/'.$this->code;
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return InviteRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): InviteRepository|null
+    {
+        if (! isset($this->attributes['channel_id'])) {
+            return null;
+        };
+
+        /** @var Channel $channel */
+        $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+
+        return $channel->invites;
     }
 
     /**

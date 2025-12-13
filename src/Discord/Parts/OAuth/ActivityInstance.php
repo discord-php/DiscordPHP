@@ -17,6 +17,7 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\ActivityInstanceRepository;
 use React\Promise\PromiseInterface;
 
 /**
@@ -72,6 +73,18 @@ class ActivityInstance extends Part
         $this->attributes['users'] = $collection;
 
         return $collection;
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return ActivityInstanceRepository The repository.
+     */
+    public function getRepository(): ActivityInstanceRepository
+    {
+        return $this->discord->application->activity_instances;
     }
 
     /**

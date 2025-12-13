@@ -36,6 +36,8 @@ use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Repository\Channel\InviteRepository;
 use Discord\Repository\Channel\StageInstanceRepository;
 use Discord\Repository\Channel\ThreadRepository;
+use Discord\Repository\Guild\ChannelRepository;
+use Discord\Repository\PrivateChannelRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -1215,21 +1217,39 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return ChannelRepository|PrivateChannelRepository The repository.
+     */
+    public function getRepository(): ChannelRepository|PrivateChannelRepository
+    {
+        if (isset($this->attributes['guild_id'])) {
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->channels;
+        }
+
+        return $this->discord->private_channels;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
     {
+        $repository = $this->getRepository();
+
         if (isset($this->attributes['guild_id'])) {
             if ($botperms = $this->getBotPermissions()) {
                 if (! $botperms->manage_channels) {
                     return reject(new NoPermissionsException("You do not have permission to manage channels in the guild {$this->attributes['guild_id']}."));
                 }
             }
-            /** @var Guild $guild */
-            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
-
-            return $guild->channels->save($this, $reason);
-        } elseif ($this->created && $this->discord->private_channels->get('id', $this->id)) {
+            
+            return $repository->save($this, $reason);
+        } elseif ($this->created && $repository->get('id', $this->id)) {
             $data = [];
             if ($this->name) {
                 $data['name'] = $this->name;
@@ -1238,7 +1258,7 @@ class Channel extends Part implements Stringable
                 $data['icon'] = $this->icon;
             }
 
-            return $this->discord->private_channels->modifyGroupDM($this, $data);
+            return $repository->modifyGroupDM($this, $data);
         }
 
         return parent::save($reason);

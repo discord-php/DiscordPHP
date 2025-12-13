@@ -16,6 +16,7 @@ namespace Discord\Parts\Guild;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\StickerRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -175,6 +176,25 @@ class Sticker extends Part implements Stringable
             'description' => $this->description,
             'tags' => $this->attributes['tags'],
         ]);
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return StickerRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): StickerRepository|null
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->stickers;
     }
 
     /**

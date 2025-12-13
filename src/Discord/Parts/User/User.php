@@ -20,6 +20,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
+use Discord\Repository\UserRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -380,6 +381,18 @@ class User extends Part implements Stringable
     public function createdTimestamp()
     {
         return \Discord\getSnowflakeTimestamp($this->id);
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return UserRepositor The repository.
+     */
+    public function getRepository(): UserRepository
+    {
+        return $this->discord->users;
     }
 
     /**

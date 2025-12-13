@@ -40,7 +40,9 @@ use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Resolved;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
+use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\ReactionRepository;
+use Discord\Repository\Channel\WebhookMessageRepository;
 use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
@@ -1396,6 +1398,26 @@ class Message extends Part
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return MessageRepository|WebhookMessageRepository The repository.
+     */
+    public function getRepository(): MessageRepository|WebhookMessageRepository
+    {
+        $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+
+        if (isset($this->attributes['webhook_id'])) {
+            $webhook = $channel->webhooks->get('id', $this->attributes['webhook_id']);
+            
+            return $webhook->messages;
+        }
+
+        return $channel->messages;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
@@ -1417,15 +1439,12 @@ class Message extends Part
             }
 
             if (isset($this->attributes['webhook_id'])) {
-                if (! $webhook = $channel->webhooks->get('id', $this->attributes['webhook_id'])) {
+                if (! $channel->webhooks->get('id', $this->attributes['webhook_id'])) {
                     return reject(new \Exception('Cannot find the webhook for this message (missing token).'));
                 }
-
-                return $webhook->messages->save($this, $reason);
             }
 
-            /** @var Channel $channel */
-            return $channel->messages->save($this, $reason);
+            return $this->getRepository()->save($this, $reason);
         }
 
         return parent::save();
