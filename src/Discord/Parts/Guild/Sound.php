@@ -16,6 +16,7 @@ namespace Discord\Parts\Guild;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\SoundRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -123,6 +124,21 @@ class Sound extends Part implements Stringable
             'emoji_id' => $this->emoji_id,
             'emoji_name' => $this->emoji_name,
         ]);
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return SoundRepository The repository.
+     */
+    public function getRepository(): SoundRepository
+    {
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->sounds;
     }
 
     /**
