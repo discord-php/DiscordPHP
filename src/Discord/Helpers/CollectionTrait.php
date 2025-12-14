@@ -456,7 +456,7 @@ trait CollectionTrait
      *
      * @return ExCollectionInterface
      */
-    public function walk(callable $callback, mixed $arg)
+    public function walk(callable $callback, mixed $arg = null)
     {
         $items = $this->items;
 
