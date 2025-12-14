@@ -32,7 +32,7 @@ interface ExCollectionInterface extends CollectionInterface
     /** @return ExCollectionInterface */
     public function intersect($items, ?callable $callback = null);
     /** @return ExCollectionInterface */
-    public function walk(callable $callback, mixed $arg);
+    public function walk(callable $callback, mixed $arg = null);
     /** @return ExCollectionInterface */
     public function reduce(callable $callback, $initial = null);
     /** @return ExCollectionInterface */
