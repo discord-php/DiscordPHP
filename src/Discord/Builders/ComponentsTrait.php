@@ -31,6 +31,8 @@ trait ComponentsTrait
 
     /**
      * Sets the components of the builder.
+     * 
+     * @since 10.42.0
      *
      * @param ComponentObject[]|null $components Components to set.
      *
@@ -48,6 +50,8 @@ trait ComponentsTrait
 
     /**
      * Adds the components to the builder.
+     * 
+     * @since 10.42.0
      *
      * @param ComponentObject[] $components Components to add.
      *
@@ -67,6 +71,8 @@ trait ComponentsTrait
 
     /**
      * Adds a component to the builder.
+     * 
+     * @since 10.42.0
      *
      * @param ComponentObject $component Component to add.
      *
