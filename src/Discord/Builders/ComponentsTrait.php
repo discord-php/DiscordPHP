@@ -39,7 +39,7 @@ trait ComponentsTrait
      *
      * @return $this
      */
-    public function setComponents($components = null): self
+    public function setComponents($components = null)
     {
         $this->components = [];
 
@@ -56,7 +56,7 @@ trait ComponentsTrait
      *
      * @return $this
      */
-    public function addComponents($components): self
+    public function addComponents($components)
     {
         foreach ($components as $component) {
             $this->addComponent($component);
@@ -75,5 +75,5 @@ trait ComponentsTrait
      *
      * @return $this
      */
-    abstract public function addComponent($component): self;
+    abstract public function addComponent($component);
 }
