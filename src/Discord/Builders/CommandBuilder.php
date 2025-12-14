@@ -174,7 +174,7 @@ class CommandBuilder extends Builder implements JsonSerializable
 
             /** @var Option $option */
             foreach ($this->options as $option) {
-                $arrCommand['options'][] = $option->getRawAttributes();
+                $arrCommand['options'][] = $option->jsonSerialize();
             }
         }
 
