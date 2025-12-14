@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Builders;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
@@ -40,9 +39,9 @@ use function Discord\poly_strlen;
  * @property ?string                                 $default_member_permissions Set of permissions represented as a bit set.
  * @property ?bool|null                              $dm_permission              Deprecated (use contexts instead); Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
  * @property ?bool                                   $default_permission         Deprecated (use default_member_permissions instead); Whether the command is enabled by default when the app is added to a guild, defaults to true. SOON DEPRECATED.
- * @property ?array                                  $integration_types          Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts
+ * @property ?int[]                                  $integration_types          Installation contexts where the command is available, only for globally-scoped commands. Defaults to your app's configured contexts
  * @property ?bool                                   $nsfw                       Indicates whether the command is age-restricted, defaults to `false`.
- * @property ?ExCollectionInterface|null             $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.
+ * @property ?int[]|null                             $contexts                   Interaction context(s) where the command can be used, only for globally-scoped commands.
  * @property ?int|null                               $handler                    Determines whether the interaction is handled by the app's interactions handler or by Discord
  */
 trait CommandAttributes
@@ -194,9 +193,9 @@ trait CommandAttributes
             throw new \OverflowException('Command can only have a maximum of 25 options.');
         }
 
-        $this->options ??= Collection::for(Option::class, 'name');
+        $this->options ??= [];
 
-        $this->options->push($option);
+        $this->options[] = $option;
 
         return $this;
     }
@@ -230,7 +229,7 @@ trait CommandAttributes
      */
     public function clearOptions(): self
     {
-        $this->options = Collection::for(Option::class, 'name');
+        $this->options = [];
 
         return $this;
     }
@@ -387,9 +386,9 @@ trait CommandAttributes
             throw new \DomainException('Invalid context provided.');
         }
 
-        $this->contexts ??= new Collection();
+        $this->contexts ??= [];
 
-        $this->contexts->push($context);
+        $this->contexts[] = $context;
 
         return $this;
     }
@@ -411,8 +410,8 @@ trait CommandAttributes
             throw new \DomainException('Only globally-scopped commands can have context.');
         }
 
-        if ($this->contexts && ($idx = $this->contexts->search($context)) !== false) {
-            $this->contexts->splice($idx, 1);
+        if ($this->contexts && ($idx = array_search($context, $this->contexts, true)) !== false) {
+            array_splice($this->contexts, $idx, 1);
         }
 
         return $this;
