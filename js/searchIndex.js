@@ -9281,6 +9281,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Interactions-Command-Command.html#method_getRepositoryAttributes"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Command\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Parts-Interactions-Command-Command.html#method_jsonSerialize"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Command\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
             "summary": "Returns\u0020a\u0020formatted\u0020mention\u0020of\u0020the\u0020command.",
@@ -9435,6 +9440,11 @@ Search.appendIndex(
             "name": "setAutoComplete",
             "summary": "Sets\u0020the\u0020autocomplete\u0020interactions\u0020for\u0020this\u0020option.",
             "url": "classes/Discord-Parts-Interactions-Command-Option.html#method_setAutoComplete"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Parts-Interactions-Command-Option.html#method_jsonSerialize"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003ASUB_COMMAND",
             "name": "SUB_COMMAND",
