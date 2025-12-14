@@ -237,13 +237,13 @@ class Option extends Part
 
     /**
      * Sets multiple options to the option.
-     * 
+     *
      * @since 10.42.0
-     * 
+     *
      * @param Option[] $options The options.
-     * 
+     *
      * @throws \OverflowException Command exceeds maximum 25 sub options.
-     * 
+     *
      * @return $this
      */
     public function setOptions($options = []): self
@@ -255,7 +255,7 @@ class Option extends Part
 
     /**
      * Adds multiple options to the option.
-     * 
+     *
      * @since 10.42.0
      *
      * @param Option[] $options The options.
@@ -295,13 +295,13 @@ class Option extends Part
 
     /**
      * Sets multiple choices to the option (Only for slash commands).
-     * 
+     *
      * @since 10.42.0
-     * 
+     *
      * @param Choice[] $choices The choices.
-     * 
+     *
      * @throws \OverflowException Command exceeds maximum 25 choices.
-     * 
+     *
      * @return $this
      */
     public function setChoices($choices = []): self
@@ -313,7 +313,7 @@ class Option extends Part
 
     /**
      * Adds multiple choices to the option (Only for slash commands).
-     * 
+     *
      * @since 10.42.0
      *
      * @param Choice[] $choices The choices.

@@ -23,7 +23,8 @@ class DiscordTestCase extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        set_rejection_handler(function (\Throwable $e): void {});
+        set_rejection_handler(function (\Throwable $e): void {
+        });
 
         /** @var Channel $channel */
         $channel = wait(function (Discord $discord, $resolve) {

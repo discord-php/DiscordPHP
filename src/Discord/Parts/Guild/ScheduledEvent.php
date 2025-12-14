@@ -333,7 +333,7 @@ class ScheduledEvent extends Part
 
     /**
      * Gets the originating repository of the part.
-     * 
+     *
      * @since 10.42.0
      *
      * @throws \Exception If the part does not have an originating repository.
@@ -344,7 +344,7 @@ class ScheduledEvent extends Part
     {
         if (! isset($this->attributes['guild_id'])) {
             return null;
-        };
+        }
 
         /** @var Guild $guild */
         $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
