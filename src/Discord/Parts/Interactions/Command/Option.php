@@ -236,6 +236,40 @@ class Option extends Part
     }
 
     /**
+     * Sets multiple options to the option.
+     * 
+     * @param Option[] $options The options.
+     * 
+     * @throws \OverflowException Command exceeds maximum 25 sub options.
+     * 
+     * @return $this
+     */
+    public function setOptions($options = []): self
+    {
+        $this->attributes['options'] = [];
+
+        return $this->addOptions($options);
+    }
+
+    /**
+     * Adds multiple options to the option.
+     *
+     * @param Option[] $options The options.
+     *
+     * @throws \OverflowException Command exceeds maximum 25 sub options.
+     *
+     * @return $this
+     */
+    public function addOptions($options): self
+    {
+        foreach ($options as $option) {
+            $this->addOption($option);
+        }
+
+        return $this;
+    }
+
+    /**
      * Adds an option to the option.
      *
      * @param Option $option The option.
@@ -251,6 +285,40 @@ class Option extends Part
         }
 
         $this->attributes['options'][] = $option->getRawAttributes();
+
+        return $this;
+    }
+
+    /**
+     * Sets multiple choices to the option (Only for slash commands).
+     * 
+     * @param Choice[] $choices The choices.
+     * 
+     * @throws \OverflowException Command exceeds maximum 25 choices.
+     * 
+     * @return $this
+     */
+    public function setChoices($choices = []): self
+    {
+        $this->attributes['choices'] = [];
+
+        return $this->addChoices($choices);
+    }
+
+    /**
+     * Adds multiple choices to the option (Only for slash commands).
+     *
+     * @param Choice[] $choices The choices.
+     *
+     * @throws \OverflowException Command exceeds maximum 25 choices.
+     *
+     * @return $this
+     */
+    public function addChoices($choices): self
+    {
+        foreach ($choices as $choice) {
+            $this->addChoice($choice);
+        }
 
         return $this;
     }
