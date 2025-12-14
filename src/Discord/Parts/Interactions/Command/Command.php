@@ -96,7 +96,7 @@ class Command extends Part implements Stringable
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {
-        return $this->attributeCollectionHelper('options', Option::class);
+        return $this->attributeCollectionHelper('options', Option::class, 'name');
     }
 
     /**
