@@ -1007,6 +1007,8 @@ class Member extends Part implements Stringable
 
     /**
      * Gets the originating repository of the part.
+     * 
+     * @since 10.42.0
      *
      * @throws \Exception If the part does not have an originating repository.
      *
