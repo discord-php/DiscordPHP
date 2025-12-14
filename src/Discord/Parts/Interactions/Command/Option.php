@@ -500,4 +500,28 @@ class Option extends Part
 
         return $this;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        $data = parent::jsonSerialize();
+
+        if ($this->choices) {
+            $data['choices'] = [];
+            foreach ($this->choices as $choice) {
+                $data['choices'][] = $choice->jsonSerialize();
+            }
+        }
+
+        if ($this->options) {
+            $data['options'] = [];
+            foreach ($this->options as $option) {
+                $data['options'][] = $option->jsonSerialize();
+            }
+        }
+
+        return $data;
+    }
 }

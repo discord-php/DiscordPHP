@@ -217,6 +217,23 @@ class Command extends Part implements Stringable
     }
 
     /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        $data = parent::jsonSerialize();
+
+        if ($this->options) {
+            $data['options'] = [];
+            foreach ($this->options as $option) {
+                $data['options'][] = $option->jsonSerialize();
+            }
+        }
+
+        return $data;
+    }
+
+    /**
      * Returns a formatted mention of the command.
      *
      * @return string A formatted mention of the command.
