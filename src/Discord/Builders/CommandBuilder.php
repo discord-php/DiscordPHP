@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Builders;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
@@ -79,7 +78,7 @@ class CommandBuilder extends Builder implements JsonSerializable
     /**
      * Interaction context(s) where the command can be used, only for globally-scoped commands.
      *
-     * @var ExCollectionInterface<int>|int[]|null
+     * @var int[]|null
      */
     protected $contexts = null;
 
