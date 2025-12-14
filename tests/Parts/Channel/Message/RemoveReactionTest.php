@@ -26,9 +26,9 @@ final class RemoveReactionTest extends DiscordTestCase
             $this
                 ->channel()
                 ->sendMessage('testing delete all reactions')
-                ->then(fn (Message $message) =>
-                    \React\Promise\all([$message->react('😝'), $message->react('🤪')])
-                        ->then(fn() => $message)
+                ->then(
+                    fn (Message $message) => \React\Promise\all([$message->react('😝'), $message->react('🤪')])
+                        ->then(fn () => $message)
                 )
                 ->then(fn (Message $message) => $message->deleteAllReactions(Message::REACT_DELETE_ALL))
                 ->then($resolve, $resolve);
@@ -45,7 +45,7 @@ final class RemoveReactionTest extends DiscordTestCase
             $this
                 ->channel()
                 ->sendMessage('testing deleting self reaction')
-                ->then(fn (Message $message) => $message->react('🤪')->then(fn() => $message))
+                ->then(fn (Message $message) => $message->react('🤪')->then(fn () => $message))
                 ->then(fn (Message $message) => $message->deleteOwnReaction('🤪'))
                 ->then($resolve, $resolve);
         });
@@ -61,7 +61,7 @@ final class RemoveReactionTest extends DiscordTestCase
             $this
                 ->channel()
                 ->sendMessage('testing deleting reaction of user')
-                ->then(fn (Message $message) => $message->react('🤪')->then(fn() => $message))
+                ->then(fn (Message $message) => $message->react('🤪')->then(fn () => $message))
                 ->then(fn (Message $message) => $message->deleteUserReaction('🤪', $discord->id))
                 ->then($resolve, $resolve);
         });
@@ -77,7 +77,7 @@ final class RemoveReactionTest extends DiscordTestCase
             $this
                 ->channel()
                 ->sendMessage('testing deleting of single reaction')
-                ->then(fn (Message $message) => $message->react('🤪')->then(fn() => $message))
+                ->then(fn (Message $message) => $message->react('🤪')->then(fn () => $message))
                 ->then(fn (Message $message) => $message->deleteEmojiReactions('🤪'))
                 ->then($resolve, $resolve);
         });

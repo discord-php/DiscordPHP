@@ -177,7 +177,7 @@ class Command extends Part implements Stringable
 
     /**
      * Gets the originating repository of the part.
-     * 
+     *
      * @since 10.42.0
      *
      * @throws \Exception If the part does not have an originating repository.
@@ -214,6 +214,23 @@ class Command extends Part implements Stringable
             'application_id' => $this->application_id,
             'command_id' => $this->id,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        $data = parent::jsonSerialize();
+
+        if ($this->options) {
+            $data['options'] = [];
+            foreach ($this->options as $option) {
+                $data['options'][] = $option->jsonSerialize();
+            }
+        }
+
+        return $data;
     }
 
     /**

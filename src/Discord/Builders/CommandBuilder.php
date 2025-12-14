@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Builders;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
@@ -79,14 +78,14 @@ class CommandBuilder extends Builder implements JsonSerializable
     /**
      * Interaction context(s) where the command can be used, only for globally-scoped commands.
      *
-     * @var ExCollectionInterface<int>|int[]|null
+     * @var int[]|null
      */
     protected $contexts = null;
 
     /**
      * The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
      *
-     * @var ExCollectionInterface<Option>|Option[]|null
+     * @var Option[]|null
      */
     protected $options = null;
 
@@ -117,11 +116,11 @@ class CommandBuilder extends Builder implements JsonSerializable
     /**
      * Returns all the options in the command.
      *
-     * @return ExCollectionInterface<Option>|Option[]
+     * @return Option[]
      */
     public function getOptions()
     {
-        return $this->options ?? Collection::for(Option::class, 'name');
+        return $this->options ?? [];
     }
 
     /**
@@ -170,7 +169,7 @@ class CommandBuilder extends Builder implements JsonSerializable
 
         // options can only be set for application commands of type CHAT_INPUT
         if ($this->type === Command::CHAT_INPUT) {
-            $this->options ??= Collection::for(Option::class, 'name');
+            $this->options ??= [];
 
             /** @var Option $option */
             foreach ($this->options as $option) {

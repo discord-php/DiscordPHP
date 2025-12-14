@@ -50,7 +50,8 @@ final class EmptyMessageTest extends DiscordTestCase
         return wait(function (Discord $discord, $resolve) {
             $content = 'Hello, world! From PHPunit';
             $this->channel()->sendMessage($content)
-                ->then(fn (Message $message) => $message->reply('replying to my message')
+                ->then(
+                    fn (Message $message) => $message->reply('replying to my message')
                     ->then(function (Message $new_message) use ($message) {
                         $this->assertEquals('replying to my message', $new_message->content);
                         $this->assertInstanceOf(Message::class, $new_message->referenced_message);
@@ -180,6 +181,7 @@ final class EmptyMessageTest extends DiscordTestCase
             $this->channel()->sendMessage('before edit')
                 ->then(function (Message $message) use ($content) {
                     $message->content = $content;
+
                     return $message->save($content);
                 })
                 ->then(fn (Message $message) => $this->assertInstanceOf(Carbon::class, $message->edited_timestamp))

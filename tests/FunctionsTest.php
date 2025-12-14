@@ -146,7 +146,6 @@ final class FunctionsTest extends TestCase
      */
     public function testNormalizePartId(): void
     {
-
         $mockDiscord = getMockDiscord();
 
         static $array = [
