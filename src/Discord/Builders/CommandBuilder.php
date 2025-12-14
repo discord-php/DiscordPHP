@@ -86,7 +86,7 @@ class CommandBuilder extends Builder implements JsonSerializable
     /**
      * The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
      *
-     * @var ExCollectionInterface<Option>|Option[]|null
+     * @var Option[]|null
      */
     protected $options = null;
 
@@ -117,11 +117,11 @@ class CommandBuilder extends Builder implements JsonSerializable
     /**
      * Returns all the options in the command.
      *
-     * @return ExCollectionInterface<Option>|Option[]
+     * @return Option[]
      */
     public function getOptions()
     {
-        return $this->options ?? Collection::for(Option::class, 'name');
+        return $this->options ?? [];
     }
 
     /**
@@ -170,7 +170,7 @@ class CommandBuilder extends Builder implements JsonSerializable
 
         // options can only be set for application commands of type CHAT_INPUT
         if ($this->type === Command::CHAT_INPUT) {
-            $this->options ??= Collection::for(Option::class, 'name');
+            $this->options ??= [];
 
             /** @var Option $option */
             foreach ($this->options as $option) {
