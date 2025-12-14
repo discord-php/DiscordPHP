@@ -149,7 +149,7 @@ class ModalBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function addComponent(ComponentObject $component): self
+    public function addComponent($component): self
     {
         if (! in_array('Modal', $component::USAGE, true)) {
             throw new \InvalidArgumentException('Invalid component type for modals.');

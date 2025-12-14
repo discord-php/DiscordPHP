@@ -76,7 +76,7 @@ class Section extends Layout implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function addComponent(ComponentObject|string $component): self
+    public function addComponent($component): self
     {
         if (is_string($component)) {
             $component = TextDisplay::new($component);

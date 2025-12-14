@@ -63,7 +63,7 @@ class ActionRow extends Layout
      *
      * @return $this
      */
-    public function addComponent(ComponentObject $component): self
+    public function addComponent($component): self
     {
         if ($component instanceof ActionRow) {
             throw new \InvalidArgumentException('You cannot add another `ActionRow` to this action row.');

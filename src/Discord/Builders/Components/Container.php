@@ -105,7 +105,7 @@ class Container extends Layout implements Contracts\ComponentV2
      *
      * @return $this
      */
-    public function addComponent(ComponentObject $component): self
+    public function addComponent($component): self
     {
         if ($component instanceof Interactive) {
             $component = ActionRow::new()->addComponent($component);
