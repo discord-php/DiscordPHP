@@ -321,34 +321,34 @@ Discord servers and has a handler to handle when the command is triggered.</p>
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Helpers-RegisteredCommand.html#property_discord">$discord</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>            </span>
-</dt>
-<dd>The Discord client.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/Discord-Helpers-RegisteredCommand.html#property_autocomplete_callback">$autocomplete_callback</a>
     <span>
                         &nbsp;: callable            </span>
 </dt>
 <dd>The callback to be called when the auto complete is triggered.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Helpers-RegisteredCommand.html#property_callback">$callback</a>
     <span>
                         &nbsp;: callable            </span>
 </dt>
 <dd>The callback to be called when the command is triggered.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Discord-Helpers-RegisteredCommand.html#property_discord">$discord</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>            </span>
+</dt>
+<dd>The Discord client.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Helpers-RegisteredCommand.html#property_name">$name</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 <dd>The name of the command.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Helpers-RegisteredCommand.html#property_subCommands">$subCommands</a>
     <span>
                         &nbsp;: array&lt;string|int, <a href="classes/Discord-Helpers-RegisteredCommand.html"><abbr title="\Discord\Helpers\RegisteredCommand">RegisteredCommand</abbr></a>&gt;            </span>
@@ -449,6 +449,82 @@ executes the callback, if given.</dd>
             -protected
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_autocomplete_callback">
+        $autocomplete_callback
+        <a href="classes/Discord-Helpers-RegisteredCommand.html#property_autocomplete_callback" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">58</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The callback to be called when the auto complete is triggered.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">callable</span>
+    <span class="phpdocumentor-signature__name">$autocomplete_callback</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_callback">
+        $callback
+        <a href="classes/Discord-Helpers-RegisteredCommand.html#property_callback" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">51</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The callback to be called when the command is triggered.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">callable</span>
+    <span class="phpdocumentor-signature__name">$callback</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_discord">
         $discord
         <a href="classes/Discord-Helpers-RegisteredCommand.html#property_discord" class="headerlink"><i class="fas fa-link"></i></a>
@@ -486,83 +562,7 @@ executes the callback, if given.</dd>
         class="
             phpdocumentor-element
             -property
-            -private
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_autocomplete_callback">
-        $autocomplete_callback
-        <a href="classes/Discord-Helpers-RegisteredCommand.html#property_autocomplete_callback" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">58</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The callback to be called when the auto complete is triggered.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
-            <span class="phpdocumentor-signature__type">callable</span>
-    <span class="phpdocumentor-signature__name">$autocomplete_callback</span>
-    </code>
-
-    
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_callback">
-        $callback
-        <a href="classes/Discord-Helpers-RegisteredCommand.html#property_callback" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/RegisteredCommand.php"><a href="files/src-discord-helpers-registeredcommand.html"><abbr title="src/Discord/Helpers/RegisteredCommand.php">RegisteredCommand.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">51</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The callback to be called when the command is triggered.</p>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
-            <span class="phpdocumentor-signature__type">callable</span>
-    <span class="phpdocumentor-signature__name">$callback</span>
-    </code>
-
-    
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -private
+            -protected
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_name">
@@ -583,7 +583,7 @@ executes the callback, if given.</dd>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$name</span>
     </code>
@@ -600,7 +600,7 @@ executes the callback, if given.</dd>
         class="
             phpdocumentor-element
             -property
-            -private
+            -protected
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_subCommands">
@@ -621,7 +621,7 @@ executes the callback, if given.</dd>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">private</span>
+        <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/Discord-Helpers-RegisteredCommand.html"><abbr title="\Discord\Helpers\RegisteredCommand">RegisteredCommand</abbr></a>&gt;</span>
     <span class="phpdocumentor-signature__name">$subCommands</span>
     </code>
@@ -1236,9 +1236,9 @@ executes the callback, if given.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Discord-Helpers-RegisteredCommand.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Helpers-RegisteredCommand.html#property_autocomplete_callback">$autocomplete_callback</a></li>
                                                     <li class=""><a href="classes/Discord-Helpers-RegisteredCommand.html#property_callback">$callback</a></li>
+                                                    <li class=""><a href="classes/Discord-Helpers-RegisteredCommand.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Helpers-RegisteredCommand.html#property_name">$name</a></li>
                                                     <li class=""><a href="classes/Discord-Helpers-RegisteredCommand.html#property_subCommands">$subCommands</a></li>
                                             </ul>
