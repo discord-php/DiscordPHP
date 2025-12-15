@@ -40,7 +40,7 @@ class TextDisplay extends Content implements Contracts\ComponentV2
      *
      * @var string
      */
-    private $content;
+    protected $content;
 
     /**
      * Creates a new text display.

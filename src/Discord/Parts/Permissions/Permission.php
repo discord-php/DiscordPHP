@@ -304,7 +304,7 @@ abstract class Permission extends Part
      *
      * @var array
      */
-    private $permissions = [];
+    protected $permissions = [];
 
     /**
      * @inheritDoc
