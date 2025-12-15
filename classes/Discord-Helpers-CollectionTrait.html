@@ -553,7 +553,7 @@ where the callback returns `true` when given the item.</dd>
 <dd>Splices the collection, removing a portion of the items and replacing them with the given replacement.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Discord-Helpers-CollectionTrait.html#method_toArray">toArray()</a>
+    <a class="-deprecated" href="classes/Discord-Helpers-CollectionTrait.html#method_toArray">toArray()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
@@ -616,7 +616,7 @@ where the callback returns `true` when given the item.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">703</span>
+    <span class="phpdocumentor-element-found-in__line">710</span>
 
     </aside>
 
@@ -655,7 +655,7 @@ where the callback returns `true` when given the item.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">646</span>
+    <span class="phpdocumentor-element-found-in__line">649</span>
 
     </aside>
 
@@ -694,7 +694,7 @@ where the callback returns `true` when given the item.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">666</span>
+    <span class="phpdocumentor-element-found-in__line">669</span>
 
     </aside>
 
@@ -872,7 +872,7 @@ where the callback returns `true` when given the item.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">546</span>
+    <span class="phpdocumentor-element-found-in__line">549</span>
 
     </aside>
 
@@ -1310,7 +1310,7 @@ where the callback returns `true` when given the item.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">693</span>
+    <span class="phpdocumentor-element-found-in__line">700</span>
 
     </aside>
 
@@ -1506,7 +1506,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">683</span>
+    <span class="phpdocumentor-element-found-in__line">688</span>
 
     </aside>
 
@@ -1514,13 +1514,25 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">jsonSerialize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">jsonSerialize</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$assoc</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
     
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$assoc</span>
+                : <span class="phpdocumentor-argument-list__argument__type">bool</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">true</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Whether to return an associative array.</p>
+</section>
+
+            </dd>
+            </dl>
+
     
 
         
@@ -1545,7 +1557,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">558</span>
+    <span class="phpdocumentor-element-found-in__line">561</span>
 
     </aside>
 
@@ -1733,7 +1745,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">580</span>
+    <span class="phpdocumentor-element-found-in__line">583</span>
 
     </aside>
 
@@ -1782,7 +1794,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">592</span>
+    <span class="phpdocumentor-element-found-in__line">595</span>
 
     </aside>
 
@@ -1838,7 +1850,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">604</span>
+    <span class="phpdocumentor-element-found-in__line">607</span>
 
     </aside>
 
@@ -1890,7 +1902,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">623</span>
+    <span class="phpdocumentor-element-found-in__line">626</span>
 
     </aside>
 
@@ -2199,7 +2211,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">636</span>
+    <span class="phpdocumentor-element-found-in__line">639</span>
 
     </aside>
 
@@ -2507,7 +2519,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
         class="phpdocumentor-element
             -method
             -public
-                                                        "
+            -deprecated                                            "
 >
     <h4 class="phpdocumentor-element__name" id="method_toArray">
         toArray()
@@ -2517,17 +2529,24 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">535</span>
+    <span class="phpdocumentor-element-found-in__line">539</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Converts the collection to an array.</p>
 
-    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">toArray</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$assoc</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
+        </div>
+                <div class="phpdocumentor-admonition">
+        <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <article>
+                <p>Use <code class="prettyprint">jsonSerialize</code></p>
+
+            </article>
         </div>
     
     
@@ -2538,7 +2557,9 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
                 : <span class="phpdocumentor-argument-list__argument__type">bool</span>
                  = <span class="phpdocumentor-argument-list__argument__default-value">true</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Whether to return an associative array.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -2615,7 +2636,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">656</span>
+    <span class="phpdocumentor-element-found-in__line">659</span>
 
     </aside>
 
@@ -2660,7 +2681,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/CollectionTrait.php"><a href="files/src-discord-helpers-collectiontrait.html"><abbr title="src/Discord/Helpers/CollectionTrait.php">CollectionTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">568</span>
+    <span class="phpdocumentor-element-found-in__line">571</span>
 
     </aside>
 
@@ -2893,7 +2914,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_slice">slice()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_sort">sort()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_splice">splice()</a></li>
-                                            <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_toArray">toArray()</a></li>
+                                            <li class="-deprecated"><a href="classes/Discord-Helpers-CollectionTrait.html#method_toArray">toArray()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_unique">unique()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_unserialize">unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Helpers-CollectionTrait.html#method_values">values()</a></li>
