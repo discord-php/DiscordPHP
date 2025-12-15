@@ -530,7 +530,7 @@ trait CollectionTrait
     /**
      * Converts the collection to an array.
      *
-     * @param bool $assoc Whether to return an associative array.
+     * @param bool $assoc Whether to map keys to values.
      *
      * @deprecated 10.42.0 Use `jsonSerialize`
      *
@@ -681,7 +681,7 @@ trait CollectionTrait
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
      *
-     * @param bool $assoc Whether to return an associative array.
+     * @param bool $assoc Whether to map keys to values.
      *
      * @return array
      */
