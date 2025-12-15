@@ -529,15 +529,18 @@ trait CollectionTrait
 
     /**
      * Converts the collection to an array.
+     * 
+     * @param bool $assoc Whether to return an associative array.
+     * 
+     * @deprecated 10.42.0 Use `jsonSerialize`
      *
      * @return array
      */
     public function toArray(bool $assoc = true): array
     {
-        return $assoc
-            ? $this->items
-            : array_values($this->items);
+        return $this->jsonSerialize($assoc);
     }
+
     /**
      * Converts the items into a new collection.
      *
@@ -677,12 +680,16 @@ trait CollectionTrait
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
+     * 
+     * @param bool $assoc Whether to return an associative array.
      *
      * @return array
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize(bool $assoc = true): array
     {
-        return $this->items;
+        return $assoc
+            ? $this->items
+            : array_values($this->items);
     }
 
     /**

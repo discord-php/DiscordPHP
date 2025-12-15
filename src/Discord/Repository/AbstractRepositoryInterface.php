@@ -40,6 +40,7 @@ interface AbstractRepositoryInterface extends CollectionInterface
     public function filter(callable $callback);
     public function find(callable $callback);
     public function clear(): void;
+    /** @deprecated 10.42.0 Use `jsonSerialize` */
     public function toArray(bool $assoc = true): array;
     public function keys(): array;
     public function values(): array;
@@ -48,7 +49,7 @@ interface AbstractRepositoryInterface extends CollectionInterface
     public function offsetGet($offset);
     public function offsetSet($offset, $value): void;
     public function offsetUnset($offset): void;
-    public function jsonSerialize(): array;
+    public function jsonSerialize(bool $assoc = true): array;
     public function &getIterator(): Traversable;
     public function __get(string $key);
 

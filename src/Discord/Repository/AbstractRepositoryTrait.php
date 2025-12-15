@@ -637,21 +637,14 @@ trait AbstractRepositoryTrait
 
     /**
      * Converts the weak caches to array.
+     * 
+     * @deprecated 10.42.0 Use `jsonSerialize`
      *
      * @return array
      */
     public function toArray(bool $assoc = true): array
     {
-        $items = [];
-
-        foreach ($this->items as $offset => $item) {
-            if ($item instanceof WeakReference) {
-                $item = $item->get();
-            }
-            $items[$offset] = $item;
-        }
-
-        return $items;
+        return $this->jsonSerialize($assoc);
     }
 
     /**
@@ -742,9 +735,20 @@ trait AbstractRepositoryTrait
     /**
      * @inheritDoc
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize(bool $assoc = true): array
     {
-        return $this->toArray();
+        $items = [];
+
+        foreach ($this->items as $offset => $item) {
+            if ($item instanceof WeakReference) {
+                $item = $item->get();
+            }
+            $assoc
+                ? $items[$offset] = $item
+                : $items[] = $item;
+        }
+
+        return $items;
     }
 
     /**
