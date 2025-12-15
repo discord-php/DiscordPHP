@@ -186,7 +186,7 @@ class Command extends Part implements Stringable
      */
     public function getRepository(): GuildCommandRepository|GlobalCommandRepository
     {
-        if (! isset($this->attributes['guild_id'])) {
+        if (isset($this->attributes['guild_id'])) {
             /** @var Guild $guild */
             $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
 
