@@ -77,6 +77,8 @@ use function React\Promise\resolve;
  * @property      ?string|null        $discovery_splash              Discovery splash hash. Only for discoverable guilds.
  * @property-read User|null           $owner                         The owner of the guild.
  * @property      string              $owner_id                      The unique identifier of the owner of the guild.
+ * @property      string              $permissions                   Total permissions for the user in the guild (excludes overwrites and implicit permissions).
+ * @property      ?string|null        $region                        Voice region id for the guild (deprecated).
  * @property      string              $afk_channel_id                The unique identifier of the AFK channel ID.
  * @property      int                 $afk_timeout                   How long in seconds you will remain in the voice channel until you are moved into the AFK channel. Can be set to: 60, 300, 900, 1800, 3600.
  * @property      bool|null           $widget_enabled                Is server widget enabled.
@@ -246,31 +248,34 @@ class Guild extends Part
         'name',
         'icon',
         'icon_hash',
-        'description',
         'splash',
         'discovery_splash',
-        'features',
-        'banner',
+        'owner',
         'owner_id',
-        'application_id',
+        'permissions',
+        'region',
         'afk_channel_id',
         'afk_timeout',
-        'system_channel_id',
         'widget_enabled',
         'widget_channel_id',
         'verification_level',
         'default_message_notifications',
-        'hub_type',
-        'mfa_level',
         'explicit_content_filter',
+        'roles',
+        'features',
+        'mfa_level',
+        'application_id',
+        'system_channel_id',
+        'system_channel_flags',
+        'rules_channel_id',
         'max_presences',
         'max_members',
         'vanity_url_code',
+        'description',
+        'banner',
         'premium_tier',
         'premium_subscription_count',
-        'system_channel_flags',
         'preferred_locale',
-        'rules_channel_id',
         'public_updates_channel_id',
         'max_video_channel_users',
         'max_stage_video_channel_users',
@@ -278,6 +283,7 @@ class Guild extends Part
         'approximate_presence_count',
         'welcome_screen',
         'nsfw_level',
+        'stickers',
         'premium_progress_bar_enabled',
         'safety_alerts_channel_id',
         'incidents_data',
@@ -289,10 +295,11 @@ class Guild extends Part
 
         // repositories
         'channels',
-        'roles',
         'emojis',
-        'stickers',
         'voice_states',
+
+        // undocumented
+        'hub_type',
     ];
 
     /**
@@ -426,7 +433,7 @@ class Guild extends Part
     protected function setRolesAttribute($roles): void
     {
         if ($roles instanceof CollectionInterface) {
-            $roles = $roles->toArray();
+            $roles = $roles->jsonSerialize();
         }
         if ($roles === null) {
             $roles = [];
