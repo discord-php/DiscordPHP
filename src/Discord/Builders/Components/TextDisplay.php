@@ -16,7 +16,7 @@ namespace Discord\Builders\Components;
 /**
  * Text display components allow you to send text.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#text-display
+ * @link https://discord.com/developers/docs/components/reference#text-display
  *
  * @since 10.5.0
  *

@@ -20,7 +20,7 @@ use Discord\Builders\ComponentsTrait;
  * components.
  * It has a type: 1 and a sub-array of components of other types.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#action-rows
+ * @link https://discord.com/developers/docs/components/reference#action-rows
  *
  * @since 7.0.0
  *

@@ -18,7 +18,7 @@ use Discord\Builders\ComponentsTrait;
 /**
  * Section components allow you to define up to 3 text display components and add either a thumbnail or button to the right side.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#section
+ * @link https://discord.com/developers/docs/components/reference#section
  *
  * @since 10.5.0
  *

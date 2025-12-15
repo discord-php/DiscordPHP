@@ -17,7 +17,7 @@ namespace Discord\Builders\Components;
  * Separator components allow you to divide components with a divider.
  * You can make the divider big or small, and make it invisible if needed.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#separator
+ * @link https://discord.com/developers/docs/components/reference#separator
  *
  * @since 10.5.0
  *

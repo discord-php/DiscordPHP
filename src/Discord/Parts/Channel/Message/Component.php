@@ -24,7 +24,7 @@ use Discord\Parts\Part;
  * Components are a field on the message object and modal.
  * You can use them when creating messages or responding to an interaction, like an application command.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#what-is-a-component
+ * @link https://discord.com/developers/docs/components/reference#what-is-a-component
  *
  * @since 10.11.0
  *

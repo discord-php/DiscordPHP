@@ -16,7 +16,7 @@ namespace Discord\Builders\Components;
 /**
  * Select menu for roles.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#select-menus
+ * @link https://discord.com/developers/docs/components/reference#select-menus
  *
  * @since 10.0.0
  *

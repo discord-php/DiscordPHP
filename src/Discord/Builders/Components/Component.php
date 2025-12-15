@@ -20,7 +20,7 @@ use JsonSerializable;
  * Components are a new field on the message object, so you can use them whether
  * you're sending messages or responding to a slash command or other interaction.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#what-is-a-component
+ * @link https://discord.com/developers/docs/components/reference#what-is-a-component
  *
  * @since 7.0.0
  * @deprecated 10.9.0 Use `ComponentObject` instead.

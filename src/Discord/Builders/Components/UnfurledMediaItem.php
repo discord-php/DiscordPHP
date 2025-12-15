@@ -20,7 +20,7 @@ use JsonSerializable;
  * Represents an unfurled media item, which is the base for V2 components.
  * It allows you to specify an arbitrary url or attachment reference.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#unfurled-media-items
+ * @link https://discord.com/developers/docs/components/reference#unfurled-media-items
  *
  * @since 10.5.0
  *

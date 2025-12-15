@@ -20,7 +20,7 @@ use function Discord\poly_strlen;
 /**
  * Option for select menu component.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure
+ * @link https://discord.com/developers/docs/components/reference#select-menu-object-select-option-structure
  *
  * @since 7.0.0
  */

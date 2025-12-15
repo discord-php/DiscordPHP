@@ -16,7 +16,7 @@ namespace Discord\Builders\Components;
 /**
  * Select menu for picking from defined text options.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#select-menus
+ * @link https://discord.com/developers/docs/components/reference#select-menus
  *
  * @since 10.0.0 Renamed from SelectMenu to StringSelect
  * @since 7.0.0
