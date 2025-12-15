@@ -52,7 +52,7 @@ class GuildStickersUpdate extends Event
         }
 
         if (isset($guild)) {
-            yield $guild->stickers->cache->setMultiple($stickerParts->toArray());
+            yield $guild->stickers->cache->setMultiple($stickerParts->jsonSerialize());
         }
 
         return [$stickerParts, $oldStickers];

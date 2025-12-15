@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Builders;
 
-use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
 use Discord\Repository\Guild\GuildCommandRepository;

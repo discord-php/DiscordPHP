@@ -53,7 +53,7 @@ class GuildEmojisUpdate extends Event
         }
 
         if (isset($guild)) {
-            yield $guild->emojis->cache->setMultiple($emojiParts->toArray());
+            yield $guild->emojis->cache->setMultiple($emojiParts->jsonSerialize());
         }
 
         return [$emojiParts, $oldEmojis];

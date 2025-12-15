@@ -102,7 +102,7 @@ trait CollectionTrait
     public function fill($items): self
     {
         $items = $items instanceof CollectionInterface
-            ? $items->toArray()
+            ? $items->jsonSerialize()
             : $items;
         if (! is_array($items)) {
             throw new \InvalidArgumentException('The fill method only accepts arrays or CollectionInterface instances.');
@@ -414,7 +414,7 @@ trait CollectionTrait
     public function diff($items, ?callable $callback = null)
     {
         $items = $items instanceof CollectionInterface
-            ? $items->toArray()
+            ? $items->jsonSerialize()
             : $items;
 
         $diff = $callback && is_callable($callback)
@@ -438,7 +438,7 @@ trait CollectionTrait
     public function intersect($items, ?callable $callback = null)
     {
         $items = $items instanceof CollectionInterface
-            ? $items->toArray()
+            ? $items->jsonSerialize()
             : $items;
 
         $diff = $callback && is_callable($callback)
@@ -519,7 +519,7 @@ trait CollectionTrait
     public function merge($collection): self
     {
         $items = $collection instanceof CollectionInterface
-            ? $collection->toArray()
+            ? $collection->jsonSerialize()
             : $collection;
 
         $this->items = array_merge($this->items, $items);
@@ -529,9 +529,9 @@ trait CollectionTrait
 
     /**
      * Converts the collection to an array.
-     * 
+     *
      * @param bool $assoc Whether to return an associative array.
-     * 
+     *
      * @deprecated 10.42.0 Use `jsonSerialize`
      *
      * @return array
@@ -669,7 +669,7 @@ trait CollectionTrait
     public function __unserialize($data): void
     {
         if ($data instanceof CollectionInterface) {
-            $data = $data->toArray();
+            $data = $data->jsonSerialize();
         }
         if (! is_array($data)) {
             throw new \InvalidArgumentException('The __unserialize method only accepts arrays or CollectionInterface instances.');
@@ -680,7 +680,7 @@ trait CollectionTrait
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     * 
+     *
      * @param bool $assoc Whether to return an associative array.
      *
      * @return array

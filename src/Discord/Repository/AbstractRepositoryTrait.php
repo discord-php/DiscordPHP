@@ -637,7 +637,7 @@ trait AbstractRepositoryTrait
 
     /**
      * Converts the weak caches to array.
-     * 
+     *
      * @deprecated 10.42.0 Use `jsonSerialize`
      *
      * @return array

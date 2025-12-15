@@ -21,7 +21,7 @@ final class CollectionsTest extends TestCase
         $array = ['one', 'two', 'three'];
         $collection = Collection::from($array);
 
-        $this->assertEquals($array, $collection->toArray());
+        $this->assertEquals($array, $collection->jsonSerialize());
     }
 
     public function testPush()
@@ -33,7 +33,7 @@ final class CollectionsTest extends TestCase
 
         $this->assertEquals(
             ['test', 'one', 'two'],
-            $collection->toArray(),
+            $collection->jsonSerialize(),
         );
     }
 
@@ -57,7 +57,7 @@ final class CollectionsTest extends TestCase
         $this->assertEquals([
             1 => $obj1,
             2 => $obj2,
-        ], $collection->toArray());
+        ], $collection->jsonSerialize());
     }
 
     public function testGet()
@@ -108,7 +108,7 @@ final class CollectionsTest extends TestCase
 
         $this->assertEquals(
             $array,
-            $collection->toArray()
+            $collection->jsonSerialize()
         );
     }
 
@@ -125,7 +125,7 @@ final class CollectionsTest extends TestCase
         $collection = new Collection([], null);
         $collection->fill([1, 2, 3, 4, 5]);
 
-        $this->assertEquals([1, 2, 3, 4, 5], $collection->toArray());
+        $this->assertEquals([1, 2, 3, 4, 5], $collection->jsonSerialize());
     }
 
     public function testCount()
@@ -172,7 +172,7 @@ final class CollectionsTest extends TestCase
         $collection = new Collection([1, 2, 3, 4, 5], null);
         $filteredCollection = $collection->filter(fn (int $number) => $number > 2);
 
-        $this->assertEquals([3, 4, 5], $filteredCollection->toArray());
+        $this->assertEquals([3, 4, 5], $filteredCollection->jsonSerialize());
     }
 
     public function testFind()
@@ -194,7 +194,7 @@ final class CollectionsTest extends TestCase
         $collection = new Collection([1, 2, 3, 4, 5], null);
         $collection->clear();
 
-        $this->assertEquals([], $collection->toArray());
+        $this->assertEquals([], $collection->jsonSerialize());
     }
 
     public function testMap()
@@ -204,7 +204,7 @@ final class CollectionsTest extends TestCase
 
         $this->assertEquals([
             2, 4, 6, 8, 10,
-        ], $mappedArray->toArray());
+        ], $mappedArray->jsonSerialize());
     }
 
     public function testMerge()
@@ -216,7 +216,7 @@ final class CollectionsTest extends TestCase
 
         $this->assertEquals(
             range(1, 8),
-            $collection->toArray()
+            $collection->jsonSerialize()
         );
     }
 
@@ -234,7 +234,7 @@ final class CollectionsTest extends TestCase
                 'third' => 3,
                 'fourth' => 5,
             ],
-            $collection->toArray()
+            $collection->jsonSerialize()
         );
     }
 
@@ -250,7 +250,7 @@ final class CollectionsTest extends TestCase
         $collection = new Collection(['first' => 1, 'second' => 2, 'third' => 3], null);
         $collection->offsetSet('second', 4);
 
-        $this->assertEquals(['first' => 1, 'second' => 4, 'third' => 3], $collection->toArray());
+        $this->assertEquals(['first' => 1, 'second' => 4, 'third' => 3], $collection->jsonSerialize());
     }
 
     public function testOffsetUnset()
@@ -258,7 +258,7 @@ final class CollectionsTest extends TestCase
         $collection = new Collection(['first' => 1, 'second' => 2, 'third' => 3], null);
         $collection->offsetUnset('second');
 
-        $this->assertEquals(['first' => 1, 'third' => 3], $collection->toArray());
+        $this->assertEquals(['first' => 1, 'third' => 3], $collection->jsonSerialize());
     }
 
     public function testIsIterable()

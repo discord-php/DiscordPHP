@@ -1001,7 +1001,7 @@ class Guild extends Part
         return $this->getVoiceRegions()->then(function () {
             $regions = $this->regions->map(function ($region) {
                 return $region->id;
-            })->toArray();
+            })->jsonSerialize();
 
             if (! in_array($this->region, $regions)) {
                 return self::REGION_DEFAULT;
@@ -1085,7 +1085,7 @@ class Guild extends Part
     public function updateRolePositions($roles): PromiseInterface
     {
         if ($roles instanceof CollectionInterface) {
-            $roles = $roles->toArray();
+            $roles = $roles->jsonSerialize();
         }
         if (! is_array($roles)) {
             return reject(new \InvalidArgumentException('Roles must be an array of Role instances or Role IDs.'));
@@ -1579,12 +1579,8 @@ class Guild extends Part
             'verification_level' => $this->verification_level,
             'default_message_notifications' => $this->default_message_notifications,
             'explicit_content_filter' => $this->explicit_content_filter,
-            'roles' => array_values(array_map(function (Role $role) {
-                return $role->getCreatableAttributes();
-            }, $this->roles->toArray())),
-            'channels' => array_values(array_map(function (Channel $channel) {
-                return $channel->getCreatableAttributes();
-            }, $this->channels->toArray())),
+            'roles' => array_values(array_map(fn (Role $role) => $role->getCreatableAttributes(), $this->roles->jsonSerialize())),
+            'channels' => array_values(array_map(fn (Channel $channel) => $channel->getCreatableAttributes(), $this->channels->jsonSerialize())),
             'afk_channel_id' => $this->afk_channel_id,
             'afk_timeout' => $this->afk_timeout,
             'system_channel_id' => $this->system_channel_id,

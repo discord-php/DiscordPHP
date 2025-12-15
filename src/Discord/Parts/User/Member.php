@@ -383,7 +383,7 @@ class Member extends Part implements Stringable
     public function setRoles($roles, ?string $reason = null): PromiseInterface
     {
         if ($roles instanceof CollectionInterface) {
-            $roles = $roles->toArray();
+            $roles = $roles->jsonSerialize();
         }
         if (! is_array($roles)) {
             return reject(new \InvalidArgumentException('Roles must be an array of Role instances or Role IDs.'));
