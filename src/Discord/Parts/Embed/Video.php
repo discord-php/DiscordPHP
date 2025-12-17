@@ -22,10 +22,15 @@ use Discord\Parts\Part;
  *
  * @since 4.0.3
  *
- * @property      ?string|null $url       The source of the video.
- * @property-read ?string|null $proxy_url A proxied url of the video.
- * @property-read ?int|null    $height    The height of the video.
- * @property-read ?int|null    $width     The width of the video.
+ * @property ?string|null $url                 The source of the video.
+ * @property ?string|null $proxy_url           A proxied url of the video.
+ * @property ?int|null    $height              The height of the video.
+ * @property ?int|null    $width               The width of the video.
+ * @property ?string|null $content_type        The video's media type.
+ * @property ?string|null $placeholder         Thumbhash placeholder of the video.
+ * @property ?int|null    $placeholder_version Version of the placeholder.
+ * @property ?string|null $description         Description (alt text) for the video.
+ * @property ?int|null    $flags               Embed media flags combined as a bitfield.
  */
 class Video extends Part
 {
@@ -37,5 +42,10 @@ class Video extends Part
         'proxy_url',
         'height',
         'width',
+        'content_type',
+        'placeholder',
+        'placeholder_version',
+        'description',
+        'flags',
     ];
 }
