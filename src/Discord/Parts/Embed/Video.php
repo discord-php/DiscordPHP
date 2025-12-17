@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Embed;
 
+use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
 
 /**
  * A video for an embed.
  *
- * @link https://discord.com/developers/docs/resources/channel#embed-object-embed-video-structure
+ * @link https://discord.com/developers/docs/resources/message#embed-object-embed-video-structure
  *
  * @since 4.0.3
  *
@@ -34,6 +35,9 @@ use Discord\Parts\Part;
  */
 class Video extends Part
 {
+    /** This video is a Clip from a stream. */
+    public const FLAG_IS_CLIP = Attachment::FLAG_IS_CLIP;
+
     /**
      * @inheritDoc
      */

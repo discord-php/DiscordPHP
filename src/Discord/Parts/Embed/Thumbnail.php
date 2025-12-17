@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Embed;
 
+use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
 
 /**
@@ -29,6 +30,9 @@ use Discord\Parts\Part;
  */
 class Thumbnail extends Part
 {
+    /** This is the thumbnail of a thread in a media channel, displayed in the grid but not on the message. */
+    public const FLAG_IS_THUMBNAIL = Attachment::FLAG_IS_THUMBNAIL;
+
     /**
      * @inheritDoc
      */

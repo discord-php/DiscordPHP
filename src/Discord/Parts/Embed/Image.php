@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Embed;
 
+use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
 
 /**
@@ -35,16 +36,8 @@ use Discord\Parts\Part;
  */
 class Image extends Part
 {
-    /** This attachment is a Clip from a stream. */
-    public const FLAG_IS_CLIP = 1 << 0;
-    /** This attachment is the thumbnail of a thread in a media channel, displayed in the grid but not on the message. */
-    public const FLAG_IS_THUMBNAIL = 1 << 1;
-    /** This attachment has been edited using the remix feature on mobile (deprecated). */
-    public const FLAG_IS_REMIX = 1 << 2;
-    /** This attachment was marked as a spoiler and is blurred until clicked. */
-    public const FLAG_IS_SPOILER = 1 << 3;
-    /** This attachment is an animated image. */
-    public const FLAG_IS_ANIMATED = 1 << 5;
+    /** This is an animated image. */
+    public const FLAG_IS_ANIMATED = Attachment::FLAG_IS_ANIMATED;
 
     /**
      * @inheritDoc
