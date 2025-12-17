@@ -4171,6 +4171,46 @@ Search.appendIndex(
             "summary": "A\u0020message\u0020attachment.",
             "url": "classes/Discord-Parts-Channel-Attachment.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Attachment\u003A\u003AgetClipParticipantsAttribute\u0028\u0029",
+            "name": "getClipParticipantsAttribute",
+            "summary": "Returns\u0020the\u0020clip\u0020participants\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Attachment.html#method_getClipParticipantsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Attachment\u003A\u003AgetClipCreatedAtAttribute\u0028\u0029",
+            "name": "getClipCreatedAtAttribute",
+            "summary": "Returns\u0020the\u0020clip\u0020created\u0020at\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Attachment.html#method_getClipCreatedAtAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Attachment\u003A\u003AgetApplicationAttribute\u0028\u0029",
+            "name": "getApplicationAttribute",
+            "summary": "Returns\u0020the\u0020application\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Attachment.html#method_getApplicationAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Attachment\u003A\u003AFLAG_IS_CLIP",
+            "name": "FLAG_IS_CLIP",
+            "summary": "This\u0020attachment\u0020is\u0020a\u0020Clip\u0020from\u0020a\u0020stream.",
+            "url": "classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_CLIP"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Attachment\u003A\u003AFLAG_IS_THUMBNAIL",
+            "name": "FLAG_IS_THUMBNAIL",
+            "summary": "This\u0020attachment\u0020is\u0020the\u0020thumbnail\u0020of\u0020a\u0020thread\u0020in\u0020a\u0020media\u0020channel,\u0020displayed\u0020in\u0020the\u0020grid\u0020but\u0020not\u0020on\u0020the\u0020message.",
+            "url": "classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_THUMBNAIL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Attachment\u003A\u003AFLAG_IS_REMIX",
+            "name": "FLAG_IS_REMIX",
+            "summary": "This\u0020attachment\u0020has\u0020been\u0020edited\u0020using\u0020the\u0020remix\u0020feature\u0020on\u0020mobile\u0020\u0028deprecated\u0029.",
+            "url": "classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_REMIX"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Attachment\u003A\u003AFLAG_IS_SPOILER",
+            "name": "FLAG_IS_SPOILER",
+            "summary": "This\u0020attachment\u0020was\u0020marked\u0020as\u0020a\u0020spoiler\u0020and\u0020is\u0020blurred\u0020until\u0020clicked.",
+            "url": "classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_SPOILER"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Attachment\u003A\u003AFLAG_IS_ANIMATEd",
+            "name": "FLAG_IS_ANIMATEd",
+            "summary": "This\u0020attachment\u0020is\u0020an\u0020animated\u0020image.",
+            "url": "classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_ANIMATEd"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Attachment\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
@@ -6876,6 +6916,11 @@ Search.appendIndex(
             "summary": "Poll\u0020result\u0020embed.",
             "url": "classes/Discord-Parts-Embed-Embed.html#constant_TYPE_POLL_RESULT"
         },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003AFLAG_IS_CONTENT_INVENTORY_ENTRY",
+            "name": "FLAG_IS_CONTENT_INVENTORY_ENTRY",
+            "summary": "This\u0020embed\u0020is\u0020a\u0020reply\u0020to\u0020an\u0020activity\u0020card\u0020and\u0020is\u0020no\u0020longer\u0020displayed.",
+            "url": "classes/Discord-Parts-Embed-Embed.html#constant_FLAG_IS_CONTENT_INVENTORY_ENTRY"
+        },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Embed\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
@@ -6985,6 +7030,11 @@ Search.appendIndex(
             "name": "Image",
             "summary": "An\u0020image\u0020for\u0020an\u0020embed.",
             "url": "classes/Discord-Parts-Embed-Image.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Embed\\Image\u003A\u003AFLAG_IS_ANIMATED",
+            "name": "FLAG_IS_ANIMATED",
+            "summary": "This\u0020image\u0020is\u0020animated.",
+            "url": "classes/Discord-Parts-Embed-Image.html#constant_FLAG_IS_ANIMATED"
         },                {
             "fqsen": "\\Discord\\Parts\\Embed\\Image\u003A\u003A\u0024fillable",
             "name": "fillable",

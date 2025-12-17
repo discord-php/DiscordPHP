@@ -265,7 +265,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -300,7 +300,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?int|null   $height        Height of file (if image).</p>
+                                                 <section class="phpdocumentor-description"><p>?int|null         $height            Height of file (if image).</p>
 </section>
 
                                     </dd>
@@ -309,7 +309,34 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?int|null   $width         Width of file (if image).</p>
+                                                 <section class="phpdocumentor-description"><p>?int|null         $width             Width of file (if image).</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?User[]|null      $clip_participants Array of user objects. For Clips, array of users who were in the stream.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Carbon|null      $clip_created_at   For Clips, when the clip was created.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">@property</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>?Application|null $application       For Clips, the application in the stream, if recognized.</p>
 </section>
 
                                     </dd>
@@ -329,6 +356,48 @@
 
 
 
+<h4 id="toc-constants">
+    Constants
+    <a href="classes/Discord-Parts-Channel-Attachment.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_ANIMATEd">FLAG_IS_ANIMATEd</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 5                            </span>
+</dt>
+<dd>This attachment is an animated image.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_CLIP">FLAG_IS_CLIP</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 0                            </span>
+</dt>
+<dd>This attachment is a Clip from a stream.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_REMIX">FLAG_IS_REMIX</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 2                            </span>
+</dt>
+<dd>This attachment has been edited using the remix feature on mobile (deprecated).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_SPOILER">FLAG_IS_SPOILER</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 3                            </span>
+</dt>
+<dd>This attachment was marked as a spoiler and is blurred until clicked.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_THUMBNAIL">FLAG_IS_THUMBNAIL</a>
+    <span>
+        &nbsp;= 1 &lt;&lt; 1                            </span>
+</dt>
+<dd>This attachment is the thumbnail of a thread in a media channel, displayed in the grid but not on the message.</dd>
+
+    </dl>
 
 
 <h4 id="toc-properties">
@@ -555,6 +624,27 @@
 <dd>Fills the parts attributes from an array.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#method_getApplicationAttribute">getApplicationAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null    </span>
+</dt>
+<dd>Returns the application attribute.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#method_getClipCreatedAtAttribute">getClipCreatedAtAttribute()</a>
+    <span>
+                                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null    </span>
+</dt>
+<dd>Returns the clip created at attribute.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Channel-Attachment.html#method_getClipParticipantsAttribute">getClipParticipantsAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;|null    </span>
+</dt>
+<dd>Returns the clip participants attribute.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_getConstants">getConstants()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -757,6 +847,168 @@ JSON. Used for JsonSerializable.</dd>
 
 
         
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="classes/Discord-Parts-Channel-Attachment.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_IS_ANIMATEd">
+        FLAG_IS_ANIMATEd
+        <a href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_ANIMATEd" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">58</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">This attachment is an animated image.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_IS_ANIMATEd</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 5</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_IS_CLIP">
+        FLAG_IS_CLIP
+        <a href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_CLIP" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">50</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">This attachment is a Clip from a stream.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_IS_CLIP</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 0</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_IS_REMIX">
+        FLAG_IS_REMIX
+        <a href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_REMIX" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">54</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">This attachment has been edited using the remix feature on mobile (deprecated).</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_IS_REMIX</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 2</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_IS_SPOILER">
+        FLAG_IS_SPOILER
+        <a href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_SPOILER" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">56</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">This attachment was marked as a spoiler and is blurred until clicked.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_IS_SPOILER</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 3</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FLAG_IS_THUMBNAIL">
+        FLAG_IS_THUMBNAIL
+        <a href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_THUMBNAIL" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">52</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">This attachment is the thumbnail of a thread in a media channel, displayed in the grid but not on the message.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FLAG_IS_THUMBNAIL</span>
+    = <span class="phpdocumentor-signature__default-value">1 &lt;&lt; 1</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+            </section>
 
         
     <section class="phpdocumentor-properties">
@@ -1457,7 +1709,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
@@ -1468,7 +1720,7 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;filename&#039;, &#039;title&#039;, &#039;description&#039;, &#039;content_type&#039;, &#039;size&#039;, &#039;url&#039;, &#039;proxy_url&#039;, &#039;height&#039;, &#039;width&#039;, &#039;ephemeral&#039;, &#039;duration_secs&#039;, &#039;waveform&#039;, &#039;flags&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;filename&#039;, &#039;title&#039;, &#039;description&#039;, &#039;content_type&#039;, &#039;size&#039;, &#039;url&#039;, &#039;proxy_url&#039;, &#039;height&#039;, &#039;width&#039;, &#039;ephemeral&#039;, &#039;duration_secs&#039;, &#039;waveform&#039;, &#039;flags&#039;, &#039;clip_participants&#039;, &#039;clip_created_at&#039;, &#039;application&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -2221,6 +2473,123 @@ JSON. Used for JsonSerializable.</dd>
         
     
     
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getApplicationAttribute">
+        getApplicationAttribute()
+        <a href="classes/Discord-Parts-Channel-Attachment.html#method_getApplicationAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">108</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the application attribute.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getApplicationAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getClipCreatedAtAttribute">
+        getClipCreatedAtAttribute()
+        <a href="classes/Discord-Parts-Channel-Attachment.html#method_getClipCreatedAtAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">98</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the clip created at attribute.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getClipCreatedAtAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getClipParticipantsAttribute">
+        getClipParticipantsAttribute()
+        <a href="classes/Discord-Parts-Channel-Attachment.html#method_getClipParticipantsAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Attachment.php"><a href="files/src-discord-parts-channel-attachment.html"><abbr title="src/Discord/Parts/Channel/Attachment.php">Attachment.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">88</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the clip participants attribute.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getClipParticipantsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;|null</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-ExCollectionInterface.html"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr></a>&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -4021,10 +4390,21 @@ static as we may move it outside this class in future.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
+                                        <li><a href="classes/Discord-Parts-Channel-Attachment.html#toc-constants">Constants</a></li>
                                                             <li><a href="classes/Discord-Parts-Channel-Attachment.html#toc-properties">Properties</a></li>
                                                             <li><a href="classes/Discord-Parts-Channel-Attachment.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
+                            <li class="phpdocumentor-on-this-page-section__title">Constants</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_ANIMATEd">FLAG_IS_ANIMATEd</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_CLIP">FLAG_IS_CLIP</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_REMIX">FLAG_IS_REMIX</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_SPOILER">FLAG_IS_SPOILER</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#constant_FLAG_IS_THUMBNAIL">FLAG_IS_THUMBNAIL</a></li>
+                                            </ul>
+                </li>
             
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
@@ -4067,6 +4447,9 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method___unserialize">__unserialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fetch">fetch()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_fill">fill()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#method_getApplicationAttribute">getApplicationAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#method_getClipCreatedAtAttribute">getClipCreatedAtAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Attachment.html#method_getClipParticipantsAttribute">getClipParticipantsAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getConstants">getConstants()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getCreatableAttributes">getCreatableAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getDiscord">getDiscord()</a></li>
