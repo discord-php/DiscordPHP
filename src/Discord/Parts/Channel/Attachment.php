@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
-use Discord\Parts\Part;
-use Discord\Parts\User\User;
-use Discord\Parts\OAuth\Application;
 use Carbon\Carbon;
 use Discord\Helpers\ExCollectionInterface;
+use Discord\Parts\OAuth\Application;
+use Discord\Parts\Part;
+use Discord\Parts\User\User;
 
 /**
  * A message attachment.
@@ -82,7 +82,7 @@ class Attachment extends Part
 
     /**
      * Returns the clip participants attribute.
-     * 
+     *
      * @return ?ExCollectionInterface<User>
      */
     public function getClipParticipantsAttribute(): ?ExCollectionInterface
@@ -92,7 +92,7 @@ class Attachment extends Part
 
     /**
      * Returns the clip created at attribute.
-     * 
+     *
      * @return ?Carbon
      */
     public function getClipCreatedAtAttribute(): ?Carbon
@@ -102,7 +102,7 @@ class Attachment extends Part
 
     /**
      * Returns the application attribute.
-     * 
+     *
      * @return ?Application
      */
     public function getApplicationAttribute(): ?Application
