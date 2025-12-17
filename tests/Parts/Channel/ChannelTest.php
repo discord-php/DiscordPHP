@@ -31,18 +31,14 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('testing pin message')
-                ->then(function (Message $message) {
-                    return $this->channel()->pinMessage($message)
-                        ->then(function () {
-                            return $this->channel()->getPinnedMessages();
-                        })
+                ->then(
+                    fn (Message $message) => $this->channel()->pinMessage($message)
+                        ->then(fn () => $this->channel()->getPinnedMessages())
                         ->then(function (Collection $messages) use ($message) {
                             $this->assertGreaterThan(0, $messages->count());
-                            $this->assertContains($message->id, $messages->map(function ($message) {
-                                return $message->id;
-                            }));
-                        });
-                })
+                            $this->assertContains($message->id, $messages->map(fn ($message) => $message->id));
+                        })
+                )
                 ->then($resolve, $resolve);
         });
     }
@@ -56,20 +52,12 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('testing pin message')
-                ->then(function (Message $message) {
-                    return $this->channel()->pinMessage($message)
-                        ->then(function () use ($message) {
-                            return $this->channel()->unpinMessage($message);
-                        })
-                        ->then(function () {
-                            return $this->channel()->getPinnedMessages();
-                        })
-                        ->then(function (Collection $messages) use ($message) {
-                            $this->assertNotContains($message->id, $messages->map(function ($message) {
-                                return $message->id;
-                            }));
-                        });
-                })
+                ->then(
+                    fn (Message $message) => $this->channel()->pinMessage($message)
+                        ->then(fn () => $this->channel()->unpinMessage($message))
+                        ->then(fn () => $this->channel()->getPinnedMessages())
+                        ->then(fn (Collection $messages) => $this->assertNotContains($message->id, $messages->map(fn ($message) => $message->id)))
+                )
                 ->then($resolve, $resolve);
         });
     }
@@ -81,12 +69,12 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('testing get message')
-                ->then(function (Message $message) {
-                    return $this->channel()->messages->fetch($message->id)
+                ->then(
+                    fn (Message $message) => $this->channel()->messages->fetch($message->id)
                         ->then(function (Message $getMessage) use ($message) {
                             $this->assertEquals($getMessage->id, $message->id);
-                        });
-                })
+                        })
+                )
                 ->then($resolve, $resolve);
         });
     }
@@ -123,9 +111,7 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('testing delete one message')
-                ->then(function (Message $message) {
-                    return $this->channel()->deleteMessages([$message]);
-                })
+                ->then(fn (Message $message) => $this->channel()->deleteMessages([$message]))
                 ->then($resolve, $resolve);
         });
     }
@@ -138,12 +124,8 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('testing delete 1/2 message')
-                ->then(function (Message $m1) {
-                    return $this->channel()->sendMessage('testing delete 2/2 message')
-                        ->then(function (Message $m2) use ($m1) {
-                            return $this->channel()->deleteMessages([$m1, $m2]);
-                        });
-                })
+                ->then(fn (Message $m1) => $this->channel()->sendMessage('testing delete 2/2 message')
+                ->then(fn (Message $m2) => $this->channel()->deleteMessages([$m1, $m2])))
                 ->then($resolve, $resolve);
         });
     }
@@ -215,13 +197,12 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('testing edit through channel')
-                ->then(function (Message $message) {
-                    return $message->edit(MessageBuilder::new()->setContent('new content'))
-                        ->then(function (Message $updatedMessage) use ($message) {
-                            $this->assertEquals('new content', $updatedMessage->content);
-                            $this->assertEquals($message->id, $updatedMessage->id);
-                        });
-                })
+                ->then(fn (Message $message) => $message->edit(MessageBuilder::new()->setContent('new content'))
+                    ->then(function (Message $updatedMessage) use ($message) {
+                        $this->assertEquals('new content', $updatedMessage->content);
+                        $this->assertEquals($message->id, $updatedMessage->id);
+                    })
+                )
                 ->then($resolve, $resolve);
         });
     }
@@ -235,9 +216,7 @@ final class ChannelTest extends DiscordTestCase
             // upload readme
             $baseDir = dirname(dirname(dirname((new ReflectionClass(Discord::class))->getFileName())));
             $this->channel()->sendMessage(MessageBuilder::new()->addFile($baseDir.DIRECTORY_SEPARATOR.'README.md'))
-                ->then(function (Message $message) {
-                    $this->assertEquals(1, count($message->attachments));
-                })
+                ->then(fn (Message $message) => $this->assertEquals(1, count($message->attachments)))
                 ->then($resolve, $resolve);
         });
     }
