@@ -16131,6 +16131,26 @@ Search.appendIndex(
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-StageInstanceUpdate.html#method_handle"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\SubscriptionCreate",
+            "name": "SubscriptionCreate",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-SubscriptionCreate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\SubscriptionCreate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-SubscriptionCreate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\SubscriptionUpdate",
+            "name": "SubscriptionUpdate",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-SubscriptionUpdate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\SubscriptionUpdate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-SubscriptionUpdate.html#method_handle"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\ThreadCreate",
             "name": "ThreadCreate",
             "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
