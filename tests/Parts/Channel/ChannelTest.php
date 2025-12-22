@@ -197,7 +197,8 @@ final class ChannelTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('testing edit through channel')
-                ->then(fn (Message $message) => $message->edit(MessageBuilder::new()->setContent('new content'))
+                ->then(
+                    fn (Message $message) => $message->edit(MessageBuilder::new()->setContent('new content'))
                     ->then(function (Message $updatedMessage) use ($message) {
                         $this->assertEquals('new content', $updatedMessage->content);
                         $this->assertEquals($message->id, $updatedMessage->id);
