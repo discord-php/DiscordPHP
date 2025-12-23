@@ -694,6 +694,8 @@ trait CollectionTrait
 
     /**
      * Returns an iterator for the collection.
+     * 
+     * @since 10.42.1 Updated to use a generator instead of ArrayIterator. This improves performance and reduces memory usage for large collections.
      *
      * @return \Traversable
      */
