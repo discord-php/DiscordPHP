@@ -19,10 +19,6 @@ For testing and stability it would be greatly appreciated if you were able to ad
 2. PHP is running out of memory?
 	- Try unlimit your PHP memory using `ini_set('memory_limit', '-1');`.
 
-## Getting Started
-
-Before you start using this Library, you **need** to know how PHP works, you need to know how Event Loops and Promises work. This is a fundamental requirement before you start. Without this knowledge, you will only suffer.
-
 ## Framework Integrations
 
 While DiscordPHP is framework-agnostic and designed to run directly in CLI environments, there are community-maintained integrations available for popular frameworks:
@@ -30,6 +26,10 @@ While DiscordPHP is framework-agnostic and designed to run directly in CLI envir
 - **[laracord/laracord](https://github.com/laracord/laracord)** — A Laravel integration for DiscordPHP, providing service container bindings, configuration helpers, and a more Laravel-native development experience.
 
 Laracord is maintained independently and is not part of the DiscordPHP core project.
+
+## Getting Started
+
+Before you start using this Library, you **need** to know how PHP works, you need to know how Event Loops and Promises work. This is a fundamental requirement before you start. Without this knowledge, you will only suffer.
 
 ### Requirements
 
