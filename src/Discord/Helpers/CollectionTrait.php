@@ -552,9 +552,9 @@ trait CollectionTrait
     }
 
     /**
-     * @since 11.0.0
-     *
      * Get the keys of the items.
+     * 
+     * @since 10.2.0
      *
      * @return int[]|string[]
      */
