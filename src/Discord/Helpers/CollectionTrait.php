@@ -701,9 +701,7 @@ trait CollectionTrait
      */
     public function getIterator(): \Traversable
     {
-        foreach ($this->items as $key => $value) {
-            yield $key => $value;
-        }
+        yield from $this->items;
     }
 
     /**
