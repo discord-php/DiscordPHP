@@ -3853,7 +3853,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Helpers\\CollectionTrait\u003A\u003Akeys\u0028\u0029",
             "name": "keys",
-            "summary": "",
+            "summary": "Get\u0020the\u0020keys\u0020of\u0020the\u0020items.",
             "url": "classes/Discord-Helpers-CollectionTrait.html#method_keys"
         },                {
             "fqsen": "\\Discord\\Helpers\\CollectionTrait\u003A\u003Avalues\u0028\u0029",
