@@ -553,7 +553,7 @@ trait CollectionTrait
 
     /**
      * Get the keys of the items.
-     * 
+     *
      * @since 10.2.0
      *
      * @return int[]|string[]
@@ -694,7 +694,7 @@ trait CollectionTrait
 
     /**
      * Returns an iterator for the collection.
-     * 
+     *
      * @since 10.42.1 Uses a generator instead of ArrayIterator, improving performance and reducing memory usage for large collections.
      *
      * @return \Traversable
