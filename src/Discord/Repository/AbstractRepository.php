@@ -22,6 +22,7 @@ use Discord\Helpers\LegacyCacheWrapper;
  * Repositories provide a way to store and update parts on the Discord server.
  *
  * @since 4.0.0
+ * @todo Will no longer directly extend Collection in v11
  *
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
@@ -32,6 +33,7 @@ use Discord\Helpers\LegacyCacheWrapper;
 abstract class AbstractRepository extends Collection implements AbstractRepositoryInterface
 {
     use AbstractRepositoryTrait;
+
     /**
      * The collection discriminator.
      *

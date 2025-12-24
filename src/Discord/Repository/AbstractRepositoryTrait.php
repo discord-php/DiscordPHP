@@ -80,6 +80,13 @@ trait AbstractRepositoryTrait
     }
 
     /**
+     * The collection class used by the repository.
+     *
+     * @var string The collection class.
+     */
+    protected static string $collection = Collection::class;
+
+    /**
      * The HTTP client.
      *
      * @var Http Client.
@@ -579,7 +586,7 @@ trait AbstractRepositoryTrait
      */
     public function filter(callable $callback)
     {
-        $collection = new Collection([], $this->discrim, $this->class);
+        $collection = new $this->collection([], $this->discrim, $this->class);
 
         foreach ($this->items as $offset => $item) {
             if ($item instanceof WeakReference) {
