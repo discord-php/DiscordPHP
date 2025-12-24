@@ -80,13 +80,6 @@ trait AbstractRepositoryTrait
     }
 
     /**
-     * The collection class used by the repository.
-     *
-     * @var string The collection class.
-     */
-    protected static string $collection = Collection::class;
-
-    /**
      * The HTTP client.
      *
      * @var Http Client.

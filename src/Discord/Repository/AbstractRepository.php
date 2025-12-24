@@ -35,6 +35,13 @@ abstract class AbstractRepository extends Collection implements AbstractReposito
     use AbstractRepositoryTrait;
 
     /**
+     * The collection class used by the repository.
+     *
+     * @var string The collection class.
+     */
+    protected static string $collection = Collection::class;
+
+    /**
      * The collection discriminator.
      *
      * @var string Discriminator.
