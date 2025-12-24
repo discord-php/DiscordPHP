@@ -695,13 +695,11 @@ trait CollectionTrait
     /**
      * Returns an iterator for the collection.
      *
-     * @since 10.42.1 Uses a generator instead of ArrayIterator, improving performance and reducing memory usage for large collections.
-     *
      * @return \Traversable
      */
     public function getIterator(): \Traversable
     {
-        yield from $this->items;
+        return new \ArrayIterator($this->items);
     }
 
     /**
