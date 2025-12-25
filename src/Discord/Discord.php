@@ -350,9 +350,16 @@ class Discord
     /**
      * The cache configuration.
      *
-     * @var CacheConfig[]
+     * @var CacheConfig[] Cache configuration.
      */
     protected $cacheConfig;
+
+    /**
+     * The collection class.
+     *
+     * @var string Collection class.
+     */
+    protected $collection = Collection::class;
 
     /**
      * The Client class.
