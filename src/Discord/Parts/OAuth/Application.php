@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\OAuth;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Part;
@@ -166,7 +165,8 @@ class Application extends Part
     {
         return $this->http->get(Endpoint::bind(Endpoint::APPLICATION_ROLE_CONNECTION_METADATA, $this->id))
             ->then(function ($response) {
-                $collection = Collection::for(ApplicationRoleConnectionMetadata::class);
+                /** @var ExCollectionInterface<ApplicationRoleConnectionMetadata> $collection */
+                $collection = $this->discord->collection::for(ApplicationRoleConnectionMetadata::class);
 
                 foreach ($response as $record) {
                     $collection[] = $this->factory->part(ApplicationRoleConnectionMetadata::class, (array) $record, true);
@@ -195,7 +195,8 @@ class Application extends Part
 
         return $this->http->put(Endpoint::bind(Endpoint::APPLICATION_ROLE_CONNECTION_METADATA, $this->id), $data)
             ->then(function ($response) {
-                $collection = Collection::for(ApplicationRoleConnectionMetadata::class);
+                /** @var ExCollectionInterface<ApplicationRoleConnectionMetadata> $collection */
+                $collection = $this->discord->collection::for(ApplicationRoleConnectionMetadata::class);
 
                 foreach ($response as $record) {
                     $collection[] = $this->factory->part(ApplicationRoleConnectionMetadata::class, (array) $record, true);

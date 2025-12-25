@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Poll;
 
-use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
@@ -163,7 +162,8 @@ class PollAnswer extends Part
 
         return $this->http->get($query)
             ->then(function ($response) {
-                $users = Collection::for(User::class);
+                /** @var ExCollectionInterface<User> $users */
+                $users = $this->discord->collection::for(User::class);
 
                 foreach ($response->users ?? [] as $user) {
                     if (! $part = $this->discord->users->get('id', $user->id)) {

@@ -15,7 +15,6 @@ namespace Discord\Parts\Channel;
 
 use Discord\Builders\MessageBuilder;
 use Discord\Exceptions\InvalidOverwriteException;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
@@ -276,7 +275,8 @@ class Channel extends Part implements Stringable
      */
     protected function getRecipientsAttribute(): ExCollectionInterface
     {
-        $recipients = Collection::for(User::class);
+        /** @var ExCollectionInterface<User> $recipients */
+        $recipients = $this->discord->collection::for(User::class);
 
         foreach ($this->attributes['recipients'] ?? [] as $recipient) {
             $recipients->pushItem($this->discord->users->get('id', $recipient->id) ?? $this->factory->part(User::class, (array) $recipient, true));
@@ -1042,7 +1042,8 @@ class Channel extends Part implements Stringable
             return $guild->voice_states->filter(fn (VoiceStateUpdate $voice_state) => $voice_state->channel_id === $this->id);
         }
 
-        return Collection::for(VoiceStateUpdate::class, 'user_id');
+        /** @var ExCollectionInterface<VoiceStateUpdate> */
+        return $this->discord->collection::for(VoiceStateUpdate::class, 'user_id');
     }
 
     /**

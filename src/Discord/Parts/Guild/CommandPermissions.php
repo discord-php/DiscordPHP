@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Parts\Guild;
 
 use Discord\Helpers\BigInt;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Command\Permission;
 use Discord\Parts\Part;

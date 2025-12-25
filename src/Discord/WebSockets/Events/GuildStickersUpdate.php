@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
@@ -30,8 +30,10 @@ class GuildStickersUpdate extends Event
      */
     public function handle($data)
     {
-        $oldStickers = Collection::for(Sticker::class);
-        $stickerParts = Collection::for(Sticker::class);
+        /** @var ExCollectionInterface<Sticker> $oldStickers */
+        $oldStickers = $this->discord->collection::for(Sticker::class);
+        /** @var ExCollectionInterface<Sticker> $stickerParts */
+        $stickerParts = $this->discord->collection::for(Sticker::class);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

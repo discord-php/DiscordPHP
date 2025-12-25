@@ -16,8 +16,6 @@ namespace Discord\Parts\Guild;
 use Carbon\Carbon;
 use Discord\Builders\ChannelBuilder;
 use Discord\Exceptions\FileNotFoundException;
-use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
@@ -50,6 +48,7 @@ use Discord\Repository\Guild\IntegrationRepository;
 use Discord\Repository\Guild\MessageRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\VoiceStateRepository;
+use Discord\Voice\Region;
 use React\Promise\PromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -432,14 +431,14 @@ class Guild extends Part
      */
     protected function setRolesAttribute($roles): void
     {
-        if ($roles instanceof CollectionInterface) {
+        if ($roles instanceof ExCollectionInterface) {
             $roles = $roles->jsonSerialize();
         }
         if ($roles === null) {
             $roles = [];
         }
         if (! is_array($roles)) {
-            throw new \InvalidArgumentException('Roles must be an array or CollectionInterface.');
+            throw new \InvalidArgumentException('Roles must be an array or ExCollectionInterface.');
         }
 
         $rolesDiscrim = $this->roles->discrim;
@@ -549,7 +548,8 @@ class Guild extends Part
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_INVITES, $this->id))->then(function ($response) {
-            $invites = Collection::for(Invite::class, 'code');
+            /** @var ExCollectionInterface<Invite> $invites */
+            $invites = $this->discord->collection::for(Invite::class, 'code');
 
             foreach ($response as $invite) {
                 $invite = $this->factory->part(Invite::class, (array) $invite, true);
@@ -613,7 +613,8 @@ class Guild extends Part
      */
     protected function getStageInstancesAttribute(): ExCollectionInterface
     {
-        $stage_instances = Collection::for(StageInstance::class);
+        /** @var ExCollectionInterface<StageInstance> $stage_instances */
+        $stage_instances = $this->discord->collection::for(StageInstance::class);
 
         if ($channels = $this->channels) {
             /** @var Channel */
@@ -630,7 +631,7 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/voice#list-voice-regions
      *
-     * @return PromiseInterface<Collection>
+     * @return PromiseInterface<ExCollectionInterface<Region>|Region[]>
      *
      * @deprecated 10.23.0 Use `Discord::listVoiceRegions` instead.
      */
@@ -1084,7 +1085,7 @@ class Guild extends Part
      */
     public function updateRolePositions($roles): PromiseInterface
     {
-        if ($roles instanceof CollectionInterface) {
+        if ($roles instanceof ExCollectionInterface) {
             $roles = $roles->jsonSerialize();
         }
         if (! is_array($roles)) {
@@ -1152,7 +1153,8 @@ class Guild extends Part
         $endpoint->addQuery('limit', $options['limit']);
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $members = Collection::for(Member::class);
+            /** @var ExCollectionInterface<Member> $members */
+            $members = $this->discord->collection::for(Member::class);
 
             foreach ($responses as $response) {
                 if (! $member = $this->members->get('id', $response->user->id)) {

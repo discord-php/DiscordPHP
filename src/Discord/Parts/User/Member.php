@@ -16,8 +16,6 @@ namespace Discord\Parts\User;
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\BigInt;
-use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -382,7 +380,7 @@ class Member extends Part implements Stringable
      */
     public function setRoles($roles, ?string $reason = null): PromiseInterface
     {
-        if ($roles instanceof CollectionInterface) {
+        if ($roles instanceof ExCollectionInterface) {
             $roles = $roles->jsonSerialize();
         }
         if (! is_array($roles)) {
@@ -770,7 +768,8 @@ class Member extends Part implements Stringable
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new $this->discord->collection();
 
         if (empty($this->attributes['roles'])) {
             return $roles;

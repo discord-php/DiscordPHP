@@ -17,7 +17,7 @@ use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\MessageBuilder;
 use Discord\Builders\ModalBuilder;
 use Discord\Exceptions\AttachmentSizeException;
-use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
@@ -735,7 +735,8 @@ class Interaction extends Part
                 return;
             }
 
-            $components = Collection::for(RequestComponent::class);
+            /** @var ExCollectionInterface<RequestComponent> $components */
+            $components = $this->discord->collection::for(RequestComponent::class);
             foreach ($interaction->data->components as $container) {
                 if ($container->components) { // e.g. ActionRow
                     foreach ($container->components as $component) {

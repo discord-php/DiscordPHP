@@ -94,6 +94,8 @@ use function React\Promise\resolve;
  * @property PrivateChannelRepository $private_channels
  * @property SoundRepository          $sounds
  * @property UserRepository           $users
+ *
+ * @property string $collection The collection class used by repositories.
  */
 class Discord
 {
@@ -350,9 +352,16 @@ class Discord
     /**
      * The cache configuration.
      *
-     * @var CacheConfig[]
+     * @var CacheConfig[] Cache configuration.
      */
     protected $cacheConfig;
+
+    /**
+     * The collection class implementing ExCollectionInterface.
+     *
+     * @var string Collection class.
+     */
+    protected $collection;
 
     /**
      * The Client class.
@@ -419,6 +428,11 @@ class Discord
         $this->cacheConfig = $options['cache'];
         if ($cacheConfig = $this->getCacheConfig()) {
             $this->logger->warning('Attached experimental CacheInterface: '.get_class($cacheConfig->interface));
+        }
+
+        $this->collection = $options['collection'];
+        if ($this->collection !== Collection::class) {
+            $this->logger->warning('Attached experimental Collection: '.$this->collection);
         }
 
         $connector = new SocketConnector($options['socket_options'], $this->loop);
@@ -1426,7 +1440,8 @@ class Discord
         }
 
         return $this->http->get(Endpoint::LIST_VOICE_REGIONS)->then(function ($response) {
-            $regions = Collection::for(Region::class);
+            /** @var ExCollectionInterface<Region> $regions */
+            $regions = $this->collection::for(Region::class);
 
             foreach ($response as $region) {
                 $regions->pushItem($this->factory->part(Region::class, (array) $region, true));
@@ -1657,6 +1672,7 @@ class Discord
                 'socket_options',
                 'dnsConfig',
                 'cache',
+                'collection',
                 'useTransportCompression',
                 'usePayloadCompression',
             ])
@@ -1676,6 +1692,7 @@ class Discord
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
                 'cache' => [AbstractRepository::class => null], // use LegacyCacheWrapper
+                'collection' => Collection::class,
                 'useTransportCompression' => true,
                 'usePayloadCompression' => true,
             ])
@@ -1696,6 +1713,14 @@ class Discord
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
+            ->setAllowedTypes('collection', 'string')
+            ->setNormalizer('collection', function ($options, $value) {
+                if (is_string($value) && class_exists($value) && is_subclass_of($value, ExCollectionInterface::class)) {
+                    return $value;
+                }
+
+                return Collection::class;
+            })
             ->setAllowedTypes('cache', ['array', CacheConfig::class, \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
             ->setNormalizer('cache', function ($options, $value) {
                 if (! is_array($value)) {
@@ -1892,7 +1917,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'voice_sessions'];
+        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'voice_sessions', 'collection'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};
