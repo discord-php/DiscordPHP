@@ -361,7 +361,7 @@ class Discord
      *
      * @var string Collection class.
      */
-    protected $collection = Collection::class;
+    protected $collection;
 
     /**
      * The Client class.
