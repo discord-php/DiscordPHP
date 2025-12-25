@@ -357,7 +357,7 @@ class Discord
     protected $cacheConfig;
 
     /**
-     * The collection class.
+     * The collection class implementing ExCollectionInterface.
      *
      * @var string Collection class.
      */
