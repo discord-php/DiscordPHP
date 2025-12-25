@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\Builders\Components;
 
 use Discord\Discord;
-use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
 use React\EventLoop\TimerInterface;
@@ -365,7 +365,8 @@ abstract class SelectMenu extends Interactive
                 if (empty($this->options)) {
                     $response = $callback($interaction);
                 } else {
-                    $options = Collection::for(Option::class, null);
+                    /** @var ExCollectionInterface<Option> $options */
+                    $options = $this->discord->collection::for(Option::class, null);
 
                     foreach ($this->options as $option) {
                         if (in_array($option->getValue(), $interaction->data->values)) {

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Part;
@@ -57,7 +56,8 @@ class GuildSearch extends Part
      */
     protected function getMessagesAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Message::class);
+        /** @var ExCollectionInterface<Message> $collection */
+        $collection = $this->discord->collection::for(Message::class);
 
         if (! isset($this->attributes['messages'])) {
             return $collection;
@@ -83,7 +83,8 @@ class GuildSearch extends Part
      */
     protected function getMembersAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Member::class);
+        /** @var ExCollectionInterface<Member> $collection */
+        $collection = $this->discord->collection::for(Member::class);
 
         if (! isset($this->attributes['members'])) {
             return $collection;

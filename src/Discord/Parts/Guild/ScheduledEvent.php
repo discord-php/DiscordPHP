@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -104,7 +103,7 @@ class ScheduledEvent extends Part
      *
      * @throws \RangeException
      *
-     * @return PromiseInterface<Collection<User>>
+     * @return PromiseInterface<ExCollectionInterface<User>>
      */
     public function getUsers(array $options): PromiseInterface
     {

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Poll;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 

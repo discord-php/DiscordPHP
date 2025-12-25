@@ -16,7 +16,6 @@ namespace Discord\Parts;
 use Carbon\Carbon;
 use Discord\Discord;
 use Discord\Factory\Factory;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Http;
 use Discord\Repository\AbstractRepository;
@@ -501,7 +500,8 @@ trait PartTrait
      */
     protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id'): ExCollectionInterface
     {
-        $collection = Collection::for($class, $discrim);
+        /** @var ExCollectionInterface $collection */
+        $collection = $this->discord->collection::for($class, $discrim);
 
         if (empty($this->attributes[$key])) {
             return $collection;
@@ -528,7 +528,8 @@ trait PartTrait
      */
     protected function attributeTypedCollectionHelper(string $class, string $key): ExCollectionInterface
     {
-        $collection = Collection::for($class);
+        /** @var ExCollectionInterface $collection */
+        $collection = $this->discord->collection::for($class);
 
         if (empty($this->attributes[$key])) {
             return $collection;

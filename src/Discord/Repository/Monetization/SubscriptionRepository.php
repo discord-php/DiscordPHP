@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Monetization;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Monetization\Subscription;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
+use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -56,7 +57,7 @@ class SubscriptionRepository extends AbstractRepository
      *
      * @throws \RangeException
      *
-     * @return \React\Promise\PromiseInterface<\Discord\Helpers\Collection<Subscription>>
+     * @return PromiseInterface<ExCollectionInterface<Subscription>>
      */
     public function getSubscriptions(array $options = [])
     {
@@ -91,7 +92,8 @@ class SubscriptionRepository extends AbstractRepository
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $subscriptions = Collection::for(Subscription::class);
+            /** @var ExCollectionInterface<Subscription> $subscriptions */
+            $subscriptions = $this->discord->collection::for(Subscription::class);
 
             foreach ($responses as $response) {
                 $subscriptions->pushItem($this->get('id', $response->id) ?? $this->create($response, true));

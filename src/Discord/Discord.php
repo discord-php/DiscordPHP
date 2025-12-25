@@ -1435,7 +1435,8 @@ class Discord
         }
 
         return $this->http->get(Endpoint::LIST_VOICE_REGIONS)->then(function ($response) {
-            $regions = Collection::for(Region::class);
+            /** @var ExCollectionInterface<Region> $regions */
+            $regions = $this->collection::for(Region::class);
 
             foreach ($response as $region) {
                 $regions->pushItem($this->factory->part(Region::class, (array) $region, true));

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\WebSockets\Events;
 
 use Discord\Builders\ChannelBuilder;
-use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
@@ -29,7 +29,8 @@ class ThreadListSync extends Event
 {
     public function handle($data)
     {
-        $threadParts = Collection::for(Thread::class);
+        /** @var ExCollectionInterface<Thread> $threadParts */
+        $threadParts = $this->discord->collection::for(Thread::class);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

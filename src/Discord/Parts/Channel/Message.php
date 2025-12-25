@@ -15,7 +15,6 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Channel\Message\MessageInteractionMetadata;
@@ -388,7 +387,8 @@ class Message extends Part
      */
     protected function getMentionChannelsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Channel::class);
+        /** @var ExCollectionInterface<Channel> $collection */
+        $collection = $this->discord->collection::for(Channel::class);
 
         if (preg_match_all('/<#([0-9]*)>/', $this->content, $matches)) {
             foreach ($matches[1] as $channelId) {
@@ -568,7 +568,8 @@ class Message extends Part
      */
     protected function getMentionsAttribute(): ExCollectionInterface
     {
-        $users = Collection::for(User::class);
+        /** @var ExCollectionInterface<User> $users */
+        $users = $this->discord->collection::for(User::class);
 
         foreach ($this->attributes['mentions'] ?? [] as $mention) {
             $users->pushItem($this->discord->users->get('id', $mention->id) ?? $this->factory->part(User::class, (array) $mention, true));
@@ -1298,7 +1299,7 @@ class Message extends Part
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
-     * @return PromiseInterface<Collection<MessageReaction>>
+     * @return PromiseInterface<ExCollectionInterface<MessageReaction>>
      */
     public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
     {
