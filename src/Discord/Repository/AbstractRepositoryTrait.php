@@ -16,8 +16,8 @@ namespace Discord\Repository;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
-use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\CollectionTrait;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
@@ -559,7 +559,8 @@ trait AbstractRepositoryTrait
      */
     public function filter(callable $callback)
     {
-        $collection = new $this->collection([], $this->discrim, $this->class);
+        /** @var ExCollectionInterface $collection */
+        $collection = new $this->discord->collection([], $this->discrim, $this->class);
 
         foreach ($this->items as $offset => $item) {
             if ($item instanceof WeakReference) {
