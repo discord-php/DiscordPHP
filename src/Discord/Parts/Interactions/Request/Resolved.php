@@ -175,7 +175,8 @@ class Resolved extends Part
             return $this->attributes['channels'];
         }
 
-        $collection = new Collection();
+        /** @var ExCollectionInterface $collection */
+        $collection = new $this->discord->collection();
 
         if (! isset($this->attributes['channels'])) {
             return $collection;

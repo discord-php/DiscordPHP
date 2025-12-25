@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild\AutoModeration;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -141,7 +140,8 @@ class Rule extends Part
      */
     protected function getExemptRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new $this->discord->collection();
 
         if (empty($this->attributes['exempt_roles'])) {
             return $roles;
@@ -165,7 +165,8 @@ class Rule extends Part
      */
     protected function getExemptChannelsAttribute(): ExCollectionInterface
     {
-        $channels = new Collection();
+        /** @var ExCollectionInterface $channels */
+        $channels = new $this->discord->collection();
 
         if (empty($this->attributes['exempt_channels'])) {
             return $channels;

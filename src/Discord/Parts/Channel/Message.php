@@ -538,7 +538,8 @@ class Message extends Part
      */
     protected function getMentionRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new $this->discord->collection();
 
         if (empty($this->attributes['mention_roles'])) {
             return $roles;
@@ -1302,7 +1303,7 @@ class Message extends Part
     public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
-        $reactions = new Collection([], null, null);
+        $reactions = new $this->discord->collection([], null, null);
         $timer = null;
 
         $options = array_merge([

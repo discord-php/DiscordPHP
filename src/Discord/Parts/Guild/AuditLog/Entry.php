@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild\AuditLog;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -208,7 +207,7 @@ class Entry extends Part
      */
     protected function getChangesAttribute(): ExCollectionInterface
     {
-        return new Collection($this->attributes['changes'] ?? [], 'key', null);
+        return new $this->discord->collection($this->attributes['changes'] ?? [], 'key', null);
     }
 
     /**

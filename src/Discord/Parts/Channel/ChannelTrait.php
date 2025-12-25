@@ -15,7 +15,9 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
+use Discord\Discord;
 use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Message\MessagePinData;
@@ -59,6 +61,8 @@ use function React\Promise\resolve;
  * @property bool              $is_private Whether the channel is a private channel.
  * @property MemberRepository  $members    Voice channel only - members in the channel or thread.
  * @property MessageRepository $messages   Text channel only - messages sent in the channel or thread.
+ * 
+ * @property Discord  $discord The Discord client instance.
  */
 trait ChannelTrait
 {
@@ -275,7 +279,8 @@ trait ChannelTrait
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $messages = Collection::for(Message::class);
+            /** @var ExCollectionInterface $messages */
+            $messages = $this->discord->collection::for(Message::class);
 
             foreach ($responses as $response) {
                 $messages->pushItem($this->messages->get('id', $response->id) ?? $this->messages->create($response, true));
@@ -630,7 +635,8 @@ trait ChannelTrait
     public function createMessageCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
-        $messages = new Collection([], null, null);
+        /** @var ExCollectionInterface $messages */
+        $messages = new $this->discord->collection([], null, null);
         $timer = null;
 
         $options = array_merge([

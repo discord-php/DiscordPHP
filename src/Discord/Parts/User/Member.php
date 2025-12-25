@@ -16,7 +16,6 @@ namespace Discord\Parts\User;
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\BigInt;
-use Discord\Helpers\Collection;
 use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
@@ -770,7 +769,8 @@ class Member extends Part implements Stringable
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new $this->discord->collection();
 
         if (empty($this->attributes['roles'])) {
             return $roles;

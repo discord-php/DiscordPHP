@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
@@ -80,7 +79,8 @@ class Emoji extends Part implements Stringable
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new $this->discord->collection();
 
         if (empty($this->attributes['roles'])) {
             return $roles;

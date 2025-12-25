@@ -15,6 +15,7 @@ namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -132,7 +133,8 @@ class ScheduledEvent extends Part
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $users = new Collection();
+            /** @var ExCollectionInterface $users */
+            $users = new $this->discord->collection();
 
             $guild = $this->guild;
 
