@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Discord\Repository;
 
+use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\CollectionTrait;
 use Discord\Http\Endpoint;
@@ -29,6 +29,19 @@ use function Discord\nowait;
 use function React\Promise\reject;
 use function React\Promise\resolve;
 
+/**
+ * Provides common functionality for all repositories.
+ *
+ * @property Discord      $discord   The Discord client instance.
+ * @property string       $discrim   The collection discriminator.
+ * @property array        $items     The items contained in the collection.
+ * @property string       $class     Class type allowed into the collection.
+ * @property Http         $http      The HTTP client.
+ * @property Factory      $factory   The parts factory.
+ * @property array        $endpoints Endpoints for interacting with the Discord servers.
+ * @property array        $vars      Variables that are related to the repository.
+ * @property CacheWrapper $cache     The react/cache wrapper.
+ */
 trait AbstractRepositoryTrait
 {
     use CollectionTrait
@@ -78,39 +91,6 @@ trait AbstractRepositoryTrait
         jsonSerialize as __Collection__jsonSerialize;
         getIterator as __Collection__getIterator;
     }
-
-    /**
-     * The HTTP client.
-     *
-     * @var Http Client.
-     */
-    protected $http;
-
-    /**
-     * The parts factory.
-     *
-     * @var Factory Parts factory.
-     */
-    protected $factory;
-
-    /**
-     * Endpoints for interacting with the Discord servers.
-     *
-     * @var array Endpoints.
-     */
-    protected $endpoints = [];
-
-    /**
-     * Variables that are related to the repository.
-     *
-     * @var array Variables.
-     */
-    protected $vars = [];
-
-    /**
-     * @var CacheWrapper
-     */
-    protected $cache;
 
     /**
      * Freshens the repository cache.

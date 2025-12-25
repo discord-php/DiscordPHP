@@ -94,7 +94,7 @@ use function React\Promise\resolve;
  * @property PrivateChannelRepository $private_channels
  * @property SoundRepository          $sounds
  * @property UserRepository           $users
- * 
+ *
  * @property string $collection The collection class used by repositories.
  */
 class Discord

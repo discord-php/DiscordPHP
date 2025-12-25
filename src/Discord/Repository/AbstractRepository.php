@@ -56,6 +56,39 @@ abstract class AbstractRepository extends Collection implements AbstractReposito
     protected $class;
 
     /**
+     * The HTTP client.
+     *
+     * @var Http Client.
+     */
+    protected $http;
+
+    /**
+     * The parts factory.
+     *
+     * @var Factory Parts factory.
+     */
+    protected $factory;
+
+    /**
+     * Endpoints for interacting with the Discord servers.
+     *
+     * @var array Endpoints.
+     */
+    protected $endpoints = [];
+
+    /**
+     * Variables that are related to the repository.
+     *
+     * @var array Variables.
+     */
+    protected $vars = [];
+
+    /**
+     * @var CacheWrapper
+     */
+    protected $cache;
+
+    /**
      * AbstractRepository constructor.
      *
      * @param Discord $discord
