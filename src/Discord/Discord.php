@@ -430,6 +430,11 @@ class Discord
             $this->logger->warning('Attached experimental CacheInterface: '.get_class($cacheConfig->interface));
         }
 
+        $this->collection = $options['collection'];
+        if ($this->collection !== Collection::class) {
+            $this->logger->warning('Attached experimental Collection: '.$this->collection);
+        }
+
         $connector = new SocketConnector($options['socket_options'], $this->loop);
         $this->wsFactory = new Connector($this->loop, $connector);
         $this->handlers = new Handlers();
