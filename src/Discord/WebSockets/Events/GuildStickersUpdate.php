@@ -31,9 +31,9 @@ class GuildStickersUpdate extends Event
     public function handle($data)
     {
         /** @var ExCollectionInterface<Sticker> $oldStickers */
-        $oldStickers = $this->discord->collection::for(Sticker::class);
+        $oldStickers = $this->discord->getCollectionClass()::for(Sticker::class);
         /** @var ExCollectionInterface<Sticker> $stickerParts */
-        $stickerParts = $this->discord->collection::for(Sticker::class);
+        $stickerParts = $this->discord->getCollectionClass()::for(Sticker::class);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

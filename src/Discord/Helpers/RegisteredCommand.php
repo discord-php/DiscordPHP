@@ -93,7 +93,7 @@ class RegisteredCommand
     public function execute($options, Interaction $interaction): bool
     {
         /** @var ExCollectionInterface<Option> $params */
-        $params = $this->discord->collection::for(Option::class, 'name');
+        $params = $this->discord->getCollectionClass()::for(Option::class, 'name');
 
         foreach ($options as $option) {
             /** @var Option $option */

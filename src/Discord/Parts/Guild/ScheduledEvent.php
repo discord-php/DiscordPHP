@@ -133,7 +133,7 @@ class ScheduledEvent extends Part
 
         return $this->http->get($endpoint)->then(function ($responses) {
             /** @var ExCollectionInterface $users */
-            $users = new $this->discord->collection();
+            $users = new $this->discord->getCollectionClass();
 
             $guild = $this->guild;
 

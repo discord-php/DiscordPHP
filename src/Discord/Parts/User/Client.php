@@ -140,7 +140,7 @@ class Client extends Part
     {
         return $this->http->get(Endpoint::USER_CURRENT_CONNECTIONS)->then(function ($response) {
             /** @var ExCollectionInterface<Connection> $collection */
-            $collection = $this->discord->collection::for(Connection::class);
+            $collection = $this->discord->getCollectionClass()::for(Connection::class);
 
             foreach ($response as $connection) {
                 $collection->pushItem($this->factory->part(Connection::class, $connection, true));

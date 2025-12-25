@@ -166,7 +166,7 @@ class Application extends Part
         return $this->http->get(Endpoint::bind(Endpoint::APPLICATION_ROLE_CONNECTION_METADATA, $this->id))
             ->then(function ($response) {
                 /** @var ExCollectionInterface<ApplicationRoleConnectionMetadata> $collection */
-                $collection = $this->discord->collection::for(ApplicationRoleConnectionMetadata::class);
+                $collection = $this->discord->getCollectionClass()::for(ApplicationRoleConnectionMetadata::class);
 
                 foreach ($response as $record) {
                     $collection[] = $this->factory->part(ApplicationRoleConnectionMetadata::class, (array) $record, true);
@@ -196,7 +196,7 @@ class Application extends Part
         return $this->http->put(Endpoint::bind(Endpoint::APPLICATION_ROLE_CONNECTION_METADATA, $this->id), $data)
             ->then(function ($response) {
                 /** @var ExCollectionInterface<ApplicationRoleConnectionMetadata> $collection */
-                $collection = $this->discord->collection::for(ApplicationRoleConnectionMetadata::class);
+                $collection = $this->discord->getCollectionClass()::for(ApplicationRoleConnectionMetadata::class);
 
                 foreach ($response as $record) {
                     $collection[] = $this->factory->part(ApplicationRoleConnectionMetadata::class, (array) $record, true);

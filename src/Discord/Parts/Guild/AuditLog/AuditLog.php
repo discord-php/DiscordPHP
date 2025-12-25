@@ -147,7 +147,7 @@ class AuditLog extends Part
         }
 
         /** @var ExCollectionInterface<User> $collection */
-        $collection = $this->discord->collection::for(User::class);
+        $collection = $this->discord->getCollectionClass()::for(User::class);
 
         foreach ($this->attributes['users'] ?? [] as $user) {
             $collection->pushItem($this->discord->users->get('id', $user->id) ?? $this->factory->part(User::class, (array) $user, true));

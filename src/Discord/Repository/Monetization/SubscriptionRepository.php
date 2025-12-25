@@ -93,7 +93,7 @@ class SubscriptionRepository extends AbstractRepository
 
         return $this->http->get($endpoint)->then(function ($responses) {
             /** @var ExCollectionInterface<Subscription> $subscriptions */
-            $subscriptions = $this->discord->collection::for(Subscription::class);
+            $subscriptions = $this->discord->getCollectionClass()::for(Subscription::class);
 
             foreach ($responses as $response) {
                 $subscriptions->pushItem($this->get('id', $response->id) ?? $this->create($response, true));

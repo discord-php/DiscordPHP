@@ -94,8 +94,6 @@ use function React\Promise\resolve;
  * @property PrivateChannelRepository $private_channels
  * @property SoundRepository          $sounds
  * @property UserRepository           $users
- *
- * @property string $collection The collection class used by repositories.
  */
 class Discord
 {
@@ -361,7 +359,7 @@ class Discord
      *
      * @var string Collection class.
      */
-    public $collection;
+    protected $collectionClass;
 
     /**
      * The Client class.
@@ -430,9 +428,9 @@ class Discord
             $this->logger->warning('Attached experimental CacheInterface: '.get_class($cacheConfig->interface));
         }
 
-        $this->collection = $options['collection'];
-        if ($this->collection !== Collection::class) {
-            $this->logger->warning('Attached experimental Collection: '.$this->collection);
+        $this->collectionClass = $options['collection'];
+        if ($this->collectionClass !== Collection::class) {
+            $this->logger->warning('Attached experimental Collection: '.$this->collectionClass);
         }
 
         $connector = new SocketConnector($options['socket_options'], $this->loop);
@@ -1441,7 +1439,7 @@ class Discord
 
         return $this->http->get(Endpoint::LIST_VOICE_REGIONS)->then(function ($response) {
             /** @var ExCollectionInterface<Region> $regions */
-            $regions = $this->collection::for(Region::class);
+            $regions = $this->collectionClass::for(Region::class);
 
             foreach ($response as $region) {
                 $regions->pushItem($this->factory->part(Region::class, (array) $region, true));
@@ -1909,6 +1907,16 @@ class Discord
     }
 
     /**
+     * Gets the collection class being used by the client.
+     *
+     * @return string
+     */
+    public function getCollectionClass(): string
+    {
+        return $this->collectionClass;
+    }
+
+    /**
      * Handles dynamic get calls to the client.
      *
      * @param string $name Variable name.
@@ -1917,7 +1925,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'voice_sessions', 'collection'];
+        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'voice_sessions'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};

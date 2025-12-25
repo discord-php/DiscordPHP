@@ -163,7 +163,7 @@ class PollAnswer extends Part
         return $this->http->get($query)
             ->then(function ($response) {
                 /** @var ExCollectionInterface<User> $users */
-                $users = $this->discord->collection::for(User::class);
+                $users = $this->discord->getCollectionClass()::for(User::class);
 
                 foreach ($response->users ?? [] as $user) {
                     if (! $part = $this->discord->users->get('id', $user->id)) {

@@ -179,6 +179,6 @@ class PresenceUpdate extends Part
             return $member->roles;
         }
 
-        return $this->discord->collection::for(Role::class);
+        return $this->discord->getCollectionClass()::for(Role::class);
     }
 }

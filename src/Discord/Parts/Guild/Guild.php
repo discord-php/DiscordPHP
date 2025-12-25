@@ -549,7 +549,7 @@ class Guild extends Part
 
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_INVITES, $this->id))->then(function ($response) {
             /** @var ExCollectionInterface<Invite> $invites */
-            $invites = $this->discord->collection::for(Invite::class, 'code');
+            $invites = $this->discord->getCollectionClass()::for(Invite::class, 'code');
 
             foreach ($response as $invite) {
                 $invite = $this->factory->part(Invite::class, (array) $invite, true);
@@ -614,7 +614,7 @@ class Guild extends Part
     protected function getStageInstancesAttribute(): ExCollectionInterface
     {
         /** @var ExCollectionInterface<StageInstance> $stage_instances */
-        $stage_instances = $this->discord->collection::for(StageInstance::class);
+        $stage_instances = $this->discord->getCollectionClass()::for(StageInstance::class);
 
         if ($channels = $this->channels) {
             /** @var Channel */
@@ -1154,7 +1154,7 @@ class Guild extends Part
 
         return $this->http->get($endpoint)->then(function ($responses) {
             /** @var ExCollectionInterface<Member> $members */
-            $members = $this->discord->collection::for(Member::class);
+            $members = $this->discord->getCollectionClass()::for(Member::class);
 
             foreach ($responses as $response) {
                 if (! $member = $this->members->get('id', $response->user->id)) {

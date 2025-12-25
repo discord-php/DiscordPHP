@@ -736,7 +736,7 @@ class Interaction extends Part
             }
 
             /** @var ExCollectionInterface<RequestComponent> $components */
-            $components = $this->discord->collection::for(RequestComponent::class);
+            $components = $this->discord->getCollectionClass()::for(RequestComponent::class);
             foreach ($interaction->data->components as $container) {
                 if ($container->components) { // e.g. ActionRow
                     foreach ($container->components as $component) {

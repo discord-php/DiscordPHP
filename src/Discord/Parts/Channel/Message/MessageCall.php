@@ -57,7 +57,7 @@ class MessageCall extends Part
      */
     protected function getUsersAttribute(): ExCollectionInterface
     {
-        return $this->discord->collection::for(User::class)->push(array_map(
+        return $this->discord->getCollectionClass()::for(User::class)->push(array_map(
             fn ($userData) => $this->discord->users->get('id', $userData) ?? $this->factory->part(User::class, ['id' => $userData], true),
             $this->attributes['participants']
         ));

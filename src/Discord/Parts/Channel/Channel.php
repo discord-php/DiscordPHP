@@ -276,7 +276,7 @@ class Channel extends Part implements Stringable
     protected function getRecipientsAttribute(): ExCollectionInterface
     {
         /** @var ExCollectionInterface<User> $recipients */
-        $recipients = $this->discord->collection::for(User::class);
+        $recipients = $this->discord->getCollectionClass()::for(User::class);
 
         foreach ($this->attributes['recipients'] ?? [] as $recipient) {
             $recipients->pushItem($this->discord->users->get('id', $recipient->id) ?? $this->factory->part(User::class, (array) $recipient, true));
@@ -1043,7 +1043,7 @@ class Channel extends Part implements Stringable
         }
 
         /** @var ExCollectionInterface<VoiceStateUpdate> */
-        return $this->discord->collection::for(VoiceStateUpdate::class, 'user_id');
+        return $this->discord->getCollectionClass()::for(VoiceStateUpdate::class, 'user_id');
     }
 
     /**

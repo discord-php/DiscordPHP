@@ -57,7 +57,7 @@ class GuildSearch extends Part
     protected function getMessagesAttribute(): ExCollectionInterface
     {
         /** @var ExCollectionInterface<Message> $collection */
-        $collection = $this->discord->collection::for(Message::class);
+        $collection = $this->discord->getCollectionClass()::for(Message::class);
 
         if (! isset($this->attributes['messages'])) {
             return $collection;
@@ -84,7 +84,7 @@ class GuildSearch extends Part
     protected function getMembersAttribute(): ExCollectionInterface
     {
         /** @var ExCollectionInterface<Member> $collection */
-        $collection = $this->discord->collection::for(Member::class);
+        $collection = $this->discord->getCollectionClass()::for(Member::class);
 
         if (! isset($this->attributes['members'])) {
             return $collection;
