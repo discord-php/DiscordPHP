@@ -94,6 +94,8 @@ use function React\Promise\resolve;
  * @property PrivateChannelRepository $private_channels
  * @property SoundRepository          $sounds
  * @property UserRepository           $users
+ * 
+ * @property string $collection The collection class used by repositories.
  */
 class Discord
 {
@@ -1899,7 +1901,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'voice_sessions'];
+        static $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'voice_sessions', 'collection'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};
