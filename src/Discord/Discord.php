@@ -1714,8 +1714,6 @@ class Discord
                     return $value;
                 }
 
-                $this->logger->warning('The "collection" option must be a class name that implements '.ExCollectionInterface::class.'. Using default collection class '.Collection::class.'.');
-
                 return Collection::class;
             })
             ->setAllowedTypes('cache', ['array', CacheConfig::class, \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
