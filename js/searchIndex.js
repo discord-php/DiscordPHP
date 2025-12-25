@@ -2971,6 +2971,11 @@ Search.appendIndex(
             "summary": "The\u0020cache\u0020configuration.",
             "url": "classes/Discord-Discord.html#property_cacheConfig"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024collection",
+            "name": "collection",
+            "summary": "The\u0020collection\u0020class\u0020implementing\u0020ExCollectionInterface.",
+            "url": "classes/Discord-Discord.html#property_collection"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024client",
             "name": "client",
             "summary": "The\u0020Client\u0020class.",
@@ -4923,7 +4928,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AdisallowAllMentions\u0028\u0029",
             "name": "disallowAllMentions",
-            "summary": "Sets\u0020the\u0020list\u0020of\u0020current\u0020allowed\u0020mention\u0020types\u0020to\u0020a\u0020new,\u0020empty\u0020ExCollectionInterface\u0020instance.",
+            "summary": "Sets\u0020the\u0020list\u0020of\u0020current\u0020allowed\u0020mention\u0020types\u0020to\u0020a\u0020new,\u0020empty\u0020array.",
             "url": "classes/Discord-Parts-Channel-Message-AllowedMentions.html#method_disallowAllMentions"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\AllowedMentions\u003A\u003AsetParse\u0028\u0029",
@@ -12686,6 +12691,31 @@ Search.appendIndex(
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-AbstractRepository.html#property_class"
         },                {
+            "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003A\u0024http",
+            "name": "http",
+            "summary": "The\u0020HTTP\u0020client.",
+            "url": "classes/Discord-Repository-AbstractRepository.html#property_http"
+        },                {
+            "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003A\u0024factory",
+            "name": "factory",
+            "summary": "The\u0020parts\u0020factory.",
+            "url": "classes/Discord-Repository-AbstractRepository.html#property_factory"
+        },                {
+            "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
+            "url": "classes/Discord-Repository-AbstractRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003A\u0024vars",
+            "name": "vars",
+            "summary": "Variables\u0020that\u0020are\u0020related\u0020to\u0020the\u0020repository.",
+            "url": "classes/Discord-Repository-AbstractRepository.html#property_vars"
+        },                {
+            "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003A\u0024cache",
+            "name": "cache",
+            "summary": "",
+            "url": "classes/Discord-Repository-AbstractRepository.html#property_cache"
+        },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepository\u003A\u003A\u0024discord",
             "name": "discord",
             "summary": "",
@@ -12700,6 +12730,11 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/Discord-Repository-AbstractRepositoryInterface.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Repository\\AbstractRepositoryInterface\u003A\u003Acollect\u0028\u0029",
+            "name": "collect",
+            "summary": "",
+            "url": "classes/Discord-Repository-AbstractRepositoryInterface.html#method_collect"
         },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepositoryInterface\u003A\u003Afreshen\u0028\u0029",
             "name": "freshen",
@@ -12843,7 +12878,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait",
             "name": "AbstractRepositoryTrait",
-            "summary": "",
+            "summary": "Provides\u0020common\u0020functionality\u0020for\u0020all\u0020repositories.",
             "url": "classes/Discord-Repository-AbstractRepositoryTrait.html"
         },                {
             "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait\u003A\u003Afreshen\u0028\u0029",
@@ -12986,31 +13021,6 @@ Search.appendIndex(
             "summary": "This\u0020method\u0020checks\u0020if\u0020a\u0020method\u0020with\u0020the\u0020name\u0020\u0022__Collection__\u007B\u0024name\u007D\u0022\u0020exists\nwithin\u0020the\u0020class.\u0020If\u0020it\u0020does,\u0020it\u0020calls\u0020that\u0020method\u0020with\u0020the\u0020provided\u0020arguments.",
             "url": "classes/Discord-Repository-AbstractRepositoryTrait.html#method___call"
         },                {
-            "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait\u003A\u003A\u0024http",
-            "name": "http",
-            "summary": "The\u0020HTTP\u0020client.",
-            "url": "classes/Discord-Repository-AbstractRepositoryTrait.html#property_http"
-        },                {
-            "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait\u003A\u003A\u0024factory",
-            "name": "factory",
-            "summary": "The\u0020parts\u0020factory.",
-            "url": "classes/Discord-Repository-AbstractRepositoryTrait.html#property_factory"
-        },                {
-            "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait\u003A\u003A\u0024endpoints",
-            "name": "endpoints",
-            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
-            "url": "classes/Discord-Repository-AbstractRepositoryTrait.html#property_endpoints"
-        },                {
-            "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait\u003A\u003A\u0024vars",
-            "name": "vars",
-            "summary": "Variables\u0020that\u0020are\u0020related\u0020to\u0020the\u0020repository.",
-            "url": "classes/Discord-Repository-AbstractRepositoryTrait.html#property_vars"
-        },                {
-            "fqsen": "\\Discord\\Repository\\AbstractRepositoryTrait\u003A\u003A\u0024cache",
-            "name": "cache",
-            "summary": "",
-            "url": "classes/Discord-Repository-AbstractRepositoryTrait.html#property_cache"
-        },                {
             "fqsen": "\\Discord\\Repository\\ActivityInstanceRepository",
             "name": "ActivityInstanceRepository",
             "summary": "Contains\u0020activity\u0020instances\u0020of\u0020an\u0020application.",
@@ -13023,7 +13033,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\ActivityInstanceRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-ActivityInstanceRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\ActivityInstanceRepository\u003A\u003A\u0024class",
@@ -13043,7 +13053,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\InviteRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Channel-InviteRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\InviteRepository\u003A\u003A\u0024class",
@@ -13063,7 +13073,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\MessageRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Channel-MessageRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\MessageRepository\u003A\u003A\u0024class",
@@ -13078,7 +13088,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\OverwriteRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Channel-OverwriteRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\OverwriteRepository\u003A\u003A\u0024class",
@@ -13093,7 +13103,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\PollAnswerRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Channel-PollAnswerRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\PollAnswerRepository\u003A\u003A\u0024class",
@@ -13113,7 +13123,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\ReactionRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Channel-ReactionRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\ReactionRepository\u003A\u003A\u0024class",
@@ -13128,7 +13138,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\StageInstanceRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Channel-StageInstanceRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\StageInstanceRepository\u003A\u003A\u0024class",
@@ -13163,7 +13173,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\ThreadRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Channel-ThreadRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\ThreadRepository\u003A\u003A\u0024class",
@@ -13178,7 +13188,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\WebhookMessageRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Channel-WebhookMessageRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\WebhookMessageRepository\u003A\u003A\u0024class",
@@ -13193,7 +13203,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\WebhookRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Channel-WebhookRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Channel\\WebhookRepository\u003A\u003A\u0024class",
@@ -13218,7 +13228,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\EmojiRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-EmojiRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\EmojiRepository\u003A\u003A\u0024class",
@@ -13243,7 +13253,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\AuditLogRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-AuditLogRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\AuditLogRepository\u003A\u003A\u0024class",
@@ -13258,7 +13268,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\AutoModerationRuleRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-AutoModerationRuleRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\AutoModerationRuleRepository\u003A\u003A\u0024class",
@@ -13293,7 +13303,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\BanRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-BanRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\BanRepository\u003A\u003A\u0024class",
@@ -13318,7 +13328,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\ChannelRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-ChannelRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\ChannelRepository\u003A\u003A\u0024class",
@@ -13338,7 +13348,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\CommandPermissionsRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-CommandPermissionsRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\CommandPermissionsRepository\u003A\u003A\u0024class",
@@ -13353,7 +13363,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\EmojiRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-EmojiRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\EmojiRepository\u003A\u003A\u0024class",
@@ -13373,7 +13383,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\GuildCommandRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-GuildCommandRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\GuildCommandRepository\u003A\u003A\u0024class",
@@ -13398,7 +13408,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\GuildTemplateRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-GuildTemplateRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\GuildTemplateRepository\u003A\u003A\u0024class",
@@ -13413,7 +13423,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\IntegrationRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-IntegrationRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\IntegrationRepository\u003A\u003A\u0024class",
@@ -13428,7 +13438,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\InviteRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-InviteRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\InviteRepository\u003A\u003A\u0024class",
@@ -13468,7 +13478,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-MemberRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003A\u0024class",
@@ -13498,7 +13508,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\MessageRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-MessageRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\MessageRepository\u003A\u003A\u0024class",
@@ -13523,7 +13533,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\RoleRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-RoleRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\RoleRepository\u003A\u003A\u0024class",
@@ -13543,7 +13553,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\ScheduledEventRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-ScheduledEventRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\ScheduledEventRepository\u003A\u003A\u0024class",
@@ -13568,7 +13578,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\SoundRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-SoundRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\SoundRepository\u003A\u003A\u0024class",
@@ -13583,7 +13593,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\StickerRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Guild-StickerRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\StickerRepository\u003A\u003A\u0024class",
@@ -13613,7 +13623,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-GuildRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\GuildRepository\u003A\u003A\u0024class",
@@ -13628,7 +13638,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Interaction\\GlobalCommandRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Interaction-GlobalCommandRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Interaction\\GlobalCommandRepository\u003A\u003A\u0024class",
@@ -13673,7 +13683,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-LobbyRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\LobbyRepository\u003A\u003A\u0024class",
@@ -13713,7 +13723,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Monetization-EntitlementRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\EntitlementRepository\u003A\u003A\u0024class",
@@ -13733,7 +13743,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\SKURepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Monetization-SKURepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\SKURepository\u003A\u003A\u0024class",
@@ -13753,7 +13763,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\SubscriptionRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Monetization-SubscriptionRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Monetization\\SubscriptionRepository\u003A\u003A\u0024class",
@@ -13773,7 +13783,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\PrivateChannelRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-PrivateChannelRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\PrivateChannelRepository\u003A\u003A\u0024class",
@@ -13793,7 +13803,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\SoundRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-SoundRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\SoundRepository\u003A\u003A\u0024class",
@@ -13818,7 +13828,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\Thread\\MemberRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-Thread-MemberRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\Thread\\MemberRepository\u003A\u003A\u0024class",
@@ -13848,7 +13858,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\UserRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-UserRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\UserRepository\u003A\u003A\u0024class",
@@ -13903,7 +13913,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
-            "summary": "",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-VoiceStateRepository.html#property_endpoints"
         },                {
             "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003A\u0024class",

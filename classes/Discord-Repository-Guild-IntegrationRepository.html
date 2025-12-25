@@ -357,20 +357,21 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Repository-Guild-IntegrationRepository.html#property_endpoints">$endpoints</a>
     <span>
-                        &nbsp;: mixed            </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
+<dd>Endpoints for interacting with the Discord servers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_factory">$factory</a>
+    <a class="" href="classes/Discord-Repository-AbstractRepository.html#property_factory">$factory</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">Factory</abbr></a>            </span>
+                        &nbsp;: <abbr title="\Discord\Repository\Factory">Factory</abbr>            </span>
 </dt>
 <dd>The parts factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_http">$http</a>
+    <a class="" href="classes/Discord-Repository-AbstractRepository.html#property_http">$http</a>
     <span>
-                        &nbsp;: <abbr title="\Discord\Http\Http">Http</abbr>            </span>
+                        &nbsp;: <abbr title="\Discord\Repository\Http">Http</abbr>            </span>
 </dt>
 <dd>The HTTP client.</dd>
 
@@ -382,7 +383,7 @@
 <dd>The items contained in the collection.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_vars">$vars</a>
+    <a class="" href="classes/Discord-Repository-AbstractRepository.html#property_vars">$vars</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -942,7 +943,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -983,16 +984,19 @@ based on the response of the callback.</dd>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Endpoints for interacting with the Discord servers.</p>
+
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type">mixed</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$endpoints</span>
      = <span class="phpdocumentor-signature__default-value">[&#039;all&#039; =&gt; \Discord\Http\Endpoint::GUILD_INTEGRATIONS, &#039;delete&#039; =&gt; \Discord\Http\Endpoint::GUILD_INTEGRATION]</span></code>
 
     
-    
+        <section class="phpdocumentor-description"><p>Endpoints.</p>
+</section>
+
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
@@ -1022,15 +1026,15 @@ based on the response of the callback.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_factory">
         $factory
-        <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_factory" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-AbstractRepository.html#property_factory" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 
     </aside>
 
@@ -1039,7 +1043,7 @@ based on the response of the callback.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">Factory</abbr></a></span>
+            <span class="phpdocumentor-signature__type"><abbr title="\Discord\Repository\Factory">Factory</abbr></span>
     <span class="phpdocumentor-signature__name">$factory</span>
     </code>
 
@@ -1062,15 +1066,15 @@ based on the response of the callback.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_http">
         $http
-        <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_http" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-AbstractRepository.html#property_http" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">87</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
     </aside>
 
@@ -1079,7 +1083,7 @@ based on the response of the callback.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">protected</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Discord\Http\Http">Http</abbr></span>
+            <span class="phpdocumentor-signature__type"><abbr title="\Discord\Repository\Http">Http</abbr></span>
     <span class="phpdocumentor-signature__name">$http</span>
     </code>
 
@@ -1110,7 +1114,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
@@ -1140,15 +1144,15 @@ based on the response of the callback.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_vars">
         $vars
-        <a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_vars" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-AbstractRepository.html#property_vars" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">108</span>
+    <span class="phpdocumentor-element-found-in__line">84</span>
 
     </aside>
 
@@ -1193,7 +1197,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">793</span>
+    <span class="phpdocumentor-element-found-in__line">774</span>
 
     </aside>
 
@@ -1279,7 +1283,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -1333,7 +1337,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
@@ -1371,7 +1375,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">771</span>
+    <span class="phpdocumentor-element-found-in__line">752</span>
 
     </aside>
 
@@ -1597,7 +1601,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">632</span>
+    <span class="phpdocumentor-element-found-in__line">613</span>
 
     </aside>
 
@@ -1717,7 +1721,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">161</span>
 
     </aside>
 
@@ -1794,7 +1798,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">252</span>
+    <span class="phpdocumentor-element-found-in__line">232</span>
 
     </aside>
 
@@ -1928,7 +1932,7 @@ Otherwise, it uses <code class="prettyprint">array_diff</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">332</span>
+    <span class="phpdocumentor-element-found-in__line">312</span>
 
     </aside>
 
@@ -2052,7 +2056,7 @@ Otherwise, it uses <code class="prettyprint">array_diff</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">580</span>
+    <span class="phpdocumentor-element-found-in__line">560</span>
 
     </aside>
 
@@ -2305,7 +2309,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">298</span>
+    <span class="phpdocumentor-element-found-in__line">278</span>
 
     </aside>
 
@@ -2380,7 +2384,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -2564,7 +2568,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">759</span>
+    <span class="phpdocumentor-element-found-in__line">740</span>
 
     </aside>
 
@@ -2603,7 +2607,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">559</span>
+    <span class="phpdocumentor-element-found-in__line">539</span>
 
     </aside>
 
@@ -2767,7 +2771,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">738</span>
+    <span class="phpdocumentor-element-found-in__line">719</span>
 
     </aside>
 
@@ -2829,7 +2833,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">655</span>
+    <span class="phpdocumentor-element-found-in__line">636</span>
 
     </aside>
 
@@ -3004,7 +3008,7 @@ Otherwise, it uses <code class="prettyprint">array_intersect</code>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">680</span>
+    <span class="phpdocumentor-element-found-in__line">661</span>
 
     </aside>
 
@@ -3061,7 +3065,7 @@ This method is deprecated for userland code but can still be used internally wit
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">695</span>
+    <span class="phpdocumentor-element-found-in__line">676</span>
 
     </aside>
 
@@ -3118,7 +3122,7 @@ This method is deprecated for userland code but can still be used internally wit
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">718</span>
+    <span class="phpdocumentor-element-found-in__line">699</span>
 
     </aside>
 
@@ -3177,7 +3181,7 @@ This method is deprecated for userland code but can still be used internally wit
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">730</span>
+    <span class="phpdocumentor-element-found-in__line">711</span>
 
     </aside>
 
@@ -3333,7 +3337,7 @@ This method is deprecated for userland code but can still be used internally wit
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">491</span>
+    <span class="phpdocumentor-element-found-in__line">471</span>
 
     </aside>
 
@@ -3446,7 +3450,7 @@ This method is deprecated for userland code but can still be used internally wit
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">200</span>
+    <span class="phpdocumentor-element-found-in__line">180</span>
 
     </aside>
 
@@ -3642,7 +3646,7 @@ This method is deprecated for userland code but can still be used internally wit
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">434</span>
+    <span class="phpdocumentor-element-found-in__line">414</span>
 
     </aside>
 
@@ -3904,7 +3908,7 @@ This method is deprecated for userland code but can still be used internally wit
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">645</span>
+    <span class="phpdocumentor-element-found-in__line">626</span>
 
     </aside>
 
@@ -4054,7 +4058,7 @@ This method is deprecated for userland code but can still be used internally wit
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">665</span>
+    <span class="phpdocumentor-element-found-in__line">646</span>
 
     </aside>
 
@@ -4149,7 +4153,7 @@ This method is deprecated for userland code but can still be used internally wit
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepositoryTrait.php"><a href="files/src-discord-repository-abstractrepositorytrait.html"><abbr title="src/Discord/Repository/AbstractRepositoryTrait.php">AbstractRepositoryTrait.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">156</span>
+    <span class="phpdocumentor-element-found-in__line">136</span>
 
     </aside>
 
@@ -4303,10 +4307,10 @@ This method is deprecated for userland code but can still be used internally wit
                                                     <li class=""><a href="classes/Discord-Repository-Guild-IntegrationRepository.html#property_class">$class</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-Guild-IntegrationRepository.html#property_endpoints">$endpoints</a></li>
-                                                    <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_factory">$factory</a></li>
-                                                    <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_http">$http</a></li>
+                                                    <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_factory">$factory</a></li>
+                                                    <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_http">$http</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_items">$items</a></li>
-                                                    <li class=""><a href="classes/Discord-Repository-AbstractRepositoryTrait.html#property_vars">$vars</a></li>
+                                                    <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_vars">$vars</a></li>
                                             </ul>
                 </li>
             
