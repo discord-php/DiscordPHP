@@ -1667,6 +1667,7 @@ class Discord
                 'socket_options',
                 'dnsConfig',
                 'cache',
+                'collection',
                 'useTransportCompression',
                 'usePayloadCompression',
             ])
@@ -1686,6 +1687,7 @@ class Discord
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
                 'cache' => [AbstractRepository::class => null], // use LegacyCacheWrapper
+                'collection' => Collection::class,
                 'useTransportCompression' => true,
                 'usePayloadCompression' => true,
             ])
@@ -1706,6 +1708,16 @@ class Discord
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
+            ->setAllowedTypes('collection', 'string')
+            ->setNormalizer('collection', function ($options, $value) {
+                if (is_string($value) && class_exists($value) && is_subclass_of($value, ExCollectionInterface::class)) {
+                    return $value;
+                }
+
+                $this->logger->warning('The "collection" option must be a class name that implements '.ExCollectionInterface::class.'. Using default collection class '.Collection::class.'.');
+
+                return Collection::class;
+            })
             ->setAllowedTypes('cache', ['array', CacheConfig::class, \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
             ->setNormalizer('cache', function ($options, $value) {
                 if (! is_array($value)) {
