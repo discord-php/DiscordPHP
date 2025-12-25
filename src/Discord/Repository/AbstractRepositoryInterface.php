@@ -23,7 +23,7 @@ interface AbstractRepositoryInterface extends CollectionInterface
 {
     public function __construct($discord, array $vars = []);
     /** @return ExCollectionInterface */
-    public function collect()/*: ExCollectionInterface*/;
+    public function collect();
     public function freshen(array $queryparams = []): PromiseInterface;
     public function create(array|object $attributes = [], bool $created = false): Part;
     /** @deprecated 10.38.0 Use `Part->save($reason)` to ensure permissions are checked. */
@@ -41,7 +41,7 @@ interface AbstractRepositoryInterface extends CollectionInterface
     public function last();
     public function has(...$keys): bool;
     /** @return ExCollectionInterface */
-    public function filter(callable $callback)/*: ExCollectionInterface*/;
+    public function filter(callable $callback);
     public function find(callable $callback);
     public function clear(): void;
     /** @deprecated 10.42.0 Use `jsonSerialize` */
