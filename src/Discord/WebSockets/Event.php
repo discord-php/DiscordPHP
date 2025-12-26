@@ -184,7 +184,7 @@ abstract class Event
         $users = $this->discord->users;
         if ($user = $users->get('id', $userdata->id)) {
             $user->fill((array) $userdata);
-        } else {
+        } elseif (isset($userdata)) {
             $users->pushItem($users->create($userdata, true));
         }
     }
