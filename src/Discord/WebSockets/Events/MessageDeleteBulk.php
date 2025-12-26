@@ -28,7 +28,7 @@ class MessageDeleteBulk extends Event
     public function handle($data)
     {
         /** @var ExCollectionInterface $resolved */
-        $resolved = new $this->discord->getCollectionClass();
+        $resolved = new ($this->discord->getCollectionClass());
 
         foreach ($data->ids as $id) {
             $event = new MessageDelete($this->discord);

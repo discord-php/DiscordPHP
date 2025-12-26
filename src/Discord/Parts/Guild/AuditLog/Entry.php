@@ -207,7 +207,7 @@ class Entry extends Part
      */
     protected function getChangesAttribute(): ExCollectionInterface
     {
-        return new $this->discord->getCollectionClass()($this->attributes['changes'] ?? [], 'key', null);
+        return new ($this->discord->getCollectionClass())($this->attributes['changes'] ?? [], 'key', null);
     }
 
     /**

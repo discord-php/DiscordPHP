@@ -470,7 +470,7 @@ class VoiceClient extends EventEmitter
         $this->deaf = $data['deaf'];
         $this->mute = $data['mute'];
         $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
-        $this->speakingStatus = new $this->discord->getCollectionClass()([], 'ssrc');
+        $this->speakingStatus = new ($this->discord->getCollectionClass())([], 'ssrc');
         $this->dnsConfig = $data['dnsConfig'];
     }
 
@@ -1676,7 +1676,7 @@ class VoiceClient extends EventEmitter
         $this->sentLoginFrame = false;
         $this->startTime = null;
         $this->streamTime = 0.0;
-        $this->speakingStatus = new $this->discord->getCollectionClass()([], 'ssrc');
+        $this->speakingStatus = new ($this->discord->getCollectionClass())([], 'ssrc');
 
         $this->emit('close');
     }

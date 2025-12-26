@@ -635,7 +635,7 @@ trait ChannelTrait
     {
         $deferred = new Deferred();
         /** @var ExCollectionInterface $messages */
-        $messages = new $this->discord->getCollectionClass()([], null, null);
+        $messages = new ($this->discord->getCollectionClass())([], null, null);
         $timer = null;
 
         $options = array_merge([

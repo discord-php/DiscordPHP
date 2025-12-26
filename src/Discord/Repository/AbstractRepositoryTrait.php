@@ -560,7 +560,7 @@ trait AbstractRepositoryTrait
     public function filter(callable $callback)
     {
         /** @var ExCollectionInterface $collection */
-        $collection = new $this->discord->getCollectionClass()([], $this->discrim, $this->class);
+        $collection = new ($this->discord->getCollectionClass())([], $this->discrim, $this->class);
 
         foreach ($this->items as $offset => $item) {
             if ($item instanceof WeakReference) {

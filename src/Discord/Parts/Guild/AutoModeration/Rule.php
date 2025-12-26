@@ -141,7 +141,7 @@ class Rule extends Part
     protected function getExemptRolesAttribute(): ExCollectionInterface
     {
         /** @var ExCollectionInterface $roles */
-        $roles = new $this->discord->getCollectionClass();
+        $roles = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['exempt_roles'])) {
             return $roles;
@@ -166,7 +166,7 @@ class Rule extends Part
     protected function getExemptChannelsAttribute(): ExCollectionInterface
     {
         /** @var ExCollectionInterface $channels */
-        $channels = new $this->discord->getCollectionClass();
+        $channels = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['exempt_channels'])) {
             return $channels;
