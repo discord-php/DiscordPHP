@@ -2756,6 +2756,11 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020cache\u0020configuration.",
             "url": "classes/Discord-Discord.html#method_getCacheConfig"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AgetCollectionClass\u0028\u0029",
+            "name": "getCollectionClass",
+            "summary": "Gets\u0020the\u0020collection\u0020class\u0020being\u0020used\u0020by\u0020the\u0020client.",
+            "url": "classes/Discord-Discord.html#method_getCollectionClass"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A__get\u0028\u0029",
             "name": "__get",
             "summary": "Handles\u0020dynamic\u0020get\u0020calls\u0020to\u0020the\u0020client.",
@@ -2971,10 +2976,10 @@ Search.appendIndex(
             "summary": "The\u0020cache\u0020configuration.",
             "url": "classes/Discord-Discord.html#property_cacheConfig"
         },                {
-            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024collection",
-            "name": "collection",
+            "fqsen": "\\Discord\\Discord\u003A\u003A\u0024collectionClass",
+            "name": "collectionClass",
             "summary": "The\u0020collection\u0020class\u0020implementing\u0020ExCollectionInterface.",
-            "url": "classes/Discord-Discord.html#property_collection"
+            "url": "classes/Discord-Discord.html#property_collectionClass"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A\u0024client",
             "name": "client",
