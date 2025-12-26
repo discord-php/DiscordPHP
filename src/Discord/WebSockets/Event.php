@@ -181,10 +181,6 @@ abstract class Event
      */
     protected function cacheUser(object $userdata): void
     {
-        if (! isset($userdata)) {
-            return;
-        }
-
         $users = $this->discord->users;
         if ($user = $users->get('id', $userdata->id)) {
             $user->fill((array) $userdata);
