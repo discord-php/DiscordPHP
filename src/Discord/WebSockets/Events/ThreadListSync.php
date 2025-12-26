@@ -30,7 +30,7 @@ class ThreadListSync extends Event
     public function handle($data)
     {
         /** @var ExCollectionInterface<Thread> $threadParts */
-        $threadParts = $this->discord->collection::for(Thread::class);
+        $threadParts = $this->discord->getCollectionClass()::for(Thread::class);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

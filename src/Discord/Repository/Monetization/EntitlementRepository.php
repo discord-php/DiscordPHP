@@ -150,7 +150,7 @@ class EntitlementRepository extends AbstractRepository
 
         return $this->http->get($endpoint)->then(function ($responses) {
             /** @var ExCollectionInterface<Entitlement> $entitlements */
-            $entitlements = $this->discord->collection::for(Entitlement::class);
+            $entitlements = $this->discord->getCollectionClass()::for(Entitlement::class);
 
             foreach ($responses as $response) {
                 $entitlements->pushItem($this->get('id', $response->id) ?? $this->create($response, true));

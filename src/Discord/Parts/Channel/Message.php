@@ -388,7 +388,7 @@ class Message extends Part
     protected function getMentionChannelsAttribute(): ExCollectionInterface
     {
         /** @var ExCollectionInterface<Channel> $collection */
-        $collection = $this->discord->collection::for(Channel::class);
+        $collection = $this->discord->getCollectionClass()::for(Channel::class);
 
         if (preg_match_all('/<#([0-9]*)>/', $this->content, $matches)) {
             foreach ($matches[1] as $channelId) {
@@ -539,7 +539,7 @@ class Message extends Part
     protected function getMentionRolesAttribute(): ExCollectionInterface
     {
         /** @var ExCollectionInterface $roles */
-        $roles = new $this->discord->collection();
+        $roles = new $this->discord->getCollectionClass();
 
         if (empty($this->attributes['mention_roles'])) {
             return $roles;
@@ -569,7 +569,7 @@ class Message extends Part
     protected function getMentionsAttribute(): ExCollectionInterface
     {
         /** @var ExCollectionInterface<User> $users */
-        $users = $this->discord->collection::for(User::class);
+        $users = $this->discord->getCollectionClass()::for(User::class);
 
         foreach ($this->attributes['mentions'] ?? [] as $mention) {
             $users->pushItem($this->discord->users->get('id', $mention->id) ?? $this->factory->part(User::class, (array) $mention, true));
@@ -1304,7 +1304,7 @@ class Message extends Part
     public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
-        $reactions = new $this->discord->collection([], null, null);
+        $reactions = new $this->discord->getCollectionClass()([], null, null);
         $timer = null;
 
         $options = array_merge([

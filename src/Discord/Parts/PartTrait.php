@@ -501,7 +501,7 @@ trait PartTrait
     protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id'): ExCollectionInterface
     {
         /** @var ExCollectionInterface $collection */
-        $collection = $this->discord->collection::for($class, $discrim);
+        $collection = $this->discord->getCollectionClass()::for($class, $discrim);
 
         if (empty($this->attributes[$key])) {
             return $collection;
@@ -529,7 +529,7 @@ trait PartTrait
     protected function attributeTypedCollectionHelper(string $class, string $key): ExCollectionInterface
     {
         /** @var ExCollectionInterface $collection */
-        $collection = $this->discord->collection::for($class);
+        $collection = $this->discord->getCollectionClass()::for($class);
 
         if (empty($this->attributes[$key])) {
             return $collection;

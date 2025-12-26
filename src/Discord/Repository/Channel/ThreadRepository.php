@@ -157,7 +157,7 @@ class ThreadRepository extends AbstractRepository
     private function handleThreadPaginationResponse(object $response): ExCollectionInterface
     {
         /** @var ExCollectionInterface<Thread> $collection */
-        $collection = $this->discord->collection::for(Thread::class);
+        $collection = $this->discord->getCollectionClass()::for(Thread::class);
 
         foreach ($response->threads as $thread) {
             /** @var Thread */

@@ -279,7 +279,7 @@ trait ChannelTrait
 
         return $this->http->get($endpoint)->then(function ($responses) {
             /** @var ExCollectionInterface $messages */
-            $messages = $this->discord->collection::for(Message::class);
+            $messages = $this->discord->getCollectionClass()::for(Message::class);
 
             foreach ($responses as $response) {
                 $messages->pushItem($this->messages->get('id', $response->id) ?? $this->messages->create($response, true));
@@ -635,7 +635,7 @@ trait ChannelTrait
     {
         $deferred = new Deferred();
         /** @var ExCollectionInterface $messages */
-        $messages = new $this->discord->collection([], null, null);
+        $messages = new $this->discord->getCollectionClass()([], null, null);
         $timer = null;
 
         $options = array_merge([

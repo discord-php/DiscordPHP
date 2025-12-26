@@ -769,7 +769,7 @@ class Member extends Part implements Stringable
     protected function getRolesAttribute(): ExCollectionInterface
     {
         /** @var ExCollectionInterface $roles */
-        $roles = new $this->discord->collection();
+        $roles = new $this->discord->getCollectionClass();
 
         if (empty($this->attributes['roles'])) {
             return $roles;

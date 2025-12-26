@@ -76,7 +76,7 @@ class Resolved extends Part
         }
 
         /** @var ExCollectionInterface<User> $collection */
-        $collection = $this->discord->collection::for(User::class);
+        $collection = $this->discord->getCollectionClass()::for(User::class);
 
         if (! isset($this->attributes['users'])) {
             return $collection;
@@ -105,7 +105,7 @@ class Resolved extends Part
         }
 
         /** @var ExCollectionInterface<Member> $collection */
-        $collection = $this->discord->collection::for(Member::class);
+        $collection = $this->discord->getCollectionClass()::for(Member::class);
 
         if (! isset($this->attributes['members'])) {
             return $collection;
@@ -141,7 +141,7 @@ class Resolved extends Part
         }
 
         /** @var ExCollectionInterface<Role> $collection */
-        $collection = $this->discord->collection::for(Role::class);
+        $collection = $this->discord->getCollectionClass()::for(Role::class);
 
         if (! isset($this->attributes['roles'])) {
             return $collection;
@@ -178,7 +178,7 @@ class Resolved extends Part
         }
 
         /** @var ExCollectionInterface $collection */
-        $collection = new $this->discord->collection();
+        $collection = new $this->discord->getCollectionClass();
 
         if (! isset($this->attributes['channels'])) {
             return $collection;
@@ -213,7 +213,7 @@ class Resolved extends Part
         }
 
         /** @var ExCollectionInterface<Message> $collection */
-        $collection = $this->discord->collection::for(Message::class);
+        $collection = $this->discord->getCollectionClass()::for(Message::class);
 
         if (! isset($this->attributes['messages'])) {
             return $collection;

@@ -366,7 +366,7 @@ abstract class SelectMenu extends Interactive
                     $response = $callback($interaction);
                 } else {
                     /** @var ExCollectionInterface<Option> $options */
-                    $options = $this->discord->collection::for(Option::class, null);
+                    $options = $this->discord->getCollectionClass()::for(Option::class, null);
 
                     foreach ($this->options as $option) {
                         if (in_array($option->getValue(), $interaction->data->values)) {

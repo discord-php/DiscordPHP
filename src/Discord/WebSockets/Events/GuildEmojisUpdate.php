@@ -31,9 +31,9 @@ class GuildEmojisUpdate extends Event
     public function handle($data)
     {
         /** @var ExCollectionInterface<Emoji> $oldEmojis */
-        $oldEmojis = $this->discord->collection::for(Emoji::class);
+        $oldEmojis = $this->discord->getCollectionClass()::for(Emoji::class);
         /** @var ExCollectionInterface<Emoji> $emojiParts */
-        $emojiParts = $this->discord->collection::for(Emoji::class);
+        $emojiParts = $this->discord->getCollectionClass()::for(Emoji::class);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
