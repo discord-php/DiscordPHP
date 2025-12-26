@@ -23,6 +23,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
 use Discord\Parts\Channel\Overwrite;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
@@ -422,11 +423,11 @@ class Member extends Part implements Stringable
      *
      * @see User::sendMessage()
      *
-     * @param MessageBuilder|string                 $message          The message builder that should be converted into a message, or the string content of the message.
-     * @param bool                                  $tts              Whether the message is TTS.
-     * @param \Discord\Parts\Embed\Embed|array|null $embed            An embed object or array to send in the message.
-     * @param AllowedMentions|array|null            $allowed_mentions Allowed mentions object for the message.
-     * @param Message|null                          $replyTo          Sends the message as a reply to the given message instance.
+     * @param MessageBuilder|string      $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                       $tts              Whether the message is TTS.
+     * @param Embed|array|null           $embed            An embed object or array to send in the message.
+     * @param AllowedMentions|array|null $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null               $replyTo          Sends the message as a reply to the given message instance.
      *
      * @throws \RuntimeException
      *
