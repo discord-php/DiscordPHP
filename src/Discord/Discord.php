@@ -1910,6 +1910,8 @@ class Discord
      * Gets the collection class being used by the client.
      *
      * @return string
+     * 
+     * @since 10.43.1
      */
     public function getCollectionClass(): string
     {
