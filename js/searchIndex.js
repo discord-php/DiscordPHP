@@ -423,7 +423,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003AUSAGE",
             "name": "USAGE",
-            "summary": "Usage\u0020of\u0020ActionRow\u0020in\u0020Modal\u0020is\u0020deprecated.\u0020Use\u0020\u0060Component\u003A\u003ALabel\u0060\u0020as\u0020the\u0020top\u002Dlevel\u0020container.",
+            "summary": "Usage\u0020of\u0020ActionRow\u0020in\u0020Modal\u0020is\u0020deprecated.\u0020Use\u0020\u0060ComponentObject\u003A\u003ALabel\u0060\u0020as\u0020the\u0020top\u002Dlevel\u0020container.",
             "url": "classes/Discord-Builders-Components-ActionRow.html#constant_USAGE"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\ActionRow\u003A\u003A\u0024type",
