@@ -105,7 +105,7 @@ class TextInput extends Interactive
      * @param int         $style     The style of the text input.
      * @param string|null $custom_id The custom ID of the text input. If not given, a UUID will be used
      */
-    public function __construct(?string $label, int $style, ?string $custom_id = null)
+    public function __construct(?string $label = null, int $style = self::STYLE_SHORT, ?string $custom_id = null)
     {
         $this->setLabel($label);
         $this->setStyle($style);
@@ -121,7 +121,7 @@ class TextInput extends Interactive
      *
      * @return self
      */
-    public static function new(?string $label, int $style, ?string $custom_id = null): self
+    public static function new(?string $label = null, int $style = self::STYLE_SHORT, ?string $custom_id = null): self
     {
         return new self($label, $style, $custom_id);
     }
