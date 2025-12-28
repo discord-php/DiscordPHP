@@ -19,8 +19,7 @@ namespace Discord\Parts\Channel\Poll;
  * @link https://discord.com/developers/docs/resources/poll#poll-create-request-object-poll-create-request-object-structure
  *
  * @since 10.0.0
- *
- * @deprecated 10.28.0 Use `PollCreateRequest`.
+ * @since 10.28.0 Alias for `PollCreateRequest`.
  */
 class Poll extends PollCreateRequest
 {
