@@ -37,7 +37,7 @@ class Thumbnail extends Content implements Contracts\ComponentV2
      *
      * @var int
      */
-    protected $type = Component::TYPE_THUMBNAIL;
+    protected $type = ComponentObject::TYPE_THUMBNAIL;
 
     /**
      * Media item for the thumbnail.

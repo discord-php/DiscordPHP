@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel\Message;
 
-use Discord\Builders\Components\Component as ComponentBuilder;
+use Discord\Builders\Components\ComponentObject;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 
@@ -40,23 +40,23 @@ class Component extends Part
      */
     public const TYPES = [
         0 => Component::class, // Fallback for unknown types
-        ComponentBuilder::TYPE_ACTION_ROW => ActionRow::class,
-        ComponentBuilder::TYPE_BUTTON => Button::class,
-        ComponentBuilder::TYPE_STRING_SELECT => StringSelect::class,
-        ComponentBuilder::TYPE_TEXT_INPUT => TextInput::class,
-        ComponentBuilder::TYPE_USER_SELECT => UserSelect::class,
-        ComponentBuilder::TYPE_ROLE_SELECT => RoleSelect::class,
-        ComponentBuilder::TYPE_MENTIONABLE_SELECT => MentionableSelect::class,
-        ComponentBuilder::TYPE_CHANNEL_SELECT => ChannelSelect::class,
-        ComponentBuilder::TYPE_SECTION => Section::class,
-        ComponentBuilder::TYPE_TEXT_DISPLAY => TextDisplay::class,
-        ComponentBuilder::TYPE_THUMBNAIL => Thumbnail::class,
-        ComponentBuilder::TYPE_MEDIA_GALLERY => MediaGallery::class,
-        ComponentBuilder::TYPE_FILE => File::class,
-        ComponentBuilder::TYPE_SEPARATOR => Separator::class,
-        ComponentBuilder::TYPE_CONTAINER => Container::class,
-        ComponentBuilder::TYPE_LABEL => Label::class,
-        ComponentBuilder::TYPE_FILE_UPLOAD => FileUpload::class,
+        ComponentObject::TYPE_ACTION_ROW => ActionRow::class,
+        ComponentObject::TYPE_BUTTON => Button::class,
+        ComponentObject::TYPE_STRING_SELECT => StringSelect::class,
+        ComponentObject::TYPE_TEXT_INPUT => TextInput::class,
+        ComponentObject::TYPE_USER_SELECT => UserSelect::class,
+        ComponentObject::TYPE_ROLE_SELECT => RoleSelect::class,
+        ComponentObject::TYPE_MENTIONABLE_SELECT => MentionableSelect::class,
+        ComponentObject::TYPE_CHANNEL_SELECT => ChannelSelect::class,
+        ComponentObject::TYPE_SECTION => Section::class,
+        ComponentObject::TYPE_TEXT_DISPLAY => TextDisplay::class,
+        ComponentObject::TYPE_THUMBNAIL => Thumbnail::class,
+        ComponentObject::TYPE_MEDIA_GALLERY => MediaGallery::class,
+        ComponentObject::TYPE_FILE => File::class,
+        ComponentObject::TYPE_SEPARATOR => Separator::class,
+        ComponentObject::TYPE_CONTAINER => Container::class,
+        ComponentObject::TYPE_LABEL => Label::class,
+        ComponentObject::TYPE_FILE_UPLOAD => FileUpload::class,
     ];
 
     /**

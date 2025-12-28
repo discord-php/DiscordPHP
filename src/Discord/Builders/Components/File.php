@@ -36,7 +36,7 @@ class File extends Content implements Contracts\ComponentV2
      *
      * @var int
      */
-    protected $type = Component::TYPE_FILE;
+    protected $type = ComponentObject::TYPE_FILE;
 
     /**
      * The file to be displayed.

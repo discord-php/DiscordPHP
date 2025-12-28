@@ -69,7 +69,7 @@ abstract class Component extends Builder implements JsonSerializable
     /** Undocumented. Used by the client for checkpoint. */
     public const TYPE_CHECKPOINT_CARD = ComponentObject::TYPE_CHECKPOINT_CARD;
 
-    /** @deprecated 7.4.0 Use `Component::TYPE_STRING_SELECT` */
+    /** @deprecated 7.4.0 Use `ComponentObject::TYPE_STRING_SELECT` */
     public const TYPE_SELECT_MENU = ComponentObject::TYPE_STRING_SELECT;
 
     /**

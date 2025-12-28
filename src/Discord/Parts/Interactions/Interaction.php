@@ -24,7 +24,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Command\Choice;
-use Discord\Parts\Channel\Message\Component as RequestComponent;
+use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
@@ -735,16 +735,16 @@ class Interaction extends Part
                 return;
             }
 
-            /** @var ExCollectionInterface<RequestComponent> $components */
-            $components = $this->discord->getCollectionClass()::for(RequestComponent::class);
+            /** @var ExCollectionInterface<Component> $components */
+            $components = $this->discord->getCollectionClass()::for(Component::class);
             foreach ($interaction->data->components as $container) {
                 if ($container->components) { // e.g. ActionRow
                     foreach ($container->components as $component) {
-                        /** @var RequestComponent $component */
+                        /** @var Component $component */
                         $components->pushItem($component);
                     }
                 } elseif ($container->component) { // e.g. Label
-                    /** @var RequestComponent $component */
+                    /** @var Component $component */
                     $components->pushItem($component);
                 }
             }

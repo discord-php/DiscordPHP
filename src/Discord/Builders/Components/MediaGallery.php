@@ -33,7 +33,7 @@ class MediaGallery extends Content implements Contracts\ComponentV2
      *
      * @var int
      */
-    protected $type = Component::TYPE_MEDIA_GALLERY;
+    protected $type = ComponentObject::TYPE_MEDIA_GALLERY;
 
     /**
      * Array of media gallery items.

@@ -31,7 +31,7 @@ class ActionRow extends Layout
 {
     use ComponentsTrait;
 
-    /** Usage of ActionRow in Modal is deprecated. Use `Component::Label` as the top-level container. */
+    /** Usage of ActionRow in Modal is deprecated. Use `ComponentObject::Label` as the top-level container. */
     public const USAGE = ['Message', 'Modal'];
 
     /**
@@ -39,7 +39,7 @@ class ActionRow extends Layout
      *
      * @var int
      */
-    protected $type = Component::TYPE_ACTION_ROW;
+    protected $type = ComponentObject::TYPE_ACTION_ROW;
 
     /**
      * Creates a new action row.

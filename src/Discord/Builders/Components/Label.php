@@ -39,7 +39,7 @@ class Label extends Layout
      *
      * @var int
      */
-    protected $type = Component::TYPE_LABEL;
+    protected $type = ComponentObject::TYPE_LABEL;
 
     /**
      * The text for the label.

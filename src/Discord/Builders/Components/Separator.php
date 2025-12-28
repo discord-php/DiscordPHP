@@ -41,7 +41,7 @@ class Separator extends Layout implements Contracts\ComponentV2
      *
      * @var int
      */
-    protected $type = Component::TYPE_SEPARATOR;
+    protected $type = ComponentObject::TYPE_SEPARATOR;
 
     /**
      * Whether the separator is a divider.

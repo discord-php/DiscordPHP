@@ -16,7 +16,7 @@ namespace Discord\Parts\Channel\Message;
 /**
  * An Action Row is a top-level layout component used in messages.
  *
- * Using ActionRows in modals is now deprecated - use Component::Label as the top level component!
+ * Using ActionRows in modals is now deprecated - use ComponentObject::Label as the top level component!
  *
  * Action Rows can contain:
  *

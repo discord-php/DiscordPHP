@@ -38,7 +38,7 @@ class Section extends Layout implements Contracts\ComponentV2
      *
      * @var int
      */
-    protected $type = Component::TYPE_SECTION;
+    protected $type = ComponentObject::TYPE_SECTION;
 
     /**
      * Array of text display components.

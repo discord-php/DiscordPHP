@@ -42,7 +42,7 @@ abstract class SelectMenu extends Interactive
      *
      * @var int
      */
-    protected $type = Component::TYPE_SELECT_MENU; // Default type
+    protected $type = ComponentObject::TYPE_SELECT_MENU; // Default type
 
     /**
      * Custom ID to identify the select menu.
