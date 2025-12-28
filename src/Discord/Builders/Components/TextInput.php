@@ -101,7 +101,7 @@ class TextInput extends Interactive
     /**
      * Creates a new text input.
      *
-     * @param string      $label     The label of the text input.
+     * @param string|null $label     (Deprecated) The label of the text input.
      * @param int         $style     The style of the text input.
      * @param string|null $custom_id The custom ID of the text input. If not given, a UUID will be used
      */
@@ -115,7 +115,7 @@ class TextInput extends Interactive
     /**
      * Creates a new text input.
      *
-     * @param string      $label     The label of the text input.
+     * @param string|null $label     (Deprecated) The label of the text input.
      * @param int         $style     The style of the text input.
      * @param string|null $custom_id The custom ID of the text input.
      *
