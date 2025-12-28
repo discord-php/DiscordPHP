@@ -483,7 +483,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function removeComponent(Component $component): self
+    public function removeComponent($component): self
     {
         if (! isset($this->components)) {
             return $this;
