@@ -821,6 +821,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Builders-Components-ComponentObject.html#constant_USAGE"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003ATYPES",
+            "name": "TYPES",
+            "summary": "Available\u0020components\u0020and\u0020their\u0020respective\u0020classes.",
+            "url": "classes/Discord-Builders-Components-ComponentObject.html#constant_TYPES"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003ATYPE_ACTION_ROW",
             "name": "TYPE_ACTION_ROW",
             "summary": "Container\u0020to\u0020display\u0020a\u0020row\u0020of\u0020interactive\u0020components.",
