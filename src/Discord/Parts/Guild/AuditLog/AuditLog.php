@@ -185,8 +185,6 @@ class AuditLog extends Part
             throw new \InvalidArgumentException("The given action type `{$action_type}` is not valid.");
         }
 
-        return $this->audit_log_entries->filter(function (Entry $entry) use ($action_type) {
-            return $entry->action_type === $action_type;
-        });
+        return $this->audit_log_entries->filter(fn (Entry $entry) => $entry->action_type === $action_type);
     }
 }

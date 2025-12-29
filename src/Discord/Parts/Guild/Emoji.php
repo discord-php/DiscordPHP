@@ -89,9 +89,7 @@ class Emoji extends Part implements Stringable
         $roles->fill(array_fill_keys($this->attributes['roles'], null));
 
         if ($guild = $this->guild) {
-            $roles->merge($guild->roles->filter(function ($role) {
-                return in_array($role->id, $this->attributes['roles']);
-            }));
+            $roles->merge($guild->roles->filter(fn ($role) => in_array($role->id, $this->attributes['roles'])));
         }
 
         return $roles;

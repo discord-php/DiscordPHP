@@ -113,9 +113,7 @@ class GuildCreate extends Event
             $await[] = $guildPart->sounds->cache->set($sound->sound_id, $guildPart->sounds->create($sound, true));
         }
 
-        $all = yield all($await)->then(function () use (&$guildPart) {
-            return $this->discord->guilds->cache->set($guildPart->id, $guildPart)->then(fn ($success) => $guildPart);
-        });
+        $all = yield all($await)->then(fn () => $this->discord->guilds->cache->set($guildPart->id, $guildPart)->then(fn ($success) => $guildPart));
 
         if (
             (

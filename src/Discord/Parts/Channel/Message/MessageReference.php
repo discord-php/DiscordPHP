@@ -122,9 +122,7 @@ class MessageReference extends Part
 
         // Workaround for Channel::sendMessage() no guild_id
         if ($this->channel_id) {
-            return $this->discord->guilds->find(function (Guild $guild) {
-                return $guild->channels->offsetExists($this->channel_id);
-            });
+            return $this->discord->guilds->find(fn (Guild $guild) => $guild->channels->offsetExists($this->channel_id));
         }
 
         return null;
