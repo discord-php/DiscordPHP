@@ -148,7 +148,7 @@ class TextInput extends Interactive
 
     /**
      * Sets the label of the text input.
-     * 
+     *
      * @deprecated Use a top-level `ComponentObject::Label`
      *
      * @param string|null $label Label of the text input. Maximum 45 characters.

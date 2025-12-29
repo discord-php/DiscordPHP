@@ -28,6 +28,32 @@ abstract class ComponentObject extends Component
 {
     public const USAGE = [];
 
+    /**
+     * Available components and their respective classes.
+     *
+     * @var array<int, string>
+     */
+    public const TYPES = [
+        0 => Component::class, // Fallback for unknown types
+        ComponentObject::TYPE_ACTION_ROW => ActionRow::class,
+        ComponentObject::TYPE_BUTTON => Button::class,
+        ComponentObject::TYPE_STRING_SELECT => StringSelect::class,
+        ComponentObject::TYPE_TEXT_INPUT => TextInput::class,
+        ComponentObject::TYPE_USER_SELECT => UserSelect::class,
+        ComponentObject::TYPE_ROLE_SELECT => RoleSelect::class,
+        ComponentObject::TYPE_MENTIONABLE_SELECT => MentionableSelect::class,
+        ComponentObject::TYPE_CHANNEL_SELECT => ChannelSelect::class,
+        ComponentObject::TYPE_SECTION => Section::class,
+        ComponentObject::TYPE_TEXT_DISPLAY => TextDisplay::class,
+        ComponentObject::TYPE_THUMBNAIL => Thumbnail::class,
+        ComponentObject::TYPE_MEDIA_GALLERY => MediaGallery::class,
+        ComponentObject::TYPE_FILE => File::class,
+        ComponentObject::TYPE_SEPARATOR => Separator::class,
+        ComponentObject::TYPE_CONTAINER => Container::class,
+        ComponentObject::TYPE_LABEL => Label::class,
+        ComponentObject::TYPE_FILE_UPLOAD => FileUpload::class,
+    ];
+
     /** Container to display a row of interactive components. */
     public const TYPE_ACTION_ROW = 1;
     /** Button object. */
