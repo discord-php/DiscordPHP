@@ -34,7 +34,7 @@ abstract class ComponentObject extends Component
      * @var array<int, string>
      */
     public const TYPES = [
-        0 => Component::class, // Fallback for unknown types
+        0 => ComponentObject::class, // Fallback for unknown types
         ComponentObject::TYPE_ACTION_ROW => ActionRow::class,
         ComponentObject::TYPE_BUTTON => Button::class,
         ComponentObject::TYPE_STRING_SELECT => StringSelect::class,
