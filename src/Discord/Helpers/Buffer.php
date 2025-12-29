@@ -124,13 +124,9 @@ class Buffer extends EventEmitter implements WritableStreamInterface
             $this->reads[] = [$deferred, $length];
 
             if ($timeout > 0 && $this->loop !== null) {
-                $timer = $this->loop->addTimer($timeout / 1000, function () use ($deferred) {
-                    $deferred->reject(new BufferTimedOutException());
-                });
+                $timer = $this->loop->addTimer($timeout / 1000, fn () => $deferred->reject(new BufferTimedOutException()));
 
-                $deferred->promise()->then(function () use ($timer) {
-                    $this->loop->cancelTimer($timer);
-                });
+                $deferred->promise()->then(fn () => $this->loop->cancelTimer($timer));
             } elseif ($timeout === 0) {
                 $deferred->reject(new BufferTimedOutException());
             }

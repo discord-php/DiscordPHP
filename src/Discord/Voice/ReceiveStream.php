@@ -241,15 +241,11 @@ class ReceiveStream extends EventEmitter implements DuplexStreamInterface
             }
         });
 
-        $dest->on('drain', function () {
-            $this->resume();
-        });
+        $dest->on('drain', fn () => $this->resume());
 
         $end = isset($options['end']) ? $options['end'] : true;
         if ($end && $this !== $dest) {
-            $this->on('end', function () use ($dest) {
-                $dest->end();
-            });
+            $this->on('end', fn () => $dest->end());
         }
     }
 
@@ -273,15 +269,11 @@ class ReceiveStream extends EventEmitter implements DuplexStreamInterface
             }
         });
 
-        $dest->on('drain', function () {
-            $this->resume();
-        });
+        $dest->on('drain', fn () => $this->resume());
 
         $end = isset($options['end']) ? $options['end'] : true;
         if ($end && $this !== $dest) {
-            $this->on('end', function () use ($dest) {
-                $dest->end();
-            });
+            $this->on('end', fn () => $dest->end());
         }
     }
 }

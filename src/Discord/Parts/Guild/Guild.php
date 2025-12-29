@@ -1000,9 +1000,7 @@ class Guild extends Part
     public function validateRegion(): PromiseInterface
     {
         return $this->getVoiceRegions()->then(function () {
-            $regions = $this->regions->map(function ($region) {
-                return $region->id;
-            })->jsonSerialize();
+            $regions = $this->regions->map(fn ($region) => $region->id)->jsonSerialize();
 
             if (! in_array($this->region, $regions)) {
                 return self::REGION_DEFAULT;

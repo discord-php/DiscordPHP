@@ -78,9 +78,7 @@ class Sticker extends Part implements Stringable
      */
     public function isPartial(): bool
     {
-        $partial = array_filter($this->attributes, function ($var) {
-            return isset($var);
-        });
+        $partial = array_filter($this->attributes, fn ($var) => isset($var));
 
         sort($partial);
 

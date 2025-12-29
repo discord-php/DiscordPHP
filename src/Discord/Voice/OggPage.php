@@ -97,18 +97,16 @@ class OggPage
                 return $buffer->read($data, timeout: $timeout);
             })
             // Reading segment data
-            ->then(function ($data) use (&$header, &$pageSegments) {
-                return new OggPage(
-                    $header['version'],
-                    $header['header_type'],
-                    $header['granule_position'],
-                    $header['bitstream_sn'],
-                    $header['page_seq'],
-                    $header['csum'],
-                    $pageSegments,
-                    $data
-                );
-            });
+            ->then(fn ($data) => new OggPage(
+                $header['version'],
+                $header['header_type'],
+                $header['granule_position'],
+                $header['bitstream_sn'],
+                $header['page_seq'],
+                $header['csum'],
+                $pageSegments,
+                $data
+            ));
     }
 
     /**

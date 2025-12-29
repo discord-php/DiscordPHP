@@ -67,9 +67,10 @@ class SubscriptionRepository extends AbstractRepository
         $resolver->setAllowedTypes('before', ['string', 'int', 'null']);
         $resolver->setAllowedTypes('after', ['string', 'int', 'null']);
         $resolver->setAllowedTypes('limit', ['int', 'null']);
-        $resolver->setAllowedValues('limit', function ($value) {
-            return $value === null || ($value >= 1 && $value <= 100);
-        });
+        $resolver->setAllowedValues(
+            'limit',
+            fn ($value) => $value === null || ($value >= 1 && $value <= 100)
+        );
 
         $options = $resolver->resolve($options);
 
