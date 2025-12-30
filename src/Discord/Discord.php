@@ -446,7 +446,7 @@ class Discord
             Event::GUILD_MEMBERS_CHUNK,
         ];
 
-        if (! $disabledImportant = array_values(array_intersect($important_events, $options['disabledEvents']))) {
+        if ($disabledImportant = array_values(array_intersect($important_events, $options['disabledEvents']))) {
             $this->logger->warning('Critical events have been disabled, performance may be affected', ['events' => implode(', ', $disabledImportant)]);
         }
 
