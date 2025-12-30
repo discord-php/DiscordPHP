@@ -1139,7 +1139,7 @@ class Discord
      *
      * @since 10.19.0
      */
-    public function resume(string $token, string $session_id, int $seq): void
+    public function resume(#[\SensitiveParameter] string $token, string $session_id, int $seq): void
     {
         $payload = Payload::new(
             Op::OP_RESUME,
