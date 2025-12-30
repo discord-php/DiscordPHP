@@ -846,6 +846,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      * @param  bool $enable
      * @return self
      */
+    #[\Deprecated(message: "Use setIsComponentsV2Flag() instead", since: "10.19.0")]
     public function setV2Flag(bool $enable = true): self
     {
         return $this->setIsComponentsV2Flag($enable);
@@ -908,6 +909,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * @deprecated 10.0.0 Use MessageBuilder::setFlags()
      */
+    #[\Deprecated(message: "Use setFlags() instead", since: "10.0.0")]
     public function _setFlags(int $flags): self
     {
         return $this->setFlags($flags);

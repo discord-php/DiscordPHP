@@ -132,6 +132,7 @@ class CommandBuilder extends Builder implements JsonSerializable
      *
      * @deprecated 10.42.0 Use `jsonSerialize`
      */
+    #[\Deprecated(message: "Use jsonSerialize()", since: "10.42.0")]
     public function toArray(): array
     {
         return $this->jsonSerialize();

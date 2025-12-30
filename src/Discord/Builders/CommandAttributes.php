@@ -271,6 +271,7 @@ trait CommandAttributes
      *
      * @return $this
      */
+    #[\Deprecated(message: "Use setDefaultMemberPermissions() instead", since: "7.1.0")]
     public function setDefaultPermission(?bool $permission): self
     {
         $this->default_permission = $permission;

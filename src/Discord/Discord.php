@@ -1898,6 +1898,7 @@ class Discord
      *
      * @deprecated Use Discord::getHttpClient()
      */
+    #[\Deprecated(message: "Use Discord::getHttpClient()")]
     public function getHttp(): Http
     {
         return $this->http;
