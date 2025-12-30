@@ -438,6 +438,18 @@ class Discord
         $this->wsFactory = new Connector($this->loop, $connector);
         $this->handlers = new Handlers();
 
+        static $important_events = [
+            Event::GUILD_CREATE,
+            Event::GUILD_DELETE,
+            Event::RESUMED,
+            Event::READY,
+            Event::GUILD_MEMBERS_CHUNK,
+        ];
+
+        if (! $disabledImportant = array_values(array_intersect($important_events, $options['disabledEvents']))) {
+            $this->logger->warning('Critical events have been disabled, performance may be affected', ['events' => implode(', ', $disabledImportant)]);
+        }
+
         foreach ($options['disabledEvents'] as $event) {
             $this->handlers->removeHandler($event);
         }
