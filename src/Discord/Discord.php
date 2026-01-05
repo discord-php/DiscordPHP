@@ -1403,7 +1403,7 @@ class Discord
         }
         $this->emittedInit = true;
 
-        if (class_exists(Manager::class, false)) {
+        if (class_exists(Manager::class)) {
             $this->voice = new Manager($this);
             $this->logger->info('voice class initialized');
         }
