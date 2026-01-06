@@ -196,9 +196,7 @@ class MemberRepository extends AbstractRepository
                     $lastValueId = $value->user->id;
                 }
 
-                $this->cacheFreshen($response)->then(function () use ($paginate, $lastValueId) {
-                    $paginate($lastValueId);
-                });
+                $this->cacheFreshen($response)->then(fn () => $paginate($lastValueId));
             }, [$deferred, 'reject']);
         })();
 
