@@ -54,7 +54,7 @@ $discord->registerCommand('discordstatus', function (Message $message, $params) 
             $message->reply('Discord status: ' . $discordstatus->status->description);
         } catch (Exception $e) { // Request failed
             // Uncomment to debug exceptions
-            $discord->logger->error('Browser request failed', ['exception' => $e]);
+            $discord->logger->error('Browser request failed', ['exception' => $e->getMessage()]);
 
             // Send reply about the discord status
             $message->reply('Unable to acesss the Discord status API :(');
