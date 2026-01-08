@@ -556,11 +556,6 @@ class Discord
             return $this->ready();
         }
 
-        // Emit ready after 60 seconds
-        $this->loop->addTimer(60, function () {
-            $this->ready();
-        });
-
         $guildLoad = new Deferred();
 
         $onGuildCreate = function ($guild) use (&$unavailable, $guildLoad) {
@@ -596,6 +591,13 @@ class Discord
 
             $this->setupChunking();
         });
+
+        if (in_array(Event::GUILD_CREATE, $this->options['disabledEvents'])) {
+            $this->ready();
+        } else {
+            // Emit ready after 60 seconds
+            $this->loop->addTimer(60, fn () => $this->ready());
+        }
     }
 
     /**
