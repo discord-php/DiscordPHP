@@ -170,6 +170,12 @@ class Entry extends Part
     public const HOME_SETTINGS_CREATE = 190;
     /** Guild Server Guide was updated. */
     public const HOME_SETTINGS_UPDATE = 191;
+    /** Guild Scheduled Event Exception was created */
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE = 200;
+    /** Guild Scheduled Event Exception was updated */
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE = 201;
+    /** Guild Scheduled Event Exception was deleted */
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_DELETE = 202;
     /** Guild Profile was updated. */
     public const GUILD_PROFILE_UPDATE = 211;
     /** Guild migrated and bypassed slowmode permission. */
