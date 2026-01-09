@@ -218,7 +218,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * Returns the created at attribute.
+     * Returns the Scheduled Start Time attribute.
      *
      * @return Carbon The time the scheduled event will start.
      *
@@ -230,7 +230,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * Returns the created at attribute.
+     * Returns the Scheduled End Time attribute.
      *
      * @return Carbon|null The time the scheduled event will end, required if entity_type is EXTERNAL.
      *

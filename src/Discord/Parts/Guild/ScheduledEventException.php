@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
+use Carbon\Carbon;
 use Discord\Parts\Part;
 
 /**
@@ -24,8 +25,8 @@ use Discord\Parts\Part;
  *
  * @property string  $event_id             The id of the scheduled event.
  * @property string  $event_exception_id   A snowflake containing the original scheduled start time of the scheduled event. The snowflake in this field is not guaranteed to be globally unique.
- * @property string  $scheduled_start_time The new time at when the scheduled event recurrence will start, if applicable.
- * @property ?string $scheduled_end_time   The new time at when the scheduled event recurrence will end, if applicable.
+ * @property Carbon  $scheduled_start_time The new time at when the scheduled event recurrence will start, if applicable.
+ * @property ?Carbon $scheduled_end_time   The new time at when the scheduled event recurrence will end, if applicable.
  * @property bool    $is_canceled          Whether or not the scheduled event will be skipped on the recurrence.
  */
 class ScheduledEventException extends Part
@@ -40,4 +41,24 @@ class ScheduledEventException extends Part
         'scheduled_end_time',
         'is_canceled',
     ];
+
+    /**
+     * Returns the Scheduled Start Time attribute.
+     *
+     * @return Carbon
+     */
+    protected function getScheduledStartTimeAttribute(): Carbon
+    {
+        return $this->attributeCarbonHelper('scheduled_start_time');
+    }
+
+    /**
+     * Returns the Scheduled End Time attribute.
+     *
+     * @return ?Carbon
+     */
+    protected function getScheduledEndTimeAttribute(): ?Carbon
+    {
+        return $this->attributeCarbonHelper('scheduled_end_time');
+    }
 }
