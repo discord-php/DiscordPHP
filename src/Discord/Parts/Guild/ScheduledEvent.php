@@ -121,7 +121,7 @@ class ScheduledEvent extends Part
         }
 
         if ($payload === $mandatory) {
-            return reject(new \InvalidArgumentException(' At minimum, you must provide a value for one of `is_canceled`, `scheduled_start_time`, or `scheduled_end_time`.'));
+            return reject(new \InvalidArgumentException('At minimum, you must provide a value for one of `is_canceled`, `scheduled_start_time`, or `scheduled_end_time`.'));
         }
 
         $headers = [];
