@@ -14,9 +14,11 @@ declare(strict_types=1);
 namespace Discord\Repository;
 
 use Discord\Discord;
+use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
 use Discord\Helpers\Collection;
 use Discord\Helpers\LegacyCacheWrapper;
+use Discord\Http\Http;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.
