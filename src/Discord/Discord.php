@@ -1769,9 +1769,7 @@ class Discord
             })
             ->setAllowedTypes('socket_options', 'array')
             ->setNormalizer('socket_options', function ($options, $value) {
-                // Discord doesn't currently support IPv6
-                // This prevents xdebug from catching exceptions when trying to fetch IPv6
-                // for Discord
+                // Discord doesn't currently support IPv6. This prevents xdebug from catching exceptions when trying to fetch IPv6 for Discord.
                 $value['happy_eyeballs'] = false;
 
                 return $value;
