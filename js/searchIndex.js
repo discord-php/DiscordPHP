@@ -7156,6 +7156,21 @@ Search.appendIndex(
             "summary": "Guild\u0020Server\u0020Guide\u0020was\u0020updated.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_HOME_SETTINGS_UPDATE"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AGUILD_SCHEDULED_EVENT_EXCEPTION_CREATE",
+            "name": "GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE",
+            "summary": "Guild\u0020Scheduled\u0020Event\u0020Exception\u0020was\u0020created",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AGUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE",
+            "name": "GUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE",
+            "summary": "Guild\u0020Scheduled\u0020Event\u0020Exception\u0020was\u0020updated",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_GUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AGUILD_SCHEDULED_EVENT_EXCEPTION_DELETE",
+            "name": "GUILD_SCHEDULED_EVENT_EXCEPTION_DELETE",
+            "summary": "Guild\u0020Scheduled\u0020Event\u0020Exception\u0020was\u0020deleted",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_GUILD_SCHEDULED_EVENT_EXCEPTION_DELETE"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AGUILD_PROFILE_UPDATE",
             "name": "GUILD_PROFILE_UPDATE",
             "summary": "Guild\u0020Profile\u0020was\u0020updated.",
@@ -8501,6 +8516,11 @@ Search.appendIndex(
             "summary": "A\u0020representation\u0020of\u0020a\u0020scheduled\u0020event\u0020in\u0020a\u0020guild.",
             "url": "classes/Discord-Parts-Guild-ScheduledEvent.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AcreateException\u0028\u0029",
+            "name": "createException",
+            "summary": "Create\u0020an\u0020exception\u0020for\u0020the\u0020guild\u0020scheduled\u0020event\u0027s\u0020recurrence\u0020rule.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_createException"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AgetUsers\u0028\u0029",
             "name": "getUsers",
             "summary": "Get\u0020a\u0020list\u0020of\u0020guild\u0020scheduled\u0020event\u0020users\u0020subscribed\u0020to\u0020a\u0020guild\u0020scheduled\nevent.",
@@ -8528,12 +8548,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AgetScheduledStartTimeAttribute\u0028\u0029",
             "name": "getScheduledStartTimeAttribute",
-            "summary": "Returns\u0020the\u0020created\u0020at\u0020attribute.",
+            "summary": "Returns\u0020the\u0020Scheduled\u0020Start\u0020Time\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_getScheduledStartTimeAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AgetScheduledEndTimeAttribute\u0028\u0029",
             "name": "getScheduledEndTimeAttribute",
-            "summary": "Returns\u0020the\u0020created\u0020at\u0020attribute.",
+            "summary": "Returns\u0020the\u0020Scheduled\u0020End\u0020Time\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_getScheduledEndTimeAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AgetEntityMetadataAttribute\u0028\u0029",
@@ -8550,6 +8570,11 @@ Search.appendIndex(
             "name": "getRecurrenceRuleAttribute",
             "summary": "Gets\u0020the\u0020recurrence\u0020rule\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_getRecurrenceRuleAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AgetGuildScheduledEventExceptionsAttribute\u0028\u0029",
+            "name": "getGuildScheduledEventExceptionsAttribute",
+            "summary": "Gets\u0020the\u0020guild\u0020scheduled\u0020event\u0020exceptions\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#method_getGuildScheduledEventExceptionsAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEvent\u003A\u003AgetCreatableAttributes\u0028\u0029",
             "name": "getCreatableAttributes",
@@ -8620,6 +8645,46 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-ScheduledEvent.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEventException",
+            "name": "ScheduledEventException",
+            "summary": "A\u0020guild\u0020scheduled\u0020event\u0020exception\u0020represents\u0020a\u0020skipped\u0020or\u0020rescheduled\u0020recurrence\u0020for\u0020the\u0020scheduled\u0020event\u0027s\u0020recurrence\u0020rule.\u0020In\u0020the\u0020client,\u0020scheduled\u0020event\u0020exceptions\u0020are\u0020commonly\u0020known\u0020as\u0020\u0022canceled\u0020events\u0022\u0020or\u0020\u0022re\u002Dscheduled\u0022\u0020events.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEventException.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEventException\u003A\u003AgetScheduledStartTimeAttribute\u0028\u0029",
+            "name": "getScheduledStartTimeAttribute",
+            "summary": "Returns\u0020the\u0020Scheduled\u0020Start\u0020Time\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEventException.html#method_getScheduledStartTimeAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEventException\u003A\u003AgetScheduledEndTimeAttribute\u0028\u0029",
+            "name": "getScheduledEndTimeAttribute",
+            "summary": "Returns\u0020the\u0020Scheduled\u0020End\u0020Time\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEventException.html#method_getScheduledEndTimeAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEventException\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEventException.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEventUser",
+            "name": "ScheduledEventUser",
+            "summary": "A\u0020guild\u0020scheduled\u0020event\u0020user\u0020subscribed\u0020to\u0020a\u0020specific\u0020guild\u0020scheduled\u0020event\u0020exception.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEventUser.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEventUser\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Get\u0020the\u0020user\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEventUser\u003A\u003AgetMemberAttribute\u0028\u0029",
+            "name": "getMemberAttribute",
+            "summary": "Get\u0020the\u0020member\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getMemberAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEventUser\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEventUser.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Sound",
             "name": "Sound",
@@ -14925,6 +14990,21 @@ Search.appendIndex(
             "name": "GUILD_SCHEDULED_EVENT_USER_REMOVE",
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_GUILD_SCHEDULED_EVENT_USER_REMOVE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGUILD_SCHEDULED_EVENT_EXCEPTION_CREATE",
+            "name": "GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE",
+            "name": "GUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGUILD_SCHEDULED_EVENT_EXCEPTION_DELETE",
+            "name": "GUILD_SCHEDULED_EVENT_EXCEPTION_DELETE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GUILD_SCHEDULED_EVENT_EXCEPTION_DELETE"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGUILD_INTEGRATIONS_UPDATE",
             "name": "GUILD_INTEGRATIONS_UPDATE",
