@@ -30,8 +30,6 @@ use Discord\Parts\Part;
  * @property bool    $is_canceled          Whether or not the scheduled event will be skipped on the recurrence.
  *
  * @property string $guild_id The id of the guild the scheduled event belongs to.
- *
- * @property guild_id
  */
 class ScheduledEventException extends Part
 {
