@@ -33,27 +33,27 @@ use function React\Promise\reject;
  *
  * @since 7.0.0
  *
- * @property      string                    $id                               The id of the scheduled event.
- * @property      string                    $guild_id                         The guild id which the scheduled event belongs to.
- * @property-read Guild|null                $guild                            The guild which the scheduled event belongs to.
- * @property      ?string|null              $channel_id                       The channel id in which the scheduled event will be hosted, or null if scheduled entity type is EXTERNAL.
- * @property-read Channel|null              $channel                          The channel in which the scheduled event will be hosted, or null.
- * @property      ?string|null              $creator_id                       The id of the user that created the scheduled event.
- * @property      string                    $name                             The name of the scheduled event (1-100 characters).
- * @property      ?string|null              $description                      The description of the scheduled event (1-1000 characters).
- * @property      Carbon                    $scheduled_start_time             The time the scheduled event will start.
- * @property      Carbon|null               $scheduled_end_time               The time the scheduled event will end, required if entity_type is EXTERNAL.
- * @property      int                       $privacy_level                    The privacy level of the scheduled event.
- * @property      int                       $status                           The status of the scheduled event.
- * @property      int                       $entity_type                      The type of the scheduled event.
- * @property      ?string                   $entity_id                        The id of an entity associated with a guild scheduled event.
- * @property      ?EntityMetadata           $entity_metadata                  Additional metadata for the guild scheduled event.
- * @property      User|null                 $creator                          The user that created the scheduled event.
- * @property      int|null                  $user_count                       The number of users subscribed to the scheduled event.
- * @property      ?string|null              $image                            The cover image URL of the scheduled event.
- * @property-read string|null               $image_hash                       The cover image hash of the scheduled event.
- * @property      RecurrenceRule|null       $recurrence_rule                  The definition for how often this event should recur.
- * @property      ScheduledEventException[] $guild_scheduled_event_exceptions The exceptions to the recurrence rule of the guild scheduled event.
+ * @property      string                                                                   $id                               The id of the scheduled event.
+ * @property      string                                                                   $guild_id                         The guild id which the scheduled event belongs to.
+ * @property-read Guild|null                                                               $guild                            The guild which the scheduled event belongs to.
+ * @property      ?string|null                                                             $channel_id                       The channel id in which the scheduled event will be hosted, or null if scheduled entity type is EXTERNAL.
+ * @property-read Channel|null                                                             $channel                          The channel in which the scheduled event will be hosted, or null.
+ * @property      ?string|null                                                             $creator_id                       The id of the user that created the scheduled event.
+ * @property      string                                                                   $name                             The name of the scheduled event (1-100 characters).
+ * @property      ?string|null                                                             $description                      The description of the scheduled event (1-1000 characters).
+ * @property      Carbon                                                                   $scheduled_start_time             The time the scheduled event will start.
+ * @property      Carbon|null                                                              $scheduled_end_time               The time the scheduled event will end, required if entity_type is EXTERNAL.
+ * @property      int                                                                      $privacy_level                    The privacy level of the scheduled event.
+ * @property      int                                                                      $status                           The status of the scheduled event.
+ * @property      int                                                                      $entity_type                      The type of the scheduled event.
+ * @property      ?string                                                                  $entity_id                        The id of an entity associated with a guild scheduled event.
+ * @property      ?EntityMetadata                                                          $entity_metadata                  Additional metadata for the guild scheduled event.
+ * @property      User|null                                                                $creator                          The user that created the scheduled event.
+ * @property      int|null                                                                 $user_count                       The number of users subscribed to the scheduled event.
+ * @property      ?string|null                                                             $image                            The cover image URL of the scheduled event.
+ * @property-read string|null                                                              $image_hash                       The cover image hash of the scheduled event.
+ * @property      RecurrenceRule|null                                                      $recurrence_rule                  The definition for how often this event should recur.
+ * @property      ExCollectionInterface<ScheduledEventException>|ScheduledEventException[] $guild_scheduled_event_exceptions The exceptions to the recurrence rule of the guild scheduled event.
  */
 class ScheduledEvent extends Part
 {
