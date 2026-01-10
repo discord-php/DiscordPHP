@@ -15526,6 +15526,36 @@ Search.appendIndex(
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-GuildScheduledEventDelete.html#method_handle"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildScheduledEventExceptionCreate",
+            "name": "GuildScheduledEventExceptionCreate",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-GuildScheduledEventExceptionCreate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildScheduledEventExceptionCreate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-GuildScheduledEventExceptionCreate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildScheduledEventExceptionDelete",
+            "name": "GuildScheduledEventExceptionDelete",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-GuildScheduledEventExceptionDelete.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildScheduledEventExceptionDelete\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-GuildScheduledEventExceptionDelete.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildScheduledEventExceptionUpdate",
+            "name": "GuildScheduledEventExceptionUpdate",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-GuildScheduledEventExceptionUpdate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GuildScheduledEventExceptionUpdate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-GuildScheduledEventExceptionUpdate.html#method_handle"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildScheduledEventUpdate",
             "name": "GuildScheduledEventUpdate",
             "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\u0020for\u0020the\u0020events.",
