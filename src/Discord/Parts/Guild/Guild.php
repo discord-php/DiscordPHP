@@ -150,7 +150,7 @@ use function React\Promise\resolve;
  * @property int|null                 $member_count           How many members are in the guild.
  * @property MemberRepository         $members                Users in the guild.
  * @property ChannelRepository        $channels               Channels in the guild.
- * @property ScheduledeventRepository $guild_scheduled_events The scheduled events in the guild.
+ * @property ScheduledEventRepository $guild_scheduled_events The scheduled events in the guild.
  *
  * @property AuditLogRepository           $audit_log
  * @property AutoModerationRuleRepository $auto_moderation_rules
