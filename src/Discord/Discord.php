@@ -1714,7 +1714,8 @@ class Discord
                 'usePayloadCompression',
             ])
             ->setDefaults([
-                'logger' => null,
+                'loop' => Loop::get(),
+                'logger' => new Monolog('DiscordPHP', [(new StreamHandler('php://stdout', Level::Debug))->setFormatter(new LineFormatter(null, null, true, true))]),
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
                 'storeMessages' => false,
@@ -1735,19 +1736,7 @@ class Discord
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
-            ->setNormalizer('logger', function ($options, $value) {
-                if (null === $options['logger']) {
-                    $streamHandler = new StreamHandler('php://stdout', Level::Debug);
-                    $lineFormatter = new LineFormatter(null, null, true, true);
-                    $streamHandler->setFormatter($lineFormatter);
-
-                    return new Monolog('DiscordPHP', [$streamHandler]);
-                }
-
-                return $value;
-            })
             ->setAllowedTypes('loop', LoopInterface::class)
-            ->setNormalizer('loop', fn ($options, $value) => $value ?? Loop::get())
             ->setAllowedTypes('loadAllMembers', ['bool', 'array'])
             ->setAllowedTypes('disabledEvents', 'array')
             ->setAllowedTypes('storeMessages', 'bool')
