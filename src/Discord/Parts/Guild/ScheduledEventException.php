@@ -28,6 +28,10 @@ use Discord\Parts\Part;
  * @property Carbon  $scheduled_start_time The new time at when the scheduled event recurrence will start, if applicable.
  * @property ?Carbon $scheduled_end_time   The new time at when the scheduled event recurrence will end, if applicable.
  * @property bool    $is_canceled          Whether or not the scheduled event will be skipped on the recurrence.
+ *
+ * @property string $guild_id The id of the guild the scheduled event belongs to.
+ *
+ * @property guild_id
  */
 class ScheduledEventException extends Part
 {
@@ -40,6 +44,8 @@ class ScheduledEventException extends Part
         'scheduled_start_time',
         'scheduled_end_time',
         'is_canceled',
+        // internal
+        'guild_id',
     ];
 
     /**

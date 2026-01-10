@@ -33,7 +33,7 @@ class GuildScheduledEventExceptionCreate extends Event
         $scheduledEventExceptionPart = $this->factory->part(ScheduledEventException::class, (array) $data, true);
 
         /** @var ?Guild */
-        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+        if ($guild = yield $this->discord->guilds->cacheGet($scheduledEventExceptionPart->guild_id)) {
             if ($event = $guild->guild_scheduled_events->get($scheduledEventExceptionPart->event_id)) {
                 $event->guild_scheduled_event_exceptions->set($scheduledEventExceptionPart->event_exception_id, $scheduledEventExceptionPart);
             }

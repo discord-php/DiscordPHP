@@ -96,11 +96,11 @@ class ScheduledEvent extends Part
      * Returns the created guild scheduled event exception object on success.
      * Fires a Guild Scheduled Event Exception Create Gateway event.
      *
-     * @param array       $options                         The scheduled event exception data.
-     * @param ?Carbon     $options['scheduled_start_time'] The new time at when the scheduled event recurrence will start, if applicable.
-     * @param ?Carbon     $options['scheduled_end_time']   The new time at when the scheduled event recurrence will end, if applicable.
-     * @param ?bool       $options['is_canceled']          Whether or not the scheduled event will be skipped on the recurrence.
-     * @param ?string     $reason                          Reason for Audit Log.
+     * @param array   $options                         The scheduled event exception data.
+     * @param ?Carbon $options['scheduled_start_time'] The new time at when the scheduled event recurrence will start, if applicable.
+     * @param ?Carbon $options['scheduled_end_time']   The new time at when the scheduled event recurrence will end, if applicable.
+     * @param ?bool   $options['is_canceled']          Whether or not the scheduled event will be skipped on the recurrence.
+     * @param ?string $reason                          Reason for Audit Log.
      *
      * @return PromiseInterface<ScheduledEventException>
      */
@@ -132,12 +132,12 @@ class ScheduledEvent extends Part
         return $this->http->post(Endpoint::bind(Endpoint::GUILD_SCHEDULED_EVENT_EXCEPTIONS, $this->guild_id, $this->id), $payload, $headers)
             ->then(
                 function ($response): ScheduledEventException {
-                $part = $this->factory->part(ScheduledEventException::class, (array) $response, true);
+                    $part = $this->factory->part(ScheduledEventException::class, (array) $response, true);
 
-                $this->guild_scheduled_event_exceptions->pushItem($part);
+                    $this->guild_scheduled_event_exceptions->pushItem($part);
 
-                return $part;
-            }
+                    return $part;
+                }
             );
     }
 
