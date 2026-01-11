@@ -49,9 +49,9 @@ class ScheduledEventException extends Part
     /**
      * Returns the Scheduled Start Time attribute.
      *
-     * @return Carbon
+     * @return Carbon|null
      */
-    protected function getScheduledStartTimeAttribute(): Carbon
+    protected function getScheduledStartTimeAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('scheduled_start_time');
     }
@@ -59,7 +59,7 @@ class ScheduledEventException extends Part
     /**
      * Returns the Scheduled End Time attribute.
      *
-     * @return ?Carbon
+     * @return Carbon|null
      */
     protected function getScheduledEndTimeAttribute(): ?Carbon
     {
