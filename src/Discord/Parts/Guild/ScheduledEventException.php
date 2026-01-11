@@ -23,13 +23,13 @@ use Discord\Parts\Part;
  *
  * @since 10.45.0
  *
- * @property string  $event_id             The id of the scheduled event.
- * @property string  $event_exception_id   A snowflake containing the original scheduled start time of the scheduled event. The snowflake in this field is not guaranteed to be globally unique.
- * @property Carbon  $scheduled_start_time The new time at when the scheduled event recurrence will start, if applicable.
- * @property ?Carbon $scheduled_end_time   The new time at when the scheduled event recurrence will end, if applicable.
- * @property bool    $is_canceled          Whether or not the scheduled event will be skipped on the recurrence.
+ * @property string      $event_id             The id of the scheduled event.
+ * @property string      $event_exception_id   A snowflake containing the original scheduled start time of the scheduled event. The snowflake in this field is not guaranteed to be globally unique.
+ * @property Carbon|null $scheduled_start_time The new time at when the scheduled event recurrence will start, if applicable.
+ * @property Carbon|null $scheduled_end_time   The new time at when the scheduled event recurrence will end, if applicable.
+ * @property bool        $is_canceled          Whether or not the scheduled event will be skipped on the recurrence.
  *
- * @property string $guild_id The id of the guild the scheduled event belongs to. Only present when received from either the GuildScheduledEventExceptionCreate, GuildScheduledEventExceptionUpdate, or GuildScheduledEventExceptionDelete event.
+ * @property string|null $guild_id The id of the guild the scheduled event belongs to. Only present when received from either the GuildScheduledEventExceptionCreate, GuildScheduledEventExceptionUpdate, or GuildScheduledEventExceptionDelete event.
  */
 class ScheduledEventException extends Part
 {

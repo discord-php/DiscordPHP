@@ -97,7 +97,7 @@ class ScheduledEventUser extends Part
 
     /**
      * Get the user_id attribute.
-     * 
+     *
      * @return string|null
      */
     protected function getUserIdAttribute(): ?string
@@ -115,7 +115,7 @@ class ScheduledEventUser extends Part
 
     /**
      * Get the guild_id attribute.
-     * 
+     *
      * @return string|null
      */
     protected function getGuildIdAttribute(): ?string
