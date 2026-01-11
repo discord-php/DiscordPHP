@@ -29,7 +29,7 @@ use Discord\Parts\Part;
  * @property ?Carbon $scheduled_end_time   The new time at when the scheduled event recurrence will end, if applicable.
  * @property bool    $is_canceled          Whether or not the scheduled event will be skipped on the recurrence.
  *
- * @property string $guild_id The id of the guild the scheduled event belongs to.
+ * @property string $guild_id The id of the guild the scheduled event belongs to. Only present when received from either the GuildScheduledEventExceptionCreate, GuildScheduledEventExceptionUpdate, or GuildScheduledEventExceptionDelete event.
  */
 class ScheduledEventException extends Part
 {
