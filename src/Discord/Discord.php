@@ -115,7 +115,7 @@ use function React\Promise\resolve;
  * @property int              $options['intents']
  * @property array            $options['socket_options']
  * @property DnsConfig|string $options['dnsConfig']
- * @property string[]         $options['cache']
+ * @property array            $options['cache']
  * @property string           $options['collection']
  * @property bool             $options['useTransportCompression']
  * @property bool             $options['usePayloadCompression']
