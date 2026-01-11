@@ -28,6 +28,11 @@ use Discord\Parts\User\User;
  * @property User        $user                               User which subscribed to an event.
  * @property Member|null $member                             Guild member data for this user for the guild which this event belongs to, if any.
  * @property string|null $guild_scheduled_event_exception_id The id of the specific scheduled event exception which the user is subscribed to, if any.
+ *
+ * @property string|null $user_id  ID of the user.
+ * @property string|null $guild_id ID of the guild.
+ *
+ * @property Guild|null $guild The guild this scheduled event user belongs to.
  */
 class ScheduledEventUser extends Part
 {
@@ -39,6 +44,9 @@ class ScheduledEventUser extends Part
         'user',
         'member',
         'guild_scheduled_event_exception_id',
+        // internal (gateway only)
+        'user_id',
+        'guild_id',
     ];
 
     /**
@@ -48,6 +56,14 @@ class ScheduledEventUser extends Part
      */
     protected function getUserAttribute(): User
     {
+        if ($this->user_id) {
+            return $this->discord->users->get('id', $this->user_id);
+        }
+
+        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+            return $user;
+        }
+
         return $this->attributePartHelper('user', User::class);
     }
 
@@ -59,5 +75,23 @@ class ScheduledEventUser extends Part
     protected function getMemberAttribute(): ?Member
     {
         return $this->attributePartHelper('member', Member::class);
+    }
+
+    /**
+     * Get the guild attribute.
+     *
+     * @return ?Guild
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        if ($this->guild_id) {
+            return $this->discord->guilds->get('id', $this->guild_id);
+        }
+
+        if ($this->member) {
+            return $this->member->guild;
+        }
+
+        return null;
     }
 }
