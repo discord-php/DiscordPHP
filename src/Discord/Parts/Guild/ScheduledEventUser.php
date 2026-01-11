@@ -22,7 +22,7 @@ use Discord\Parts\User\User;
  *
  * @link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-user-object
  *
- * @since 10.45.0
+ * @since 10.46.0
  *
  * @property string      $guild_scheduled_event_id           The scheduled event id which the user subscribed to.
  * @property User        $user                               User which subscribed to an event.

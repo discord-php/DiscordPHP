@@ -21,7 +21,7 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-exception-object
  *
- * @since 10.45.0
+ * @since 10.46.0
  *
  * @property string      $event_id             The id of the scheduled event.
  * @property string      $event_exception_id   A snowflake containing the original scheduled start time of the scheduled event. The snowflake in this field is not guaranteed to be globally unique.
