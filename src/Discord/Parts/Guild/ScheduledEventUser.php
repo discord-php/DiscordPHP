@@ -70,7 +70,7 @@ class ScheduledEventUser extends Part
     /**
      * Get the member attribute.
      *
-     * @return ?Member
+     * @return Member|null
      */
     protected function getMemberAttribute(): ?Member
     {
@@ -80,7 +80,7 @@ class ScheduledEventUser extends Part
     /**
      * Get the guild attribute.
      *
-     * @return ?Guild
+     * @return Guild|null
      */
     protected function getGuildAttribute(): ?Guild
     {
@@ -90,6 +90,42 @@ class ScheduledEventUser extends Part
 
         if ($this->member) {
             return $this->member->guild;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the user_id attribute.
+     * 
+     * @return string|null
+     */
+    protected function getUserIdAttribute(): ?string
+    {
+        if (isset($this->attributes['user_id'])) {
+            return $this->attributes['user_id'];
+        }
+
+        if ($this->user) {
+            return $this->user->id;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the guild_id attribute.
+     * 
+     * @return string|null
+     */
+    protected function getGuildIdAttribute(): ?string
+    {
+        if (isset($this->attributes['guild_id'])) {
+            return $this->attributes['guild_id'];
+        }
+
+        if ($this->guild) {
+            return $this->guild->id;
         }
 
         return null;
