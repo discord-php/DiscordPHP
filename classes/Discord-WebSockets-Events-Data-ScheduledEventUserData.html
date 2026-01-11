@@ -235,13 +235,14 @@
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts.html">Parts</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-guild.html">Guild</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-websockets.html">WebSockets</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-websockets-events.html">Events</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-websockets-events-data.html">Data</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    ScheduledEventUser
+    ScheduledEventUserData
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
@@ -263,35 +264,43 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php"><a href="files/src-discord-websockets-events-data-scheduledeventuserdata.html"><abbr title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php">ScheduledEventUserData.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">A guild scheduled event user subscribed to a specific guild scheduled event exception.</p>
+            <p class="phpdocumentor-summary">Sent when a user has subscribed or unsubscribed to a guild scheduled event.</p>
 
 
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\WebSockets\Events\Data\Discord\Parts\Guild\ScheduledEventUser">ScheduledEventUser</abbr></span>
+                                        
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-user-object"> https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-user-object </a>
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/events/gateway-events.mdx#guild-scheduled-event-user-add-event-fields"> https://discord.com/developers/docs/events/gateway-events.mdx#guild-scheduled-event-user-add-event-fields </a>
                     
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">10.45.0</span>
+                                            <span class="phpdocumentor-tag-link">10.46.0</span>
                                                                                 
                                              
                                     </dd>
@@ -301,7 +310,7 @@
     
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -315,7 +324,7 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -327,31 +336,31 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_guild">$guild</a>
+    <a class="" href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_guild">$guild</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_guild_id">$guild_id</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_guild_scheduled_event_exception_id">$guild_scheduled_event_exception_id</a>
-    <span>
-                        &nbsp;: string|null            </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_guild_scheduled_event_id">$guild_scheduled_event_id</a>
+    <a class="" href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_guild_id">$guild_id</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_member">$member</a>
+    <a class="" href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_guild_scheduled_event_exception_id">$guild_scheduled_event_exception_id</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_guild_scheduled_event_id">$guild_scheduled_event_id</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_member">$member</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null            </span>
 </dt>
@@ -364,15 +373,15 @@
 <dd>Custom script data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_user">$user</a>
+    <a class="" href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_user">$user</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>            </span>
+                        &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_user_id">$user_id</a>
+    <a class="" href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_user_id">$user_id</a>
     <span>
-                        &nbsp;: string|null            </span>
+                        &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
@@ -397,7 +406,7 @@
 <dd>The factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_fillable">$fillable</a>
+    <a class="" href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_fillable">$fillable</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -442,7 +451,7 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -684,39 +693,25 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Gets an attribute on the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getGuildAttribute">getGuildAttribute()</a>
+    <a class="" href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#method_getGuildAttribute">getGuildAttribute()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null    </span>
 </dt>
 <dd>Get the guild attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getGuildIdAttribute">getGuildIdAttribute()</a>
-    <span>
-                                &nbsp;: string|null    </span>
-</dt>
-<dd>Get the guild_id attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getMemberAttribute">getMemberAttribute()</a>
+    <a class="" href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#method_getMemberAttribute">getMemberAttribute()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null    </span>
 </dt>
 <dd>Get the member attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getUserAttribute">getUserAttribute()</a>
+    <a class="" href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#method_getUserAttribute">getUserAttribute()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null    </span>
 </dt>
 <dd>Get the user attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getUserIdAttribute">getUserIdAttribute()</a>
-    <span>
-                                &nbsp;: string|null    </span>
-</dt>
-<dd>Get the user_id attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a>
@@ -749,7 +744,7 @@ JSON. Used for JsonSerializable.</dd>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -801,13 +796,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_guild">
         $guild
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php"><a href="files/src-discord-websockets-events-data-scheduledeventuserdata.html"><abbr title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php">ScheduledEventUserData.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -821,7 +816,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$guild</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The guild this scheduled event user belongs to.</p>
+        <section class="phpdocumentor-description"><p>The guild this scheduled event user data belongs to.</p>
 </section>
 
     
@@ -840,13 +835,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_guild_id">
         $guild_id
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php"><a href="files/src-discord-websockets-events-data-scheduledeventuserdata.html"><abbr title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php">ScheduledEventUserData.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -856,7 +851,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
+            <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$guild_id</span>
     </code>
 
@@ -879,13 +874,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_guild_scheduled_event_exception_id">
         $guild_scheduled_event_exception_id
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_guild_scheduled_event_exception_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_guild_scheduled_event_exception_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php"><a href="files/src-discord-websockets-events-data-scheduledeventuserdata.html"><abbr title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php">ScheduledEventUserData.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -899,7 +894,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$guild_scheduled_event_exception_id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The id of the specific scheduled event exception which the user is subscribed to, if any.</p>
+        <section class="phpdocumentor-description"><p>ID of the guild scheduled event exception, if applicable.</p>
 </section>
 
     
@@ -918,13 +913,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_guild_scheduled_event_id">
         $guild_scheduled_event_id
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_guild_scheduled_event_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_guild_scheduled_event_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php"><a href="files/src-discord-websockets-events-data-scheduledeventuserdata.html"><abbr title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php">ScheduledEventUserData.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -938,7 +933,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$guild_scheduled_event_id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The scheduled event id which the user subscribed to.</p>
+        <section class="phpdocumentor-description"><p>ID of the guild scheduled event</p>
 </section>
 
     
@@ -957,13 +952,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_member">
         $member
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_member" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_member" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php"><a href="files/src-discord-websockets-events-data-scheduledeventuserdata.html"><abbr title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php">ScheduledEventUserData.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1043,13 +1038,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_user">
         $user
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_user" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_user" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php"><a href="files/src-discord-websockets-events-data-scheduledeventuserdata.html"><abbr title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php">ScheduledEventUserData.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1059,7 +1054,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span>
     <span class="phpdocumentor-signature__name">$user</span>
     </code>
 
@@ -1082,13 +1077,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_user_id">
         $user_id
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_user_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_user_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php"><a href="files/src-discord-websockets-events-data-scheduledeventuserdata.html"><abbr title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php">ScheduledEventUserData.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1098,7 +1093,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
+            <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$user_id</span>
     </code>
 
@@ -1241,15 +1236,15 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_fillable">
         $fillable
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php"><a href="files/src-discord-websockets-events-data-scheduledeventuserdata.html"><abbr title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php">ScheduledEventUserData.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -1260,15 +1255,7 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[
-    &#039;guild_scheduled_event_id&#039;,
-    &#039;user&#039;,
-    &#039;member&#039;,
-    &#039;guild_scheduled_event_exception_id&#039;,
-    // internal (gateway only)
-    &#039;user_id&#039;,
-    &#039;guild_id&#039;,
-]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;guild_scheduled_event_id&#039;, &#039;user_id&#039;, &#039;guild_id&#039;, &#039;guild_scheduled_event_exception_id&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -1277,7 +1264,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -1495,7 +1482,7 @@ JSON. Used for JsonSerializable.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -3542,13 +3529,13 @@ JSON. Used for JsonSerializable.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
         getGuildAttribute()
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php"><a href="files/src-discord-websockets-events-data-scheduledeventuserdata.html"><abbr title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php">ScheduledEventUserData.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
@@ -3579,54 +3566,15 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getGuildIdAttribute">
-        getGuildIdAttribute()
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getGuildIdAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">121</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the guild_id attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getGuildIdAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string|null</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getMemberAttribute">
         getMemberAttribute()
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getMemberAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#method_getMemberAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php"><a href="files/src-discord-websockets-events-data-scheduledeventuserdata.html"><abbr title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php">ScheduledEventUserData.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -3659,13 +3607,13 @@ JSON. Used for JsonSerializable.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getUserAttribute">
         getUserAttribute()
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getUserAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#method_getUserAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php"><a href="files/src-discord-websockets-events-data-scheduledeventuserdata.html"><abbr title="src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php">ScheduledEventUserData.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -3673,7 +3621,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getUserAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">getUserAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3686,46 +3634,7 @@ JSON. Used for JsonSerializable.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getUserIdAttribute">
-        getUserIdAttribute()
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getUserIdAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/ScheduledEventUser.php"><a href="files/src-discord-parts-guild-scheduledeventuser.html"><abbr title="src/Discord/Parts/Guild/ScheduledEventUser.php">ScheduledEventUser.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">103</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the user_id attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getUserIdAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string|null</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span>
             </section>
 
 </article>
@@ -3915,7 +3824,7 @@ static as we may move it outside this class in future.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Guild/ScheduledEventUser.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/WebSockets/Events/Data/ScheduledEventUserData.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -4016,8 +3925,8 @@ static as we may move it outside this class in future.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
@@ -4025,18 +3934,18 @@ static as we may move it outside this class in future.</p>
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_guild">$guild</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_guild_id">$guild_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_guild_scheduled_event_exception_id">$guild_scheduled_event_exception_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_guild_scheduled_event_id">$guild_scheduled_event_id</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_member">$member</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_guild">$guild</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_guild_id">$guild_id</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_guild_scheduled_event_exception_id">$guild_scheduled_event_exception_id</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_guild_scheduled_event_id">$guild_scheduled_event_id</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_member">$member</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_user">$user</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_user_id">$user_id</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_user">$user</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_user_id">$user_id</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#property_fillable">$fillable</a></li>
+                                                    <li class=""><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_fillable">$fillable</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_http">$http</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories">$repositories</a></li>
@@ -4082,11 +3991,9 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getGuildAttribute">getGuildAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getGuildIdAttribute">getGuildIdAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getMemberAttribute">getMemberAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getUserAttribute">getUserAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getUserIdAttribute">getUserIdAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#method_getGuildAttribute">getGuildAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#method_getMemberAttribute">getMemberAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#method_getUserAttribute">getUserAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a></li>
@@ -4109,7 +4016,7 @@ static as we may move it outside this class in future.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Parts-Guild-ScheduledEventUser.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

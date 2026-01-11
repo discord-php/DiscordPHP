@@ -341,7 +341,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Guild-ScheduledEventException.html#property_guild_id">$guild_id</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: string|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -359,7 +359,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Discord-Parts-Guild-ScheduledEventException.html#property_scheduled_start_time">$scheduled_start_time</a>
     <span>
-                        &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>            </span>
+                        &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -687,7 +687,7 @@ JSON. Used for JsonSerializable.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Guild-ScheduledEventException.html#method_getScheduledStartTimeAttribute">getScheduledStartTimeAttribute()</a>
     <span>
-                                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>    </span>
+                                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null    </span>
 </dt>
 <dd>Returns the Scheduled Start Time attribute.</dd>
 
@@ -868,11 +868,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
     <span class="phpdocumentor-signature__name">$guild_id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The id of the guild the scheduled event belongs to.</p>
+        <section class="phpdocumentor-description"><p>The id of the guild the scheduled event belongs to. Only present when received from either the GuildScheduledEventExceptionCreate, GuildScheduledEventExceptionUpdate, or GuildScheduledEventExceptionDelete event.</p>
 </section>
 
     
@@ -985,7 +985,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr></span>
+            <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
     <span class="phpdocumentor-signature__name">$scheduled_start_time</span>
     </code>
 
@@ -3529,7 +3529,7 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                    <span class="phpdocumentor-signature__name">getScheduledStartTimeAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">getScheduledStartTimeAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -3542,7 +3542,7 @@ JSON. Used for JsonSerializable.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr></span>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
             </section>
 
 </article>

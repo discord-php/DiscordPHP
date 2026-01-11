@@ -8681,6 +8681,21 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020member\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getMemberAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEventUser\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Get\u0020the\u0020guild\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEventUser\u003A\u003AgetUserIdAttribute\u0028\u0029",
+            "name": "getUserIdAttribute",
+            "summary": "Get\u0020the\u0020user_id\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getUserIdAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEventUser\u003A\u003AgetGuildIdAttribute\u0028\u0029",
+            "name": "getGuildIdAttribute",
+            "summary": "Get\u0020the\u0020guild_id\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-ScheduledEventUser.html#method_getGuildIdAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\ScheduledEventUser\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
@@ -15345,6 +15360,31 @@ Search.appendIndex(
             "name": "GuildMembersChunkData",
             "summary": "Raw\u0020data\u0020received\u0020from\u0020the\u0020\u0060GUILD_MEMBERS_CHUNK\u0060\u0020event.",
             "url": "classes/Discord-WebSockets-Events-Data-GuildMembersChunkData.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\ScheduledEventUserData",
+            "name": "ScheduledEventUserData",
+            "summary": "Sent\u0020when\u0020a\u0020user\u0020has\u0020subscribed\u0020or\u0020unsubscribed\u0020to\u0020a\u0020guild\u0020scheduled\u0020event.",
+            "url": "classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\ScheduledEventUserData\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Get\u0020the\u0020user\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#method_getUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\ScheduledEventUserData\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Get\u0020the\u0020guild\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\ScheduledEventUserData\u003A\u003AgetMemberAttribute\u0028\u0029",
+            "name": "getMemberAttribute",
+            "summary": "Get\u0020the\u0020member\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#method_getMemberAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\ScheduledEventUserData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-WebSockets-Events-Data-ScheduledEventUserData.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\EntitlementCreate",
             "name": "EntitlementCreate",
