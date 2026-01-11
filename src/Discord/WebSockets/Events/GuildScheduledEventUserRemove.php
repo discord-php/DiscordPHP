@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Guild\ScheduledEventUser;
+use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\Data\ScheduledEventUserData;
 
@@ -39,7 +40,7 @@ class GuildScheduledEventUserRemove extends Event
             'guild_id' => $scheduledEventUserDataPart->guild_id,
             'guild_scheduled_event_exception_id' => $scheduledEventUserDataPart->guild_scheduled_event_exception_id,
             // Reconstructed or cached
-            'user' => $scheduledEventUserDataPart->user ?? $this->factory->part(ScheduledEventUser::class, ['id' => $scheduledEventUserDataPart->user_id], true),
+            'user' => $scheduledEventUserDataPart->user ?? $this->factory->part(User::class, ['id' => $scheduledEventUserDataPart->user_id], true),
             'member' => $scheduledEventUserDataPart->member,
         ];
 
