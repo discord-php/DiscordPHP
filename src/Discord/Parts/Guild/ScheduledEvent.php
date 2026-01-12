@@ -106,7 +106,7 @@ class ScheduledEvent extends Part
      */
     public function createException(array $options, ?string $reason = null): PromiseInterface
     {
-        $mandatory = $payload['original_scheduled_start_time'] = $this->scheduled_start_time;
+        $mandatory = $payload = ['original_scheduled_start_time' => $this->scheduled_start_time];
 
         if (isset($options['scheduled_start_time'])) {
             $payload['scheduled_start_time'] = $options['scheduled_start_time'];
