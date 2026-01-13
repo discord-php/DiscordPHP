@@ -291,7 +291,11 @@ class Invite extends Part implements Stringable
     }
 
     /**
-     * Gets the users allowed to see and accept this invite. Response is a CSV file with a single column `Users` containing the user IDs.
+     * Gets the users allowed to see and accept this invite.
+     * 
+     * Response is a CSV file with a single column `Users` containing the user IDs.
+     * 
+     * Requires the `MANAGE_GUILD` permission.
      *
      * @todo
      *
@@ -306,17 +310,24 @@ class Invite extends Part implements Stringable
      * Updates the users allowed to see and accept this invite.
      *
      * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
+     * 
+     * Requires the `MANAGE_GUILD` permission.
      *
      * @todo
      *
-     * @param $target_users_file A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body. Requires the `MANAGE_GUILD` permission.
+     * @param $target_users_file A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body.
      *
      * @return PromiseInterface<void>
      */
-    //public function updateTargetUsers($target_users_file): PromiseInterface
+    public function updateTargetUsers($target_users_file)//: PromiseInterface
+    {
+
+    }
     
     /**
      * Processing target users from a CSV when creating or updating an invite is done asynchronously. This endpoint allows you to check the status of that job.
+     * 
+     * Requires the `MANAGE_GUILD` permission.
      *
      * @todo
      *
