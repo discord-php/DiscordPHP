@@ -321,7 +321,7 @@ class Invite extends Part implements Stringable
      */
     public function updateTargetUsers($target_users_file)//: PromiseInterface
     {
-
+        return reject(new \BadMethodCallException('Not implemented yet.'));
     }
     
     /**
