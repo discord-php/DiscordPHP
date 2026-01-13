@@ -685,6 +685,8 @@ class Channel extends Part implements Stringable
      * @param int         $options['target_type']           The type of target for this voice channel invite.
      * @param string      $options['target_user_id']        The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel.
      * @param string      $options['target_application_id'] The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag.
+     * @param object      $options['target_users_file']     (TODO) A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body. Requires the `MANAGE_GUILD` permission. Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
+     * @param string[]    $options['role_ids']              The role ID(s) for roles in the guild given to the users that accept this invite. Requires the `MANAGE_ROLES` permission and cannot assign roles with higher permissions than the sender.
      * @param string|null $reason                           Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing create_instant_invite permission.
@@ -713,16 +715,19 @@ class Channel extends Part implements Stringable
                 'target_type',
                 'target_user_id',
                 'target_application_id',
+                'target_users_file',
+                'role_ids',
             ])
             ->setAllowedTypes('max_age', 'int')
+            ->setAllowedValues('max_age', fn ($value) => ($value >= 0 && $value <= 604800))
             ->setAllowedTypes('max_uses', 'int')
+            ->setAllowedValues('max_uses', fn ($value) => ($value >= 0 && $value <= 100))
             ->setAllowedTypes('temporary', 'bool')
             ->setAllowedTypes('unique', 'bool')
             ->setAllowedTypes('target_type', 'int')
             ->setAllowedTypes('target_user_id', ['string', 'int'])
             ->setAllowedTypes('target_application_id', ['string', 'int'])
-            ->setAllowedValues('max_age', fn ($value) => ($value >= 0 && $value <= 604800))
-            ->setAllowedValues('max_uses', fn ($value) => ($value >= 0 && $value <= 100));
+            ->setAllowedTypes('role_ids', 'array');
 
         $options = $resolver->resolve($options);
 
