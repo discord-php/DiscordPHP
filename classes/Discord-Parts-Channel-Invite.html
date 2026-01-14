@@ -268,7 +268,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
@@ -496,6 +496,12 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Invite.html#property_roles">$roles</a>
+    <span>
+                        &nbsp;: array&lt;string|int, <a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a>&gt;            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="-deprecated" href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a>
     <span>
                         &nbsp;: mixed            </span>
@@ -717,6 +723,20 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getTargetUsers">getTargetUsers()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>    </span>
+</dt>
+<dd>Gets the users allowed to see and accept this invite.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getTargetUsersJobStatus">getTargetUsersJobStatus()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Parts\Channel\InviteJobStatus">InviteJobStatus</abbr>&gt;    </span>
+</dt>
+<dd>Processing target users from a CSV when creating or updating an invite is done asynchronously. This endpoint allows you to check the status of that job.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_getUpdatableAttributes">getUpdatableAttributes()</a>
     <span>
                                 &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -793,6 +813,13 @@ JSON. Used for JsonSerializable.</dd>
                                 &nbsp;: void    </span>
 </dt>
 <dd>Unserializes some data and stores it. Used for Serializable.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_updateTargetUsers">updateTargetUsers()</a>
+    <span>
+                                &nbsp;: <abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, void&gt;    </span>
+</dt>
+<dd>Updates the users allowed to see and accept this invite.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_afterConstruct">afterConstruct()</a>
@@ -928,6 +955,13 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Returns the guild profile for this invite.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getRolesAttribute">getRolesAttribute()</a>
+    <span>
+                                &nbsp;: <abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a>&gt;    </span>
+</dt>
+<dd>Returns the roles for this invite.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-Channel-Invite.html#method_getTargetApplicationAttribute">getTargetApplicationAttribute()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a>|null    </span>
@@ -983,7 +1017,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
@@ -1014,7 +1048,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -1044,7 +1078,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -1074,7 +1108,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
@@ -1104,7 +1138,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
@@ -1134,7 +1168,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
@@ -1828,6 +1862,45 @@ JSON. Used for JsonSerializable.</dd>
             phpdocumentor-element
             -property
             -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_roles">
+        $roles
+        <a href="classes/Discord-Parts-Channel-Invite.html#property_roles" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, <a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$roles</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The roles assigned to the user upon accepting the invite.</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
                         -deprecated                                            "
 >
     <h4 class="phpdocumentor-element__name" id="property_scriptData">
@@ -2241,7 +2314,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">84</span>
 
     </aside>
 
@@ -2815,7 +2888,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">373</span>
+    <span class="phpdocumentor-element-found-in__line">439</span>
 
     </aside>
 
@@ -3252,7 +3325,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">327</span>
+    <span class="phpdocumentor-element-found-in__line">393</span>
 
     </aside>
 
@@ -3320,7 +3393,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">366</span>
+    <span class="phpdocumentor-element-found-in__line">432</span>
 
     </aside>
 
@@ -3355,6 +3428,125 @@ JSON. Used for JsonSerializable.</dd>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getTargetUsers">
+        getTargetUsers()
+        <a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetUsers" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">304</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets the users allowed to see and accept this invite.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getTargetUsers</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Response is a CSV file with a single column <code class="prettyprint">Users</code> containing the user IDs.</p>
+<p>Requires the <code class="prettyprint">MANAGE_GUILD</code> permission.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetUsers#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The multipart response containing the CSV file.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getTargetUsersJobStatus">
+        getTargetUsersJobStatus()
+        <a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetUsersJobStatus" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">336</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Processing target users from a CSV when creating or updating an invite is done asynchronously. This endpoint allows you to check the status of that job.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">getTargetUsersJobStatus</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Parts\Channel\InviteJobStatus">InviteJobStatus</abbr>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Requires the <code class="prettyprint">MANAGE_GUILD</code> permission.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetUsersJobStatus#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, <abbr title="\Discord\Parts\Channel\InviteJobStatus">InviteJobStatus</abbr>&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The job status.</p>
+</section>
+
             </section>
 
 </article>
@@ -3411,7 +3603,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">291</span>
+    <span class="phpdocumentor-element-found-in__line">357</span>
 
     </aside>
 
@@ -3821,7 +4013,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">342</span>
+    <span class="phpdocumentor-element-found-in__line">408</span>
 
     </aside>
 
@@ -3975,6 +4167,74 @@ JSON. Used for JsonSerializable.</p>
         
     
     
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_updateTargetUsers">
+        updateTargetUsers()
+        <a href="classes/Discord-Parts-Channel-Invite.html#method_updateTargetUsers" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">322</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Updates the users allowed to see and accept this invite.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">updateTargetUsers</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$target_users_file</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, void&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.</p>
+<p>Requires the <code class="prettyprint">MANAGE_GUILD</code> permission.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$target_users_file</span>
+                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>A csv file with a single column of user IDs for all the users able to accept this invite. Requires <code class="prettyprint">multipart/form-data</code> as the content type with other parameters as form fields in the multipart body.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-Invite.html#method_updateTargetUsers#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">todo</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr>&lt;string|int, void&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -4557,7 +4817,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
@@ -4600,7 +4860,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">185</span>
+    <span class="phpdocumentor-element-found-in__line">190</span>
 
     </aside>
 
@@ -4643,7 +4903,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">303</span>
+    <span class="phpdocumentor-element-found-in__line">369</span>
 
     </aside>
 
@@ -4701,7 +4961,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">251</span>
+    <span class="phpdocumentor-element-found-in__line">256</span>
 
     </aside>
 
@@ -4759,7 +5019,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
@@ -4802,7 +5062,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">141</span>
+    <span class="phpdocumentor-element-found-in__line">146</span>
 
     </aside>
 
@@ -4841,7 +5101,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">261</span>
+    <span class="phpdocumentor-element-found-in__line">266</span>
 
     </aside>
 
@@ -4884,7 +5144,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -4927,7 +5187,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">203</span>
+    <span class="phpdocumentor-element-found-in__line">208</span>
 
     </aside>
 
@@ -4970,7 +5230,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">313</span>
+    <span class="phpdocumentor-element-found-in__line">379</span>
 
     </aside>
 
@@ -5013,7 +5273,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">281</span>
+    <span class="phpdocumentor-element-found-in__line">347</span>
 
     </aside>
 
@@ -5048,6 +5308,64 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getRolesAttribute">
+        getRolesAttribute()
+        <a href="classes/Discord-Parts-Channel-Invite.html#method_getRolesAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">288</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the roles for this invite.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getRolesAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Parts-Channel-Invite.html#method_getRolesAttribute#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.46.0</span>
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Discord\Helpers\ExCollectionInterface">ExCollectionInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a>&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The roles assigned to the user upon accepting the invite.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getTargetApplicationAttribute">
         getTargetApplicationAttribute()
         <a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetApplicationAttribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -5056,7 +5374,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">239</span>
+    <span class="phpdocumentor-element-found-in__line">244</span>
 
     </aside>
 
@@ -5099,7 +5417,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">221</span>
+    <span class="phpdocumentor-element-found-in__line">226</span>
 
     </aside>
 
@@ -5452,6 +5770,7 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_max_age">$max_age</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_max_uses">$max_uses</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_profile">$profile</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_roles">$roles</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_target_application">$target_application</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#property_target_type">$target_type</a></li>
@@ -5490,6 +5809,8 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getRawAttributes">getRawAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getRepository">getRepository()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getRepositoryAttributes">getRepositoryAttributes()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetUsers">getTargetUsers()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetUsersJobStatus">getTargetUsersJobStatus()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getUpdatableAttributes">getUpdatableAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_isGuestInvite">isGuestInvite()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_isPartial">isPartial()</a></li>
@@ -5501,6 +5822,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_save">save()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_serialize">serialize()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_unserialize">unserialize()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_updateTargetUsers">updateTargetUsers()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_afterConstruct">afterConstruct()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_attributeCarbonHelper">attributeCarbonHelper()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_attributeCollectionHelper">attributeCollectionHelper()</a></li>
@@ -5520,6 +5842,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getInviterAttribute">getInviterAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getInviteUrlAttribute">getInviteUrlAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getProfileAttribute">getProfileAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getRolesAttribute">getRolesAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetApplicationAttribute">getTargetApplicationAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-Channel-Invite.html#method_getTargetUserAttribute">getTargetUserAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
