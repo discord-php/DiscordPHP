@@ -4426,6 +4426,11 @@ Search.appendIndex(
             "summary": "Updates\u0020the\u0020users\u0020allowed\u0020to\u0020see\u0020and\u0020accept\u0020this\u0020invite.",
             "url": "classes/Discord-Parts-Channel-Invite.html#method_updateTargetUsers"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AupdateTargetUsersFromContent\u0028\u0029",
+            "name": "updateTargetUsersFromContent",
+            "summary": "Updates\u0020the\u0020users\u0020allowed\u0020to\u0020see\u0020and\u0020accept\u0020this\u0020invite.",
+            "url": "classes/Discord-Parts-Channel-Invite.html#method_updateTargetUsersFromContent"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Invite\u003A\u003AgetTargetUsersJobStatus\u0028\u0029",
             "name": "getTargetUsersJobStatus",
             "summary": "Processing\u0020target\u0020users\u0020from\u0020a\u0020CSV\u0020when\u0020creating\u0020or\u0020updating\u0020an\u0020invite\u0020is\u0020done\u0020asynchronously.\u0020This\u0020endpoint\u0020allows\u0020you\u0020to\u0020check\u0020the\u0020status\u0020of\u0020that\u0020job.",
