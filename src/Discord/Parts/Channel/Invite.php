@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
+use BadMethodCallException;
 use Carbon\Carbon;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
+use Discord\Exceptions\FileNotFoundException;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
@@ -315,13 +317,28 @@ class Invite extends Part implements Stringable
      *
      * @todo
      *
-     * @param $target_users_file A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body.
+     * @param $contents A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body.
      *
-     * @return PromiseInterface<void>
+     * @return PromiseInterface
      */
-    public function updateTargetUsers($target_users_file): PromiseInterface
+    public function updateTargetUsers(string $contents): PromiseInterface
     {
-        return reject(new \BadMethodCallException('Not implemented yet.'));
+        if (! $contents) {
+            return reject(new BadMethodCallException('The provided CSV contents are empty.'));
+        }
+
+        $multipart = new Multipart([
+            [
+                'name' => 'target_users_file',
+                'filename' => 'target_users.csv',
+                'content' => $contents,
+                'headers' => [
+                    'Content-Type' => 'text/csv',
+                ],
+            ],
+        ]);
+
+        return $this->http->put(Endpoint::bind(Endpoint::INVITE_TARGET_USERS, $this->id), (string) $multipart, $multipart->getHeaders());
     }
     
     /**
