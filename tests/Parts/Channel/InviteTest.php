@@ -50,6 +50,6 @@ final class InviteTest extends TestCase
             )
             ->willReturn(resolve(null));
 
-        $invite->updateTargetUsers($csvContent);
+        $invite->updateTargetUsersFromContent($csvContent);
     }
 }
