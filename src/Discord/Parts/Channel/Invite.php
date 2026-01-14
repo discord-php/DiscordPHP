@@ -17,7 +17,6 @@ use BadMethodCallException;
 use Carbon\Carbon;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
-use Discord\Exceptions\FileNotFoundException;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
