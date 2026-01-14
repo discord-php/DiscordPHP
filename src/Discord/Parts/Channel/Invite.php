@@ -313,13 +313,47 @@ class Invite extends Part implements Stringable
      * 
      * Requires the `MANAGE_GUILD` permission.
      *
-     * @todo
+     * @since 10.46.0
      *
-     * @param $contents A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body.
+     * @param resource|string $file A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body.
      *
      * @return PromiseInterface
      */
-    public function updateTargetUsers(string $contents): PromiseInterface
+    public function updateTargetUsers($file): PromiseInterface
+    {
+        $contents = '';
+        $filename = 'target_users.csv';
+
+        if (is_string($file) && file_exists($file)) {
+            $contents = file_get_contents($file);
+            $filename = basename($file);
+        } elseif (is_resource($file)) {
+            $contents = stream_get_contents($file);
+            $meta = stream_get_meta_data($file);
+            $filename = isset($meta['uri']) ? basename($meta['uri']) : 'target_users.csv';
+        }
+
+        if ($contents === false) {
+            return reject(new \InvalidArgumentException('The provided file could not be read.'));
+        }
+        
+        return $this->updateTargetUsersFromContent($contents, $filename);
+    }
+
+    /**
+     * Updates the users allowed to see and accept this invite.
+     *
+     * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
+     * 
+     * Requires the `MANAGE_GUILD` permission.
+     *
+     * @since 10.46.0
+     *
+     * @param string $contents A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body.
+     *
+     * @return PromiseInterface
+     */
+    public function updateTargetUsersFromContent(string $contents, string $filename = 'target_users.csv'): PromiseInterface
     {
         if (! $contents) {
             return reject(new \BadMethodCallException('The provided CSV contents are empty.'));
@@ -328,7 +362,7 @@ class Invite extends Part implements Stringable
         $multipart = new Multipart([
             [
                 'name' => 'target_users_file',
-                'filename' => 'target_users.csv',
+                'filename' => $filename,
                 'content' => $contents,
                 'headers' => [
                     'Content-Type' => 'text/csv',
