@@ -281,7 +281,7 @@ class Invite extends Part implements Stringable
 
     /**
      * Returns the roles for this invite.
-     * 
+     *
      * @since 10.46.0
      *
      * @return ExCollectionInterface<Role> The roles assigned to the user upon accepting the invite.
@@ -293,9 +293,9 @@ class Invite extends Part implements Stringable
 
     /**
      * Gets the users allowed to see and accept this invite.
-     * 
+     *
      * Response is a CSV file with a single column `Users` containing the user IDs.
-     * 
+     *
      * Requires the `MANAGE_GUILD` permission.
      *
      * @todo
@@ -311,7 +311,7 @@ class Invite extends Part implements Stringable
      * Updates the users allowed to see and accept this invite.
      *
      * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
-     * 
+     *
      * Requires the `MANAGE_GUILD` permission.
      *
      * @since 10.46.0
@@ -334,7 +334,7 @@ class Invite extends Part implements Stringable
      * Updates the users allowed to see and accept this invite.
      *
      * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
-     * 
+     *
      * Requires the `MANAGE_GUILD` permission.
      *
      * @since 10.46.0
@@ -355,9 +355,7 @@ class Invite extends Part implements Stringable
                 'name' => 'target_users_file',
                 'filename' => $filename,
                 'content' => $contents,
-                'headers' => [
-                    'Content-Type' => 'text/csv',
-                ],
+                'headers' => ['Content-Type' => 'text/csv'],
             ],
         ]);
 
@@ -366,7 +364,7 @@ class Invite extends Part implements Stringable
     
     /**
      * Processing target users from a CSV when creating or updating an invite is done asynchronously. This endpoint allows you to check the status of that job.
-     * 
+     *
      * Requires the `MANAGE_GUILD` permission.
      *
      * @todo
