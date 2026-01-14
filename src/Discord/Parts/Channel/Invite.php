@@ -296,10 +296,10 @@ class Invite extends Part implements Stringable
      * Response is a CSV file with a single column `Users` containing the user IDs.
      * 
      * Requires the `MANAGE_GUILD` permission.
+     * 
+     * @since 10.46.0
      *
-     * @todo
-     *
-     * @return PromiseInterface The multipart response containing the CSV file.
+     * @return PromiseInterface<string> The CSV file's content containing the user IDs.
      */
     public function getTargetUsers(): PromiseInterface
     {
