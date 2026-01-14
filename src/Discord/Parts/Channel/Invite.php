@@ -327,12 +327,11 @@ class Invite extends Part implements Stringable
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
-        $contents = file_get_contents($filepath);
-        if ($contents === false) {
+        if (($content = file_get_contents($filepath)) === false) {
             throw new FileNotFoundException("Unable to read file at path {$filepath}.");
         }
 
-        return $this->updateTargetUsersFromContent($contents, $filename ?? basename($filepath));
+        return $this->updateTargetUsersFromContent($content, $filename ?? basename($filepath));
     }
 
     /**
