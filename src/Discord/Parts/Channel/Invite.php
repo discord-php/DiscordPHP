@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
-use BadMethodCallException;
 use Carbon\Carbon;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
@@ -323,7 +322,7 @@ class Invite extends Part implements Stringable
     public function updateTargetUsers(string $contents): PromiseInterface
     {
         if (! $contents) {
-            return reject(new BadMethodCallException('The provided CSV contents are empty.'));
+            return reject(new \BadMethodCallException('The provided CSV contents are empty.'));
         }
 
         $multipart = new Multipart([
