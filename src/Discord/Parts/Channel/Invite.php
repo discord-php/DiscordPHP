@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
@@ -280,7 +281,7 @@ class Invite extends Part implements Stringable
 
     /**
      * Returns the roles for this invite.
-     * 
+     *
      * @since 10.46.0
      *
      * @return ExCollectionInterface<Role> The roles assigned to the user upon accepting the invite.
@@ -292,9 +293,9 @@ class Invite extends Part implements Stringable
 
     /**
      * Gets the users allowed to see and accept this invite.
-     * 
+     *
      * Response is a CSV file with a single column `Users` containing the user IDs.
-     * 
+     *
      * Requires the `MANAGE_GUILD` permission.
      * 
      * @todo Parse the CSV response to an array.
@@ -311,23 +312,66 @@ class Invite extends Part implements Stringable
      * Updates the users allowed to see and accept this invite.
      *
      * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
-     * 
+     *
      * Requires the `MANAGE_GUILD` permission.
      *
-     * @todo
+     * @since 10.46.0
      *
-     * @param $target_users_file A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body.
+     * @param string      $filepath Path to the file to send.
+     * @param string|null $filename Name to send the file as. `null` for the base name of `$filepath`.
      *
-     * @return PromiseInterface<void>
+     * @return PromiseInterface
+     * 
+     * @throws FileNotFoundException If the file does not exist or is not readable.
      */
-    public function updateTargetUsers($target_users_file): PromiseInterface
+    public function updateTargetUsers(string $filepath, ?string $filename = null): PromiseInterface
     {
-        return reject(new \BadMethodCallException('Not implemented yet.'));
+        if (! file_exists($filepath)) {
+            throw new FileNotFoundException("File does not exist at path {$filepath}.");
+        }
+
+        if (($content = file_get_contents($filepath)) === false) {
+            throw new FileNotFoundException("Unable to read file at path {$filepath}.");
+        }
+
+        return $this->updateTargetUsersFromContent($content, $filename ?? basename($filepath));
+    }
+
+    /**
+     * Updates the users allowed to see and accept this invite.
+     *
+     * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
+     *
+     * Requires the `MANAGE_GUILD` permission.
+     *
+     * @since 10.46.0
+     *
+     * @param string $content  Content of the file.
+     * @param string $filename Name to send the file as.
+     *
+     * @return PromiseInterface
+     */
+    public function updateTargetUsersFromContent(string $content, string $filename = 'target_users.csv'): PromiseInterface
+    {
+        if ($content === '') {
+            return reject(new \BadMethodCallException('The provided CSV contents are empty.'));
+        }
+
+        $multipart = new Multipart([
+            [
+                'name' => 'target_users_file',
+                'filename' => $filename,
+                'content' => $content,
+                'headers' => ['Content-Type' => 'text/csv'],
+            ],
+        ]);
+
+        return $this->http->put(Endpoint::bind(Endpoint::INVITE_TARGET_USERS, $this->id), (string) $multipart, $multipart->getHeaders());
     }
     
     /**
      * Processing target users from a CSV when creating or updating an invite is done asynchronously. This endpoint allows you to check the status of that job.
-     * 
+     *
      * Requires the `MANAGE_GUILD` permission.
      *
      * @todo
