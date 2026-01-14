@@ -352,7 +352,7 @@ class Invite extends Part implements Stringable
      */
     public function updateTargetUsersFromContent(string $content, string $filename = 'target_users.csv'): PromiseInterface
     {
-        if (! $content) {
+        if ($content === '') {
             return reject(new \BadMethodCallException('The provided CSV contents are empty.'));
         }
 
