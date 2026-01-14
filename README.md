@@ -112,3 +112,6 @@ We are open to contributions. However, please make sure you follow our coding st
 ## License
 
 MIT License, &copy; David Cole and other contributers 2016-present.
+
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/discord-php/DiscordPHP.svg?variant=adaptive)](https://starchart.cc/discord-php/DiscordPHP)
