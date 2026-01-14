@@ -45,8 +45,8 @@ final class InviteTest extends TestCase
             ->method('put')
             ->with(
                 $this->isInstanceOf(Endpoint::class),
-                $this->callback(fn ($body) => is_string($body) && strpos($body, $csvContent) !== false),
-                $this->callback(fn ($headers) => is_array($headers) && array_key_exists('Content-Type', $headers) && strpos($headers['Content-Type'], 'multipart/form-data') !== false)
+                $this->callback(fn ($body) => is_string($body) && str_contains($body, $csvContent)),
+                $this->callback(fn ($headers) => is_array($headers) && array_key_exists('Content-Type', $headers) && str_contains($headers['Content-Type'], 'multipart/form-data'))
             )
             ->willReturn(resolve(null));
 
