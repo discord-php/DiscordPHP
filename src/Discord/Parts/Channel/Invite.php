@@ -320,6 +320,8 @@ class Invite extends Part implements Stringable
      * @param string|null $filename Name to send the file as. `null` for the base name of `$filepath`.
      *
      * @return PromiseInterface
+     * 
+     * @throws FileNotFoundException If the file does not exist or is not readable.
      */
     public function updateTargetUsers(string $filepath, ?string $filename = null): PromiseInterface
     {
