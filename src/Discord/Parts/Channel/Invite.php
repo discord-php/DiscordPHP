@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
@@ -315,29 +316,18 @@ class Invite extends Part implements Stringable
      *
      * @since 10.46.0
      *
-     * @param resource|string $file A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body.
+     * @param string      $filepath Path to the file to send.
+     * @param string|null $filename Name to send the file as. `null` for the base name of `$filepath`.
      *
      * @return PromiseInterface
      */
-    public function updateTargetUsers($file): PromiseInterface
+    public function updateTargetUsers(string $filepath, ?string $filename = null): PromiseInterface
     {
-        $contents = '';
-        $filename = 'target_users.csv';
-
-        if (is_string($file) && file_exists($file)) {
-            $contents = file_get_contents($file);
-            $filename = basename($file);
-        } elseif (is_resource($file)) {
-            $contents = stream_get_contents($file);
-            $meta = stream_get_meta_data($file);
-            $filename = isset($meta['uri']) ? basename($meta['uri']) : 'target_users.csv';
-        }
-
-        if ($contents === false) {
-            return reject(new \InvalidArgumentException('The provided file could not be read.'));
+        if (! file_exists($filepath)) {
+            throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
         
-        return $this->updateTargetUsersFromContent($contents, $filename);
+        return $this->updateTargetUsersFromContent(file_get_contents($filepath), $filename ?? basename($filepath));
     }
 
     /**
@@ -349,7 +339,8 @@ class Invite extends Part implements Stringable
      *
      * @since 10.46.0
      *
-     * @param string $contents A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body.
+     * @param string $content  Content of the file.
+     * @param string $filename Name to send the file as.
      *
      * @return PromiseInterface
      */
