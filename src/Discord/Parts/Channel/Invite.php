@@ -297,9 +297,10 @@ class Invite extends Part implements Stringable
      * 
      * Requires the `MANAGE_GUILD` permission.
      * 
+     * @todo Parse the CSV response to an array.
      * @since 10.46.0
      *
-     * @return PromiseInterface<string> The CSV file's content containing the user IDs.
+     * @return PromiseInterface<array|string> The CSV file's content containing the user IDs.
      */
     public function getTargetUsers(): PromiseInterface
     {
