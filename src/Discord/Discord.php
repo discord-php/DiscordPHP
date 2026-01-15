@@ -374,9 +374,9 @@ class Discord
     /**
      * The voice handler, of clients and packets.
      *
-     * @var Manager
+     * @var Manager|null
      */
-    public Manager $voice;
+    public ?Manager $voice = null;
 
     /**
      * The transport compression setting.
