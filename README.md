@@ -87,12 +87,12 @@ $discord = new Discord([
 ]);
 
 $discord->on('ready', function (Discord $discord) {
-    echo "Bot is ready!", PHP_EOL;
+    $discord->logger->info("Bot is ready!");
 
     // Listen for messages.
     $discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
-        echo "{$message->author->username}: {$message->content}", PHP_EOL;
         // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
+        $discord->logger->info("{$message->author->username}: {$message->content}");
     });
 });
 
