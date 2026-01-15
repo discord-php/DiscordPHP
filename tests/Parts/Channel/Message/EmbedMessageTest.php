@@ -11,6 +11,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
+use Discord\Builders\MessageBuilder;
 use Discord\Discord;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Author;
@@ -29,7 +30,6 @@ final class EmbedMessageTest extends DiscordTestCase
         return wait(function (Discord $discord, $resolve) {
             $embed = new Embed($discord);
             $embed->setTitle('Testing Embed')
-                ->setType(Embed::TYPE_RICH)
                 ->setAuthor('DiscordPHP Bot')
                 ->setDescription('Embed Description')
                 ->setColor(getColor('lightblue'))
@@ -45,7 +45,7 @@ final class EmbedMessageTest extends DiscordTestCase
                 ])
                 ->setFooter('Footer Value');
 
-            $this->channel()->sendEmbed($embed)
+            $this->channel()->sendMessage(MessageBuilder::new()->addEmbed($embed))
                 ->then(function (Message $message) use ($resolve) {
                     $this->assertEquals(1, $message->embeds->count());
 

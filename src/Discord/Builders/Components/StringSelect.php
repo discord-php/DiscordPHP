@@ -16,7 +16,7 @@ namespace Discord\Builders\Components;
 /**
  * Select menu for picking from defined text options.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#select-menus
+ * @link https://discord.com/developers/docs/components/reference#select-menus
  *
  * @since 10.0.0 Renamed from SelectMenu to StringSelect
  * @since 7.0.0
@@ -36,7 +36,7 @@ class StringSelect extends SelectMenu
      *
      * @var int
      */
-    protected $type = Component::TYPE_STRING_SELECT;
+    protected $type = ComponentObject::TYPE_STRING_SELECT;
 
     /**
      * Array of options that the select menu has.
@@ -71,7 +71,7 @@ class StringSelect extends SelectMenu
      */
     public function addOption(Option $option): self
     {
-        if (count($this->options) > 25) {
+        if (count($this->options) >= 25) {
             throw new \OverflowException('You can only have 25 options per select menu.');
         }
 

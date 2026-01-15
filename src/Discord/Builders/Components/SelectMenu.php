@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\Builders\Components;
 
 use Discord\Discord;
-use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
 use React\EventLoop\TimerInterface;
@@ -28,7 +28,7 @@ use function Discord\poly_strlen;
  * On desktop, clicking on a select menu opens a dropdown-style UI.
  * On mobile, tapping a select menu opens up a half-sheet with the options.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#select-menus
+ * @link https://discord.com/developers/docs/components/reference#select-menus
  *
  * @since 10.0.0 Renamed from SelectMenu to StringSelect and made SelectMenu abstract
  * @since 10.9.0 Extends Interactive instead of Component
@@ -42,7 +42,7 @@ abstract class SelectMenu extends Interactive
      *
      * @var int
      */
-    protected $type = Component::TYPE_SELECT_MENU; // Default type
+    protected $type = ComponentObject::TYPE_STRING_SELECT; // Default type
 
     /**
      * Custom ID to identify the select menu.
@@ -365,7 +365,8 @@ abstract class SelectMenu extends Interactive
                 if (empty($this->options)) {
                     $response = $callback($interaction);
                 } else {
-                    $options = Collection::for(Option::class, null);
+                    /** @var ExCollectionInterface<Option> $options */
+                    $options = $this->discord->getCollectionClass()::for(Option::class, null);
 
                     foreach ($this->options as $option) {
                         if (in_array($option->getValue(), $interaction->data->values)) {

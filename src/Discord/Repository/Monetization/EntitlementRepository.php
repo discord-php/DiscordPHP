@@ -13,8 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\Repository\Monetization;
 
-use Discord\Discord;
-use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Monetization\Entitlement;
@@ -99,7 +98,7 @@ class EntitlementRepository extends AbstractRepository
      *
      * @throws \RangeException
      *
-     * @return PromiseInterface<Collection<Entitlement[]>>
+     * @return PromiseInterface<ExCollectionInterface<Entitlement[]>>
      */
     public function getEntitlements(array $options = []): PromiseInterface
     {
@@ -150,7 +149,8 @@ class EntitlementRepository extends AbstractRepository
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $entitlements = Collection::for(Entitlement::class);
+            /** @var ExCollectionInterface<Entitlement> $entitlements */
+            $entitlements = $this->discord->getCollectionClass()::for(Entitlement::class);
 
             foreach ($responses as $response) {
                 $entitlements->pushItem($this->get('id', $response->id) ?? $this->create($response, true));

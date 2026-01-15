@@ -13,23 +13,32 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Embed;
 
+use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
 
 /**
  * An image for an embed.
  *
- * @link https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure
- * @link https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure
+ * @link https://discord.com/developers/docs/resources/message#embed-object-embed-image-structure
+ * @link https://discord.com/developers/docs/resources/message#embed-object-embed-thumbnail-structure
  *
  * @since 4.0.3
  *
- * @property      string       $url       The source of the image. Must be https.
- * @property-read ?string|null $proxy_url A proxied version of the image.
- * @property-read ?int|null    $height    The height of the image.
- * @property-read ?int|null    $width     The width of the image.
+ * @property string       $url                 The source of the image. Must be https.
+ * @property ?string|null $proxy_url           A proxied version of the image.
+ * @property ?int|null    $height              The height of the image.
+ * @property ?int|null    $width               The width of the image.
+ * @property ?string|null $content_type        The image's media type.
+ * @property ?string|null $placeholder         Thumbhash placeholder of the image.
+ * @property ?int|null    $placeholder_version Version of the placeholder.
+ * @property ?string|null $description         Description (alt text) for the image.
+ * @property ?int|null    $flags               Embed media flags combined as a bitfield.
  */
 class Image extends Part
 {
+    /** This is an animated image. */
+    public const FLAG_IS_ANIMATED = Attachment::FLAG_IS_ANIMATED;
+
     /**
      * @inheritDoc
      */
@@ -38,5 +47,10 @@ class Image extends Part
         'proxy_url',
         'height',
         'width',
+        'content_type',
+        'placeholder',
+        'placeholder_version',
+        'description',
+        'flags',
     ];
 }

@@ -14,14 +14,17 @@ declare(strict_types=1);
 namespace Discord\Repository;
 
 use Discord\Discord;
+use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
 use Discord\Helpers\Collection;
 use Discord\Helpers\LegacyCacheWrapper;
+use Discord\Http\Http;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.
  *
  * @since 4.0.0
+ * @todo Will no longer directly extend Collection in v11
  *
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
@@ -32,6 +35,7 @@ use Discord\Helpers\LegacyCacheWrapper;
 abstract class AbstractRepository extends Collection implements AbstractRepositoryInterface
 {
     use AbstractRepositoryTrait;
+
     /**
      * The collection discriminator.
      *
@@ -52,6 +56,39 @@ abstract class AbstractRepository extends Collection implements AbstractReposito
      * @var string
      */
     protected $class;
+
+    /**
+     * The HTTP client.
+     *
+     * @var Http Client.
+     */
+    protected $http;
+
+    /**
+     * The parts factory.
+     *
+     * @var Factory Parts factory.
+     */
+    protected $factory;
+
+    /**
+     * Endpoints for interacting with the Discord servers.
+     *
+     * @var array Endpoints.
+     */
+    protected $endpoints = [];
+
+    /**
+     * Variables that are related to the repository.
+     *
+     * @var array Variables.
+     */
+    protected $vars = [];
+
+    /**
+     * @var CacheWrapper
+     */
+    protected $cache;
 
     /**
      * AbstractRepository constructor.

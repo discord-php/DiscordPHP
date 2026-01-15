@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild\AuditLog;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -171,6 +170,12 @@ class Entry extends Part
     public const HOME_SETTINGS_CREATE = 190;
     /** Guild Server Guide was updated. */
     public const HOME_SETTINGS_UPDATE = 191;
+    /** Guild Scheduled Event Exception was created */
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_CREATE = 200;
+    /** Guild Scheduled Event Exception was updated */
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_UPDATE = 201;
+    /** Guild Scheduled Event Exception was deleted */
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_DELETE = 202;
     /** Guild Profile was updated. */
     public const GUILD_PROFILE_UPDATE = 211;
     /** Guild migrated and bypassed slowmode permission. */
@@ -208,7 +213,7 @@ class Entry extends Part
      */
     protected function getChangesAttribute(): ExCollectionInterface
     {
-        return new Collection($this->attributes['changes'] ?? [], 'key', null);
+        return new ($this->discord->getCollectionClass())($this->attributes['changes'] ?? [], 'key', null);
     }
 
     /**

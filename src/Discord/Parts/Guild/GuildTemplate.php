@@ -18,6 +18,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\GuildTemplateRepository;
 use DomainException;
 use React\Promise\PromiseInterface;
 use Stringable;
@@ -249,6 +250,27 @@ class GuildTemplate extends Part implements Stringable
         }
 
         return $guild->templates->sync($this->code);
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return GuildTemplateRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): GuildTemplateRepository|null
+    {
+        if (! isset($this->attributes['source_guild_id'])) {
+            return null;
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['source_guild_id']], true);
+
+        return $guild->templates;
     }
 
     /**

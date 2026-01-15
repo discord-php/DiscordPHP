@@ -16,8 +16,6 @@ namespace Discord\Parts\User;
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\BigInt;
-use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -25,6 +23,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
 use Discord\Parts\Channel\Overwrite;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
@@ -33,6 +32,7 @@ use Discord\Parts\Permissions\Permission;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\PresenceUpdate;
+use Discord\Repository\Guild\MemberRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -381,8 +381,8 @@ class Member extends Part implements Stringable
      */
     public function setRoles($roles, ?string $reason = null): PromiseInterface
     {
-        if ($roles instanceof CollectionInterface) {
-            $roles = $roles->toArray();
+        if ($roles instanceof ExCollectionInterface) {
+            $roles = $roles->jsonSerialize();
         }
         if (! is_array($roles)) {
             return reject(new \InvalidArgumentException('Roles must be an array of Role instances or Role IDs.'));
@@ -423,11 +423,11 @@ class Member extends Part implements Stringable
      *
      * @see User::sendMessage()
      *
-     * @param MessageBuilder|string                 $message          The message builder that should be converted into a message, or the string content of the message.
-     * @param bool                                  $tts              Whether the message is TTS.
-     * @param \Discord\Parts\Embed\Embed|array|null $embed            An embed object or array to send in the message.
-     * @param AllowedMentions|array|null            $allowed_mentions Allowed mentions object for the message.
-     * @param Message|null                          $replyTo          Sends the message as a reply to the given message instance.
+     * @param MessageBuilder|string      $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                       $tts              Whether the message is TTS.
+     * @param Embed|array|null           $embed            An embed object or array to send in the message.
+     * @param AllowedMentions|array|null $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null               $replyTo          Sends the message as a reply to the given message instance.
      *
      * @throws \RuntimeException
      *
@@ -769,7 +769,8 @@ class Member extends Part implements Stringable
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['roles'])) {
             return $roles;
@@ -1002,6 +1003,27 @@ class Member extends Part implements Stringable
         return [
             'roles' => array_values($this->attributes['roles']),
         ];
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return MemberRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): MemberRepository|null
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        /** @var Guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->members;
     }
 
     /**

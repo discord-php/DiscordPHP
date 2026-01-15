@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Parts\Channel\Message;
 
 use Carbon\Carbon;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -58,7 +57,7 @@ class MessageCall extends Part
      */
     protected function getUsersAttribute(): ExCollectionInterface
     {
-        return Collection::for(User::class)->push(array_map(
+        return $this->discord->getCollectionClass()::for(User::class)->push(array_map(
             fn ($userData) => $this->discord->users->get('id', $userData) ?? $this->factory->part(User::class, ['id' => $userData], true),
             $this->attributes['participants']
         ));

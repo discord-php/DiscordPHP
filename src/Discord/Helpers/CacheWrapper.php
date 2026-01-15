@@ -15,7 +15,9 @@ namespace Discord\Helpers;
 
 use Discord\Discord;
 use Discord\Parts\Part;
+use Psr\SimpleCache\CacheInterface as PSRCacheInterface;
 use React\Cache\ArrayCache;
+use React\Cache\CacheInterface as ReactCacheInterface;
 use React\Promise\PromiseInterface;
 use Throwable;
 use WeakReference;
@@ -41,7 +43,7 @@ class CacheWrapper
     protected $discord;
 
     /**
-     * @var \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface
+     * @var ReactCacheInterface|PSRCacheInterface
      */
     protected $interface;
 

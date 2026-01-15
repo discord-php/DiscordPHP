@@ -29,6 +29,74 @@ abstract class ComponentObject extends Component
     public const USAGE = [];
 
     /**
+     * Available components and their respective classes.
+     *
+     * @var array<int, string>
+     */
+    public const TYPES = [
+        0 => ComponentObject::class, // Fallback for unknown types
+        ComponentObject::TYPE_ACTION_ROW => ActionRow::class,
+        ComponentObject::TYPE_BUTTON => Button::class,
+        ComponentObject::TYPE_STRING_SELECT => StringSelect::class,
+        ComponentObject::TYPE_TEXT_INPUT => TextInput::class,
+        ComponentObject::TYPE_USER_SELECT => UserSelect::class,
+        ComponentObject::TYPE_ROLE_SELECT => RoleSelect::class,
+        ComponentObject::TYPE_MENTIONABLE_SELECT => MentionableSelect::class,
+        ComponentObject::TYPE_CHANNEL_SELECT => ChannelSelect::class,
+        ComponentObject::TYPE_SECTION => Section::class,
+        ComponentObject::TYPE_TEXT_DISPLAY => TextDisplay::class,
+        ComponentObject::TYPE_THUMBNAIL => Thumbnail::class,
+        ComponentObject::TYPE_MEDIA_GALLERY => MediaGallery::class,
+        ComponentObject::TYPE_FILE => File::class,
+        ComponentObject::TYPE_SEPARATOR => Separator::class,
+        ComponentObject::TYPE_CONTAINER => Container::class,
+        ComponentObject::TYPE_LABEL => Label::class,
+        ComponentObject::TYPE_FILE_UPLOAD => FileUpload::class,
+    ];
+
+    /** Container to display a row of interactive components. */
+    public const TYPE_ACTION_ROW = 1;
+    /** Button object. */
+    public const TYPE_BUTTON = 2;
+    /** Select menu for picking from defined text options. */
+    public const TYPE_STRING_SELECT = 3;
+    /** Text input object. */
+    public const TYPE_TEXT_INPUT = 4;
+    /** Select menu for users. */
+    public const TYPE_USER_SELECT = 5;
+    /** Select menu for roles. */
+    public const TYPE_ROLE_SELECT = 6;
+    /** Select menu for mentionables (users and roles). */
+    public const TYPE_MENTIONABLE_SELECT = 7;
+    /** Select menu for channels. */
+    public const TYPE_CHANNEL_SELECT = 8;
+
+    // Requires IS_COMPONENTS_V2 flag
+    /** Container to display text alongside an accessory component. */
+    public const TYPE_SECTION = 9;
+    /** Markdown text. */
+    public const TYPE_TEXT_DISPLAY = 10;
+    /** Small image that can be used as an accessory. */
+    public const TYPE_THUMBNAIL = 11;
+    /** Display images and other media. */
+    public const TYPE_MEDIA_GALLERY = 12;
+    /** Displays an attached file. */
+    public const TYPE_FILE = 13;
+    /** Component to add vertical padding between other components. */
+    public const TYPE_SEPARATOR = 14;
+    /** Undocumented. */
+    public const TYPE_CONTENT_INVENTORY_ENTRY = 16;
+    /** Container that visually groups a set of components. */
+    public const TYPE_CONTAINER = 17;
+
+    /** Container associating a label and description with a component. */
+    public const TYPE_LABEL = 18;
+    /** Component for uploading files. */
+    public const TYPE_FILE_UPLOAD = 19;
+    /** Undocumented. Used by the client for checkpoint. */
+    public const TYPE_CHECKPOINT_CARD = 20;
+
+    /**
      * The type of the component.
      *
      * @var int

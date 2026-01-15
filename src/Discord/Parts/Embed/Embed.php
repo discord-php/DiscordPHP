@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Parts\Embed;
 
 use Carbon\Carbon;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
@@ -42,6 +41,7 @@ use function Discord\poly_strlen;
  * @property-read ?Provider|null                        $provider    The provider of the embed.
  * @property      ?Author|null                          $author      The author of the embed.
  * @property      ?ExCollectionInterface<Field>|Field[] $fields      A collection of embed fields (max of 25).
+ * @property      ?int|null                             $flags       Embedded flags combined as a bitfield.
  */
 class Embed extends Part
 {
@@ -71,6 +71,9 @@ class Embed extends Part
     /** Poll result embed. */
     public const TYPE_POLL_RESULT = 'poll_result';
 
+    /** This embed is a reply to an activity card and is no longer displayed. */
+    public const FLAG_IS_CONTENT_INVENTORY_ENTRY = 1 << 5;
+
     /**
      * @inheritDoc
      */
@@ -88,6 +91,7 @@ class Embed extends Part
         'provider',
         'author',
         'fields',
+        'flags',
     ];
 
     /**

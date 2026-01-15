@@ -183,7 +183,7 @@ abstract class Permission extends Part
     public const USE_EXTERNAL_APPS = 50;
     /** Allows pinning and unpinning messages. */
     public const PIN_MESSAGES = 51;
-    /** Allows members to send messages in this channel without being affected by slowmode. */
+    /** Allows bypassing slowmode restrictions. */
     public const BYPASS_SLOWMODE = 52;
 
     /**
@@ -229,6 +229,7 @@ abstract class Permission extends Part
         'use_external_sounds' => self::USE_EXTERNAL_SOUNDS,
         'send_voice_messages' => self::SEND_VOICE_MESSAGES,
         'send_polls' => self::SEND_POLLS,
+        'bypass_slowmode' => self::BYPASS_SLOWMODE,
     ];
 
     /**
@@ -247,6 +248,7 @@ abstract class Permission extends Part
         'request_to_speak' => self::REQUEST_TO_SPEAK,
         'manage_events' => self::MANAGE_EVENTS,
         'create_events' => self::CREATE_EVENTS,
+        'bypass_slowmode' => self::BYPASS_SLOWMODE,
     ];
 
     /**
@@ -302,7 +304,7 @@ abstract class Permission extends Part
      *
      * @var array
      */
-    private $permissions = [];
+    protected $permissions = [];
 
     /**
      * @inheritDoc

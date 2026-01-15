@@ -20,6 +20,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Repository\VoiceStateRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -141,6 +142,27 @@ class VoiceStateUpdate extends Part
     protected function getRequestToSpeakTimestampAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('request_to_speak_timestamp');
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return VoiceStateRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): VoiceStateRepository|null
+    {
+        if (! isset($this->attributes['guild_id'], $this->attributes['user_id'])) {
+            return null;
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->voice_states;
     }
 
     /**

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Discord\Parts\User;
 
 use Discord\Exceptions\FileNotFoundException;
-use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\OAuth\ApplicationRoleConnectionMetadata;
@@ -139,7 +139,8 @@ class Client extends Part
     protected function __getCurrentUserConnections(): PromiseInterface
     {
         return $this->http->get(Endpoint::USER_CURRENT_CONNECTIONS)->then(function ($response) {
-            $collection = Collection::for(Connection::class);
+            /** @var ExCollectionInterface<Connection> $collection */
+            $collection = $this->discord->getCollectionClass()::for(Connection::class);
 
             foreach ($response as $connection) {
                 $collection->pushItem($this->factory->part(Connection::class, $connection, true));

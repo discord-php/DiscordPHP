@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\WebSockets;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
@@ -180,6 +179,6 @@ class PresenceUpdate extends Part
             return $member->roles;
         }
 
-        return Collection::for(Role::class);
+        return $this->discord->getCollectionClass()::for(Role::class);
     }
 }

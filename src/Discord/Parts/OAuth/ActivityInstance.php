@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Discord\Parts\OAuth;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\ActivityInstanceRepository;
 use React\Promise\PromiseInterface;
 
 /**
@@ -63,7 +63,8 @@ class ActivityInstance extends Part
             return $this->attributes['users'];
         }
 
-        $collection = Collection::for(User::class);
+        /** @var ExCollectionInterface<User> $collection */
+        $collection = $this->discord->getCollectionClass()::for(User::class);
 
         foreach ($this->attributes['users'] as $user) {
             $collection->pushItem($this->discord->users->get('id', $user->id) ?? $this->factory->part(User::class, (array) $user, true));
@@ -72,6 +73,20 @@ class ActivityInstance extends Part
         $this->attributes['users'] = $collection;
 
         return $collection;
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return ActivityInstanceRepository The repository.
+     */
+    public function getRepository(): ActivityInstanceRepository
+    {
+        return $this->discord->application->activity_instances;
     }
 
     /**

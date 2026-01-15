@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Builders;
 
 use Discord\Builders\Components\ActionRow;
-use Discord\Builders\Components\Component;
 use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\Components\Contracts\ComponentV2;
 use Discord\Builders\Components\Interactive;
@@ -27,6 +26,8 @@ use Discord\Parts\Channel\Message\AllowedMentions;
 use Discord\Parts\Channel\Poll\Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
+use Discord\Repository\Channel\MessageRepository;
+use Discord\Repository\PrivateChannelRepository;
 use JsonSerializable;
 
 use function Discord\poly_strlen;
@@ -40,6 +41,8 @@ use function Discord\poly_strlen;
  */
 class MessageBuilder extends Builder implements JsonSerializable
 {
+    use ComponentsTrait;
+
     /**
      * Content of the message.
      *
@@ -104,13 +107,6 @@ class MessageBuilder extends Builder implements JsonSerializable
     protected $forward;
 
     /**
-     * Components to send with this message.
-     *
-     * @var ComponentObject[]|null
-     */
-    protected $components;
-
-    /**
      * IDs of up to 3 stickers in the server to send in the message.
      *
      * @var string[]
@@ -160,6 +156,20 @@ class MessageBuilder extends Builder implements JsonSerializable
     public static function new(): self
     {
         return new static();
+    }
+
+    /**
+     * Creates the message in the given repository.
+     *
+     * @param MessageRepository|PrivateChannelRepository $repository
+     *
+     * @return Message
+     *
+     * @since 10.41.0
+     */
+    public function create(MessageRepository|PrivateChannelRepository $repository): Message
+    {
+        return $repository->create($this->jsonSerialize());
     }
 
     /**
@@ -420,76 +430,14 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * Adds a component to the builder.
-     *
-     * @param ComponentObject $component Component to add.
-     *
-     * @throws \InvalidArgumentException Component is not a valid type.
-     * @throws \OverflowException        Builder exceeds component limits.
-     *
-     * @return $this
-     */
-    public function addComponent(ComponentObject $component): self
-    {
-        /*
-        if (! in_array($component::USAGE, ['Message'])) {
-            throw new \InvalidArgumentException('Invalid component type for messages.');
-        }
-        */
-
-        if ($component instanceof Interactive) {
-            $component = ActionRow::new()->addComponent($component);
-        }
-
-        if ($component instanceof ComponentV2) {
-            $this->setIsComponentsV2Flag();
-        }
-
-        if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
-            $this->enforceV2Limits();
-        } else {
-            $this->enforceV1Limits($component);
-        }
-
-        $this->components ??= [];
-
-        $this->components[] = $component;
-
-        return $this;
-    }
-
-    /**
-     * Add a group of components to the builder.
-     *
-     * @param ComponentObject[] $components Components to add.
-     *
-     * @throws \InvalidArgumentException Component is not a valid type.
-     * @throws \OverflowException        Builder exceeds component limits.
-     *
-     * @return $this
-     *
-     * @since 10.19.0
-     */
-    public function addComponents($components): self
-    {
-        foreach ($components as $component) {
-            $this->addComponent($component);
-        }
-
-        return $this;
-    }
-
-    /**
      * Validates the total number of components added to the message.
      *
      * @throws \OverflowException If the total number of components is 40 or more.
      */
     protected function enforceV2Limits(): void
     {
-        if (isset($this->components)) {
-            if ($this->countTotalComponents() >= 40) {
-                throw new \OverflowException('You can only add 40 components to a v2 message');
-            }
+        if ($this->countTotalComponents() >= 40) {
+            throw new \OverflowException('You can only add 40 components to a v2 message');
         }
     }
 
@@ -507,10 +455,8 @@ class MessageBuilder extends Builder implements JsonSerializable
             throw new \InvalidArgumentException('You can only add action rows as components to v1 messages. Put your other components inside an action row.');
         }
 
-        if (isset($this->components)) {
-            if (count($this->components) >= 5) {
-                throw new \OverflowException('You can only add 5 components to a v1 message');
-            }
+        if (count($this->components) >= 5) {
+            throw new \OverflowException('You can only add 5 components to a v1 message');
         }
     }
 
@@ -536,7 +482,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function removeComponent(Component $component): self
+    public function removeComponent($component): self
     {
         if (! isset($this->components)) {
             return $this;
@@ -551,19 +497,38 @@ class MessageBuilder extends Builder implements JsonSerializable
     }
 
     /**
-     * Sets the components of the message. Removes the existing components in the process.
+     * Adds a component to the builder.
      *
-     * @param ComponentObject[]|null $components New message components.
+     * @param ComponentObject $component Component to add.
+     *
+     * @throws \InvalidArgumentException Component is not a valid type.
+     * @throws \OverflowException        Builder exceeds component limits.
      *
      * @return $this
      */
-    public function setComponents($components = null): self
+    public function addComponent($component): self
     {
-        $this->components = [];
-
-        foreach ($components ?? [] as $component) {
-            $this->components[] = $component;
+        if (! in_array('Message', $component::USAGE, true)) {
+            throw new \InvalidArgumentException('Invalid component type for messages.');
         }
+
+        if ($component instanceof Interactive) {
+            $component = ActionRow::new()->addComponent($component);
+        }
+
+        if ($component instanceof ComponentV2) {
+            $this->setIsComponentsV2Flag();
+        }
+
+        $this->components ??= [];
+        
+        if ($this->flags & Message::FLAG_IS_COMPONENTS_V2) {
+            $this->enforceV2Limits();
+        } else {
+            $this->enforceV1Limits($component);
+        }
+
+        $this->components[] = $component;
 
         return $this;
     }
@@ -581,7 +546,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Adds a sticker to the builder. Only used for sending message or creating forum thread.
      *
-     * @param string|Sticker $sticker Sticker to add.
+     * @param Sticker|string $sticker Sticker to add.
      *
      * @throws \OverflowException Builder exceeds 3 stickers.
      *
@@ -605,7 +570,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Removes a sticker from the builder.
      *
-     * @param string|Sticker $sticker Sticker to remove.
+     * @param Sticker|string $sticker Sticker to remove.
      *
      * @return $this
      */
@@ -625,7 +590,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets the stickers of the builder. Removes the existing stickers in the process.
      *
-     * @param array $stickers New sticker ids.
+     * @param Sticker[]|string[] $stickers New sticker ids.
      *
      * @return $this
      */

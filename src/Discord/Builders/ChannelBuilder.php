@@ -17,6 +17,7 @@ use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Overwrite;
 use Discord\Parts\Guild\Emoji;
+use Discord\Repository\Guild\ChannelRepository;
 use Discord\Voice\Region;
 use JsonSerializable;
 
@@ -52,9 +53,28 @@ class ChannelBuilder extends Builder implements JsonSerializable
     protected ?int $default_forum_layout; // Forum
     protected ?int $default_thread_rate_limit_per_user; // Text, Announcement, Forum, Media
 
+    /**
+     * Creates a new channel builder.
+     *
+     * @return static
+     */
     public static function new(string $name): self
     {
         return (new static())->setName($name);
+    }
+
+    /**
+     * Creates the channel in the given repository.
+     *
+     * @param ChannelRepository $repository
+     *
+     * @return Channel
+     *
+     * @since 10.41.0
+     */
+    public function create(ChannelRepository $repository): Channel
+    {
+        return $repository->create($this->jsonSerialize());
     }
 
     /**

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild\AuditLog;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Webhook;
 use Discord\Parts\Guild\AutoModeration\Rule;
@@ -147,7 +146,8 @@ class AuditLog extends Part
             return $this->attributes['users'];
         }
 
-        $collection = Collection::for(User::class);
+        /** @var ExCollectionInterface<User> $collection */
+        $collection = $this->discord->getCollectionClass()::for(User::class);
 
         foreach ($this->attributes['users'] ?? [] as $user) {
             $collection->pushItem($this->discord->users->get('id', $user->id) ?? $this->factory->part(User::class, (array) $user, true));

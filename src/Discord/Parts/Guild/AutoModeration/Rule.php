@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild\AutoModeration;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -21,6 +20,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\AutoModerationRuleRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -140,7 +140,8 @@ class Rule extends Part
      */
     protected function getExemptRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['exempt_roles'])) {
             return $roles;
@@ -164,7 +165,8 @@ class Rule extends Part
      */
     protected function getExemptChannelsAttribute(): ExCollectionInterface
     {
-        $channels = new Collection();
+        /** @var ExCollectionInterface $channels */
+        $channels = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['exempt_channels'])) {
             return $channels;
@@ -192,9 +194,7 @@ class Rule extends Part
             'name' => $this->name,
             'event_type' => $this->event_type,
             'trigger_type' => $this->trigger_type,
-            'actions' => array_values($this->actions->map(function (Action $action) {
-                return $action->getCreatableAttributes();
-            })->toArray()),
+            'actions' => array_values($this->actions->map(fn (Action $action) => $action->getCreatableAttributes())->jsonSerialize()),
         ];
 
         $attr += $this->makeOptionalAttributes([
@@ -231,6 +231,27 @@ class Rule extends Part
         }
 
         return $attr;
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return AutoModerationRuleRepository|null The repository, or null if required part data is missing.
+     */
+    public function getRepository(): AutoModerationRuleRepository|null
+    {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
+        /** @var Guild $guild */
+        $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+        return $guild->auto_moderation_rules;
     }
 
     /**

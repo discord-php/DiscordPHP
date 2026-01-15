@@ -13,11 +13,12 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Guild;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\EmojiRepository;
+use Discord\Repository\Guild\EmojiRepository as GuildEmojiRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -78,7 +79,8 @@ class Emoji extends Part implements Stringable
      */
     protected function getRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['roles'])) {
             return $roles;
@@ -155,6 +157,27 @@ class Emoji extends Part implements Stringable
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return EmojiRepository|GuildEmojiRepository The repository.
+     */
+    public function getRepository(): EmojiRepository|GuildEmojiRepository
+    {
+        if (isset($this->attributes['guild_id'])) {
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->emojis;
+        }
+
+        return $this->discord->emojis;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
@@ -173,11 +196,9 @@ class Emoji extends Part implements Stringable
                     return reject(new NoPermissionsException("You do not have permission to create or manage emojis in the guild {$guild->id}."));
                 }
             }
-
-            return $guild->emojis->save($this, $reason);
         }
 
-        return $this->discord->emojis->save($this, $reason);
+        return $this->getRepository()->save($this, $reason);
     }
 
     /**

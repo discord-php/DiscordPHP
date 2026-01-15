@@ -22,9 +22,15 @@ use React\Promise\PromiseInterface;
 use function React\Promise\reject;
 
 /**
- * Used only to search messages sent in a guild.
+ * Returns a list of messages without the `reactions` key that match a search query in the guild. Requires the `READ_MESSAGE_HISTORY` permission.
  *
- * All bots with the message content intent can use it, but it's not considered stable yet, and Discord might make changes or remove bot access if necessary.
+ * If the entity you are searching is not yet indexed, the endpoint will return a 202 accepted response.
+ * The response body will not contain any search results, and will look similar to an error response.
+ *
+ * Due to speed optimizations, search may return slightly less results than the limit specified when messages have not been accessed for a long time.
+ * Clients should not rely on the length of the `messages` array to paginate results.
+ *
+ * Additionally, when messages are actively being created or deleted, the `total_results` field may not be accurate.
  *
  * @see \Discord\Parts\Guild\GuildSearch
  *
@@ -63,32 +69,28 @@ class MessageRepository extends AbstractRepository
     /**
      * Freshens the repository cache.
      *
-     * @param array $queryparams Query string params to add to the request (no validation).
-     *                           Supported parameters:
-     *                           - sort_by: Sorting mode. See SortingMode schema.
-     *                           - sort_order: Sorting order. See SortingOrder schema.
-     *                           - content: Message content to search for (array|string, max 1024 chars).
-     *                           - slop: Integer, minimum 0, maximum 100.
-     *                           - author_id: Author ID (SnowflakeType|null, up to 1521 unique items).
-     *                           - author_type: Author type (AuthorType, up to 1521 unique items).
-     *                           - mentions: Mentioned user ID (SnowflakeType|null, up to 1521 unique items).
-     *                           - mention_everyone: Boolean, whether to include messages mentioning everyone.
-     *                           - min_id: Minimum message ID (SnowflakeType).
-     *                           - max_id: Maximum message ID (SnowflakeType).
-     *                           - limit: Integer, minimum 1, maximum 25.
-     *                           - offset: Integer, minimum 0, maximum 9975.
-     *                           - cursor: Cursor for pagination (ScoreCursor or TimestampCursor).
-     *                           - has: Message feature (HasOption, up to 1521 unique items).
-     *                           - link_hostname: Link hostname (string|null, max 152133 chars each, up to 1521 unique items).
-     *                           - embed_provider: Embed providers (string|null, max 256 chars each, up to 1521 unique items).
-     *                           - embed_type: Embed type (SearchableEmbedType|null, up to 1521 unique items).
-     *                           - attachment_extension: Attachment extension (string|null, max 152133 chars each, up to 1521 unique items).
-     *                           - attachment_filename: Attachment filename (string, max 1024 chars).
-     *                           - pinned: Boolean, whether to include pinned messages.
-     *                           - command_id: Command ID (SnowflakeType).
-     *                           - command_name: Command name (string, max 32 chars).
-     *                           - include_nsfw: Boolean, whether to include NSFW messages.
-     *                           - channel_id: Channel IDs (SnowflakeType, up to 500 unique items).
+     * @param array  $queryparams                         Query string params to add to the request (no validation).
+     * @param int    $queryparams['limit']                Integer, minimum 1, maximum 25 (default 25).
+     * @param int    $queryparams['offset']               Integer, minimum 0, maximum 9975.
+     * @param string $queryparams['max_id']               Maximum message ID (snowflake).
+     * @param string $queryparams['min_id']               Minimum message ID (snowflake).
+     * @param int    $queryparams['slop']                 Integer, minimum 0, maximum 100 (default 2).
+     * @param string $queryparams['content']              Message content to search for (string, max 1024 chars).
+     * @param array  $queryparams['channel_id']           Array of snowflakes, max 500 unique items.
+     * @param array  $queryparams['author_type']          Array of strings, filter by author type.
+     * @param array  $queryparams['author_id']            Array of snowflakes, filter by authors.
+     * @param array  $queryparams['mentions']             Array of snowflakes, filter messages that mention these users.
+     * @param bool   $queryparams['mention_everyone']     Boolean, filter messages that do or do not mention @everyone.
+     * @param bool   $queryparams['pinned']               Boolean, filter messages by whether they are or are not pinned.
+     * @param array  $queryparams['has']                  Array of strings, filter messages by whether they have specific things.
+     * @param array  $queryparams['embed_type']           Array of strings, filter messages by embed type.
+     * @param array  $queryparams['embed_provider']       Array of strings, filter by embed provider (case-sensitive, max 256 chars).
+     * @param array  $queryparams['link_hostname']        Array of strings, filter by link hostname (case-sensitive).
+     * @param array  $queryparams['attachment_filename']  Array of strings, filter by attachment filename (max 1024 chars).
+     * @param array  $queryparams['attachment_extension'] Array of strings, filter by attachment extension.
+     * @param string $queryparams['sort_by']              String, the sorting algorithm to use.
+     * @param string $queryparams['sort_order']           String, the sort direction (asc or desc, default desc).
+     * @param bool   $queryparams['include_nsfw']         Boolean, whether to include results from NSFW channels (default false).
      *
      * @return PromiseInterface<static>
      *

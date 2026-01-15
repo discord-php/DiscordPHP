@@ -86,7 +86,7 @@ class Option extends Part
      */
     protected function getChoicesAttribute(): ExCollectionInterface
     {
-        return $this->attributeCollectionHelper('choices', Choice::class);
+        return $this->attributeCollectionHelper('choices', Choice::class, 'name');
     }
 
     /**
@@ -96,7 +96,7 @@ class Option extends Part
      */
     protected function getOptionsAttribute(): ExCollectionInterface
     {
-        return $this->attributeCollectionHelper('options', Option::class);
+        return $this->attributeCollectionHelper('options', Option::class, 'name');
     }
 
     /**
@@ -236,6 +236,44 @@ class Option extends Part
     }
 
     /**
+     * Sets multiple options to the option.
+     *
+     * @since 10.42.0
+     *
+     * @param Option[] $options The options.
+     *
+     * @throws \OverflowException Command exceeds maximum 25 sub options.
+     *
+     * @return $this
+     */
+    public function setOptions($options = []): self
+    {
+        $this->attributes['options'] = [];
+
+        return $this->addOptions($options);
+    }
+
+    /**
+     * Adds multiple options to the option.
+     *
+     * @since 10.42.0
+     *
+     * @param Option[] $options The options.
+     *
+     * @throws \OverflowException Command exceeds maximum 25 sub options.
+     *
+     * @return $this
+     */
+    public function addOptions($options): self
+    {
+        foreach ($options as $option) {
+            $this->addOption($option);
+        }
+
+        return $this;
+    }
+
+    /**
      * Adds an option to the option.
      *
      * @param Option $option The option.
@@ -251,6 +289,44 @@ class Option extends Part
         }
 
         $this->attributes['options'][] = $option->getRawAttributes();
+
+        return $this;
+    }
+
+    /**
+     * Sets multiple choices to the option (Only for slash commands).
+     *
+     * @since 10.42.0
+     *
+     * @param Choice[] $choices The choices.
+     *
+     * @throws \OverflowException Command exceeds maximum 25 choices.
+     *
+     * @return $this
+     */
+    public function setChoices($choices = []): self
+    {
+        $this->attributes['choices'] = [];
+
+        return $this->addChoices($choices);
+    }
+
+    /**
+     * Adds multiple choices to the option (Only for slash commands).
+     *
+     * @since 10.42.0
+     *
+     * @param Choice[] $choices The choices.
+     *
+     * @throws \OverflowException Command exceeds maximum 25 choices.
+     *
+     * @return $this
+     */
+    public function addChoices($choices): self
+    {
+        foreach ($choices as $choice) {
+            $this->addChoice($choice);
+        }
 
         return $this;
     }
@@ -423,5 +499,29 @@ class Option extends Part
         $this->autocomplete = $autocomplete;
 
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        $data = parent::jsonSerialize();
+
+        if ($this->choices) {
+            $data['choices'] = [];
+            foreach ($this->choices as $choice) {
+                $data['choices'][] = $choice->jsonSerialize();
+            }
+        }
+
+        if ($this->options) {
+            $data['options'] = [];
+            foreach ($this->options as $option) {
+                $data['options'][] = $option->jsonSerialize();
+            }
+        }
+
+        return $data;
     }
 }

@@ -114,7 +114,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v10.42.0';
+    public const VERSION = 'v10.46.0';
 
     public const REFERRER = 'https://github.com/discord-php/DiscordPHP';
 
@@ -346,9 +346,16 @@ class Discord
     /**
      * The cache configuration.
      *
-     * @var CacheConfig[]
+     * @var CacheConfig[] Cache configuration.
      */
     protected $cacheConfig;
+
+    /**
+     * The collection class implementing ExCollectionInterface.
+     *
+     * @var string Collection class.
+     */
+    protected $collectionClass;
 
     /**
      * The Client class.
@@ -424,9 +431,26 @@ class Discord
             $this->logger->warning('Attached experimental CacheInterface: '.get_class($cacheConfig->interface));
         }
 
+        $this->collectionClass = $options['collection'];
+        if ($this->collectionClass !== Collection::class) {
+            $this->logger->warning('Attached experimental Collection: '.$this->collectionClass);
+        }
+
         $connector = new SocketConnector($options['socket_options'], $this->loop);
         $this->wsFactory = new Connector($this->loop, $connector);
         $this->handlers = new Handlers();
+
+        static $important_events = [
+            Event::GUILD_CREATE,
+            Event::GUILD_DELETE,
+            Event::RESUMED,
+            Event::READY,
+            Event::GUILD_MEMBERS_CHUNK,
+        ];
+
+        if ($disabledImportant = array_values(array_intersect($important_events, $options['disabledEvents']))) {
+            $this->logger->warning('Critical events have been disabled, performance may be affected', ['events' => implode(', ', $disabledImportant)]);
+        }
 
         foreach ($options['disabledEvents'] as $event) {
             $this->handlers->removeHandler($event);
@@ -534,11 +558,6 @@ class Discord
             return $this->ready();
         }
 
-        // Emit ready after 60 seconds
-        $this->loop->addTimer(60, function () {
-            $this->ready();
-        });
-
         $guildLoad = new Deferred();
 
         $onGuildCreate = function ($guild) use (&$unavailable, $guildLoad) {
@@ -574,6 +593,13 @@ class Discord
 
             $this->setupChunking();
         });
+
+        if (in_array(Event::GUILD_CREATE, $this->options['disabledEvents'])) {
+            $this->ready();
+        } else {
+            // Emit ready after 60 seconds
+            $this->loop->addTimer(60, fn () => $this->ready());
+        }
     }
 
     /**
@@ -1116,7 +1142,7 @@ class Discord
      *
      * @since 10.19.0
      */
-    public function resume(string $token, string $session_id, int $seq): void
+    public function resume(#[\SensitiveParameter] string $token, string $session_id, int $seq): void
     {
         $payload = Payload::new(
             Op::OP_RESUME,
@@ -1433,7 +1459,8 @@ class Discord
         }
 
         return $this->http->get(Endpoint::LIST_VOICE_REGIONS)->then(function ($response) {
-            $regions = Collection::for(Region::class);
+            /** @var ExCollectionInterface<Region> $regions */
+            $regions = $this->collectionClass::for(Region::class);
 
             foreach ($response as $region) {
                 $regions->pushItem($this->factory->part(Region::class, (array) $region, true));
@@ -1658,6 +1685,7 @@ class Discord
                 'socket_options',
                 'dnsConfig',
                 'cache',
+                'collection',
                 'useTransportCompression',
                 'usePayloadCompression',
             ])
@@ -1677,6 +1705,7 @@ class Discord
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
                 'cache' => [AbstractRepository::class => null], // use LegacyCacheWrapper
+                'collection' => Collection::class,
                 'useTransportCompression' => true,
                 'usePayloadCompression' => true,
             ])
@@ -1697,6 +1726,14 @@ class Discord
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
+            ->setAllowedTypes('collection', 'string')
+            ->setNormalizer('collection', function ($options, $value) {
+                if (is_string($value) && class_exists($value) && is_subclass_of($value, ExCollectionInterface::class)) {
+                    return $value;
+                }
+
+                return Collection::class;
+            })
             ->setAllowedTypes('cache', ['array', CacheConfig::class, \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
             ->setNormalizer('cache', function ($options, $value) {
                 if (! is_array($value)) {
@@ -1882,6 +1919,18 @@ class Discord
         }
 
         return $this->cacheConfig[$repository_class];
+    }
+
+    /**
+     * Gets the collection class being used by the client.
+     *
+     * @return string
+     *
+     * @since 10.43.1
+     */
+    public function getCollectionClass(): string
+    {
+        return $this->collectionClass;
     }
 
     /**

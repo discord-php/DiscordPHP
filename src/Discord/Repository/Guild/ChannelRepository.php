@@ -57,7 +57,7 @@ class ChannelRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
      *
-     * @deprecated v10.41.0 Use `ChannelRepository::build()`
+     * @deprecated 10.41.3 use `ChannelBuilder::create($repository)`
      * @since 10.25.0
      *
      * @param Guild|string                  $guild   The guild or guild ID that the channel should be created on.
@@ -76,6 +76,7 @@ class ChannelRepository extends AbstractRepository
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
      *
+     * @deprecated 10.41.0 Use `ChannelBuilder::create($repository)`
      * @since 10.25.0
      *
      * @param Guild|string                  $guild   The guild or guild ID that the channel should be created on.

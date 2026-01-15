@@ -41,28 +41,28 @@ class RegisteredCommand
      *
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * The callback to be called when the command is triggered.
      *
      * @var callable
      */
-    private $callback;
+    protected $callback;
 
     /**
      * The callback to be called when the auto complete is triggered.
      *
      * @var callable
      */
-    private $autocomplete_callback;
+    protected $autocomplete_callback;
 
     /**
      * Array of sub-commands.
      *
      * @var RegisteredCommand[]
      */
-    private $subCommands;
+    protected $subCommands;
 
     /**
      * RegisteredCommand represents a command that has been registered with the
@@ -92,7 +92,8 @@ class RegisteredCommand
      */
     public function execute($options, Interaction $interaction): bool
     {
-        $params = Collection::for(Option::class, 'name');
+        /** @var ExCollectionInterface<Option> $params */
+        $params = $this->discord->getCollectionClass()::for(Option::class, 'name');
 
         foreach ($options as $option) {
             /** @var Option $option */

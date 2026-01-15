@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Discord\Parts\Channel;
 
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
@@ -170,7 +169,8 @@ class Reaction extends Part
 
         return $this->http->get($query)
         ->then(function ($response) {
-            $users = Collection::for(User::class);
+            /** @var ExCollectionInterface<User> $users */
+            $users = $this->discord->getCollectionClass()::for(User::class);
 
             foreach ((array) $response as $user) {
                 if (! $part = $this->discord->users->get('id', $user->id)) {
@@ -195,7 +195,7 @@ class Reaction extends Part
      */
     public function getAllUsers(): PromiseInterface
     {
-        return $this->__getUsers(Collection::for(User::class));
+        return $this->__getUsers($this->discord->getCollectionClass()::for(User::class));
     }
 
     /**

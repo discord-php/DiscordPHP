@@ -15,7 +15,6 @@ namespace Discord\Parts\Channel;
 
 use Discord\Builders\MessageBuilder;
 use Discord\Exceptions\InvalidOverwriteException;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
@@ -36,6 +35,8 @@ use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Repository\Channel\InviteRepository;
 use Discord\Repository\Channel\StageInstanceRepository;
 use Discord\Repository\Channel\ThreadRepository;
+use Discord\Repository\Guild\ChannelRepository;
+use Discord\Repository\PrivateChannelRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -274,7 +275,8 @@ class Channel extends Part implements Stringable
      */
     protected function getRecipientsAttribute(): ExCollectionInterface
     {
-        $recipients = Collection::for(User::class);
+        /** @var ExCollectionInterface<User> $recipients */
+        $recipients = $this->discord->getCollectionClass()::for(User::class);
 
         foreach ($this->attributes['recipients'] ?? [] as $recipient) {
             $recipients->pushItem($this->discord->users->get('id', $recipient->id) ?? $this->factory->part(User::class, (array) $recipient, true));
@@ -683,6 +685,8 @@ class Channel extends Part implements Stringable
      * @param int         $options['target_type']           The type of target for this voice channel invite.
      * @param string      $options['target_user_id']        The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel.
      * @param string      $options['target_application_id'] The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag.
+     * @param object      $options['target_users_file']     (TODO) A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body. Requires the `MANAGE_GUILD` permission. Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
+     * @param string[]    $options['role_ids']              The role ID(s) for roles in the guild given to the users that accept this invite. Requires the `MANAGE_ROLES` permission and cannot assign roles with higher permissions than the sender.
      * @param string|null $reason                           Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing create_instant_invite permission.
@@ -711,16 +715,19 @@ class Channel extends Part implements Stringable
                 'target_type',
                 'target_user_id',
                 'target_application_id',
+                'target_users_file',
+                'role_ids',
             ])
             ->setAllowedTypes('max_age', 'int')
+            ->setAllowedValues('max_age', fn ($value) => ($value >= 0 && $value <= 604800))
             ->setAllowedTypes('max_uses', 'int')
+            ->setAllowedValues('max_uses', fn ($value) => ($value >= 0 && $value <= 100))
             ->setAllowedTypes('temporary', 'bool')
             ->setAllowedTypes('unique', 'bool')
             ->setAllowedTypes('target_type', 'int')
             ->setAllowedTypes('target_user_id', ['string', 'int'])
             ->setAllowedTypes('target_application_id', ['string', 'int'])
-            ->setAllowedValues('max_age', fn ($value) => ($value >= 0 && $value <= 604800))
-            ->setAllowedValues('max_uses', fn ($value) => ($value >= 0 && $value <= 100));
+            ->setAllowedTypes('role_ids', 'array');
 
         $options = $resolver->resolve($options);
 
@@ -1040,7 +1047,8 @@ class Channel extends Part implements Stringable
             return $guild->voice_states->filter(fn (VoiceStateUpdate $voice_state) => $voice_state->channel_id === $this->id);
         }
 
-        return Collection::for(VoiceStateUpdate::class, 'user_id');
+        /** @var ExCollectionInterface<VoiceStateUpdate> */
+        return $this->discord->getCollectionClass()::for(VoiceStateUpdate::class, 'user_id');
     }
 
     /**
@@ -1215,21 +1223,41 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return ChannelRepository|PrivateChannelRepository The repository.
+     */
+    public function getRepository(): ChannelRepository|PrivateChannelRepository
+    {
+        if (isset($this->attributes['guild_id'])) {
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            return $guild->channels;
+        }
+
+        return $this->discord->private_channels;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
     {
+        $repository = $this->getRepository();
+
         if (isset($this->attributes['guild_id'])) {
             if ($botperms = $this->getBotPermissions()) {
                 if (! $botperms->manage_channels) {
                     return reject(new NoPermissionsException("You do not have permission to manage channels in the guild {$this->attributes['guild_id']}."));
                 }
             }
-            /** @var Guild $guild */
-            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
-
-            return $guild->channels->save($this, $reason);
-        } elseif ($this->created && $this->discord->private_channels->get('id', $this->id)) {
+            
+            return $repository->save($this, $reason);
+        } elseif ($this->created && $repository->get('id', $this->id)) {
             $data = [];
             if ($this->name) {
                 $data['name'] = $this->name;
@@ -1238,7 +1266,7 @@ class Channel extends Part implements Stringable
                 $data['icon'] = $this->icon;
             }
 
-            return $this->discord->private_channels->modifyGroupDM($this, $data);
+            return $repository->modifyGroupDM($this, $data);
         }
 
         return parent::save($reason);

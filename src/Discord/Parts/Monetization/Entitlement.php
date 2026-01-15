@@ -15,6 +15,7 @@ namespace Discord\Parts\Monetization;
 
 use Carbon\Carbon;
 use Discord\Parts\Part;
+use Discord\Repository\Monetization\EntitlementRepository;
 use React\Promise\PromiseInterface;
 
 use function React\Promise\reject;
@@ -94,6 +95,20 @@ class Entitlement extends Part
     protected function getEndsAtAttribute(): ?Carbon
     {
         return $this->attributeCarbonHelper('ends_at');
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return EntitlementRepository The repository.
+     */
+    public function getRepository(): EntitlementRepository
+    {
+        return $this->discord->application->entitlements;
     }
 
     /**

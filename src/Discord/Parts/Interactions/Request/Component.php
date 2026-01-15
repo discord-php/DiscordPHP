@@ -21,7 +21,7 @@ use Discord\Parts\Part;
 /**
  * Represents a component received with a message or interaction.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#component-object
+ * @link https://discord.com/developers/docs/components/reference#component-object
  *
  * @since 7.0.0
  * @deprecated 10.11.0 Use \Discord\Parts\Channel\Message\Component` instead.

@@ -16,7 +16,7 @@ namespace Discord\Builders\Components;
 /**
  * Select menu for channels.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#select-menus
+ * @link https://discord.com/developers/docs/components/reference#select-menus
  *
  * @since 10.0.0
  *
@@ -37,7 +37,7 @@ class ChannelSelect extends SelectMenu
      *
      * @var int
      */
-    protected $type = Component::TYPE_CHANNEL_SELECT;
+    protected $type = ComponentObject::TYPE_CHANNEL_SELECT;
 
     /**
      * List of channel types to include.

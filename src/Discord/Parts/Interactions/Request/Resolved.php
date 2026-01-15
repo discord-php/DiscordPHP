@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Discord\Parts\Interactions\Request;
 
 use Discord\Builders\ChannelBuilder;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Channel;
@@ -76,7 +75,8 @@ class Resolved extends Part
             return $this->attributes['users'];
         }
 
-        $collection = Collection::for(User::class);
+        /** @var ExCollectionInterface<User> $collection */
+        $collection = $this->discord->getCollectionClass()::for(User::class);
 
         if (! isset($this->attributes['users'])) {
             return $collection;
@@ -104,7 +104,8 @@ class Resolved extends Part
             return $this->attributes['members'];
         }
 
-        $collection = Collection::for(Member::class);
+        /** @var ExCollectionInterface<Member> $collection */
+        $collection = $this->discord->getCollectionClass()::for(Member::class);
 
         if (! isset($this->attributes['members'])) {
             return $collection;
@@ -139,7 +140,8 @@ class Resolved extends Part
             return $this->attributes['roles'];
         }
 
-        $collection = Collection::for(Role::class);
+        /** @var ExCollectionInterface<Role> $collection */
+        $collection = $this->discord->getCollectionClass()::for(Role::class);
 
         if (! isset($this->attributes['roles'])) {
             return $collection;
@@ -175,7 +177,8 @@ class Resolved extends Part
             return $this->attributes['channels'];
         }
 
-        $collection = new Collection();
+        /** @var ExCollectionInterface $collection */
+        $collection = new ($this->discord->getCollectionClass());
 
         if (! isset($this->attributes['channels'])) {
             return $collection;
@@ -209,7 +212,8 @@ class Resolved extends Part
             return $this->attributes['messages'];
         }
 
-        $collection = Collection::for(Message::class);
+        /** @var ExCollectionInterface<Message> $collection */
+        $collection = $this->discord->getCollectionClass()::for(Message::class);
 
         if (! isset($this->attributes['messages'])) {
             return $collection;

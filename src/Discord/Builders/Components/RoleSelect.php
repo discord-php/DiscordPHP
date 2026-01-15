@@ -16,7 +16,7 @@ namespace Discord\Builders\Components;
 /**
  * Select menu for roles.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#select-menus
+ * @link https://discord.com/developers/docs/components/reference#select-menus
  *
  * @since 10.0.0
  *
@@ -36,7 +36,7 @@ class RoleSelect extends SelectMenu
      *
      * @var int
      */
-    protected $type = Component::TYPE_ROLE_SELECT;
+    protected $type = ComponentObject::TYPE_ROLE_SELECT;
 
     /**
      * Set if this component is required to be filled, default false. (Modal only).

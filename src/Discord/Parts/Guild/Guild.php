@@ -16,8 +16,6 @@ namespace Discord\Parts\Guild;
 use Carbon\Carbon;
 use Discord\Builders\ChannelBuilder;
 use Discord\Exceptions\FileNotFoundException;
-use Discord\Helpers\Collection;
-use Discord\Helpers\CollectionInterface;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
@@ -48,7 +46,9 @@ use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
 use Discord\Repository\Guild\MessageRepository;
+use Discord\Repository\GuildRepository;
 use Discord\Repository\VoiceStateRepository;
+use Discord\Voice\Region;
 use React\Promise\PromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -76,6 +76,8 @@ use function React\Promise\resolve;
  * @property      ?string|null        $discovery_splash              Discovery splash hash. Only for discoverable guilds.
  * @property-read User|null           $owner                         The owner of the guild.
  * @property      string              $owner_id                      The unique identifier of the owner of the guild.
+ * @property      string              $permissions                   Total permissions for the user in the guild (excludes overwrites and implicit permissions).
+ * @property      ?string|null        $region                        Voice region id for the guild (deprecated).
  * @property      string              $afk_channel_id                The unique identifier of the AFK channel ID.
  * @property      int                 $afk_timeout                   How long in seconds you will remain in the voice channel until you are moved into the AFK channel. Can be set to: 60, 300, 900, 1800, 3600.
  * @property      bool|null           $widget_enabled                Is server widget enabled.
@@ -148,7 +150,7 @@ use function React\Promise\resolve;
  * @property int|null                 $member_count           How many members are in the guild.
  * @property MemberRepository         $members                Users in the guild.
  * @property ChannelRepository        $channels               Channels in the guild.
- * @property ScheduledeventRepository $guild_scheduled_events The scheduled events in the guild.
+ * @property ScheduledEventRepository $guild_scheduled_events The scheduled events in the guild.
  *
  * @property AuditLogRepository           $audit_log
  * @property AutoModerationRuleRepository $auto_moderation_rules
@@ -245,31 +247,34 @@ class Guild extends Part
         'name',
         'icon',
         'icon_hash',
-        'description',
         'splash',
         'discovery_splash',
-        'features',
-        'banner',
+        'owner',
         'owner_id',
-        'application_id',
+        'permissions',
+        'region',
         'afk_channel_id',
         'afk_timeout',
-        'system_channel_id',
         'widget_enabled',
         'widget_channel_id',
         'verification_level',
         'default_message_notifications',
-        'hub_type',
-        'mfa_level',
         'explicit_content_filter',
+        'roles',
+        'features',
+        'mfa_level',
+        'application_id',
+        'system_channel_id',
+        'system_channel_flags',
+        'rules_channel_id',
         'max_presences',
         'max_members',
         'vanity_url_code',
+        'description',
+        'banner',
         'premium_tier',
         'premium_subscription_count',
-        'system_channel_flags',
         'preferred_locale',
-        'rules_channel_id',
         'public_updates_channel_id',
         'max_video_channel_users',
         'max_stage_video_channel_users',
@@ -277,6 +282,7 @@ class Guild extends Part
         'approximate_presence_count',
         'welcome_screen',
         'nsfw_level',
+        'stickers',
         'premium_progress_bar_enabled',
         'safety_alerts_channel_id',
         'incidents_data',
@@ -288,10 +294,11 @@ class Guild extends Part
 
         // repositories
         'channels',
-        'roles',
         'emojis',
-        'stickers',
         'voice_states',
+
+        // undocumented
+        'hub_type',
     ];
 
     /**
@@ -424,14 +431,14 @@ class Guild extends Part
      */
     protected function setRolesAttribute($roles): void
     {
-        if ($roles instanceof CollectionInterface) {
-            $roles = $roles->toArray();
+        if ($roles instanceof ExCollectionInterface) {
+            $roles = $roles->jsonSerialize();
         }
         if ($roles === null) {
             $roles = [];
         }
         if (! is_array($roles)) {
-            throw new \InvalidArgumentException('Roles must be an array or CollectionInterface.');
+            throw new \InvalidArgumentException('Roles must be an array or ExCollectionInterface.');
         }
 
         $rolesDiscrim = $this->roles->discrim;
@@ -541,7 +548,8 @@ class Guild extends Part
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_INVITES, $this->id))->then(function ($response) {
-            $invites = Collection::for(Invite::class, 'code');
+            /** @var ExCollectionInterface<Invite> $invites */
+            $invites = $this->discord->getCollectionClass()::for(Invite::class, 'code');
 
             foreach ($response as $invite) {
                 $invite = $this->factory->part(Invite::class, (array) $invite, true);
@@ -605,7 +613,8 @@ class Guild extends Part
      */
     protected function getStageInstancesAttribute(): ExCollectionInterface
     {
-        $stage_instances = Collection::for(StageInstance::class);
+        /** @var ExCollectionInterface<StageInstance> $stage_instances */
+        $stage_instances = $this->discord->getCollectionClass()::for(StageInstance::class);
 
         if ($channels = $this->channels) {
             /** @var Channel */
@@ -622,7 +631,7 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/voice#list-voice-regions
      *
-     * @return PromiseInterface<Collection>
+     * @return PromiseInterface<ExCollectionInterface<Region>|Region[]>
      *
      * @deprecated 10.23.0 Use `Discord::listVoiceRegions` instead.
      */
@@ -993,7 +1002,7 @@ class Guild extends Part
         return $this->getVoiceRegions()->then(function () {
             $regions = $this->regions->map(function ($region) {
                 return $region->id;
-            })->toArray();
+            })->jsonSerialize();
 
             if (! in_array($this->region, $regions)) {
                 return self::REGION_DEFAULT;
@@ -1076,8 +1085,8 @@ class Guild extends Part
      */
     public function updateRolePositions($roles): PromiseInterface
     {
-        if ($roles instanceof CollectionInterface) {
-            $roles = $roles->toArray();
+        if ($roles instanceof ExCollectionInterface) {
+            $roles = $roles->jsonSerialize();
         }
         if (! is_array($roles)) {
             return reject(new \InvalidArgumentException('Roles must be an array of Role instances or Role IDs.'));
@@ -1144,7 +1153,8 @@ class Guild extends Part
         $endpoint->addQuery('limit', $options['limit']);
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $members = Collection::for(Member::class);
+            /** @var ExCollectionInterface<Member> $members */
+            $members = $this->discord->getCollectionClass()::for(Member::class);
 
             foreach ($responses as $response) {
                 if (! $member = $this->members->get('id', $response->user->id)) {
@@ -1571,12 +1581,8 @@ class Guild extends Part
             'verification_level' => $this->verification_level,
             'default_message_notifications' => $this->default_message_notifications,
             'explicit_content_filter' => $this->explicit_content_filter,
-            'roles' => array_values(array_map(function (Role $role) {
-                return $role->getCreatableAttributes();
-            }, $this->roles->toArray())),
-            'channels' => array_values(array_map(function (Channel $channel) {
-                return $channel->getCreatableAttributes();
-            }, $this->channels->toArray())),
+            'roles' => array_values(array_map(fn (Role $role) => $role->getCreatableAttributes(), $this->roles->jsonSerialize())),
+            'channels' => array_values(array_map(fn (Channel $channel) => $channel->getCreatableAttributes(), $this->channels->jsonSerialize())),
             'afk_channel_id' => $this->afk_channel_id,
             'afk_timeout' => $this->afk_timeout,
             'system_channel_id' => $this->system_channel_id,
@@ -1614,6 +1620,20 @@ class Guild extends Part
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return GuildRepository The repository.
+     */
+    public function getRepository(): GuildRepository
+    {
+        return $this->discord->guilds;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
@@ -1624,7 +1644,7 @@ class Guild extends Part
             }
         }
 
-        return $this->discord->guilds->save($this, $reason);
+        return $this->getRepository()->save($this, $reason);
     }
 
     /**

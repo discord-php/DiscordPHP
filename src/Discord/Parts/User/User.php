@@ -17,9 +17,11 @@ use Discord\Builders\MessageBuilder;
 use Discord\Helpers\BigInt;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
+use Discord\Parts\Embed\Embed;
+use Discord\Parts\Part;
+use Discord\Repository\UserRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
 
@@ -176,11 +178,11 @@ class User extends Part implements Stringable
      *
      * @link https://discord.com/developers/docs/resources/channel#create-message
      *
-     * @param MessageBuilder|string                 $message          The message builder that should be converted into a message, or the string content of the message.
-     * @param bool                                  $tts              Whether the message is TTS.
-     * @param \Discord\Parts\Embed\Embed|array|null $embed            An embed object or array to send in the message.
-     * @param AllowedMentions|array|null            $allowed_mentions Allowed mentions object for the message.
-     * @param Message|null                          $replyTo          Sends the message as a reply to the given message instance.
+     * @param MessageBuilder|string      $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                       $tts              Whether the message is TTS.
+     * @param Embed|array|null           $embed            An embed object or array to send in the message.
+     * @param AllowedMentions|array|null $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null               $replyTo          Sends the message as a reply to the given message instance.
      *
      * @return PromiseInterface<Message>
      */
@@ -380,6 +382,20 @@ class User extends Part implements Stringable
     public function createdTimestamp()
     {
         return \Discord\getSnowflakeTimestamp($this->id);
+    }
+
+    /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return UserRepositor The repository.
+     */
+    public function getRepository(): UserRepository
+    {
+        return $this->discord->users;
     }
 
     /**

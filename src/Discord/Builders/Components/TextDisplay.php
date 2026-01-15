@@ -16,7 +16,7 @@ namespace Discord\Builders\Components;
 /**
  * Text display components allow you to send text.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#text-display
+ * @link https://discord.com/developers/docs/components/reference#text-display
  *
  * @since 10.5.0
  *
@@ -33,14 +33,14 @@ class TextDisplay extends Content implements Contracts\ComponentV2
      *
      * @var int
      */
-    protected $type = Component::TYPE_TEXT_DISPLAY;
+    protected $type = ComponentObject::TYPE_TEXT_DISPLAY;
 
     /**
      * Content of the text display.
      *
      * @var string
      */
-    private $content;
+    protected $content;
 
     /**
      * Creates a new text display.

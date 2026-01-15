@@ -27,80 +27,54 @@ use function Discord\studly;
 
 final class FunctionsTest extends TestCase
 {
-    /**
-     * @dataProvider containsProvider
-     */
-    public function testContains($expected, $needle, $haystack): void
+    public function testContains(): void
     {
-        $this->assertEquals($expected, contains($needle, $haystack));
-    }
-
-    public function containsProvider(): array
-    {
-        return [
+        static $array = [
             [true, 'hello, world!', ['hello']],
             [true, 'phpunit tests', ['p', 'u']],
             [false, 'phpunit tests', ['a']],
         ];
+
+        foreach ($array as $case) {
+            $this->assertEquals($case[0], contains($case[1], $case[2]));
+        }
     }
 
-    /**
-     * @dataProvider colorProvider
-     */
-    public function testGetColor($expected, $color): void
+    public function testGetColor(): void
     {
-        $this->assertEquals($expected, getColor($color));
-    }
-
-    public function colorProvider(): array
-    {
-        return [
+        static $array = [
             [0xcd5c5c, 'indianred'],
             [0x00bfff, 'deepskyblue'],
             [0x00bfff, 0x00bfff],
             [0, 0],
             [0x00bfff, '0x00bfff'],
         ];
+
+        foreach ($array as $case) {
+            $this->assertEquals($case[0], getColor($case[1]));
+        }
     }
 
-    /**
-     * @dataProvider strlenProvider
-     */
-    public function testPolyStrlen($expected, $string): void
+    public function testPolyStrlen(): void
     {
-        $this->assertEquals($expected, poly_strlen($string));
-    }
-
-    public function strlenProvider(): array
-    {
-        return [
+        static $array = [
             [5, 'abcde'],
             [0, ''],
             [1, ' '],
         ];
+        foreach ($array as $case) {
+            $this->assertEquals($case[0], poly_strlen($case[1]));
+        }
     }
 
     /**
      * @test
-     * @dataProvider mentionedProvider
      */
-    public function testMentioned($part, $attributes, $outcome): void
+    public function testMentioned(): void
     {
         $mockDiscord = getMockDiscord();
 
-        $message = new Message(
-            $mockDiscord,
-            $attributes
-        );
-
-        $this->assertEquals($outcome, mentioned($part, $message));
-    }
-
-    public function mentionedProvider(): array
-    {
-        $mockDiscord = getMockDiscord();
-
-        return [
+        static $array = [
             'member in mentions' => [
                 new Member($mockDiscord, ['id' => '12345']),
                 [
@@ -146,66 +120,59 @@ final class FunctionsTest extends TestCase
                 false,
             ],
         ];
+
+        foreach ($array as $case) {
+            $this->assertEquals($case[2], mentioned($case[0], new Message($mockDiscord, $case[1])));
+        }
     }
 
     /**
      * @test
-     * @dataProvider studlyCaseProvider
      */
-    public function testStudlyCase(string $input, string $expected): void
+    public function testStudlyCase(): void
     {
-        $this->assertEquals($expected, studly($input));
-    }
-
-    public function studlyCaseProvider(): array
-    {
-        return [
+        static $array = [
             ['trains are cool', 'TrainsAreCool'],
             ['robo smells like bananas', 'RoboSmellsLikeBananas'],
             ['i LiKE TuRtLEs', 'ILikeTurtles'],
         ];
+        foreach ($array as $case) {
+            $this->assertEquals($case[1], studly($case[0]));
+        }
     }
 
     /**
      * @test
-     * @dataProvider normalizePartIdProvider
      */
-    public function testNormalizePartId($part, $expected): void
-    {
-        $this->assertEquals(
-            $expected,
-            (normalizePartId())(
-                new OptionsResolver(),
-                $part
-            )
-        );
-    }
-
-    public function normalizePartIdProvider(): array
+    public function testNormalizePartId(): void
     {
         $mockDiscord = getMockDiscord();
 
-        return [
+        static $array = [
             [new User($mockDiscord, ['id' => '12345']), '12345'],
             [new Channel($mockDiscord, ['id' => '12345']), '12345'],
             [new Role($mockDiscord, ['id' => '12345']), '12345'],
             ['12345', '12345'],
             [null, null],
         ];
+
+        foreach ($array as $case) {
+            $this->assertEquals(
+                $case[1],
+                (normalizePartId())(
+                    new OptionsResolver(),
+                    $case[0]
+                )
+            );
+        }
     }
 
     /**
      * @test
-     * @dataProvider escapeMarkdownProvider
      */
-    public function testEscapeMarkdown(string $input, string $expected): void
+    public function testEscapeMarkdown(): void
     {
-        $this->assertEquals($expected, escapeMarkdown($input));
-    }
-
-    public function escapeMarkdownProvider(): array
-    {
-        return [
+        static $array = [
             [
                 'hello there this is plain text, nothing should be escaped in here! :D, except the colon',
                 'hello there this is plain text, nothing should be escaped in here! \:D, except the colon',
@@ -227,5 +194,9 @@ final class FunctionsTest extends TestCase
                 'actually nothing should be changed now',
             ],
         ];
+
+        foreach ($array as $case) {
+            $this->assertEquals($case[1], escapeMarkdown($case[0]));
+        }
     }
 }

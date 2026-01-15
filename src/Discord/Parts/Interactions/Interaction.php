@@ -17,14 +17,14 @@ use Discord\Builders\Components\ComponentObject;
 use Discord\Builders\MessageBuilder;
 use Discord\Builders\ModalBuilder;
 use Discord\Exceptions\AttachmentSizeException;
-use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Command\Choice;
-use Discord\Parts\Channel\Message\Component as RequestComponent;
+use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
@@ -43,6 +43,7 @@ use function React\Promise\reject;
  *
  * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object
  *
+ * @since 10.19.0 Use either `Ping`, `ApplicationCommand`, `MessageComponent`, `ApplicationCommandAutocomplete`, or `ModalSubmit` except within the `INTERACTION_CREATE` event.
  * @since 7.0.0
  *
  * @property      string                 $id                             ID of the interaction.
@@ -65,8 +66,6 @@ use function React\Promise\reject;
  * @property      array                  $authorizing_integration_owners Mapping of installation contexts that the interaction was authorized for to related user or guild IDs.
  * @property      int|null               $context                        Context where the interaction was triggered from.
  * @property      int                    $attachment_size_limit          Attachment size limit in bytes.
- *
- * @deprecated 10.19.0 Use either `Ping`, `ApplicationCommand`, `MessageComponent`, `ApplicationCommandAutocomplete`, or `ModalSubmit`
  */
 class Interaction extends Part
 {
@@ -736,15 +735,16 @@ class Interaction extends Part
                 return;
             }
 
-            $components = Collection::for(RequestComponent::class);
+            /** @var ExCollectionInterface<Component> $components */
+            $components = $this->discord->getCollectionClass()::for(Component::class);
             foreach ($interaction->data->components as $container) {
                 if ($container->components) { // e.g. ActionRow
                     foreach ($container->components as $component) {
-                        /** @var RequestComponent $component */
+                        /** @var Component $component */
                         $components->pushItem($component);
                     }
                 } elseif ($container->component) { // e.g. Label
-                    /** @var RequestComponent $component */
+                    /** @var Component $component */
                     $components->pushItem($component);
                 }
             }

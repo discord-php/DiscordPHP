@@ -27,7 +27,7 @@ use function Discord\poly_strlen;
  * They can be clicked by users, and send an interaction to your app when
  * clicked.
  *
- * @link https://discord.com/developers/docs/interactions/message-components#buttons
+ * @link https://discord.com/developers/docs/components/reference#buttons
  *
  * @since 7.0.0
  *
@@ -63,7 +63,7 @@ class Button extends Interactive
      *
      * @var int
      */
-    protected $type = Component::TYPE_BUTTON;
+    protected $type = ComponentObject::TYPE_BUTTON;
 
     /**
      * Style of button.
@@ -519,7 +519,7 @@ class Button extends Interactive
         $timer = null;
 
         $listener = function (Interaction $interaction) use ($callback, $oneOff, &$timer) {
-            if ($interaction->data->component_type !== Component::TYPE_BUTTON || $interaction->data->custom_id !== $this->custom_id) {
+            if ($interaction->data->component_type !== ComponentObject::TYPE_BUTTON || $interaction->data->custom_id !== $this->custom_id) {
                 return;
             }
 

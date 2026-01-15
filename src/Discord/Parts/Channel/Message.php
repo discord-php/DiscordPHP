@@ -15,7 +15,6 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
-use Discord\Helpers\Collection;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Channel\Message\Component;
 use Discord\Parts\Channel\Message\MessageInteractionMetadata;
@@ -40,7 +39,9 @@ use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Resolved;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
+use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\ReactionRepository;
+use Discord\Repository\Channel\WebhookMessageRepository;
 use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
@@ -386,7 +387,8 @@ class Message extends Part
      */
     protected function getMentionChannelsAttribute(): ExCollectionInterface
     {
-        $collection = Collection::for(Channel::class);
+        /** @var ExCollectionInterface<Channel> $collection */
+        $collection = $this->discord->getCollectionClass()::for(Channel::class);
 
         if (preg_match_all('/<#([0-9]*)>/', $this->content, $matches)) {
             foreach ($matches[1] as $channelId) {
@@ -536,7 +538,8 @@ class Message extends Part
      */
     protected function getMentionRolesAttribute(): ExCollectionInterface
     {
-        $roles = new Collection();
+        /** @var ExCollectionInterface $roles */
+        $roles = new ($this->discord->getCollectionClass());
 
         if (empty($this->attributes['mention_roles'])) {
             return $roles;
@@ -565,7 +568,8 @@ class Message extends Part
      */
     protected function getMentionsAttribute(): ExCollectionInterface
     {
-        $users = Collection::for(User::class);
+        /** @var ExCollectionInterface<User> $users */
+        $users = $this->discord->getCollectionClass()::for(User::class);
 
         foreach ($this->attributes['mentions'] ?? [] as $mention) {
             $users->pushItem($this->discord->users->get('id', $mention->id) ?? $this->factory->part(User::class, (array) $mention, true));
@@ -1295,12 +1299,12 @@ class Message extends Part
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
-     * @return PromiseInterface<Collection<MessageReaction>>
+     * @return PromiseInterface<ExCollectionInterface<MessageReaction>>
      */
     public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
-        $reactions = new Collection([], null, null);
+        $reactions = new ($this->discord->getCollectionClass())([], null, null);
         $timer = null;
 
         $options = array_merge([
@@ -1396,6 +1400,28 @@ class Message extends Part
     }
 
     /**
+     * Gets the originating repository of the part.
+     *
+     * @since 10.42.0
+     *
+     * @throws \Exception If the part does not have an originating repository.
+     *
+     * @return MessageRepository|WebhookMessageRepository The repository.
+     */
+    public function getRepository(): MessageRepository|WebhookMessageRepository
+    {
+        $channel = $this->channel ?? $this->factory->part(Channel::class, ['id' => $this->attributes['channel_id']], true);
+
+        if (isset($this->attributes['webhook_id'])) {
+            $webhook = $channel->webhooks->get('id', $this->attributes['webhook_id']);
+            
+            return $webhook->messages;
+        }
+
+        return $channel->messages;
+    }
+
+    /**
      * @inheritDoc
      */
     public function save(?string $reason = null): PromiseInterface
@@ -1417,15 +1443,12 @@ class Message extends Part
             }
 
             if (isset($this->attributes['webhook_id'])) {
-                if (! $webhook = $channel->webhooks->get('id', $this->attributes['webhook_id'])) {
+                if (! $channel->webhooks->get('id', $this->attributes['webhook_id'])) {
                     return reject(new \Exception('Cannot find the webhook for this message (missing token).'));
                 }
-
-                return $webhook->messages->save($this, $reason);
             }
 
-            /** @var Channel $channel */
-            return $channel->messages->save($this, $reason);
+            return $this->getRepository()->save($this, $reason);
         }
 
         return parent::save();

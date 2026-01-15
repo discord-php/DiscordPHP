@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Collection;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
@@ -30,8 +30,10 @@ class GuildEmojisUpdate extends Event
      */
     public function handle($data)
     {
-        $oldEmojis = Collection::for(Emoji::class);
-        $emojiParts = Collection::for(Emoji::class);
+        /** @var ExCollectionInterface<Emoji> $oldEmojis */
+        $oldEmojis = $this->discord->getCollectionClass()::for(Emoji::class);
+        /** @var ExCollectionInterface<Emoji> $emojiParts */
+        $emojiParts = $this->discord->getCollectionClass()::for(Emoji::class);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
@@ -53,7 +55,7 @@ class GuildEmojisUpdate extends Event
         }
 
         if (isset($guild)) {
-            yield $guild->emojis->cache->setMultiple($emojiParts->toArray());
+            yield $guild->emojis->cache->setMultiple($emojiParts->jsonSerialize());
         }
 
         return [$emojiParts, $oldEmojis];

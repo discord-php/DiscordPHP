@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Discord\Repository;
 
+use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
-use Discord\Helpers\Collection;
-use Discord\Helpers\ExCollectionInterface;
 use Discord\Helpers\CollectionTrait;
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
@@ -29,6 +29,19 @@ use function Discord\nowait;
 use function React\Promise\reject;
 use function React\Promise\resolve;
 
+/**
+ * Provides common functionality for all repositories.
+ *
+ * @property Discord      $discord   The Discord client instance.
+ * @property string       $discrim   The collection discriminator.
+ * @property array        $items     The items contained in the collection.
+ * @property string       $class     Class type allowed into the collection.
+ * @property Http         $http      The HTTP client.
+ * @property Factory      $factory   The parts factory.
+ * @property array        $endpoints Endpoints for interacting with the Discord servers.
+ * @property array        $vars      Variables that are related to the repository.
+ * @property CacheWrapper $cache     The react/cache wrapper.
+ */
 trait AbstractRepositoryTrait
 {
     use CollectionTrait
@@ -78,39 +91,6 @@ trait AbstractRepositoryTrait
         jsonSerialize as __Collection__jsonSerialize;
         getIterator as __Collection__getIterator;
     }
-
-    /**
-     * The HTTP client.
-     *
-     * @var Http Client.
-     */
-    protected $http;
-
-    /**
-     * The parts factory.
-     *
-     * @var Factory Parts factory.
-     */
-    protected $factory;
-
-    /**
-     * Endpoints for interacting with the Discord servers.
-     *
-     * @var array Endpoints.
-     */
-    protected $endpoints = [];
-
-    /**
-     * Variables that are related to the repository.
-     *
-     * @var array Variables.
-     */
-    protected $vars = [];
-
-    /**
-     * @var CacheWrapper
-     */
-    protected $cache;
 
     /**
      * Freshens the repository cache.
@@ -195,7 +175,7 @@ trait AbstractRepositoryTrait
      *
      * @throws \Exception
      *
-     * @deprecated v10.38.0 Use `Part->save($reason)` to ensure permissions are checked.
+     * @deprecated 10.38.0 Use `Part->save($reason)` to ensure permissions are checked.
      */
     public function save(Part $part, ?string $reason = null): PromiseInterface
     {
@@ -579,7 +559,8 @@ trait AbstractRepositoryTrait
      */
     public function filter(callable $callback)
     {
-        $collection = new Collection([], $this->discrim, $this->class);
+        /** @var ExCollectionInterface $collection */
+        $collection = new ($this->discord->getCollectionClass())([], $this->discrim, $this->class);
 
         foreach ($this->items as $offset => $item) {
             if ($item instanceof WeakReference) {
@@ -638,20 +619,13 @@ trait AbstractRepositoryTrait
     /**
      * Converts the weak caches to array.
      *
+     * @deprecated 10.42.0 Use `jsonSerialize`
+     *
      * @return array
      */
     public function toArray(bool $assoc = true): array
     {
-        $items = [];
-
-        foreach ($this->items as $offset => $item) {
-            if ($item instanceof WeakReference) {
-                $item = $item->get();
-            }
-            $items[$offset] = $item;
-        }
-
-        return $items;
+        return $this->jsonSerialize($assoc);
     }
 
     /**
@@ -742,9 +716,20 @@ trait AbstractRepositoryTrait
     /**
      * @inheritDoc
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize(bool $assoc = true): array
     {
-        return $this->toArray();
+        $items = [];
+
+        foreach ($this->items as $offset => $item) {
+            if ($item instanceof WeakReference) {
+                $item = $item->get();
+            }
+            $assoc
+                ? $items[$offset] = $item
+                : $items[] = $item;
+        }
+
+        return $items;
     }
 
     /**

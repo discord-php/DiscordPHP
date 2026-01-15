@@ -18,7 +18,6 @@ use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Helpers\Buffer as RealBuffer;
-use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
@@ -471,7 +470,7 @@ class OldVoiceClient extends EventEmitter
         $this->deaf = $data['deaf'];
         $this->mute = $data['mute'];
         $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
-        $this->speakingStatus = new Collection([], 'ssrc');
+        $this->speakingStatus = new ($this->discord->getCollectionClass())([], 'ssrc');
         $this->dnsConfig = $data['dnsConfig'];
     }
 
@@ -1677,7 +1676,7 @@ class OldVoiceClient extends EventEmitter
         $this->sentLoginFrame = false;
         $this->startTime = null;
         $this->streamTime = 0.0;
-        $this->speakingStatus = new Collection([], 'ssrc');
+        $this->speakingStatus = new ($this->discord->getCollectionClass())([], 'ssrc');
 
         $this->emit('close');
     }
