@@ -1511,6 +1511,8 @@ class Discord
      * @param VoiceServerUpdate $vs      The voice state update event.
      * @param Channel           $channel The voice channel.
      * @param array             $data    Reference to the data array for the voice client.
+     * 
+     * @todo Remove this function in v11, as it's no longer needed.
      */
     protected function voiceStateUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data): void
     {
