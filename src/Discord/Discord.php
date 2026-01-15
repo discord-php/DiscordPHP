@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -1511,7 +1512,7 @@ class Discord
      * @param VoiceServerUpdate $vs      The voice state update event.
      * @param Channel           $channel The voice channel.
      * @param array             $data    Reference to the data array for the voice client.
-     * 
+     *
      * @todo Remove this function in v11, as it's no longer needed.
      */
     protected function voiceStateUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data): void

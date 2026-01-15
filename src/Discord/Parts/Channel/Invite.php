@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -297,7 +298,7 @@ class Invite extends Part implements Stringable
      * Response is a CSV file with a single column `Users` containing the user IDs.
      *
      * Requires the `MANAGE_GUILD` permission.
-     * 
+     *
      * @todo Parse the CSV response to an array.
      * @since 10.46.0
      *
@@ -321,7 +322,7 @@ class Invite extends Part implements Stringable
      * @param string|null $filename Name to send the file as. `null` for the base name of `$filepath`.
      *
      * @return PromiseInterface
-     * 
+     *
      * @throws FileNotFoundException If the file does not exist or is not readable.
      */
     public function updateTargetUsers(string $filepath, ?string $filename = null): PromiseInterface
