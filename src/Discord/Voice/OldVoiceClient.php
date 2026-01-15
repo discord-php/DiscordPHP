@@ -48,7 +48,7 @@ use function React\Promise\resolve;
  *
  * @since 3.2.0
  */
-class VoiceClient extends EventEmitter
+class OldVoiceClient extends EventEmitter
 {
     /** Not speaking. */
     public const NOT_SPEAKING = 0;
@@ -596,7 +596,7 @@ class VoiceClient extends EventEmitter
 
         $this->discord->getLogger()->debug('received heartbeat ack', ['response_time' => $diff]);
         $this->emit('ws-ping', [$diff]);
-        $this->emit('ws-heartbeat-ack', [$data->d]);
+        $this->emit('ws-heartbeat-ack', [$data->d['t']]);
     }
 
     /**
@@ -677,13 +677,13 @@ class VoiceClient extends EventEmitter
         $udpfac->createClient("{$this->udpIp}:".$this->udpPort)->then(function (Socket $client): void {
             $this->client = $client;
 
-            $buffer = new Buffer(74);
+            $buffer = new OldBuffer(74);
             $buffer[1] = "\x01";
             $buffer[3] = "\x46";
             $buffer->writeUInt32BE($this->ssrc, 4);
 
             $this->udpHeartbeat = $this->discord->getLoop()->addPeriodicTimer(5, function () {
-                $buffer = new Buffer(9);
+                $buffer = new OldBuffer(9);
                 $buffer[0] = "\xC9";
                 $buffer->writeUInt64LE($this->heartbeatSeq, 1);
                 ++$this->heartbeatSeq;
@@ -1285,7 +1285,7 @@ class VoiceClient extends EventEmitter
 
         $this->setSpeaking(self::MICROPHONE);
 
-        OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($deferred, $loops) {
+        OldOggStream::fromBuffer($this->buffer)->then(function (OldOggStream $os) use ($deferred, $loops) {
             $this->startTime = microtime(true) + 0.5;
             $this->readOpusTimer = $this->discord->getLoop()->addTimer(0.5, fn () => $this->readOpus($deferred, $os, $loops));
         });
@@ -1296,14 +1296,14 @@ class VoiceClient extends EventEmitter
     /**
      * Reads and processes Opus audio packets from an OGG stream.
      *
-     * @param Deferred  $deferred The deferred promise that will be resolved when the stream ends.
-     * @param OggStream &$ogg     Reference to the OGG stream object to read packets from.
-     * @param int       &$loops   Reference to the loop counter used for timing calculations.
+     * @param Deferred     $deferred The deferred promise that will be resolved when the stream ends.
+     * @param OldOggStream &$ogg     Reference to the OGG stream object to read packets from.
+     * @param int          &$loops   Reference to the loop counter used for timing calculations.
      *
      *
      * @throws \Exception If packet retrieval fails.
      */
-    public function readOpus(Deferred $deferred, OggStream &$ogg, int &$loops)
+    public function readOpus(Deferred $deferred, OldOggStream &$ogg, int &$loops)
     {
         $this->readOpusTimer = null;
 
@@ -1821,13 +1821,13 @@ class VoiceClient extends EventEmitter
     /**
      * Decodes voice packet data.
      *
-     * @param string      $decrypted   The decrypted voice data.
-     * @param VoiceClient $vc          The voice client instance.
-     * @param VoicePacket $voicePacket The voice packet to decode.
+     * @param string         $decrypted   The decrypted voice data.
+     * @param OldVoiceClient $vc          The voice client instance.
+     * @param VoicePacket    $voicePacket The voice packet to decode.
      *
      * @todo
      */
-    public static function decodeVoicePacket(string $decrypted, VoiceClient $vc, VoicePacket $voicePacket): void
+    public static function decodeVoicePacket(string $decrypted, OldVoiceClient $vc, VoicePacket $voicePacket): void
     {
         $vp = VoicePacket::make($voicePacket->getHeader().$decrypted);
 
@@ -1851,7 +1851,7 @@ class VoiceClient extends EventEmitter
             $vc->voiceDecoders[$ss->ssrc] = $decoder;
         }
 
-        $buff = new Buffer(strlen($vp->getData()) + 2);
+        $buff = new OldBuffer(strlen($vp->getData()) + 2);
         $buff->write(pack('s', strlen($vp->getData())), 0);
         $buff->write($vp->getData(), 2);
 

@@ -21,7 +21,7 @@ use TrafficCophp\ByteBuffer\Buffer as BaseBuffer;
  *
  * @since 3.2.0
  */
-class Buffer extends BaseBuffer implements ArrayAccess
+class OldBuffer extends BaseBuffer implements ArrayAccess
 {
     /**
      * Writes a 32-bit unsigned integer with big endian.

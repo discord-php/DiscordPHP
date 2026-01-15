@@ -1,4 +1,4 @@
-J<?php
+<?php
 
 declare(strict_types=1);
 
@@ -77,5 +77,4 @@ class InviteJobStatus extends Part
     {
         return $this->attributeCarbonHelper('completed_at');
     }
-}
 }
