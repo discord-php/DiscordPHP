@@ -685,6 +685,8 @@ class Discord
      * Handles `VOICE_STATE_UPDATE` packets.
      *
      * @param Payload $data Packet data.
+     * 
+     * @todo Verify that $this->voice_sessions is being used or if it should be removed
      */
     protected function handleVoiceStateUpdate(object $data): void
     {
@@ -1504,23 +1506,6 @@ class Discord
             ? $this->voice->joinChannel($channel, $this, $this->voice_sessions, $mute, $deaf)
             : reject(new \RuntimeException('Voice manager is not initialized.'));
     }
-
-    /**
-     * Handles voice state update events.
-     *
-     * @param VoiceServerUpdate $vs      The voice state update event.
-     * @param Channel           $channel The voice channel.
-     * @param array             $data    Reference to the data array for the voice client.
-     */
-    protected function voiceStateUpdate(VoiceServerUpdate $vs, Channel $channel, array &$data): void
-    {
-        if ($vs->guild_id !== $channel->guild_id) {
-            return; // This voice state update isn't for our guild.
-        }
-        $this->voice_sessions[$channel->guild_id] = $vs->session_id;
-        $this->removeListener(Event::VOICE_STATE_UPDATE, fn () => $this->voiceStateUpdate($vs, $channel, $data));
-    }
-
     /**
      * Handles voice server update events.
      *
