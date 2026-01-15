@@ -1481,7 +1481,7 @@ class Discord
      */
     public function getVoiceClient(string $guild_id): ?VoiceClient
     {
-        return $this->voice->clients[$guild_id] ?? null;
+        return isset($this->voice) ? ($this->voice->clients[$guild_id] ?? null) : null;
     }
 
     /**
