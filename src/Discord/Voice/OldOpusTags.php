@@ -23,7 +23,7 @@ namespace Discord\Voice;
  *
  * @internal
  */
-class OpusTags
+class OldOpusTags
 {
     /**
      * The vendor of the Opus Ogg.

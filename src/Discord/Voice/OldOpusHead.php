@@ -23,7 +23,7 @@ namespace Discord\Voice;
  *
  * @internal
  */
-class OpusHead
+class OldOpusHead
 {
     /**
      * Binary format string used to parse header.

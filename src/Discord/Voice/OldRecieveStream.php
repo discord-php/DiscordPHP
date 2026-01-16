@@ -21,6 +21,6 @@ namespace Discord\Voice;
  *
  * @deprecated use ReceiveStream
  */
-class RecieveStream extends ReceiveStream
+class OldRecieveStream extends ReceiveStream
 {
 }
