@@ -29,9 +29,7 @@ namespace Discord\Builders\Components;
 class Checkbox extends Interactive
 {
     /**
-     * Component type.
-     *
-     * @var int
+     * @inheritDoc
      */
     protected $type = ComponentObject::TYPE_CHECKBOX;
 
@@ -41,6 +39,30 @@ class Checkbox extends Interactive
      * @var bool|null
      */
     protected $value;
+
+    /**
+     * Creates a new checkbox.
+     *
+     * @param string|null $custom_id custom ID of the checkbox. If not given, a UUID will be used.
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function __construct(?string $custom_id = null)
+    {
+        $this->setCustomId($custom_id ?? self::generateUuid());
+    }
+    
+    /**
+     * Creates a new checkbox component.
+     *
+     * @param string|null $custom_id ID for the checkbox.
+     *
+     * @return self
+     */
+    public static function new(?string $custom_id = null): self
+    {
+        return new self($custom_id);
+    }
 
     /**
      * Sets whether the checkbox is checked or not.
@@ -56,6 +78,16 @@ class Checkbox extends Interactive
         return $this;
     }
 
+    /**
+     * Returns whether the checkbox is checked or not.
+     *
+     * @return bool|null
+     */
+    public function getValue(): ?bool
+    {
+        return $this->value ?? null;
+    }
+
     public function jsonSerialize(): array
     {
         $content = [
@@ -63,12 +95,12 @@ class Checkbox extends Interactive
             'custom_id' => $this->custom_id,
         ];
 
-        if (isset($this->id)) {
-            $content['id'] = $this->id;
-        }
-
         if (isset($this->value)) {
             $content['value'] = $this->value;
+        }
+
+        if (isset($this->id)) {
+            $content['id'] = $this->id;
         }
 
         return $content;
