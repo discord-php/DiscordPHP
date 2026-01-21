@@ -36,14 +36,14 @@ class GroupOption extends Component
     protected $value;
 
     /**
-     * User-visible label of the option. Maximum 25 characters.
+     * User-visible label of the option. Maximum 100 characters.
      *
      * @var string
      */
     protected $label;
 
     /**
-     * Description for the option. Maximum 50 characters.
+     * Description for the option. Maximum 100 characters.
      *
      * @var string|null
      */
