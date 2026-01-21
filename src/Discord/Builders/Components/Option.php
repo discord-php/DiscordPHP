@@ -23,7 +23,8 @@ use function Discord\poly_strlen;
  *
  * @link https://discord.com/developers/docs/components/reference#select-menu-object-select-option-structure
  *
- * @todo Deprecate this class in favor of SelectMenuOption.
+ * @todo Deprecate Option in v11.
+ * @since 10.46.0 Use SelectMenuOption instead of Option.
  * @since 7.0.0
  */
 class Option extends Component
