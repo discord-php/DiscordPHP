@@ -738,13 +738,23 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003AsetMinValues\u0028\u0029",
             "name": "setMinValues",
-            "summary": "Sets\u0020the\u0020minimum\u0020number\u0020of\u0020files\u0020which\u0020must\u0020be\u0020uploaded.",
+            "summary": "Sets\u0020the\u0020minimum\u0020number\u0020of\u0020items\u0020that\u0020must\u0020be\u0020chosen.",
             "url": "classes/Discord-Builders-Components-CheckboxGroup.html#method_setMinValues"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003AgetMinValues\u0028\u0029",
+            "name": "getMinValues",
+            "summary": "Gets\u0020the\u0020minimum\u0020number\u0020of\u0020items\u0020that\u0020must\u0020be\u0020chosen.",
+            "url": "classes/Discord-Builders-Components-CheckboxGroup.html#method_getMinValues"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003AsetMaxValues\u0028\u0029",
             "name": "setMaxValues",
-            "summary": "Sets\u0020the\u0020maximum\u0020number\u0020of\u0020files\u0020which\u0020can\u0020be\u0020uploaded.",
+            "summary": "Sets\u0020the\u0020maximum\u0020number\u0020of\u0020items\u0020that\u0020can\u0020be\u0020chosen.",
             "url": "classes/Discord-Builders-Components-CheckboxGroup.html#method_setMaxValues"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003AgetMaxValues\u0028\u0029",
+            "name": "getMaxValues",
+            "summary": "Gets\u0020the\u0020maximum\u0020number\u0020of\u0020items\u0020that\u0020can\u0020be\u0020chosen.",
+            "url": "classes/Discord-Builders-Components-CheckboxGroup.html#method_getMaxValues"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003AjsonSerialize\u0028\u0029",
             "name": "jsonSerialize",
@@ -1338,12 +1348,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003A\u0024label",
             "name": "label",
-            "summary": "User\u002Dvisible\u0020label\u0020of\u0020the\u0020option.\u0020Maximum\u002025\u0020characters.",
+            "summary": "User\u002Dvisible\u0020label\u0020of\u0020the\u0020option.\u0020Maximum\u0020100\u0020characters.",
             "url": "classes/Discord-Builders-Components-GroupOption.html#property_label"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003A\u0024description",
             "name": "description",
-            "summary": "Description\u0020for\u0020the\u0020option.\u0020Maximum\u002050\u0020characters.",
+            "summary": "Description\u0020for\u0020the\u0020option.\u0020Maximum\u0020100\u0020characters.",
             "url": "classes/Discord-Builders-Components-GroupOption.html#property_description"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003A\u0024default",
@@ -10468,7 +10478,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AACTIVE",
             "name": "ACTIVE",
-            "summary": "",
+            "summary": "Undocumented.",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_ACTIVE"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AINTEGRATION_TYPE_GUILD_INSTALL",
@@ -12353,7 +12363,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_SYSTEM",
             "name": "FLAG_SYSTEM",
-            "summary": "",
+            "summary": "Undocumented.",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_SYSTEM"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_BUG_HUNTER_LEVEL_2",
@@ -12393,7 +12403,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_SUSPECTED_SPAM",
             "name": "FLAG_SUSPECTED_SPAM",
-            "summary": "",
+            "summary": "Undocumented.",
             "url": "classes/Discord-Parts-User-User.html#constant_FLAG_SUSPECTED_SPAM"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\User\u003A\u003AFLAG_ACTIVE_DEVELOPER",
