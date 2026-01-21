@@ -21,11 +21,11 @@ namespace Discord\Builders\Components;
  *
  * @since 10.46.0
  *
- * @property int       $type      21 for a radio group.
- * @property ?int|null $id        Optional identifier for component.
- * @property string    $custom_id Custom ID to send with interactive component.
- * @property array     $options   List of options to render.
- * @property ?bool     $required  Whether selecting an option is required or not.
+ * @property int        $type      21 for a radio group.
+ * @property ?int|null  $id        Optional identifier for component.
+ * @property string     $custom_id Custom ID to send with interactive component.
+ * @property array      $options   List of options to render.
+ * @property ?bool|null $required  Whether selecting an option is required or not.
  */
 abstract class Group extends Interactive
 {

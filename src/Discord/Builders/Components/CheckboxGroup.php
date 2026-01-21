@@ -87,7 +87,7 @@ class CheckboxGroup extends Group
 
     /**
      * Gets the minimum number of items that must be chosen.
-     * 
+     *
      * @return int|null
      */
     public function getMinValues(): ?int
@@ -117,7 +117,7 @@ class CheckboxGroup extends Group
 
     /**
      * Gets the maximum number of items that can be chosen.
-     * 
+     *
      * @return int|null
      */
     public function getMaxValues(): ?int
