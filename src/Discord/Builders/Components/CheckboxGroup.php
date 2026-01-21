@@ -66,7 +66,7 @@ class CheckboxGroup extends Group
     }
 
     /**
-     * Sets the minimum number of files which must be uploaded.
+     * Sets the minimum number of items that must be chosen.
      *
      * @param int|null $min_values Default `1`, minimum `0` and maximum `10`. `null` to set as default.
      *
@@ -86,7 +86,17 @@ class CheckboxGroup extends Group
     }
 
     /**
-     * Sets the maximum number of files which can be uploaded.
+     * Gets the minimum number of items that must be chosen.
+     * 
+     * @return int|null
+     */
+    public function getMinValues(): ?int
+    {
+        return $this->min_values ?? null;
+    }
+
+    /**
+     * Sets the maximum number of items that can be chosen.
      *
      * @param int|null $max_values Default `1` and maximum `10`. `null` to set as default.
      *
@@ -103,6 +113,16 @@ class CheckboxGroup extends Group
         $this->max_values = $max_values;
 
         return $this;
+    }
+
+    /**
+     * Gets the maximum number of items that can be chosen.
+     * 
+     * @return int|null
+     */
+    public function getMaxValues(): ?int
+    {
+        return $this->max_values ?? null;
     }
 
     /**
