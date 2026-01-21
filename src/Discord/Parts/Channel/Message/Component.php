@@ -58,6 +58,9 @@ class Component extends Part
         ComponentObject::TYPE_CONTAINER => Container::class,
         ComponentObject::TYPE_LABEL => Label::class,
         ComponentObject::TYPE_FILE_UPLOAD => FileUpload::class,
+        ComponentObject::TYPE_RADIO_GROUP => RadioGroup::class,
+        ComponentObject::TYPE_CHECKBOX_GROUP => CheckboxGroup::class,
+        ComponentObject::TYPE_CHECKBOX => Checkbox::class,
     ];
 
     /**
