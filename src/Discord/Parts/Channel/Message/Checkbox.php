@@ -26,7 +26,7 @@ namespace Discord\Parts\Channel\Message;
  * @property string $custom_id Developer-defined identifier for the input; 1-100 characters.
  * @property bool   $value     Whether the checkbox is checked or not.
  */
-class Checkbox
+class Checkbox extends Interactive
 {
     /**
      * @inheritDoc

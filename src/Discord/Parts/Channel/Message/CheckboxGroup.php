@@ -26,7 +26,7 @@ namespace Discord\Parts\Channel\Message;
  * @property string   $custom_id Developer-defined identifier for the input; 1-100 characters.
  * @property string[] $value     The values of the selected options.
  */
-class CheckboxGroup
+class CheckboxGroup extends Interactive
 {
     /**
      * @inheritDoc
