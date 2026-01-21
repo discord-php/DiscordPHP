@@ -23,6 +23,7 @@ namespace Discord\Builders\Components;
  *
  * @link https://discord.com/developers/docs/components/reference#component-object
  *
+ * @since 10.45.12 Class is concrete instead of abstract.
  * @since 10.9.0
  */
 class ComponentObject extends Component
