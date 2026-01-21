@@ -53,6 +53,9 @@ abstract class ComponentObject extends Component
         ComponentObject::TYPE_CONTAINER => Container::class,
         ComponentObject::TYPE_LABEL => Label::class,
         ComponentObject::TYPE_FILE_UPLOAD => FileUpload::class,
+        ComponentObject::TYPE_RADIO_GROUP => RadioGroup::class,
+        ComponentObject::TYPE_CHECKBOX_GROUP => CheckboxGroup::class,
+        ComponentObject::TYPE_CHECKBOX => Checkbox::class,
     ];
 
     /** Container to display a row of interactive components. */
@@ -96,6 +99,13 @@ abstract class ComponentObject extends Component
     public const TYPE_FILE_UPLOAD = 19;
     /** Undocumented. Used by the client for checkpoint. */
     public const TYPE_CHECKPOINT_CARD = 20;
+
+    /** Single-choice set of radio options. */
+    public const TYPE_RADIO_GROUP = 21;
+    /** Multi-select group of checkboxes. */
+    public const TYPE_CHECKBOX_GROUP = 22;
+    /** Single checkbox for binary choice. */
+    public const TYPE_CHECKBOX = 23;
 
     /**
      * The type of the component.
