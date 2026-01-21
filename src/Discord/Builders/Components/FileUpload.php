@@ -56,7 +56,7 @@ class FileUpload extends Interactive
 
     /**
      * Whether the file upload is required to be filled in a modal (defaults to `true`).
-     * 
+     *
      * @var bool|null
      */
     protected $required;

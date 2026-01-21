@@ -62,7 +62,7 @@ class StringSelect extends SelectMenu
 
     /**
      * Adds an option to the select menu. Maximum 25 options.
-     * 
+     *
      * @todo Deprecate Option in v11.
      * @since 10.46.0 Use SelectMenuOption instead of Option.
      *
@@ -98,7 +98,7 @@ class StringSelect extends SelectMenu
      *
      * @todo Deprecate Option in v11.
      * @since 10.46.0 Use SelectMenuOption instead of Option.
-     * 
+     *
      * @param Option $option Option to remove.
      *
      * @return $this
