@@ -31,6 +31,11 @@ class Checkbox extends Interactive
     /**
      * @inheritDoc
      */
+    public const USAGE = ['Modal'];
+
+    /**
+     * @inheritDoc
+     */
     protected $type = ComponentObject::TYPE_CHECKBOX;
 
     /**

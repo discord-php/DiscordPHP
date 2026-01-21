@@ -32,6 +32,11 @@ class RadioGroup extends Group
     /**
      * @inheritDoc
      */
+    public const USAGE = ['Modal'];
+
+    /**
+     * @inheritDoc
+     */
     protected $type = ComponentObject::TYPE_RADIO_GROUP;
 
     /**

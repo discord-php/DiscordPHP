@@ -34,6 +34,11 @@ class CheckboxGroup extends Group
     /**
      * @inheritDoc
      */
+    public const USAGE = ['Modal'];
+
+    /**
+     * @inheritDoc
+     */
     protected $type = ComponentObject::TYPE_CHECKBOX_GROUP;
 
     /**
