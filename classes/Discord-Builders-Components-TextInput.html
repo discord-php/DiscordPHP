@@ -398,6 +398,20 @@
 <dd>Select menu for channels.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHECKBOX">TYPE_CHECKBOX</a>
+    <span>
+        &nbsp;= 23                            </span>
+</dt>
+<dd>Single checkbox for binary choice.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHECKBOX_GROUP">TYPE_CHECKBOX_GROUP</a>
+    <span>
+        &nbsp;= 22                            </span>
+</dt>
+<dd>Multi-select group of checkboxes.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHECKPOINT_CARD">TYPE_CHECKPOINT_CARD</a>
     <span>
         &nbsp;= 20                            </span>
@@ -452,6 +466,13 @@
         &nbsp;= 7                            </span>
 </dt>
 <dd>Select menu for mentionables (users and roles).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_RADIO_GROUP">TYPE_RADIO_GROUP</a>
+    <span>
+        &nbsp;= 21                            </span>
+</dt>
+<dd>Single-choice set of radio options.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_ROLE_SELECT">TYPE_ROLE_SELECT</a>
@@ -538,6 +559,9 @@
     \Discord\Builders\Components\ComponentObject::TYPE_CONTAINER =&gt; \Discord\Builders\Components\Container::class,
     \Discord\Builders\Components\ComponentObject::TYPE_LABEL =&gt; \Discord\Builders\Components\Label::class,
     \Discord\Builders\Components\ComponentObject::TYPE_FILE_UPLOAD =&gt; \Discord\Builders\Components\FileUpload::class,
+    \Discord\Builders\Components\ComponentObject::TYPE_RADIO_GROUP =&gt; \Discord\Builders\Components\RadioGroup::class,
+    \Discord\Builders\Components\ComponentObject::TYPE_CHECKBOX_GROUP =&gt; \Discord\Builders\Components\CheckboxGroup::class,
+    \Discord\Builders\Components\ComponentObject::TYPE_CHECKBOX =&gt; \Discord\Builders\Components\Checkbox::class,
 ]                            </span>
 </dt>
 <dd>Available components and their respective classes.</dd>
@@ -913,7 +937,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
@@ -944,7 +968,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
@@ -975,7 +999,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
@@ -997,6 +1021,68 @@
         
     </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_CHECKBOX">
+        TYPE_CHECKBOX
+        <a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHECKBOX" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">113</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Single checkbox for binary choice.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_CHECKBOX</span>
+    = <span class="phpdocumentor-signature__default-value">23</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_CHECKBOX_GROUP">
+        TYPE_CHECKBOX_GROUP
+        <a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHECKBOX_GROUP" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">111</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Multi-select group of checkboxes.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_CHECKBOX_GROUP</span>
+    = <span class="phpdocumentor-signature__default-value">22</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_TYPE_CHECKPOINT_CARD">
         TYPE_CHECKPOINT_CARD
         <a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHECKPOINT_CARD" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1006,7 +1092,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">98</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
@@ -1037,7 +1123,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">91</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -1068,7 +1154,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -1099,7 +1185,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -1130,7 +1216,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -1161,7 +1247,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">102</span>
 
     </aside>
 
@@ -1192,7 +1278,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -1223,7 +1309,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
@@ -1245,6 +1331,37 @@
         
     </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_RADIO_GROUP">
+        TYPE_RADIO_GROUP
+        <a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_RADIO_GROUP" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">109</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Single-choice set of radio options.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_RADIO_GROUP</span>
+    = <span class="phpdocumentor-signature__default-value">21</span>
+</code>
+
+
+    
+    
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_TYPE_ROLE_SELECT">
         TYPE_ROLE_SELECT
         <a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_ROLE_SELECT" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1254,7 +1371,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">69</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 
     </aside>
 
@@ -1285,7 +1402,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
     </aside>
 
@@ -1353,7 +1470,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">87</span>
+    <span class="phpdocumentor-element-found-in__line">95</span>
 
     </aside>
 
@@ -1384,7 +1501,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
@@ -1415,7 +1532,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">87</span>
 
     </aside>
 
@@ -1446,7 +1563,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
@@ -1477,7 +1594,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
@@ -1508,7 +1625,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">67</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -1539,7 +1656,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -1570,6 +1687,9 @@
     \Discord\Builders\Components\ComponentObject::TYPE_CONTAINER =&gt; \Discord\Builders\Components\Container::class,
     \Discord\Builders\Components\ComponentObject::TYPE_LABEL =&gt; \Discord\Builders\Components\Label::class,
     \Discord\Builders\Components\ComponentObject::TYPE_FILE_UPLOAD =&gt; \Discord\Builders\Components\FileUpload::class,
+    \Discord\Builders\Components\ComponentObject::TYPE_RADIO_GROUP =&gt; \Discord\Builders\Components\RadioGroup::class,
+    \Discord\Builders\Components\ComponentObject::TYPE_CHECKBOX_GROUP =&gt; \Discord\Builders\Components\CheckboxGroup::class,
+    \Discord\Builders\Components\ComponentObject::TYPE_CHECKBOX =&gt; \Discord\Builders\Components\Checkbox::class,
 ]</span>
 </code>
 
@@ -1676,7 +1796,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">112</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -2453,7 +2573,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
@@ -3428,7 +3548,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/Components/ComponentObject.php"><a href="files/src-discord-builders-components-componentobject.html"><abbr title="src/Discord/Builders/Components/ComponentObject.php">ComponentObject.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">144</span>
 
     </aside>
 
@@ -3711,6 +3831,8 @@ as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_ACTION_ROW">TYPE_ACTION_ROW</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_BUTTON">TYPE_BUTTON</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHANNEL_SELECT">TYPE_CHANNEL_SELECT</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHECKBOX">TYPE_CHECKBOX</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHECKBOX_GROUP">TYPE_CHECKBOX_GROUP</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHECKPOINT_CARD">TYPE_CHECKPOINT_CARD</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CONTAINER">TYPE_CONTAINER</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CONTENT_INVENTORY_ENTRY">TYPE_CONTENT_INVENTORY_ENTRY</a></li>
@@ -3719,6 +3841,7 @@ as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_LABEL">TYPE_LABEL</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_MEDIA_GALLERY">TYPE_MEDIA_GALLERY</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_MENTIONABLE_SELECT">TYPE_MENTIONABLE_SELECT</a></li>
+                                                    <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_RADIO_GROUP">TYPE_RADIO_GROUP</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_ROLE_SELECT">TYPE_ROLE_SELECT</a></li>
                                                     <li class=""><a href="classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_SECTION">TYPE_SECTION</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_SELECT_MENU">TYPE_SELECT_MENU</a></li>

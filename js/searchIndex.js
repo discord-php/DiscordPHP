@@ -676,6 +676,96 @@ Search.appendIndex(
             "summary": "List\u0020of\u0020channel\u0020types\u0020to\u0020include.",
             "url": "classes/Discord-Builders-Components-ChannelSelect.html#property_channel_types"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Checkbox",
+            "name": "Checkbox",
+            "summary": "A\u0020Checkbox\u0020is\u0020a\u0020single\u0020interactive\u0020component\u0020for\u0020simple\u0020yes\/no\u0020style\u0020questions.\u0020Checkboxes\u0020are\u0020available\u0020in\u0020modals\u0020and\u0020must\u0020be\u0020placed\u0020inside\u0020a\u0020Labl.",
+            "url": "classes/Discord-Builders-Components-Checkbox.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Checkbox\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Creates\u0020a\u0020new\u0020checkbox.",
+            "url": "classes/Discord-Builders-Components-Checkbox.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Checkbox\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020checkbox\u0020component.",
+            "url": "classes/Discord-Builders-Components-Checkbox.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Checkbox\u003A\u003AsetValue\u0028\u0029",
+            "name": "setValue",
+            "summary": "Sets\u0020whether\u0020the\u0020checkbox\u0020is\u0020checked\u0020or\u0020not.",
+            "url": "classes/Discord-Builders-Components-Checkbox.html#method_setValue"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Checkbox\u003A\u003AgetValue\u0028\u0029",
+            "name": "getValue",
+            "summary": "Returns\u0020whether\u0020the\u0020checkbox\u0020is\u0020checked\u0020or\u0020not.",
+            "url": "classes/Discord-Builders-Components-Checkbox.html#method_getValue"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Checkbox\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Checkbox.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Checkbox\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Checkbox.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Checkbox\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-Checkbox.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Checkbox\u003A\u003A\u0024value",
+            "name": "value",
+            "summary": "Whether\u0020the\u0020checkbox\u0020is\u0020checked\u0020or\u0020not.",
+            "url": "classes/Discord-Builders-Components-Checkbox.html#property_value"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup",
+            "name": "CheckboxGroup",
+            "summary": "A\u0020Checkbox\u0020Group\u0020is\u0020an\u0020interactive\u0020component\u0020for\u0020selecting\u0020one\u0020or\u0020many\u0020options\u0020via\u0020checkboxes.\u0020Checkbox\u0020Groups\u0020are\u0020available\u0020in\u0020modals\u0020and\u0020must\u0020be\u0020placed\u0020inside\u0020a\u0020Label.",
+            "url": "classes/Discord-Builders-Components-CheckboxGroup.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Creates\u0020a\u0020new\u0020checkbox\u0020group.",
+            "url": "classes/Discord-Builders-Components-CheckboxGroup.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020checkbox\u0020group\u0020component.",
+            "url": "classes/Discord-Builders-Components-CheckboxGroup.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003AsetMinValues\u0028\u0029",
+            "name": "setMinValues",
+            "summary": "Sets\u0020the\u0020minimum\u0020number\u0020of\u0020files\u0020which\u0020must\u0020be\u0020uploaded.",
+            "url": "classes/Discord-Builders-Components-CheckboxGroup.html#method_setMinValues"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003AsetMaxValues\u0028\u0029",
+            "name": "setMaxValues",
+            "summary": "Sets\u0020the\u0020maximum\u0020number\u0020of\u0020files\u0020which\u0020can\u0020be\u0020uploaded.",
+            "url": "classes/Discord-Builders-Components-CheckboxGroup.html#method_setMaxValues"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-CheckboxGroup.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-CheckboxGroup.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroup\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-CheckboxGroup.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\CheckboxGroupOption",
+            "name": "CheckboxGroupOption",
+            "summary": "List\u0020of\u0020options\u0020to\u0020render\u0020within\u0020a\u0020Checkbox\u0020Group.",
+            "url": "classes/Discord-Builders-Components-CheckboxGroupOption.html"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\Component",
             "name": "Component",
             "summary": "Components\u0020are\u0020a\u0020new\u0020field\u0020on\u0020the\u0020message\u0020object,\u0020so\u0020you\u0020can\u0020use\u0020them\u0020whether\nyou\u0027re\u0020sending\u0020messages\u0020or\u0020responding\u0020to\u0020a\u0020slash\u0020command\u0020or\u0020other\u0020interaction.",
@@ -818,7 +908,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003AUSAGE",
             "name": "USAGE",
-            "summary": "",
+            "summary": "Usage\u0020contexts\u0020for\u0020the\u0020component.",
             "url": "classes/Discord-Builders-Components-ComponentObject.html#constant_USAGE"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003ATYPES",
@@ -920,6 +1010,21 @@ Search.appendIndex(
             "name": "TYPE_CHECKPOINT_CARD",
             "summary": "Undocumented.\u0020Used\u0020by\u0020the\u0020client\u0020for\u0020checkpoint.",
             "url": "classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHECKPOINT_CARD"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003ATYPE_RADIO_GROUP",
+            "name": "TYPE_RADIO_GROUP",
+            "summary": "Single\u002Dchoice\u0020set\u0020of\u0020radio\u0020options.",
+            "url": "classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_RADIO_GROUP"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003ATYPE_CHECKBOX_GROUP",
+            "name": "TYPE_CHECKBOX_GROUP",
+            "summary": "Multi\u002Dselect\u0020group\u0020of\u0020checkboxes.",
+            "url": "classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHECKBOX_GROUP"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003ATYPE_CHECKBOX",
+            "name": "TYPE_CHECKBOX",
+            "summary": "Single\u0020checkbox\u0020for\u0020binary\u0020choice.",
+            "url": "classes/Discord-Builders-Components-ComponentObject.html#constant_TYPE_CHECKBOX"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\ComponentObject\u003A\u003A\u0024type",
             "name": "type",
@@ -1120,6 +1225,131 @@ Search.appendIndex(
             "name": "max_values",
             "summary": "Maximum\u0020number\u0020of\u0020files\u0020that\u0020can\u0020be\u0020uploaded.",
             "url": "classes/Discord-Builders-Components-FileUpload.html#property_max_values"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\FileUpload\u003A\u003A\u0024required",
+            "name": "required",
+            "summary": "Whether\u0020the\u0020file\u0020upload\u0020is\u0020required\u0020to\u0020be\u0020filled\u0020in\u0020a\u0020modal\u0020\u0028defaults\u0020to\u0020\u0060true\u0060\u0029.",
+            "url": "classes/Discord-Builders-Components-FileUpload.html#property_required"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Group",
+            "name": "Group",
+            "summary": "A\u0020Checkbox\u0020Group\u0020is\u0020an\u0020interactive\u0020component\u0020for\u0020selecting\u0020one\u0020or\u0020many\u0020options\u0020via\u0020checkboxes.\u0020Checkbox\u0020Groups\u0020are\u0020available\u0020in\u0020modals\u0020and\u0020must\u0020be\u0020placed\u0020inside\u0020a\u0020Label.",
+            "url": "classes/Discord-Builders-Components-Group.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Group\u003A\u003AsetOptions\u0028\u0029",
+            "name": "setOptions",
+            "summary": "List\u0020of\u0020options\u0020to\u0020render.",
+            "url": "classes/Discord-Builders-Components-Group.html#method_setOptions"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Group\u003A\u003AaddOption\u0028\u0029",
+            "name": "addOption",
+            "summary": "Adds\u0020an\u0020option\u0020to\u0020the\u0020group.\u0020Maximum\u002010\u0020options.",
+            "url": "classes/Discord-Builders-Components-Group.html#method_addOption"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Group\u003A\u003AremoveOption\u0028\u0029",
+            "name": "removeOption",
+            "summary": "Removes\u0020an\u0020option\u0020from\u0020the\u0020group.",
+            "url": "classes/Discord-Builders-Components-Group.html#method_removeOption"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Group\u003A\u003AgetOptions\u0028\u0029",
+            "name": "getOptions",
+            "summary": "Gets\u0020the\u0020options.",
+            "url": "classes/Discord-Builders-Components-Group.html#method_getOptions"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Group\u003A\u003AsetRequired\u0028\u0029",
+            "name": "setRequired",
+            "summary": "Set\u0020if\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled,\u0020default\u0020false.\u0020\u0028Modal\u0020only\u0029.",
+            "url": "classes/Discord-Builders-Components-Group.html#method_setRequired"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Group\u003A\u003AgetRequired\u0028\u0029",
+            "name": "getRequired",
+            "summary": "Gets\u0020whether\u0020this\u0020component\u0020is\u0020required\u0020to\u0020be\u0020filled.",
+            "url": "classes/Discord-Builders-Components-Group.html#method_getRequired"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Group\u003A\u003A\u0024options",
+            "name": "options",
+            "summary": "List\u0020of\u0020options\u0020to\u0020render.",
+            "url": "classes/Discord-Builders-Components-Group.html#property_options"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\Group\u003A\u003A\u0024required",
+            "name": "required",
+            "summary": "Whether\u0020selecting\u0020an\u0020option\u0020is\u0020required\u0020or\u0020not.",
+            "url": "classes/Discord-Builders-Components-Group.html#property_required"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption",
+            "name": "GroupOption",
+            "summary": "List\u0020of\u0020options\u0020to\u0020render\u0020within\u0020a\u0020Group.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003AsetValue\u0028\u0029",
+            "name": "setValue",
+            "summary": "Sets\u0020the\u0020value\u0020text.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#method_setValue"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003AgetValue\u0028\u0029",
+            "name": "getValue",
+            "summary": "Gets\u0020the\u0020value\u0020text.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#method_getValue"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003AsetLabel\u0028\u0029",
+            "name": "setLabel",
+            "summary": "Sets\u0020the\u0020label\u0020text.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#method_setLabel"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003AgetLabel\u0028\u0029",
+            "name": "getLabel",
+            "summary": "Gets\u0020the\u0020label\u0020text.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#method_getLabel"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003AsetDescription\u0028\u0029",
+            "name": "setDescription",
+            "summary": "Sets\u0020the\u0020description\u0020text.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#method_setDescription"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003AgetDescription\u0028\u0029",
+            "name": "getDescription",
+            "summary": "Gets\u0020the\u0020description\u0020text.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#method_getDescription"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003AsetDefault\u0028\u0029",
+            "name": "setDefault",
+            "summary": "Sets\u0020the\u0020option\u0020as\u0020default.\u0020Pass\u0020false\u0020to\u0020set\u0020as\u0020non\u002Ddefault.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#method_setDefault"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003AgetDefault\u0028\u0029",
+            "name": "getDefault",
+            "summary": "Gets\u0020whether\u0020the\u0020option\u0020is\u0020set\u0020as\u0020default.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#method_getDefault"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003A\u0024value",
+            "name": "value",
+            "summary": "Developer\u0020value\u0020for\u0020the\u0020option.\u0020Maximum\u0020100\u0020characters.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#property_value"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003A\u0024label",
+            "name": "label",
+            "summary": "User\u002Dvisible\u0020label\u0020of\u0020the\u0020option.\u0020Maximum\u002025\u0020characters.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#property_label"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003A\u0024description",
+            "name": "description",
+            "summary": "Description\u0020for\u0020the\u0020option.\u0020Maximum\u002050\u0020characters.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#property_description"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\GroupOption\u003A\u003A\u0024default",
+            "name": "default",
+            "summary": "Whether\u0020the\u0020option\u0020should\u0020be\u0020enabled\u0020as\u0020default.",
+            "url": "classes/Discord-Builders-Components-GroupOption.html#property_default"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Interactive",
             "name": "Interactive",
@@ -1406,6 +1636,41 @@ Search.appendIndex(
             "summary": "Whether\u0020the\u0020option\u0020should\u0020be\u0020enabled\u0020as\u0020default.",
             "url": "classes/Discord-Builders-Components-Option.html#property_default"
         },                {
+            "fqsen": "\\Discord\\Builders\\Components\\RadioGroup",
+            "name": "RadioGroup",
+            "summary": "A\u0020Radio\u0020Group\u0020is\u0020an\u0020interactive\u0020component\u0020for\u0020selecting\u0020exactly\u0020one\u0020option\u0020from\u0020a\u0020defined\u0020list.\u0020Radio\u0020Groups\u0020are\u0020available\u0020in\u0020modals\u0020and\u0020must\u0020be\u0020placed\u0020inside\u0020a\u0020Label.",
+            "url": "classes/Discord-Builders-Components-RadioGroup.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\RadioGroup\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Creates\u0020a\u0020new\u0020radio\u0020group.",
+            "url": "classes/Discord-Builders-Components-RadioGroup.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\RadioGroup\u003A\u003Anew\u0028\u0029",
+            "name": "new",
+            "summary": "Creates\u0020a\u0020new\u0020radio\u0020group\u0020component.",
+            "url": "classes/Discord-Builders-Components-RadioGroup.html#method_new"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\RadioGroup\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-RadioGroup.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\RadioGroup\u003A\u003AUSAGE",
+            "name": "USAGE",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-RadioGroup.html#constant_USAGE"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\RadioGroup\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "",
+            "url": "classes/Discord-Builders-Components-RadioGroup.html#property_type"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\RadioGroupOption",
+            "name": "RadioGroupOption",
+            "summary": "List\u0020of\u0020options\u0020to\u0020render\u0020within\u0020a\u0020Radio\u0020Group.",
+            "url": "classes/Discord-Builders-Components-RadioGroupOption.html"
+        },                {
             "fqsen": "\\Discord\\Builders\\Components\\RoleSelect",
             "name": "RoleSelect",
             "summary": "Select\u0020menu\u0020for\u0020roles.",
@@ -1655,6 +1920,11 @@ Search.appendIndex(
             "name": "discord",
             "summary": "Discord\u0020instance\u0020when\u0020the\u0020listener\u0020is\u0020set.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#property_discord"
+        },                {
+            "fqsen": "\\Discord\\Builders\\Components\\SelectMenuOption",
+            "name": "SelectMenuOption",
+            "summary": "Option\u0020for\u0020select\u0020menu\u0020component.",
+            "url": "classes/Discord-Builders-Components-SelectMenuOption.html"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\Separator",
             "name": "Separator",
@@ -4756,6 +5026,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message-ChannelSelect.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Checkbox",
+            "name": "Checkbox",
+            "summary": "A\u0020Checkbox\u0020is\u0020a\u0020single\u0020interactive\u0020component\u0020for\u0020simple\u0020yes\/no\u0020style\u0020questions.\u0020Checkboxes\u0020are\u0020available\u0020in\u0020modals\u0020and\u0020must\u0020be\u0020placed\u0020inside\u0020a\u0020Labl.",
+            "url": "classes/Discord-Parts-Channel-Message-Checkbox.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\Checkbox\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-Checkbox.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\CheckboxGroup",
+            "name": "CheckboxGroup",
+            "summary": "A\u0020Checkbox\u0020Group\u0020is\u0020an\u0020interactive\u0020component\u0020for\u0020selecting\u0020one\u0020or\u0020many\u0020options\u0020via\u0020checkboxes.\u0020Checkbox\u0020Groups\u0020are\u0020available\u0020in\u0020modals\u0020and\u0020must\u0020be\u0020placed\u0020inside\u0020a\u0020Label.",
+            "url": "classes/Discord-Parts-Channel-Message-CheckboxGroup.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\CheckboxGroup\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-CheckboxGroup.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\Component",
             "name": "Component",
             "summary": "Components\u0020allow\u0020you\u0020to\u0020style\u0020and\u0020structure\u0020your\u0020messages,\u0020modals,\u0020and\u0020interactions.",
@@ -5080,6 +5370,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Channel-Message-MessageSnapshot.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\RadioGroup",
+            "name": "RadioGroup",
+            "summary": "A\u0020Radio\u0020Group\u0020is\u0020an\u0020interactive\u0020component\u0020for\u0020selecting\u0020exactly\u0020one\u0020option\u0020from\u0020a\u0020defined\u0020list.\u0020Radio\u0020Groups\u0020are\u0020available\u0020in\u0020modals\u0020and\u0020must\u0020be\u0020placed\u0020inside\u0020a\u0020Label.",
+            "url": "classes/Discord-Parts-Channel-Message-RadioGroup.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\\RadioGroup\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Channel-Message-RadioGroup.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\\RoleSelect",
             "name": "RoleSelect",
