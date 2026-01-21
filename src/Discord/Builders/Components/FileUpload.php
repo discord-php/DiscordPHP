@@ -94,7 +94,7 @@ class FileUpload extends Interactive
      *
      * @return $this
      */
-    public function setMinValues(?int $min_values): self
+    public function setMinValues(?int $min_values = null): self
     {
         if (isset($min_values) && ($min_values < 1 || $min_values > 10)) {
             throw new \LengthException('Number must be between 0 and 10 inclusive.');
@@ -114,7 +114,7 @@ class FileUpload extends Interactive
      *
      * @return $this
      */
-    public function setMaxValues(?int $max_values): self
+    public function setMaxValues(?int $max_values = null): self
     {
         if ($max_values && $max_values > 10) {
             throw new \LengthException('Number must be less than or equal to 10.');
