@@ -30,7 +30,7 @@ abstract class ComponentObject extends Component
     /**
      * Usage contexts for the component. 
      *
-     * @var String[]
+     * @var string[]
      */    
     public const USAGE = [];
 
