@@ -23,9 +23,10 @@ namespace Discord\Builders\Components;
  *
  * @link https://discord.com/developers/docs/components/reference#component-object
  *
+ * @since 10.45.12 Class is concrete instead of abstract.
  * @since 10.9.0
  */
-abstract class ComponentObject extends Component
+class ComponentObject extends Component
 {
     /**
      * Usage contexts for the component. 
@@ -127,6 +128,16 @@ abstract class ComponentObject extends Component
     protected $id;
 
     /**
+     * Creates a new component.
+     *
+     * @return self
+     */
+    public static function new(): self
+    {
+        return new self();
+    }
+
+    /**
      * Retrieves the type of the component.
      *
      * @return int
@@ -146,5 +157,25 @@ abstract class ComponentObject extends Component
         $this->id = $id;
 
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        $reflection = new \ReflectionClass($this);
+        $properties = $reflection->getProperties(\ReflectionProperty::IS_PROTECTED);
+        
+        $result = [];
+        foreach ($properties as $property) {
+            $property->setAccessible(true);
+            $value = $property->getValue($this);
+            if ($value !== null) {
+                $result[$property->getName()] = $value;
+            }
+        }
+        
+        return $result;
     }
 }
