@@ -55,6 +55,13 @@ class FileUpload extends Interactive
     protected $max_values;
 
     /**
+     * Whether the file upload is required to be filled in a modal (defaults to `true`).
+     * 
+     * @var bool|null
+     */
+    protected $required;
+
+    /**
      * Creates a new file upload.
      *
      * @param string|null $custom_id custom ID of the file upload. If not given, a UUID will be used
