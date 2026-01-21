@@ -135,7 +135,7 @@ class Application extends Part
     public const GATEWAY_MESSAGE_CONTENT_LIMITED = (1 << 19);
     /** Indicates if an app has registered global application commands. */
     public const APPLICATION_COMMAND_BADGE = (1 << 23);
-    /** @todo Undocumented. */
+    /** Undocumented. */
     public const ACTIVE = (1 << 24);
 
     /**	App is installable to servers. */

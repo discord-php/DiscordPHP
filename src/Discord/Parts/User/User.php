@@ -99,7 +99,7 @@ class User extends Part implements Stringable
     public const FLAG_TEAM_PSEUDO_USER = (1 << 10);
     /** @deprecated 10.36.32 use `User::FLAG_TEAM_PSEUDO_USER` */
     public const FLAG_TEAM_USER = (1 << 10);
-    /** @todo Undocumented. */
+    /** Undocumented. */
     public const FLAG_SYSTEM = (1 << 12);
     /** Bug Hunter Level 2. */
     public const FLAG_BUG_HUNTER_LEVEL_2 = (1 << 14);
@@ -115,7 +115,7 @@ class User extends Part implements Stringable
     public const FLAG_DISCORD_CERTIFIED_MODERATOR = self::FLAG_CERTIFIED_MODERATOR;
     /** Bot uses only HTTP interactions and is shown in the online member list. */
     public const FLAG_BOT_HTTP_INTERACTIONS = (1 << 19);
-    /** @todo Undocumented. */
+    /** Undocumented. */
     public const FLAG_SUSPECTED_SPAM = (1 << 20); // Not documented
     /** User is an Active Developer. */
     public const FLAG_ACTIVE_DEVELOPER = (1 << 22);

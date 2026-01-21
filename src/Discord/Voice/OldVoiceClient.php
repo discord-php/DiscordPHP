@@ -1825,8 +1825,6 @@ class OldVoiceClient extends EventEmitter
      * @param string         $decrypted   The decrypted voice data.
      * @param OldVoiceClient $vc          The voice client instance.
      * @param VoicePacket    $voicePacket The voice packet to decode.
-     *
-     * @todo
      */
     public static function decodeVoicePacket(string $decrypted, OldVoiceClient $vc, VoicePacket $voicePacket): void
     {
@@ -1861,8 +1859,6 @@ class OldVoiceClient extends EventEmitter
 
     /**
      * Creates and starts a decoder process for the given stream source.
-     *
-     * @todo Implement MLS decoding and use the appropriate decoder.
      *
      * @param object $ss The stream source object containing ssrc and user_id properties.
      *
