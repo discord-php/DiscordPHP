@@ -27,6 +27,11 @@ namespace Discord\Builders\Components;
  */
 abstract class ComponentObject extends Component
 {
+    /**
+     * Usage contexts for the component. 
+     *
+     * @var String[]
+     */    
     public const USAGE = [];
 
     /**
