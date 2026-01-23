@@ -59,12 +59,10 @@ class InviteDeleteData extends Part
      */
     protected function getChannelAttribute(): ?Channel
     {
-        $guild = $this->guild;
-
-        if ($guild === null || $this->channel_id === null) {
+        if ($this->channel_id === null) {
             return null;
         }
 
-        return $guild->channels->get('id', $this->channel_id);
+        return $this->discord->getChannel($this->channel_id);
     }
 }
