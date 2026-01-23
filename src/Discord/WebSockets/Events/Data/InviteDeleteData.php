@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events\Data;
 
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 
 /**
@@ -24,6 +26,9 @@ use Discord\Parts\Part;
  * @property string|null $channel_id Channel of the invite.
  * @property string|null $guild_id   Guild of the invite.
  * @property string $code       Unique invite code.
+ * 
+ * @property Guild|null $guild Guild of the invite.
+ * @property Channel|null $channel Channel of the invite.
  */
 class InviteDeleteData extends Part
 {
@@ -32,4 +37,34 @@ class InviteDeleteData extends Part
         'guild_id',
         'code',
     ];
+
+    /**
+     * Gets the guild attribute.
+     * 
+     * @return ?Guild
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        if ($this->guild_id === null) {
+            return null;
+        }
+
+        return $this->discord->guilds->get('id', $this->guild_id);
+    }
+
+    /**
+     * Gets the channel attribute.
+     * 
+     * @return ?Channel
+     */
+    protected function getChannelAttribute(): ?Channel
+    {
+        $guild = $this->guild;
+
+        if ($guild === null || $this->channel_id === null) {
+            return null;
+        }
+
+        return $guild->channels->get('id', $this->channel_id);
+    }
 }
