@@ -952,27 +952,27 @@ class Discord
      */
     protected function handleGuildMembersChunk(Payload $data): void
     {
-        /** @var GuildMembersChunkData $d */
-        $d = $data->d;
+        /** @var GuildMembersChunkData $chunkData */
+        $chunkData = $this->factory->part(GuildMembersChunkData::class, (array) $data->d, true);
 
-        if (! $guild = $this->guilds->get('id', $d->guild_id)) {
-            $this->logger->warning('not chunking member, Guild is not cached.', ['guild_id' => $d->guild_id]);
+        if (! $guild = $this->guilds->get('id', $chunkData->guild_id)) {
+            $this->logger->warning('not chunking member, Guild is not cached.', ['guild_id' => $chunkData->guild_id]);
 
             return;
         }
 
-        $this->logger->debug('received guild member chunk', ['guild_id' => $d->guild_id, 'guild_name' => $guild->name, 'chunk_count' => count($d->members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count, 'progress' => [$d->chunk_index + 1, $d->chunk_count]]);
+        $this->logger->debug('received guild member chunk', ['guild_id' => $chunkData->guild_id, 'guild_name' => $guild->name, 'chunk_count' => count($chunkData->members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count, 'progress' => [$chunkData->chunk_index + 1, $chunkData->chunk_count]]);
 
         $count = $skipped = 0;
         $await = [];
-        foreach ($d->members as $member) {
+        foreach ($chunkData->members as $member) {
             $userId = $member->user->id;
             if ($guild->members->offsetExists($userId)) {
                 continue;
             }
 
             $member = (array) $member;
-            $member['guild_id'] = $d->guild_id;
+            $member['guild_id'] = $chunkData->guild_id;
             $member['status'] = 'offline';
             $await[] = $guild->members->cache->set($userId, $this->factory->part(Member::class, $member, true));
 

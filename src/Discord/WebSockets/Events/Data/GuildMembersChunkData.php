@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events\Data;
 
+use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\Websockets\PresenceUpdate;
 
@@ -34,6 +35,15 @@ use Discord\Parts\Websockets\PresenceUpdate;
  * @property PresenceUpdate[]|null $presences   When passing `true` to `REQUEST_GUILD_MEMBERS`, presences of the returned members will be here.
  * @property string|null           $nonce       Nonce used in the Guild Members Request.
  */
-class GuildMembersChunkData
+class GuildMembersChunkData extends Part
 {
+    protected $fillable = [
+        'guild_id',
+        'members',
+        'chunk_index',
+        'chunk_count',
+        'not_found',
+        'presences',
+        'nonce',
+    ];
 }
