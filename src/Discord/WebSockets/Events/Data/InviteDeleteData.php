@@ -27,8 +27,9 @@ use Discord\Parts\Part;
  * @property string|null $guild_id   Guild of the invite.
  * @property string      $code       Unique invite code.
  *
- * @property Guild|null   $guild   Guild of the invite.
- * @property Channel|null $channel Channel of the invite.
+ * @property Guild|null   $guild      Guild of the invite.
+ * @property Channel|null $channel    Channel of the invite.
+ * @property string       $invite_url The URL to the invite.
  */
 class InviteDeleteData extends Part
 {
@@ -64,5 +65,15 @@ class InviteDeleteData extends Part
         }
 
         return $this->discord->getChannel($this->channel_id);
+    }
+
+    /**
+     * Returns the invite URL attribute.
+     *
+     * @return string The URL to the invite.
+     */
+    protected function getInviteUrlAttribute(): string
+    {
+        return 'https://discord.gg/'.$this->code;
     }
 }
