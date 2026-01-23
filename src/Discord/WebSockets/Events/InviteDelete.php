@@ -18,9 +18,10 @@ use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Invite;
 use Discord\Parts\Guild\Guild;
+use Discord\WebSockets\Events\Data\InviteDeleteData;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#invite-delete
+ * @link https://discord.com/developers/docs/events/gateway-events#invite-delete-invite-delete-event-fields
  *
  * @since 5.0.0
  */
@@ -32,6 +33,8 @@ class InviteDelete extends Event
     public function handle($data)
     {
         $invitePart = null;
+
+        $data = $this->factory->part(InviteDeleteData::class, (array) $data, true);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
