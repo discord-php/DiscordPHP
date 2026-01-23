@@ -22,12 +22,12 @@ use Discord\Parts\Part;
  * @link https://discord.com/developers/docs/events/gateway-events#invite-delete-invite-delete-event-fields
  *
  * @since 10.46.0
- * 
+ *
  * @property string|null $channel_id Channel of the invite.
  * @property string|null $guild_id   Guild of the invite.
- * @property string $code       Unique invite code.
- * 
- * @property Guild|null $guild Guild of the invite.
+ * @property string      $code       Unique invite code.
+ *
+ * @property Guild|null   $guild   Guild of the invite.
  * @property Channel|null $channel Channel of the invite.
  */
 class InviteDeleteData extends Part
@@ -40,7 +40,7 @@ class InviteDeleteData extends Part
 
     /**
      * Gets the guild attribute.
-     * 
+     *
      * @return ?Guild
      */
     protected function getGuildAttribute(): ?Guild
@@ -54,7 +54,7 @@ class InviteDeleteData extends Part
 
     /**
      * Gets the channel attribute.
-     * 
+     *
      * @return ?Channel
      */
     protected function getChannelAttribute(): ?Channel
