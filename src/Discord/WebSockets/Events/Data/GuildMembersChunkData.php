@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets\Events\Data;
 
+use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\Websockets\PresenceUpdate;
@@ -27,13 +28,13 @@ use Discord\Parts\Websockets\PresenceUpdate;
  *
  * @since 10.38.2
  *
- * @property string                $guild_id    ID of the guild.
- * @property Member[]              $members     Set of guild members.
- * @property int                   $chunk_index Chunk index in the expected chunks for this response (0 <= chunk_index < chunk_count).
- * @property int                   $chunk_count Total number of expected chunks for this response.
- * @property array|null            $not_found   When passing an invalid ID to `REQUEST_GUILD_MEMBERS`, it will be returned here.
- * @property PresenceUpdate[]|null $presences   When passing `true` to `REQUEST_GUILD_MEMBERS`, presences of the returned members will be here.
- * @property string|null           $nonce       Nonce used in the Guild Members Request.
+ * @property string                                 $guild_id    ID of the guild.
+ * @property ExCollectionInterface<Member>|Member[] $members     Set of guild members.
+ * @property int                                    $chunk_index Chunk index in the expected chunks for this response (0 <= chunk_index < chunk_count).
+ * @property int                                    $chunk_count Total number of expected chunks for this response.
+ * @property array|null                             $not_found   When passing an invalid ID to `REQUEST_GUILD_MEMBERS`, it will be returned here.
+ * @property PresenceUpdate[]|null                  $presences   When passing `true` to `REQUEST_GUILD_MEMBERS`, presences of the returned members will be here.
+ * @property string|null                            $nonce       Nonce used in the Guild Members Request.
  */
 class GuildMembersChunkData extends Part
 {
@@ -46,4 +47,14 @@ class GuildMembersChunkData extends Part
         'presences',
         'nonce',
     ];
+
+    /**
+     * Gets the members attribute.
+     *
+     * @return ExCollectionInterface<Member>
+     */
+    protected function getMembersAttribute(): ExCollectionInterface
+    {
+        return $this->attributeCollectionHelper('members', Member::class);
+    }
 }
