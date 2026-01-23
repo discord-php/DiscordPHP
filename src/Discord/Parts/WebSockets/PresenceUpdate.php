@@ -44,6 +44,7 @@ use Discord\Parts\User\ClientStatus;
  * @property      string|null                                $web_status      Status of the user on their web client. Null if they are not active on web.
  * @property      string|null                                $embedded_status Status of the user on an embedded application (Xbox, PlayStation, in-game). Null if they are not active on an embedded application.
  *
+ * @property-read string                             $id     The ID of the user.
  * @property-read Member                             $member The member that the presence update affects.
  * @property-read ExCollectionInterface<Role>|Role[] $roles  Roles that the user has in the guild.
  */
@@ -153,6 +154,16 @@ class PresenceUpdate extends Part
     protected function getWebStatusAttribute(): ?string
     {
         return $this->client_status->web ?? null;
+    }
+
+    /**
+     * Returns the id attribute.
+     *
+     * @return string The user ID of the member.
+     */
+    protected function getIdAttribute(): string
+    {
+        return $this->user->id;
     }
 
     /**
