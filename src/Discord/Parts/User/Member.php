@@ -982,13 +982,7 @@ class Member extends Part implements Stringable
     public function getVoiceChannel(): ?Channel
     {
         if ($guild = $this->guild) {
-            return $guild->channels->find(function (Channel $channel) {
-                if ($channel->isVoiceBased() && $members = $channel->members) {
-                    return $members->offsetExists($this->id);
-                }
-
-                return false;
-            });
+            return $guild->channels->find(fn (Channel $channel) => $channel->isVoiceBased() && ($members = $channel->members) && $members->offsetExists($this->id));
         }
 
         return null;
