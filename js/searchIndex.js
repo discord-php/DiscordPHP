@@ -12611,6 +12611,11 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020status\u0020of\u0020the\u0020user\u0020on\u0020their\u0020web\u0020client.",
             "url": "classes/Discord-Parts-WebSockets-PresenceUpdate.html#method_getWebStatusAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\PresenceUpdate\u003A\u003AgetIdAttribute\u0028\u0029",
+            "name": "getIdAttribute",
+            "summary": "Returns\u0020the\u0020id\u0020attribute.",
+            "url": "classes/Discord-Parts-WebSockets-PresenceUpdate.html#method_getIdAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\PresenceUpdate\u003A\u003AgetMemberAttribute\u0028\u0029",
             "name": "getMemberAttribute",
             "summary": "Gets\u0020the\u0020member\u0020attribute.",
@@ -15715,6 +15720,46 @@ Search.appendIndex(
             "name": "GuildMembersChunkData",
             "summary": "Raw\u0020data\u0020received\u0020from\u0020the\u0020\u0060GUILD_MEMBERS_CHUNK\u0060\u0020event.",
             "url": "classes/Discord-WebSockets-Events-Data-GuildMembersChunkData.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildMembersChunkData\u003A\u003AgetMembersAttribute\u0028\u0029",
+            "name": "getMembersAttribute",
+            "summary": "Gets\u0020the\u0020members\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildMembersChunkData.html#method_getMembersAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildMembersChunkData\u003A\u003AgetPresencesAttribute\u0028\u0029",
+            "name": "getPresencesAttribute",
+            "summary": "Gets\u0020the\u0020presences\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildMembersChunkData.html#method_getPresencesAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildMembersChunkData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-WebSockets-Events-Data-GuildMembersChunkData.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\InviteDeleteData",
+            "name": "InviteDeleteData",
+            "summary": "This\u0020class\u0020is\u0020the\u0020base\u0020of\u0020all\u0020objects\u0020that\u0020are\u0020returned.\u0020All\u0020\u0022Parts\u0022\u0020extend\noff\u0020this\u0020base\u0020class.",
+            "url": "classes/Discord-WebSockets-Events-Data-InviteDeleteData.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\InviteDeleteData\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Gets\u0020the\u0020guild\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-InviteDeleteData.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\InviteDeleteData\u003A\u003AgetChannelAttribute\u0028\u0029",
+            "name": "getChannelAttribute",
+            "summary": "Gets\u0020the\u0020channel\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-InviteDeleteData.html#method_getChannelAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\InviteDeleteData\u003A\u003AgetInviteUrlAttribute\u0028\u0029",
+            "name": "getInviteUrlAttribute",
+            "summary": "Returns\u0020the\u0020invite\u0020URL\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-InviteDeleteData.html#method_getInviteUrlAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\InviteDeleteData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-WebSockets-Events-Data-InviteDeleteData.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\Data\\ScheduledEventUserData",
             "name": "ScheduledEventUserData",
