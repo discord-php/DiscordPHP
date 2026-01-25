@@ -88,6 +88,8 @@ use function React\Promise\resolve;
  * @property ThreadRepository        $threads         Threads that belong to the channel.
  * @property InviteRepository        $invites         Invites in the channel.
  * @property StageInstanceRepository $stage_instances Stage instances in the channel.
+ *
+ * @property ExCollectionInterface<VoiceStateUpdate>|VoiceStateUpdate[] $members If voice channel, the members currently in the channel.
  */
 class Channel extends Part implements Stringable
 {

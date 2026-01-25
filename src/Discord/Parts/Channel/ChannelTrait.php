@@ -26,7 +26,6 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
-use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
@@ -58,9 +57,9 @@ use function React\Promise\resolve;
  * @property      string       $parent_id           The ID of the parent channel or the channel which the thread was started in.
  * @property-read Channel|null $parent              The parent channel or the channel which the thread was created in.
  *
- * @property bool              $is_private Whether the channel is a private channel.
- * @property MemberRepository  $members    Voice channel only - members in the channel or thread.
- * @property MessageRepository $messages   Text channel only - messages sent in the channel or thread.
+ * @property bool                                                       $is_private Whether the channel is a private channel.
+ * @property ExCollectionInterface<VoiceStateUpdate>|VoiceStateUpdate[] $members    Voice channel only - members in the channel or thread.
+ * @property MessageRepository                                          $messages   Text channel only - messages sent in the channel or thread.
  *
  * @property Discord $discord The Discord client instance.
  */
