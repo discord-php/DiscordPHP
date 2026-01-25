@@ -2008,37 +2008,31 @@ class Discord
     /**
      * Add listener for incoming application command from interaction.
      *
-     * @param array|string  $names
-     * @param callable|null $callback
-     * @param callable|null $autocomplete_callback
+     * @param string[]|string $names
+     * @param callable|null   $callback
+     * @param callable|null   $autocomplete_callback
      *
      * @throws \LogicException
      *
      * @return RegisteredCommand
      */
-    public function listenCommand($names, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
+    public function listenCommand(array|string $names, ?callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {
-        if (! is_array($names)) {
+        if (is_string($names)) {
             $names = [$names];
-        }
-
-        // registering base command
-        if (count($names) === 1) {
-            $name = array_shift($names);
-            if (isset($this->application_commands[$name])) {
-                throw new \LogicException("The command `{$name}` already exists.");
-            }
-
-            return $this->application_commands[$name] = new RegisteredCommand($this, $name, $callback, $autocomplete_callback);
         }
 
         $baseCommand = array_shift($names);
 
-        if (! isset($this->application_commands[$baseCommand])) {
-            $this->listenCommand($baseCommand);
+        // registering base command
+        if (!isset($this->application_commands[$baseCommand])) {
+            $this->application_commands[$baseCommand] = new RegisteredCommand($this, $baseCommand, $callback, $autocomplete_callback);
         }
 
-        return $this->application_commands[$baseCommand]->addSubCommand($names, $callback, $autocomplete_callback);
+        // register subcommands
+        $this->application_commands[$baseCommand]->addSubCommand($names, $callback, $autocomplete_callback);
+
+        return $this->application_commands[$baseCommand];
     }
 
     /**
