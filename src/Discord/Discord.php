@@ -953,7 +953,7 @@ class Discord
     protected function handleGuildMembersChunk(Payload $data): void
     {
         /** @var GuildMembersChunkData $chunkData */
-        $chunkData = $this->factory->part(GuildMembersChunkData::class, (array) $data->d, true);
+        $chunkData = $data->d;
 
         if (! $guild = $this->guilds->get('id', $chunkData->guild_id)) {
             $this->logger->warning('not chunking member, Guild is not cached.', ['guild_id' => $chunkData->guild_id]);

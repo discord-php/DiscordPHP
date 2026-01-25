@@ -42,7 +42,7 @@ class VoiceStateRepository extends AbstractRepository
 {
     /**
      * @inheritDoc
-     */    
+     */
     protected $discrim = 'user_id';
 
     /**
