@@ -42,6 +42,11 @@ class VoiceStateRepository extends AbstractRepository
 {
     /**
      * @inheritDoc
+     */    
+    protected $discrim = 'user_id';
+
+    /**
+     * @inheritDoc
      */
     protected $endpoints = [
         'get' => Endpoint::GUILD_USER_VOICE_STATE,
