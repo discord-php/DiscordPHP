@@ -89,7 +89,7 @@ use function React\Promise\resolve;
  * @property InviteRepository        $invites         Invites in the channel.
  * @property StageInstanceRepository $stage_instances Stage instances in the channel.
  *
- * @property ExCollectionInterface<VoiceStateUpdate>|VoiceStateUpdate[] $members If voice channel, the members currently in the channel.
+ * @property ExCollectionInterface<Member>|Member[] $members If voice channel, the members currently in the channel.
  */
 class Channel extends Part implements Stringable
 {
@@ -1042,16 +1042,15 @@ class Channel extends Part implements Stringable
     /**
      * Gets the members currently in the voice channel.
      *
-     * @return ExCollectionInterface<VoiceStateUpdate>|VoiceStateUpdate[] Members in the voice channel.
+     * @return ExCollectionInterface<Member>|Member[] Members in the voice channel.
      */
     public function getMembersAttribute(): ExCollectionInterface
     {
         if ($guild = $this->guild) {
-            return $guild->voice_states->filter(fn (VoiceStateUpdate $voice_state) => $voice_state->channel_id === $this->id);
+            return $guild->members->filter(fn (Member $member) => $guild->voice_states->filter(fn (VoiceStateUpdate $voice_state) => $voice_state->channel_id === $this->id)->has($member->id));
         }
 
-        /** @var ExCollectionInterface<VoiceStateUpdate> */
-        return $this->discord->getCollectionClass()::for(VoiceStateUpdate::class, 'user_id');
+        return $this->discord->getCollectionClass()::for(Member::class, 'id');
     }
 
     /**
