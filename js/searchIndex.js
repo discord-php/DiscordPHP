@@ -13986,6 +13986,11 @@ Search.appendIndex(
             "summary": "Attempts\u0020to\u0020save\u0020a\u0020part\u0020to\u0020the\u0020Discord\u0020servers.",
             "url": "classes/Discord-Repository-VoiceStateRepository.html#method_save"
         },                {
+            "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003A\u0024discrim",
+            "name": "discrim",
+            "summary": "The\u0020collection\u0020discriminator.",
+            "url": "classes/Discord-Repository-VoiceStateRepository.html#property_discrim"
+        },                {
             "fqsen": "\\Discord\\Repository\\VoiceStateRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
             "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",

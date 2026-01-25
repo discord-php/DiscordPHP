@@ -325,12 +325,6 @@
                         &nbsp;: <a href="classes/Discord-Helpers-CacheWrapper.html"><abbr title="\Discord\Helpers\CacheWrapper">CacheWrapper</abbr></a>            </span>
 </dt>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Repository-AbstractRepository.html#property_discrim">$discrim</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Repository-VoiceStateRepository.html#property_class">$class</a>
     <span>
@@ -343,6 +337,13 @@
     <span>
                         &nbsp;: mixed            </span>
 </dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a class="" href="classes/Discord-Repository-VoiceStateRepository.html#property_discrim">$discrim</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+<dd>The collection discriminator.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a class="" href="classes/Discord-Repository-VoiceStateRepository.html#property_endpoints">$endpoints</a>
@@ -681,45 +682,6 @@ based on the response of the callback.</dd>
         class="
             phpdocumentor-element
             -property
-            -public
-                                                                    "
->
-    <h4 class="phpdocumentor-element__name" id="property_discrim">
-        $discrim
-        <a href="classes/Discord-Repository-AbstractRepository.html#property_discrim" class="headerlink"><i class="fas fa-link"></i></a>
-
-        <span class="phpdocumentor-element__modifiers">
-                                            </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-        <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$discrim</span>
-    </code>
-
-        <section class="phpdocumentor-description"><p>The discriminator.</p>
-</section>
-
-    
-    
-
-        
-        
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
             -protected
                                                                     "
 >
@@ -733,7 +695,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/VoiceStateRepository.php"><a href="files/src-discord-repository-voicestaterepository.html"><abbr title="src/Discord/Repository/VoiceStateRepository.php">VoiceStateRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
     </aside>
 
@@ -812,6 +774,60 @@ based on the response of the callback.</dd>
             -protected
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_discrim">
+        $discrim
+        <a href="classes/Discord-Repository-VoiceStateRepository.html#property_discrim" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/VoiceStateRepository.php"><a href="files/src-discord-repository-voicestaterepository.html"><abbr title="src/Discord/Repository/VoiceStateRepository.php">VoiceStateRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">46</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">The collection discriminator.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">protected</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$discrim</span>
+     = <span class="phpdocumentor-signature__default-value">&#039;user_id&#039;</span></code>
+
+    
+        <section class="phpdocumentor-description"><p>Discriminator.</p>
+</section>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Discord-Repository-VoiceStateRepository.html#property_discrim#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_endpoints">
         $endpoints
         <a href="classes/Discord-Repository-VoiceStateRepository.html#property_endpoints" class="headerlink"><i class="fas fa-link"></i></a>
@@ -822,7 +838,7 @@ based on the response of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/VoiceStateRepository.php"><a href="files/src-discord-repository-voicestaterepository.html"><abbr title="src/Discord/Repository/VoiceStateRepository.php">VoiceStateRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -1455,7 +1471,7 @@ This was changed to use the <code class="prettyprint">__Collection__method</code
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/VoiceStateRepository.php"><a href="files/src-discord-repository-voicestaterepository.html"><abbr title="src/Discord/Repository/VoiceStateRepository.php">VoiceStateRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">193</span>
+    <span class="phpdocumentor-element-found-in__line">198</span>
 
     </aside>
 
@@ -1682,7 +1698,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/VoiceStateRepository.php"><a href="files/src-discord-repository-voicestaterepository.html"><abbr title="src/Discord/Repository/VoiceStateRepository.php">VoiceStateRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">242</span>
+    <span class="phpdocumentor-element-found-in__line">247</span>
 
     </aside>
 
@@ -1878,7 +1894,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/VoiceStateRepository.php"><a href="files/src-discord-repository-voicestaterepository.html"><abbr title="src/Discord/Repository/VoiceStateRepository.php">VoiceStateRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
@@ -1990,7 +2006,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/VoiceStateRepository.php"><a href="files/src-discord-repository-voicestaterepository.html"><abbr title="src/Discord/Repository/VoiceStateRepository.php">VoiceStateRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">138</span>
 
     </aside>
 
@@ -2064,7 +2080,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/VoiceStateRepository.php"><a href="files/src-discord-repository-voicestaterepository.html"><abbr title="src/Discord/Repository/VoiceStateRepository.php">VoiceStateRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 
     </aside>
 
@@ -2319,7 +2335,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/VoiceStateRepository.php"><a href="files/src-discord-repository-voicestaterepository.html"><abbr title="src/Discord/Repository/VoiceStateRepository.php">VoiceStateRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
@@ -2400,7 +2416,7 @@ based on the response of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/VoiceStateRepository.php"><a href="files/src-discord-repository-voicestaterepository.html"><abbr title="src/Discord/Repository/VoiceStateRepository.php">VoiceStateRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">170</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -2827,7 +2843,7 @@ This method is deprecated for userland code but can still be used internally wit
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/VoiceStateRepository.php"><a href="files/src-discord-repository-voicestaterepository.html"><abbr title="src/Discord/Repository/VoiceStateRepository.php">VoiceStateRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">273</span>
+    <span class="phpdocumentor-element-found-in__line">278</span>
 
     </aside>
 
@@ -3199,9 +3215,9 @@ This method is deprecated for userland code but can still be used internally wit
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_cache">$cache</a></li>
-                                                    <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_discrim">$discrim</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-VoiceStateRepository.html#property_class">$class</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_discord">$discord</a></li>
+                                                    <li class=""><a href="classes/Discord-Repository-VoiceStateRepository.html#property_discrim">$discrim</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-VoiceStateRepository.html#property_endpoints">$endpoints</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_factory">$factory</a></li>
                                                     <li class=""><a href="classes/Discord-Repository-AbstractRepository.html#property_http">$http</a></li>
