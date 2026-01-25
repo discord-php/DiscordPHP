@@ -14,6 +14,74 @@ declare(strict_types=1);
 
 namespace Discord\WebSockets;
 
+use Discord\WebSockets\Events\ApplicationCommandPermissionsUpdate;
+use Discord\WebSockets\Events\AutoModerationActionExecution;
+use Discord\WebSockets\Events\AutoModerationRuleCreate;
+use Discord\WebSockets\Events\AutoModerationRuleDelete;
+use Discord\WebSockets\Events\AutoModerationRuleUpdate;
+use Discord\WebSockets\Events\ChannelCreate;
+use Discord\WebSockets\Events\ChannelDelete;
+use Discord\WebSockets\Events\ChannelPinsUpdate;
+use Discord\WebSockets\Events\ChannelUpdate;
+use Discord\WebSockets\Events\EntitlementCreate;
+use Discord\WebSockets\Events\EntitlementDelete;
+use Discord\WebSockets\Events\EntitlementUpdate;
+use Discord\WebSockets\Events\GuildAuditLogEntryCreate;
+use Discord\WebSockets\Events\GuildBanAdd;
+use Discord\WebSockets\Events\GuildBanRemove;
+use Discord\WebSockets\Events\GuildCreate;
+use Discord\WebSockets\Events\GuildDelete;
+use Discord\WebSockets\Events\GuildEmojisUpdate;
+use Discord\WebSockets\Events\GuildIntegrationsUpdate;
+use Discord\WebSockets\Events\GuildMemberAdd;
+use Discord\WebSockets\Events\GuildMemberRemove;
+use Discord\WebSockets\Events\GuildMemberUpdate;
+use Discord\WebSockets\Events\GuildRoleCreate;
+use Discord\WebSockets\Events\GuildRoleDelete;
+use Discord\WebSockets\Events\GuildRoleUpdate;
+use Discord\WebSockets\Events\GuildScheduledEventCreate;
+use Discord\WebSockets\Events\GuildScheduledEventDelete;
+use Discord\WebSockets\Events\GuildScheduledEventUpdate;
+use Discord\WebSockets\Events\GuildScheduledEventUserAdd;
+use Discord\WebSockets\Events\GuildScheduledEventUserRemove;
+use Discord\WebSockets\Events\GuildSoundboardSoundCreate;
+use Discord\WebSockets\Events\GuildSoundboardSoundDelete;
+use Discord\WebSockets\Events\GuildSoundboardSoundUpdate;
+use Discord\WebSockets\Events\GuildStickersUpdate;
+use Discord\WebSockets\Events\GuildUpdate;
+use Discord\WebSockets\Events\IntegrationCreate;
+use Discord\WebSockets\Events\IntegrationDelete;
+use Discord\WebSockets\Events\IntegrationUpdate;
+use Discord\WebSockets\Events\InteractionCreate;
+use Discord\WebSockets\Events\InviteCreate;
+use Discord\WebSockets\Events\InviteDelete;
+use Discord\WebSockets\Events\MessageCreate;
+use Discord\WebSockets\Events\MessageDelete;
+use Discord\WebSockets\Events\MessageDeleteBulk;
+use Discord\WebSockets\Events\MessagePollVoteAdd;
+use Discord\WebSockets\Events\MessagePollVoteRemove;
+use Discord\WebSockets\Events\MessageReactionAdd;
+use Discord\WebSockets\Events\MessageReactionRemove;
+use Discord\WebSockets\Events\MessageReactionRemoveAll;
+use Discord\WebSockets\Events\MessageReactionRemoveEmoji;
+use Discord\WebSockets\Events\MessageUpdate;
+use Discord\WebSockets\Events\PresenceUpdate;
+use Discord\WebSockets\Events\SoundboardSounds;
+use Discord\WebSockets\Events\StageInstanceCreate;
+use Discord\WebSockets\Events\StageInstanceDelete;
+use Discord\WebSockets\Events\StageInstanceUpdate;
+use Discord\WebSockets\Events\ThreadCreate;
+use Discord\WebSockets\Events\ThreadDelete;
+use Discord\WebSockets\Events\ThreadListSync;
+use Discord\WebSockets\Events\ThreadMembersUpdate;
+use Discord\WebSockets\Events\ThreadMemberUpdate;
+use Discord\WebSockets\Events\ThreadUpdate;
+use Discord\WebSockets\Events\TypingStart;
+use Discord\WebSockets\Events\UserUpdate;
+use Discord\WebSockets\Events\VoiceServerUpdate;
+use Discord\WebSockets\Events\VoiceStateUpdate;
+use Discord\WebSockets\Events\WebhooksUpdate;
+
 /**
  * This class contains all the handlers for the individual WebSocket events.
  *
@@ -34,103 +102,103 @@ class Handlers
     public function __construct()
     {
         // General
-        $this->addHandler(Event::PRESENCE_UPDATE, \Discord\WebSockets\Events\PresenceUpdate::class);
-        $this->addHandler(Event::TYPING_START, \Discord\WebSockets\Events\TypingStart::class);
-        $this->addHandler(Event::VOICE_STATE_UPDATE, \Discord\WebSockets\Events\VoiceStateUpdate::class);
-        $this->addHandler(Event::VOICE_SERVER_UPDATE, \Discord\WebSockets\Events\VoiceServerUpdate::class);
-        $this->addHandler(Event::INTERACTION_CREATE, \Discord\WebSockets\Events\InteractionCreate::class);
-        $this->addHandler(Event::USER_UPDATE, \Discord\WebSockets\Events\UserUpdate::class);
+        $this->addHandler(Event::PRESENCE_UPDATE, PresenceUpdate::class);
+        $this->addHandler(Event::TYPING_START, TypingStart::class);
+        $this->addHandler(Event::VOICE_STATE_UPDATE, VoiceStateUpdate::class);
+        $this->addHandler(Event::VOICE_SERVER_UPDATE, VoiceServerUpdate::class);
+        $this->addHandler(Event::INTERACTION_CREATE, InteractionCreate::class);
+        $this->addHandler(Event::USER_UPDATE, UserUpdate::class);
 
         // Guild Event handlers
-        $this->addHandler(Event::GUILD_CREATE, \Discord\WebSockets\Events\GuildCreate::class);
-        $this->addHandler(Event::GUILD_DELETE, \Discord\WebSockets\Events\GuildDelete::class);
-        $this->addHandler(Event::GUILD_UPDATE, \Discord\WebSockets\Events\GuildUpdate::class);
-        $this->addHandler(Event::GUILD_INTEGRATIONS_UPDATE, \Discord\WebSockets\Events\GuildIntegrationsUpdate::class);
-        $this->addHandler(Event::INTEGRATION_CREATE, \Discord\WebSockets\Events\IntegrationCreate::class);
-        $this->addHandler(Event::INTEGRATION_UPDATE, \Discord\WebSockets\Events\IntegrationUpdate::class);
-        $this->addHandler(Event::INTEGRATION_DELETE, \Discord\WebSockets\Events\IntegrationDelete::class);
-        $this->addHandler(Event::WEBHOOKS_UPDATE, \Discord\WebSockets\Events\WebhooksUpdate::class);
-        $this->addHandler(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, \Discord\WebSockets\Events\ApplicationCommandPermissionsUpdate::class);
-        $this->addHandler(Event::GUILD_AUDIT_LOG_ENTRY_CREATE, \Discord\WebSockets\Events\GuildAuditLogEntryCreate::class);
+        $this->addHandler(Event::GUILD_CREATE, GuildCreate::class);
+        $this->addHandler(Event::GUILD_DELETE, GuildDelete::class);
+        $this->addHandler(Event::GUILD_UPDATE, GuildUpdate::class);
+        $this->addHandler(Event::GUILD_INTEGRATIONS_UPDATE, GuildIntegrationsUpdate::class);
+        $this->addHandler(Event::INTEGRATION_CREATE, IntegrationCreate::class);
+        $this->addHandler(Event::INTEGRATION_UPDATE, IntegrationUpdate::class);
+        $this->addHandler(Event::INTEGRATION_DELETE, IntegrationDelete::class);
+        $this->addHandler(Event::WEBHOOKS_UPDATE, WebhooksUpdate::class);
+        $this->addHandler(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, ApplicationCommandPermissionsUpdate::class);
+        $this->addHandler(Event::GUILD_AUDIT_LOG_ENTRY_CREATE, GuildAuditLogEntryCreate::class);
 
         // Invite handlers
-        $this->addHandler(Event::INVITE_CREATE, \Discord\WebSockets\Events\InviteCreate::class);
-        $this->addHandler(Event::INVITE_DELETE, \Discord\WebSockets\Events\InviteDelete::class);
+        $this->addHandler(Event::INVITE_CREATE, InviteCreate::class);
+        $this->addHandler(Event::INVITE_DELETE, InviteDelete::class);
 
         // Channel Event handlers
-        $this->addHandler(Event::CHANNEL_CREATE, \Discord\WebSockets\Events\ChannelCreate::class);
-        $this->addHandler(Event::CHANNEL_UPDATE, \Discord\WebSockets\Events\ChannelUpdate::class);
-        $this->addHandler(Event::CHANNEL_DELETE, \Discord\WebSockets\Events\ChannelDelete::class);
-        $this->addHandler(Event::CHANNEL_PINS_UPDATE, \Discord\WebSockets\Events\ChannelPinsUpdate::class);
+        $this->addHandler(Event::CHANNEL_CREATE, ChannelCreate::class);
+        $this->addHandler(Event::CHANNEL_UPDATE, ChannelUpdate::class);
+        $this->addHandler(Event::CHANNEL_DELETE, ChannelDelete::class);
+        $this->addHandler(Event::CHANNEL_PINS_UPDATE, ChannelPinsUpdate::class);
 
         // Ban Event handlers
-        $this->addHandler(Event::GUILD_BAN_ADD, \Discord\WebSockets\Events\GuildBanAdd::class);
-        $this->addHandler(Event::GUILD_BAN_REMOVE, \Discord\WebSockets\Events\GuildBanRemove::class);
+        $this->addHandler(Event::GUILD_BAN_ADD, GuildBanAdd::class);
+        $this->addHandler(Event::GUILD_BAN_REMOVE, GuildBanRemove::class);
 
         // Guild Emoji Event handler
-        $this->addHandler(Event::GUILD_EMOJIS_UPDATE, \Discord\WebSockets\Events\GuildEmojisUpdate::class);
+        $this->addHandler(Event::GUILD_EMOJIS_UPDATE, GuildEmojisUpdate::class);
 
         // Guild Sticker Event handler
-        $this->addHandler(Event::GUILD_STICKERS_UPDATE, \Discord\WebSockets\Events\GuildStickersUpdate::class);
+        $this->addHandler(Event::GUILD_STICKERS_UPDATE, GuildStickersUpdate::class);
 
         // Message handlers
-        $this->addHandler(Event::MESSAGE_CREATE, \Discord\WebSockets\Events\MessageCreate::class, ['message']);
-        $this->addHandler(Event::MESSAGE_DELETE, \Discord\WebSockets\Events\MessageDelete::class);
-        $this->addHandler(Event::MESSAGE_DELETE_BULK, \Discord\WebSockets\Events\MessageDeleteBulk::class);
-        $this->addHandler(Event::MESSAGE_UPDATE, \Discord\WebSockets\Events\MessageUpdate::class);
-        $this->addHandler(Event::MESSAGE_REACTION_ADD, \Discord\WebSockets\Events\MessageReactionAdd::class);
-        $this->addHandler(Event::MESSAGE_REACTION_REMOVE, \Discord\WebSockets\Events\MessageReactionRemove::class);
-        $this->addHandler(Event::MESSAGE_REACTION_REMOVE_ALL, \Discord\WebSockets\Events\MessageReactionRemoveAll::class);
-        $this->addHandler(Event::MESSAGE_REACTION_REMOVE_EMOJI, \Discord\WebSockets\Events\MessageReactionRemoveEmoji::class);
-        $this->addHandler(Event::MESSAGE_POLL_VOTE_ADD, \Discord\WebSockets\Events\MessagePollVoteAdd::class);
-        $this->addHandler(Event::MESSAGE_POLL_VOTE_REMOVE, \Discord\WebSockets\Events\MessagePollVoteRemove::class);
+        $this->addHandler(Event::MESSAGE_CREATE, MessageCreate::class, ['message']);
+        $this->addHandler(Event::MESSAGE_DELETE, MessageDelete::class);
+        $this->addHandler(Event::MESSAGE_DELETE_BULK, MessageDeleteBulk::class);
+        $this->addHandler(Event::MESSAGE_UPDATE, MessageUpdate::class);
+        $this->addHandler(Event::MESSAGE_REACTION_ADD, MessageReactionAdd::class);
+        $this->addHandler(Event::MESSAGE_REACTION_REMOVE, MessageReactionRemove::class);
+        $this->addHandler(Event::MESSAGE_REACTION_REMOVE_ALL, MessageReactionRemoveAll::class);
+        $this->addHandler(Event::MESSAGE_REACTION_REMOVE_EMOJI, MessageReactionRemoveEmoji::class);
+        $this->addHandler(Event::MESSAGE_POLL_VOTE_ADD, MessagePollVoteAdd::class);
+        $this->addHandler(Event::MESSAGE_POLL_VOTE_REMOVE, MessagePollVoteRemove::class);
 
         // New Member Event handlers
-        $this->addHandler(Event::GUILD_MEMBER_ADD, \Discord\WebSockets\Events\GuildMemberAdd::class);
-        $this->addHandler(Event::GUILD_MEMBER_REMOVE, \Discord\WebSockets\Events\GuildMemberRemove::class);
-        $this->addHandler(Event::GUILD_MEMBER_UPDATE, \Discord\WebSockets\Events\GuildMemberUpdate::class);
+        $this->addHandler(Event::GUILD_MEMBER_ADD, GuildMemberAdd::class);
+        $this->addHandler(Event::GUILD_MEMBER_REMOVE, GuildMemberRemove::class);
+        $this->addHandler(Event::GUILD_MEMBER_UPDATE, GuildMemberUpdate::class);
 
         // New Role Event handlers
-        $this->addHandler(Event::GUILD_ROLE_CREATE, \Discord\WebSockets\Events\GuildRoleCreate::class);
-        $this->addHandler(Event::GUILD_ROLE_DELETE, \Discord\WebSockets\Events\GuildRoleDelete::class);
-        $this->addHandler(Event::GUILD_ROLE_UPDATE, \Discord\WebSockets\Events\GuildRoleUpdate::class);
+        $this->addHandler(Event::GUILD_ROLE_CREATE, GuildRoleCreate::class);
+        $this->addHandler(Event::GUILD_ROLE_DELETE, GuildRoleDelete::class);
+        $this->addHandler(Event::GUILD_ROLE_UPDATE, GuildRoleUpdate::class);
 
         // Guild Scheduled Events Event handlers
-        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_CREATE, \Discord\WebSockets\Events\GuildScheduledEventCreate::class);
-        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_UPDATE, \Discord\WebSockets\Events\GuildScheduledEventUpdate::class);
-        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_DELETE, \Discord\WebSockets\Events\GuildScheduledEventDelete::class);
-        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_USER_ADD, \Discord\WebSockets\Events\GuildScheduledEventUserAdd::class);
-        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, \Discord\WebSockets\Events\GuildScheduledEventUserRemove::class);
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_CREATE, GuildScheduledEventCreate::class);
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_UPDATE, GuildScheduledEventUpdate::class);
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_DELETE, GuildScheduledEventDelete::class);
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_USER_ADD, GuildScheduledEventUserAdd::class);
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, GuildScheduledEventUserRemove::class);
 
         // Thread events
-        $this->addHandler(Event::THREAD_CREATE, \Discord\WebSockets\Events\ThreadCreate::class);
-        $this->addHandler(Event::THREAD_UPDATE, \Discord\WebSockets\Events\ThreadUpdate::class);
-        $this->addHandler(Event::THREAD_DELETE, \Discord\WebSockets\Events\ThreadDelete::class);
-        $this->addHandler(Event::THREAD_LIST_SYNC, \Discord\WebSockets\Events\ThreadListSync::class);
-        $this->addHandler(Event::THREAD_MEMBER_UPDATE, \Discord\WebSockets\Events\ThreadMemberUpdate::class);
-        $this->addHandler(Event::THREAD_MEMBERS_UPDATE, \Discord\WebSockets\Events\ThreadMembersUpdate::class);
+        $this->addHandler(Event::THREAD_CREATE, ThreadCreate::class);
+        $this->addHandler(Event::THREAD_UPDATE, ThreadUpdate::class);
+        $this->addHandler(Event::THREAD_DELETE, ThreadDelete::class);
+        $this->addHandler(Event::THREAD_LIST_SYNC, ThreadListSync::class);
+        $this->addHandler(Event::THREAD_MEMBER_UPDATE, ThreadMemberUpdate::class);
+        $this->addHandler(Event::THREAD_MEMBERS_UPDATE, ThreadMembersUpdate::class);
 
         // Stage Instance Event Handlers
-        $this->addHandler(Event::STAGE_INSTANCE_CREATE, \Discord\WebSockets\Events\StageInstanceCreate::class);
-        $this->addHandler(Event::STAGE_INSTANCE_UPDATE, \Discord\WebSockets\Events\StageInstanceUpdate::class);
-        $this->addHandler(Event::STAGE_INSTANCE_DELETE, \Discord\WebSockets\Events\StageInstanceDelete::class);
+        $this->addHandler(Event::STAGE_INSTANCE_CREATE, StageInstanceCreate::class);
+        $this->addHandler(Event::STAGE_INSTANCE_UPDATE, StageInstanceUpdate::class);
+        $this->addHandler(Event::STAGE_INSTANCE_DELETE, StageInstanceDelete::class);
 
         // Auto Moderation Event Handlers
-        $this->addHandler(Event::AUTO_MODERATION_RULE_CREATE, \Discord\WebSockets\Events\AutoModerationRuleCreate::class);
-        $this->addHandler(Event::AUTO_MODERATION_RULE_UPDATE, \Discord\WebSockets\Events\AutoModerationRuleUpdate::class);
-        $this->addHandler(Event::AUTO_MODERATION_RULE_DELETE, \Discord\WebSockets\Events\AutoModerationRuleDelete::class);
-        $this->addHandler(Event::AUTO_MODERATION_ACTION_EXECUTION, \Discord\WebSockets\Events\AutoModerationActionExecution::class);
+        $this->addHandler(Event::AUTO_MODERATION_RULE_CREATE, AutoModerationRuleCreate::class);
+        $this->addHandler(Event::AUTO_MODERATION_RULE_UPDATE, AutoModerationRuleUpdate::class);
+        $this->addHandler(Event::AUTO_MODERATION_RULE_DELETE, AutoModerationRuleDelete::class);
+        $this->addHandler(Event::AUTO_MODERATION_ACTION_EXECUTION, AutoModerationActionExecution::class);
 
         // Soundboard Event Handlers
-        $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_CREATE, \Discord\WebSockets\Events\GuildSoundboardSoundCreate::class);
-        $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_UPDATE, \Discord\WebSockets\Events\GuildSoundboardSoundUpdate::class);
-        $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_DELETE, \Discord\WebSockets\Events\GuildSoundboardSoundDelete::class);
-        $this->addHandler(Event::SOUNDBOARD_SOUNDS, \Discord\WebSockets\Events\SoundboardSounds::class);
+        $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_CREATE, GuildSoundboardSoundCreate::class);
+        $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_UPDATE, GuildSoundboardSoundUpdate::class);
+        $this->addHandler(Event::GUILD_SOUNDBOARD_SOUND_DELETE, GuildSoundboardSoundDelete::class);
+        $this->addHandler(Event::SOUNDBOARD_SOUNDS, SoundboardSounds::class);
 
         // Entitlements Event Handlers
-        $this->addHandler(Event::ENTITLEMENT_CREATE, \Discord\WebSockets\Events\EntitlementCreate::class);
-        $this->addHandler(Event::ENTITLEMENT_UPDATE, \Discord\WebSockets\Events\EntitlementUpdate::class);
-        $this->addHandler(Event::ENTITLEMENT_DELETE, \Discord\WebSockets\Events\EntitlementDelete::class);
+        $this->addHandler(Event::ENTITLEMENT_CREATE, EntitlementCreate::class);
+        $this->addHandler(Event::ENTITLEMENT_UPDATE, EntitlementUpdate::class);
+        $this->addHandler(Event::ENTITLEMENT_DELETE, EntitlementDelete::class);
     }
 
     /**
