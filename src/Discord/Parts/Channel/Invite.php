@@ -297,7 +297,7 @@ class Invite extends Part implements Stringable
      *
      * Response is a CSV file with a single column `Users` containing the user IDs.
      *
-     * Requires the `MANAGE_GUILD` permission.
+     * Requires the caller to be the inviter, or have `MANAGE_GUILD` permission, or have `VIEW_AUDIT_LOG` permission.
      *
      * @todo Parse the CSV response to an array.
      * @since 10.46.0
@@ -314,7 +314,7 @@ class Invite extends Part implements Stringable
      *
      * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
      *
-     * Requires the `MANAGE_GUILD` permission.
+     * Requires the caller to be the inviter, or have `MANAGE_GUILD` permission, or have `VIEW_AUDIT_LOG` permission.
      *
      * @since 10.46.0
      *
@@ -343,7 +343,7 @@ class Invite extends Part implements Stringable
      *
      * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
      *
-     * Requires the `MANAGE_GUILD` permission.
+     * Requires the caller to be the inviter, or have `MANAGE_GUILD` permission, or have `VIEW_AUDIT_LOG` permission.
      *
      * @since 10.46.0
      *
@@ -373,7 +373,7 @@ class Invite extends Part implements Stringable
     /**
      * Processing target users from a CSV when creating or updating an invite is done asynchronously. This endpoint allows you to check the status of that job.
      *
-     * Requires the `MANAGE_GUILD` permission.
+     * Requires the caller to be the inviter, or have `MANAGE_GUILD` permission, or have `VIEW_AUDIT_LOG` permission.
      *
      * @todo
      *
