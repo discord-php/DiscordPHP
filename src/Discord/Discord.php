@@ -62,6 +62,7 @@ use Psr\Log\LoggerInterface;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
+use React\Dns\Config\Config as DnsConfig;
 use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
@@ -98,6 +99,29 @@ use function React\Promise\resolve;
  * @property PrivateChannelRepository $private_channels
  * @property SoundRepository          $sounds
  * @property UserRepository           $users
+ *
+ * @property array            $options
+ * @property string           $options['token']
+ * @property LoggerInterface  $options['logger']
+ * @property LoopInterface    $options['loop']
+ * @property array|bool       $options['loadAllMembers']
+ * @property array            $options['disabledEvents']
+ * @property bool             $options['storeMessages']
+ * @property array|bool       $options['retrieveBans']
+ * @property int|null         $options['large_threshold']
+ * @property array|null       $options['shard']
+ * @property int|null         $options['shard_id']
+ * @property int|null         $options['num_shards']
+ * @property int|null         $options['shardId']
+ * @property int|null         $options['shardCount']
+ * @property array|null       $options['presence']
+ * @property int              $options['intents']
+ * @property array            $options['socket_options']
+ * @property DnsConfig|string $options['dnsConfig']
+ * @property array            $options['cache']
+ * @property string           $options['collection']
+ * @property bool             $options['useTransportCompression']
+ * @property bool             $options['usePayloadCompression']
  */
 class Discord
 {
@@ -1693,7 +1717,8 @@ class Discord
                 'usePayloadCompression',
             ])
             ->setDefaults([
-                'logger' => null,
+                'loop' => Loop::get(),
+                'logger' => new Monolog('DiscordPHP', [(new StreamHandler('php://stdout', Level::Debug))->setFormatter(new LineFormatter(null, null, true, true))]),
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
                 'storeMessages' => false,
@@ -1727,8 +1752,42 @@ class Discord
             ->setAllowedTypes('shardCount', ['null', 'int'])
             ->setAllowedTypes('presence', ['null', 'array'])
             ->setAllowedTypes('intents', ['array', 'int'])
+            ->setNormalizer('intents', function ($options, $value) {
+                if (is_array($value)) {
+                    $intent = 0;
+                    $validIntents = Intents::getValidIntents();
+
+                    foreach ($value as $idx => $i) {
+                        if (! in_array($i, $validIntents)) {
+                            throw new IntentException('Given intent at index '.$idx.' is invalid.');
+                        }
+
+                        $intent |= $i;
+                    }
+
+                    $value = $intent;
+                }
+
+                return (int) $value;
+            })
             ->setAllowedTypes('socket_options', 'array')
-            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
+            ->setNormalizer('socket_options', function ($options, $value) {
+                // Discord doesn't currently support IPv6. This prevents xdebug from catching exceptions when trying to fetch IPv6 for Discord.
+                $value['happy_eyeballs'] = false;
+
+                return $value;
+            })
+            ->setAllowedTypes('dnsConfig', ['string', DnsConfig::class])
+            ->setNormalizer('dnsConfig', function ($options, $value) {
+                if (null === $value) {
+                    $value = DnsConfig::loadSystemConfigBlocking();
+                    if (! $value->nameservers) {
+                        $value->nameservers[] = '8.8.8.8';
+                    }
+                }
+
+                return $value;
+            })
             ->setAllowedTypes('collection', 'string')
             ->setNormalizer('collection', function ($options, $value) {
                 if (is_string($value) && class_exists($value) && is_subclass_of($value, ExCollectionInterface::class)) {
@@ -1754,49 +1813,10 @@ class Discord
 
         $options = $resolver->resolve($options);
 
-        $options['loop'] ??= Loop::get();
-
-        if (null === $options['logger']) {
-            $streamHandler = new StreamHandler('php://stdout', Level::Debug);
-            $lineFormatter = new LineFormatter(null, null, true, true);
-            $streamHandler->setFormatter($lineFormatter);
-            $logger = new Monolog('DiscordPHP', [$streamHandler]);
-            $options['logger'] = $logger;
-        }
-
-        if (! isset($options['dnsConfig'])) {
-            $dnsConfig = \React\Dns\Config\Config::loadSystemConfigBlocking();
-            if (! $dnsConfig->nameservers) {
-                $dnsConfig->nameservers[] = '8.8.8.8';
-            }
-
-            $options['dnsConfig'] = $dnsConfig;
-        }
-
-        if (is_array($options['intents'])) {
-            $intent = 0;
-            $validIntents = Intents::getValidIntents();
-
-            foreach ($options['intents'] as $idx => $i) {
-                if (! in_array($i, $validIntents)) {
-                    throw new IntentException('Given intent at index '.$idx.' is invalid.');
-                }
-
-                $intent |= $i;
-            }
-
-            $options['intents'] = $intent;
-        }
-
         if ($options['loadAllMembers'] && ! ($options['intents'] & Intents::GUILD_MEMBERS)) {
             throw new IntentException('You have enabled the `loadAllMembers` option but have not enabled the required `GUILD_MEMBERS` intent.'.
             'See the documentation on the `loadAllMembers` property for more information: http://discord-php.github.io/DiscordPHP/#basics');
         }
-
-        // Discord doesn't currently support IPv6
-        // This prevents xdebug from catching exceptions when trying to fetch IPv6
-        // for Discord
-        $options['socket_options']['happy_eyeballs'] = false;
 
         return $options;
     }
