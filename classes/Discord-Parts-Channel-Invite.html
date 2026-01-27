@@ -2895,7 +2895,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">485</span>
+    <span class="phpdocumentor-element-found-in__line">516</span>
 
     </aside>
 
@@ -3332,7 +3332,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">439</span>
+    <span class="phpdocumentor-element-found-in__line">470</span>
 
     </aside>
 
@@ -3400,7 +3400,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">478</span>
+    <span class="phpdocumentor-element-found-in__line">509</span>
 
     </aside>
 
@@ -3452,7 +3452,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">307</span>
+    <span class="phpdocumentor-element-found-in__line">309</span>
 
     </aside>
 
@@ -3466,7 +3466,7 @@ JSON. Used for JsonSerializable.</dd>
         </div>
     
         <section class="phpdocumentor-description"><p>Response is a CSV file with a single column <code class="prettyprint">Users</code> containing the user IDs.</p>
-<p>Requires the <code class="prettyprint">MANAGE_GUILD</code> permission.</p>
+<p>Requires the caller to be the inviter, or have <code class="prettyprint">MANAGE_GUILD</code> permission, or have <code class="prettyprint">VIEW_AUDIT_LOG</code> permission.</p>
 </section>
 
     
@@ -3493,6 +3493,16 @@ JSON. Used for JsonSerializable.</dd>
                                             <span class="phpdocumentor-tag-link">10.46.0</span>
                                                                                 
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Discord\Http\Exceptions\NoPermissionsException">NoPermissionsException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>If the bot does not have permission to view the audit log or manage the guild, and is not the inviter.</p>
+</section>
+
                                     </dd>
                                             </dl>
 
@@ -3522,7 +3532,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">382</span>
+    <span class="phpdocumentor-element-found-in__line">407</span>
 
     </aside>
 
@@ -3535,7 +3545,7 @@ JSON. Used for JsonSerializable.</dd>
     <div class="phpdocumentor-label-line">
         </div>
     
-        <section class="phpdocumentor-description"><p>Requires the <code class="prettyprint">MANAGE_GUILD</code> permission.</p>
+        <section class="phpdocumentor-description"><p>Requires the caller to be the inviter, or have <code class="prettyprint">MANAGE_GUILD</code> permission, or have <code class="prettyprint">VIEW_AUDIT_LOG</code> permission.</p>
 </section>
 
     
@@ -3552,6 +3562,16 @@ JSON. Used for JsonSerializable.</dd>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Discord\Http\Exceptions\NoPermissionsException">NoPermissionsException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>If the bot does not have permission to view the audit log or manage the guild, and is not the inviter.</p>
+</section>
+
                                     </dd>
                                             </dl>
 
@@ -3620,7 +3640,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">403</span>
+    <span class="phpdocumentor-element-found-in__line">434</span>
 
     </aside>
 
@@ -4030,7 +4050,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">454</span>
+    <span class="phpdocumentor-element-found-in__line">485</span>
 
     </aside>
 
@@ -4199,7 +4219,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">328</span>
+    <span class="phpdocumentor-element-found-in__line">337</span>
 
     </aside>
 
@@ -4213,7 +4233,7 @@ JSON. Used for JsonSerializable.</p>
         </div>
     
         <section class="phpdocumentor-description"><p>Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.</p>
-<p>Requires the <code class="prettyprint">MANAGE_GUILD</code> permission.</p>
+<p>Requires the caller to be the inviter or have the <code class="prettyprint">MANAGE_GUILD</code> permission.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -4257,6 +4277,16 @@ JSON. Used for JsonSerializable.</p>
                     <span class="phpdocumentor-tag__name">throws</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Discord\Http\Exceptions\NoPermissionsException">NoPermissionsException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>If the bot does not have permission to view the audit log or manage the guild, and is not the inviter.</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
                                                                 <span class="phpdocumentor-tag-link"><a href="classes/Discord-Exceptions-FileNotFoundException.html"><abbr title="\Discord\Exceptions\FileNotFoundException">FileNotFoundException</abbr></a></span>
                                                             
                                                  <section class="phpdocumentor-description"><p>If the file does not exist or is not readable.</p>
@@ -4287,7 +4317,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">355</span>
+    <span class="phpdocumentor-element-found-in__line">372</span>
 
     </aside>
 
@@ -4301,7 +4331,7 @@ JSON. Used for JsonSerializable.</p>
         </div>
     
         <section class="phpdocumentor-description"><p>Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.</p>
-<p>Requires the <code class="prettyprint">MANAGE_GUILD</code> permission.</p>
+<p>Requires the caller to be the inviter or have the <code class="prettyprint">MANAGE_GUILD</code> permission.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -4340,6 +4370,16 @@ JSON. Used for JsonSerializable.</p>
                                             <span class="phpdocumentor-tag-link">10.46.0</span>
                                                                                 
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Discord\Http\Exceptions\NoPermissionsException">NoPermissionsException</abbr></span>
+                                                            
+                                                 <section class="phpdocumentor-description"><p>If the bot does not have permission to view the audit log or manage the guild, and is not the inviter.</p>
+</section>
+
                                     </dd>
                                             </dl>
 
@@ -5018,7 +5058,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">415</span>
+    <span class="phpdocumentor-element-found-in__line">446</span>
 
     </aside>
 
@@ -5345,7 +5385,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">425</span>
+    <span class="phpdocumentor-element-found-in__line">456</span>
 
     </aside>
 
@@ -5388,7 +5428,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Invite.php"><a href="files/src-discord-parts-channel-invite.html"><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">393</span>
+    <span class="phpdocumentor-element-found-in__line">424</span>
 
     </aside>
 
