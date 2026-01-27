@@ -1729,14 +1729,6 @@ class Discord
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
-            ->setAllowedTypes('collection', 'string')
-            ->setNormalizer('collection', function ($options, $value) {
-                if (is_string($value) && class_exists($value) && is_subclass_of($value, ExCollectionInterface::class)) {
-                    return $value;
-                }
-
-                return Collection::class;
-            })
             ->setAllowedTypes('cache', ['array', CacheConfig::class, \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
             ->setNormalizer('cache', function ($options, $value) {
                 if (! is_array($value)) {
@@ -1748,6 +1740,14 @@ class Discord
                 }
 
                 return $value;
+            })
+            ->setAllowedTypes('collection', 'string')
+            ->setNormalizer('collection', function ($options, $value) {
+                if (is_string($value) && class_exists($value) && is_subclass_of($value, ExCollectionInterface::class)) {
+                    return $value;
+                }
+
+                return Collection::class;
             })
             ->setAllowedTypes('useTransportCompression', 'bool')
             ->setAllowedTypes('usePayloadCompression', 'bool');
