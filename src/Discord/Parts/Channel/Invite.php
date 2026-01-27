@@ -301,11 +301,19 @@ class Invite extends Part implements Stringable
      *
      * @todo Parse the CSV response to an array.
      * @since 10.46.0
+     * 
+     * @throws NoPermissionsException If the bot does not have permission to view the audit log or manage the guild, and is not the inviter.
      *
      * @return PromiseInterface<array|string> The CSV file's content containing the user IDs.
      */
     public function getTargetUsers(): PromiseInterface
     {
+        if ($botperms = $this->channel->getBotPermissions()) {
+            if (! $botperms->manage_guild && ! $botperms->view_audit_log && ! $this->inviter->id === $this->discord->user->id) {
+                return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$this->channel->id}."));
+            }
+        }
+
         return $this->http->get(Endpoint::bind(Endpoint::INVITE_TARGET_USERS, $this->id));
     }
 
@@ -314,19 +322,26 @@ class Invite extends Part implements Stringable
      *
      * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
      *
-     * Requires the caller to be the inviter, or have `MANAGE_GUILD` permission, or have `VIEW_AUDIT_LOG` permission.
+     * Requires the caller to be the inviter or have the `MANAGE_GUILD` permission.
      *
      * @since 10.46.0
      *
      * @param string      $filepath Path to the file to send.
      * @param string|null $filename Name to send the file as. `null` for the base name of `$filepath`.
+     * 
+     * @throws NoPermissionsException If the bot does not have permission to view the audit log or manage the guild, and is not the inviter.
+     * @throws FileNotFoundException If the file does not exist or is not readable.
      *
      * @return PromiseInterface
-     *
-     * @throws FileNotFoundException If the file does not exist or is not readable.
      */
     public function updateTargetUsers(string $filepath, ?string $filename = null): PromiseInterface
     {
+        if ($botperms = $this->channel->getBotPermissions()) {
+            if (! $botperms->manage_guild && ! $this->inviter->id === $this->discord->user->id) {
+                return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$this->channel->id}."));
+            }
+        }
+
         if (! file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
@@ -343,17 +358,25 @@ class Invite extends Part implements Stringable
      *
      * Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described.
      *
-     * Requires the caller to be the inviter, or have `MANAGE_GUILD` permission, or have `VIEW_AUDIT_LOG` permission.
+     * Requires the caller to be the inviter or have the `MANAGE_GUILD` permission.
      *
      * @since 10.46.0
      *
      * @param string $content  Content of the file.
      * @param string $filename Name to send the file as.
+     * 
+     * @throws NoPermissionsException If the bot does not have permission to view the audit log or manage the guild, and is not the inviter.
      *
      * @return PromiseInterface
      */
     public function updateTargetUsersFromContent(string $content, string $filename = 'target_users.csv'): PromiseInterface
     {
+        if ($botperms = $this->channel->getBotPermissions()) {
+            if (! $botperms->manage_guild && ! $this->inviter->id === $this->discord->user->id) {
+                return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$this->channel->id}."));
+            }
+        }
+
         if ($content === '') {
             return reject(new \BadMethodCallException('The provided CSV contents are empty.'));
         }
@@ -376,11 +399,19 @@ class Invite extends Part implements Stringable
      * Requires the caller to be the inviter, or have `MANAGE_GUILD` permission, or have `VIEW_AUDIT_LOG` permission.
      *
      * @todo
+     * 
+     * @throws NoPermissionsException If the bot does not have permission to view the audit log or manage the guild, and is not the inviter.
      *
      * @return PromiseInterface<InviteJobStatus> The job status.
      */
     public function getTargetUsersJobStatus()
     {
+        if ($botperms = $this->channel->getBotPermissions()) {
+            if (! $botperms->manage_guild && ! $botperms->view_audit_log && ! $this->inviter->id === $this->discord->user->id) {
+                return reject(new NoPermissionsException("You do not have permission to create invites in the channel {$this->channel->id}."));
+            }
+        }
+
         return $this->http->get(Endpoint::bind(Endpoint::INVITE_TARGET_USERS_JOB_STATUS, $this->id))
             ->then(fn ($response) => $this->factory->part(InviteJobStatus::class, (array) $response));
     }
