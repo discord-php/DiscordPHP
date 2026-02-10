@@ -447,6 +447,9 @@ class Discord
             Event::RESUMED,
             Event::READY,
             Event::GUILD_MEMBERS_CHUNK,
+            // These are critical for voice functionality such as connecting to voice channels and seeing what memebers are in a voice channel
+            Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
+            Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
         ];
 
         if ($disabledImportant = array_values(array_intersect($important_events, $options['disabledEvents']))) {
