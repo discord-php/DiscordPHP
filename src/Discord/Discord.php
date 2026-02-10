@@ -888,7 +888,7 @@ class Discord
                 Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
             ];
 
-            if (isset($handlers[$data->t])) {
+            if (isset($handlers[$data->t]) && ! in_array($data->t, $this->options['disabledEvents'])) {
                 $this->{$handlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
             }
 
