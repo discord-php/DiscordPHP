@@ -176,27 +176,6 @@ class Discord
     protected $handlers;
 
     /**
-     * An array of critical event handlers.
-     * 
-     * @var array<string, string> Critical Handlers.
-     */
-    protected static $criticalDispatchHandlers = [
-        Event::RESUMED => 'handleResume',
-        Event::READY => 'handleReady',
-        Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
-    ];
-
-    /**
-     * An array of optional event handlers that are not critical to the client's operation, but may be handled if they are not disabled.
-     * 
-     * @var array<string, string> Optional Handlers.
-     */
-    protected $optionalDispatchHandlers = [
-        Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
-        Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
-    ];
-
-    /**
      * The packet sequence that the client is up to.
      *
      * @var int Sequence.
@@ -901,12 +880,16 @@ class Discord
         $hData = $this->handlers->getHandler($data->t);
 
         if (null === $hData) {
-            if (isset($this->criticalDispatchHandlers[$data->t])) {
-                $this->{$this->criticalDispatchHandlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
-            }
+            static $handlers = [
+                Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
+                Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
+                Event::RESUMED => 'handleResume',
+                Event::READY => 'handleReady',
+                Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
+            ];
 
-            if (isset($this->optionalDispatchHandlers[$data->t]) && ! in_array($data->t, $this->options['disabledEvents'])) {
-                $this->{$this->optionalDispatchHandlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
+            if (isset($handlers[$data->t])) {
+                $this->{$handlers[$data->t]}(Payload::new($data->op, $data->d, $data->s, $data->t));
             }
 
             return;
