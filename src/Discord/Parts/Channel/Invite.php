@@ -57,7 +57,7 @@ use function React\Promise\reject;
  * @property Carbon              $expires_at                 The expiration date of this invite.
  * @property ScheduledEvent|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
  * @property int                 $flags                      Guild invite flags for guild invites.
- * @property Role[]              $roles                      The roles assigned to the user upon accepting the invite.
+ * @property Role[]              $roles                      The roles assigned to the user upon accepting the invite. Contains a limited amount of role information.
  * @property Profile             $profile                    The guild profile.
  *
  * @property int|null    $uses       How many times the invite has been used.
@@ -321,7 +321,7 @@ class Invite extends Part implements Stringable
     /**
      * Gets the users allowed to see and accept this invite.
      *
-     * Response is a CSV file with a single column `Users` containing the user IDs.
+     * Response is a CSV file with the header `user_id` and each user ID from the original file passed to invite create on its own line.
      *
      * Requires the caller to be the inviter, or have `MANAGE_GUILD` permission, or have `VIEW_AUDIT_LOG` permission.
      *
