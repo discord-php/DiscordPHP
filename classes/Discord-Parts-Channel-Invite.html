@@ -1893,7 +1893,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$roles</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The roles assigned to the user upon accepting the invite.</p>
+        <section class="phpdocumentor-description"><p>The roles assigned to the user upon accepting the invite. Contains a limited amount of role information.</p>
 </section>
 
     
@@ -3465,7 +3465,7 @@ JSON. Used for JsonSerializable.</dd>
     <div class="phpdocumentor-label-line">
         </div>
     
-        <section class="phpdocumentor-description"><p>Response is a CSV file with a single column <code class="prettyprint">Users</code> containing the user IDs.</p>
+        <section class="phpdocumentor-description"><p>Response is a CSV file with the header <code class="prettyprint">user_id</code> and each user ID from the original file passed to invite create on its own line.</p>
 <p>Requires the caller to be the inviter, or have <code class="prettyprint">MANAGE_GUILD</code> permission, or have <code class="prettyprint">VIEW_AUDIT_LOG</code> permission.</p>
 </section>
 
