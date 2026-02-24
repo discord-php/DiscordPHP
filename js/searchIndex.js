@@ -16961,6 +16961,11 @@ Search.appendIndex(
             "summary": "Unknown\u0020encryption\u0020mode.",
             "url": "classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_UNKNOWN_ENCRYPT"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003ACLOSE_VOICE_E2EE_DAVE_REQUIRED",
+            "name": "CLOSE_VOICE_E2EE_DAVE_REQUIRED",
+            "summary": "E2EE\/DAVE\u0020protocol\u0020required.",
+            "url": "classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_E2EE_DAVE_REQUIRED"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Op\u003A\u003ACLOSE_VOICE_BAD_REQUEST",
             "name": "CLOSE_VOICE_BAD_REQUEST",
             "summary": "You\u0020sent\u0020a\u0020malformed\u0020request.",
