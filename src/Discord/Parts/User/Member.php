@@ -66,6 +66,7 @@ use function React\Promise\reject;
  * @property-read string|null                        $avatar_decoration            The member's guild avatar decoration URL.
  * @property-read string|null                        $avatar_decoration_hash       The member's guild avatar decoration hash.
  * @property      ?AvatarDecorationData|null         $avatar_decoration_data       Data for the member's guild avatar decoration.
+ * @property      ?Collectibles|null                 $collectibles                 Data for the member's collectibles                                                       
  *
  * @property      string|null $guild_id The unique identifier of the guild that the member belongs to.
  * @property-read Guild|null  $guild    The guild that the member belongs to.
@@ -119,6 +120,7 @@ class Member extends Part implements Stringable
         'permissions',
         'communication_disabled_until',
         'avatar_decoration_data',
+        'collectibles',
 
         // partial
         'guild_id',
@@ -972,6 +974,16 @@ class Member extends Part implements Stringable
     protected function getAvatarDecorationDataAttribute(): ?AvatarDecorationData
     {
         return $this->attributePartHelper('avatar_decoration_data', AvatarDecorationData::class);
+    }
+
+    /**
+     * Returns the collectibles for the member.
+     *
+     * @return Collectibles|null The collectibles data.
+     */
+    protected function getCollectiblesAttribute(): ?Collectibles
+    {
+        return $this->attributePartHelper('collectibles', Collectibles::class);
     }
 
     /**
