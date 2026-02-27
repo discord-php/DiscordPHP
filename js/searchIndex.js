@@ -12026,6 +12026,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020avatar\u0020decoration\u0020data\u0020for\u0020the\u0020member.",
             "url": "classes/Discord-Parts-User-Member.html#method_getAvatarDecorationDataAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetCollectiblesAttribute\u0028\u0029",
+            "name": "getCollectiblesAttribute",
+            "summary": "Returns\u0020the\u0020collectibles\u0020for\u0020the\u0020member.",
+            "url": "classes/Discord-Parts-User-Member.html#method_getCollectiblesAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetVoiceChannel\u0028\u0029",
             "name": "getVoiceChannel",
             "summary": "Returns\u0020the\u0020voicechannel\u0020of\u0020the\u0020member.",
