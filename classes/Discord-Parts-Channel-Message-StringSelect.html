@@ -266,7 +266,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/StringSelect.php"><a href="files/src-discord-parts-channel-message-stringselect.html"><abbr title="src/Discord/Parts/Channel/Message/StringSelect.php">StringSelect.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -407,6 +407,12 @@
     <a class="" href="classes/Discord-Parts-Channel-Message-StringSelect.html#property_placeholder">$placeholder</a>
     <span>
                         &nbsp;: string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Channel-Message-StringSelect.html#property_required">$required</a>
+    <span>
+                        &nbsp;: bool|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -959,7 +965,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$disabled</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Whether select menu is disabled (defaults to false).</p>
+        <section class="phpdocumentor-description"><p>Whether select menu is disabled (defaults to false). Using in a modal will result in an error.</p>
 </section>
 
     
@@ -1076,7 +1082,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$min_values</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Minimum number of items that must be chosen (defaults to 1); min 0 (1), max 25.</p>
+        <section class="phpdocumentor-description"><p>Minimum number of items that must be chosen (defaults to 1); min 0 (1), max 25. Must be either omitted or at least <code class="prettyprint">1</code> if <code class="prettyprint">required</code> is omitted or <code class="prettyprint">true</code>.</p>
 </section>
 
     
@@ -1155,6 +1161,45 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Placeholder text if nothing is selected or default; max 150 characters</p>
+</section>
+
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_required">
+        $required
+        <a href="classes/Discord-Parts-Channel-Message-StringSelect.html#property_required" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/StringSelect.php"><a href="files/src-discord-parts-channel-message-stringselect.html"><abbr title="src/Discord/Parts/Channel/Message/StringSelect.php">StringSelect.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">bool|null</span>
+    <span class="phpdocumentor-signature__name">$required</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Whether the string select is required to answer in a modal (defaults to true).</p>
 </section>
 
     
@@ -1387,7 +1432,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/StringSelect.php"><a href="files/src-discord-parts-channel-message-stringselect.html"><abbr title="src/Discord/Parts/Channel/Message/StringSelect.php">StringSelect.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -1397,7 +1442,7 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;type&#039;, &#039;id&#039;, &#039;custom_id&#039;, &#039;options&#039;, &#039;placeholder&#039;, &#039;min_values&#039;, &#039;max_values&#039;, &#039;disabled&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;type&#039;, &#039;id&#039;, &#039;custom_id&#039;, &#039;options&#039;, &#039;placeholder&#039;, &#039;min_values&#039;, &#039;max_values&#039;, &#039;required&#039;, &#039;disabled&#039;]</span></code>
 
     
     
@@ -3791,7 +3836,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message/StringSelect.php"><a href="files/src-discord-parts-channel-message-stringselect.html"><abbr title="src/Discord/Parts/Channel/Message/StringSelect.php">StringSelect.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -4126,6 +4171,7 @@ static as we may move it outside this class in future.</p>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-StringSelect.html#property_min_values">$min_values</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-StringSelect.html#property_options">$options</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-StringSelect.html#property_placeholder">$placeholder</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Channel-Message-StringSelect.html#property_required">$required</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Channel-Message-StringSelect.html#property_type">$type</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>

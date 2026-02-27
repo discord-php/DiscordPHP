@@ -319,7 +319,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?int|null    $min_values  Minimum number of items that must be chosen (defaults to 1); min 0, max 25.</p>
+                                                 <section class="phpdocumentor-description"><p>?int|null    $min_values  Minimum number of items that must be chosen (defaults to 1); min 0, max 25. Must be either omitted or at least <code class="prettyprint">1</code> if <code class="prettyprint">required</code> is omitted or <code class="prettyprint">true</code>.</p>
 </section>
 
                                     </dd>
@@ -346,7 +346,7 @@
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p>?bool|null   $disabled    Whether select menu is disabled in a message (defaults to false).</p>
+                                                 <section class="phpdocumentor-description"><p>?bool|null   $disabled    Whether select menu is disabled in a message (defaults to false). Using in a modal will result in an error.</p>
 </section>
 
                                     </dd>
