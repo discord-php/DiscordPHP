@@ -25,10 +25,10 @@ namespace Discord\Builders\Components;
  * @property int          $type        3 for string select.
  * @property Option[]     $options     Specified choices in a select menu; max 25.
  * @property ?string|null $placeholder Placeholder text if nothing is selected or default; max 150 characters.
- * @property ?int|null    $min_values  Minimum number of items that must be chosen (defaults to 1); min 0, max 25.
+ * @property ?int|null    $min_values  Minimum number of items that must be chosen (defaults to 1); min 0, max 25. Must be either omitted or at least `1` if `required` is omitted or `true`.
  * @property ?int|null    $max_values  Maximum number of items that can be chosen (defaults to 1); max 25.
  * @property ?bool|null   $required    Whether the string select is required to answer in a modal (defaults to true).
- * @property ?bool|null   $disabled    Whether select menu is disabled in a message (defaults to false).
+ * @property ?bool|null   $disabled    Whether select menu is disabled in a message (defaults to false). Using in a modal will result in an error.
  */
 class StringSelect extends SelectMenu
 {

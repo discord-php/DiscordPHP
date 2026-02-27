@@ -66,7 +66,7 @@ use function React\Promise\reject;
  * @property-read string|null                        $avatar_decoration            The member's guild avatar decoration URL.
  * @property-read string|null                        $avatar_decoration_hash       The member's guild avatar decoration hash.
  * @property      ?AvatarDecorationData|null         $avatar_decoration_data       Data for the member's guild avatar decoration.
- * @property      ?Collectibles|null                 $collectibles                 Data for the member's collectibles                                                       
+ * @property      ?Collectibles|null                 $collectibles                 Data for the member's collectibles
  *
  * @property      string|null $guild_id The unique identifier of the guild that the member belongs to.
  * @property-read Guild|null  $guild    The guild that the member belongs to.
