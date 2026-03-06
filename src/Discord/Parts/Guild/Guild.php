@@ -167,8 +167,6 @@ use function React\Promise\resolve;
  * @property SoundRepository              $sounds
  * @property GuildTemplateRepository      $templates
  * @property VoiceStateRepository         $voice_states
- *
- * @property-read ExCollectionInterface<Webhook>|Webhook[] $webhooks Guild webhook objects.
  */
 class Guild extends Part
 {
