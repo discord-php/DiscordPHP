@@ -1408,6 +1408,72 @@ class Guild extends Part
     }
 
     /**
+     * Returns the guild Onboarding object.
+     *
+     * @link https://discord.com/developers/docs/resources/guild#get-guild-onboarding
+     *
+     * @return PromiseInterface<Onboarding>
+     */
+    public function getOnboarding(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_ONBOARDING, $this->id))
+            ->then(fn ($response) => new Onboarding($this->discord, (array) $response, true));
+    }
+
+    /**
+     * Modifies the guild onboarding configuration.
+     *
+     * All parameters are optional. Requires `MANAGE_GUILD` and `MANAGE_ROLES`.
+     * Supports the `X-Audit-Log-Reason` header.
+     *
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild-onboarding
+     *
+     * @param array       $options An array of options: 'prompts' (array), 'default_channel_ids' (array), 'enabled' (bool), 'mode' (string)
+     * @param string|null $reason  Reason for Audit Log.
+     *
+     * @return PromiseInterface<Onboarding> The updated Onboarding object.
+     */
+    public function modifyOnboarding(array $options = [], ?string $reason = null): PromiseInterface
+    {
+        if ($botperms = $this->getBotPermissions()) {
+            if (! ($botperms->manage_guild && $botperms->manage_roles)) {
+                return reject(new NoPermissionsException("You do not have permission to modify onboarding of the guild {$this->id}."));
+            }
+        }
+
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'prompts',
+            'default_channel_ids',
+            'enabled',
+            'mode',
+        ])
+        ->setAllowedTypes('prompts', 'array')
+        ->setAllowedTypes('default_channel_ids', 'array')
+        ->setAllowedTypes('enabled', 'bool')
+        ->setAllowedTypes('mode', 'string')
+        ->setNormalizer('default_channel_ids', function ($option, $values) {
+            foreach ($values as &$value) {
+                if (! is_string($value)) {
+                    $value = (string) $value;
+                }
+            }
+
+            return $values;
+        });
+
+        $options = $resolver->resolve($options);
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_ONBOARDING, $this->id), $options, $headers)
+            ->then(fn ($response) => new Onboarding($this->discord, (array) $response, true));
+    }
+
+    /**
      * Fetch the Widget Settings for the guild.
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-widget-settings
