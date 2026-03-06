@@ -34,6 +34,9 @@ use Discord\Parts\Part;
  * @property ?bool|null   $emoji_animated Whether the emoji is animated.
  * @property string       $title          Title of the option.
  * @property string|null  $description    Description of the option.
+ *
+ * @property-read string|null $guild_id The ID of the guild.
+ * @property-read Guild|null  $guild    The guild.
  */
 class OnboardingPromptOption extends Part
 {
@@ -55,16 +58,26 @@ class OnboardingPromptOption extends Part
         'guild_id',
     ];
 
-    public function getEmojiAttribute(): ?Emoji
+    /**
+     * Returns the emoji for this prompt option.
+     */
+    protected function getEmojiAttribute(): ?Emoji
     {
-        if ($emoji = $this->attributePartHelper('emoji', Emoji::class)) {
-            if ($guild = $this->discord->guilds->get($this->guild_id)) {
-                return $guild->emojis->get($emoji->id) ?? $emoji;
-            }
-
-            return $emoji;
+        if ($this->guild) {
+            return $this->guild->emojis->get('id', $this->emoji_id ?? $this->emoji->id)
+                ?? $this->guild->emojis->get('name', $this->emoji_name ?? $this->emoji->name);
         }
 
-        return null;
+        return $this->attributePartHelper('emoji', Emoji::class);
+    }
+
+    /**
+     * Returns the guild which the onboarding prompt option belongs to.
+     *
+     * @return Guild|null
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 }

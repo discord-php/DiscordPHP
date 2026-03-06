@@ -16,7 +16,6 @@ namespace Discord\Parts;
 
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Guild\Sticker;
-use Discord\Parts\Part;
 use Stringable;
 
 /**

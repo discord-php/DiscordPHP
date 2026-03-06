@@ -60,7 +60,7 @@ use function React\Promise\resolve;
  * @property PrivateChannelRepository $private_channels
  * @property SoundRepository          $sounds
  * @property UserRepository           $users
- * 
+ *
  * @property StickerPack[]|ExCollectionInterface<StickerPack> $sticker_packs A pack of standard stickers
  */
 class Client extends Part
@@ -88,7 +88,7 @@ class Client extends Part
         // internal
         'connections',
         'role_connection',
-        'sticker_packs'
+        'sticker_packs',
     ];
 
     /**
@@ -312,7 +312,7 @@ class Client extends Part
      * @param string $sticker_id The ID of the sticker to retrieve.
      *
      * @return PromiseInterface<Sticker>
-     * 
+     *
      * @since 10.46.0
      */
     public function getSticker(string $sticker_id): PromiseInterface
@@ -339,7 +339,7 @@ class Client extends Part
      * Returns a pack of standard stickers.
      *
      * @return PromiseInterface<StickerPack>
-     * 
+     *
      * @since 10.46.0
      */
     protected function getStickerPacksAttribute(): PromiseInterface

@@ -206,7 +206,7 @@ class Integration extends Part
      * @link https://discord.com/developers/docs/resources/guild#sync-guild-integration
      *
      * @since 10.46.0
-     * 
+     *
      * @throws NoPermissionsException If the bot does not have the `MANAGE_GUILD` permissions.
      *
      * @return PromiseInterface<Integration>
