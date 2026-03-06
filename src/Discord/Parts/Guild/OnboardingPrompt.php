@@ -31,6 +31,9 @@ use Discord\Parts\Part;
  * @property bool                                                                   $single_select Indicates whether users are limited to selecting one option for the prompt.
  * @property bool                                                                   $required      Indicates whether the prompt is required before a user completes the onboarding flow.
  * @property bool                                                                   $in_onboarding Indicates whether the prompt is present in the onboarding flow. If false, the prompt will only appear in the Channels & Roles tab.
+ * 
+ * @property-read string|null $guild_id The ID of the guild.
+ * @property-read Guild|null  $guild    The guild.
  */
 class OnboardingPrompt extends Part
 {
@@ -58,8 +61,18 @@ class OnboardingPrompt extends Part
      *
      * @return ExCollectionInterface<OnboardingPromptOption>|OnboardingPromptOption[] An array of OnboardingPromptOption objects representing the options for this prompt.
      */
-    public function getOptionsAttribute(): ExCollectionInterface
+    protected function getOptionsAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('options', OnboardingPromptOption::class, 'id', ['guild_id' => $this->guild_id]);
+    }
+
+    /**
+     * Returns the guild which the onboarding prompt belongs to.
+     *
+     * @return Guild|null
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 }
