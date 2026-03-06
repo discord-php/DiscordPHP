@@ -24,6 +24,7 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Invite;
 use Discord\Parts\Channel\StageInstance;
+use Discord\Parts\Channel\Webhook;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -166,6 +167,8 @@ use function React\Promise\resolve;
  * @property SoundRepository              $sounds
  * @property GuildTemplateRepository      $templates
  * @property VoiceStateRepository         $voice_states
+ *
+ * @property-read ExCollectionInterface<Webhook>|Webhook[] $webhooks Guild webhook objects.
  */
 class Guild extends Part
 {
@@ -562,6 +565,39 @@ class Guild extends Part
     }
 
     /**
+     * Returns a list of guild webhook objects.
+     *
+     * @link https://discord.com/developers/docs/resources/webhook#get-guild-webhooks
+     * 
+     * @since 10.46.0
+     *
+     * @throws NoPermissionsException Missing manage_webhooks permission.
+     *
+     * @return PromiseInterface<ExCollectionInterface<Webhook>|Webhook[]>
+     */
+    public function getWebhooks(): PromiseInterface
+    {
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_webhooks) {
+                return reject(new NoPermissionsException("You do not have permission to get webhooks for the guild {$this->id}."));
+            }
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_WEBHOOKS, $this->id))->then(function ($response) {
+            $response = (array) $response;
+
+            /** @var ExCollectionInterface<Webhook> $webhooks */
+            $webhooks = $this->discord->getCollectionClass()::for(Webhook::class);
+
+            foreach ($response as $webhook) {
+                $webhooks->pushItem($this->factory->part(Webhook::class, (array) $webhook, true));
+            }
+
+            return $webhooks;
+        });
+    }
+
+    /**
      * Unbans a member. Alias for `$guild->bans->unban($user)`.
      *
      * @see BanRepository::unban()
@@ -629,7 +665,7 @@ class Guild extends Part
 
     /**
      * Returns a list of voice region objects for the guild.
-     * 
+     *
      * Unlike the similar /voice route, this returns VIP servers when the guild is VIP-enabled.
      *
      * @link https://docs.discord.com/developers/resources/guild#get-guild-voice-regions
@@ -652,7 +688,7 @@ class Guild extends Part
 
     /**
      * Returns the current user's voice state in the guild.
-     * 
+     *
      * @since 10.26.0
      *
      * @link https://discord.com/developers/docs/resources/voice#get-current-user-voice-state
@@ -1418,7 +1454,7 @@ class Guild extends Part
 
     /**
      * Returns the guild Onboarding object.
-     * 
+     *
      * @since 10.46.0
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-onboarding
@@ -1436,7 +1472,7 @@ class Guild extends Part
      *
      * All parameters are optional. Requires `MANAGE_GUILD` and `MANAGE_ROLES`.
      * Supports the `X-Audit-Log-Reason` header.
-     * 
+     *
      * @since 10.46.0
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-onboarding
