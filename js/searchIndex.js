@@ -4186,6 +4186,11 @@ Search.appendIndex(
             "summary": "Sends\u0020a\u0020soundboard\u0020sound\u0020to\u0020the\u0020voice\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_sendSoundboardSound"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003Afollow\u0028\u0029",
+            "name": "follow",
+            "summary": "Follow\u0020an\u0020Announcement\u0020Channel\u0020to\u0020send\u0020messages\u0020to\u0020a\u0020target\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#method_follow"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AcreateInvite\u0028\u0029",
             "name": "createInvite",
             "summary": "Creates\u0020an\u0020invite\u0020for\u0020the\u0020channel.",
@@ -7946,6 +7951,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020channels\u0020invites.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getInvites"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetWebhooks\u0028\u0029",
+            "name": "getWebhooks",
+            "summary": "Returns\u0020a\u0020list\u0020of\u0020guild\u0020webhook\u0020objects.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getWebhooks"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003Aunban\u0028\u0029",
             "name": "unban",
             "summary": "Unbans\u0020a\u0020member.\u0020Alias\u0020for\u0020\u0060\u0024guild\u002D\u003Ebans\u002D\u003Eunban\u0028\u0024user\u0029\u0060.",
@@ -7968,13 +7978,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetVoiceRegions\u0028\u0029",
             "name": "getVoiceRegions",
-            "summary": "Gets\u0020the\u0020voice\u0020regions\u0020available.",
+            "summary": "Returns\u0020a\u0020list\u0020of\u0020voice\u0020region\u0020objects\u0020for\u0020the\u0020guild.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getVoiceRegions"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetCurrentUserVoiceState\u0028\u0029",
             "name": "getCurrentUserVoiceState",
             "summary": "Returns\u0020the\u0020current\u0020user\u0027s\u0020voice\u0020state\u0020in\u0020the\u0020guild.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getCurrentUserVoiceState"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AfetchVanityUrl\u0028\u0029",
+            "name": "fetchVanityUrl",
+            "summary": "Returns\u0020a\u0020partial\u0020invite\u0020object\u0020for\u0020guilds\u0020with\u0020that\u0020feature\u0020enabled.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_fetchVanityUrl"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AmodifyCurrentUserVoiceState\u0028\u0029",
             "name": "modifyCurrentUserVoiceState",
@@ -8065,6 +8080,16 @@ Search.appendIndex(
             "name": "updateWelcomeScreen",
             "summary": "Modify\u0020the\u0020guild\u0027s\u0020Welcome\u0020Screen.\u0020Requires\u0020the\u0020MANAGE_GUILD\u0020permission.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_updateWelcomeScreen"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetOnboarding\u0028\u0029",
+            "name": "getOnboarding",
+            "summary": "Returns\u0020the\u0020guild\u0020Onboarding\u0020object.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getOnboarding"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AmodifyOnboarding\u0028\u0029",
+            "name": "modifyOnboarding",
+            "summary": "Modifies\u0020the\u0020guild\u0020onboarding\u0020configuration.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_modifyOnboarding"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetWidgetSettings\u0028\u0029",
             "name": "getWidgetSettings",
@@ -8731,6 +8756,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Integration.html#method_save"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Integration\u003A\u003Async\u0028\u0029",
+            "name": "sync",
+            "summary": "Syncs\u0020an\u0020integration\u0020for\u0020the\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-Integration.html#method_sync"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Integration\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "",
@@ -8740,6 +8770,86 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-Integration.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Onboarding",
+            "name": "Onboarding",
+            "summary": "Represents\u0020the\u0020onboarding\u0020flow\u0020for\u0020a\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-Onboarding.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Onboarding\u003A\u003AgetPromptsAttribute\u0028\u0029",
+            "name": "getPromptsAttribute",
+            "summary": "Get\u0020the\u0020prompts\u0020for\u0020this\u0020onboarding.",
+            "url": "classes/Discord-Parts-Guild-Onboarding.html#method_getPromptsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Onboarding\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020which\u0020the\u0020onboarding\u0020belongs\u0020to.",
+            "url": "classes/Discord-Parts-Guild-Onboarding.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Onboarding\u003A\u003AMODE_ONBOARDING_DEFAULT",
+            "name": "MODE_ONBOARDING_DEFAULT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Onboarding.html#constant_MODE_ONBOARDING_DEFAULT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Onboarding\u003A\u003AMODE_ONBOARDING_ADVANCED",
+            "name": "MODE_ONBOARDING_ADVANCED",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Onboarding.html#constant_MODE_ONBOARDING_ADVANCED"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Onboarding\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-Onboarding.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\OnboardingPrompt",
+            "name": "OnboardingPrompt",
+            "summary": "Represents\u0020an\u0020onboarding\u0020prompt\u0020for\u0020a\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-OnboardingPrompt.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\OnboardingPrompt\u003A\u003AgetOptionsAttribute\u0028\u0029",
+            "name": "getOptionsAttribute",
+            "summary": "Get\u0020the\u0020options\u0020for\u0020this\u0020prompt.",
+            "url": "classes/Discord-Parts-Guild-OnboardingPrompt.html#method_getOptionsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\OnboardingPrompt\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020which\u0020the\u0020onboarding\u0020prompt\u0020belongs\u0020to.",
+            "url": "classes/Discord-Parts-Guild-OnboardingPrompt.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\OnboardingPrompt\u003A\u003ATYPE_MULTIPLE_CHOICE",
+            "name": "TYPE_MULTIPLE_CHOICE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-OnboardingPrompt.html#constant_TYPE_MULTIPLE_CHOICE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\OnboardingPrompt\u003A\u003ATYPE_DROPDOWN",
+            "name": "TYPE_DROPDOWN",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-OnboardingPrompt.html#constant_TYPE_DROPDOWN"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\OnboardingPrompt\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-OnboardingPrompt.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\OnboardingPromptOption",
+            "name": "OnboardingPromptOption",
+            "summary": "Represents\u0020an\u0020onboarding\u0020prompt\u0020option\u0020for\u0020a\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-OnboardingPromptOption.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\OnboardingPromptOption\u003A\u003AgetEmojiAttribute\u0028\u0029",
+            "name": "getEmojiAttribute",
+            "summary": "Returns\u0020the\u0020emoji\u0020for\u0020this\u0020prompt\u0020option.",
+            "url": "classes/Discord-Parts-Guild-OnboardingPromptOption.html#method_getEmojiAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\OnboardingPromptOption\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020which\u0020the\u0020onboarding\u0020prompt\u0020option\u0020belongs\u0020to.",
+            "url": "classes/Discord-Parts-Guild-OnboardingPromptOption.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\OnboardingPromptOption\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-OnboardingPromptOption.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Profile",
             "name": "Profile",
@@ -11316,6 +11426,26 @@ Search.appendIndex(
             "summary": "Returns\u0020an\u0020array\u0020of\u0020extra\u0020permissions.",
             "url": "classes/Discord-Parts-Permissions-RolePermission.html#method_getPermissions"
         },                {
+            "fqsen": "\\Discord\\Parts\\StickerPack",
+            "name": "StickerPack",
+            "summary": "Represents\u0020a\u0020pack\u0020of\u0020standard\u0020stickers.",
+            "url": "classes/Discord-Parts-StickerPack.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\StickerPack\u003A\u003AgetStickersAttribute\u0028\u0029",
+            "name": "getStickersAttribute",
+            "summary": "Returns\u0020the\u0020stickers\u0020attribute\u0020as\u0020a\u0020collection\u0020of\u0020Sticker\u0020objects.",
+            "url": "classes/Discord-Parts-StickerPack.html#method_getStickersAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\StickerPack\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "",
+            "url": "classes/Discord-Parts-StickerPack.html#method___toString"
+        },                {
+            "fqsen": "\\Discord\\Parts\\StickerPack\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-StickerPack.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Member",
             "name": "Member",
             "summary": "Represents\u0020a\u0020member\u0020that\u0020belongs\u0020to\u0020a\u0020thread.\u0020Not\u0020the\u0020same\u0020as\u0020a\u0020user\u0020nor\u0020a\nguild\u0020member.",
@@ -11785,6 +11915,16 @@ Search.appendIndex(
             "name": "getAvatarHashAttribute",
             "summary": "",
             "url": "classes/Discord-Parts-User-Client.html#method_getAvatarHashAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetSticker\u0028\u0029",
+            "name": "getSticker",
+            "summary": "Returns\u0020a\u0020sticker\u0020object\u0020for\u0020the\u0020given\u0020sticker\u0020ID.",
+            "url": "classes/Discord-Parts-User-Client.html#method_getSticker"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetStickerPacksAttribute\u0028\u0029",
+            "name": "getStickerPacksAttribute",
+            "summary": "Returns\u0020a\u0020pack\u0020of\u0020standard\u0020stickers.",
+            "url": "classes/Discord-Parts-User-Client.html#method_getStickerPacksAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003Asave\u0028\u0029",
             "name": "save",
@@ -13501,6 +13641,11 @@ Search.appendIndex(
             "summary": "Contains\u0020integrations\u0020on\u0020a\u0020guild.",
             "url": "classes/Discord-Repository-Guild-IntegrationRepository.html"
         },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\IntegrationRepository\u003A\u003Async\u0028\u0029",
+            "name": "sync",
+            "summary": "Syncs\u0020an\u0020integration\u0020for\u0020the\u0020guild.",
+            "url": "classes/Discord-Repository-Guild-IntegrationRepository.html#method_sync"
+        },                {
             "fqsen": "\\Discord\\Repository\\Guild\\IntegrationRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
             "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
@@ -13630,6 +13775,16 @@ Search.appendIndex(
             "name": "fetch",
             "summary": "",
             "url": "classes/Discord-Repository-Guild-ScheduledEventRepository.html#method_fetch"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\ScheduledEventRepository\u003A\u003AgetUsersCount\u0028\u0029",
+            "name": "getUsersCount",
+            "summary": "Get\u0020the\u0020counts\u0020for\u0020users\u0020subscribed\u0020to\u0020a\u0020scheduled\u0020event.",
+            "url": "classes/Discord-Repository-Guild-ScheduledEventRepository.html#method_getUsersCount"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\ScheduledEventRepository\u003A\u003AgetExceptionUsers\u0028\u0029",
+            "name": "getExceptionUsers",
+            "summary": "Get\u0020users\u0020for\u0020a\u0020specific\u0020scheduled\u0020event\u0020exception.",
+            "url": "classes/Discord-Repository-Guild-ScheduledEventRepository.html#method_getExceptionUsers"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\ScheduledEventRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
