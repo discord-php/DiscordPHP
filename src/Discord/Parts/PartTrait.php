@@ -499,7 +499,7 @@ trait PartTrait
      *
      * @since 10.19.0
      */
-    protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id'): ExCollectionInterface
+    protected function attributeCollectionHelper($key, $class, ?string $discrim = 'id', ?array $extraData = []): ExCollectionInterface
     {
         /** @var ExCollectionInterface $collection */
         $collection = $this->discord->getCollectionClass()::for($class, $discrim);
@@ -512,7 +512,7 @@ trait PartTrait
             $collection->pushItem(
                 $part instanceof $class
                     ? $part
-                    : $part = $this->createOf($class, $part)
+                    : $part = $this->createOf($class, ((array) $part) + $extraData)
             );
         }
 
