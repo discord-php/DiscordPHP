@@ -643,12 +643,12 @@ class Guild extends Part
 
     /**
      * Returns the current user's voice state in the guild.
+     * 
+     * @since 10.26.0
      *
      * @link https://discord.com/developers/docs/resources/voice#get-current-user-voice-state
      *
      * @return PromiseInterface<VoiceStateUpdate>
-     *
-     * @since 10.26.0
      */
     public function getCurrentUserVoiceState(): PromiseInterface
     {
@@ -1409,6 +1409,8 @@ class Guild extends Part
 
     /**
      * Returns the guild Onboarding object.
+     * 
+     * @since 10.46.0
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-onboarding
      *
@@ -1425,6 +1427,8 @@ class Guild extends Part
      *
      * All parameters are optional. Requires `MANAGE_GUILD` and `MANAGE_ROLES`.
      * Supports the `X-Audit-Log-Reason` header.
+     * 
+     * @since 10.46.0
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-onboarding
      *
