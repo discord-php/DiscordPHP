@@ -656,6 +656,42 @@ class Guild extends Part
     }
 
     /**
+     * Returns a partial invite object for guilds with that feature enabled.
+     *
+     * Requires the `MANAGE_GUILD` permission. `code` will be null if a vanity url for the guild is not set.
+     *
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-vanity-url
+     *
+     * @return PromiseInterface<string|null> Vanity URL code or null if no vanity URL is set.
+     */
+    public function fetchVanityUrl(): PromiseInterface
+    {
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_guild) {
+                return reject(new NoPermissionsException("You do not have permission to get the vanity URL for the guild {$this->id}."));
+            }
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_VANITY_URL, $this->id))
+            ->then(function ($response) {
+                $response = (array) $response;
+
+                if (! isset($response['code'])) {
+                    return null;
+                }
+
+                if ($invite = $this->invites->get('code', $response['code'])) {
+                    return (string) $invite;
+                }
+
+                $invite = new Invite($this->discord, $response, true);
+                $this->invites->pushItem($invite);
+
+                return (string) $invite;
+            });
+    }
+
+    /**
      * Modify the current user's voice state in the guild.
      *
      * Caveats:

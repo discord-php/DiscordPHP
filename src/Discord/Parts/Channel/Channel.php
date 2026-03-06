@@ -684,7 +684,7 @@ class Channel extends Part implements Stringable
      *
      * @param string $webhookChannelId ID of the channel to receive crossposted messages.
      *
-    * @return PromiseInterface<array{channel: Channel|int, webhook: int}>
+     * @return PromiseInterface<array{channel: Channel|int, webhook: int}>
      *
      * @since 10.46.0
      */
