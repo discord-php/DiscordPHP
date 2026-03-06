@@ -29,6 +29,8 @@ use Discord\Parts\Part;
  * @property string[]                                                   $default_channel_ids Channel IDs that members get opted into automatically
  * @property bool                                                       $enabled             Whether onboarding is enabled in the guild
  * @property int                                                        $mode                Current mode of onboarding
+ * 
+ * @property-read Guild|null  $guild    The guild.
  */
 class Onboarding extends Part
 {
@@ -51,8 +53,18 @@ class Onboarding extends Part
      *
      * @return ExCollectionInterface<OnboardingPrompt>|OnboardingPrompt[]
      */
-    public function getPromptsAttribute(): ExCollectionInterface
+    protected function getPromptsAttribute(): ExCollectionInterface
     {
         return $this->attributeCollectionHelper('prompts', OnboardingPrompt::class, 'id', ['guild_id' => $this->guild_id]);
+    }
+
+    /**
+     * Returns the guild which the onboarding belongs to.
+     *
+     * @return Guild|null
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 }
