@@ -628,17 +628,26 @@ class Guild extends Part
     }
 
     /**
-     * Gets the voice regions available.
+     * Returns a list of voice region objects for the guild.
+     * 
+     * Unlike the similar /voice route, this returns VIP servers when the guild is VIP-enabled.
      *
-     * @link https://discord.com/developers/docs/resources/voice#list-voice-regions
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-voice-regions
      *
      * @return PromiseInterface<ExCollectionInterface<Region>|Region[]>
-     *
-     * @deprecated 10.23.0 Use `Discord::listVoiceRegions` instead.
      */
     public function getVoiceRegions(): PromiseInterface
     {
-        return $this->discord->listVoiceRegions();
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_REGIONS, $this->id))->then(function ($response) {
+            /** @var ExCollectionInterface<Region> $regions */
+            $regions = $this->discord->getCollectionClass()::for(Region::class);
+
+            foreach ($response as $region) {
+                $regions->pushItem($this->factory->part(Region::class, (array) $region, true));
+            }
+
+            return $regions;
+        });
     }
 
     /**
