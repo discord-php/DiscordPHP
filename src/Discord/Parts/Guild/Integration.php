@@ -207,6 +207,8 @@ class Integration extends Part
          * Fires Guild Integrations Update and Integration Update Gateway events.
          *
          * @link https://discord.com/developers/docs/resources/guild#sync-guild-integration
+         * 
+         * @since 10.46.0
          *
          * @return PromiseInterface<Integration>
          */
