@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -200,15 +201,13 @@ class Integration extends Part
     /**
      * Syncs an integration for the guild.
      *
-     * Requires the `MANAGE_GUILD` permission.
-     *
-     * Returns a 204 empty response on success.
-     *
      * Fires Guild Integrations Update and Integration Update Gateway events.
      *
      * @link https://discord.com/developers/docs/resources/guild#sync-guild-integration
      *
      * @since 10.46.0
+     * 
+     * @throws NoPermissionsException If the bot does not have the `MANAGE_GUILD` permissions.
      *
      * @return PromiseInterface<Integration>
      */
@@ -223,7 +222,7 @@ class Integration extends Part
 
         if ($botperms = $guild->getBotPermissions()) {
             if (! $botperms->manageGuild) {
-                return reject(new \Exception('The bot requires the MANAGE_GUILD permission to sync this integration.'));
+                return reject(new NoPermissionsException('The bot requires the MANAGE_GUILD permission to sync this integration.'));
             }
         }
 
