@@ -18,22 +18,22 @@ use Discord\Parts\Part;
 
 /**
  * Represents an onboarding prompt option for a guild.
- * 
+ *
  * When creating or updating a prompt option, the emoji_id, emoji_name, and emoji_animated fields must be used instead of the emoji object.
  *
  * @since 10.26.0
  *
  * @link https://docs.discord.com/developers/resources/guild#guild-onboarding-object-prompt-option-structure
  *
- * @property string      $id             ID of the prompt option.
- * @property array       $channel_ids    IDs for channels a member is added to when the option is selected.
- * @property array       $role_ids       IDs for roles assigned to a member when the option is selected.
- * @property object|null $emoji          Emoji of the option.
- * @property string|null $emoji_id       Emoji ID of the option.
- * @property string|null $emoji_name     Emoji name of the option.
- * @property bool|null   $emoji_animated Whether the emoji is animated.
- * @property string      $title          Title of the option.
- * @property string|null $description    Description of the option.
+ * @property string       $id             ID of the prompt option.
+ * @property array        $channel_ids    IDs for channels a member is added to when the option is selected.
+ * @property array        $role_ids       IDs for roles assigned to a member when the option is selected.
+ * @property ?Emoji|null  $emoji          Emoji of the option.
+ * @property ?string|null $emoji_id       Emoji ID of the option.
+ * @property ?string|null $emoji_name     Emoji name of the option.
+ * @property ?bool|null   $emoji_animated Whether the emoji is animated.
+ * @property string       $title          Title of the option.
+ * @property string|null  $description    Description of the option.
  */
 class OnboardingPromptOption extends Part
 {
