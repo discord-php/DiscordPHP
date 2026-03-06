@@ -568,7 +568,7 @@ class Guild extends Part
      * Returns a list of guild webhook objects.
      *
      * @link https://discord.com/developers/docs/resources/webhook#get-guild-webhooks
-     * 
+     *
      * @since 10.46.0
      *
      * @throws NoPermissionsException Missing manage_webhooks permission.

@@ -12,7 +12,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Guild;
+namespace Discord\Parts;
 
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
