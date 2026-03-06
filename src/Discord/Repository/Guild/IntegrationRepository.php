@@ -50,11 +50,11 @@ class IntegrationRepository extends AbstractRepository
 
     /**
      * Syncs an integration for the guild.
-     * 
+     *
      * Requires the MANAGE_GUILD permission.
-     * 
+     *
      * Returns a 204 empty response on success.
-     * 
+     *
      * Fires Guild Integrations Update and Integration Update Gateway events.
      *
      * @link https://discord.com/developers/docs/resources/guild#sync-guild-integration
