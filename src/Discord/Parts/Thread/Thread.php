@@ -106,7 +106,7 @@ class Thread extends Part implements Stringable
     protected function afterConstruct(): void
     {
         if (isset($this->attributes['member'])) {
-            $memberPart = $this->members->create((array) $this->attributes['member'] + [
+            $memberPart = $this->guild->members->create((array) $this->attributes['member'] + [
                 'id' => $this->id,
                 'user_id' => $this->discord->id,
                 'guild_id' => $this->guild_id,
