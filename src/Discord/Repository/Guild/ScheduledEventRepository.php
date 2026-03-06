@@ -94,7 +94,7 @@ class ScheduledEventRepository extends AbstractRepository
      * @param string $id The scheduled event id.
      *
      * @return PromiseInterface<int> The count of users subscribed to the scheduled event.
-     * 
+     *
      * @since 10.46.0
      */
     public function getUsersCount(string $id): PromiseInterface
@@ -112,7 +112,7 @@ class ScheduledEventRepository extends AbstractRepository
      * @param array  $options
      *
      * @return PromiseInterface<ExCollectionInterface<User>>
-     * 
+     *
      * @since 10.46.0
      */
     public function getExceptionUsers(string $scheduledEventId, string $exceptionId, array $options = []): PromiseInterface

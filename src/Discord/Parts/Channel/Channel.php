@@ -674,6 +674,33 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Follow an Announcement Channel to send messages to a target channel.
+     *
+     * Requires the MANAGE_WEBHOOKS permission in the target channel.
+     *
+     * Returns a followed channel object. Fires a Webhooks Update Gateway event for the target channel.
+     *
+     * @link https://docs.discord.com/developers/resources/channel#followed-channel-object
+     *
+     * @param string $webhookChannelId ID of the channel to receive crossposted messages.
+     *
+    * @return PromiseInterface<array{channel: Channel|int, webhook: int}>
+     *
+     * @since 10.46.0
+     */
+    public function follow(string $webhookChannelId): PromiseInterface
+    {
+        $payload = ['webhook_channel_id' => $webhookChannelId];
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_FOLLOW, $this->id), $payload)->then(
+            fn ($response) => [
+                'channel' => $this->discord->getChannel($response->channel_id) ?? $response->channel_id,
+                'webhook' => $response->webhook_id,
+            ]
+        );
+    }
+
+    /**
      * Creates an invite for the channel.
      *
      * @link https://discord.com/developers/docs/resources/channel#create-channel-invite
