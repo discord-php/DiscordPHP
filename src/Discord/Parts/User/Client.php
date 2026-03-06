@@ -17,9 +17,11 @@ namespace Discord\Parts\User;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\ExCollectionInterface;
 use Discord\Http\Endpoint;
+use Discord\Parts\Guild\Sticker;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\OAuth\ApplicationRoleConnectionMetadata;
 use Discord\Parts\Part;
+use Discord\Parts\StickerPack;
 use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\LobbyRepository;
@@ -58,6 +60,8 @@ use function React\Promise\resolve;
  * @property PrivateChannelRepository $private_channels
  * @property SoundRepository          $sounds
  * @property UserRepository           $users
+ * 
+ * @property StickerPack[]|ExCollectionInterface<StickerPack> $sticker_packs A pack of standard stickers
  */
 class Client extends Part
 {
@@ -84,6 +88,7 @@ class Client extends Part
         // internal
         'connections',
         'role_connection',
+        'sticker_packs'
     ];
 
     /**
@@ -299,6 +304,58 @@ class Client extends Part
     protected function getAvatarHashAttribute(): ?string
     {
         return $this->attributes['avatar'];
+    }
+
+    /**
+     * Returns a sticker object for the given sticker ID.
+     *
+     * @param string $sticker_id The ID of the sticker to retrieve.
+     *
+     * @return PromiseInterface<Sticker>
+     * 
+     * @since 10.46.0
+     */
+    public function getSticker(string $sticker_id): PromiseInterface
+    {
+        foreach ($this->discord->guilds as $guild) {
+            if ($sticker = $guild->stickers->get('id', $sticker_id)) {
+                return resolve($sticker);
+            }
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::STICKER, $sticker_id))->then(function ($response) {
+            /** @var Sticker $sticker */
+            $sticker = $this->factory->part(Sticker::class, (array) $response, true);
+
+            if ($guild = $sticker->guild) {
+                $guild->stickers->pushItem($sticker);
+            }
+
+            return $sticker;
+        });
+    }
+
+    /**
+     * Returns a pack of standard stickers.
+     *
+     * @return PromiseInterface<StickerPack>
+     * 
+     * @since 10.46.0
+     */
+    protected function getStickerPacksAttribute(): PromiseInterface
+    {
+        if (isset($this->attributes['sticker_packs'])) {
+            return resolve($this->attributes['sticker_packs']);
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::STICKER_PACKS))->then(function ($response) {
+            /** @var StickerPack $stickerPack */
+            $stickerPack = $this->factory->part(StickerPack::class, (array) $response, true);
+
+            $this->attributes['sticker_packs'] = $stickerPack;
+
+            return $stickerPack;
+        });
     }
 
     /**
