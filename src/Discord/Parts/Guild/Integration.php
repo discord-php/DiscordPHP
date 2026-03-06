@@ -21,6 +21,8 @@ use Discord\Parts\User\User;
 use Discord\Repository\Guild\IntegrationRepository;
 use React\Promise\PromiseInterface;
 
+use function React\Promise\reject;
+
 /**
  * An Integration is a guild integrations for Twitch, YouTube, Bot and Apps.
  *
@@ -194,6 +196,41 @@ class Integration extends Part
 
         return parent::save();
     }
+
+        /**
+         * Syncs an integration for the guild.
+         *
+         * Requires the `MANAGE_GUILD` permission.
+         * 
+         * Returns a 204 empty response on success.
+         * 
+         * Fires Guild Integrations Update and Integration Update Gateway events.
+         *
+         * @link https://discord.com/developers/docs/resources/guild#sync-guild-integration
+         *
+         * @return PromiseInterface<Integration>
+         */
+        public function sync(): PromiseInterface
+        {
+            if (! isset($this->attributes['guild_id'])) {
+                return reject(new \Exception('Integration does not belong to a guild.'));
+            }
+            
+            /** @var Guild $guild */
+            $guild = $this->guild ?? $this->factory->part(Guild::class, ['id' => $this->attributes['guild_id']], true);
+
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->manageGuild) {
+                    return reject(new \Exception('The bot requires the MANAGE_GUILD permission to sync this integration.'));
+                }
+            }
+
+            return $guild->integrations->sync($this->id)->then(function ($response) {
+                $this->fill((array) $response);
+
+                return $this;
+            });
+        }
 
     /**
      * @inheritDoc
