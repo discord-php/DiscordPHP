@@ -11606,6 +11606,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_save"
         },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020that\u0020the\u0020thread\u0020belongs\u0020to.",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_getGuildAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "",
