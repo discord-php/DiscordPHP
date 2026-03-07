@@ -20,6 +20,7 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\ChannelTrait;
 use Discord\Parts\Channel\ThreadMetadata;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\Thread\Member as ThreadMember;
 use Discord\Parts\User\Member;
@@ -52,6 +53,9 @@ use function React\Promise\reject;
  * @property-read bool         $locked                Whether the thread has been locked.
  * @property-read bool|null    $invitable             Whether non-moderators can add other non-moderators to a thread; only available on private threads.
  * @property-read ?Carbon|null $create_timestamp      Timestamp when the thread was created; only populated for threads created after 2022-01-09.
+ *
+ * @property-read string $guild_id The ID of the guild that the thread belongs to.
+ * @property-read Guild  $guild    The guild that the thread belongs to.
  */
 class Thread extends Part implements Stringable
 {
@@ -486,6 +490,16 @@ class Thread extends Part implements Stringable
         }
 
         return parent::save();
+    }
+
+    /**
+     * Returns the guild that the thread belongs to.
+     *
+     * @return Guild
+     */
+    protected function getGuildAttribute(): Guild
+    {
+        return $this->discord->guilds->get('id', $this->guild_id) ?? new Guild($this->discord, ['id' => $this->guild_id], true);
     }
 
     /**

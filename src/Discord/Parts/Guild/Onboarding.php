@@ -29,8 +29,8 @@ use Discord\Parts\Part;
  * @property string[]                                                   $default_channel_ids Channel IDs that members get opted into automatically
  * @property bool                                                       $enabled             Whether onboarding is enabled in the guild
  * @property int                                                        $mode                Current mode of onboarding
- * 
- * @property-read Guild|null  $guild    The guild.
+ *
+ * @property-read Guild|null $guild The guild.
  */
 class Onboarding extends Part
 {

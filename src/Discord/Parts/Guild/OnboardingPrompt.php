@@ -31,7 +31,7 @@ use Discord\Parts\Part;
  * @property bool                                                                   $single_select Indicates whether users are limited to selecting one option for the prompt.
  * @property bool                                                                   $required      Indicates whether the prompt is required before a user completes the onboarding flow.
  * @property bool                                                                   $in_onboarding Indicates whether the prompt is present in the onboarding flow. If false, the prompt will only appear in the Channels & Roles tab.
- * 
+ *
  * @property-read string|null $guild_id The ID of the guild.
  * @property-read Guild|null  $guild    The guild.
  */
