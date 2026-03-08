@@ -2018,8 +2018,8 @@ class OldVoiceClient extends EventEmitter
             $flags = array_merge($preArgs, $flags);
         }
 
-        $flags = implode(' ', $flags);
-        $cmd = "{$this->ffmpeg} {$flags}";
+        $flags = implode(' ', array_map('escapeshellarg', $flags));
+        $cmd = escapeshellarg($this->ffmpeg)." {$flags}";
 
         return new Process($cmd, null, null, [
             ['socket'],
