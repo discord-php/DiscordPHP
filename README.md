@@ -113,5 +113,14 @@ We are open to contributions. However, please make sure you follow our coding st
 
 MIT License, &copy; David Cole and other contributers 2016-present.
 
+## MCP Configuration
+
+This project can be configured to use a Model Context Protocol (MCP) server for model-context integrations.
+
+- **MCP server:** set in `mago.toml` under the `[mcp]` section (`server = "https://docs.discord.com/mcp"`).
+- **Environment override:** you can override the MCP server by setting the `MCP_URL` environment variable.
+
+For more information about the MCP endpoint, see https://docs.discord.com/mcp
+
 ## Stargazers over time
 [![Stargazers over time](https://starchart.cc/discord-php/DiscordPHP.svg?variant=adaptive)](https://starchart.cc/discord-php/DiscordPHP)
