@@ -33,9 +33,3 @@ strict-list-index-checks = false
 no-boolean-literal-comparison = false
 check-missing-type-hints = true
 register-super-globals = true
-
-[mcp]
-# URL of the Model Context Protocol (MCP) server used for model-context integrations
-server = "https://docs.discord.com/mcp"
-# Optionally allow overriding via environment variable `MCP_URL`
-use_env = true
