@@ -527,7 +527,7 @@ trait PartTrait
      *
      * @return ExCollectionInterface
      */
-    protected function attributeTypedCollectionHelper(string $class, string $key): ExCollectionInterface
+    protected function attributeTypedCollectionHelper(string $class, $key): ExCollectionInterface
     {
         /** @var ExCollectionInterface $collection */
         $collection = $this->discord->getCollectionClass()::for($class);
