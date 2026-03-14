@@ -16,6 +16,8 @@ namespace Discord\Builders\Components\Contracts;
 
 /**
  * This interface is a contract for V2 components.
+ * 
+ * @link https://docs.discord.com/developers/change-log#getting-started-3
  *
  * @since 10.5.0
  */
