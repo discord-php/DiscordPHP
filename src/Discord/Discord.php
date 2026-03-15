@@ -1128,6 +1128,10 @@ class Discord
             $data['presence'] = $this->options['presence'];
         }
 
+        if (isset($this->options['capabilities']) && $this->options['capabilities']) {
+            $data['capabilities'] = $this->options['capabilities'];
+        }
+
         $payload = Payload::new(
             Op::OP_IDENTIFY,
             $data,
@@ -1688,6 +1692,7 @@ class Discord
                 'shardCount',
                 'presence',
                 'intents',
+                'capabilities',
                 'socket_options',
                 'dnsConfig',
                 'cache',
@@ -1709,6 +1714,7 @@ class Discord
                 'shardCount' => null,
                 'presence' => null,
                 'intents' => Intents::getDefaultIntents(),
+                'capabilities' => null,
                 'socket_options' => [],
                 'cache' => [AbstractRepository::class => null], // use LegacyCacheWrapper
                 'collection' => Collection::class,
@@ -1730,6 +1736,7 @@ class Discord
             ->setAllowedTypes('shardCount', ['null', 'int'])
             ->setAllowedTypes('presence', ['null', 'array'])
             ->setAllowedTypes('intents', ['array', 'int'])
+            ->setAllowedTypes('capabilities', ['null', 'array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
             ->setAllowedTypes('cache', ['array', CacheConfig::class, \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
@@ -1789,6 +1796,20 @@ class Discord
             }
 
             $options['intents'] = $intent;
+        }
+
+        if (is_array($options['capabilities'])) {
+            $capabilities = 0;
+
+            foreach ($options['capabilities'] as $idx => $i) {
+                if (! is_numeric(($i))) {
+                    throw new IntentException('Given capability at index '.$idx.' is invalid.');
+                }
+
+                $capabilities |= $i;
+            }
+
+            $options['capabilities'] = $capabilities ?: null;
         }
 
         if ($options['loadAllMembers'] && ! ($options['intents'] & Intents::GUILD_MEMBERS)) {
