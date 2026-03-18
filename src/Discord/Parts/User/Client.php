@@ -27,6 +27,7 @@ use Discord\Repository\GuildRepository;
 use Discord\Repository\LobbyRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\SoundRepository;
+use Discord\Repository\StickerPackRepository;
 use Discord\Repository\UserRepository;
 use React\Promise\PromiseInterface;
 
@@ -100,6 +101,7 @@ class Client extends Part
         'lobbies' => LobbyRepository::class,
         'private_channels' => PrivateChannelRepository::class,
         'sounds' => SoundRepository::class,
+        'sticker_packs' => StickerPackRepository::class,
         'users' => UserRepository::class,
     ];
 
@@ -313,49 +315,12 @@ class Client extends Part
      *
      * @return PromiseInterface<Sticker>
      *
+     * @since 10.47.0 Deprecated in favor of StickerPackRepository::get()
      * @since 10.46.0
      */
     public function getSticker(string $sticker_id): PromiseInterface
     {
-        foreach ($this->discord->guilds as $guild) {
-            if ($sticker = $guild->stickers->get('id', $sticker_id)) {
-                return resolve($sticker);
-            }
-        }
-
-        return $this->http->get(Endpoint::bind(Endpoint::STICKER, $sticker_id))->then(function ($response) {
-            /** @var Sticker $sticker */
-            $sticker = $this->factory->part(Sticker::class, (array) $response, true);
-
-            if ($guild = $sticker->guild) {
-                $guild->stickers->pushItem($sticker);
-            }
-
-            return $sticker;
-        });
-    }
-
-    /**
-     * Returns a pack of standard stickers.
-     *
-     * @return PromiseInterface<StickerPack>
-     *
-     * @since 10.46.0
-     */
-    protected function getStickerPacksAttribute(): PromiseInterface
-    {
-        if (isset($this->attributes['sticker_packs'])) {
-            return resolve($this->attributes['sticker_packs']);
-        }
-
-        return $this->http->get(Endpoint::bind(Endpoint::STICKER_PACKS))->then(function ($response) {
-            /** @var StickerPack $stickerPack */
-            $stickerPack = $this->factory->part(StickerPack::class, (array) $response, true);
-
-            $this->attributes['sticker_packs'] = $stickerPack;
-
-            return $stickerPack;
-        });
+        return $this->sticker_packs->get('id', $sticker_id);
     }
 
     /**
