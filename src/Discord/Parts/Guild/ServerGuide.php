@@ -18,7 +18,7 @@ use Discord\Helpers\ExCollectionInterface;
 use Discord\Parts\Part;
 
 /**
- * Home Settings for a guild.
+ * Server Guide for a guild.
  *
  * @link https://github.com/discord/discord-api-spec/blob/7cba79e03a393456fc904cff470097d3be383bec/specs/openapi_preview.json#L25369
  *
@@ -30,9 +30,9 @@ use Discord\Parts\Part;
  * @property ExCollectionInterface<NewMemberAction>|NewMemberAction[] $new_member_actions The new member actions.
  * @property ExCollectionInterface<ResourceChannel>|ResourceChannel[] $resource_channels  The resource channels.
  *
- * @property-read Guild|null $guild The guild associated with these Home settings.
+ * @property-read Guild|null $guild The guild associated with the server guide.
  */
-class HomeSettings extends Part
+class ServerGuide extends Part
 {
     /**
      * @inheritDoc
