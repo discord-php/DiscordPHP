@@ -42,6 +42,7 @@ use Discord\Repository\GuildRepository;
 use Discord\Repository\LobbyRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\SoundRepository;
+use Discord\Repository\StickerPackRepository;
 use Discord\Repository\UserRepository;
 use Discord\Voice\Manager;
 use Discord\Voice\Region;
