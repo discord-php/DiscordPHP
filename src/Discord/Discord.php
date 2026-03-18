@@ -97,6 +97,7 @@ use function React\Promise\resolve;
  * @property LobbyRepository          $lobbies
  * @property PrivateChannelRepository $private_channels
  * @property SoundRepository          $sounds
+ * @property StickerPackRepository    $sticker_packs
  * @property UserRepository           $users
  */
 class Discord
