@@ -24,12 +24,12 @@ use Discord\Parts\Part;
  *
  * @since 10.47.0 OpenAPI Preview
  *
- * @property string|null $channel_id  The target channel id.
- * @property int         $action_type The action type (0 = VIEW, 1 = TALK).
- * @property string      $title       The action title.
- * @property string      $description The action description.
- * @property Emoji|null  $emoji       The partial emoji associated with the action.
- * @property string|null $icon        The icon string, if present.
+ * @property string|null $channel_id  The ID of the channel where the action is located.
+ * @property int         $action_type The type of action the user should take in the channel (0 = VIEW, 1 = TALK).
+ * @property string      $title       The title of the action (max 60 characters).
+ * @property string      $description The description of the action (max 200 characters).
+ * @property Emoji|null  $emoji       The partial emoji representing the action.
+ * @property string|null $icon        The icon hash representing the action.
  *
  * @property-read string|null  $guild_id The guild id associated with this action.
  * @property-read Guild|null   $guild    The guild associated with this action.
@@ -37,7 +37,9 @@ use Discord\Parts\Part;
  */
 class NewMemberAction extends Part
 {
+    /** View the channel. */
     public const ACTION_TYPE_VIEW = 0;
+    /** Send a message in the channel. */
     public const ACTION_TYPE_TALK = 1;
 
     /**

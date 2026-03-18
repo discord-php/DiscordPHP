@@ -23,8 +23,8 @@ use Discord\Parts\Part;
  *
  * @since 10.47.0 OpenAPI Preview
  *
- * @property string[] $author_ids The author IDs for the message.
- * @property string   $message    The welcome message content.
+ * @property string[] $author_ids The IDs of the users who authored the welcome message (max 10).
+ * @property string   $message    The welcome message shown to new members (max 300 characters).
  */
 class WelcomeMessage extends Part
 {

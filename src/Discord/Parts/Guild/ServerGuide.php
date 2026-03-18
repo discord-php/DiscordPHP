@@ -20,15 +20,17 @@ use Discord\Parts\Part;
 /**
  * Server Guide for a guild.
  *
+ * Previously known as GuildHome.
+ *
  * @link https://github.com/discord/discord-api-spec/blob/7cba79e03a393456fc904cff470097d3be383bec/specs/openapi_preview.json#L25369
  *
  * @since 10.47.0 OpenAPI Preview
  *
- * @property string                                                   $guild_id           The guild (server) id.
- * @property bool                                                     $enabled            Whether Home is enabled for the guild.
- * @property WelcomeMessage|null                                      $welcome_message    The welcome message settings.
- * @property ExCollectionInterface<NewMemberAction>|NewMemberAction[] $new_member_actions The new member actions.
- * @property ExCollectionInterface<ResourceChannel>|ResourceChannel[] $resource_channels  The resource channels.
+ * @property string                                                   $guild_id           The ID of the guild this new member welcome is for.
+ * @property bool                                                     $enabled            Whether the new member welcome experience is enabled.
+ * @property WelcomeMessage|null                                      $welcome_message    Welcome message shown to new members of the guild.
+ * @property ExCollectionInterface<NewMemberAction>|NewMemberAction[] $new_member_actions Actions shown to new members of the guild (max 5).
+ * @property ExCollectionInterface<ResourceChannel>|ResourceChannel[] $resource_channels  Read-only channels that provide resources for new members (max 7).
  *
  * @property-read Guild|null $guild The guild associated with the server guide.
  */
