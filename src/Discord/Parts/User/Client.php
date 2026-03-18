@@ -318,7 +318,7 @@ class Client extends Part
      */
     public function getSticker(string $sticker_id): PromiseInterface
     {
-        return $this->sticker_packs->get('id', $sticker_id);
+        return resolve($this->sticker_packs->get('id', $sticker_id));
     }
 
     /**
