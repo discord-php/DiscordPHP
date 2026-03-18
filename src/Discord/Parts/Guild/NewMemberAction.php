@@ -82,6 +82,6 @@ class NewMemberAction extends Part
      */
     protected function getChannelAttribute(): ?Channel
     {
-        return $this->discord->channels->get('id', $this->attributes['channel_id']);
+        return $this->discord->channels->get('id', $this->channel_id);
     }
 }
