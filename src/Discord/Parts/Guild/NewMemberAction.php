@@ -28,7 +28,7 @@ use Discord\Parts\Part;
  * @property int         $action_type The action type (0 = VIEW, 1 = TALK).
  * @property string      $title       The action title.
  * @property string      $description The action description.
- * @property Emoji|null  $emoji       The emoji associated with the action.
+ * @property Emoji|null  $emoji       The partial emoji associated with the action.
  * @property string|null $icon        The icon string, if present.
  *
  * @property-read string|null  $guild_id The guild id associated with this action.
