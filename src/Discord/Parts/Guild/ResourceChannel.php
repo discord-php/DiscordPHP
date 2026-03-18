@@ -24,11 +24,11 @@ use Discord\Parts\Part;
  *
  * @since 10.47.0 OpenAPI Preview
  *
- * @property string      $channel_id  The channel id for the resource.
- * @property string      $title       The title of the resource channel.
- * @property Emoji|null  $emoji       The partial emoji for the resource.
- * @property string|null $icon        The icon string, if present.
- * @property string      $description The description of the resource channel.
+ * @property string      $channel_id  The ID of the channel that provides resources for new members.
+ * @property string      $title       The title of the resource channel (max 60 characters).
+ * @property string      $description The description of the resource channel (max 200 characters).
+ * @property Emoji|null  $emoji       The partial emoji representing the resource channel.
+ * @property string|null $icon        The icon hash representing the resource channel.
  *
  * @property-read string|null  $guild_id The guild id associated with this resource channel.
  * @property-read Guild|null   $guild    The guild associated with this resource channel.
@@ -42,9 +42,9 @@ class ResourceChannel extends Part
     protected $fillable = [
         'channel_id',
         'title',
+        'description',
         'emoji',
         'icon',
-        'description',
 
         // @internal
         'guild_id',
