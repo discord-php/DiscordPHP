@@ -18,7 +18,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 
 /**
- * Resource channel in Home settings.
+ * Resource channel in a server guide.
  *
  * @link https://github.com/discord/discord-api-spec/blob/7cba79e03a393456fc904cff470097d3be383bec/specs/openapi_preview.json#L34147
  *
