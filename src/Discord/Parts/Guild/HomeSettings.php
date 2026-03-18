@@ -29,7 +29,7 @@ use Discord\Parts\Part;
  * @property WelcomeMessage|null                                      $welcome_message    The welcome message settings.
  * @property ExCollectionInterface<NewMemberAction>|NewMemberAction[] $new_member_actions The new member actions.
  * @property ExCollectionInterface<ResourceChannel>|ResourceChannel[] $resource_channels  The resource channels.
- * 
+ *
  * @property-read Guild|null $guild The guild associated with these Home settings.
  */
 class HomeSettings extends Part

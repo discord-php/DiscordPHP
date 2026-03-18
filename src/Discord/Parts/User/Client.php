@@ -21,7 +21,6 @@ use Discord\Parts\Guild\Sticker;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\OAuth\ApplicationRoleConnectionMetadata;
 use Discord\Parts\Part;
-use Discord\Parts\StickerPack;
 use Discord\Repository\EmojiRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\LobbyRepository;
@@ -60,9 +59,8 @@ use function React\Promise\resolve;
  * @property GuildRepository          $guilds
  * @property PrivateChannelRepository $private_channels
  * @property SoundRepository          $sounds
+ * @property StickerPackRepository    $sticker_packs
  * @property UserRepository           $users
- *
- * @property StickerPack[]|ExCollectionInterface<StickerPack> $sticker_packs A pack of standard stickers
  */
 class Client extends Part
 {
