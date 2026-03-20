@@ -140,7 +140,7 @@ class Discord
      *
      * @var array Options.
      */
-    protected $options;
+    protected $options = [];
 
     /**
      * The authentication token.
