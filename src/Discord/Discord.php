@@ -2095,8 +2095,8 @@ class Discord
         static $secrets = [
             'token' => '*****',
         ];
-        $replace = array_intersect_key($secrets, $this->options);
-        $config = $replace + $this->options;
+        $replace = array_intersect_key($secrets, $this->options ?? []);
+        $config = $replace + $this->options ?? [];
 
         unset($config['loop'], $config['logger']);
 
