@@ -8771,6 +8771,41 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-Integration.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\NewMemberAction",
+            "name": "NewMemberAction",
+            "summary": "An\u0020action\u0020taken\u0020for\u0020a\u0020new\u0020member\u0020in\u0020the\u0020welcome\u0020message.",
+            "url": "classes/Discord-Parts-Guild-NewMemberAction.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\NewMemberAction\u003A\u003AgetEmojiAttribute\u0028\u0029",
+            "name": "getEmojiAttribute",
+            "summary": "Gets\u0020the\u0020emoji.",
+            "url": "classes/Discord-Parts-Guild-NewMemberAction.html#method_getEmojiAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\NewMemberAction\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Gets\u0020the\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-NewMemberAction.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\NewMemberAction\u003A\u003AgetChannelAttribute\u0028\u0029",
+            "name": "getChannelAttribute",
+            "summary": "Gets\u0020the\u0020channel.",
+            "url": "classes/Discord-Parts-Guild-NewMemberAction.html#method_getChannelAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\NewMemberAction\u003A\u003AACTION_TYPE_VIEW",
+            "name": "ACTION_TYPE_VIEW",
+            "summary": "View\u0020the\u0020channel.",
+            "url": "classes/Discord-Parts-Guild-NewMemberAction.html#constant_ACTION_TYPE_VIEW"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\NewMemberAction\u003A\u003AACTION_TYPE_TALK",
+            "name": "ACTION_TYPE_TALK",
+            "summary": "Send\u0020a\u0020message\u0020in\u0020the\u0020channel.",
+            "url": "classes/Discord-Parts-Guild-NewMemberAction.html#constant_ACTION_TYPE_TALK"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\NewMemberAction\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-NewMemberAction.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Onboarding",
             "name": "Onboarding",
             "summary": "Represents\u0020the\u0020onboarding\u0020flow\u0020for\u0020a\u0020guild.",
@@ -8875,6 +8910,31 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-RecurrenceRule.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ResourceChannel",
+            "name": "ResourceChannel",
+            "summary": "Resource\u0020channel\u0020in\u0020a\u0020server\u0020guide.",
+            "url": "classes/Discord-Parts-Guild-ResourceChannel.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ResourceChannel\u003A\u003AgetEmojiAttribute\u0028\u0029",
+            "name": "getEmojiAttribute",
+            "summary": "Gets\u0020the\u0020emoji.",
+            "url": "classes/Discord-Parts-Guild-ResourceChannel.html#method_getEmojiAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ResourceChannel\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Gets\u0020the\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-ResourceChannel.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ResourceChannel\u003A\u003AgetChannelAttribute\u0028\u0029",
+            "name": "getChannelAttribute",
+            "summary": "Gets\u0020the\u0020channel.",
+            "url": "classes/Discord-Parts-Guild-ResourceChannel.html#method_getChannelAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ResourceChannel\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-ResourceChannel.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Role",
             "name": "Role",
@@ -9186,6 +9246,36 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-ScheduledEventUser.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ServerGuide",
+            "name": "ServerGuide",
+            "summary": "Server\u0020Guide\u0020for\u0020a\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-ServerGuide.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ServerGuide\u003A\u003AgetWelcomeMessageAttribute\u0028\u0029",
+            "name": "getWelcomeMessageAttribute",
+            "summary": "Gets\u0020the\u0020welcome\u0020message.",
+            "url": "classes/Discord-Parts-Guild-ServerGuide.html#method_getWelcomeMessageAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ServerGuide\u003A\u003AgetNewMemberActionsAttribute\u0028\u0029",
+            "name": "getNewMemberActionsAttribute",
+            "summary": "Gets\u0020the\u0020new\u0020member\u0020actions.",
+            "url": "classes/Discord-Parts-Guild-ServerGuide.html#method_getNewMemberActionsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ServerGuide\u003A\u003AgetResourceChannelsAttribute\u0028\u0029",
+            "name": "getResourceChannelsAttribute",
+            "summary": "Gets\u0020the\u0020resource\u0020channels.",
+            "url": "classes/Discord-Parts-Guild-ServerGuide.html#method_getResourceChannelsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ServerGuide\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Gets\u0020the\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-ServerGuide.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\ServerGuide\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-ServerGuide.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Sound",
             "name": "Sound",
             "summary": "An\u0020sound\u0020object\u0020represents\u0020a\u0020soundboard\u0020sound.",
@@ -9340,6 +9430,16 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-WelcomeChannel.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\WelcomeMessage",
+            "name": "WelcomeMessage",
+            "summary": "Welcome\u0020message\u0020shown\u0020to\u0020new\u0020members.",
+            "url": "classes/Discord-Parts-Guild-WelcomeMessage.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\WelcomeMessage\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-WelcomeMessage.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\WelcomeScreen",
             "name": "WelcomeScreen",
@@ -11926,11 +12026,6 @@ Search.appendIndex(
             "summary": "Returns\u0020a\u0020sticker\u0020object\u0020for\u0020the\u0020given\u0020sticker\u0020ID.",
             "url": "classes/Discord-Parts-User-Client.html#method_getSticker"
         },                {
-            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetStickerPacksAttribute\u0028\u0029",
-            "name": "getStickerPacksAttribute",
-            "summary": "Returns\u0020a\u0020pack\u0020of\u0020standard\u0020stickers.",
-            "url": "classes/Discord-Parts-User-Client.html#method_getStickerPacksAttribute"
-        },                {
             "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003Asave\u0028\u0029",
             "name": "save",
             "summary": "Saves\u0020the\u0020client\u0020instance.",
@@ -14050,6 +14145,26 @@ Search.appendIndex(
             "name": "class",
             "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
             "url": "classes/Discord-Repository-SoundRepository.html#property_class"
+        },                {
+            "fqsen": "\\Discord\\Repository\\StickerPackRepository",
+            "name": "StickerPackRepository",
+            "summary": "Contains\u0020sticker\u0020packs\u0020of\u0020an\u0020application.",
+            "url": "classes/Discord-Repository-StickerPackRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\StickerPackRepository\u003A\u003A\u0024discrim",
+            "name": "discrim",
+            "summary": "The\u0020discriminator.",
+            "url": "classes/Discord-Repository-StickerPackRepository.html#property_discrim"
+        },                {
+            "fqsen": "\\Discord\\Repository\\StickerPackRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
+            "url": "classes/Discord-Repository-StickerPackRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\StickerPackRepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "Class\u0020type\u0020allowed\u0020into\u0020the\u0020collection.",
+            "url": "classes/Discord-Repository-StickerPackRepository.html#property_class"
         },                {
             "fqsen": "\\Discord\\Repository\\Thread\\MemberRepository",
             "name": "MemberRepository",
