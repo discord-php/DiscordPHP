@@ -7946,6 +7946,16 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020incidents\u0020data\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getIncidentsDataAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetServerGuideAttribute\u0028\u0029",
+            "name": "getServerGuideAttribute",
+            "summary": "Returns\u0020the\u0020server\u0020guide\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getServerGuideAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetServerGuide\u0028\u0029",
+            "name": "getServerGuide",
+            "summary": "Fetches\u0020the\u0020server\u0020guide\u0020\u0028new\u0020member\u0020welcome\u0029\u0020for\u0020the\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getServerGuide"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetInvites\u0028\u0029",
             "name": "getInvites",
             "summary": "Returns\u0020the\u0020channels\u0020invites.",
@@ -11591,6 +11601,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_afterConstruct"
         },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003Asearch\u0028\u0029",
+            "name": "search",
+            "summary": "Searches\u0020for\u0020the\u0020given\u0020query\u0020string\u0020in\u0020the\u0020thread\u0027s\u0020message\u0020history.\u0020Returns\u0020a\u0020collection\u0020of\u0020matching\u0020threads,\u0020members,\u0020and\u0020the\u0020first\u0020message\u0020in\u0020each\u0020thread.",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_search"
+        },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetThreadMetadataAttribute\u0028\u0029",
             "name": "getThreadMetadataAttribute",
             "summary": "Returns\u0020the\u0020thread\u0020metadata.",
@@ -11740,6 +11755,31 @@ Search.appendIndex(
             "name": "repositories",
             "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
             "url": "classes/Discord-Parts-Thread-Thread.html#property_repositories"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\ThreadSearch",
+            "name": "ThreadSearch",
+            "summary": "Container\u0020for\u0020thread\u0020search\u0020responses.",
+            "url": "classes/Discord-Parts-Thread-ThreadSearch.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\ThreadSearch\u003A\u003AgetThreadsAttribute\u0028\u0029",
+            "name": "getThreadsAttribute",
+            "summary": "Returns\u0020the\u0020threads\u0020as\u0020a\u0020collection\u0020of\u0020\u0060Thread\u0060\u0020parts.",
+            "url": "classes/Discord-Parts-Thread-ThreadSearch.html#method_getThreadsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\ThreadSearch\u003A\u003AgetMembersAttribute\u0028\u0029",
+            "name": "getMembersAttribute",
+            "summary": "Returns\u0020the\u0020members\u0020as\u0020a\u0020collection\u0020of\u0020thread\u0020\u0060Member\u0060\u0020parts.",
+            "url": "classes/Discord-Parts-Thread-ThreadSearch.html#method_getMembersAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\ThreadSearch\u003A\u003AgetFirstMessagesAttribute\u0028\u0029",
+            "name": "getFirstMessagesAttribute",
+            "summary": "Returns\u0020the\u0020first\u0020messages\u0020as\u0020a\u0020collection\u0020of\u0020\u0060Message\u0060\u0020parts.",
+            "url": "classes/Discord-Parts-Thread-ThreadSearch.html#method_getFirstMessagesAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\ThreadSearch\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Thread-ThreadSearch.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Activity",
             "name": "Activity",
