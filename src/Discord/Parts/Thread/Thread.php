@@ -123,7 +123,7 @@ class Thread extends Part implements Stringable
 
     /**
      * Searches for the given query string in the thread's message history. Returns a collection of matching threads, members, and the first message in each thread.
-     * 
+     *
      * @param array $options
      *
      * @return PromiseInterface<ThreadSearchResponse>
