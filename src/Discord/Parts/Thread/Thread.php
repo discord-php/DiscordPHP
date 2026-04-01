@@ -126,7 +126,7 @@ class Thread extends Part implements Stringable
      *
      * @param array $options
      *
-     * @return PromiseInterface<ThreadSearchResponse>
+     * @return PromiseInterface<ThreadSearch>
      *
      * @since 10.47.0
      */
