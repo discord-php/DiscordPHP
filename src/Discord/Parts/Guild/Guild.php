@@ -113,6 +113,8 @@ use function React\Promise\resolve;
  * @property      ?string|null        $safety_alerts_channel_id      The id of the channel where admins and moderators of Community guilds receive safety alerts from Discord.
  * @property      ?IncidentsData|null $incidents_data                The incidents data for this guild.
  *
+ * @property ?ServerGuide|null $server_guide The server guide for this guild, shown to new members and in the directory. Use `getServerGuide` first to populate.
+ *
  * @property-read bool $feature_animated_banner                           Guild has access to set an animated guild banner image.
  * @property-read bool $feature_animated_icon                             Guild has access to set an animated guild icon.
  * @property-read bool $feature_application_command_permissions_v2        Guild is using the old permissions configuration behavior.
@@ -530,6 +532,46 @@ class Guild extends Part
     protected function getIncidentsDataAttribute(): ?IncidentsData
     {
         return $this->attributePartHelper('incidents_data', IncidentsData::class);
+    }
+
+    /**
+     * Returns the server guide attribute.
+     *
+     * @return ServerGuide|null
+     *
+     * @since 10.47.0
+     */
+    protected function getServerGuideAttribute(): ?ServerGuide
+    {
+        return $this->attributePartHelper('server_guide', ServerGuide::class);
+    }
+
+    /**
+     * Fetches the server guide (new member welcome) for the guild.
+     *
+     * @param bool $fresh Whether to bypass cache and fetch fresh data.
+     *
+     * @since 10.47.0
+     *
+     * @return PromiseInterface<?ServerGuide>
+     */
+    public function getServerGuide(bool $fresh = false): PromiseInterface
+    {
+        if (! $fresh && $serverGuide = $this->server_guide) {
+            return resolve($serverGuide);
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_NEW_MEMBER_WELCOME, $this->id))->then(function ($response) {
+            if ($response === null) {
+                $this->attributes['server_guide'] = null;
+
+                return null;
+            }
+
+            $this->attributes['server_guide'] = $response;
+
+            return $this->attributePartHelper('server_guide', ServerGuide::class);
+        });
     }
 
     /**
