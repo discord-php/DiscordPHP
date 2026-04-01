@@ -415,14 +415,12 @@ trait ChannelTrait
      *
      * @return PromiseInterface<Message>
      *
-     * @todo Remove manage_messages permission check on January 12, 2026.
-     *
      * @since 10.19.0 Updated endpoint to use the new pin message endpoint.
      */
     public function pinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
-            if (! $botperms->pin_messages && ! $botperms->manage_messages) {
+            if (! $botperms->pin_messages) {
                 return reject(new NoPermissionsException("You do not have permission to pin messages in the channel {$this->id}."));
             }
         }
@@ -460,14 +458,12 @@ trait ChannelTrait
      *
      * @return PromiseInterface
      *
-     * @todo Remove manage_messages permission check on January 12, 2026.
-     *
      * @since 10.19.0 Updated endpoint to use the new unpin message endpoint.
      */
     public function unpinMessage(Message $message, ?string $reason = null): PromiseInterface
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
-            if (! $botperms->pin_messages && ! $botperms->manage_messages) {
+            if (! $botperms->pin_messages) {
                 return reject(new NoPermissionsException("You do not have permission to unpin messages in the channel {$this->id}."));
             }
         }
