@@ -24,7 +24,7 @@ use Discord\Parts\Part;
  *
  * @link https://docs.discord.com/developers/events/gateway-events#channel-pins-update
  *
- * @since 10.47.0
+ * @since 10.47.2
  *
  * @property ?string|null $guild_id           ID of the guild.
  * @property string       $channel_id         ID of the channel.

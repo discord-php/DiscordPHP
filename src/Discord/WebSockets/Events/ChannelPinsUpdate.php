@@ -15,10 +15,12 @@ declare(strict_types=1);
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
+use Discord\WebSockets\Events\Data\ChannelPinsUpdateData;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#channel-pins-update
  *
+ * @since 10.47.2 Returns a `ChannelPinsUpdateData` part instead of a generic object.
  * @since 4.0.4
  */
 class ChannelPinsUpdate extends Event
@@ -28,7 +30,6 @@ class ChannelPinsUpdate extends Event
      */
     public function handle($data)
     {
-        /** @todo Create WebSockets Event Part */
-        return $data;
+        return $this->factory->part(ChannelPinsUpdateData::class, (array) $data, true);
     }
 }
