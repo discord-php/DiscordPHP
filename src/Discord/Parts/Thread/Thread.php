@@ -30,6 +30,7 @@ use Discord\Repository\Channel\ThreadRepository;
 use Discord\Repository\Thread\MemberRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function React\Promise\reject;
 
@@ -118,6 +119,58 @@ class Thread extends Part implements Stringable
             $memberPart->created = &$this->created;
             $this->members->pushItem($memberPart);
         }
+    }
+
+    /**
+     * Searches for the given query string in the thread's message history. Returns a collection of matching threads, members, and the first message in each thread.
+     * 
+     * @param array $options
+     *
+     * @return PromiseInterface<ThreadSearchResponse>
+     *
+     * @since 10.47.0
+     */
+    public function search(array $options): PromiseInterface
+    {
+        $resolver = new OptionsResolver();
+
+        $resolver->setDefined([
+            'name',
+            'slop',
+            'min_id',
+            'max_id',
+            'tag',
+            'tag_setting',
+            'archived',
+            'sort_by',
+            'sort_order',
+            'limit',
+            'offset',
+        ])
+        ->setAllowedTypes('name', 'string')
+        ->setAllowedTypes('slop', 'int')
+        ->setAllowedTypes('min_id', ['string', 'int'])
+        ->setAllowedTypes('max_id', ['string', 'int'])
+        ->setAllowedTypes('tag', ['string', 'array'])
+        ->setAllowedTypes('tag_setting', 'string')
+        ->setAllowedTypes('archived', 'bool')
+        ->setAllowedTypes('sort_by', 'string')
+        ->setAllowedTypes('sort_order', ['string', 'int'])
+        ->setAllowedTypes('limit', 'int')
+        ->setAllowedTypes('offset', 'int')
+        ->setAllowedValues('slop', fn ($v) => $v >= 0 && $v <= 100)
+        ->setAllowedValues('limit', fn ($v) => $v >= 1 && $v <= 25)
+        ->setAllowedValues('offset', fn ($v) => $v >= 0 && $v <= 9975);
+
+        $options = $resolver->resolve($options);
+
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_THREADS_SEARCH, $this->parent_id);
+
+        foreach ($options as $k => $v) {
+            $endpoint->addQuery($k, $v);
+        }
+
+        return $this->http->get($endpoint)->then(fn ($response) => $this->createOf(ThreadSearch::class, $response));
     }
 
     /**
