@@ -16036,6 +16036,31 @@ Search.appendIndex(
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-ChannelUpdate.html#method_handle"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\ChannelPinsUpdateData",
+            "name": "ChannelPinsUpdateData",
+            "summary": "Sent\u0020when\u0020a\u0020message\u0020is\u0020pinned\u0020or\u0020unpinned\u0020in\u0020a\u0020text\u0020channel.\u0020This\u0020is\u0020not\u0020sent\u0020when\u0020a\u0020pinned\u0020message\u0020is\u0020deleted.",
+            "url": "classes/Discord-WebSockets-Events-Data-ChannelPinsUpdateData.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\ChannelPinsUpdateData\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Gets\u0020the\u0020guild\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-ChannelPinsUpdateData.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\ChannelPinsUpdateData\u003A\u003AgetChannelAttribute\u0028\u0029",
+            "name": "getChannelAttribute",
+            "summary": "Gets\u0020the\u0020channel\u0020attribute.",
+            "url": "classes/Discord-WebSockets-Events-Data-ChannelPinsUpdateData.html#method_getChannelAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\ChannelPinsUpdateData\u003A\u003AgetLastPinTimestampAttribute\u0028\u0029",
+            "name": "getLastPinTimestampAttribute",
+            "summary": "Gets\u0020the\u0020last_pin_timestamp\u0020attribute\u0020as\u0020Carbon.",
+            "url": "classes/Discord-WebSockets-Events-Data-ChannelPinsUpdateData.html#method_getLastPinTimestampAttribute"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\Data\\ChannelPinsUpdateData\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-WebSockets-Events-Data-ChannelPinsUpdateData.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\Data\\GuildCreateData",
             "name": "GuildCreateData",
             "summary": "Raw\u0020data\u0020received\u0020from\u0020the\u0020\u0060GUILD_CREATE\u0060\u0020event.",
