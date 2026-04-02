@@ -19,7 +19,7 @@ namespace Discord\Parts\Channel\Message;
  *
  * Thumbnails are only available in messages as an accessory in a section.
  *
- * @link https://discord.com/developers/docs/components/reference#thumbnail
+ * @link https://docs.discord.com/developers/components/reference#thumbnail
  *
  * @since 10.11.0
  *

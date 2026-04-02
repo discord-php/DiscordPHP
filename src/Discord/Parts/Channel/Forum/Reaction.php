@@ -20,7 +20,7 @@ use Discord\Parts\Part;
  * An object that specifies the emoji to use as the default way to react to a
  * forum post. Exactly one of `emoji_id` and `emoji_name` must be set.
  *
- * @link https://discord.com/developers/docs/resources/channel#default-reaction-object
+ * @link https://docs.discord.com/developers/resources/channel#default-reaction-object
  *
  * @since 7.4.0
  *

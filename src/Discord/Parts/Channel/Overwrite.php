@@ -20,7 +20,7 @@ use Discord\Parts\Permissions\ChannelPermission;
 /**
  * Channel Overwrite Class.
  *
- * @link https://discord.com/developers/docs/resources/channel#overwrite-object
+ * @link https://docs.discord.com/developers/resources/channel#overwrite-object
  *
  * @since 3.1.1
  *

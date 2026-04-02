@@ -30,7 +30,7 @@ use function React\Promise\reject;
  * There is a set of default sounds available to all users. Soundboard sounds can also be created in a guild; users will be able to use the sounds in the guild, and Nitro subscribers can use them in all guilds.
  * Soundboard sounds in a set of guilds can be retrieved over the Gateway using Request Soundboard Sounds.
  *
- * @link https://discord.com/developers/docs/resources/soundboard
+ * @link https://docs.discord.com/developers/resources/soundboard
  *
  * @since 10.0.0
  *
@@ -115,7 +115,7 @@ class Sound extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/soundboard#modify-guild-soundboard-sound
+     * @link https://docs.discord.com/developers/resources/soundboard#modify-guild-soundboard-sound
      */
     public function getUpdatableAttributes(): array
     {

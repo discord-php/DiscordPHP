@@ -19,7 +19,7 @@ use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#webhooks-update
+ * @link https://docs.discord.com/developers/topics/gateway-events#webhooks-update
  *
  * @since 7.0.0
  */

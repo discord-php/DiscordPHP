@@ -27,7 +27,8 @@ use function React\Promise\reject;
 /**
  * An Integration is a guild integrations for Twitch, YouTube, Bot and Apps.
  *
- * @link https://discord.com/developers/docs/resources/guild#integration-object
+ * @link https://docs.discord.com/developers/resources/guild#integration-object
+ * @link https://docs.discord.com/developers/events/gateway-events#interaction-create
  *
  * @since 7.0.0
  *
@@ -122,7 +123,7 @@ class Integration extends Part
     /**
      * Returns the application attribute.
      *
-     * @todo return correct Application structure https://discord.com/developers/docs/resources/guild#integration-application-object
+     * @todo return correct Application structure https://docs.discord.com/developers/resources/guild#integration-application-object
      *
      * @return Application|null
      */
@@ -203,7 +204,7 @@ class Integration extends Part
      *
      * Fires Guild Integrations Update and Integration Update Gateway events.
      *
-     * @link https://discord.com/developers/docs/resources/guild#sync-guild-integration
+     * @link https://docs.discord.com/developers/resources/guild#sync-guild-integration
      *
      * @since 10.46.0
      *

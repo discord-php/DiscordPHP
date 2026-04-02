@@ -25,7 +25,7 @@ use Discord\Parts\Part;
  * When sending tertiary_color the API enforces the role color to be a holographic style with values of:
  * primary_color = 11127295, secondary_color = 16759788, and tertiary_color = 16761760.
  *
- * @link https://discord.com/developers/docs/topics/permissions#role-object-role-colors-object
+ * @link https://docs.discord.com/developers/topics/permissions#role-object-role-colors-object
  *
  * @since 10.18.1
  *

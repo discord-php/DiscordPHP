@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * The incidents data for a guild.
  *
- * @link https://discord.com/developers/docs/resources/guild#incidents-data-object
+ * @link https://docs.discord.com/developers/resources/guild#incidents-data-object
  *
  * @since 10.29.0
  *

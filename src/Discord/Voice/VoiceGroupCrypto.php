@@ -35,7 +35,7 @@ class VoiceGroupCrypto implements VoiceGroupCryptoInterface
     /**
      * Supported encryption modes for voice connections.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes
+     * @link https://docs.discord.com/developers/topics/voice-connections#transport-encryption-modes
      *
      * @var string[] The supported transport encryption modes.
      */

@@ -364,7 +364,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets the allowed mentions object of the message.
      *
-     * @link https://discord.com/developers/docs/resources/channel#allowed-mentions-object
+     * @link https://docs.discord.com/developers/resources/channel#allowed-mentions-object
      *
      * @param AllowedMentions|array|null $allowed_mentions
      *

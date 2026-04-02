@@ -21,7 +21,7 @@ use Discord\Parts\Part;
  *
  * @since 10.28.0
  *
- * @link https://discord.com/developers/docs/resources/lobby#lobby-object
+ * @link https://docs.discord.com/developers/resources/lobby#lobby-object
  *
  * @property string      $id       The unique identifier of the user.
  * @property ?array|null $metadata Dictionary of string key/value pairs. The max total length is 1000.

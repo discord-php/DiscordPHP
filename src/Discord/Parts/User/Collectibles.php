@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Represents the collectibles a user has.
  *
- * @link https://discord.com/developers/docs/resources/user#collectibles
+ * @link https://docs.discord.com/developers/resources/user#collectibles
  *
  * @property ?Nameplate|null $nameplate The nameplate collectible object, if present.
  */

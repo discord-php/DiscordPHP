@@ -17,7 +17,7 @@ namespace Discord\Parts\Interactions\Request;
 /**
  * Represents the data associated with an interaction.
  *
- * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure
+ * @link https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-message-component-data-structure
  *
  * @since 10.19.0
  *

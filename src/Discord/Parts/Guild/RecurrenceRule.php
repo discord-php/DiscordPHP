@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Discord's recurrence rule is a subset of the behaviors defined in the iCalendar RFC and implemented by python's dateutil rrule.
  *
- * @link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-recurrence-rule-object
+ * @link https://docs.discord.com/developers/resources/guild-scheduled-event#guild-scheduled-event-recurrence-rule-object
  *
  * @since 10.24.0
  *

@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * The provider of an embed object.
  *
- * @link https://discord.com/developers/docs/resources/message#embed-object-embed-provider-structure
+ * @link https://docs.discord.com/developers/resources/message#embed-object-embed-provider-structure
  *
  * @since 10.19.0
  *

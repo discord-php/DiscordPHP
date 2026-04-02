@@ -26,7 +26,7 @@ use React\Promise\PromiseInterface;
 /**
  * A message poll.
  *
- * @link https://discord.com/developers/docs/resources/poll#poll-object
+ * @link https://docs.discord.com/developers/resources/poll#poll-object
  *
  * @since 10.0.0
  *
@@ -124,7 +124,7 @@ class Poll extends Part
     /**
      * Expire the poll.
      *
-     * @link https://discord.com/developers/docs/resources/poll#end-poll
+     * @link https://docs.discord.com/developers/resources/poll#end-poll
      *
      * @return PromiseInterface<Message>
      */

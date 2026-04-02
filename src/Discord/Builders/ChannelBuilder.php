@@ -27,7 +27,7 @@ use function Discord\poly_strlen;
 /**
  * Helper class used to build guild channels.
  *
- * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
+ * @link https://docs.discord.com/developers/resources/guild#create-guild-channel
  *
  * @since 10.23.0
  */

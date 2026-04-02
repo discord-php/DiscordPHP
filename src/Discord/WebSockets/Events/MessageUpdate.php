@@ -22,7 +22,7 @@ use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Intents;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#message-update
+ * @link https://docs.discord.com/developers/topics/gateway-events#message-update
  *
  * @since 2.1.3
  */

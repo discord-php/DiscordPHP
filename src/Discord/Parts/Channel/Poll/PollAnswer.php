@@ -29,7 +29,7 @@ use function Discord\normalizePartId;
 /**
  * An answer to a poll.
  *
- * @link https://discord.com/developers/docs/resources/poll#poll-answer-object
+ * @link https://docs.discord.com/developers/resources/poll#poll-answer-object
  *
  * @since 10.0.0
  *
@@ -137,7 +137,7 @@ class PollAnswer extends Part
      * @param string|null $options['after'] Get users after this user ID.
      * @param int|null    $options['limit'] Max number of users to return (1-100).
      *
-     * @link https://discord.com/developers/docs/resources/poll#get-answer-voters
+     * @link https://docs.discord.com/developers/resources/poll#get-answer-voters
      *
      * @throws \OutOfRangeException
      *

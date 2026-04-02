@@ -25,7 +25,7 @@ use React\Promise\PromiseInterface;
 /**
  * A Widget of a Guild.
  *
- * @link https://discord.com/developers/docs/resources/guild#guild-widget-object
+ * @link https://docs.discord.com/developers/resources/guild#guild-widget-object
  *
  * @since 7.0.0
  *

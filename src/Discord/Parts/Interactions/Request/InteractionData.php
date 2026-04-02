@@ -21,7 +21,7 @@ use Discord\Parts\Part;
 /**
  * Represents the data associated with an interaction.
  *
- * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data
+ * @link https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-interaction-data
  *
  * @since 7.0.0
  *

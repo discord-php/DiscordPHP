@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * The footer section of an embed.
  *
- * @link https://discord.com/developers/docs/resources/message#embed-object-embed-footer-structure
+ * @link https://docs.discord.com/developers/resources/message#embed-object-embed-footer-structure
  *
  * @since 4.0.3
  *

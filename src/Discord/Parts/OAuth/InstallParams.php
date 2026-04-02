@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Settings for the app's default in-app authorization link, if enabled.
  *
- * @link https://discord.com/developers/docs/resources/application#install-params-object
+ * @link https://docs.discord.com/developers/resources/application#install-params-object
  *
  * @since 10.24.0
  *

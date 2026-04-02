@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * A field of an embed object.
  *
- * @link https://discord.com/developers/docs/resources/message#embed-object-embed-field-structure
+ * @link https://docs.discord.com/developers/resources/message#embed-object-embed-field-structure
  *
  * @since 4.0.3
  *

@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Additional metadata for the guild scheduled event.
  *
- * @link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-metadata
+ * @link https://docs.discord.com/developers/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-metadata
  *
  * @since 10.24.0
  *

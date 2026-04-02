@@ -222,7 +222,7 @@ trait ChannelTrait
     /**
      * Fetches message history.
      *
-     * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
+     * @link https://docs.discord.com/developers/resources/channel#get-channel-messages
      *
      * @param array               $options           Array of options.
      * @param string|Message|null $options['around'] Get messages around this message ID.
@@ -292,7 +292,7 @@ trait ChannelTrait
     /**
      * Bulk deletes an array of messages.
      *
-     * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
+     * @link https://docs.discord.com/developers/resources/channel#bulk-delete-messages
      *
      * @param array|Traversable $messages An array of messages to delete.
      * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
@@ -348,7 +348,7 @@ trait ChannelTrait
     /**
      * Returns the channels pinned messages.
      *
-     * @link https://discord.com/developers/docs/resources/message#get-channel-pins
+     * @link https://docs.discord.com/developers/resources/message#get-channel-pins
      *
      * @param array                 $options           Array of options.
      * @param int                   $options['limit']  The amount of messages to retrieve.
@@ -404,7 +404,7 @@ trait ChannelTrait
     /**
      * Pin a message in a channel.
      *
-     * @link https://discord.com/developers/docs/resources/message#pin-message
+     * @link https://docs.discord.com/developers/resources/message#pin-message
      *
      * @param Message     $message The message to pin.
      * @param string|null $reason  Reason for Audit Log.
@@ -448,7 +448,7 @@ trait ChannelTrait
     /**
      * Removes a message from the channels pinboard.
      *
-     * @link https://discord.com/developers/docs/resources/message#unpin-message
+     * @link https://docs.discord.com/developers/resources/message#unpin-message
      *
      * @param Message     $message The message to un-pin.
      * @param string|null $reason  Reason for Audit Log.
@@ -495,7 +495,7 @@ trait ChannelTrait
      * parameter. If the first parameter is an instance of `MessageBuilder`, the
      * rest of the arguments are disregarded.
      *
-     * @link https://discord.com/developers/docs/resources/channel#create-message
+     * @link https://docs.discord.com/developers/resources/channel#create-message
      *
      * @param MessageBuilder|string      $message          The message builder that should be converted into a message, or the string content of the message.
      * @param bool                       $tts              Whether the message is TTS.
@@ -602,7 +602,7 @@ trait ChannelTrait
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @link https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
+     * @link https://docs.discord.com/developers/resources/channel#trigger-typing-indicator
      *
      * @throws \RuntimeException
      *

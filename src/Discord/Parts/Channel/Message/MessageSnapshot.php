@@ -22,7 +22,7 @@ use Discord\Parts\Part;
  *
  * The current subset of message fields consists of: type, content, embeds, attachments, timestamp, edited_timestamp, flags, mentions, mention_roles, stickers, sticker_items, and components.
  *
- * @link https://discord.com/developers/docs/resources/message#message-snapshot-object
+ * @link https://docs.discord.com/developers/resources/message#message-snapshot-object
  *
  * @since 10.22.0
  *

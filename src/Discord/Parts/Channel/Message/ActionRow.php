@@ -25,7 +25,7 @@ namespace Discord\Parts\Channel\Message;
  * A single text input
  * A single select component (string select, user select, role select, mentionable select, or channel select)
  *
- * @link https://discord.com/developers/docs/components/reference#action-row
+ * @link https://docs.discord.com/developers/components/reference#action-row
  *
  * @since 10.11.0
  *

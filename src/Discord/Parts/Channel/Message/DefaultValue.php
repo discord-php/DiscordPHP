@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * List of default values for auto-populated select menu components; number of default values must be in the range defined by min_values and max_values.
  *
- * @link https://discord.com/developers/docs/components/reference#user-select-select-default-value-structure
+ * @link https://docs.discord.com/developers/components/reference#user-select-select-default-value-structure
  *
  * @since 10.11.0
  *

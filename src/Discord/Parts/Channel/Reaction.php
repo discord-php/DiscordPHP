@@ -31,7 +31,7 @@ use function React\Promise\resolve;
 /**
  * Represents a reaction emoji to a message by members(s).
  *
- * @link https://discord.com/developers/docs/resources/message#reaction-object
+ * @link https://docs.discord.com/developers/resources/message#reaction-object
  *
  * @since 5.0.0
  *
@@ -146,7 +146,7 @@ class Reaction extends Part
      * @param string|null $options['after'] Get users after this user ID.
      * @param int|null    $options['limit'] Max number of users to return (1-100).
      *
-     * @link https://discord.com/developers/docs/resources/channel#get-reactions
+     * @link https://docs.discord.com/developers/resources/channel#get-reactions
      *
      * @return PromiseInterface<ExCollectionInterface<User>|User[]>
      */

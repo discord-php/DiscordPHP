@@ -28,7 +28,7 @@ use function React\Promise\reject;
 /**
  * An emoji object represents a custom emoji.
  *
- * @link https://discord.com/developers/docs/resources/emoji
+ * @link https://docs.discord.com/developers/resources/emoji
  *
  * @since 4.0.2
  *
@@ -147,7 +147,7 @@ class Emoji extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/emoji#modify-guild-emoji-json-params
+     * @link https://docs.discord.com/developers/resources/emoji#modify-guild-emoji-json-params
      */
     public function getUpdatableAttributes(): array
     {

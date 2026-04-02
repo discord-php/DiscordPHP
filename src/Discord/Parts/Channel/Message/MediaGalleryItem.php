@@ -17,7 +17,7 @@ namespace Discord\Parts\Channel\Message;
 use Discord\Parts\Part;
 
 /**
- * @link https://discord.com/developers/docs/components/reference#media-gallery-media-gallery-item-structure
+ * @link https://docs.discord.com/developers/components/reference#media-gallery-media-gallery-item-structure
  *
  * @since 10.11.0
  *

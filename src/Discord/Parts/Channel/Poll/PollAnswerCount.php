@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * The number of votes for an answer in a poll.
  *
- * @link https://discord.com/developers/docs/resources/poll#poll-results-object-poll-answer-count-object-structure
+ * @link https://docs.discord.com/developers/resources/poll#poll-results-object-poll-answer-count-object-structure
  *
  * @since 10.0.0
  *

@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * An array containing a pinned messages and its pinned_at timestamp.
  *
- * @link https://discord.com/developers/docs/resources/message#message-pin-object
+ * @link https://docs.discord.com/developers/resources/message#message-pin-object
  *
  * @since 10.19.0
  *

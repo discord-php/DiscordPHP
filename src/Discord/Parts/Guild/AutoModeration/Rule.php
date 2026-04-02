@@ -34,7 +34,7 @@ use function React\Promise\reject;
  * trigger. For example, if a user tries to send a message which contains a
  * certain keyword, a rule can trigger and block the message before it is sent.
  *
- * @link https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object
+ * @link https://docs.discord.com/developers/resources/auto-moderation#auto-moderation-rule-object
  *
  * @since 7.1.0
  *
@@ -187,7 +187,7 @@ class Rule extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule-json-params
+     * @link https://docs.discord.com/developers/resources/auto-moderation#create-auto-moderation-rule-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -214,7 +214,7 @@ class Rule extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule-json-params
+     * @link https://docs.discord.com/developers/resources/auto-moderation#modify-auto-moderation-rule-json-params
      */
     public function getUpdatableAttributes(): array
     {

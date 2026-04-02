@@ -23,7 +23,7 @@ use Discord\Parts\User\User;
 /**
  * A message attachment.
  *
- * @link https://discord.com/developers/docs/resources/message#attachment-object
+ * @link https://docs.discord.com/developers/resources/message#attachment-object
  *
  * @since 7.0.0
  *

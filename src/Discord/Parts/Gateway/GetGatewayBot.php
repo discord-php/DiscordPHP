@@ -22,7 +22,7 @@ use Discord\Parts\Part;
  *
  * Unlike the Get Gateway, this route should not be cached for extended periods of time as the value is not guaranteed to be the same per-call, and changes as the bot joins/leaves guilds.
  *
- * @link https://discord.com/developers/docs/events/gateway#get-gateway-bot
+ * @link https://docs.discord.com/developers/events/gateway#get-gateway-bot
  *
  * @since 10.18.0
  *

@@ -24,7 +24,7 @@ use function React\Promise\reject;
 /**
  * Entitlements in Discord represent that a user or guild has access to a premium offering in your application.
  *
- * @link https://discord.com/developers/docs/resources/entitlement#entitlement-object
+ * @link https://docs.discord.com/developers/resources/entitlement#entitlement-object
  *
  * @since 10.15.0
  *

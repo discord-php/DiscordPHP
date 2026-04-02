@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Information on the current session start limit.
  *
- * @link https://discord.com/developers/docs/events/gateway#session-start-limit-object
+ * @link https://docs.discord.com/developers/events/gateway#session-start-limit-object
  *
  * @since 10.18.0
  *

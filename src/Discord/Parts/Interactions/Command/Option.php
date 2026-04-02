@@ -22,7 +22,7 @@ use function Discord\poly_strlen;
 /**
  * Option represents an array of options that can be given to a command.
  *
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+ * @link https://docs.discord.com/developers/interactions/application-commands#application-command-object-application-command-option-structure
  *
  * @since 7.0.0
  *

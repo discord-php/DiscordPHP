@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * If the app belongs to a team, this will be a list of the members of that team.
  *
- * @link https://discord.com/developers/docs/topics/teams#data-models-team-object
+ * @link https://docs.discord.com/developers/topics/teams#data-models-team-object
  *
  * @since 10.24.0
  *

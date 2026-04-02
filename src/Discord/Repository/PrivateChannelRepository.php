@@ -48,7 +48,7 @@ class PrivateChannelRepository extends AbstractRepository
     /**
      * Fires a Channel Update Gateway event.
      *
-     * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-group-dm
+     * @link https://docs.discord.com/developers/resources/channel#modify-channel-json-params-group-dm
      *
      * @param Channel|string $channel
      * @param array          $params

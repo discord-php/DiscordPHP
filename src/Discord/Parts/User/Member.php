@@ -42,7 +42,7 @@ use function React\Promise\reject;
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
  *
- * @link https://discord.com/developers/docs/resources/guild#guild-member-object
+ * @link https://docs.discord.com/developers/resources/guild#guild-member-object
  *
  * @since 2.0.0
  *
@@ -279,7 +279,7 @@ class Member extends Part implements Stringable
     /**
      * Adds a role to the member.
      *
-     * @link https://discord.com/developers/docs/resources/guild#add-guild-member-role
+     * @link https://docs.discord.com/developers/resources/guild#add-guild-member-role
      *
      * @param Role|string $role   The role to add to the member.
      * @param string|null $reason Reason for Audit Log.
@@ -329,7 +329,7 @@ class Member extends Part implements Stringable
     /**
      * Removes a role from the member.
      *
-     * @link https://discord.com/developers/docs/resources/guild#remove-guild-member-role
+     * @link https://docs.discord.com/developers/resources/guild#remove-guild-member-role
      *
      * @param Role|string $role   The role to remove from the member.
      * @param string|null $reason Reason for Audit Log.
@@ -373,7 +373,7 @@ class Member extends Part implements Stringable
     /**
      * Updates member roles.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-member
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-member
      *
      * @param ExCollectionInterface<Role|string>|Role[]|string[] $roles  The roles to set to the member.
      * @param string|null                                        $reason Reason for Audit Log.
@@ -451,7 +451,7 @@ class Member extends Part implements Stringable
      * Note that Discord permissions are complex and YOU need to account for the
      * fact that you cannot edit a role higher than your own.
      *
-     * @link https://discord.com/developers/docs/topics/permissions
+     * @link https://docs.discord.com/developers/topics/permissions
      *
      * @param Channel|Thread|null $channel The channel to check its permission overwrites. `null` for just Role.
      *
@@ -1003,7 +1003,7 @@ class Member extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-member-json-params
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-member-json-params
      */
     public function getUpdatableAttributes(): array
     {
@@ -1064,7 +1064,7 @@ class Member extends Part implements Stringable
         }
 
         // @todo Add more permission checks
-        // @link https://discord.com/developers/docs/resources/guild#modify-guild-member
+        // @link https://docs.discord.com/developers/resources/guild#modify-guild-member
 
         return $guild->members->save($this, $reason);
     }

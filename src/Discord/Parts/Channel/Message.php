@@ -53,7 +53,7 @@ use function React\Promise\reject;
 /**
  * A message which is posted to a Discord text channel.
  *
- * @link https://discord.com/developers/docs/resources/message#message-object
+ * @link https://docs.discord.com/developers/resources/message#message-object
  *
  * @since 2.0.0
  *
@@ -857,7 +857,7 @@ class Message extends Part
     /**
      * Starts a public thread from the message.
      *
-     * @link https://discord.com/developers/docs/resources/channel#start-thread-from-message
+     * @link https://docs.discord.com/developers/resources/channel#start-thread-from-message
      *
      * @param array       $options                          Thread params.
      * @param string      $options['name']                  The name of the thread.
@@ -945,7 +945,7 @@ class Message extends Part
     /**
      * Replies to the message.
      *
-     * @link https://discord.com/developers/docs/resources/message#create-message
+     * @link https://docs.discord.com/developers/resources/message#create-message
      *
      * @param string|MessageBuilder $message The reply message.
      *
@@ -967,7 +967,7 @@ class Message extends Part
     /**
      * Crossposts the message to any following channels (publish announcement).
      *
-     * @link https://discord.com/developers/docs/resources/message#crosspost-message
+     * @link https://docs.discord.com/developers/resources/message#crosspost-message
      *
      * @throws \RuntimeException      Message has already been crossposted.
      * @throws NoPermissionsException Missing permission:
@@ -1049,7 +1049,7 @@ class Message extends Part
     /**
      * Reacts to the message.
      *
-     * @link https://discord.com/developers/docs/resources/message#create-reaction
+     * @link https://docs.discord.com/developers/resources/message#create-reaction
      *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
@@ -1078,8 +1078,8 @@ class Message extends Part
      *
      * @deprecated 10.14.0 Use `Message::deleteAllReactions()`, `Message::deleteOwnReaction()`, `Message::deleteUserReaction()`, or `Message::deleteEmojiReactions()`.
      *
-     * @link https://discord.com/developers/docs/resources/message#delete-own-reaction
-     * @link https://discord.com/developers/docs/resources/message#delete-user-reaction
+     * @link https://docs.discord.com/developers/resources/message#delete-own-reaction
+     * @link https://docs.discord.com/developers/resources/message#delete-user-reaction
      *
      * @param int               $type     The type of deletion to perform.
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
@@ -1228,7 +1228,7 @@ class Message extends Part
     /**
      * Edits the message.
      *
-     * @link https://discord.com/developers/docs/resources/message#edit-message
+     * @link https://docs.discord.com/developers/resources/message#edit-message
      *
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
      *
@@ -1257,7 +1257,7 @@ class Message extends Part
     /**
      * Deletes the message from the channel.
      *
-     * @link https://discord.com/developers/docs/resources/message#delete-message
+     * @link https://docs.discord.com/developers/resources/message#delete-message
      *
      * @param string|null $reason Reason for Audit Log (if supported).
      *
@@ -1390,7 +1390,7 @@ class Message extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/message#edit-message-jsonform-params
+     * @link https://docs.discord.com/developers/resources/message#edit-message-jsonform-params
      */
     public function getUpdatableAttributes(): array
     {

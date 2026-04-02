@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * Specified choices in a string select menu; max 25.
  *
- * @link https://discord.com/developers/docs/components/reference#string-select-select-option-structure
+ * @link https://docs.discord.com/developers/components/reference#string-select-select-option-structure
  *
  * @since 10.11.0
  *

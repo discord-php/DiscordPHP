@@ -21,7 +21,7 @@ use Discord\Repository\Guild\StickerRepository;
 /**
  * A guild can be previewed before joining via Membership Screening or the directory.
  *
- * @link https://discord.com/developers/docs/resources/guild#guild-preview-object-guild-preview-structure
+ * @link https://docs.discord.com/developers/resources/guild#guild-preview-object-guild-preview-structure
  *
  * @property string       $id                         The unique identifier of the guild.
  * @property string       $name                       The name of the guild.

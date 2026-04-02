@@ -17,7 +17,7 @@ namespace Discord\Builders\Components;
 /**
  * A Radio Group is an interactive component for selecting exactly one option from a defined list. Radio Groups are available in modals and must be placed inside a Label.
  *
- * @link https://discord.com/developers/docs/components/reference#radio-group
+ * @link https://docs.discord.com/developers/components/reference#radio-group
  *
  * @since 10.46.0
  *

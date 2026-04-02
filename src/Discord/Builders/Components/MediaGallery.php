@@ -17,7 +17,7 @@ namespace Discord\Builders\Components;
 /**
  * Media gallery components allow you to group images, videos or gifs into a gallery grid.
  *
- * @link https://discord.com/developers/docs/components/reference#media-gallery
+ * @link https://docs.discord.com/developers/components/reference#media-gallery
  *
  * @since 10.5.0
  *

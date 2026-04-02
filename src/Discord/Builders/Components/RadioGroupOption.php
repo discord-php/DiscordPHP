@@ -17,7 +17,7 @@ namespace Discord\Builders\Components;
 /**
  * List of options to render within a Radio Group.
  *
- * @link https://discord.com/developers/docs/components/reference#radio-group-option-structure
+ * @link https://docs.discord.com/developers/components/reference#radio-group-option-structure
  *
  * @since 10.46.0
  *

@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Represents the hello data sent when establishing a voice connection.
  *
- * @link https://discord.com/developers/docs/topics/voice-connections#heartbeating-example-hello-payload
+ * @link https://docs.discord.com/developers/topics/voice-connections#heartbeating-example-hello-payload
  *
  * @since 10.41.0
  *

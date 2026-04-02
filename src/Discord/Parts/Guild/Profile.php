@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * This object can only be retrieved through the `profile` field of the [GET Invite](/docs/resources/invite#get-invite) endpoint.
  *
- * @link https://discord.com/developers/docs/resources/guild#guild-profile-object
+ * @link https://docs.discord.com/developers/resources/guild#guild-profile-object
  *
  * @since 10.22.0
  *

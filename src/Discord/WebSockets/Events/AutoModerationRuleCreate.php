@@ -19,7 +19,7 @@ use Discord\Parts\Guild\AutoModeration\Rule;
 use Discord\Parts\Guild\Guild;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#auto-moderation-rule-create
+ * @link https://docs.discord.com/developers/topics/gateway-events#auto-moderation-rule-create
  *
  * @since 7.1.0
  */

@@ -21,7 +21,7 @@ use Discord\Parts\Part;
 /**
  * Represents an Activity Location.
  *
- * @link https://discord.com/developers/docs/resources/application#get-application-activity-instance-activity-location-object
+ * @link https://docs.discord.com/developers/resources/application#get-application-activity-instance-activity-location-object
  *
  * @since 10.17.0
  *

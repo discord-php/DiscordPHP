@@ -25,7 +25,7 @@ use function React\Promise\reject;
 /**
  * A Stage Instance holds information about a live stage.
  *
- * @link https://discord.com/developers/docs/resources/stage-instance#stage-instance-resource
+ * @link https://docs.discord.com/developers/resources/stage-instance#stage-instance-resource
  *
  * @since 7.0.0
  *
@@ -95,7 +95,7 @@ class StageInstance extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/stage-instance#create-stage-instance-json-params
+     * @link https://docs.discord.com/developers/resources/stage-instance#create-stage-instance-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -116,7 +116,7 @@ class StageInstance extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance-json-params
+     * @link https://docs.discord.com/developers/resources/stage-instance#modify-stage-instance-json-params
      */
     public function getUpdatableAttributes(): array
     {

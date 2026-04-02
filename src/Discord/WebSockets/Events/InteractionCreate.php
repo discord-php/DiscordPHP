@@ -25,7 +25,7 @@ use Discord\Repository\Guild\MemberRepository;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#interaction-create
+ * @link https://docs.discord.com/developers/topics/gateway-events#interaction-create
  *
  * @since 6.0.0
  */

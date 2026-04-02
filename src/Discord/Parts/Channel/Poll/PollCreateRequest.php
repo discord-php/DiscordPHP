@@ -24,7 +24,7 @@ use function Discord\poly_strlen;
  * It is similar but not exactly identical to the main poll object.
  * The main difference is that the request has duration which eventually becomes expiry.
  *
- * @link https://discord.com/developers/docs/resources/poll#poll-create-request-object-poll-create-request-object-structure
+ * @link https://docs.discord.com/developers/resources/poll#poll-create-request-object-poll-create-request-object-structure
  *
  * @since 10.0.0
  *

@@ -17,7 +17,7 @@ namespace Discord\Builders\Components;
 /**
  * Select menu for users.
  *
- * @link https://discord.com/developers/docs/components/reference#user-select
+ * @link https://docs.discord.com/developers/components/reference#user-select
  *
  * @since 10.0.0
  *

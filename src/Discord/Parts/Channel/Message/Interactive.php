@@ -17,7 +17,7 @@ namespace Discord\Parts\Channel\Message;
 /**
  * For user interactions (Buttons, Select Menus, Text Input).
  *
- * @link https://discord.com/developers/docs/components/reference#anatomy-of-a-component-custom-id
+ * @link https://docs.discord.com/developers/components/reference#anatomy-of-a-component-custom-id
  *
  * @since 10.11.0
  *

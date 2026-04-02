@@ -24,7 +24,7 @@ use function Discord\poly_strlen;
 /**
  * An embed object to be sent with a message.
  *
- * @link https://discord.com/developers/docs/resources/message#embed-object-embed-structure
+ * @link https://docs.discord.com/developers/resources/message#embed-object-embed-structure
  *
  * @since 4.0.3
  * @since 10.19.0 The `provider` property was added and `thumbnail` was updated to return `Thumbnail`.

@@ -30,7 +30,7 @@ use Discord\Parts\User\ClientStatus;
  *
  * @since 2.1.3
  *
- * @link https://discord.com/developers/docs/topics/gateway-events#presence
+ * @link https://docs.discord.com/developers/topics/gateway-events#presence
  *
  * @property      User                                       $user            The user that the presence update affects.
  * @property      string                                     $guild_id        The unique identifier of the guild that the presence update affects.

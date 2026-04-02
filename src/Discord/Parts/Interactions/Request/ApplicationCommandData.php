@@ -19,7 +19,7 @@ use Discord\Helpers\ExCollectionInterface;
 /**
  * Represents the data associated with an interaction.
  *
- * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-data-structure
+ * @link https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-application-command-data-structure
  *
  * @since 10.19.0
  *

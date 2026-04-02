@@ -59,7 +59,7 @@ class GuildTemplateRepository extends AbstractRepository
     /**
      * Syncs the template to the guild's current state. Requires the MANAGE_GUILD permission.
      *
-     * @link https://discord.com/developers/docs/resources/guild-template#sync-guild-template
+     * @link https://docs.discord.com/developers/resources/guild-template#sync-guild-template
      *
      * @param string $template_code The guild template code.
      *

@@ -24,7 +24,7 @@ use Discord\Parts\Websockets\PresenceUpdate;
  *
  * @see Discord::handleGuildMembersChunk()
  *
- * @link https://discord.com/developers/docs/events/gateway-events#guild-members-chunk-guild-members-chunk-event-fields
+ * @link https://docs.discord.com/developers/events/gateway-events#guild-members-chunk-guild-members-chunk-event-fields
  *
  * @since 10.38.2
  *

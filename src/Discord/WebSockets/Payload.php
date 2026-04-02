@@ -21,7 +21,7 @@ use JsonSerializable;
  *
  * Gateway event payloads have a common structure, but the contents of the associated data (d) varies between the different events.
  *
- * @link https://discord.com/developers/docs/topics/gateway#payloads-gateway-payload-structure
+ * @link https://docs.discord.com/developers/topics/gateway#payloads-gateway-payload-structure
  *
  * @property int         $op Gateway opcode, which indicates the payload type.
  * @property mixed|null  $d  Event data.

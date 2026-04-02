@@ -45,7 +45,7 @@ use function React\Promise\resolve;
 /**
  * The Discord voice client.
  *
- * @link https://discord.com/developers/docs/topics/voice-connections
+ * @link https://docs.discord.com/developers/topics/voice-connections
  *
  * @since 3.2.0
  */
@@ -63,7 +63,7 @@ class OldVoiceClient extends EventEmitter
     /**
      * The Opus Silence Frame.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
+     * @link https://docs.discord.com/developers/topics/voice-connections#voice-data-interpolation
      *
      * @var string The silence frame.
      */
@@ -72,7 +72,7 @@ class OldVoiceClient extends EventEmitter
     /**
      * Supported encryption modes for voice connections.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes
+     * @link https://docs.discord.com/developers/topics/voice-connections#transport-encryption-modes
      *
      * @var string[] The supported transport encryption modes.
      */
@@ -84,7 +84,7 @@ class OldVoiceClient extends EventEmitter
     /**
      * Maximum DAVE protocol version supported.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#endtoend-encryption-dave-protocol
+     * @link https://docs.discord.com/developers/topics/voice-connections#endtoend-encryption-dave-protocol
      *
      * @var int The maximum DAVE protocol version supported.
      */
@@ -534,7 +534,7 @@ class OldVoiceClient extends EventEmitter
     /**
      * Sends an identify payload to the voice gateway to authenticate the client.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-websocket-connection-example-voice-identify-payload
+     * @link https://docs.discord.com/developers/topics/voice-connections#establishing-a-voice-websocket-connection-example-voice-identify-payload
      *
      * @since 10.19.0
      */
@@ -563,7 +563,7 @@ class OldVoiceClient extends EventEmitter
     /**
      * Sends a heartbeat payload to the voice server to maintain the connection.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#heartbeating
+     * @link https://docs.discord.com/developers/topics/voice-connections#heartbeating
      *
      * @since 10.19.0
      */
@@ -1033,7 +1033,7 @@ class OldVoiceClient extends EventEmitter
          * A64 (string)         | Address   | 64 bytes  | The IP address of the sender
          * n (unsigned short)   | Port      | 2 bytes   | The port of the sender
          *
-         * @see https://discord.com/developers/docs/topics/voice-connections#ip-discovery
+         * @see https://docs.discord.com/developers/topics/voice-connections#ip-discovery
          * @see https://www.php.net/manual/en/function.unpack.php
          * @see https://www.php.net/manual/en/function.pack.php For the formats
          */
@@ -1395,7 +1395,7 @@ class OldVoiceClient extends EventEmitter
     /**
      * Sets the speaking value of the client.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#speaking
+     * @link https://docs.discord.com/developers/topics/voice-connections#speaking
      *
      * @param int|bool $speaking The speaking mode.
      *
@@ -1984,7 +1984,7 @@ class OldVoiceClient extends EventEmitter
      * will be appended to the FFmpeg command _before_ setting the input
      * arguments.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-and-sending-voice
+     * @link https://docs.discord.com/developers/topics/voice-connections#transport-encryption-and-sending-voice
      *
      * @param ?string $filename Path to file to be converted into Ogg Opus, or
      *                          null for pipe via stdin.
@@ -2053,7 +2053,7 @@ class OldVoiceClient extends EventEmitter
     /**
      * Sends five frames of Opus silence to avoid unintended interpolation when there is a break in the sent data.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
+     * @link https://docs.discord.com/developers/topics/voice-connections#voice-data-interpolation
      *
      * @return PromiseInterface Resolves after all silence frames have been sent.
      */

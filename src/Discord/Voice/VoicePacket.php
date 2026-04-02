@@ -185,7 +185,7 @@ class VoicePacket
     /**
      * Builds the header.
      *
-     * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure
+     * @link https://docs.discord.com/developers/topics/voice-connections#transport-encryption-modes-voice-packet-structure
      *
      * @return Buffer The header.
      */

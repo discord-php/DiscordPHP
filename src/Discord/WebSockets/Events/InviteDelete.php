@@ -21,7 +21,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Events\Data\InviteDeleteData;
 
 /**
- * @link https://discord.com/developers/docs/events/gateway-events#invite-delete-invite-delete-event-fields
+ * @link https://docs.discord.com/developers/events/gateway-events#invite-delete-invite-delete-event-fields
  *
  * @since 5.0.0
  */

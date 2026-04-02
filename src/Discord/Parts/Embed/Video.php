@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * A video for an embed.
  *
- * @link https://discord.com/developers/docs/resources/message#embed-object-embed-video-structure
+ * @link https://docs.discord.com/developers/resources/message#embed-object-embed-video-structure
  *
  * @since 4.0.3
  *

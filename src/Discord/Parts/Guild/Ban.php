@@ -24,7 +24,7 @@ use function React\Promise\reject;
 /**
  * A Ban is a ban on a user specific to a guild. It is also IP based.
  *
- * @link https://discord.com/developers/docs/resources/guild#ban-object
+ * @link https://docs.discord.com/developers/resources/guild#ban-object
  *
  * @since 2.0.0
  *

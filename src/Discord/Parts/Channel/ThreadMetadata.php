@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * The thread metadata object contains a number of thread-specific channel fields that are not needed by other channel types.
  *
- * @link https://discord.com/developers/docs/resources/channel#thread-metadata-object
+ * @link https://docs.discord.com/developers/resources/channel#thread-metadata-object
  *
  * @since 10.22.0
  *

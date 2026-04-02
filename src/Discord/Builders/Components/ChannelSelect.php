@@ -17,7 +17,7 @@ namespace Discord\Builders\Components;
 /**
  * Select menu for channels.
  *
- * @link https://discord.com/developers/docs/components/reference#select-menus
+ * @link https://docs.discord.com/developers/components/reference#select-menus
  *
  * @since 10.0.0
  *
@@ -50,7 +50,7 @@ class ChannelSelect extends SelectMenu
     /**
      * Set the channel types of the select menu.
      *
-     * @link https://discord.com/developers/docs/resources/channel#channel-object-channel-types
+     * @link https://docs.discord.com/developers/resources/channel#channel-object-channel-types
      *
      * @param ?int[] $channel_types Array of channel types.
      *

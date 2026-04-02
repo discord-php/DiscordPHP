@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * The reaction count details object contains a breakdown of normal and super reaction counts for the associated emoji.
  *
- * @link https://discord.com/developers/docs/resources/message#reaction-count-details-object
+ * @link https://docs.discord.com/developers/resources/message#reaction-count-details-object
  *
  * @since 10.36.29
  *

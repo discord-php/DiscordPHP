@@ -17,7 +17,7 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#message-delete-bulk
+ * @link https://docs.discord.com/developers/topics/gateway-events#message-delete-bulk
  *
  * @since 4.0.0
  */

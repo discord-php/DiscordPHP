@@ -19,7 +19,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 
 /**
- * @link https://discord.com/developers/docs/events/gateway-events#invite-delete-invite-delete-event-fields
+ * @link https://docs.discord.com/developers/events/gateway-events#invite-delete-invite-delete-event-fields
  *
  * @since 10.46.0
  *

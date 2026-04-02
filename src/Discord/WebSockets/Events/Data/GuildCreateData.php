@@ -29,7 +29,7 @@ use Discord\Parts\WebSockets\VoiceStateUpdate;
  *
  * @see \Discord\Websockets\Events\GuildCreate
  *
- * @link https://discord.com/developers/docs/events/gateway-events#guild-create-guild-create-extra-fields
+ * @link https://docs.discord.com/developers/events/gateway-events#guild-create-guild-create-extra-fields
  *
  * @since 10.38.2
  *

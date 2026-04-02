@@ -28,7 +28,7 @@ use function Discord\poly_strlen;
  * They can be clicked by users, and send an interaction to your app when
  * clicked.
  *
- * @link https://discord.com/developers/docs/components/reference#buttons
+ * @link https://docs.discord.com/developers/components/reference#button
  *
  * @since 7.0.0
  *

@@ -21,7 +21,7 @@ use JsonSerializable;
  * This will always validate against the message and components to avoid phantom pings
  * (e.g. to ping everyone, you must still have @everyone in the message), and check against user/bot permissions.
  *
- * @link https://discord.com/developers/docs/resources/message#allowed-mentions-object
+ * @link https://docs.discord.com/developers/resources/message#allowed-mentions-object
  *
  * @since 10.10.1
  *

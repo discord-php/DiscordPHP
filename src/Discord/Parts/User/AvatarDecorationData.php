@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * The data for the user's avatar decoration.
  *
- * @link https://discord.com/developers/docs/resources/user#avatar-decoration-data-object
+ * @link https://docs.discord.com/developers/resources/user#avatar-decoration-data-object
  *
  * @property string $asset  The avatar decoration hash.
  * @property string $sku_id The id of the avatar decoration's SKU.

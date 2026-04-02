@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * An action which will execute whenever a rule is triggered.
  *
- * @link https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object
+ * @link https://docs.discord.com/developers/resources/auto-moderation#auto-moderation-action-object
  *
  * @since 7.1.0
  *

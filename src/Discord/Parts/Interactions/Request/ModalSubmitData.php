@@ -20,7 +20,7 @@ use Discord\Parts\Channel\Message\Component;
 /**
  * Represents the data associated with an interaction.
  *
- * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-modal-submit-data-structure
+ * @link https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-modal-submit-data-structure
  *
  * @since 10.19.0
  *

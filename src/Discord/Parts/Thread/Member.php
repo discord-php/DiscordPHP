@@ -26,7 +26,7 @@ use React\Promise\PromiseInterface;
  * Represents a member that belongs to a thread. Not the same as a user nor a
  * guild member.
  *
- * @link https://discord.com/developers/docs/resources/channel#thread-member-object
+ * @link https://docs.discord.com/developers/resources/channel#thread-member-object
  *
  * @since 7.0.0
  *
@@ -111,7 +111,7 @@ class Member extends Part
     /**
      * Attempts to remove the member from the thread.
      *
-     * @link https://discord.com/developers/docs/resources/channel#remove-thread-member
+     * @link https://docs.discord.com/developers/resources/channel#remove-thread-member
      *
      * @return PromiseInterface
      */

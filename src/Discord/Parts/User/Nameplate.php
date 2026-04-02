@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Represents a user's nameplate collectible.
  *
- * @link https://discord.com/developers/docs/resources/user#nameplate-nameplate-structure
+ * @link https://docs.discord.com/developers/resources/user#nameplate-nameplate-structure
  *
  * @since 10.10.0
  *

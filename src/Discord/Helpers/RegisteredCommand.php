@@ -22,7 +22,7 @@ use Discord\Parts\Interactions\Request\Option;
  * RegisteredCommand represents a command that has been registered with the
  * Discord servers and has a handler to handle when the command is triggered.
  *
- * https://discord.com/developers/docs/interactions/application-commands
+ * https://docs.discord.com/developers/interactions/application-commands
  *
  * @since 7.0.0
  *

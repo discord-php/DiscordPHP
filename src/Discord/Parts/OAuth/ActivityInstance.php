@@ -23,7 +23,7 @@ use React\Promise\PromiseInterface;
 /**
  * Represents an Activity Instance.
  *
- * @link https://discord.com/developers/docs/resources/application#get-application-activity-instance-activity-instance-object
+ * @link https://docs.discord.com/developers/resources/application#get-application-activity-instance-activity-instance-object
  *
  * @since 10.17.0
  *

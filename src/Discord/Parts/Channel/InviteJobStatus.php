@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * Represents the status of an invite target users job.
  *
- * @link https://discord.com/developers/docs/resources/invite#get-target-users-job-status
+ * @link https://docs.discord.com/developers/resources/invite#get-target-users-job-status
  *
  * @since 10.46.0
  *

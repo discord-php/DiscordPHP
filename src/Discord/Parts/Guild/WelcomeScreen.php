@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * A Welcome Screen of a Guild.
  *
- * @link https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-structure
+ * @link https://docs.discord.com/developers/resources/guild#welcome-screen-object-welcome-screen-structure
  *
  * @since 7.0.0
  *

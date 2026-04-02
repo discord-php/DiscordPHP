@@ -29,7 +29,7 @@ use ReflectionClass;
 /**
  * Represents an audit log query from a guild.
  *
- * @link https://discord.com/developers/docs/resources/audit-log#audit-log-object
+ * @link https://docs.discord.com/developers/resources/audit-log#audit-log-object
  *
  * @since 5.1.0
  *
@@ -117,7 +117,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of partial integrations found in the audit log.
      *
-     * @link https://discord.com/developers/docs/resources/audit-log#audit-log-object-example-partial-integration-object
+     * @link https://docs.discord.com/developers/resources/audit-log#audit-log-object-example-partial-integration-object
      *
      * @return ExCollectionInterface<Integration>|Integration[]
      */

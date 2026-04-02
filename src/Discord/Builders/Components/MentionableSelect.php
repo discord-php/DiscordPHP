@@ -17,7 +17,7 @@ namespace Discord\Builders\Components;
 /**
  * Select menu for mentionables (users and roles).
  *
- * @link https://discord.com/developers/docs/components/reference#select-menus
+ * @link https://docs.discord.com/developers/components/reference#select-menus
  *
  * @since 10.0.0
  *

@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * The current results of a poll.
  *
- * @link https://discord.com/developers/docs/resources/poll#poll-results-object
+ * @link https://docs.discord.com/developers/resources/poll#poll-results-object
  *
  * @since 10.0.0
  *

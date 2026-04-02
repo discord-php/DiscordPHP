@@ -17,7 +17,7 @@ namespace Discord\Builders\Components;
 /**
  * Option for select menu component.
  *
- * @link https://discord.com/developers/docs/components/reference#select-menu-object-select-option-structure
+ * @link https://docs.discord.com/developers/components/reference#select-menu-object-select-option-structure
  *
  * @since 10.46.0
  */

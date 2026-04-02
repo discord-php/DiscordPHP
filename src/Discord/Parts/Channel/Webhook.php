@@ -33,7 +33,7 @@ use function React\Promise\reject;
  *
  * Apps can also subscribe to webhook events (i.e. outgoing webhooks) when events happen in Discord, which is detailed in the Webhook Events documentation.
  *
- * @link https://discord.com/developers/docs/resources/webhook#webhook-resource
+ * @link https://docs.discord.com/developers/resources/webhook#webhook-resource
  *
  * @since 5.0.0
  *
@@ -91,7 +91,7 @@ class Webhook extends Part
     /**
      * Executes the webhook with an array of data.
      *
-     * @link https://discord.com/developers/docs/resources/webhook#execute-webhook
+     * @link https://docs.discord.com/developers/resources/webhook#execute-webhook
      *
      * @param MessageBuilder|array $data
      * @param array                $queryparams                    Query string params to add to the request.
@@ -222,7 +222,7 @@ class Webhook extends Part
     /**
      * Edits a previously-sent webhook message from the same token.
      *
-     * @link https://discord.com/developers/docs/resources/webhook#edit-webhook-message
+     * @link https://docs.discord.com/developers/resources/webhook#edit-webhook-message
      *
      * @param string         $message_id  ID of the message to update.
      * @param MessageBuilder $builder     The new message.
@@ -358,7 +358,7 @@ class Webhook extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/webhook#create-webhook-json-params
+     * @link https://docs.discord.com/developers/resources/webhook#create-webhook-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -372,7 +372,7 @@ class Webhook extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/webhook#modify-webhook-json-params
+     * @link https://docs.discord.com/developers/resources/webhook#modify-webhook-json-params
      */
     public function getUpdatableAttributes(): array
     {

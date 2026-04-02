@@ -24,7 +24,7 @@ use Discord\Parts\User\User;
  *
  * @see Discord\Parts\Guild\ScheduledEventUser
  *
- * @link https://discord.com/developers/docs/events/gateway-events.mdx#guild-scheduled-event-user-add-event-fields
+ * @link https://docs.discord.com/developers/events/gateway-events.mdx#guild-scheduled-event-user-add-event-fields
  *
  * @since 10.46.0
  *

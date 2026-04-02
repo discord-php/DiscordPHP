@@ -31,7 +31,7 @@ use function React\Promise\resolve;
 /**
  * A user is a general user that is not attached to a guild.
  *
- * @link https://discord.com/developers/docs/resources/user
+ * @link https://docs.discord.com/developers/resources/user
  *
  * @since 2.0.0
  *
@@ -153,7 +153,7 @@ class User extends Part implements Stringable
     /**
      * Gets the private channel for the user.
      *
-     * @link https://discord.com/developers/docs/resources/user#create-dm
+     * @link https://docs.discord.com/developers/resources/user#create-dm
      *
      * @return PromiseInterface<Channel>
      */
@@ -177,7 +177,7 @@ class User extends Part implements Stringable
      * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
      * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
      *
-     * @link https://discord.com/developers/docs/resources/channel#create-message
+     * @link https://docs.discord.com/developers/resources/channel#create-message
      *
      * @param MessageBuilder|string      $message          The message builder that should be converted into a message, or the string content of the message.
      * @param bool                       $tts              Whether the message is TTS.
@@ -197,7 +197,7 @@ class User extends Part implements Stringable
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @link https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
+     * @link https://docs.discord.com/developers/resources/channel#trigger-typing-indicator
      *
      * @throws \RuntimeException
      *

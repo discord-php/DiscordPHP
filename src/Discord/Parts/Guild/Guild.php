@@ -64,7 +64,7 @@ use function React\Promise\resolve;
  * A Guild is Discord's equivalent of a server. It contains all the Members,
  * Channels, Roles, Bans etc.
  *
- * @link https://discord.com/developers/docs/resources/guild
+ * @link https://docs.discord.com/developers/resources/guild
  *
  * @since 2.0.0 Refactored as Part
  * @since 1.0.0
@@ -370,7 +370,7 @@ class Guild extends Part
     /**
      * Attempts to save a channel to the Discord servers.
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-channel
      *
      * @since 10.25.2
      *
@@ -387,7 +387,7 @@ class Guild extends Part
     /**
      * Modifies the current member (no validation).
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-current-member-json-params
+     * @link https://docs.discord.com/developers/resources/guild#modify-current-member-json-params
      *
      * @since 10.30.0
      *
@@ -525,7 +525,7 @@ class Guild extends Part
     /**
      * Returns the incidents data attribute.
      *
-     * @link https://discord.com/developers/docs/resources/guild#incidents-data-object
+     * @link https://docs.discord.com/developers/resources/guild#incidents-data-object
      *
      * @return IncidentsData|null
      */
@@ -577,7 +577,7 @@ class Guild extends Part
     /**
      * Returns the channels invites.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-invites
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-invites
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
@@ -607,7 +607,7 @@ class Guild extends Part
     /**
      * Returns a list of guild webhook objects.
      *
-     * @link https://discord.com/developers/docs/resources/webhook#get-guild-webhooks
+     * @link https://docs.discord.com/developers/resources/webhook#get-guild-webhooks
      *
      * @since 10.46.0
      *
@@ -731,7 +731,7 @@ class Guild extends Part
      *
      * @since 10.26.0
      *
-     * @link https://discord.com/developers/docs/resources/voice#get-current-user-voice-state
+     * @link https://docs.discord.com/developers/resources/voice#get-current-user-voice-state
      *
      * @return PromiseInterface<VoiceStateUpdate>
      */
@@ -786,7 +786,7 @@ class Guild extends Part
      * - You must have the REQUEST_TO_SPEAK permission to request to speak. You can always clear your own request to speak.
      * - You are able to set request_to_speak_timestamp to any present or future time.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state
+     * @link https://docs.discord.com/developers/resources/guild#modify-current-user-voice-state
      *
      * @param array               $data
      * @param ?string|null        $data['channel_id']                 The ID of the channel the user is currently in.
@@ -817,7 +817,7 @@ class Guild extends Part
     /**
      * Returns the specified user's voice state in the guild.
      *
-     * @link https://discord.com/developers/docs/resources/voice#get-user-voice-state
+     * @link https://docs.discord.com/developers/resources/voice#get-user-voice-state
      *
      * @param Member|User|string $user The user or user ID.
      *
@@ -838,7 +838,7 @@ class Guild extends Part
      * - When unsuppressed, non-bot users will have their request_to_speak_timestamp set to the current time. Bot users will not.
      * - When suppressed, the user will have their request_to_speak_timestamp removed.
      *
-     * @link https://discord.com/developers/docs/resources/voice#modify-user-voice-state
+     * @link https://docs.discord.com/developers/resources/voice#modify-user-voice-state
      *
      * @param array        $data
      * @param ?string|null $data['channel_id'] The ID of the channel the user is currently in.
@@ -860,7 +860,7 @@ class Guild extends Part
     /**
      * Creates a role.
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-role
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-role
      *
      * @param array       $data   The data to fill the role with.
      * @param string|null $reason Reason for Audit Log.
@@ -883,7 +883,7 @@ class Guild extends Part
     /**
      * Creates an Emoji for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/emoji#create-guild-emoji
+     * @link https://docs.discord.com/developers/resources/emoji#create-guild-emoji
      *
      * @param array       $options          An array of options.
      * @param string      $options['name']  Name of the emoji.
@@ -957,7 +957,7 @@ class Guild extends Part
     /**
      * Creates a Sticker for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/sticker#create-guild-sticker
+     * @link https://docs.discord.com/developers/resources/sticker#create-guild-sticker
      *
      * @param array       $options                An array of options.
      * @param string      $options['name']        Name of the sticker.
@@ -1137,7 +1137,7 @@ class Guild extends Part
     /**
      * Returns an audit log object for the query.
      *
-     * @link https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log
+     * @link https://docs.discord.com/developers/resources/audit-log#get-guild-audit-log
      *
      * @param array                   $options                An array of options.
      * @param string|Member|User|null $options['user_id']     filter the log for actions made by a user
@@ -1195,7 +1195,7 @@ class Guild extends Part
     /**
      * Updates the positions of a list of given roles.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-positions
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-role-positions
      *
      * @param ExCollectionInterface|array $roles Associative array where the LHS key is the position,
      *                                           and the RHS value is a `Role` object or a string ID,
@@ -1248,7 +1248,7 @@ class Guild extends Part
      * Returns a list of guild member objects whose username or nickname starts
      * with a provided string.
      *
-     * @link https://discord.com/developers/docs/resources/guild#search-guild-members
+     * @link https://docs.discord.com/developers/resources/guild#search-guild-members
      *
      * @param array       $options          An array of options. All fields are optional.
      * @param string|null $options['query'] Query string to match username(s) and nickname(s) against
@@ -1294,7 +1294,7 @@ class Guild extends Part
     /**
      * Returns the number of members that would be removed in a prune operation.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-prune-count
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-prune-count
      *
      * @param array                $options                  An array of options.
      * @param int|null             $options['days']          Number of days to count prune for (1-30), defaults to 7.
@@ -1347,7 +1347,7 @@ class Guild extends Part
      * For large guilds it's recommended to set the `compute_prune_count` option
      * to `false`, forcing 'pruned' to null.
      *
-     * @link https://discord.com/developers/docs/resources/guild#begin-guild-prune
+     * @link https://docs.discord.com/developers/resources/guild#begin-guild-prune
      *
      * @param array                $options                        An array of options.
      * @param int|null             $options['days']                Number of days to count prune for (1-30), defaults to 7.
@@ -1403,7 +1403,7 @@ class Guild extends Part
     /**
      * Get the Welcome Screen for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-welcome-screen
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-welcome-screen
      *
      * @param bool $fresh Whether we should skip checking the cache.
      *
@@ -1445,7 +1445,7 @@ class Guild extends Part
     /**
      * Modify the guild's Welcome Screen. Requires the MANAGE_GUILD permission.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-welcome-screen
      *
      * @param array                 $options                     An array of options. All fields are optional.
      * @param bool|null             $options['enabled']          Whether the welcome screen is enabled.
@@ -1497,7 +1497,7 @@ class Guild extends Part
      *
      * @since 10.46.0
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-onboarding
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-onboarding
      *
      * @return PromiseInterface<Onboarding>
      */
@@ -1515,7 +1515,7 @@ class Guild extends Part
      *
      * @since 10.46.0
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-onboarding
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-onboarding
      *
      * @param array       $options An array of options: 'prompts' (array), 'default_channel_ids' (array), 'enabled' (bool), 'mode' (string)
      * @param string|null $reason  Reason for Audit Log.
@@ -1565,7 +1565,7 @@ class Guild extends Part
     /**
      * Fetch the Widget Settings for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-widget-settings
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-widget-settings
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
@@ -1591,7 +1591,7 @@ class Guild extends Part
      * Modify a guild widget settings object for the guild. All attributes may
      * be passed in with JSON and modified. Requires the MANAGE_GUILD permission.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-widget
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-widget
      *
      * @param array   $options An array of options.
      *                         enabled => whether the widget is enabled
@@ -1636,7 +1636,7 @@ class Guild extends Part
     /**
      * Get the Widget for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-widget
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-widget
      *
      * @return PromiseInterface<Widget>
      */
@@ -1679,7 +1679,7 @@ class Guild extends Part
     /**
      * Modify the Guild `mfa_level`, requires guild ownership.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-mfa-level
      *
      * @param int         $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
      * @param string|null $reason Reason for Audit Log.
@@ -1703,8 +1703,8 @@ class Guild extends Part
     /**
      * Modify the guild feature.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild
-     * @link https://discord.com/developers/docs/resources/guild#guild-object-mutable-guild-features
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild
+     * @link https://docs.discord.com/developers/resources/guild#guild-object-mutable-guild-features
      *
      * @param bool[]      $features Array of features to set/unset, e.g. `['COMMUNITY' => true, 'INVITES_DISABLED' => false]`.
      * @param string|null $reason   Reason for Audit Log.
@@ -1762,7 +1762,7 @@ class Guild extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-json-params
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -1785,7 +1785,7 @@ class Guild extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-json-params
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-json-params
      */
     public function getUpdatableAttributes(): array
     {

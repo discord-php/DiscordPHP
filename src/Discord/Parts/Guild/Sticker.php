@@ -26,7 +26,7 @@ use function React\Promise\reject;
 /**
  * A sticker that can be sent in a Discord message.
  *
- * @link https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-structure
+ * @link https://docs.discord.com/developers/resources/sticker#sticker-object-sticker-structure
  *
  * @since 7.0.0 Namespace moved from Channel to Guild
  * @since 6.0.0
@@ -168,7 +168,7 @@ class Sticker extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/sticker#modify-guild-sticker-json-params
+     * @link https://docs.discord.com/developers/resources/sticker#modify-guild-sticker-json-params
      */
     public function getUpdatableAttributes(): array
     {

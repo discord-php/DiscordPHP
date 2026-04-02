@@ -21,7 +21,7 @@ namespace Discord\Builders\Components;
  * Components are a field on the message object and modal.
  * You can use them when creating messages or responding to an interaction, like an application command.
  *
- * @link https://discord.com/developers/docs/components/reference#component-object
+ * @link https://docs.discord.com/developers/components/reference#component-object
  *
  * @since 10.9.0
  */

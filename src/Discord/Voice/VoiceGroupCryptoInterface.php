@@ -19,7 +19,7 @@ namespace Discord\Voice;
  *
  * @author Valithor Obsidion <valithor@valgorithms.com>
  *
- * @link https://discord.com/developers/docs/topics/voice-connections#transport-encryption-and-sending-voice
+ * @link https://docs.discord.com/developers/topics/voice-connections#transport-encryption-and-sending-voice
  *
  * @since 10.41.0
  */

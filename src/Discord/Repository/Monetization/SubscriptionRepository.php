@@ -48,7 +48,7 @@ class SubscriptionRepository extends AbstractRepository
     /**
      * Returns all subscriptions for a given SKU, optionally filtered by user.
      *
-     * @link https://discord.com/developers/docs/resources/subscription#list-sku-subscriptions
+     * @link https://docs.discord.com/developers/resources/subscription#list-sku-subscriptions
      *
      * @param array                       $options
      * @param Member|User|string|int|null $options['user_id'] User ID to filter subscriptions by. Required except for OAuth queries.

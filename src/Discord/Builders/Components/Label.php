@@ -21,7 +21,7 @@ use function Discord\poly_strlen;
  *
  * The description may display above or below the component depending on the platform.
  *
- * @link https://discord.com/developers/docs/components/reference#label
+ * @link https://docs.discord.com/developers/components/reference#label
  *
  * @since 10.19.0
  *
@@ -125,7 +125,7 @@ class Label extends Layout
 
     /** Sets The component within the label.
      *
-     * @link https://discord.com/developers/docs/components/reference#label-label-child-components
+     * @link https://docs.discord.com/developers/components/reference#label-label-child-components
      *
      * @param FileUpload|SelectMenu|TextInput $component The component within the label.
      *

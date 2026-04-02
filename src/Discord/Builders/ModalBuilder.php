@@ -24,8 +24,8 @@ use function Discord\poly_strlen;
 /**
  * Helper class used to build Modals.
  *
- * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-modal
- * @link https://discord.com/developers/docs/components/using-modal-components
+ * @link https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-response-object-modal
+ * @link https://docs.discord.com/developers/components/using-modal-components
  *
  * @since 10.19.0
  *

@@ -89,7 +89,7 @@ class ThreadRepository extends AbstractRepository
     /**
      * Fetches all the active threads on the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#list-active-threads
+     * @link https://docs.discord.com/developers/resources/channel#list-active-threads
      *
      * @return PromiseInterface<ExCollectionInterface<Thread[]>>
      */
@@ -102,9 +102,9 @@ class ThreadRepository extends AbstractRepository
     /**
      * Fetches archived threads based on a set of options.
      *
-     * @link https://discord.com/developers/docs/resources/channel#list-public-archived-threads
-     * @link https://discord.com/developers/docs/resources/channel#list-private-archived-threads
-     * @link https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads
+     * @link https://docs.discord.com/developers/resources/channel#list-public-archived-threads
+     * @link https://docs.discord.com/developers/resources/channel#list-private-archived-threads
+     * @link https://docs.discord.com/developers/resources/channel#list-joined-private-archived-threads
      *
      * @param bool               $private Whether we are fetching archived private threads.
      * @param bool               $joined  Whether we are fetching private threads that we have joined. Note `private` cannot be false while `joined` is true.

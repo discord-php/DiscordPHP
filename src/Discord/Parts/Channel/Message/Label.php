@@ -19,7 +19,7 @@ namespace Discord\Parts\Channel\Message;
  *
  * The description may display above or below the component depending on the platform.
  *
- * @link https://discord.com/developers/docs/components/reference#label
+ * @link https://docs.discord.com/developers/components/reference#label
  *
  * @since 10.19.0
  *

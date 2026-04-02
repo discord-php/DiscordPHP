@@ -23,7 +23,7 @@ use Discord\Helpers\ExCollectionInterface;
  *
  * User Selects must be placed inside an Action Row and are only available in messages. An Action Row can contain only one select menu and cannot contain buttons if it has a select menu.
  *
- * @link https://discord.com/developers/docs/components/reference#user-select
+ * @link https://docs.discord.com/developers/components/reference#user-select
  *
  * @since 10.11.0
  *

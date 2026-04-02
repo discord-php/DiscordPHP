@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Guild Trait Object.
  *
- * @link https://discord.com/developers/docs/resources/guild#guild-trait-object
+ * @link https://docs.discord.com/developers/resources/guild#guild-trait-object
  *
  * @since 10.22.0
  *

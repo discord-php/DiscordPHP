@@ -17,7 +17,7 @@ namespace Discord\Parts\Channel\Poll;
 /**
  * A poll create request object that can be attached to a message.
  *
- * @link https://discord.com/developers/docs/resources/poll#poll-create-request-object-poll-create-request-object-structure
+ * @link https://docs.discord.com/developers/resources/poll#poll-create-request-object-poll-create-request-object-structure
  *
  * @since 10.0.0
  * @since 10.28.0 Alias for `PollCreateRequest`.

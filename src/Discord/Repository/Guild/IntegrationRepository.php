@@ -57,7 +57,7 @@ class IntegrationRepository extends AbstractRepository
      *
      * Fires Guild Integrations Update and Integration Update Gateway events.
      *
-     * @link https://discord.com/developers/docs/resources/guild#sync-guild-integration
+     * @link https://docs.discord.com/developers/resources/guild#sync-guild-integration
      *
      * @param string $integrationId
      *

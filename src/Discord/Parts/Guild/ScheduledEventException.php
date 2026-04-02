@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * A guild scheduled event exception represents a skipped or rescheduled recurrence for the scheduled event's recurrence rule. In the client, scheduled event exceptions are commonly known as "canceled events" or "re-scheduled" events.
  *
- * @link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-exception-object
+ * @link https://docs.discord.com/developers/resources/guild-scheduled-event#guild-scheduled-event-exception-object
  *
  * @since 10.46.0
  *

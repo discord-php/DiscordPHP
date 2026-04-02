@@ -21,7 +21,7 @@ use Discord\Helpers\ExCollectionInterface;
  *
  * Media Galleries are only available in messages.
  *
- * @link https://discord.com/developers/docs/components/reference#media-gallery
+ * @link https://docs.discord.com/developers/components/reference#media-gallery
  *
  * @since 10.11.0
  *

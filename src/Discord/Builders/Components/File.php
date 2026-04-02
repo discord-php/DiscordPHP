@@ -19,7 +19,7 @@ use Discord\Parts\Channel\Attachment;
 /**
  * File components allow you to send a file. You can also spoiler it.
  *
- * @link https://discord.com/developers/docs/components/reference#file
+ * @link https://docs.discord.com/developers/components/reference#file
  *
  * @since 10.5.0
  *

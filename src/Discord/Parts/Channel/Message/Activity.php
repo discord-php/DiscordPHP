@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Sent with Rich Presence-related chat embeds.
  *
- * @link https://discord.com/developers/docs/resources/message#message-object-message-activity-structure
+ * @link https://docs.discord.com/developers/resources/message#message-object-message-activity-structure
  *
  * @since 10.22.0
  *

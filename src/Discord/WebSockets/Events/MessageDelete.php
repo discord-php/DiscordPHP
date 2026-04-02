@@ -21,7 +21,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#message-delete
+ * @link https://docs.discord.com/developers/topics/gateway-events#message-delete
  *
  * @since 2.1.3
  */

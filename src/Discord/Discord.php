@@ -1091,7 +1091,7 @@ class Discord
     /**
      * Used to trigger the initial handshake with the gateway.
      *
-     * @link https://discord.com/developers/docs/events/gateway#identifying
+     * @link https://docs.discord.com/developers/events/gateway#identifying
      */
     public function identify(): void
     {
@@ -1147,8 +1147,8 @@ class Discord
     /**
      * Used to replay missed events when a disconnected client resumes.
      *
-     * @link https://discord.com/developers/docs/events/gateway-events#resume
-     * @link https://discord.com/developers/docs/events/gateway#resuming
+     * @link https://docs.discord.com/developers/events/gateway-events#resume
+     * @link https://docs.discord.com/developers/events/gateway#resuming
      *
      * @since 10.19.0
      */
@@ -1203,7 +1203,7 @@ class Discord
      *
      * @see self::handleGuildMembersChunk()
      *
-     * @link https://discord.com/developers/docs/events/gateway-events#request-guild-members
+     * @link https://docs.discord.com/developers/events/gateway-events#request-guild-members
      *
      * @param Guild|string       $guild_id             ID of the guild or Guild object. Required.
      * @param array              $options
@@ -1266,7 +1266,7 @@ class Discord
      *
      * @see \Discord\WebSockets\Events\SoundboardSounds
      *
-     * @link https://discord.com/developers/docs/events/gateway-events#request-soundboard-sounds
+     * @link https://docs.discord.com/developers/events/gateway-events#request-soundboard-sounds
      *
      * @param array $guildIds Array of guild IDs.
      */
@@ -1285,7 +1285,7 @@ class Discord
     /**
      * Sent when a client wants to join, move, or disconnect from a voice channel.
      *
-     * @link https://discord.com/developers/docs/events/gateway-events#update-voice-state
+     * @link https://docs.discord.com/developers/events/gateway-events#update-voice-state
      *
      * @param Guild|string        $guild_id   ID of the guild.
      * @param Channel|string|null $channel_id ID of the voice channel to join, or null to disconnect.
@@ -1320,7 +1320,7 @@ class Discord
     /**
      * Sent by the client to indicate a presence or status update.
      *
-     * @link https://discord.com/developers/docs/events/gateway-events#update-presence
+     * @link https://docs.discord.com/developers/events/gateway-events#update-presence
      *
      * @param Activity|null $activity The current client activity, or null.
      *                                Note: Both name and state must be set to use custom, and the only valid fields are `name`, `state`, `type` and `url`.

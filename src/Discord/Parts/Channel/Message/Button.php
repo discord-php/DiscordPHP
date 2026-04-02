@@ -22,7 +22,7 @@ use Discord\Parts\Guild\Emoji;
  *
  * Buttons must be placed inside an Action Row or a Section's accessory field.
  *
- * @link https://discord.com/developers/docs/components/reference#button
+ * @link https://docs.discord.com/developers/components/reference#button
  *
  * @since 10.11.0
  *

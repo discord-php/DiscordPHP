@@ -19,7 +19,7 @@ namespace Discord\Parts\Channel\Message;
  *
  * Containers are only available in messages.
  *
- * @link https://discord.com/developers/docs/components/reference#container
+ * @link https://docs.discord.com/developers/components/reference#container
  *
  * @since 10.11.0
  *

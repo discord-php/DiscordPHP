@@ -21,7 +21,7 @@ use Discord\Parts\Part;
  *
  * At most one of `emoji_id` and `emoji_name` may be set to a non-null value.
  *
- * @link https://discord.com/developers/docs/resources/channel#forum-tag-object
+ * @link https://docs.discord.com/developers/resources/channel#forum-tag-object
  *
  * @since 7.4.0
  *

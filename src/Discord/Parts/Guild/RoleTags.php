@@ -22,7 +22,7 @@ use Stringable;
  *
  * Tags with type null represent booleans. They will be present and set to null if they are "true", and will be not present if they are "false".
  *
- * @link https://discord.com/developers/docs/topics/permissions#role-object-role-tags-structure
+ * @link https://docs.discord.com/developers/topics/permissions#role-object-role-tags-structure
  *
  * @since 10.19.0
  *

@@ -21,7 +21,7 @@ use Discord\Parts\Part;
  *
  * No date is actually sent with this payload, but having a Part makes it easier to log and handle.
  *
- * @link https://discord.com/developers/docs/topics/voice-connections#resuming-voice-connection-example-resumed-payload
+ * @link https://docs.discord.com/developers/topics/voice-connections#resuming-voice-connection-example-resumed-payload
  *
  * @since 10.41.0
  */

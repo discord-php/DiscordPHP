@@ -22,7 +22,7 @@ use Discord\Parts\User\User;
  * Sent on the message object when the message is a response to an Interaction
  * without an existing message.
  *
- * @link https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object
+ * @link https://docs.discord.com/developers/interactions/receiving-and-responding#message-interaction-object
  *
  * @since 7.1.0
  *

@@ -20,7 +20,7 @@ use Discord\Builders\ComponentsTrait;
  * Containers are a new way to group components together.
  * You can also specify an accent color (similar to embeds) and spoiler it.
  *
- * @link https://discord.com/developers/docs/components/reference#container
+ * @link https://docs.discord.com/developers/components/reference#container
  *
  * @since 10.5.0
  *

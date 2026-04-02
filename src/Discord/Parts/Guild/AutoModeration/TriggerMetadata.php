@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Additional data used to determine whether a rule should be triggered. Different fields are relevant based on the value of trigger_type.
  *
- * @link https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-metadata
+ * @link https://docs.discord.com/developers/resources/auto-moderation#auto-moderation-rule-object-trigger-metadata
  *
  * @since 10.24.0
  *

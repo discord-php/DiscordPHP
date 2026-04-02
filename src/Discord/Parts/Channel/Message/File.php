@@ -19,7 +19,7 @@ namespace Discord\Parts\Channel\Message;
  *
  * Files are only available in messages.
  *
- * @link https://discord.com/developers/docs/components/reference#text-display
+ * @link https://docs.discord.com/developers/components/reference#text-display
  *
  * @since 10.11.0
  *

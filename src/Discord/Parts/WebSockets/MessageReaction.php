@@ -227,8 +227,8 @@ class MessageReaction extends Part
      *
      * @see Message::deleteReaction()
      *
-     * @link https://discord.com/developers/docs/resources/channel#delete-own-reaction
-     * @link https://discord.com/developers/docs/resources/channel#delete-user-reaction
+     * @link https://docs.discord.com/developers/resources/channel#delete-own-reaction
+     * @link https://docs.discord.com/developers/resources/channel#delete-user-reaction
      */
     public function delete(?int $type = null): PromiseInterface
     {

@@ -136,7 +136,7 @@ class Client extends Part
      * Returns a list of connection objects.
      * Requires the connections OAuth2 scope.
      *
-     * @link https://discord.com/developers/docs/resources/user#get-current-user-guild-member
+     * @link https://docs.discord.com/developers/resources/user#get-current-user-guild-member
      *
      * @return PromiseInterface<ExCollectionInterface<Connection>|Connection[]>
      *
@@ -240,7 +240,7 @@ class Client extends Part
     /**
      * Updates the current application associated with the bot user.
      *
-     * @link https://discord.com/developers/docs/resources/application#edit-current-application
+     * @link https://docs.discord.com/developers/resources/application#edit-current-application
      *
      * @param array $options Array of fields to update. All fields are optional.
      *
@@ -334,7 +334,7 @@ class Client extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/user#modify-current-user-json-params
+     * @link https://docs.discord.com/developers/resources/user#modify-current-user-json-params
      */
     public function getUpdatableAttributes(): array
     {

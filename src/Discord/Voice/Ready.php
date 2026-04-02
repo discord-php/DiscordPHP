@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Represents the ready data.
  *
- * @link https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-websocket-connection-example-voice-ready-payload
+ * @link https://docs.discord.com/developers/topics/voice-connections#establishing-a-voice-websocket-connection-example-voice-ready-payload
  *
  * @since 10.41.0
  *

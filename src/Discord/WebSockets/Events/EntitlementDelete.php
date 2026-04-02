@@ -18,7 +18,7 @@ use Discord\Parts\Monetization\Entitlement;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#entitlement-delete
+ * @link https://docs.discord.com/developers/topics/gateway-events#entitlement-delete
  *
  * @since 10.15.0
  */

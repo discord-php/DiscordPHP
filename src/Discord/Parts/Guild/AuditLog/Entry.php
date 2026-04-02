@@ -23,7 +23,7 @@ use Discord\Parts\User\User;
  *
  * @since 5.1.0
  *
- * @link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object
+ * @link https://docs.discord.com/developers/resources/audit-log#audit-log-entry-object
  *
  * @property      ?string               $target_id   ID of the affected entity (webhook, user, role, etc.).
  * @property      ExCollectionInterface $changes     Changes made to the target_id.
@@ -208,7 +208,7 @@ class Entry extends Part
     /**
      * Returns a collection of changes.
      *
-     * @link https://discord.com/developers/docs/resources/audit-log#audit-log-change-object
+     * @link https://docs.discord.com/developers/resources/audit-log#audit-log-change-object
      *
      * @return ExCollectionInterface
      */

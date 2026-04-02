@@ -27,7 +27,7 @@ use function React\Promise\reject;
  * A role defines permissions for the guild. Members can be added to the role.
  * The role belongs to a guild.
  *
- * @link https://discord.com/developers/docs/topics/permissions#role-object
+ * @link https://docs.discord.com/developers/topics/permissions#role-object
  *
  * @since 2.0.0
  *
@@ -229,7 +229,7 @@ class Role extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-role-json-params
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-role-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -247,7 +247,7 @@ class Role extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-json-params
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-role-json-params
      */
     public function getUpdatableAttributes(): array
     {

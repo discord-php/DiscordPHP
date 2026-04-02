@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Application Command Permissions Class.
  *
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure
+ * @link https://docs.discord.com/developers/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure
  *
  * @since 7.0.0
  *

@@ -22,7 +22,7 @@ use function Discord\poly_strlen;
 /**
  * Choice represents a choice that can be given to a command.
  *
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure
+ * @link https://docs.discord.com/developers/interactions/application-commands#application-command-object-application-command-option-choice-structure
  *
  * @since 7.0.0
  *
@@ -81,7 +81,7 @@ class Choice extends Part
     /**
      * Sets the name of the choice in another language.
      *
-     * @link https://discord.com/developers/docs/reference#locales
+     * @link https://docs.discord.com/developers/reference#locales
      *
      * @param string      $locale Discord locale code.
      * @param string|null $name   Localized name of the choice.

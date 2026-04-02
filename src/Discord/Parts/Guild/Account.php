@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * integration account information.
  *
- * @link https://discord.com/developers/docs/resources/guild#integration-account-object
+ * @link https://docs.discord.com/developers/resources/guild#integration-account-object
  *
  * @since 10.24.0
  *

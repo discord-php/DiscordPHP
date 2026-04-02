@@ -22,7 +22,7 @@ use Discord\Helpers\ExCollectionInterface;
  * On desktop, clicking on a select menu opens a dropdown-style UI.
  * On mobile, tapping a select menu opens up a half-sheet with the options.
  *
- * @link https://discord.com/developers/docs/components/reference#select-menus
+ * @link https://docs.discord.com/developers/components/reference#select-menus
  *
  * @since 10.11.0
  */

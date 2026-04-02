@@ -23,7 +23,7 @@ use Discord\Parts\Part;
  *
  * Note: The const declared here are the bit position, not the bitwise value.
  *
- * @link https://discord.com/developers/docs/topics/permissions
+ * @link https://docs.discord.com/developers/topics/permissions
  *
  * @since 10.19.0 Added constants for all permissions.
  * @since 2.1.3 Namespace moved from Guild to Permissions
@@ -335,7 +335,7 @@ abstract class Permission extends Part
     /**
      * Gets the bitwise attribute of the permission.
      *
-     * @link https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
+     * @link https://docs.discord.com/developers/topics/permissions#permissions-bitwise-permission-flags
      *
      * @return int|string
      */
@@ -365,7 +365,7 @@ abstract class Permission extends Part
     /**
      * Sets the bitwise attribute of the permission.
      *
-     * @link https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
+     * @link https://docs.discord.com/developers/topics/permissions#permissions-bitwise-permission-flags
      *
      * @param int|string $bitwise
      */

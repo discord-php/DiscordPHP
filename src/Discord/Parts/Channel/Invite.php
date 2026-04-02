@@ -36,7 +36,7 @@ use function React\Promise\reject;
 /**
  * An invite to a Channel and Guild.
  *
- * @link https://discord.com/developers/docs/resources/invite
+ * @link https://docs.discord.com/developers/resources/invite
  *
  * @since 7.0.0 Namespace moved from Guild to Channel
  * @since 2.0.0

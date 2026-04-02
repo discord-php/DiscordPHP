@@ -19,7 +19,7 @@ namespace Discord\Parts\Channel\Message;
  *
  * Separators are only available in messages.
  *
- * @link https://discord.com/developers/docs/components/reference#user-select
+ * @link https://docs.discord.com/developers/components/reference#user-select
  *
  * @since 10.11.0
  *

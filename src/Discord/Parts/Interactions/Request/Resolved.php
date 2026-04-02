@@ -29,7 +29,7 @@ use Discord\Parts\User\User;
 /**
  * Represents the data associated with an interaction.
  *
- * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure
+ * @link https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-resolved-data-structure
  *
  * @since 7.0.0
  *

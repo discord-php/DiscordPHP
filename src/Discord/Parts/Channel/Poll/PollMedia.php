@@ -20,7 +20,7 @@ use Discord\Parts\Guild\Emoji;
 /**
  * The poll media object is a common object that backs both the question and answers.
  *
- * @link https://discord.com/developers/docs/resources/poll#poll-media-object
+ * @link https://docs.discord.com/developers/resources/poll#poll-media-object
  *
  * @since 10.0.0
  *

@@ -38,7 +38,7 @@ use function React\Promise\all;
  * Otherwise, if a guild has over `large_threshold` members (configurable in Gateway Identify), it will only send members who are online, have a role, have a nickname, or are in a voice channel.
  * Otherwise (if it has under `large_threshold` members), it will send all members.
  *
- * @link https://discord.com/developers/docs/events/gateway-events#guild-create
+ * @link https://docs.discord.com/developers/events/gateway-events#guild-create
  *
  * @since 2.1.3
  */

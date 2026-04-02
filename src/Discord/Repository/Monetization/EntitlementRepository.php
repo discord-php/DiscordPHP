@@ -63,7 +63,7 @@ class EntitlementRepository extends AbstractRepository
     /**
      * For One-Time Purchase consumable SKUs, marks a given entitlement for the user as consumed. The entitlement will have consumed: true when using List Entitlements.
      *
-     * @link https://discord.com/developers/docs/resources/entitlement#consume-an-entitlement
+     * @link https://docs.discord.com/developers/resources/entitlement#consume-an-entitlement
      *
      * @param Entitlement|string $entitlement
      *
@@ -84,7 +84,7 @@ class EntitlementRepository extends AbstractRepository
     /**
      * Returns all entitlements for a given app, active and expired.
      *
-     * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
+     * @link https://docs.discord.com/developers/resources/channel#get-channel-messages
      *
      * @param array                       $options                    Array of options.
      * @param Application|string|int|null $options['application_id']  Application ID to look up entitlements for. Defaults to the bot's application ID.
@@ -168,7 +168,7 @@ class EntitlementRepository extends AbstractRepository
      *
      * After creating a test entitlement, you'll need to reload your Discord client. After doing so, you'll see that your server or user now has premium access.
      *
-     * @link https://discord.com/developers/docs/resources/entitlement#create-test-entitlement
+     * @link https://docs.discord.com/developers/resources/entitlement#create-test-entitlement
      *
      * @param array  $data
      * @param string $data['sku_id']     ID of the SKU to grant the entitlement to.
@@ -201,7 +201,7 @@ class EntitlementRepository extends AbstractRepository
     /**
      * Deletes a currently-active test entitlement. Discord will act as though that user or guild no longer has entitlement to your premium offering.
      *
-     * @link https://discord.com/developers/docs/resources/entitlement#delete-test-entitlement
+     * @link https://docs.discord.com/developers/resources/entitlement#delete-test-entitlement
      *
      * @param Entitlement|string $entitlement The entitlement or entitlement ID to delete.
      *

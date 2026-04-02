@@ -18,7 +18,7 @@ use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\Data\ChannelPinsUpdateData;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#channel-pins-update
+ * @link https://docs.discord.com/developers/topics/gateway-events#channel-pins-update
  *
  * @since 10.47.2 Returns a `ChannelPinsUpdateData` part instead of a generic object.
  * @since 4.0.4

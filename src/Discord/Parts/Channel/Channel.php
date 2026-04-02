@@ -49,7 +49,7 @@ use function React\Promise\resolve;
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
  *
- * @link https://discord.com/developers/docs/resources/channel#channel-object
+ * @link https://docs.discord.com/developers/resources/channel#channel-object
  *
  * @todo Class will be abstract and deprecated for userland in v11.
  *
@@ -289,7 +289,7 @@ class Channel extends Part implements Stringable
     /**
      * Sets permissions in a channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#edit-channel-permissions
+     * @link https://docs.discord.com/developers/resources/channel#edit-channel-permissions
      *
      * @param Part        $part   A role or member.
      * @param array       $allow  An array of permissions to allow.
@@ -330,7 +330,7 @@ class Channel extends Part implements Stringable
     /**
      * Sets an overwrite to the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#edit-channel-permissions
+     * @link https://docs.discord.com/developers/resources/channel#edit-channel-permissions
      *
      * @param Part        $part      A role or member.
      * @param Overwrite   $overwrite An overwrite object.
@@ -703,7 +703,7 @@ class Channel extends Part implements Stringable
     /**
      * Creates an invite for the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#create-channel-invite
+     * @link https://docs.discord.com/developers/resources/channel#create-channel-invite
      *
      * @param array       $options                          An array of options. All fields are optional.
      * @param int         $options['max_age']               The time that the invite will be valid in seconds.
@@ -783,7 +783,7 @@ class Channel extends Part implements Stringable
     /**
      * Deletes a given number of messages, in order of time sent.
      *
-     * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
+     * @link https://docs.discord.com/developers/resources/channel#bulk-delete-messages
      *
      * @param int         $value
      * @param string|null $reason Reason for Audit Log (only for bulk messages).
@@ -809,7 +809,7 @@ class Channel extends Part implements Stringable
      * Deleting a category does not delete its child channels; they will have their parent_id removed and a Channel Update Gateway event will fire for each of them.
      * For Community guilds, the Rules or Guidelines channel and the Community Updates channel cannot be deleted.
      *
-     * @link https://discord.com/developers/docs/resources/channel#deleteclose-channel
+     * @link https://docs.discord.com/developers/resources/channel#deleteclose-channel
      *
      * @param string|null $reason Reason for Audit Log.
      *
@@ -908,8 +908,8 @@ class Channel extends Part implements Stringable
     /**
      * Starts a thread in the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message
-     * @link https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
+     * @link https://docs.discord.com/developers/resources/channel#start-thread-without-message
+     * @link https://docs.discord.com/developers/resources/channel#start-thread-in-forum-channel
      *
      * @param array          $options                          Thread params.
      * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in an announcement channel. Ignored in forum channel.
@@ -1084,7 +1084,7 @@ class Channel extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-channel-json-params
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-channel-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -1173,7 +1173,7 @@ class Channel extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-guild-channel
+     * @link https://docs.discord.com/developers/resources/channel#modify-channel-json-params-guild-channel
      */
     public function getUpdatableAttributes(): array
     {

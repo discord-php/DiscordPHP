@@ -37,7 +37,7 @@ use function React\Promise\reject;
 /**
  * Represents a Discord thread.
  *
- * @link https://discord.com/developers/docs/topics/threads
+ * @link https://docs.discord.com/developers/topics/threads
  *
  * @since 7.0.0
  *
@@ -303,7 +303,7 @@ class Thread extends Part implements Stringable
     /**
      * Attempts to join the thread.
      *
-     * @link https://discord.com/developers/docs/resources/channel#join-thread
+     * @link https://docs.discord.com/developers/resources/channel#join-thread
      *
      * @return PromiseInterface
      */
@@ -315,7 +315,7 @@ class Thread extends Part implements Stringable
     /**
      * Attempts to add a user to the thread.
      *
-     * @link https://discord.com/developers/docs/resources/channel#add-thread-member
+     * @link https://docs.discord.com/developers/resources/channel#add-thread-member
      *
      * @param User|Member|string $user User to add. Can be one of the user objects or a user ID.
      *
@@ -333,7 +333,7 @@ class Thread extends Part implements Stringable
     /**
      * Attempts to leave the thread.
      *
-     * @link https://discord.com/developers/docs/resources/channel#leave-thread
+     * @link https://docs.discord.com/developers/resources/channel#leave-thread
      *
      * @return PromiseInterface
      */
@@ -345,7 +345,7 @@ class Thread extends Part implements Stringable
     /**
      * Attempts to remove a user from the thread.
      *
-     * @link https://discord.com/developers/docs/resources/channel#remove-thread-member
+     * @link https://docs.discord.com/developers/resources/channel#remove-thread-member
      *
      * @param User|Member|ThreadMember|string $user User to remove. Can be one of the user objects or a user ID.
      *
@@ -455,7 +455,7 @@ class Thread extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message-json-params
+     * @link https://docs.discord.com/developers/resources/channel#start-thread-without-message-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -481,7 +481,7 @@ class Thread extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-thread
+     * @link https://docs.discord.com/developers/resources/channel#modify-channel-json-params-thread
      */
     public function getUpdatableAttributes(): array
     {

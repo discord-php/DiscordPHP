@@ -26,7 +26,7 @@ use Stringable;
 /**
  * Represents a command registered on the Discord servers.
  *
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
+ * @link https://docs.discord.com/developers/interactions/application-commands#application-command-object-application-command-structure
  *
  * @since 7.0.0
  *
@@ -117,8 +117,8 @@ class Command extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command-json-params
-     * @link https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command-json-params
+     * @link https://docs.discord.com/developers/interactions/application-commands#create-global-application-command-json-params
+     * @link https://docs.discord.com/developers/interactions/application-commands#create-guild-application-command-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -149,7 +149,7 @@ class Command extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command-json-params
+     * @link https://docs.discord.com/developers/interactions/application-commands#edit-global-application-command-json-params
      */
     public function getUpdatableAttributes(): array
     {

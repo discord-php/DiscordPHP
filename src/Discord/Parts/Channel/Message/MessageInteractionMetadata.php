@@ -25,7 +25,7 @@ use Discord\Parts\User\User;
  *
  * @since 10.11.2
  *
- * @link https://discord.com/developers/docs/resources/message#message-interaction-metadata-object
+ * @link https://docs.discord.com/developers/resources/message#message-interaction-metadata-object
  *
  * @property string                          $id                              ID of the interaction.
  * @property int                             $type                            Type of interaction.

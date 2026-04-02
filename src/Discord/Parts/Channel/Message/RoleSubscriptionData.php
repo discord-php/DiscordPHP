@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Data of the role subscription purchase or renewal that prompted this ROLE_SUBSCRIPTION_PURCHASE message.
  *
- * @link https://discord.com/developers/docs/resources/message#role-subscription-data-object
+ * @link https://docs.discord.com/developers/resources/message#role-subscription-data-object
  *
  * @since 10.22.0
  *

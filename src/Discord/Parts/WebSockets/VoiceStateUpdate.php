@@ -29,7 +29,7 @@ use function React\Promise\reject;
 /**
  * Notifies the client of voice state updates about users.
  *
- * @link https://discord.com/developers/docs/resources/voice#voice-state-object
+ * @link https://docs.discord.com/developers/resources/voice#voice-state-object
  *
  * @since 3.2.1
  *

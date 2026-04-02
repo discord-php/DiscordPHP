@@ -30,7 +30,7 @@ use function React\Promise\reject;
 /**
  * The OAuth2 application of the bot.
  *
- * @link https://discord.com/developers/docs/resources/application
+ * @link https://docs.discord.com/developers/resources/application
  *
  * @since 7.0.0
  *
@@ -156,7 +156,7 @@ class Application extends Part
     /**
      * Returns a list of application role connection metadata objects for the given application.
      *
-     * @link https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
+     * @link https://docs.discord.com/developers/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
      *
      * @since 10.29.0
      *
@@ -180,7 +180,7 @@ class Application extends Part
     /**
      * Updates and returns a list of application role connection metadata objects for the given application.
      *
-     * @link https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
+     * @link https://docs.discord.com/developers/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
      *
      * @since 10.29.0
      *

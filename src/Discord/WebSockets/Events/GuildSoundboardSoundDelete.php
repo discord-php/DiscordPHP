@@ -19,7 +19,7 @@ use Discord\Parts\Guild\Sound;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#guild-soundboard-sound-delete
+ * @link https://docs.discord.com/developers/topics/gateway-events#guild-soundboard-sound-delete
  *
  * @since 10.0.0
  */

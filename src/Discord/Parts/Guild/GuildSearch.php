@@ -23,7 +23,7 @@ use Discord\Parts\User\Member;
 /**
  * Represents a Guild Search result.
  *
- * @link https://discord.com/developers/docs/resources/guild#search-guild-members
+ * @link https://docs.discord.com/developers/resources/guild#search-guild-members
  *
  * @property string                                   $analytics_id                The analytics ID for the search query.
  * @property ExCollectionInterface<Message>|Message[] $messages                    An array of messages that match the query.

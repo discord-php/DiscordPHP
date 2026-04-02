@@ -17,7 +17,7 @@ namespace Discord\Parts\Channel\Message;
 /**
  * A Checkbox Group is an interactive component for selecting one or many options via checkboxes. Checkbox Groups are available in modals and must be placed inside a Label.
  *
- * @link https://discord.com/developers/docs/components/reference#checkbox-group
+ * @link https://docs.discord.com/developers/components/reference#checkbox-group
  *
  * @since 10.46.0
  *

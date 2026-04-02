@@ -20,7 +20,7 @@ use Discord\Parts\OAuth\ApplicationRoleConnectionMetadata;
 /**
  * The role connection object that an application has attached to a user.
  *
- * @link https://discord.com/developers/docs/resources/user#application-role-connection-object
+ * @link https://docs.discord.com/developers/resources/user#application-role-connection-object
  *
  * @since 10.33.0
  *

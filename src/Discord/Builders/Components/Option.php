@@ -21,7 +21,7 @@ use function Discord\poly_strlen;
 /**
  * Option for select menu component.
  *
- * @link https://discord.com/developers/docs/components/reference#select-menu-object-select-option-structure
+ * @link https://docs.discord.com/developers/components/reference#select-menu-object-select-option-structure
  *
  * @todo Deprecate Option in v11.
  * @since 10.46.0 Use SelectMenuOption instead of Option.

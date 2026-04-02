@@ -56,7 +56,7 @@ class ChannelRepository extends AbstractRepository
     /**
      * Attempts to save a channel to the Discord servers.
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-channel
      *
      * @deprecated 10.41.3 use `ChannelBuilder::create($repository)`
      * @since 10.25.0
@@ -75,7 +75,7 @@ class ChannelRepository extends AbstractRepository
     /**
      * Attempts to save a channel to the Discord servers.
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-channel
      *
      * @deprecated 10.41.0 Use `ChannelBuilder::create($repository)`
      * @since 10.25.0

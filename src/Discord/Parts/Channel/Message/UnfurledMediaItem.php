@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * A url or attachment, except in the case of File, which only supports attachment.
  *
- * @link https://discord.com/developers/docs/components/reference#unfurled-media-item-structure
+ * @link https://docs.discord.com/developers/components/reference#unfurled-media-item-structure
  *
  * @since 10.11.0
  *

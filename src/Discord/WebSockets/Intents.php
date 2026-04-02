@@ -17,7 +17,7 @@ namespace Discord\WebSockets;
 /**
  * Contains constants used in intents.
  *
- * @link https://discord.com/developers/docs/topics/gateway#gateway-intents
+ * @link https://docs.discord.com/developers/topics/gateway#gateway-intents
  *
  * @since 5.0.0
  */
@@ -164,7 +164,7 @@ class Intents
     /**
      * Message content intent (Privileged).
      *
-     * @link https://discord.com/developers/docs/topics/gateway#message-content-intent
+     * @link https://docs.discord.com/developers/topics/gateway#message-content-intent
      * @link https://dis.gd/mcfaq
      *
      * @since 7.3.0

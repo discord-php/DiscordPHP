@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Unix timestamps for start and/or end of the game.
  *
- * @link https://discord.com/developers/docs/events/gateway-events#activity-object-activity-timestamps
+ * @link https://docs.discord.com/developers/events/gateway-events#activity-object-activity-timestamps
  *
  * @since 10.24.0
  *

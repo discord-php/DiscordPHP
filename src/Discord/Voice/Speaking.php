@@ -20,7 +20,7 @@ use Discord\Parts\User\User;
 /**
  * Represents a user's speaking state in a voice channel.
  *
- * @link https://discord.com/developers/docs/topics/voice-connections#speaking
+ * @link https://docs.discord.com/developers/topics/voice-connections#speaking
  *
  * @since 10.40.0
  *

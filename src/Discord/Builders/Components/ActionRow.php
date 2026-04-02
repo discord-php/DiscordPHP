@@ -21,7 +21,7 @@ use Discord\Builders\ComponentsTrait;
  * components.
  * It has a type: 1 and a sub-array of components of other types.
  *
- * @link https://discord.com/developers/docs/components/reference#action-rows
+ * @link https://docs.discord.com/developers/components/reference#action-row
  *
  * @since 7.0.0
  *

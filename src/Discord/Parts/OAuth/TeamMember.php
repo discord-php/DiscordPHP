@@ -20,7 +20,7 @@ use Discord\Parts\User\User;
 /**
  * Member of a team.
  *
- * @link https://discord.com/developers/docs/topics/teams#data-models-team-member-object
+ * @link https://docs.discord.com/developers/topics/teams#data-models-team-member-object
  *
  * @since 10.24.0
  *

@@ -30,7 +30,7 @@ use function React\Promise\reject;
 /**
  * A representation of a scheduled event in a guild.
  *
- * @link https://discord.com/developers/docs/resources/guild-scheduled-event
+ * @link https://docs.discord.com/developers/resources/guild-scheduled-event
  *
  * @since 7.0.0
  *
@@ -149,7 +149,7 @@ class ScheduledEvent extends Part
      * Guild member data, if it exists, is included if the with_member query
      * parameter is set.
      *
-     * @link https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users
+     * @link https://docs.discord.com/developers/resources/guild-scheduled-event#get-guild-scheduled-event-users
      *
      * @param array $options
      *
@@ -345,7 +345,7 @@ class ScheduledEvent extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event-json-params
+     * @link https://docs.discord.com/developers/resources/guild-scheduled-event#create-guild-scheduled-event-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -365,7 +365,7 @@ class ScheduledEvent extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event-json-params
+     * @link https://docs.discord.com/developers/resources/guild-scheduled-event#modify-guild-scheduled-event-json-params
      */
     public function getUpdatableAttributes(): array
     {

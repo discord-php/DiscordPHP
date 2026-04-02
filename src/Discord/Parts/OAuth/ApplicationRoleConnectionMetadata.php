@@ -22,7 +22,7 @@ use Discord\Parts\Part;
  * Each metadata type offers a comparison operation that allows guilds to configure role requirements based on metadata values stored by the bot.
  * Bots specify a metadata value for each user and guilds specify the required guild's configured value within the guild role settings.
  *
- * @link https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata
+ * @link https://docs.discord.com/developers/resources/application-role-connection-metadata#application-role-connection-metadata
  *
  * @since 10.29.0
  *

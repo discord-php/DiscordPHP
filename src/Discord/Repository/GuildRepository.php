@@ -55,7 +55,7 @@ class GuildRepository extends AbstractRepository
     /**
      * Causes the client to leave a guild.
      *
-     * @link https://discord.com/developers/docs/resources/user#leave-guild
+     * @link https://docs.discord.com/developers/resources/user#leave-guild
      *
      * @param Guild|string $guild
      *
@@ -76,7 +76,7 @@ class GuildRepository extends AbstractRepository
      * Returns the guild preview object for the given id. If the bot is not in the guild, then the guild must be discoverable.
      * Rejects with 10004 Unknown Guild if the guild does not exist or the bot is not in the guild and it is not discoverable.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-preview
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-preview
      *
      * @param Guild|string $guild_id
      *
@@ -101,7 +101,7 @@ class GuildRepository extends AbstractRepository
      * This endpoint returns 200 guilds by default, which is the maximum number of guilds a non-bot user can join.
      * Therefore, pagination is not needed for integrations that need to get a list of the users' guilds.
      *
-     * @link https://discord.com/developers/docs/resources/user#get-current-user-guilds
+     * @link https://docs.discord.com/developers/resources/user#get-current-user-guilds
      *
      * @param ?string|null $before      Get guilds before this guild ID.
      * @param ?string|null $after       Get guilds after this guild ID.

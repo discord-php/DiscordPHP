@@ -17,7 +17,7 @@ namespace Discord\Builders\Components;
 /**
  * List of options to render within a Checkbox Group.
  *
- * @link https://discord.com/developers/docs/components/reference#checkbox-group-option-structure
+ * @link https://docs.discord.com/developers/components/reference#checkbox-group-option-structure
  *
  * @since 10.46.0
  *

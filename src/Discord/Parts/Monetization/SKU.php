@@ -20,7 +20,7 @@ use Discord\Repository\Monetization\SubscriptionRepository;
 /**
  * SKUs (stock-keeping units) in Discord represent premium offerings that can be made available to your application's users or guilds.
  *
- * @link https://discord.com/developers/docs/resources/sku
+ * @link https://docs.discord.com/developers/resources/sku
  *
  * @since 10.15.0
  *

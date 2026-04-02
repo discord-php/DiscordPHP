@@ -27,9 +27,9 @@ use Discord\Parts\Part;
  * The start of a subscription is determined by its ID. When the subscription renews, its current period is updated.
  * If the user cancels the subscription, the subscription will enter the ENDING status and the canceled_at timestamp will reflect the time of the cancellation.
  *
- * @link https://discord.com/developers/docs/monetization/implementing-app-subscriptions
+ * @link https://docs.discord.com/developers/monetization/implementing-app-subscriptions
  *
- * @link https://discord.com/developers/docs/resources/subscription
+ * @link https://docs.discord.com/developers/resources/subscription
  *
  * @since 10.15.0
  *

@@ -19,7 +19,7 @@ use function Discord\poly_strlen;
 /**
  * Thumbnail components allow you to add a thumbnail image to a section.
  *
- * @link https://discord.com/developers/docs/components/reference#thumbnail
+ * @link https://docs.discord.com/developers/components/reference#thumbnail
  *
  * @since 10.5.0
  *

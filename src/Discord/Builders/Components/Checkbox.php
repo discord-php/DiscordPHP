@@ -17,7 +17,7 @@ namespace Discord\Builders\Components;
 /**
  * A Checkbox is a single interactive component for simple yes/no style questions. Checkboxes are available in modals and must be placed inside a Labl.
  *
- * @link https://discord.com/developers/docs/components/reference#checkbox
+ * @link https://docs.discord.com/developers/components/reference#checkbox
  *
  * @since 10.46.0
  *

@@ -20,7 +20,7 @@ use Discord\Parts\Part;
  * Additional data used when an action is executed. Different fields are
  * relevant based on the value of action types.
  *
- * @link https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-action-metadata
+ * @link https://docs.discord.com/developers/resources/auto-moderation#auto-moderation-action-object-action-metadata
  *
  * @since 10.0.0
  *

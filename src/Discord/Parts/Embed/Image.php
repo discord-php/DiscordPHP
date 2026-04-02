@@ -20,8 +20,8 @@ use Discord\Parts\Part;
 /**
  * An image for an embed.
  *
- * @link https://discord.com/developers/docs/resources/message#embed-object-embed-image-structure
- * @link https://discord.com/developers/docs/resources/message#embed-object-embed-thumbnail-structure
+ * @link https://docs.discord.com/developers/resources/message#embed-object-embed-image-structure
+ * @link https://docs.discord.com/developers/resources/message#embed-object-embed-thumbnail-structure
  *
  * @since 4.0.3
  *

@@ -19,7 +19,7 @@ use Discord\Parts\Part;
 /**
  * Information for the current party of the player.
  *
- * @link https://discord.com/developers/docs/events/gateway-events#activity-object-activity-party
+ * @link https://docs.discord.com/developers/events/gateway-events#activity-object-activity-party
  *
  * @since 10.19.0
  *

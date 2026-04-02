@@ -21,7 +21,7 @@ use Discord\Parts\User\User;
 /**
  * A guild scheduled event user subscribed to a specific guild scheduled event exception.
  *
- * @link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-user-object
+ * @link https://docs.discord.com/developers/resources/guild-scheduled-event#guild-scheduled-event-user-object
  *
  * @since 10.46.0
  *

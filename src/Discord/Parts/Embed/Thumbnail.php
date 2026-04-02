@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * The thumbnail of an embed object.
  *
- * @link https://discord.com/developers/docs/resources/message#embed-object-embed-thumbnail-structure
+ * @link https://docs.discord.com/developers/resources/message#embed-object-embed-thumbnail-structure
  *
  * @since 10.19.0
  *

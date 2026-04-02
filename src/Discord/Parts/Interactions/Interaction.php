@@ -42,7 +42,7 @@ use function React\Promise\reject;
 /**
  * Represents an interaction from Discord.
  *
- * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object
+ * @link https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object
  *
  * @since 10.19.0 Use either `Ping`, `ApplicationCommand`, `MessageComponent`, `ApplicationCommandAutocomplete`, or `ModalSubmit` except within the `INTERACTION_CREATE` event.
  * @since 7.0.0
@@ -287,7 +287,7 @@ class Interaction extends Part
      * Acknowledges an interaction without returning a response.
      * Only valid for message component interactions.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#responding-to-an-interaction
      *
      * @throws \LogicException Interaction is not Message Component or Modal Submit.
      *
@@ -312,7 +312,7 @@ class Interaction extends Part
      * Acknowledges an interaction, creating a placeholder response message
      * which can be edited later through the `updateOriginalResponse` function.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#responding-to-an-interaction
      *
      * @param bool $ephemeral Whether the acknowledge should be ephemeral.
      *
@@ -336,7 +336,7 @@ class Interaction extends Part
      * Updates the message that the interaction was triggered from.
      * Only valid for message component interactions.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#responding-to-an-interaction
      *
      * @param MessageBuilder $builder The new message content.
      *
@@ -363,7 +363,7 @@ class Interaction extends Part
     /**
      * Retrieves the original interaction response.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#get-original-interaction-response
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#get-original-interaction-response
      *
      * @throws \RuntimeException Interaction is not created yet.
      *
@@ -386,7 +386,7 @@ class Interaction extends Part
     /**
      * Updates the original interaction response.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#edit-original-interaction-response
      *
      * @param MessageBuilder $builder New message contents.
      *
@@ -418,7 +418,7 @@ class Interaction extends Part
     /**
      * Deletes the original interaction response.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#delete-original-interaction-response
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#delete-original-interaction-response
      *
      * @throws \RuntimeException Interaction is not responded yet.
      *
@@ -445,7 +445,7 @@ class Interaction extends Part
      * as an existing message's ephemeral state cannot be changed.
      * This behavior is deprecated, and you should use the Edit Original Interaction Response endpoint in this case instead.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#create-followup-message
      *
      * @param MessageBuilder $builder   Message to send.
      * @param bool           $ephemeral Whether the created follow-up should be ephemeral
@@ -482,7 +482,7 @@ class Interaction extends Part
     /**
      * Responds to the interaction with a message.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#create-interaction-response
      *
      * @param MessageBuilder $builder   Message to respond with.
      * @param bool           $ephemeral Whether the created message should be ephemeral.
@@ -521,7 +521,7 @@ class Interaction extends Part
      * This is a separate function so that it can be overloaded when responding
      * via webhook.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#create-interaction-response
      *
      * @param array          $payload   Response payload.
      * @param Multipart|null $multipart Optional multipart payload.
@@ -556,7 +556,7 @@ class Interaction extends Part
     /**
      * Updates a non ephemeral follow up message.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#edit-followup-message
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#edit-followup-message
      *
      * @param string         $message_id Message to update.
      * @param MessageBuilder $builder    New message contents.
@@ -589,7 +589,7 @@ class Interaction extends Part
     /**
      * Retrieves a non ephemeral follow up message.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#get-followup-message
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#get-followup-message
      *
      * @param string $message_id Message to get.
      *
@@ -614,7 +614,7 @@ class Interaction extends Part
     /**
      * Deletes a follow up message.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#delete-followup-message
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#delete-followup-message
      *
      * @param string $message_id Message to delete.
      *
@@ -634,7 +634,7 @@ class Interaction extends Part
     /**
      * Responds to the interaction with auto complete suggestions.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#responding-to-an-interaction
      *
      * @param array|Choice[] $choices Autocomplete choices (max of 25 choices)
      *
@@ -657,7 +657,7 @@ class Interaction extends Part
     /**
      * Responds to the interaction with a popup modal.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#responding-to-an-interaction
      *
      * @param string            $title      The title of the popup modal, max 45 characters.
      * @param string            $custom_id  Developer-defined identifier for the component, max 100 characters.
@@ -699,7 +699,7 @@ class Interaction extends Part
     /**
      * Responds to the interaction with a popup modal.
      *
-     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
+     * @link https://docs.discord.com/developers/interactions/receiving-and-responding#responding-to-an-interaction
      *
      * @param ModalBuilder  $modal  The modal.
      * @param callable|null $submit The function to call once modal is submitted.

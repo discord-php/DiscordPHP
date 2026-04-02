@@ -19,7 +19,7 @@ use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway-events#voice-state-update
+ * @link https://docs.discord.com/developers/topics/gateway-events#voice-state-update
  *
  * @see \Discord\Parts\WebSockets\VoiceStateUpdate
  *

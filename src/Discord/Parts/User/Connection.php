@@ -21,7 +21,7 @@ use Discord\Parts\Guild\Integration;
 /**
  * The connection object that a user has attached.
  *
- * @link https://discord.com/developers/docs/resources/user#connection-object
+ * @link https://docs.discord.com/developers/resources/user#connection-object
  *
  * @since 10.33.0
  *
