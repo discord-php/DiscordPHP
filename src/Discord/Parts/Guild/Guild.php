@@ -303,6 +303,9 @@ class Guild extends Part
 
         // undocumented
         'hub_type',
+
+        // internal
+        'server_guide',
     ];
 
     /**
