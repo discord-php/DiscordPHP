@@ -132,6 +132,14 @@ abstract class Event
     public const ENTITLEMENT_UPDATE = 'ENTITLEMENT_UPDATE';
     public const ENTITLEMENT_DELETE = 'ENTITLEMENT_DELETE';
 
+    // Subscriptions
+    public const SUBSCRIPTION_CREATE = 'SUBSCRIPTION_CREATE';
+    public const SUBSCRIPTION_UPDATE = 'SUBSCRIPTION_UPDATE';
+    public const SUBSCRIPTION_DELETE = 'SUBSCRIPTION_DELETE';
+
+    // Game Server
+    public const GAME_SERVER_UPDATE = 'GAME_SERVER_UPDATE';
+
     /**
      * The Discord client instance.
      *
