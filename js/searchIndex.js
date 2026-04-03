@@ -10426,6 +10426,21 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Monetization-Entitlement.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\GameServer",
+            "name": "GameServer",
+            "summary": "Represents\u0020a\u0020game\u0020server\u0020object\u0020delivered\u0020by\u0020gateway\u0020events.",
+            "url": "classes/Discord-Parts-Monetization-GameServer.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\GameServer\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Gets\u0020the\u0020guild\u0020associated\u0020with\u0020this\u0020game\u0020server,\u0020if\u0020any.",
+            "url": "classes/Discord-Parts-Monetization-GameServer.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Monetization\\GameServer\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Monetization-GameServer.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\Monetization\\SKU",
             "name": "SKU",
             "summary": "SKUs\u0020\u0028stock\u002Dkeeping\u0020units\u0029\u0020in\u0020Discord\u0020represent\u0020premium\u0020offerings\u0020that\u0020can\u0020be\u0020made\u0020available\u0020to\u0020your\u0020application\u0027s\u0020users\u0020or\u0020guilds.",
@@ -15786,6 +15801,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_GUILD_SOUNDBOARD_SOUND_DELETE"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGUILD_SOUNDBOARD_SOUNDS_UPDATE",
+            "name": "GUILD_SOUNDBOARD_SOUNDS_UPDATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GUILD_SOUNDBOARD_SOUNDS_UPDATE"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ASOUNDBOARD_SOUNDS",
             "name": "SOUNDBOARD_SOUNDS",
             "summary": "",
@@ -15930,6 +15950,26 @@ Search.appendIndex(
             "name": "ENTITLEMENT_DELETE",
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_ENTITLEMENT_DELETE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ASUBSCRIPTION_CREATE",
+            "name": "SUBSCRIPTION_CREATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_SUBSCRIPTION_CREATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ASUBSCRIPTION_UPDATE",
+            "name": "SUBSCRIPTION_UPDATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_SUBSCRIPTION_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ASUBSCRIPTION_DELETE",
+            "name": "SUBSCRIPTION_DELETE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_SUBSCRIPTION_DELETE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AGAME_SERVER_UPDATE",
+            "name": "GAME_SERVER_UPDATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_GAME_SERVER_UPDATE"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003A\u0024discord",
             "name": "discord",
@@ -16165,6 +16205,16 @@ Search.appendIndex(
             "name": "handle",
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-EntitlementUpdate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GameServerUpdate",
+            "name": "GameServerUpdate",
+            "summary": "Handles\u0020GAME_SERVER_UPDATE\u0020gateway\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-GameServerUpdate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\GameServerUpdate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\u0020Discord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-GameServerUpdate.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\GuildAuditLogEntryCreate",
             "name": "GuildAuditLogEntryCreate",

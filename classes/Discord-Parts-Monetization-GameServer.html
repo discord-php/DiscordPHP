@@ -236,12 +236,12 @@
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts.html">Parts</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-websockets.html">WebSockets</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-monetization.html">Monetization</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    VoiceServerUpdate
+    GameServer
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
@@ -263,20 +263,20 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php"><a href="files/src-discord-parts-websockets-voiceserverupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php">VoiceServerUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Tells the client that the voice channel&#039;s server has changed.</p>
+            <p class="phpdocumentor-summary">Represents a game server object delivered by gateway events.</p>
 
 
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -284,16 +284,17 @@
                     <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="https://docs.discord.com/developers/events/gateway-events#voice"> https://docs.discord.com/developers/events/gateway-events#voice </a>
+                                                                                                        <a class="phpdocumentor-tag-link" href="TBD"> TBD </a>
                     
                                     </dd>
                                                 <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">since</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">4.0.0</span>
                                                                                 
-                                             
+                                                 <section class="phpdocumentor-description"><p>TBD</p>
+</section>
+
                                     </dd>
                                             </dl>
 
@@ -301,7 +302,7 @@
     
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Monetization-GameServer.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -315,7 +316,7 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Monetization-GameServer.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -327,19 +328,97 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_endpoint">$endpoint</a>
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_entitlement_id">$entitlement_id</a>
     <span>
-                        &nbsp;: string|null            </span>
+                        &nbsp;: string            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_guild">$guild</a>
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_game_config">$game_config</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_game_id">$game_id</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_guild">$guild</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_guild_id">$guild_id</a>
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_guild_id">$guild_id</a>
+    <span>
+                        &nbsp;: string|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_id">$id</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_ip">$ip</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_max_players_count">$max_players_count</a>
+    <span>
+                        &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_name">$name</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_plan_name">$plan_name</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_players_count">$players_count</a>
+    <span>
+                        &nbsp;: int            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_port">$port</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_provider_type">$provider_type</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_provider_url">$provider_url</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_region_id">$region_id</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_region_name">$region_name</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
@@ -352,7 +431,13 @@
 <dd>Custom script data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_token">$token</a>
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_sku_id">$sku_id</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_status">$status</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
@@ -379,7 +464,7 @@
 <dd>The factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a class="" href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_fillable">$fillable</a>
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#property_fillable">$fillable</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -424,7 +509,7 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Discord-Parts-Monetization-GameServer.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -666,11 +751,11 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Gets an attribute on the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a class="" href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#method_getGuildAttribute">getGuildAttribute()</a>
+    <a class="" href="classes/Discord-Parts-Monetization-GameServer.html#method_getGuildAttribute">getGuildAttribute()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null    </span>
 </dt>
-<dd>Returns the guild attribute.</dd>
+<dd>Gets the guild associated with this game server, if any.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a>
@@ -703,7 +788,7 @@ JSON. Used for JsonSerializable.</dd>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Monetization-GameServer.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -753,15 +838,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_endpoint">
-        $endpoint
-        <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_endpoint" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_entitlement_id">
+        $entitlement_id
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_entitlement_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php"><a href="files/src-discord-parts-websockets-voiceserverupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php">VoiceServerUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -771,13 +856,85 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$endpoint</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$entitlement_id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The new voice server endpoint.</p>
-</section>
+    
+    
+    
 
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_game_config">
+        $game_config
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_game_config" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$game_config</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_game_id">
+        $game_id
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_game_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$game_id</span>
+    </code>
+
+    
     
     
 
@@ -794,13 +951,13 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_guild">
         $guild
-        <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                         <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php"><a href="files/src-discord-parts-websockets-voiceserverupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php">VoiceServerUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -814,9 +971,44 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$guild</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The guild affected by the change.</p>
-</section>
+    
+    
+    
 
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                -read-only                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_guild_id">
+        $guild_id
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$guild_id</span>
+    </code>
+
+    
     
     
 
@@ -831,15 +1023,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_guild_id">
-        $guild_id
-        <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_id">
+        $id
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php"><a href="files/src-discord-parts-websockets-voiceserverupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php">VoiceServerUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -850,12 +1042,380 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$guild_id</span>
+    <span class="phpdocumentor-signature__name">$id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The unique identifier of the guild that was affected by the change.</p>
-</section>
+    
+    
+    
 
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_ip">
+        $ip
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_ip" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$ip</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_max_players_count">
+        $max_players_count
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_max_players_count" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$max_players_count</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_name">
+        $name
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$name</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_plan_name">
+        $plan_name
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_plan_name" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$plan_name</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_players_count">
+        $players_count
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_players_count" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$players_count</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_port">
+        $port
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_port" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$port</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_provider_type">
+        $provider_type
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_provider_type" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$provider_type</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_provider_url">
+        $provider_url
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_provider_url" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$provider_url</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_region_id">
+        $region_id
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_region_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$region_id</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_region_name">
+        $region_name
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_region_name" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$region_name</span>
+    </code>
+
+    
     
     
 
@@ -917,15 +1477,15 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                                     "
 >
-    <h4 class="phpdocumentor-element__name" id="property_token">
-        $token
-        <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_token" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_sku_id">
+        $sku_id
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_sku_id" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php"><a href="files/src-discord-parts-websockets-voiceserverupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php">VoiceServerUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -936,12 +1496,47 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$token</span>
+    <span class="phpdocumentor-signature__name">$sku_id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The new client voice token.</p>
-</section>
+    
+    
+    
 
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_status">
+        $status
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_status" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$status</span>
+    </code>
+
+    
     
     
 
@@ -1078,15 +1673,15 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_fillable">
         $fillable
-        <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
                                             </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php"><a href="files/src-discord-parts-websockets-voiceserverupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php">VoiceServerUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -1097,7 +1692,26 @@ JSON. Used for JsonSerializable.</dd>
         <span class="phpdocumentor-signature__visibility">protected</span>
             <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;token&#039;, &#039;guild_id&#039;, &#039;endpoint&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[
+    &#039;id&#039;,
+    &#039;game_id&#039;,
+    &#039;entitlement_id&#039;,
+    &#039;name&#039;,
+    &#039;status&#039;,
+    &#039;sku_id&#039;,
+    &#039;region_name&#039;,
+    &#039;region_id&#039;,
+    &#039;provider_url&#039;,
+    &#039;provider_type&#039;,
+    &#039;port&#039;,
+    &#039;players_count&#039;,
+    &#039;plan_name&#039;,
+    &#039;max_players_count&#039;,
+    &#039;ip&#039;,
+    &#039;game_config&#039;,
+    // internal
+    &#039;guild_id&#039;,
+]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -1106,12 +1720,12 @@ JSON. Used for JsonSerializable.</dd>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#property_fillable#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritDoc</span>
+                    <span class="phpdocumentor-tag__name">inheritdoc</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
@@ -1324,7 +1938,7 @@ JSON. Used for JsonSerializable.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Monetization-GameServer.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -3378,17 +3992,17 @@ JSON. Used for JsonSerializable.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
         getGuildAttribute()
-        <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php"><a href="files/src-discord-parts-websockets-voiceserverupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceServerUpdate.php">VoiceServerUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Monetization/GameServer.php"><a href="files/src-discord-parts-monetization-gameserver.html"><abbr title="src/Discord/Parts/Monetization/GameServer.php">GameServer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Returns the guild attribute.</p>
+        <p class="phpdocumentor-summary">Gets the guild associated with this game server, if any.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
@@ -3406,10 +4020,6 @@ JSON. Used for JsonSerializable.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The guild attribute.</p>
-</section>
-
             </section>
 
 </article>
@@ -3599,7 +4209,7 @@ static as we may move it outside this class in future.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/WebSockets/VoiceServerUpdate.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Discord/Parts/Monetization/GameServer.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -3700,8 +4310,8 @@ static as we may move it outside this class in future.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/Discord-Parts-Monetization-GameServer.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Discord-Parts-Monetization-GameServer.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
@@ -3709,15 +4319,29 @@ static as we may move it outside this class in future.</p>
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_created">$created</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_endpoint">$endpoint</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_guild">$guild</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_guild_id">$guild_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_entitlement_id">$entitlement_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_game_config">$game_config</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_game_id">$game_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_guild">$guild</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_guild_id">$guild_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_id">$id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_ip">$ip</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_max_players_count">$max_players_count</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_name">$name</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_plan_name">$plan_name</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_players_count">$players_count</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_port">$port</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_provider_type">$provider_type</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_provider_url">$provider_url</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_region_id">$region_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_region_name">$region_name</a></li>
                                                     <li class="-deprecated"><a href="classes/Discord-Parts-Part.html#property_scriptData">$scriptData</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_token">$token</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_sku_id">$sku_id</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_status">$status</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_attributes">$attributes</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_discord">$discord</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_factory">$factory</a></li>
-                                                    <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#property_fillable">$fillable</a></li>
+                                                    <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#property_fillable">$fillable</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_hidden">$hidden</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_http">$http</a></li>
                                                     <li class=""><a href="classes/Discord-Parts-Part.html#property_repositories">$repositories</a></li>
@@ -3763,7 +4387,7 @@ static as we may move it outside this class in future.</p>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForGetMutator">checkForGetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_checkForSetMutator">checkForSetMutator()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_getAttribute">getAttribute()</a></li>
-                                            <li class=""><a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#method_getGuildAttribute">getGuildAttribute()</a></li>
+                                            <li class=""><a href="classes/Discord-Parts-Monetization-GameServer.html#method_getGuildAttribute">getGuildAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_makeOptionalAttributes">makeOptionalAttributes()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_setAttribute">setAttribute()</a></li>
                                             <li class=""><a href="classes/Discord-Parts-PartTrait.html#method_studly">studly()</a></li>
@@ -3786,7 +4410,7 @@ static as we may move it outside this class in future.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Discord-Parts-WebSockets-VoiceServerUpdate.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Parts-Monetization-GameServer.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
