@@ -19,7 +19,7 @@ use Discord\Parts\Guild\Role;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#guild-role-delete
+ * @link https://docs.discord.com/developers/events/gateway-events#guild-role-delete
  *
  * @since 2.1.3
  */

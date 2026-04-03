@@ -23,7 +23,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#message-reaction-add
+ * @link https://docs.discord.com/developers/events/gateway-events#message-reaction-add
  *
  * @since 4.0.4
  */

@@ -22,7 +22,7 @@ use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageReaction;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#message-reaction-remove-emoji
+ * @link https://docs.discord.com/developers/events/gateway-events#message-reaction-remove-emoji
  *
  * @since 5.0.0
  */

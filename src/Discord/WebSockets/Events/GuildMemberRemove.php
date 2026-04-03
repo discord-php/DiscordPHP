@@ -19,7 +19,7 @@ use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#guild-member-remove
+ * @link https://docs.discord.com/developers/events/gateway-events#guild-member-remove
  *
  * @since 2.1.3
  */

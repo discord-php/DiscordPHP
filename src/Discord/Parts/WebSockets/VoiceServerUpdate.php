@@ -20,7 +20,7 @@ use Discord\Parts\Part;
 /**
  * Tells the client that the voice channel's server has changed.
  *
- * @link https://docs.discord.com/developers/topics/gateway-events#voice
+ * @link https://docs.discord.com/developers/events/gateway-events#voice
  *
  * @since 4.0.0
  *

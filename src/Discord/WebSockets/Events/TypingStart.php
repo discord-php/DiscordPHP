@@ -19,7 +19,7 @@ use Discord\Parts\WebSockets\TypingStart as TypingStartPart;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#typing-start
+ * @link https://docs.discord.com/developers/events/gateway-events#typing-start
  *
  * @see \Discord\Parts\WebSockets\TypingStart
  *

@@ -20,7 +20,7 @@ use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\Data\ScheduledEventUserData;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#guild-scheduled-event-user-add
+ * @link https://docs.discord.com/developers/events/gateway-events#guild-scheduled-event-user-add
  *
  * @since 10.46.0 Added ScheduledEventUserData part
  * @since 7.0.0

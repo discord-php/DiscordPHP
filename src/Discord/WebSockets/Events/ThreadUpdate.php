@@ -21,7 +21,7 @@ use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#thread-update
+ * @link https://docs.discord.com/developers/events/gateway-events#thread-update
  *
  * @since 7.0.0
  */

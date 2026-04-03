@@ -20,7 +20,7 @@ use Discord\Parts\Guild\AuditLog\Entry;
 use Discord\Parts\Guild\Guild;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#guild-audit-log-entry-create
+ * @link https://docs.discord.com/developers/events/gateway-events#guild-audit-log-entry-create
  *
  * @since 10.0.0
  */

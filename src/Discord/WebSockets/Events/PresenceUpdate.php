@@ -20,7 +20,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#presence-update
+ * @link https://docs.discord.com/developers/events/gateway-events#presence-update
  *
  * @see \Discord\Parts\WebSockets\PresenceUpdate
  *

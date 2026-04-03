@@ -20,7 +20,7 @@ use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\Guild\ScheduledEventException;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#guild-scheduled-event-exception-update
+ * @link https://docs.discord.com/developers/events/gateway-events#guild-scheduled-event-exception-update
  *
  * @since 10.45.1
  */

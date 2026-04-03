@@ -19,7 +19,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#channel-update
+ * @link https://docs.discord.com/developers/events/gateway-events#channel-update
  *
  * @since 2.1.3
  */

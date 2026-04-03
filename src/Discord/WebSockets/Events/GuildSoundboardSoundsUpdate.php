@@ -20,7 +20,7 @@ use Discord\Repository\Guild\SoundRepository;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#guild-soundboard-sounds-update
+ * @link https://docs.discord.com/developers/events/gateway-events#guild-soundboard-sounds-update
  *
  * @since 10.0.0
  */
@@ -41,7 +41,7 @@ class GuildSoundboardSoundsUpdate extends Event
         /** @var SoundRepository */
         $repository = $guild->sounds;
 
-        foreach ($data as $soundData) {
+        foreach ($data->soundboard_sounds as $soundData) {
             /** @var SoundboardSound */
             $part = $this->factory->part(Sound::class, (array) $soundData, true);
             $repository->set($part->sound_id, $part);

@@ -20,7 +20,7 @@ use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#stage-instance-create
+ * @link https://docs.discord.com/developers/events/gateway-events#stage-instance-create
  *
  * @since 7.0.0
  */

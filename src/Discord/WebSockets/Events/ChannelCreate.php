@@ -20,7 +20,7 @@ use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#channel-create
+ * @link https://docs.discord.com/developers/events/gateway-events#channel-create
  *
  * @since 2.1.3
  */

@@ -19,7 +19,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Integration;
 
 /**
- * @link https://docs.discord.com/developers/topics/gateway-events#integration-create
+ * @link https://docs.discord.com/developers/events/gateway-events#integration-create
  *
  * @since 7.0.0
  */
