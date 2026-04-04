@@ -86,6 +86,6 @@ class Component extends Part
      */
     public function getComponentAttribute(): ?Component
     {
-        return $this->attributePartHelper('component', Component::TYPES[$this->attributes['component']->type ?? 0]);
+        return $this->attributePartHelper('component', self::TYPES[$this->attributes['component']->type ?? 0]);
     }
 }
