@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -23,7 +24,7 @@ use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Message\AllowedMentions;
-use Discord\Parts\Channel\Poll\Poll;
+use Discord\Parts\Channel\Poll\PollCreateRequest as Poll;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
 use Discord\Repository\Channel\MessageRepository;
@@ -363,7 +364,7 @@ class MessageBuilder extends Builder implements JsonSerializable
     /**
      * Sets the allowed mentions object of the message.
      *
-     * @link https://discord.com/developers/docs/resources/channel#allowed-mentions-object
+     * @link https://docs.discord.com/developers/resources/channel#allowed-mentions-object
      *
      * @param AllowedMentions|array|null $allowed_mentions
      *
@@ -752,7 +753,7 @@ class MessageBuilder extends Builder implements JsonSerializable
      *
      * @return $this
      */
-    public function setPoll(Poll|null $poll): self
+    public function setPoll($poll = null): self
     {
         $this->poll = $poll;
 

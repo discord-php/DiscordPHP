@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -23,6 +24,7 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Invite;
 use Discord\Parts\Channel\StageInstance;
+use Discord\Parts\Channel\Webhook;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -62,7 +64,7 @@ use function React\Promise\resolve;
  * A Guild is Discord's equivalent of a server. It contains all the Members,
  * Channels, Roles, Bans etc.
  *
- * @link https://discord.com/developers/docs/resources/guild
+ * @link https://docs.discord.com/developers/resources/guild
  *
  * @since 2.0.0 Refactored as Part
  * @since 1.0.0
@@ -111,6 +113,8 @@ use function React\Promise\resolve;
  * @property      ?string|null        $safety_alerts_channel_id      The id of the channel where admins and moderators of Community guilds receive safety alerts from Discord.
  * @property      ?IncidentsData|null $incidents_data                The incidents data for this guild.
  *
+ * @property ?ServerGuide|null $server_guide The server guide for this guild, shown to new members and in the directory. Use `getServerGuide` first to populate.
+ *
  * @property-read bool $feature_animated_banner                           Guild has access to set an animated guild banner image.
  * @property-read bool $feature_animated_icon                             Guild has access to set an animated guild icon.
  * @property-read bool $feature_application_command_permissions_v2        Guild is using the old permissions configuration behavior.
@@ -150,7 +154,7 @@ use function React\Promise\resolve;
  * @property int|null                 $member_count           How many members are in the guild.
  * @property MemberRepository         $members                Users in the guild.
  * @property ChannelRepository        $channels               Channels in the guild.
- * @property ScheduledeventRepository $guild_scheduled_events The scheduled events in the guild.
+ * @property ScheduledEventRepository $guild_scheduled_events The scheduled events in the guild.
  *
  * @property AuditLogRepository           $audit_log
  * @property AutoModerationRuleRepository $auto_moderation_rules
@@ -299,6 +303,9 @@ class Guild extends Part
 
         // undocumented
         'hub_type',
+
+        // internal
+        'server_guide',
     ];
 
     /**
@@ -366,7 +373,7 @@ class Guild extends Part
     /**
      * Attempts to save a channel to the Discord servers.
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-channel
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-channel
      *
      * @since 10.25.2
      *
@@ -383,7 +390,7 @@ class Guild extends Part
     /**
      * Modifies the current member (no validation).
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-current-member-json-params
+     * @link https://docs.discord.com/developers/resources/guild#modify-current-member-json-params
      *
      * @since 10.30.0
      *
@@ -521,7 +528,7 @@ class Guild extends Part
     /**
      * Returns the incidents data attribute.
      *
-     * @link https://discord.com/developers/docs/resources/guild#incidents-data-object
+     * @link https://docs.discord.com/developers/resources/guild#incidents-data-object
      *
      * @return IncidentsData|null
      */
@@ -531,9 +538,49 @@ class Guild extends Part
     }
 
     /**
+     * Returns the server guide attribute.
+     *
+     * @return ServerGuide|null
+     *
+     * @since 10.47.0
+     */
+    protected function getServerGuideAttribute(): ?ServerGuide
+    {
+        return $this->attributePartHelper('server_guide', ServerGuide::class);
+    }
+
+    /**
+     * Fetches the server guide (new member welcome) for the guild.
+     *
+     * @param bool $fresh Whether to bypass cache and fetch fresh data.
+     *
+     * @since 10.47.0
+     *
+     * @return PromiseInterface<?ServerGuide>
+     */
+    public function getServerGuide(bool $fresh = false): PromiseInterface
+    {
+        if (! $fresh && $serverGuide = $this->server_guide) {
+            return resolve($serverGuide);
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_NEW_MEMBER_WELCOME, $this->id))->then(function ($response) {
+            if ($response === null) {
+                $this->attributes['server_guide'] = null;
+
+                return null;
+            }
+
+            $this->attributes['server_guide'] = $response;
+
+            return $this->attributePartHelper('server_guide', ServerGuide::class);
+        });
+    }
+
+    /**
      * Returns the channels invites.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-invites
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-invites
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
@@ -557,6 +604,39 @@ class Guild extends Part
             }
 
             return $invites;
+        });
+    }
+
+    /**
+     * Returns a list of guild webhook objects.
+     *
+     * @link https://docs.discord.com/developers/resources/webhook#get-guild-webhooks
+     *
+     * @since 10.46.0
+     *
+     * @throws NoPermissionsException Missing manage_webhooks permission.
+     *
+     * @return PromiseInterface<ExCollectionInterface<Webhook>|Webhook[]>
+     */
+    public function getWebhooks(): PromiseInterface
+    {
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_webhooks) {
+                return reject(new NoPermissionsException("You do not have permission to get webhooks for the guild {$this->id}."));
+            }
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_WEBHOOKS, $this->id))->then(function ($response) {
+            $response = (array) $response;
+
+            /** @var ExCollectionInterface<Webhook> $webhooks */
+            $webhooks = $this->discord->getCollectionClass()::for(Webhook::class);
+
+            foreach ($response as $webhook) {
+                $webhooks->pushItem($this->factory->part(Webhook::class, (array) $webhook, true));
+            }
+
+            return $webhooks;
         });
     }
 
@@ -627,31 +707,76 @@ class Guild extends Part
     }
 
     /**
-     * Gets the voice regions available.
+     * Returns a list of voice region objects for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/voice#list-voice-regions
+     * Unlike the similar /voice route, this returns VIP servers when the guild is VIP-enabled.
+     *
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-voice-regions
      *
      * @return PromiseInterface<ExCollectionInterface<Region>|Region[]>
-     *
-     * @deprecated 10.23.0 Use `Discord::listVoiceRegions` instead.
      */
     public function getVoiceRegions(): PromiseInterface
     {
-        return $this->discord->listVoiceRegions();
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_REGIONS, $this->id))->then(function ($response) {
+            /** @var ExCollectionInterface<Region> $regions */
+            $regions = $this->discord->getCollectionClass()::for(Region::class);
+
+            foreach ($response as $region) {
+                $regions->pushItem($this->factory->part(Region::class, (array) $region, true));
+            }
+
+            return $regions;
+        });
     }
 
     /**
      * Returns the current user's voice state in the guild.
      *
-     * @link https://discord.com/developers/docs/resources/voice#get-current-user-voice-state
+     * @since 10.26.0
+     *
+     * @link https://docs.discord.com/developers/resources/voice#get-current-user-voice-state
      *
      * @return PromiseInterface<VoiceStateUpdate>
-     *
-     * @since 10.26.0
      */
     public function getCurrentUserVoiceState(): PromiseInterface
     {
         return $this->voice_states->getCurrentUserVoiceState($this->id);
+    }
+
+    /**
+     * Returns a partial invite object for guilds with that feature enabled.
+     *
+     * Requires the `MANAGE_GUILD` permission. `code` will be null if a vanity url for the guild is not set.
+     *
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-vanity-url
+     *
+     * @return PromiseInterface<string|null> Vanity URL code or null if no vanity URL is set.
+     */
+    public function fetchVanityUrl(): PromiseInterface
+    {
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_guild) {
+                return reject(new NoPermissionsException("You do not have permission to get the vanity URL for the guild {$this->id}."));
+            }
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_VANITY_URL, $this->id))
+            ->then(function ($response) {
+                $response = (array) $response;
+
+                if (! isset($response['code'])) {
+                    return null;
+                }
+
+                if ($invite = $this->invites->get('code', $response['code'])) {
+                    return (string) $invite;
+                }
+
+                $invite = new Invite($this->discord, $response, true);
+                $this->invites->pushItem($invite);
+
+                return (string) $invite;
+            });
     }
 
     /**
@@ -664,7 +789,7 @@ class Guild extends Part
      * - You must have the REQUEST_TO_SPEAK permission to request to speak. You can always clear your own request to speak.
      * - You are able to set request_to_speak_timestamp to any present or future time.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state
+     * @link https://docs.discord.com/developers/resources/guild#modify-current-user-voice-state
      *
      * @param array               $data
      * @param ?string|null        $data['channel_id']                 The ID of the channel the user is currently in.
@@ -695,7 +820,7 @@ class Guild extends Part
     /**
      * Returns the specified user's voice state in the guild.
      *
-     * @link https://discord.com/developers/docs/resources/voice#get-user-voice-state
+     * @link https://docs.discord.com/developers/resources/voice#get-user-voice-state
      *
      * @param Member|User|string $user The user or user ID.
      *
@@ -716,7 +841,7 @@ class Guild extends Part
      * - When unsuppressed, non-bot users will have their request_to_speak_timestamp set to the current time. Bot users will not.
      * - When suppressed, the user will have their request_to_speak_timestamp removed.
      *
-     * @link https://discord.com/developers/docs/resources/voice#modify-user-voice-state
+     * @link https://docs.discord.com/developers/resources/voice#modify-user-voice-state
      *
      * @param array        $data
      * @param ?string|null $data['channel_id'] The ID of the channel the user is currently in.
@@ -738,7 +863,7 @@ class Guild extends Part
     /**
      * Creates a role.
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-role
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-role
      *
      * @param array       $data   The data to fill the role with.
      * @param string|null $reason Reason for Audit Log.
@@ -761,7 +886,7 @@ class Guild extends Part
     /**
      * Creates an Emoji for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/emoji#create-guild-emoji
+     * @link https://docs.discord.com/developers/resources/emoji#create-guild-emoji
      *
      * @param array       $options          An array of options.
      * @param string      $options['name']  Name of the emoji.
@@ -835,7 +960,7 @@ class Guild extends Part
     /**
      * Creates a Sticker for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/sticker#create-guild-sticker
+     * @link https://docs.discord.com/developers/resources/sticker#create-guild-sticker
      *
      * @param array       $options                An array of options.
      * @param string      $options['name']        Name of the sticker.
@@ -1015,7 +1140,7 @@ class Guild extends Part
     /**
      * Returns an audit log object for the query.
      *
-     * @link https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log
+     * @link https://docs.discord.com/developers/resources/audit-log#get-guild-audit-log
      *
      * @param array                   $options                An array of options.
      * @param string|Member|User|null $options['user_id']     filter the log for actions made by a user
@@ -1073,7 +1198,7 @@ class Guild extends Part
     /**
      * Updates the positions of a list of given roles.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-positions
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-role-positions
      *
      * @param ExCollectionInterface|array $roles Associative array where the LHS key is the position,
      *                                           and the RHS value is a `Role` object or a string ID,
@@ -1126,7 +1251,7 @@ class Guild extends Part
      * Returns a list of guild member objects whose username or nickname starts
      * with a provided string.
      *
-     * @link https://discord.com/developers/docs/resources/guild#search-guild-members
+     * @link https://docs.discord.com/developers/resources/guild#search-guild-members
      *
      * @param array       $options          An array of options. All fields are optional.
      * @param string|null $options['query'] Query string to match username(s) and nickname(s) against
@@ -1172,7 +1297,7 @@ class Guild extends Part
     /**
      * Returns the number of members that would be removed in a prune operation.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-prune-count
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-prune-count
      *
      * @param array                $options                  An array of options.
      * @param int|null             $options['days']          Number of days to count prune for (1-30), defaults to 7.
@@ -1225,7 +1350,7 @@ class Guild extends Part
      * For large guilds it's recommended to set the `compute_prune_count` option
      * to `false`, forcing 'pruned' to null.
      *
-     * @link https://discord.com/developers/docs/resources/guild#begin-guild-prune
+     * @link https://docs.discord.com/developers/resources/guild#begin-guild-prune
      *
      * @param array                $options                        An array of options.
      * @param int|null             $options['days']                Number of days to count prune for (1-30), defaults to 7.
@@ -1281,7 +1406,7 @@ class Guild extends Part
     /**
      * Get the Welcome Screen for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-welcome-screen
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-welcome-screen
      *
      * @param bool $fresh Whether we should skip checking the cache.
      *
@@ -1323,7 +1448,7 @@ class Guild extends Part
     /**
      * Modify the guild's Welcome Screen. Requires the MANAGE_GUILD permission.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-welcome-screen
      *
      * @param array                 $options                     An array of options. All fields are optional.
      * @param bool|null             $options['enabled']          Whether the welcome screen is enabled.
@@ -1371,9 +1496,79 @@ class Guild extends Part
     }
 
     /**
+     * Returns the guild Onboarding object.
+     *
+     * @since 10.46.0
+     *
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-onboarding
+     *
+     * @return PromiseInterface<Onboarding>
+     */
+    public function getOnboarding(): PromiseInterface
+    {
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_ONBOARDING, $this->id))
+            ->then(fn ($response) => new Onboarding($this->discord, (array) $response, true));
+    }
+
+    /**
+     * Modifies the guild onboarding configuration.
+     *
+     * All parameters are optional. Requires `MANAGE_GUILD` and `MANAGE_ROLES`.
+     * Supports the `X-Audit-Log-Reason` header.
+     *
+     * @since 10.46.0
+     *
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-onboarding
+     *
+     * @param array       $options An array of options: 'prompts' (array), 'default_channel_ids' (array), 'enabled' (bool), 'mode' (string)
+     * @param string|null $reason  Reason for Audit Log.
+     *
+     * @return PromiseInterface<Onboarding> The updated Onboarding object.
+     */
+    public function modifyOnboarding(array $options = [], ?string $reason = null): PromiseInterface
+    {
+        if ($botperms = $this->getBotPermissions()) {
+            if (! ($botperms->manage_guild && $botperms->manage_roles)) {
+                return reject(new NoPermissionsException("You do not have permission to modify onboarding of the guild {$this->id}."));
+            }
+        }
+
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'prompts',
+            'default_channel_ids',
+            'enabled',
+            'mode',
+        ])
+        ->setAllowedTypes('prompts', 'array')
+        ->setAllowedTypes('default_channel_ids', 'array')
+        ->setAllowedTypes('enabled', 'bool')
+        ->setAllowedTypes('mode', 'string')
+        ->setNormalizer('default_channel_ids', function ($option, $values) {
+            foreach ($values as &$value) {
+                if (! is_string($value)) {
+                    $value = (string) $value;
+                }
+            }
+
+            return $values;
+        });
+
+        $options = $resolver->resolve($options);
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_ONBOARDING, $this->id), $options, $headers)
+            ->then(fn ($response) => new Onboarding($this->discord, (array) $response, true));
+    }
+
+    /**
      * Fetch the Widget Settings for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-widget-settings
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-widget-settings
      *
      * @throws NoPermissionsException Missing manage_guild permission.
      *
@@ -1399,7 +1594,7 @@ class Guild extends Part
      * Modify a guild widget settings object for the guild. All attributes may
      * be passed in with JSON and modified. Requires the MANAGE_GUILD permission.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-widget
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-widget
      *
      * @param array   $options An array of options.
      *                         enabled => whether the widget is enabled
@@ -1444,7 +1639,7 @@ class Guild extends Part
     /**
      * Get the Widget for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-widget
+     * @link https://docs.discord.com/developers/resources/guild#get-guild-widget
      *
      * @return PromiseInterface<Widget>
      */
@@ -1487,7 +1682,7 @@ class Guild extends Part
     /**
      * Modify the Guild `mfa_level`, requires guild ownership.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-mfa-level
      *
      * @param int         $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
      * @param string|null $reason Reason for Audit Log.
@@ -1511,8 +1706,8 @@ class Guild extends Part
     /**
      * Modify the guild feature.
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild
-     * @link https://discord.com/developers/docs/resources/guild#guild-object-mutable-guild-features
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild
+     * @link https://docs.discord.com/developers/resources/guild#guild-object-mutable-guild-features
      *
      * @param bool[]      $features Array of features to set/unset, e.g. `['COMMUNITY' => true, 'INVITES_DISABLED' => false]`.
      * @param string|null $reason   Reason for Audit Log.
@@ -1570,7 +1765,7 @@ class Guild extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-json-params
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -1593,7 +1788,7 @@ class Guild extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#modify-guild-json-params
+     * @link https://docs.discord.com/developers/resources/guild#modify-guild-json-params
      */
     public function getUpdatableAttributes(): array
     {

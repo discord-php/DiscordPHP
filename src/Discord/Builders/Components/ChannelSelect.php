@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,7 +17,7 @@ namespace Discord\Builders\Components;
 /**
  * Select menu for channels.
  *
- * @link https://discord.com/developers/docs/components/reference#select-menus
+ * @link https://docs.discord.com/developers/components/reference#select-menus
  *
  * @since 10.0.0
  *
@@ -49,7 +50,7 @@ class ChannelSelect extends SelectMenu
     /**
      * Set the channel types of the select menu.
      *
-     * @link https://discord.com/developers/docs/resources/channel#channel-object-channel-types
+     * @link https://docs.discord.com/developers/resources/channel#channel-object-channel-types
      *
      * @param ?int[] $channel_types Array of channel types.
      *

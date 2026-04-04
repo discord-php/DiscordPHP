@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -29,7 +30,7 @@ use Discord\Parts\User\ClientStatus;
  *
  * @since 2.1.3
  *
- * @link https://discord.com/developers/docs/topics/gateway-events#presence
+ * @link https://docs.discord.com/developers/events/gateway-events#presence
  *
  * @property      User                                       $user            The user that the presence update affects.
  * @property      string                                     $guild_id        The unique identifier of the guild that the presence update affects.
@@ -43,6 +44,7 @@ use Discord\Parts\User\ClientStatus;
  * @property      string|null                                $web_status      Status of the user on their web client. Null if they are not active on web.
  * @property      string|null                                $embedded_status Status of the user on an embedded application (Xbox, PlayStation, in-game). Null if they are not active on an embedded application.
  *
+ * @property-read string                             $id     The ID of the user.
  * @property-read Member                             $member The member that the presence update affects.
  * @property-read ExCollectionInterface<Role>|Role[] $roles  Roles that the user has in the guild.
  */
@@ -152,6 +154,16 @@ class PresenceUpdate extends Part
     protected function getWebStatusAttribute(): ?string
     {
         return $this->client_status->web ?? null;
+    }
+
+    /**
+     * Returns the id attribute.
+     *
+     * @return string The user ID of the member.
+     */
+    protected function getIdAttribute(): string
+    {
+        return $this->user->id;
     }
 
     /**

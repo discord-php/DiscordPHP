@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -48,7 +49,7 @@ use function React\Promise\resolve;
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
  *
- * @link https://discord.com/developers/docs/resources/channel#channel-object
+ * @link https://docs.discord.com/developers/resources/channel#channel-object
  *
  * @todo Class will be abstract and deprecated for userland in v11.
  *
@@ -288,7 +289,7 @@ class Channel extends Part implements Stringable
     /**
      * Sets permissions in a channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#edit-channel-permissions
+     * @link https://docs.discord.com/developers/resources/channel#edit-channel-permissions
      *
      * @param Part        $part   A role or member.
      * @param array       $allow  An array of permissions to allow.
@@ -329,7 +330,7 @@ class Channel extends Part implements Stringable
     /**
      * Sets an overwrite to the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#edit-channel-permissions
+     * @link https://docs.discord.com/developers/resources/channel#edit-channel-permissions
      *
      * @param Part        $part      A role or member.
      * @param Overwrite   $overwrite An overwrite object.
@@ -673,9 +674,36 @@ class Channel extends Part implements Stringable
     }
 
     /**
+     * Follow an Announcement Channel to send messages to a target channel.
+     *
+     * Requires the MANAGE_WEBHOOKS permission in the target channel.
+     *
+     * Returns a followed channel object. Fires a Webhooks Update Gateway event for the target channel.
+     *
+     * @link https://docs.discord.com/developers/resources/channel#followed-channel-object
+     *
+     * @param string $webhookChannelId ID of the channel to receive crossposted messages.
+     *
+     * @return PromiseInterface<array{channel: Channel|int, webhook: int}>
+     *
+     * @since 10.46.0
+     */
+    public function follow(string $webhookChannelId): PromiseInterface
+    {
+        $payload = ['webhook_channel_id' => $webhookChannelId];
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_FOLLOW, $this->id), $payload)->then(
+            fn ($response) => [
+                'channel' => $this->discord->getChannel($response->channel_id) ?? $response->channel_id,
+                'webhook' => $response->webhook_id,
+            ]
+        );
+    }
+
+    /**
      * Creates an invite for the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#create-channel-invite
+     * @link https://docs.discord.com/developers/resources/channel#create-channel-invite
      *
      * @param array       $options                          An array of options. All fields are optional.
      * @param int         $options['max_age']               The time that the invite will be valid in seconds.
@@ -685,6 +713,9 @@ class Channel extends Part implements Stringable
      * @param int         $options['target_type']           The type of target for this voice channel invite.
      * @param string      $options['target_user_id']        The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel.
      * @param string      $options['target_application_id'] The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag.
+     * @param object      $options['target_users_file']     (TODO) A csv file with a single column of user IDs for all the users able to accept this invite. Requires `multipart/form-data` as the content type with other parameters as form fields in the multipart body. Uploading a file with invalid user IDs will result in a 400 with the invalid IDs described. Duplicate user IDs in the file will be ignored.
+     * @param string      $options['payload_json']          JSON-encoded body of non-file params, only for `multipart/form-data` requests.
+     * @param string[]    $options['role_ids']              The role ID(s) for roles in the guild given to the users that accept this invite. Requires the `MANAGE_ROLES` permission and cannot assign roles with higher permissions than the sender.
      * @param string|null $reason                           Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing create_instant_invite permission.
@@ -713,16 +744,21 @@ class Channel extends Part implements Stringable
                 'target_type',
                 'target_user_id',
                 'target_application_id',
+                'target_users_file',
+                'payload_json',
+                'role_ids',
             ])
             ->setAllowedTypes('max_age', 'int')
+            ->setAllowedValues('max_age', fn ($value) => ($value >= 0 && $value <= 604800))
             ->setAllowedTypes('max_uses', 'int')
+            ->setAllowedValues('max_uses', fn ($value) => ($value >= 0 && $value <= 100))
             ->setAllowedTypes('temporary', 'bool')
             ->setAllowedTypes('unique', 'bool')
             ->setAllowedTypes('target_type', 'int')
             ->setAllowedTypes('target_user_id', ['string', 'int'])
             ->setAllowedTypes('target_application_id', ['string', 'int'])
-            ->setAllowedValues('max_age', fn ($value) => ($value >= 0 && $value <= 604800))
-            ->setAllowedValues('max_uses', fn ($value) => ($value >= 0 && $value <= 100));
+            ->setAllowedTypes('payload_json', 'string')
+            ->setAllowedTypes('role_ids', 'array');
 
         $options = $resolver->resolve($options);
 
@@ -747,7 +783,7 @@ class Channel extends Part implements Stringable
     /**
      * Deletes a given number of messages, in order of time sent.
      *
-     * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
+     * @link https://docs.discord.com/developers/resources/channel#bulk-delete-messages
      *
      * @param int         $value
      * @param string|null $reason Reason for Audit Log (only for bulk messages).
@@ -773,7 +809,7 @@ class Channel extends Part implements Stringable
      * Deleting a category does not delete its child channels; they will have their parent_id removed and a Channel Update Gateway event will fire for each of them.
      * For Community guilds, the Rules or Guidelines channel and the Community Updates channel cannot be deleted.
      *
-     * @link https://discord.com/developers/docs/resources/channel#deleteclose-channel
+     * @link https://docs.discord.com/developers/resources/channel#deleteclose-channel
      *
      * @param string|null $reason Reason for Audit Log.
      *
@@ -872,8 +908,8 @@ class Channel extends Part implements Stringable
     /**
      * Starts a thread in the channel.
      *
-     * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message
-     * @link https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
+     * @link https://docs.discord.com/developers/resources/channel#start-thread-without-message
+     * @link https://docs.discord.com/developers/resources/channel#start-thread-in-forum-channel
      *
      * @param array          $options                          Thread params.
      * @param bool           $options['private']               Whether the thread should be private. Cannot start a private thread in an announcement channel. Ignored in forum channel.
@@ -1034,22 +1070,21 @@ class Channel extends Part implements Stringable
     /**
      * Gets the members currently in the voice channel.
      *
-     * @return ExCollectionInterface<VoiceStateUpdate>|VoiceStateUpdate[] Members in the voice channel.
+     * @return ExCollectionInterface<Member>|Member[] Members in the voice channel.
      */
     public function getMembersAttribute(): ExCollectionInterface
     {
         if ($guild = $this->guild) {
-            return $guild->voice_states->filter(fn (VoiceStateUpdate $voice_state) => $voice_state->channel_id === $this->id);
+            return $guild->members->filter(fn (Member $member) => $guild->voice_states->filter(fn (VoiceStateUpdate $voice_state) => $voice_state->channel_id === $this->id)->has($member->id));
         }
 
-        /** @var ExCollectionInterface<VoiceStateUpdate> */
-        return $this->discord->getCollectionClass()::for(VoiceStateUpdate::class, 'user_id');
+        return $this->discord->getCollectionClass()::for(Member::class, 'id');
     }
 
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-channel-json-params
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-channel-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -1138,7 +1173,7 @@ class Channel extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-guild-channel
+     * @link https://docs.discord.com/developers/resources/channel#modify-channel-json-params-guild-channel
      */
     public function getUpdatableAttributes(): array
     {

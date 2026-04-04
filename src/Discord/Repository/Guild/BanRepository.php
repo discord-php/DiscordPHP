@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -61,7 +62,7 @@ class BanRepository extends AbstractRepository
      * Requires both the BAN_MEMBERS and MANAGE_GUILD permissions.
      * Returns a 200 response on success, including the fields banned_users with the IDs of the banned users and failed_users with IDs that could not be banned or were already banned.
      *
-     * @link https://discord.com/developers/docs/resources/guild#bulk-guild-ban
+     * @link https://docs.discord.com/developers/resources/guild#bulk-guild-ban
      *
      * @param Member[]|User[]|string[] $users                             An array of user IDs to ban (up to 200).
      * @param array                    $options                           Array of Ban options.
@@ -126,7 +127,7 @@ class BanRepository extends AbstractRepository
     /**
      * Bans a member from the guild.
      *
-     * @link https://discord.com/developers/docs/resources/guild#create-guild-ban
+     * @link https://docs.discord.com/developers/resources/guild#create-guild-ban
      *
      * @param User|Member|string $user    The User to ban.
      * @param array              $options Array of Ban options 'delete_message_seconds' or 'delete_message_days' (deprecated).
@@ -179,7 +180,7 @@ class BanRepository extends AbstractRepository
     /**
      * Unbans a member from the guild.
      *
-     * @link https://discord.com/developers/docs/resources/guild#remove-guild-ban
+     * @link https://docs.discord.com/developers/resources/guild#remove-guild-ban
      *
      * @param User|Ban|string $ban    User or Ban Part, or User ID
      * @param string|null     $reason Reason for Audit Log.

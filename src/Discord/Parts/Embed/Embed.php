@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -23,7 +24,7 @@ use function Discord\poly_strlen;
 /**
  * An embed object to be sent with a message.
  *
- * @link https://discord.com/developers/docs/resources/message#embed-object-embed-structure
+ * @link https://docs.discord.com/developers/resources/message#embed-object-embed-structure
  *
  * @since 4.0.3
  * @since 10.19.0 The `provider` property was added and `thumbnail` was updated to return `Thumbnail`.

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -21,7 +22,7 @@ use function Discord\poly_strlen;
 /**
  * Choice represents a choice that can be given to a command.
  *
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure
+ * @link https://docs.discord.com/developers/interactions/application-commands#application-command-object-application-command-option-choice-structure
  *
  * @since 7.0.0
  *
@@ -80,7 +81,7 @@ class Choice extends Part
     /**
      * Sets the name of the choice in another language.
      *
-     * @link https://discord.com/developers/docs/reference#locales
+     * @link https://docs.discord.com/developers/reference#locales
      *
      * @param string      $locale Discord locale code.
      * @param string|null $name   Localized name of the choice.

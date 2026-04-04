@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -29,7 +30,7 @@ use function React\Promise\reject;
 /**
  * The OAuth2 application of the bot.
  *
- * @link https://discord.com/developers/docs/resources/application
+ * @link https://docs.discord.com/developers/resources/application
  *
  * @since 7.0.0
  *
@@ -134,7 +135,7 @@ class Application extends Part
     public const GATEWAY_MESSAGE_CONTENT_LIMITED = (1 << 19);
     /** Indicates if an app has registered global application commands. */
     public const APPLICATION_COMMAND_BADGE = (1 << 23);
-    /** @todo Undocumented. */
+    /** Undocumented. */
     public const ACTIVE = (1 << 24);
 
     /**	App is installable to servers. */
@@ -155,7 +156,7 @@ class Application extends Part
     /**
      * Returns a list of application role connection metadata objects for the given application.
      *
-     * @link https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
+     * @link https://docs.discord.com/developers/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
      *
      * @since 10.29.0
      *
@@ -179,7 +180,7 @@ class Application extends Part
     /**
      * Updates and returns a list of application role connection metadata objects for the given application.
      *
-     * @link https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
+     * @link https://docs.discord.com/developers/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
      *
      * @since 10.29.0
      *

@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -20,7 +21,7 @@ use JsonSerializable;
  *
  * Gateway event payloads have a common structure, but the contents of the associated data (d) varies between the different events.
  *
- * @link https://discord.com/developers/docs/topics/gateway#payloads-gateway-payload-structure
+ * @link https://docs.discord.com/developers/topics/gateway#payloads-gateway-payload-structure
  *
  * @property int         $op Gateway opcode, which indicates the payload type.
  * @property mixed|null  $d  Event data.
@@ -85,10 +86,10 @@ class Payload implements JsonSerializable
         if (isset($array['d'])) {
             is_array($array['d'])
                 ? (isset($array['d']['token'])
-                    ? $array['d']['token'] = 'xxxxx'
+                    ? $array['d']['token'] = '*****'
                     : null)
                 : (isset($array['d']->token)
-                    ? $array['d']->token = 'xxxxx'
+                    ? $array['d']->token = '*****'
                     : null);
         }
 

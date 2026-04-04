@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -29,30 +30,31 @@ use function React\Promise\reject;
 /**
  * A representation of a scheduled event in a guild.
  *
- * @link https://discord.com/developers/docs/resources/guild-scheduled-event
+ * @link https://docs.discord.com/developers/resources/guild-scheduled-event
  *
  * @since 7.0.0
  *
- * @property      string              $id                   The id of the scheduled event.
- * @property      string              $guild_id             The guild id which the scheduled event belongs to.
- * @property-read Guild|null          $guild                The guild which the scheduled event belongs to.
- * @property      ?string|null        $channel_id           The channel id in which the scheduled event will be hosted, or null if scheduled entity type is EXTERNAL.
- * @property-read Channel|null        $channel              The channel in which the scheduled event will be hosted, or null.
- * @property      ?string|null        $creator_id           The id of the user that created the scheduled event.
- * @property      string              $name                 The name of the scheduled event (1-100 characters).
- * @property      ?string|null        $description          The description of the scheduled event (1-1000 characters).
- * @property      Carbon              $scheduled_start_time The time the scheduled event will start.
- * @property      Carbon|null         $scheduled_end_time   The time the scheduled event will end, required if entity_type is EXTERNAL.
- * @property      int                 $privacy_level        The privacy level of the scheduled event.
- * @property      int                 $status               The status of the scheduled event.
- * @property      int                 $entity_type          The type of the scheduled event.
- * @property      ?string             $entity_id            The id of an entity associated with a guild scheduled event.
- * @property      ?EntityMetadata     $entity_metadata      Additional metadata for the guild scheduled event.
- * @property      User|null           $creator              The user that created the scheduled event.
- * @property      int|null            $user_count           The number of users subscribed to the scheduled event.
- * @property      ?string|null        $image                The cover image URL of the scheduled event.
- * @property-read string|null         $image_hash           The cover image hash of the scheduled event.
- * @property      RecurrenceRule|null $recurrence_rule      The definition for how often this event should recur.
+ * @property      string                                                                   $id                               The id of the scheduled event.
+ * @property      string                                                                   $guild_id                         The guild id which the scheduled event belongs to.
+ * @property-read Guild|null                                                               $guild                            The guild which the scheduled event belongs to.
+ * @property      ?string|null                                                             $channel_id                       The channel id in which the scheduled event will be hosted, or null if scheduled entity type is EXTERNAL.
+ * @property-read Channel|null                                                             $channel                          The channel in which the scheduled event will be hosted, or null.
+ * @property      ?string|null                                                             $creator_id                       The id of the user that created the scheduled event.
+ * @property      string                                                                   $name                             The name of the scheduled event (1-100 characters).
+ * @property      ?string|null                                                             $description                      The description of the scheduled event (1-1000 characters).
+ * @property      Carbon                                                                   $scheduled_start_time             The time the scheduled event will start.
+ * @property      Carbon|null                                                              $scheduled_end_time               The time the scheduled event will end, required if entity_type is EXTERNAL.
+ * @property      int                                                                      $privacy_level                    The privacy level of the scheduled event.
+ * @property      int                                                                      $status                           The status of the scheduled event.
+ * @property      int                                                                      $entity_type                      The type of the scheduled event.
+ * @property      ?string                                                                  $entity_id                        The id of an entity associated with a guild scheduled event.
+ * @property      ?EntityMetadata                                                          $entity_metadata                  Additional metadata for the guild scheduled event.
+ * @property      User|null                                                                $creator                          The user that created the scheduled event.
+ * @property      int|null                                                                 $user_count                       The number of users subscribed to the scheduled event.
+ * @property      ?string|null                                                             $image                            The cover image URL of the scheduled event.
+ * @property-read string|null                                                              $image_hash                       The cover image hash of the scheduled event.
+ * @property      RecurrenceRule|null                                                      $recurrence_rule                  The definition for how often this event should recur.
+ * @property      ExCollectionInterface<ScheduledEventException>|ScheduledEventException[] $guild_scheduled_event_exceptions The exceptions to the recurrence rule of the guild scheduled event.
  */
 class ScheduledEvent extends Part
 {
@@ -91,13 +93,63 @@ class ScheduledEvent extends Part
     ];
 
     /**
+     * Create an exception for the guild scheduled event's recurrence rule.
+     * Returns the created guild scheduled event exception object on success.
+     * Fires a Guild Scheduled Event Exception Create Gateway event.
+     *
+     * @param array   $options                         The scheduled event exception data.
+     * @param ?Carbon $options['scheduled_start_time'] The new time at when the scheduled event recurrence will start, if applicable.
+     * @param ?Carbon $options['scheduled_end_time']   The new time at when the scheduled event recurrence will end, if applicable.
+     * @param ?bool   $options['is_canceled']          Whether or not the scheduled event will be skipped on the recurrence.
+     * @param ?string $reason                          Reason for Audit Log.
+     *
+     * @return PromiseInterface<ScheduledEventException>
+     */
+    public function createException(array $options, ?string $reason = null): PromiseInterface
+    {
+        $mandatory = $payload = ['original_scheduled_start_time' => $this->scheduled_start_time];
+
+        if (isset($options['scheduled_start_time'])) {
+            $payload['scheduled_start_time'] = $options['scheduled_start_time'];
+        }
+
+        if (isset($options['scheduled_end_time'])) {
+            $payload['scheduled_end_time'] = $options['scheduled_end_time'];
+        }
+
+        if (isset($options['is_canceled'])) {
+            $payload['is_canceled'] = $options['is_canceled'];
+        }
+
+        if ($payload === $mandatory) {
+            return reject(new \InvalidArgumentException('At minimum, you must provide a value for one of `is_canceled`, `scheduled_start_time`, or `scheduled_end_time`.'));
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_SCHEDULED_EVENT_EXCEPTIONS, $this->guild_id, $this->id), $payload, $headers)
+            ->then(
+                function ($response): ScheduledEventException {
+                    $part = $this->factory->part(ScheduledEventException::class, (array) $response, true);
+
+                    $this->guild_scheduled_event_exceptions->pushItem($part);
+
+                    return $part;
+                }
+            );
+    }
+
+    /**
      * Get a list of guild scheduled event users subscribed to a guild scheduled
      * event.
      * Returns a list of guild scheduled event user objects on success.
      * Guild member data, if it exists, is included if the with_member query
      * parameter is set.
      *
-     * @link https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users
+     * @link https://docs.discord.com/developers/resources/guild-scheduled-event#get-guild-scheduled-event-users
      *
      * @param array $options
      *
@@ -217,7 +269,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * Returns the created at attribute.
+     * Returns the Scheduled Start Time attribute.
      *
      * @return Carbon The time the scheduled event will start.
      *
@@ -229,7 +281,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * Returns the created at attribute.
+     * Returns the Scheduled End Time attribute.
      *
      * @return Carbon|null The time the scheduled event will end, required if entity_type is EXTERNAL.
      *
@@ -281,9 +333,19 @@ class ScheduledEvent extends Part
     }
 
     /**
+     * Gets the guild scheduled event exceptions attribute.
+     *
+     * @return ExCollectionInterface The exceptions to the recurrence rule of the guild scheduled event.
+     */
+    protected function getGuildScheduledEventExceptionsAttribute(): ExCollectionInterface
+    {
+        return $this->attributeCollectionHelper('guild_scheduled_event_exceptions', ScheduledEventException::class, 'event_id');
+    }
+
+    /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event-json-params
+     * @link https://docs.discord.com/developers/resources/guild-scheduled-event#create-guild-scheduled-event-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -303,7 +365,7 @@ class ScheduledEvent extends Part
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event-json-params
+     * @link https://docs.discord.com/developers/resources/guild-scheduled-event#modify-guild-scheduled-event-json-params
      */
     public function getUpdatableAttributes(): array
     {

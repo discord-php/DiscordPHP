@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -30,7 +31,7 @@ use function React\Promise\reject;
  * A Guild Template is a code that when used, creates a guild based on a
  * snapshot of an existing guild.
  *
- * @link https://discord.com/developers/docs/resources/guild-template
+ * @link https://docs.discord.com/developers/resources/guild-template
  *
  * @since 7.0.0
  *
@@ -142,7 +143,7 @@ class GuildTemplate extends Part implements Stringable
      * Creates a guild from this template. Can be used only by bots in less than
      * 10 guilds.
      *
-     * @link https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template
+     * @link https://docs.discord.com/developers/resources/guild-template#create-guild-from-guild-template
      *
      * @param array       $options         An array of options.
      * @param string      $options['name'] The name of the guild (2-100 characters).
@@ -201,7 +202,7 @@ class GuildTemplate extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild-template#create-guild-template-json-params
+     * @link https://docs.discord.com/developers/resources/guild-template#create-guild-template-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -215,7 +216,7 @@ class GuildTemplate extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/guild-template#modify-guild-template-json-params
+     * @link https://docs.discord.com/developers/resources/guild-template#modify-guild-template-json-params
      */
     public function getUpdatableAttributes(): array
     {
@@ -228,7 +229,7 @@ class GuildTemplate extends Part implements Stringable
     /**
      * Syncs the template to the guild's current state. Requires the MANAGE_GUILD permission.
      *
-     * @link https://discord.com/developers/docs/resources/guild-template#sync-guild-template
+     * @link https://docs.discord.com/developers/resources/guild-template#sync-guild-template
      *
      * @return PromiseInterface<GuildTemplate>
      *

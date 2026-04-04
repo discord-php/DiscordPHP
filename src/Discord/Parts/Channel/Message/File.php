@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -18,7 +19,7 @@ namespace Discord\Parts\Channel\Message;
  *
  * Files are only available in messages.
  *
- * @link https://discord.com/developers/docs/components/reference#text-display
+ * @link https://docs.discord.com/developers/components/reference#text-display
  *
  * @since 10.11.0
  *
@@ -26,6 +27,8 @@ namespace Discord\Parts\Channel\Message;
  * @property string|null       $id      Optional identifier for component.
  * @property UnfurledMediaItem $file    Unfurled media item, supports only attachment://<filename> syntax.
  * @property bool|null         $spoiler Whether the media should be a spoiler (blurred out). Defaults to false.
+ * @property string|null       $name    Name of the file. This field is ignored and provided by the API as part of the response.
+ * @property int|null          $size    Size of the file in bytes. This field is ignored and provided by the API as part of the response.
  */
 class File extends Content
 {
@@ -37,6 +40,8 @@ class File extends Content
         'id',
         'file',
         'spoiler',
+        'name',
+        'size',
     ];
 
     protected function getFileAttribute(): UnfurledMediaItem

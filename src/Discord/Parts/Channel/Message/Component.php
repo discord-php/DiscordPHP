@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -24,7 +25,7 @@ use Discord\Parts\Part;
  * Components are a field on the message object and modal.
  * You can use them when creating messages or responding to an interaction, like an application command.
  *
- * @link https://discord.com/developers/docs/components/reference#what-is-a-component
+ * @link https://docs.discord.com/developers/components/reference#what-is-a-component
  *
  * @since 10.11.0
  *
@@ -57,6 +58,9 @@ class Component extends Part
         ComponentObject::TYPE_CONTAINER => Container::class,
         ComponentObject::TYPE_LABEL => Label::class,
         ComponentObject::TYPE_FILE_UPLOAD => FileUpload::class,
+        ComponentObject::TYPE_RADIO_GROUP => RadioGroup::class,
+        ComponentObject::TYPE_CHECKBOX_GROUP => CheckboxGroup::class,
+        ComponentObject::TYPE_CHECKBOX => Checkbox::class,
     ];
 
     /**
@@ -82,6 +86,6 @@ class Component extends Part
      */
     public function getComponentAttribute(): ?Component
     {
-        return $this->attributePartHelper('component', Component::TYPES[$this->attributes['component']->type ?? 0]);
+        return $this->attributePartHelper('component', self::TYPES[$this->attributes['component']->type ?? 0]);
     }
 }

@@ -6,6 +6,10 @@
         {
             "name": "David Cole",
             "email": "david.cole1340@gmail.com"
+        },
+        {
+            "name": "Valithor Obsidion",
+            "email": "valithor@discordphp.org"
         }
     ],
     "support": {
@@ -31,7 +35,8 @@
         "react/cache": "^0.5 || ^0.6 || ^1.0",
         "react/promise": "^3.0.0",
         "psr/simple-cache": "^1.0 || ^2.0 || ^3.0",
-        "discord-php-helpers/collection": "^8.0"
+        "discord-php-helpers/collection": "^8.0",
+        "discord-php-helpers/voice": "^8.0 || dev-main"
     },
     "require-dev": {
         "symfony/var-dumper": "*",
@@ -40,7 +45,8 @@
         "wyrihaximus/react-cache-redis": "^4.5",
         "symfony/cache": "^5.4",
         "laravel/pint": "^1.21",
-        "pestphp/pest": "^4.1.2"
+        "pestphp/pest": "^4.1.2",
+        "carthage-software/mago": "1.1.0"
     },
     "autoload": {
         "files": [
@@ -63,6 +69,7 @@
         "pint": ["./vendor/bin/pint --config ./pint.json ./src"],
         "cs": ["./vendor/bin/php-cs-fixer fix"],
         "cs-unsupported": ["./vendor/bin/php-cs-fixer fix --allow-unsupported-php-version yes"],
+        "mago-lint": ["./vendor/bin/mago lint src/"],
         "unit": ["./vendor/bin/phpunit --testdox"],
         "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage --testdox"],
         "php8.0": ["docker-compose run php8.0 sh"],
@@ -74,7 +81,8 @@
     },
     "config": {
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "carthage-software/mago": true
         }
     }
 }

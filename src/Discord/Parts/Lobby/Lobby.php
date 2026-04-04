@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -22,8 +23,8 @@ use React\Promise\PromiseInterface;
  *
  * @since 10.28.0
  *
- * @link https://discord.com/developers/docs/resources/lobby#lobby-object
- * @link https://discord.com/developers/docs/discord-social-sdk/development-guides/managing-lobbies
+ * @link https://docs.discord.com/developers/resources/lobby#lobby-object
+ * @link https://docs.discord.com/developers/discord-social-sdk/development-guides/managing-lobbies
  *
  * @property      string       $id             The unique identifier of the lobby.
  * @property      string       $application_id The application that created the lobby.

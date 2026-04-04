@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -19,6 +20,7 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\ChannelTrait;
 use Discord\Parts\Channel\ThreadMetadata;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\Thread\Member as ThreadMember;
 use Discord\Parts\User\Member;
@@ -28,13 +30,14 @@ use Discord\Repository\Channel\ThreadRepository;
 use Discord\Repository\Thread\MemberRepository;
 use React\Promise\PromiseInterface;
 use Stringable;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function React\Promise\reject;
 
 /**
  * Represents a Discord thread.
  *
- * @link https://discord.com/developers/docs/topics/threads
+ * @link https://docs.discord.com/developers/topics/threads
  *
  * @since 7.0.0
  *
@@ -51,6 +54,9 @@ use function React\Promise\reject;
  * @property-read bool         $locked                Whether the thread has been locked.
  * @property-read bool|null    $invitable             Whether non-moderators can add other non-moderators to a thread; only available on private threads.
  * @property-read ?Carbon|null $create_timestamp      Timestamp when the thread was created; only populated for threads created after 2022-01-09.
+ *
+ * @property-read string $guild_id The ID of the guild that the thread belongs to.
+ * @property-read Guild  $guild    The guild that the thread belongs to.
  */
 class Thread extends Part implements Stringable
 {
@@ -105,7 +111,7 @@ class Thread extends Part implements Stringable
     protected function afterConstruct(): void
     {
         if (isset($this->attributes['member'])) {
-            $memberPart = $this->members->create((array) $this->attributes['member'] + [
+            $memberPart = $this->guild->members->create((array) $this->attributes['member'] + [
                 'id' => $this->id,
                 'user_id' => $this->discord->id,
                 'guild_id' => $this->guild_id,
@@ -113,6 +119,58 @@ class Thread extends Part implements Stringable
             $memberPart->created = &$this->created;
             $this->members->pushItem($memberPart);
         }
+    }
+
+    /**
+     * Searches for the given query string in the thread's message history. Returns a collection of matching threads, members, and the first message in each thread.
+     *
+     * @param array $options
+     *
+     * @return PromiseInterface<ThreadSearch>
+     *
+     * @since 10.47.0
+     */
+    public function search(array $options): PromiseInterface
+    {
+        $resolver = new OptionsResolver();
+
+        $resolver->setDefined([
+            'name',
+            'slop',
+            'min_id',
+            'max_id',
+            'tag',
+            'tag_setting',
+            'archived',
+            'sort_by',
+            'sort_order',
+            'limit',
+            'offset',
+        ])
+        ->setAllowedTypes('name', 'string')
+        ->setAllowedTypes('slop', 'int')
+        ->setAllowedTypes('min_id', ['string', 'int'])
+        ->setAllowedTypes('max_id', ['string', 'int'])
+        ->setAllowedTypes('tag', ['string', 'array'])
+        ->setAllowedTypes('tag_setting', 'string')
+        ->setAllowedTypes('archived', 'bool')
+        ->setAllowedTypes('sort_by', 'string')
+        ->setAllowedTypes('sort_order', ['string', 'int'])
+        ->setAllowedTypes('limit', 'int')
+        ->setAllowedTypes('offset', 'int')
+        ->setAllowedValues('slop', fn ($v) => $v >= 0 && $v <= 100)
+        ->setAllowedValues('limit', fn ($v) => $v >= 1 && $v <= 25)
+        ->setAllowedValues('offset', fn ($v) => $v >= 0 && $v <= 9975);
+
+        $options = $resolver->resolve($options);
+
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_THREADS_SEARCH, $this->parent_id);
+
+        foreach ($options as $k => $v) {
+            $endpoint->addQuery($k, $v);
+        }
+
+        return $this->http->get($endpoint)->then(fn ($response) => $this->createOf(ThreadSearch::class, $response));
     }
 
     /**
@@ -245,7 +303,7 @@ class Thread extends Part implements Stringable
     /**
      * Attempts to join the thread.
      *
-     * @link https://discord.com/developers/docs/resources/channel#join-thread
+     * @link https://docs.discord.com/developers/resources/channel#join-thread
      *
      * @return PromiseInterface
      */
@@ -257,7 +315,7 @@ class Thread extends Part implements Stringable
     /**
      * Attempts to add a user to the thread.
      *
-     * @link https://discord.com/developers/docs/resources/channel#add-thread-member
+     * @link https://docs.discord.com/developers/resources/channel#add-thread-member
      *
      * @param User|Member|string $user User to add. Can be one of the user objects or a user ID.
      *
@@ -275,7 +333,7 @@ class Thread extends Part implements Stringable
     /**
      * Attempts to leave the thread.
      *
-     * @link https://discord.com/developers/docs/resources/channel#leave-thread
+     * @link https://docs.discord.com/developers/resources/channel#leave-thread
      *
      * @return PromiseInterface
      */
@@ -287,7 +345,7 @@ class Thread extends Part implements Stringable
     /**
      * Attempts to remove a user from the thread.
      *
-     * @link https://discord.com/developers/docs/resources/channel#remove-thread-member
+     * @link https://docs.discord.com/developers/resources/channel#remove-thread-member
      *
      * @param User|Member|ThreadMember|string $user User to remove. Can be one of the user objects or a user ID.
      *
@@ -397,7 +455,7 @@ class Thread extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message-json-params
+     * @link https://docs.discord.com/developers/resources/channel#start-thread-without-message-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -423,7 +481,7 @@ class Thread extends Part implements Stringable
     /**
      * @inheritDoc
      *
-     * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-thread
+     * @link https://docs.discord.com/developers/resources/channel#modify-channel-json-params-thread
      */
     public function getUpdatableAttributes(): array
     {
@@ -485,6 +543,16 @@ class Thread extends Part implements Stringable
         }
 
         return parent::save();
+    }
+
+    /**
+     * Returns the guild that the thread belongs to.
+     *
+     * @return Guild
+     */
+    protected function getGuildAttribute(): Guild
+    {
+        return $this->discord->guilds->get('id', $this->guild_id) ?? new Guild($this->discord, ['id' => $this->guild_id], true);
     }
 
     /**

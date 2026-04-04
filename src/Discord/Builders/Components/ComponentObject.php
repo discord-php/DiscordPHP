@@ -5,7 +5,8 @@ declare(strict_types=1);
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-2022 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2020-present Valithor Obsidion <valithor@discordphp.org>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -20,12 +21,17 @@ namespace Discord\Builders\Components;
  * Components are a field on the message object and modal.
  * You can use them when creating messages or responding to an interaction, like an application command.
  *
- * @link https://discord.com/developers/docs/components/reference#component-object
+ * @link https://docs.discord.com/developers/components/reference#component-object
  *
  * @since 10.9.0
  */
 abstract class ComponentObject extends Component
 {
+    /**
+     * Usage contexts for the component.
+     *
+     * @var string[]
+     */
     public const USAGE = [];
 
     /**
@@ -52,6 +58,9 @@ abstract class ComponentObject extends Component
         ComponentObject::TYPE_CONTAINER => Container::class,
         ComponentObject::TYPE_LABEL => Label::class,
         ComponentObject::TYPE_FILE_UPLOAD => FileUpload::class,
+        ComponentObject::TYPE_RADIO_GROUP => RadioGroup::class,
+        ComponentObject::TYPE_CHECKBOX_GROUP => CheckboxGroup::class,
+        ComponentObject::TYPE_CHECKBOX => Checkbox::class,
     ];
 
     /** Container to display a row of interactive components. */
@@ -95,6 +104,13 @@ abstract class ComponentObject extends Component
     public const TYPE_FILE_UPLOAD = 19;
     /** Undocumented. Used by the client for checkpoint. */
     public const TYPE_CHECKPOINT_CARD = 20;
+
+    /** Single-choice set of radio options. */
+    public const TYPE_RADIO_GROUP = 21;
+    /** Multi-select group of checkboxes. */
+    public const TYPE_CHECKBOX_GROUP = 22;
+    /** Single checkbox for binary choice. */
+    public const TYPE_CHECKBOX = 23;
 
     /**
      * The type of the component.

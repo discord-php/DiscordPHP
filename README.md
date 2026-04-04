@@ -87,12 +87,12 @@ $discord = new Discord([
 ]);
 
 $discord->on('ready', function (Discord $discord) {
-    echo "Bot is ready!", PHP_EOL;
+    $discord->logger->info("Bot is ready!");
 
     // Listen for messages.
     $discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
-        echo "{$message->author->username}: {$message->content}", PHP_EOL;
         // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
+        $discord->logger->info("{$message->author->username}: {$message->content}");
     });
 });
 
@@ -112,3 +112,6 @@ We are open to contributions. However, please make sure you follow our coding st
 ## License
 
 MIT License, &copy; David Cole and other contributers 2016-present.
+
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/discord-php/DiscordPHP.svg?variant=adaptive)](https://starchart.cc/discord-php/DiscordPHP)
